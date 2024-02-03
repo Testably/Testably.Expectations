@@ -83,22 +83,6 @@ public sealed class ExpectTests
 		//Expect.That(sut, _ => _.Throws<ArgumentException>());
 	}
 
-	[Theory]
-	[MemberData(nameof(ManyTestsData))]
-	public async Task ManyTests(int i)
-	{
-		await Task.Delay(5);
-			Expect.That(i, Is.GreaterThan(0));
-	}
-
-	public static IEnumerable<object[]> ManyTestsData()
-	{
-		for(int i=1;i<100;i++)
-		{
-			yield return new object[] { i };
-		}
-	}
-
 	private class Dummy
 	{
 		public int Id { get; set; }

@@ -3,9 +3,9 @@
 namespace Testably.Expectations.TestFrameworks;
 
 /// <summary>
-/// Represents an abstraction of a particular test framework such as MSTest, nUnit, etc.
+/// Represents an adapter to a particular test framework such as xUnit, nUnit, etc.
 /// </summary>
-internal interface ITestFramework
+internal interface ITestFrameworkAdapter
 {
 	/// <summary>
 	/// Gets a value indicating whether the corresponding test framework is currently available.

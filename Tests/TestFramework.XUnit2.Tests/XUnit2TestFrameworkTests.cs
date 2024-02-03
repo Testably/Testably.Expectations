@@ -7,7 +7,7 @@ namespace Testably.Expectations.Tests;
 public sealed class XUnit2TestFrameworkTests
 {
 	[Fact]
-	public void WhenUsingXunitAsTestFramework_ShouldThrowXunitException()
+	public void WhenUsingXunit2AsTestFramework_ShouldThrowXunitException()
 	{
 		Action act = () => Expect.That(true, Is.False);
 

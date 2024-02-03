@@ -6,9 +6,12 @@ using System.Reflection;
 namespace Testably.Expectations.TestFrameworks;
 
 /// <summary>
-/// Implements the XUnit (version 2) test framework adapter.
+/// Implements the XUnit test framework adapter.
 /// </summary>
-internal class XUnit2TestFramework : ITestFramework
+/// <remarks>
+/// <see href="https://github.com/xunit/xunit"/>
+/// </remarks>
+internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 {
 	private Assembly? assembly;
 

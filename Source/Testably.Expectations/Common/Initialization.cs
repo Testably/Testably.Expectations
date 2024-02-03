@@ -17,9 +17,9 @@ internal static class Initialization
 		return new InitializationState(testFramework);
 	}
 
-	private static ITestFramework DetectFramework()
+	private static ITestFrameworkAdapter DetectFramework()
 	{
-		var frameworkInterface = typeof(ITestFramework);
+		var frameworkInterface = typeof(ITestFrameworkAdapter);
 		foreach (var frameworkType in frameworkInterface.Assembly
 			.GetTypes()
 			.Where(x => x.IsClass)
@@ -27,7 +27,7 @@ internal static class Initialization
 		{
 			try
 			{
-				var testFramework = (ITestFramework?)Activator.CreateInstance(frameworkType);
+				var testFramework = (ITestFrameworkAdapter?)Activator.CreateInstance(frameworkType);
 				if (testFramework?.IsAvailable == true)
 				{
 					return testFramework;
@@ -44,9 +44,9 @@ internal static class Initialization
 
 	internal class InitializationState
 	{
-		private readonly ITestFramework testFramework;
+		private readonly ITestFrameworkAdapter testFramework;
 
-		public InitializationState(ITestFramework testFramework)
+		public InitializationState(ITestFrameworkAdapter testFramework)
 		{
 			this.testFramework = testFramework;
 		}
@@ -56,7 +56,7 @@ internal static class Initialization
 		public void Throw(string message) => testFramework.Throw(message);
 	}
 
-	private class InternalTestFramework : ITestFramework
+	private class InternalTestFramework : ITestFrameworkAdapter
 	{
 		public bool IsAvailable => false;
 
