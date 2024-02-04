@@ -11,11 +11,12 @@ namespace Testably.Expectations;
 public static class Expect
 {
 	public static void That<TActual>([NotNull] TActual actual,
-		Func<IConstraint<TActual>, IConstraint<TActual>> constraintBuilder,
+		Func<IConstraintBuilder<TActual>, IConstraint<TActual>> constraintBuilder,
 		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
-		var constraint = constraintBuilder.Invoke(new Constraint<TActual>());
-		var result = constraint.ApplyTo(actual);
+		var builder = ExpectationContext.Current.GetEmptyConstraintBuilder<TActual>();
+		constraintBuilder.Invoke(builder);
+		var result = builder.ApplyTo(actual);
 
 		if (!result.IsSuccess())
 		{
@@ -25,14 +26,15 @@ public static class Expect
 		{
 			Debug.Assert(actual != null);
 		}
-
 	}
 
 	public static void That<TActual>([NotNull] TActual actual,
-		IConstraint<TActual> constraint,
+		Func<IConstraintBuilder<TActual>, IConstraint> constraintBuilder,
 		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
-		var result = constraint.ApplyTo(actual);
+		var builder = ExpectationContext.Current.GetEmptyConstraintBuilder<TActual>();
+		constraintBuilder.Invoke(builder);
+		var result = builder.ApplyTo(actual);
 
 		if (!result.IsSuccess())
 		{
@@ -42,15 +44,32 @@ public static class Expect
 		{
 			Debug.Assert(actual != null);
 		}
+	}
 
+	public static void That<TActual>([NotNull] TActual actual,
+		IConstraint _,
+		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
+	{
+		var builder = ExpectationContext.Current.GetRegisteredConstraintBuilder<TActual>();
+		var result = builder.ApplyTo(actual);
+
+		if (!result.IsSuccess())
+		{
+			ReportFailure(result, actual, null, actualExpression);
+		}
+		else
+		{
+			Debug.Assert(actual != null);
+		}
 	}
 
 	public static void That<TActual>(TActual actual,
-		Func<IConstraint<TActual>, INullableConstraint<TActual>> constraintBuilder,
+		Func<IConstraintBuilder<TActual>, INullableConstraint<TActual>> constraintBuilder,
 		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
-		var constraint = constraintBuilder.Invoke(new Constraint<TActual>());
-		var result = constraint.ApplyTo(actual);
+		var builder = ExpectationContext.Current.GetEmptyConstraintBuilder<TActual>();
+		constraintBuilder.Invoke(builder);
+		var result = builder.ApplyTo(actual);
 
 		if (!result.IsSuccess())
 		{
@@ -59,7 +78,7 @@ public static class Expect
 	}
 
 	[DoesNotReturn]
-	private static void ReportFailure<TActual>(ConstraintResult<TActual> result, TActual? actual, string? message, string actualExpression)
+	private static void ReportFailure<TActual>(ExpectationResult<TActual> result, TActual? actual, string? message, string actualExpression)
 	{
 		Initialization.State.Value.Throw(result.CreateMessage(actualExpression, actual));
 	}

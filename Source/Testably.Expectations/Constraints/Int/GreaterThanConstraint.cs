@@ -1,7 +1,7 @@
 ﻿using Testably.Expectations.Common;
 
 namespace Testably.Expectations.Constraints.Int;
-internal class GreaterThanConstraint : IConstraint<int>
+internal class GreaterThanConstraint : SimpleConstraint<int>
 {
 	private int expected;
 
@@ -10,9 +10,8 @@ internal class GreaterThanConstraint : IConstraint<int>
 		this.expected = expected;
 	}
 
-	public string ExpectationText => $"to be greater than {expected}";
-	public ConstraintResult<int> ApplyTo(int actual)
-	{
-		return new ConstraintResult<int>(this, actual > expected);
-	}
+	public override string ExpectationText => $"to be greater than {expected}";
+
+	protected override bool Satisfies(int actual)
+		=> actual > expected;
 }

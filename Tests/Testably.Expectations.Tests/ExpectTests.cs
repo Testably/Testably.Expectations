@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
@@ -76,11 +74,11 @@ public sealed class ExpectTests
 	}
 
 	[Fact]
-	public void Throws()
+	public void Throws2()
 	{
 		Action sut = () => throw new ArgumentException("foo");
 
-		//Expect.That(sut, _ => _.Throws<ArgumentException>());
+		Expect.That(sut, _ => _.Throws<ArgumentException>());
 	}
 
 	private class Dummy

@@ -1,22 +1,25 @@
 ﻿namespace Testably.Expectations.Common;
 
-public class ConstraintResult<TActual>
+public class ConstraintResult<TResult>
 {
-	private readonly IConstraint _Constraint;
-	private readonly bool _IsSuccess;
-
-	public ConstraintResult(IConstraint constraint, bool isSuccess)
+	public ConstraintResult(bool isSuccess, TResult value)
 	{
-		_Constraint = constraint;
-		_IsSuccess = isSuccess;
-	}
-	public bool IsSuccess()
-	{
-		return _IsSuccess;
+		IsSuccess = isSuccess;
+		Value = value;
 	}
 
-	public string CreateMessage(string? actualExpression, TActual? actual)
+	public bool IsSuccess { get; }
+	public TResult Value { get; }
+}
+
+public class ConstraintResult
+{
+	public ConstraintResult(bool isSuccess, object? value)
 	{
-		return $"Expected {actualExpression} {_Constraint.ExpectationText}, but found {actual}.";
+		IsSuccess = isSuccess;
+		Value = value;
 	}
+
+	public bool IsSuccess { get; }
+	public object? Value { get; }
 }

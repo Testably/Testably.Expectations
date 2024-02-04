@@ -2,12 +2,10 @@
 
 namespace Testably.Expectations.Constraints.Bool;
 
-public class FalseConstraint : IConstraint<bool>
+public class FalseConstraint : SimpleConstraint<bool>
 {
-	public string ExpectationText => "to be False";
+	public override string ExpectationText => "to be False";
 
-	public ConstraintResult<bool> ApplyTo(bool actual)
-	{
-		return new ConstraintResult<bool>(this, false.Equals(actual));
-	}
+	protected override bool Satisfies(bool actual)
+		=> false.Equals(actual);
 }

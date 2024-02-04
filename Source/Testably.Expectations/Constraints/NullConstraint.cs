@@ -2,12 +2,10 @@
 
 namespace Testably.Expectations.Constraints;
 
-public class NullConstraint<TActual> : INullableConstraint<TActual>
+public class NullConstraint<TActual> : SimpleNullableConstraint<TActual>
 {
-	public string ExpectationText => "to be null";
+	public override string ExpectationText => "to be null";
 
-	public ConstraintResult<TActual> ApplyTo(TActual actual)
-	{
-		return new ConstraintResult<TActual>(this, actual == null);
-	}
+	protected override bool Satisfies(TActual? actual)
+		=> actual == null;
 }

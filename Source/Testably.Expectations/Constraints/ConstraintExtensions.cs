@@ -7,9 +7,16 @@ namespace Testably.Expectations;
 
 public static partial class ConstraintExtensions
 {
-	public static INullableConstraint<TActual> IsNull<TActual>(this IConstraint<TActual> builder) => new NullConstraint<TActual>();
-	public static IConstraint<TActual> IsNotNull<TActual>(this IConstraint<TActual> builder) => new NotNullConstraint<TActual>();
-	public static IConstraint<TActual> And<TActual>(this IConstraint<TActual> builder) => new AndConstraint<TActual>(builder);
-	public static IConstraint<TActual> And<TActual>(this Func<IConstraint<TActual>, IConstraint<TActual>> builder) => new AndConstraint<TActual>(builder.Invoke(new Constraint<TActual>()));
+	public static INullableConstraint<TActual> IsNull<TActual>(this IConstraintBuilder<TActual> builder)
+		=> builder.Append(new NullConstraint<TActual>());
+
+	public static IConstraint<TActual> IsNotNull<TActual>(this IConstraintBuilder<TActual> builder)
+		=> builder.Append(new NotNullConstraint<TActual>());
+
+	public static IConstraintBuilder<TActual> And<TActual>(this IConstraint<TActual> _)
+		=> ExpectationContext.Current.GetEmptyConstraintBuilder<TActual>();
+
+	public static IConstraintBuilder<TActual> And<TActual>(this Func<IConstraintBuilder<TActual>, IConstraint<TActual>> builder)
+		=> ExpectationContext.Current.GetEmptyConstraintBuilder<TActual>();
 }
 

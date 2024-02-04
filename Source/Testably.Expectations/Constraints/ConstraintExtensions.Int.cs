@@ -5,7 +5,8 @@ namespace Testably.Expectations;
 
 public static partial class ConstraintExtensions
 {
-	public static IConstraint<int> IsGreaterThan(this IConstraint<int> builder, int expected) => new GreaterThanConstraint(expected);
+	public static IConstraint<int> IsGreaterThan(this IConstraintBuilder<int> builder, int expected)
+		=> builder.Append(new GreaterThanConstraint(expected));
 
 }
 

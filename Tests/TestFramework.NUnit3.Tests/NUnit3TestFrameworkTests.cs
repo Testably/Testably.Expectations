@@ -10,6 +10,6 @@ public sealed class NUnit3TestFrameworkTests
 	{
 		Action act = () => Expect.That(true, Is.False);
 
-		Assert.That(act, Throws.TypeOf<AssertionException>());
+		Expect.That(act, Throws.TypeOf<AssertionException>());
 	}
 }

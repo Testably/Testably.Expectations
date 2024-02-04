@@ -11,6 +11,6 @@ public sealed class XUnit2TestFrameworkTests
 	{
 		Action act = () => Expect.That(true, Is.False);
 
-		var exception = Assert.Throws<XunitException>(act);
+		Expect.That(act, Throws.TypeOf<XunitException>());
 	}
 }

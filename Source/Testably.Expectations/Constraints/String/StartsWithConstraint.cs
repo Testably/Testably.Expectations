@@ -1,7 +1,7 @@
 ﻿using Testably.Expectations.Common;
 
 namespace Testably.Expectations.Constraints.String;
-internal class StartsWithConstraint : IConstraint<string?>
+internal class StartsWithConstraint : SimpleConstraint<string?>
 {
 	private string expected;
 
@@ -10,10 +10,8 @@ internal class StartsWithConstraint : IConstraint<string?>
 		this.expected = expected;
 	}
 
-	public string ExpectationText => $"to start with '{expected}'";
+	public override string ExpectationText => $"to start with '{expected}'";
 
-	public ConstraintResult<string?> ApplyTo(string? actual)
-	{
-		return new ConstraintResult<string?>(this, actual?.StartsWith(expected) == true);
-	}
+	protected override bool Satisfies(string? actual)
+		=> actual?.StartsWith(expected) == true;
 }

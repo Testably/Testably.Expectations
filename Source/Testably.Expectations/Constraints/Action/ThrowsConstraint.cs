@@ -2,10 +2,10 @@
 using Testably.Expectations.Common;
 
 namespace Testably.Expectations.Constraints.Action;
-internal class ThrowsConstraint<TException> : IConstraint<System.Action, TException>
+internal class ThrowsConstraint<TException> : ComplexConstraint<System.Action, TException?>
 		where TException : Exception
 {
-	public ConstraintResult<TException> ApplyTo(System.Action actual)
+	protected override ConstraintResult<TException?> Satisfies(System.Action actual)
 	{
 		Exception? caughtException = null;
 		try
@@ -17,7 +17,7 @@ internal class ThrowsConstraint<TException> : IConstraint<System.Action, TExcept
 			caughtException = ex;
 		}
 
-		return new ConstraintResult<TException>(this, caughtException is TException);
+		return new ConstraintResult<TException?>(caughtException is TException, caughtException as TException);
 	}
-	public string ExpectationText => $"to throw {typeof(TException).Name}";
+	public override string ExpectationText => $"to throw {typeof(TException).Name}";
 }

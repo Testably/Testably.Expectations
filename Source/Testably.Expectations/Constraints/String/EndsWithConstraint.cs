@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Constraints.String;
 
-internal class EndsWithConstraint : IConstraint<string?>
+internal class EndsWithConstraint : SimpleConstraint<string?>
 {
 	private string expected;
 
@@ -11,10 +11,8 @@ internal class EndsWithConstraint : IConstraint<string?>
 		this.expected = expected;
 	}
 
-	public string ExpectationText => $"to end with '{expected}'";
+	public override string ExpectationText => $"to end with '{expected}'";
 
-	public ConstraintResult<string?> ApplyTo(string? actual)
-	{
-		return new ConstraintResult<string?>(this, actual?.EndsWith(expected) == true);
-	}
+	protected override bool Satisfies(string? actual)
+		=> actual?.EndsWith(expected) == true;
 }
