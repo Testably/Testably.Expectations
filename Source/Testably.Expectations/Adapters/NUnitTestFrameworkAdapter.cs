@@ -4,17 +4,20 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
-namespace Testably.Expectations.TestFrameworks;
+namespace Testably.Expectations.Adapters;
 
 /// <summary>
-/// Implements the NUnit test framework adapter.
+///     Implements the NUnit test framework adapter.
 /// </summary>
 /// <remarks>
-/// <see href="https://github.com/nunit/nunit"/>
+///     <see href="https://github.com/nunit/nunit" />
 /// </remarks>
+// ReSharper disable once UnusedMember.Global
 internal class NUnitTestFrameworkAdapter : ITestFrameworkAdapter
 {
-	private Assembly? assembly;
+	private Assembly? _assembly;
+
+	#region ITestFrameworkAdapter Members
 
 	public bool IsAvailable
 	{
@@ -22,12 +25,10 @@ internal class NUnitTestFrameworkAdapter : ITestFrameworkAdapter
 		{
 			const string prefix = "nunit.framework,";
 
-			assembly = AppDomain.CurrentDomain
-				.GetAssemblies()
-				.Where(a => a.FullName?.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) == true)
-				.FirstOrDefault();
+			_assembly = AppDomain.CurrentDomain.GetAssemblies()
+				.FirstOrDefault(a => a.FullName?.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) == true);
 
-			return assembly is not null;
+			return _assembly is not null;
 		}
 	}
 
@@ -35,9 +36,11 @@ internal class NUnitTestFrameworkAdapter : ITestFrameworkAdapter
 	[StackTraceHidden]
 	public void Throw(string message)
 	{
-		Type exceptionType = assembly?.GetType("NUnit.Framework.AssertionException")
-			?? throw new NotSupportedException("Failed to create the NUnit assertion type");
+		Type exceptionType = _assembly?.GetType("NUnit.Framework.AssertionException")
+		                     ?? throw new NotSupportedException("Failed to create the NUnit assertion type");
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}
+
+	#endregion
 }

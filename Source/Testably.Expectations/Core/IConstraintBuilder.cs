@@ -1,8 +1,7 @@
-﻿namespace Testably.Expectations.Common;
+﻿namespace Testably.Expectations.Core;
 
 public interface IConstraintBuilder<TActual>
 {
-	ExpectationResult<TActual> ApplyTo(TActual actual);
-
 	TConstraint Append<TConstraint>(TConstraint constraint) where TConstraint : IConstraint;
+	ExpectationResult<TActual> ApplyTo(TActual actual);
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-
-namespace Testably.Expectations.Common;
+﻿namespace Testably.Expectations.Core;
 
 public interface IConstraint
 {
@@ -12,6 +9,7 @@ public interface IConstraint
 public interface IConstraint<TActual> : IConstraint
 {
 }
+
 public interface IConstraint<TActual, TTarget> : IConstraint<TTarget>
 {
 }

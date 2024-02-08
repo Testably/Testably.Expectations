@@ -3,17 +3,20 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
-namespace Testably.Expectations.TestFrameworks;
+namespace Testably.Expectations.Adapters;
 
 /// <summary>
-/// Implements the XUnit test framework adapter.
+///     Implements the XUnit test framework adapter.
 /// </summary>
 /// <remarks>
-/// <see href="https://github.com/xunit/xunit"/>
+///     <see href="https://github.com/xunit/xunit" />
 /// </remarks>
+// ReSharper disable once UnusedMember.Global
 internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 {
-	private Assembly? assembly;
+	private Assembly? _assembly;
+
+	#region ITestFrameworkAdapter Members
 
 	public bool IsAvailable
 	{
@@ -22,9 +25,9 @@ internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 			try
 			{
 				// For netfx the assembly is not in AppDomain by default, so we can't just scan AppDomain.CurrentDomain
-				assembly = Assembly.Load(new AssemblyName("xunit.assert"));
+				_assembly = Assembly.Load(new AssemblyName("xunit.assert"));
 
-				return assembly is not null;
+				return _assembly is not null;
 			}
 			catch
 			{
@@ -37,9 +40,11 @@ internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 	[StackTraceHidden]
 	public void Throw(string message)
 	{
-		Type exceptionType = assembly?.GetType("Xunit.Sdk.XunitException")
-			?? throw new NotSupportedException("Failed to create the XUnit assertion type");
+		Type exceptionType = _assembly?.GetType("Xunit.Sdk.XunitException")
+		                     ?? throw new NotSupportedException("Failed to create the XUnit assertion type");
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}
+
+	#endregion
 }

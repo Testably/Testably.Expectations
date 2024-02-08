@@ -1,4 +1,4 @@
-﻿using Testably.Expectations.Common;
+﻿using Testably.Expectations.Core;
 
 namespace Testably.Expectations.Constraints;
 

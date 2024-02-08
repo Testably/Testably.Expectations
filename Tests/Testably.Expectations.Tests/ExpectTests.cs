@@ -7,11 +7,35 @@ namespace Testably.Expectations.Tests;
 
 public sealed class ExpectTests
 {
+	#region Test Setup
+
 	private readonly ITestOutputHelper testOutputHelper;
 
 	public ExpectTests(ITestOutputHelper testOutputHelper)
 	{
 		this.testOutputHelper = testOutputHelper;
+	}
+
+	#endregion
+
+	[Fact]
+	public void False()
+	{
+		bool sut = false;
+
+		Expect.That(sut, Should.Be.False());
+	}
+
+	[Fact]
+	public void False_Message()
+	{
+		bool fo2klsif = true;
+
+		Action act = () => { Expect.That(fo2klsif, Should.Be.False()); };
+
+		XunitException exception = Assert.Throws<XunitException>(act);
+		Assert.Equal($"Expected {nameof(fo2klsif)} to be False, but found True.",
+			exception.Message);
 	}
 
 	[Fact]
@@ -20,57 +44,28 @@ public sealed class ExpectTests
 		Dummy? nullDummy = null;
 		string? sut2 = "foo";
 
-		Expect.That(sut2, Does.StartWith("f").And().EndsWith("o"));
-		Expect.That(nullDummy, Is.Null());
+		Expect.That(sut2, Should.Start.With("f").And().End.With("o"));
+		Expect.That(nullDummy, Should.Be.Null());
 	}
 
 	[Fact]
 	public void IsNull_ShouldThrowOnNotNull()
 	{
-		Dummy? nullDummy = new Dummy();
+		Dummy? nullDummy = new()
+		{
+			Id = 2,
+			Value2 = "fog"
+		};
 
-		var act = () => { Expect.That(nullDummy, Is.Null<Dummy>()); };
+		Action act = () => { Expect.That(nullDummy, Should.Be.Null()); };
 
-		var exception = Assert.Throws<XunitException>(act);
+		Expect.That(nullDummy, Should.Be.OfType<Dummy>()
+			.Which(_ => _.Id, Should.Be.EqualTo(2)).And()
+			.Which(_ => _.Value2, Should.Start.With("f").And()
+				.End.With("g")));
+
+		XunitException exception = Assert.Throws<XunitException>(act);
 		Assert.StartsWith($"Expected {nameof(nullDummy)} to be null, but found", exception.Message);
-	}
-
-	[Fact]
-	public void True_Message()
-	{
-		var sut2 = false;
-
-		var act = () => { Expect.That(sut2, Is.True); };
-
-		var exception = Assert.Throws<XunitException>(act);
-		Assert.Equal($"Expected {nameof(sut2)} to be True, but found False.", exception.Message);
-	}
-
-	[Fact]
-	public void False_Message()
-	{
-		var fo2klsif = true;
-
-		var act = () => { Expect.That(fo2klsif, Is.False); };
-
-		var exception = Assert.Throws<XunitException>(act);
-		Assert.Equal($"Expected {nameof(fo2klsif)} to be False, but found True.", exception.Message);
-	}
-
-	[Fact]
-	public void True()
-	{
-		var sut = true;
-
-		Expect.That(sut, Is.True);
-	}
-
-	[Fact]
-	public void False()
-	{
-		var sut = false;
-
-		Expect.That(sut, Is.False);
 	}
 
 	[Fact]
@@ -78,11 +73,31 @@ public sealed class ExpectTests
 	{
 		Action sut = () => throw new ArgumentException("foo");
 
-		Expect.That(sut, _ => _.Throws<ArgumentException>());
+		Expect.That(sut, Should.Throw.TypeOf<ArgumentException>());
+	}
+
+	[Fact]
+	public void True()
+	{
+		bool sut = true;
+
+		Expect.That(sut, Should.Be.True());
+	}
+
+	[Fact]
+	public void True_Message()
+	{
+		bool sut2 = false;
+
+		Action act = () => { Expect.That(sut2, Should.Be.True()); };
+
+		XunitException exception = Assert.Throws<XunitException>(act);
+		Assert.Equal($"Expected {nameof(sut2)} to be True, but found False.", exception.Message);
 	}
 
 	private class Dummy
 	{
 		public int Id { get; set; }
+		public string? Value2 { get; set; }
 	}
 }

@@ -1,6 +1,6 @@
-﻿using Testably.Expectations.Common;
+﻿using Testably.Expectations.Core;
 
-namespace Testably.Expectations.Constraints.Bool;
+namespace Testably.Expectations.Constraints;
 
 public class TrueConstraint : SimpleConstraint<bool>
 {

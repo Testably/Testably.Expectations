@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Testably.Expectations.Common;
+namespace Testably.Expectations.Core;
 
 /// <summary>
-/// Represents the default exception in case no test framework is configured.
+///     Represents the default exception in case no test framework is configured.
 /// </summary>
 public class ExpectationException : Exception
 {
