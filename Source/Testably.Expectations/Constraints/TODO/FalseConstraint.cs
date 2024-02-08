@@ -1,9 +1,11 @@
-﻿namespace Testably.Expectations.Constraints;
+﻿using Testably.Expectations.Core;
 
-internal class FalseConstraint : SimpleConstraint<bool>
+namespace Testably.Expectations.Constraints;
+
+internal class FalseConstraint : IConstraint<bool>
 {
-	public override string ExpectationText => "to be False";
+	public string ExpectationText => "to be False";
 
-	protected override bool Satisfies(bool actual)
-		=> false.Equals(actual);
+	public ConstraintResult Satisfies(bool actual)
+		=> new ConstraintResult<bool>(false.Equals(actual), actual);
 }

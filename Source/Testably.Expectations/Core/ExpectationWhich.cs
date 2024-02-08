@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using Testably.Expectations.Internal.ConstraintBuilders;
 
 namespace Testably.Expectations.Core;
@@ -6,23 +7,31 @@ namespace Testably.Expectations.Core;
 public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>,
 	IShould<TStart, TCurrent>
 {
+	private readonly IConstraintBuilder _constraintBuilder;
+
 	internal ExpectationWhich(IConstraintBuilder constraintBuilder) : base(constraintBuilder)
 	{
+		_constraintBuilder = constraintBuilder;
 	}
+
+	public Expectation<TStart, TCurrent> Which<TProperty>(
+		Expression<Func<TCurrent, TProperty>> propertySelector,
+		Expectation<TProperty> constraint)
+		=> new(new WhichConstraintBuilder<TCurrent, TProperty>(_constraintBuilder, propertySelector, constraint));
 
 	#region IShould<TStart,TCurrent> Members
 
-	public ShouldBe Be => throw new NotImplementedException();
+	public ShouldBe Be => new(_constraintBuilder);
 
-	public ShouldContain Contain => throw new NotImplementedException();
+	public ShouldContain Contain => new(_constraintBuilder);
 
-	public ShouldEnd End => throw new NotImplementedException();
+	public ShouldEnd End => new(_constraintBuilder);
 
-	public ShouldHave Have => throw new NotImplementedException();
+	public ShouldHave Have => new(_constraintBuilder);
 
-	public ShouldStart Start => throw new NotImplementedException();
+	public ShouldStart Start => new(_constraintBuilder);
 
-	public ShouldThrow Throw => throw new NotImplementedException();
+	public ShouldThrow Throw => new(_constraintBuilder);
 
 	#endregion
 }

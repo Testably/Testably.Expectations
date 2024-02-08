@@ -2,11 +2,11 @@
 
 namespace Testably.Expectations.Constraints;
 
-internal class OfTypeConstraint<TType> : ComplexConstraint<TType, TType?>
+internal class OfTypeConstraint<TType> : IConstraint<TType, TType?>
 {
-	public override string ExpectationText => $"to be of type {typeof(TType).Name}";
+	public string ExpectationText => $"to be of type {typeof(TType).Name}";
 
-	protected override ConstraintResult<TType?> Satisfies(TType? actual)
+	public ConstraintResult Satisfies(TType? actual)
 	{
 		return new ConstraintResult<TType?>(actual is TType, actual);
 	}

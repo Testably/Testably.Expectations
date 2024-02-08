@@ -1,8 +1,10 @@
-﻿namespace Testably.Expectations.Constraints;
+﻿using Testably.Expectations.Core;
 
-internal class EqualToConstraint<T> : SimpleConstraint<T>
+namespace Testably.Expectations.Constraints;
+
+internal class EqualToConstraint<T> : IConstraint<T>
 {
-	public override string ExpectationText => $"to be equal to {_expected}";
+	public string ExpectationText => $"to be equal to {_expected}";
 	private readonly T _expected;
 
 	public EqualToConstraint(T expected)
@@ -10,6 +12,6 @@ internal class EqualToConstraint<T> : SimpleConstraint<T>
 		_expected = expected;
 	}
 
-	protected override bool Satisfies(T? actual)
-		=> _expected?.Equals(actual) == true;
+	ConstraintResult IConstraint<T>.Satisfies(T? actual)
+		=> new ConstraintResult<T?>(_expected?.Equals(actual) == true, actual);
 }

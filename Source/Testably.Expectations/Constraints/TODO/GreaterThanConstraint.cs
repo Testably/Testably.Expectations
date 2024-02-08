@@ -1,8 +1,10 @@
-﻿namespace Testably.Expectations.Constraints;
+﻿using Testably.Expectations.Core;
 
-internal class GreaterThanConstraint : SimpleConstraint<int>
+namespace Testably.Expectations.Constraints;
+
+internal class GreaterThanConstraint : IConstraint<int>
 {
-	public override string ExpectationText => $"to be greater than {_expected}";
+	public string ExpectationText => $"to be greater than {_expected}";
 	private readonly int _expected;
 
 	public GreaterThanConstraint(int expected)
@@ -10,6 +12,6 @@ internal class GreaterThanConstraint : SimpleConstraint<int>
 		_expected = expected;
 	}
 
-	protected override bool Satisfies(int actual)
-		=> actual > _expected;
+	public ConstraintResult Satisfies(int actual)
+		=> new ConstraintResult<int>(actual > _expected, actual);
 }

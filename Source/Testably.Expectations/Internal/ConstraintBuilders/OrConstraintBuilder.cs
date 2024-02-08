@@ -1,5 +1,4 @@
 ﻿using Testably.Expectations.Core;
-using Testably.Expectations.Core.Internal;
 
 namespace Testably.Expectations.Internal.ConstraintBuilders;
 

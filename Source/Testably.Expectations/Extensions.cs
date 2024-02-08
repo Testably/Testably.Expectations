@@ -23,7 +23,7 @@ public static class Extensions
 	//	=> new AndConstraint<TStart, TCurrent>(new WhichConstraintBuilder<TCurrent, TProperty>(propertySelector, constraint));
 
 
-	public static NullableExpectation Null(this ShouldBe shouldBe)
+	public static NullableExpectation<object?> Null(this ShouldBe shouldBe)
 		=> shouldBe.WithConstraint(new NullConstraint());
 
 	public static ExpectationWhich<TType, TType?> OfType<TType>(this ShouldBe shouldBe)
@@ -36,10 +36,4 @@ public static class Extensions
 		this ShouldThrow shouldThrow)
 		where TException : Exception
 		=> shouldThrow.WithConstraintMapping(new ThrowsConstraint<TException>());
-
-	public static Expectation<TStart, TCurrent> Which<TStart, TCurrent, TProperty>(
-		this IShould<TStart, TCurrent> _,
-		Expression<Func<TCurrent, TProperty>> propertySelector,
-		Expectation<TProperty> constraint)
-		=> new(new WhichConstraintBuilder<TCurrent, TProperty>(propertySelector, constraint));
 }

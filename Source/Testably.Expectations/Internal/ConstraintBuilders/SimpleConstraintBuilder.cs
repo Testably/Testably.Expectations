@@ -1,6 +1,6 @@
 ﻿using System;
+using Testably.Expectations.Constraints;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Internal;
 
 namespace Testably.Expectations.Internal.ConstraintBuilders;
 
@@ -23,10 +23,19 @@ internal class SimpleConstraintBuilder : IConstraintBuilder
 
 	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
 	{
-		ConstraintResult? result = _constraint?.Satisfies(actual);
-		if (result?.IsSuccess == false)
+		if (_constraint is IConstraint<TExpectation> typedConstraint)
 		{
-			return new ExpectationResult(_constraint!.ExpectationText, false);
+			var result = typedConstraint.Satisfies(actual);
+			if (result is ConstraintResult<TExpectation> resultWithValue)
+			{
+				return new ExpectationResult<TExpectation>(resultWithValue.Value, result.IsSuccess ? ToString() : typedConstraint.ExpectationText, result.IsSuccess);
+			}
+			if (result is ConstraintResult<Exception> resultWithException)
+			{
+				return new ExpectationResult<Exception>(resultWithException.Value, result.IsSuccess ? ToString() : typedConstraint.ExpectationText, result.IsSuccess);
+			}
+
+			return new ExpectationResult(result.IsSuccess ? ToString() : typedConstraint.ExpectationText, result.IsSuccess);
 		}
 
 		return new ExpectationResult(ToString(), true);

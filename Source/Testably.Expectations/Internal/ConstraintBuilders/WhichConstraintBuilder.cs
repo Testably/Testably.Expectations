@@ -2,18 +2,20 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Internal;
 
 namespace Testably.Expectations.Internal.ConstraintBuilders;
 
 internal class WhichConstraintBuilder<TExpectation, TProperty> : IConstraintBuilder
 {
 	private readonly Expectation<TProperty> _constraint;
+	private readonly IConstraintBuilder _constraintBuilder;
 	private readonly Expression<Func<TExpectation, TProperty>> _propertySelector;
 
-	public WhichConstraintBuilder(Expression<Func<TExpectation, TProperty>> propertySelector,
+	public WhichConstraintBuilder(IConstraintBuilder constraintBuilder,
+		Expression<Func<TExpectation, TProperty>> propertySelector,
 		Expectation<TProperty> constraint)
 	{
+		_constraintBuilder = constraintBuilder;
 		_propertySelector = propertySelector;
 		_constraint = constraint;
 	}
@@ -24,6 +26,12 @@ internal class WhichConstraintBuilder<TExpectation, TProperty> : IConstraintBuil
 
 	public ExpectationResult ApplyTo<T>(T actual)
 	{
+		var outerResult = _constraintBuilder.ApplyTo(actual);
+		if (!outerResult.IsSuccess || outerResult is not ExpectationResult<TExpectation> outerResult2)
+		{
+			return outerResult;
+		}
+
 		if (_propertySelector.Body is not MemberExpression member)
 		{
 			throw new ArgumentException(string.Format(
@@ -48,7 +56,7 @@ internal class WhichConstraintBuilder<TExpectation, TProperty> : IConstraintBuil
 				type));
 		}
 
-		object? propertyValue = propInfo.GetValue(actual);
+		object? propertyValue = propInfo.GetValue(outerResult2.Value);
 		if (propertyValue is TProperty castedPropertyValue)
 		{
 			ExpectationResult result = _constraint.ApplyTo(castedPropertyValue);

@@ -1,15 +1,17 @@
-﻿namespace Testably.Expectations.Core;
+﻿using Testably.Expectations.Constraints;
+
+namespace Testably.Expectations.Core;
 
 public interface IConstraint
 {
 	string ExpectationText { get; }
-	ConstraintResult Satisfies(object? actual);
 }
 
-public interface IConstraint<TActual> : IConstraint
+public interface IConstraint<in TActual> : IConstraint
 {
+	ConstraintResult Satisfies(TActual? actual);
 }
 
-public interface IConstraint<TActual, TTarget> : IConstraint<TTarget>
+public interface IConstraint<in TActual, TTarget> : IConstraint<TActual>
 {
 }

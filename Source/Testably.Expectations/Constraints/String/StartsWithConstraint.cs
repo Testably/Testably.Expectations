@@ -1,8 +1,9 @@
-﻿namespace Testably.Expectations.Constraints.String;
+﻿using Testably.Expectations.Core;
 
-internal class StartsWithConstraint : SimpleConstraint<string?>
+namespace Testably.Expectations.Constraints.String;
+
+internal class StartsWithConstraint : IConstraint<string?>
 {
-	public override string ExpectationText => $"to start with '{_expected}'";
 	private readonly string _expected;
 
 	public StartsWithConstraint(string expected)
@@ -10,6 +11,12 @@ internal class StartsWithConstraint : SimpleConstraint<string?>
 		_expected = expected;
 	}
 
-	protected override bool Satisfies(string? actual)
-		=> actual?.StartsWith(_expected) == true;
+	#region IConstraint<string?> Members
+
+	public string ExpectationText => $"to start with '{_expected}'";
+
+	public ConstraintResult Satisfies(string? actual)
+		=> new ConstraintResult<string?>(actual?.StartsWith(_expected) == true, actual);
+
+	#endregion
 }

@@ -2,13 +2,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Internal;
 using Testably.Expectations.Internal;
 
 namespace Testably.Expectations;
 
 [StackTraceHidden]
-[DebuggerNonUserCode]
 public static class Expect
 {
 	public static void That<TActual>([NotNull] TActual actual,

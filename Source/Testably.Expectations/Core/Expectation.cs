@@ -1,5 +1,4 @@
 ﻿using System;
-using Testably.Expectations.Core.Internal;
 using Testably.Expectations.Internal.ConstraintBuilders;
 
 namespace Testably.Expectations.Core;
@@ -18,11 +17,11 @@ public class Expectation<TExpectation, TProperty>
 		_constraintBuilder = constraintBuilder;
 	}
 
-	public IShould<TExpectation, TProperty> And()
-		=> new AndShould<TExpectation, TProperty>(_constraintBuilder);
+	public ExpectationWhich<TExpectation, TProperty> And()
+		=> new(new AndConstraintBuilder(_constraintBuilder));
 
-	public IShould<TExpectation, TProperty> Or()
-		=> new OrShould<TExpectation, TProperty>(_constraintBuilder);
+	public ExpectationWhich<TExpectation, TProperty> Or()
+		=> new(new OrConstraintBuilder(_constraintBuilder));
 
 	internal ExpectationResult ApplyTo(TExpectation actual)
 		=> _constraintBuilder.ApplyTo(actual);

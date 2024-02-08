@@ -1,9 +1,12 @@
-﻿namespace Testably.Expectations.Constraints;
+﻿using System.Data;
+using Testably.Expectations.Core;
 
-internal class NotNullConstraint<TActual> : SimpleConstraint<TActual>
+namespace Testably.Expectations.Constraints;
+
+internal class NotNullConstraint<TActual> : IConstraint<TActual>
 {
-	public override string ExpectationText => "not to be null";
+	public string ExpectationText => "not to be null";
 
-	protected override bool Satisfies(TActual actual)
-		=> actual != null;
+	public ConstraintResult Satisfies(TActual? actual)
+		=> new ConstraintResult<TActual?>(actual != null, actual);
 }

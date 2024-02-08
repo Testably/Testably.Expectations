@@ -1,8 +1,9 @@
-﻿namespace Testably.Expectations.Constraints.String;
+﻿using Testably.Expectations.Core;
 
-internal class EndsWithConstraint : SimpleConstraint<string?>
+namespace Testably.Expectations.Constraints.String;
+
+internal class EndsWithConstraint : IConstraint<string?>
 {
-	public override string ExpectationText => $"to end with '{_expected}'";
 	private readonly string _expected;
 
 	public EndsWithConstraint(string expected)
@@ -10,6 +11,12 @@ internal class EndsWithConstraint : SimpleConstraint<string?>
 		_expected = expected;
 	}
 
-	protected override bool Satisfies(string? actual)
-		=> actual?.EndsWith(_expected) == true;
+	#region IConstraint<string?> Members
+
+	public string ExpectationText => $"to end with '{_expected}'";
+
+	public ConstraintResult Satisfies(string? actual)
+		=> new ConstraintResult<string?>(actual?.EndsWith(_expected) == true, actual);
+
+	#endregion
 }
