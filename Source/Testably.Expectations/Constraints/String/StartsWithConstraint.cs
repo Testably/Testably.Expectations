@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Core;
-
-namespace Testably.Expectations.Constraints;
+﻿namespace Testably.Expectations.Constraints.String;
 
 internal class StartsWithConstraint : SimpleConstraint<string?>
 {

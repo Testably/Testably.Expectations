@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Constraints;
 
-public class NullConstraint<TActual> : SimpleNullableConstraint<TActual>
+internal class NullConstraint<TActual> : SimpleNullableConstraint<TActual>
 {
 	public override string ExpectationText => "to be null";
 
@@ -10,7 +10,7 @@ public class NullConstraint<TActual> : SimpleNullableConstraint<TActual>
 		=> actual == null;
 }
 
-public class NullConstraint : INullableConstraint
+internal class NullConstraint : INullableConstraint
 {
 	#region INullableConstraint Members
 

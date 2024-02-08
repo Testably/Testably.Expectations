@@ -73,7 +73,8 @@ public sealed class ExpectTests
 	{
 		Action sut = () => throw new ArgumentException("foo");
 
-		Expect.That(sut, Should.Throw.TypeOf<ArgumentException>());
+		Expect.That(sut, Should.Throw.TypeOf<ArgumentException>()
+			.Which(_ => _.Message, Should.Start.With("f").And().End.With("o")));
 	}
 
 	[Fact]

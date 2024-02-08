@@ -1,13 +1,10 @@
-﻿namespace Testably.Expectations.Core;
+﻿using Testably.Expectations.Internal.ConstraintBuilders;
 
-internal class AndShould<TExpectation, TProperty> : IShould<TExpectation, TProperty>
+namespace Testably.Expectations.Core.Internal;
+
+internal class AndShould<TExpectation, TProperty>(IConstraintBuilder constraintBuilder) : IShould<TExpectation, TProperty>
 {
-	private readonly IConstraintBuilder _constraintBuilder;
-
-	public AndShould(IConstraintBuilder constraintBuilder)
-	{
-		_constraintBuilder = new AndConstraintBuilder(constraintBuilder);
-	}
+	private readonly IConstraintBuilder _constraintBuilder = new AndConstraintBuilder(constraintBuilder);
 
 	#region IShould<TExpectation,TProperty> Members
 

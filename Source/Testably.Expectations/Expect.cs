@@ -2,6 +2,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Internal;
+using Testably.Expectations.Internal;
 
 namespace Testably.Expectations;
 
@@ -10,13 +12,12 @@ namespace Testably.Expectations;
 public static class Expect
 {
 	public static void That<TActual>([NotNull] TActual actual,
-		AndConstraint constraint,
-		[CallerArgumentExpression(nameof(actual))]
-		string actualExpression = "")
+		Expectation expectation,
+		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
-		ExpectationResult<TActual> result = constraint.ApplyTo(actual);
+		ExpectationResult result = expectation.ApplyTo(actual);
 
-		if (!result.IsSuccess())
+		if (!result.IsSuccess)
 		{
 			ReportFailure(result, actual, null, actualExpression);
 		}
@@ -27,13 +28,12 @@ public static class Expect
 	}
 
 	public static void That<TActual, TTarget>([NotNull] TActual actual,
-		AndConstraint<TActual, TTarget> constraint,
-		[CallerArgumentExpression(nameof(actual))]
-		string actualExpression = "")
+		Expectation<TActual, TTarget> expectation,
+		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
-		ExpectationResult<TActual> result = constraint.ApplyTo(actual);
+		ExpectationResult result = expectation.ApplyTo(actual);
 
-		if (!result.IsSuccess())
+		if (!result.IsSuccess)
 		{
 			ReportFailure(result, actual, null, actualExpression);
 		}
@@ -44,35 +44,38 @@ public static class Expect
 	}
 
 	public static void That<TActual>(TActual actual,
-		NullableAndConstraint constraint,
-		[CallerArgumentExpression(nameof(actual))]
-		string actualExpression = "")
+		NullableExpectation nullableExpectation,
+		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
-		ExpectationResult<TActual> result = constraint.ApplyTo(actual);
+		ExpectationResult result = nullableExpectation.ApplyTo(actual);
 
-		if (!result.IsSuccess())
+		if (!result.IsSuccess)
 		{
 			ReportFailure(result, actual, null, actualExpression);
 		}
 	}
 
 	public static void That<TActual, TTarget>(TActual actual,
-		NullableAndConstraint<TActual, TTarget> constraint,
-		[CallerArgumentExpression(nameof(actual))]
-		string actualExpression = "")
+		NullableExpectation<TActual, TTarget> constraint,
+		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
-		ExpectationResult<TActual> result = constraint.ApplyTo(actual);
+		ExpectationResult result = constraint.ApplyTo(actual);
 
-		if (!result.IsSuccess())
+		if (!result.IsSuccess)
 		{
 			ReportFailure(result, actual, null, actualExpression);
 		}
 	}
 
 	[DoesNotReturn]
-	private static void ReportFailure<TActual>(ExpectationResult<TActual> result, TActual? actual,
-		string? message, string actualExpression)
+	private static void ReportFailure<TActual>(
+		ExpectationResult result,
+		TActual? actual,
+		string? because,
+		string actualExpression)
 	{
-		Initialization.State.Value.Throw(result.CreateMessage(actualExpression, actual));
+		because ??= "";
+		var failureMessage = $"Expected {actualExpression} {result.ExpectationText}{because}, but found {actual}.";
+		Initialization.State.Value.Throw(failureMessage);
 	}
 }

@@ -1,8 +1,9 @@
 ﻿using System;
+using Testably.Expectations.Core;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Constraints;
 
-public abstract class ComplexConstraint<TActual, TTarget> : IConstraint<TActual, TTarget>
+internal abstract class ComplexConstraint<TActual, TTarget> : IConstraint<TActual, TTarget>
 {
 	#region IConstraint<TActual,TTarget> Members
 

@@ -1,8 +1,6 @@
-﻿using Testably.Expectations.Core;
+﻿namespace Testably.Expectations.Constraints;
 
-namespace Testably.Expectations.Constraints;
-
-public class TrueConstraint : SimpleConstraint<bool>
+internal class TrueConstraint : SimpleConstraint<bool>
 {
 	public override string ExpectationText => "to be True";
 

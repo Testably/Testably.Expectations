@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Testably.Expectations.Adapters;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Internal;
 
 internal static class Initialization
 {
@@ -34,7 +34,7 @@ internal static class Initialization
 			}
 		}
 
-		return new InternalTestFramework();
+		return new FallbackTestFramework();
 	}
 
 	private static InitializationState Initialize()
@@ -49,7 +49,7 @@ internal static class Initialization
 
 		public InitializationState(ITestFrameworkAdapter testFramework)
 		{
-			this._testFramework = testFramework;
+			_testFramework = testFramework;
 		}
 
 		[DoesNotReturn]
@@ -57,7 +57,7 @@ internal static class Initialization
 		public void Throw(string message) => _testFramework.Throw(message);
 	}
 
-	private class InternalTestFramework : ITestFrameworkAdapter
+	private class FallbackTestFramework : ITestFrameworkAdapter
 	{
 		#region ITestFrameworkAdapter Members
 

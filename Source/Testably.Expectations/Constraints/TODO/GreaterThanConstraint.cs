@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Core;
-
-namespace Testably.Expectations.Constraints;
+﻿namespace Testably.Expectations.Constraints;
 
 internal class GreaterThanConstraint : SimpleConstraint<int>
 {

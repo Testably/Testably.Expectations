@@ -1,11 +1,12 @@
 ﻿using System;
+using Testably.Expectations.Internal.ConstraintBuilders;
 
 namespace Testably.Expectations.Core;
 
-public class AndWhichConstraint<TStart, TCurrent> : AndConstraint<TStart, TCurrent>,
+public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>,
 	IShould<TStart, TCurrent>
 {
-	internal AndWhichConstraint(IConstraintBuilder constraintBuilder) : base(constraintBuilder)
+	internal ExpectationWhich(IConstraintBuilder constraintBuilder) : base(constraintBuilder)
 	{
 	}
 

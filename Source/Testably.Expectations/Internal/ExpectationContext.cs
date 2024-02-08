@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Internal;
 
 internal class ExpectationContext
 {

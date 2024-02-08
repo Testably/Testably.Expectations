@@ -1,15 +1,21 @@
 ﻿using System;
+using Testably.Expectations.Core;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Constraints;
 
-public abstract class SimpleConstraint<TActual> : IConstraint<TActual>
+internal abstract class SimpleNullableConstraint<TActual> : INullableConstraint<TActual>
 {
-	#region IConstraint<TActual> Members
+	#region INullableConstraint<TActual> Members
 
 	public abstract string ExpectationText { get; }
 
 	public ConstraintResult Satisfies(object? actual)
 	{
+		if (actual is null)
+		{
+			return new ConstraintResult(Satisfies(default), actual);
+		}
+
 		if (actual is TActual typedActual)
 		{
 			return new ConstraintResult(Satisfies(typedActual), actual);
@@ -21,5 +27,5 @@ public abstract class SimpleConstraint<TActual> : IConstraint<TActual>
 
 	#endregion
 
-	protected abstract bool Satisfies(TActual actual);
+	protected abstract bool Satisfies(TActual? actual);
 }

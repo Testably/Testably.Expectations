@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Core;
-
-namespace Testably.Expectations.Constraints;
+﻿namespace Testably.Expectations.Constraints;
 
 internal class EqualToConstraint<T> : SimpleConstraint<T>
 {
@@ -9,7 +7,7 @@ internal class EqualToConstraint<T> : SimpleConstraint<T>
 
 	public EqualToConstraint(T expected)
 	{
-		this._expected = expected;
+		_expected = expected;
 	}
 
 	protected override bool Satisfies(T? actual)

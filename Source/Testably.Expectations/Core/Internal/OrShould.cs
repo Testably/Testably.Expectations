@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core;
+﻿using Testably.Expectations.Internal.ConstraintBuilders;
+
+namespace Testably.Expectations.Core.Internal;
 
 internal class OrShould<TExpectation, TProperty> : IShould<TExpectation, TProperty>
 {

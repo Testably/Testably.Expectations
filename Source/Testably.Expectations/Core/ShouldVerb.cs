@@ -1,27 +1,29 @@
-﻿namespace Testably.Expectations.Core;
+﻿using Testably.Expectations.Internal.ConstraintBuilders;
+
+namespace Testably.Expectations.Core;
 
 public abstract class ShouldVerb
 {
-	private readonly IConstraintBuilder _iConstraintBuilder;
+	private readonly IConstraintBuilder _constraintBuilder;
 
 	internal ShouldVerb(IConstraintBuilder constraintBuilder)
 	{
-		_iConstraintBuilder = constraintBuilder;
+		_constraintBuilder = constraintBuilder;
 	}
 
-	internal AndConstraint<T> WithConstraint<T>(IConstraint<T> constraint)
-		=> new(_iConstraintBuilder.Add(constraint));
+	internal Expectation<T> WithConstraint<T>(IConstraint<T> constraint)
+		=> new(_constraintBuilder.Add(constraint));
 
-	internal NullableAndConstraint<T> WithConstraint<T>(INullableConstraint<T> constraint)
-		=> new(_iConstraintBuilder.Add(constraint));
+	internal NullableExpectation<T> WithConstraint<T>(INullableConstraint<T> constraint)
+		=> new(_constraintBuilder.Add(constraint));
 
-	internal AndConstraint WithConstraint(IConstraint constraint)
-		=> new(_iConstraintBuilder.Add(constraint));
+	internal Expectation WithConstraint(IConstraint constraint)
+		=> new(_constraintBuilder.Add(constraint));
 
-	internal NullableAndConstraint WithConstraint(INullableConstraint constraint)
-		=> new(_iConstraintBuilder.Add(constraint));
+	internal NullableExpectation WithConstraint(INullableConstraint constraint)
+		=> new(_constraintBuilder.Add(constraint));
 
-	internal AndWhichConstraint<T1, T2> WithConstraintMapping<T1, T2>(
+	internal ExpectationWhich<T1, T2> WithConstraintMapping<T1, T2>(
 		IConstraint<T1, T2> constraint)
-		=> new(_iConstraintBuilder.Add(constraint));
+		=> new(_constraintBuilder.Add(constraint));
 }

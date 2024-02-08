@@ -2,26 +2,27 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Internal;
 
-namespace Testably.Expectations;
+namespace Testably.Expectations.Internal.ConstraintBuilders;
 
 internal class WhichConstraintBuilder<TExpectation, TProperty> : IConstraintBuilder
 {
-	private readonly AndConstraint<TProperty> _constraint;
+	private readonly Expectation<TProperty> _constraint;
 	private readonly Expression<Func<TExpectation, TProperty>> _propertySelector;
 
 	public WhichConstraintBuilder(Expression<Func<TExpectation, TProperty>> propertySelector,
-		AndConstraint<TProperty> constraint)
+		Expectation<TProperty> constraint)
 	{
-		this._propertySelector = propertySelector;
-		this._constraint = constraint;
+		_propertySelector = propertySelector;
+		_constraint = constraint;
 	}
 
 	#region IConstraintBuilder Members
 
 	public IConstraintBuilder Add(IConstraint constraint) => throw new NotImplementedException();
 
-	public ExpectationResult<T> ApplyTo<T>(T actual)
+	public ExpectationResult ApplyTo<T>(T actual)
 	{
 		if (_propertySelector.Body is not MemberExpression member)
 		{
@@ -39,7 +40,7 @@ internal class WhichConstraintBuilder<TExpectation, TProperty> : IConstraintBuil
 
 		Type type = typeof(TExpectation);
 		if (propInfo.ReflectedType != null && type != propInfo.ReflectedType &&
-		    !type.IsSubclassOf(propInfo.ReflectedType))
+			!type.IsSubclassOf(propInfo.ReflectedType))
 		{
 			throw new ArgumentException(string.Format(
 				"Expression '{0}' refers to a property that is not from type {1}.",
@@ -50,12 +51,12 @@ internal class WhichConstraintBuilder<TExpectation, TProperty> : IConstraintBuil
 		object? propertyValue = propInfo.GetValue(actual);
 		if (propertyValue is TProperty castedPropertyValue)
 		{
-			ExpectationResult<TProperty> result = _constraint.ApplyTo(castedPropertyValue);
-			return new ExpectationResult<T>($"expected property {propInfo.Name} {result}",
-				result.IsSuccess());
+			ExpectationResult result = _constraint.ApplyTo(castedPropertyValue);
+			return new ExpectationResult($"property '{propInfo.Name}' {result.ExpectationText}",
+				result.IsSuccess);
 		}
 
-		return new ExpectationResult<T>("failed", false);
+		return new ExpectationResult("failed", false);
 	}
 
 	#endregion
