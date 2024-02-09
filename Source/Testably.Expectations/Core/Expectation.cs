@@ -26,18 +26,3 @@ public class Expectation<TExpectation, TProperty>
 	internal ExpectationResult ApplyTo(TExpectation actual)
 		=> _expectationBuilder.ApplyTo(actual);
 }
-
-public class Expectation
-{
-	private readonly IExpectationBuilder _expectationBuilder;
-
-	internal Expectation(IExpectationBuilder expectationBuilder)
-	{
-		_expectationBuilder = expectationBuilder;
-	}
-
-	public IShould And() => throw new NotImplementedException();
-
-	internal ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
-		=> _expectationBuilder.ApplyTo(actual);
-}

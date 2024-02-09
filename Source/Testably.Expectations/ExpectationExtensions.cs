@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using Testably.Expectations.Core;
 using Testably.Expectations.Expectations;
 using Testably.Expectations.Expectations.Action;
@@ -11,24 +10,24 @@ namespace Testably.Expectations;
 
 public static class ExpectationExtensions
 {
-	public static NullableExpectation<T> EqualTo<T>(this ShouldBe shouldBe, T expected)
-		=> shouldBe.WithExpectation(new BeEqualTo<T>(expected));
+	public static NullableExpectation<T?> EqualTo<T>(this ShouldBe shouldBe, T expected)
+		=> shouldBe.WithExpectation(new BeEqualTo<T?>(expected));
 
 	public static NullableExpectation<object?> Null(this ShouldBe shouldBe)
 		=> shouldBe.WithExpectation(new BeNull<object?>());
 
 	public static ExpectationWhich<object?, TType> OfType<TType>(this ShouldBe shouldBe)
-		=> shouldBe.WithExpectationMapping(new BeOfType<TType>());
+		=> shouldBe.WithMappedExpectation(new BeOfType<TType>());
 
 	#region Action
 
 	public static ExpectationWhich<Action, TException> TypeOf<TException>(
 		this ShouldThrow shouldThrow)
 		where TException : Exception
-		=> shouldThrow.WithExpectationMapping(new ThrowException<TException>());
+		=> shouldThrow.WithMappedExpectation(new ThrowException<TException>());
 
 	public static ExpectationWhich<Action, Exception> Exception(this ShouldThrow shouldThrow)
-		=> shouldThrow.WithExpectationMapping(new ThrowException<Exception>());
+		=> shouldThrow.WithMappedExpectation(new ThrowException<Exception>());
 
 	#endregion
 
@@ -61,9 +60,10 @@ public static class ExpectationExtensions
 
 	#region Convenience Shortcuts
 
-	public static Expectation<TStart, Exception> WhichMessage<TStart>(
-		this ExpectationWhich<TStart, Exception> which,
-		NullableExpectation<string> expectation)
+	public static Expectation<TStart, TException> WhichMessage<TStart, TException>(
+		this ExpectationWhich<TStart, TException> which,
+		NullableExpectation<string?> expectation)
+		where TException : Exception
 		=> which.Which(m => m.Message, expectation);
 
 	#endregion

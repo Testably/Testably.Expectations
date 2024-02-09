@@ -1,17 +1,10 @@
 ﻿using System;
-using static Testably.Expectations.Core.ExpectationResult;
 
 namespace Testably.Expectations.Core;
 
 public abstract class ExpectationResult
 {
-	public class Success : ExpectationResult
-	{
-		public Success()
-		{
-
-		}
-	}
+	public class Success : ExpectationResult;
 
 	public class Success<T> : Success
 	{

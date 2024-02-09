@@ -5,39 +5,40 @@ internal class AndExpectationBuilder : IExpectationBuilder
 	private readonly IExpectationBuilder _left;
 	private readonly IExpectationBuilder _right = new SimpleExpectationBuilder();
 
-	public AndExpectationBuilder(IExpectationBuilder left)
+	internal AndExpectationBuilder(IExpectationBuilder left)
 	{
 		_left = left;
 	}
 
 	#region IExpectationBuilder Members
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="IExpectationBuilder.Add(IExpectation)" />
 	public IExpectationBuilder Add(IExpectation expectation)
 	{
 		_right.Add(expectation);
 		return this;
 	}
 
+	/// <inheritdoc cref="IExpectationBuilder.ApplyTo{TExpectation}(TExpectation)" />
 	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
 	{
 		ExpectationResult leftResult = _left.ApplyTo(actual);
-		if (leftResult is ExpectationResult.Success)
-		{
-			ExpectationResult rightResult = _right.ApplyTo(actual);
-			if (rightResult is ExpectationResult.Success)
-			{
-				return new ExpectationResult.Success();
-			}
+		ExpectationResult rightResult = _right.ApplyTo(actual);
 
-			return rightResult;
+		if (leftResult is ExpectationResult.Failure leftFailure &&
+		    rightResult is ExpectationResult.Failure rightFailure)
+		{
+			return new ExpectationResult.Failure(
+				$"{leftFailure.ExpectationText} and {rightFailure.ExpectationText}",
+				$"{leftFailure.ResultText} and {rightFailure.ResultText}");
 		}
 
+		if (leftResult is ExpectationResult.Success)
+		{
+			return rightResult;
+		}
 		return leftResult;
 	}
 
 	#endregion
-
-	public override string ToString()
-		=> $"{_left} AND {_right}";
 }

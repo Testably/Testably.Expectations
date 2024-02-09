@@ -21,7 +21,7 @@ public class NullableExpectation<TExpectation, TCurrent>
 
 	public IShould<TExpectation, TCurrent> And() => throw new NotImplementedException();
 
-	internal ExpectationResult ApplyTo(TExpectation actual)
+	internal ExpectationResult ApplyTo(TExpectation? actual)
 		=> _expectationBuilder.ApplyTo(actual);
 }
 

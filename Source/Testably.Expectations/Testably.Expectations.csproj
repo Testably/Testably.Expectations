@@ -6,6 +6,10 @@
 		<PackageReadmeFile>Docs/README.md</PackageReadmeFile>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<Nullable>annotations</Nullable>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="/Docs/" Link="Docs\README.md" />
 	</ItemGroup>

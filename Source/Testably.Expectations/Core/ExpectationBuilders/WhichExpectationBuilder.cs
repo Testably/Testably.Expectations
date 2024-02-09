@@ -1,82 +1,121 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Reflection;
+using System.Text;
 
 namespace Testably.Expectations.Core.ExpectationBuilders;
 
-internal class WhichExpectationBuilder<TExpectation, TProperty> : IExpectationBuilder
+internal class WhichExpectationBuilder<TSource, TProperty> : IExpectationBuilder
 {
 	private readonly Func<TProperty, ExpectationResult> _expectation;
 	private readonly IExpectationBuilder _expectationBuilder;
-	private readonly Expression<Func<TExpectation, TProperty>> _propertySelector;
+	private readonly string _propertySelector;
 
 	public WhichExpectationBuilder(IExpectationBuilder expectationBuilder,
-		Expression<Func<TExpectation, TProperty>> propertySelector,
+		Expression<Func<TSource, TProperty>> propertySelector,
 		Expectation<TProperty> expectation)
 	{
 		_expectationBuilder = expectationBuilder;
-		_propertySelector = propertySelector;
+		_propertySelector = GetPropertyPath(propertySelector);
 		_expectation = expectation.ApplyTo;
 	}
 
 	public WhichExpectationBuilder(IExpectationBuilder expectationBuilder,
-		Expression<Func<TExpectation, TProperty>> propertySelector,
+		Expression<Func<TSource, TProperty>> propertySelector,
 		NullableExpectation<TProperty> expectation)
 	{
 		_expectationBuilder = expectationBuilder;
-		_propertySelector = propertySelector;
+		_propertySelector = GetPropertyPath(propertySelector);
 		_expectation = expectation.ApplyTo;
 	}
 
 	#region IExpectationBuilder Members
 
-	/// <inheritdoc />
+	/// <inheritdoc cref="IExpectationBuilder.Add(IExpectation)" />
 	public IExpectationBuilder Add(IExpectation expectation)
 	{
 		throw new NotImplementedException();
 	}
 
-	public ExpectationResult ApplyTo<T>(T actual)
+	/// <inheritdoc cref="IExpectationBuilder.ApplyTo{TExpectation}(TExpectation)" />
+	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
 	{
-		var outerResult = _expectationBuilder.ApplyTo(actual);
-		if (outerResult is not ExpectationResult.Success<TExpectation> outerResult2)
+		ExpectationResult expectationResult = _expectationBuilder.ApplyTo(actual);
+		if (expectationResult is not ExpectationResult.Success<TSource> successResult)
 		{
-			return outerResult;
+			return expectationResult;
 		}
 
-		if (_propertySelector.Body is not MemberExpression member)
+		object? propertyValue = GetPropertyValue(successResult.Value, _propertySelector);
+		if (propertyValue is not TProperty castedPropertyValue)
 		{
-			throw new ArgumentException(string.Format(
-				"Expression '{0}' refers to a method, not a property.",
-				_propertySelector));
+			throw new ArgumentException(
+				$"The property at '{_propertySelector}' is not of type {typeof(TProperty).Name}");
 		}
 
-		if (member.Member is not PropertyInfo propInfo)
-		{
-			throw new ArgumentException(string.Format(
-				"Expression '{0}' refers to a field, not a property.",
-				_propertySelector));
-		}
-
-		Type type = typeof(TExpectation);
-		if (propInfo.ReflectedType != null && type != propInfo.ReflectedType &&
-			!type.IsSubclassOf(propInfo.ReflectedType))
-		{
-			throw new ArgumentException(string.Format(
-				"Expression '{0}' refers to a property that is not from type {1}.",
-				_propertySelector,
-				type));
-		}
-
-		object? propertyValue = propInfo.GetValue(outerResult2.Value);
-		if (propertyValue is TProperty castedPropertyValue)
-		{
-			ExpectationResult result = _expectation.Invoke(castedPropertyValue);
-			return ExpectationResult.Copy(result, castedPropertyValue, f => $"property '{propInfo.Name}' {f.ExpectationText}");
-		}
-
-		return new ExpectationResult.Failure("failed", "");
+		ExpectationResult result = _expectation.Invoke(castedPropertyValue);
+		return ExpectationResult.Copy(result, propertyValue,
+			f => $".{_propertySelector} {f.ExpectationText}");
 	}
 
 	#endregion
+
+	public static object? GetPropertyValue(object? obj, string propertyPath)
+	{
+		if (propertyPath.IndexOf(".", StringComparison.Ordinal) < 0)
+		{
+			Type? objType = obj?.GetType();
+			return objType?.GetProperty(propertyPath)?.GetValue(obj, null);
+		}
+
+		object? propertyValue = obj;
+		foreach (string propertyName in propertyPath.Split('.'))
+		{
+			propertyValue = GetPropertyValue(propertyValue, propertyName);
+		}
+
+		return propertyValue;
+	}
+
+	private static MemberExpression? GetMemberExpression(Expression? expression)
+		=> expression switch
+		{
+			MemberExpression memberExpression => memberExpression,
+			LambdaExpression lambdaExpression => lambdaExpression.Body switch
+			{
+				MemberExpression body => body,
+				UnaryExpression unaryExpression => (MemberExpression)unaryExpression.Operand,
+				_ => null
+			},
+			_ => null
+		};
+
+	private static string GetPropertyPath(Expression<Func<TSource, TProperty>> expression)
+	{
+		MemberExpression? memberExpression = GetMemberExpression(expression.Body);
+		if (memberExpression == null)
+		{
+			if (expression.Body is UnaryExpression castExpression)
+			{
+				throw new ArgumentException(
+					$"Expression '{castExpression.Operand}' does not refer to a property.");
+			}
+
+			throw new ArgumentException(
+				$"Expression '{expression.Body}' does not refer to a property.");
+		}
+
+		StringBuilder path = new();
+		while (memberExpression != null)
+		{
+			if (path.Length > 0)
+			{
+				path.Insert(0, ".");
+			}
+
+			path.Insert(0, memberExpression.Member.Name);
+			memberExpression = GetMemberExpression(memberExpression.Expression);
+		}
+
+		return path.ToString();
+	}
 }

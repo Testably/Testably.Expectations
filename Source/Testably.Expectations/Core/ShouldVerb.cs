@@ -10,19 +10,14 @@ public abstract class ShouldVerb
 	{
 		_expectationBuilder = expectationBuilder;
 	}
-	internal Expectation<T> WithExpectation<T>(IExpectation<T> expectation)
+
+	public Expectation<T> WithExpectation<T>(IExpectation<T> expectation)
 		=> new(_expectationBuilder.Add(expectation));
 
-	internal NullableExpectation<T> WithExpectation<T>(INullableExpectation<T> expectation)
+	public NullableExpectation<T> WithExpectation<T>(INullableExpectation<T> expectation)
 		=> new(_expectationBuilder.Add(expectation));
 
-	internal Expectation WithExpectation(IExpectation expectation)
-		=> new(_expectationBuilder.Add(expectation));
-
-	internal NullableExpectation WithExpectation(INullableExpectation expectation)
-		=> new(_expectationBuilder.Add(expectation));
-
-	internal ExpectationWhich<T1, T2> WithExpectationMapping<T1, T2>(
+	public ExpectationWhich<T1, T2> WithMappedExpectation<T1, T2>(
 		IExpectation<T1, T2> expectation)
 		=> new(_expectationBuilder.Add(expectation));
 }

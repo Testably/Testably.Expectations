@@ -25,7 +25,7 @@ public static class Expect
 		}
 	}
 
-	public static void That<TActual, TTarget>(TActual actual,
+	public static void That<TActual, TTarget>(TActual? actual,
 		NullableExpectation<TActual, TTarget> nullableExpectation,
 		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
