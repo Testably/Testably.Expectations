@@ -1,43 +1,43 @@
 ﻿using System;
-using Testably.Expectations.Internal.ConstraintBuilders;
+using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
 public class Expectation<TExpectation> : Expectation<TExpectation, TExpectation>
 {
-	internal Expectation(IConstraintBuilder constraintBuilder) : base(constraintBuilder) { }
+	internal Expectation(IExpectationBuilder expectationBuilder) : base(expectationBuilder) { }
 }
 
 public class Expectation<TExpectation, TProperty>
 {
-	private readonly IConstraintBuilder _constraintBuilder;
+	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal Expectation(IConstraintBuilder constraintBuilder)
+	internal Expectation(IExpectationBuilder expectationBuilder)
 	{
-		_constraintBuilder = constraintBuilder;
+		_expectationBuilder = expectationBuilder;
 	}
 
 	public ExpectationWhich<TExpectation, TProperty> And()
-		=> new(new AndConstraintBuilder(_constraintBuilder));
+		=> new(new AndExpectationBuilder(_expectationBuilder));
 
 	public ExpectationWhich<TExpectation, TProperty> Or()
-		=> new(new OrConstraintBuilder(_constraintBuilder));
+		=> new(new OrExpectationBuilder(_expectationBuilder));
 
 	internal ExpectationResult ApplyTo(TExpectation actual)
-		=> _constraintBuilder.ApplyTo(actual);
+		=> _expectationBuilder.ApplyTo(actual);
 }
 
 public class Expectation
 {
-	private readonly IConstraintBuilder _constraintBuilder;
+	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal Expectation(IConstraintBuilder constraintBuilder)
+	internal Expectation(IExpectationBuilder expectationBuilder)
 	{
-		_constraintBuilder = constraintBuilder;
+		_expectationBuilder = expectationBuilder;
 	}
 
 	public IShould And() => throw new NotImplementedException();
 
 	internal ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
-		=> _constraintBuilder.ApplyTo(actual);
+		=> _expectationBuilder.ApplyTo(actual);
 }

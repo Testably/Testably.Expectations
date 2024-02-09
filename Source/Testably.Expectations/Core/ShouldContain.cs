@@ -1,9 +1,9 @@
-﻿using Testably.Expectations.Internal.ConstraintBuilders;
+﻿using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
 public class ShouldContain : ShouldVerb
 {
-	internal ShouldContain(IConstraintBuilder constraintBuilder)
-		: base(constraintBuilder) { }
+	internal ShouldContain(IExpectationBuilder expectationBuilder)
+		: base(expectationBuilder) { }
 }

@@ -1,41 +1,41 @@
 ﻿using System;
-using Testably.Expectations.Internal.ConstraintBuilders;
+using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
 public class NullableExpectation<TExpectation> : NullableExpectation<TExpectation, TExpectation>
 {
-	internal NullableExpectation(IConstraintBuilder constraintBuilder) : base(constraintBuilder)
+	internal NullableExpectation(IExpectationBuilder expectationBuilder) : base(expectationBuilder)
 	{
 	}
 }
 
 public class NullableExpectation<TExpectation, TCurrent>
 {
-	private readonly IConstraintBuilder _constraintBuilder;
+	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal NullableExpectation(IConstraintBuilder constraintBuilder)
+	internal NullableExpectation(IExpectationBuilder expectationBuilder)
 	{
-		_constraintBuilder = constraintBuilder;
+		_expectationBuilder = expectationBuilder;
 	}
 
 	public IShould<TExpectation, TCurrent> And() => throw new NotImplementedException();
 
 	internal ExpectationResult ApplyTo(TExpectation actual)
-		=> _constraintBuilder.ApplyTo(actual);
+		=> _expectationBuilder.ApplyTo(actual);
 }
 
 public class NullableExpectation
 {
-	private readonly IConstraintBuilder _constraintBuilder;
+	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal NullableExpectation(IConstraintBuilder constraintBuilder)
+	internal NullableExpectation(IExpectationBuilder expectationBuilder)
 	{
-		_constraintBuilder = constraintBuilder;
+		_expectationBuilder = expectationBuilder;
 	}
 
 	public IShould And() => throw new NotImplementedException();
 
 	internal ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
-		=> _constraintBuilder.ApplyTo(actual);
+		=> _expectationBuilder.ApplyTo(actual);
 }

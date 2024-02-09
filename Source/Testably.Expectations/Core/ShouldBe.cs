@@ -1,9 +1,9 @@
-﻿using Testably.Expectations.Internal.ConstraintBuilders;
+﻿using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
 public class ShouldBe : ShouldVerb
 {
-	internal ShouldBe(IConstraintBuilder constraintBuilder)
-		: base(constraintBuilder) { }
+	internal ShouldBe(IExpectationBuilder expectationBuilder)
+		: base(expectationBuilder) { }
 }

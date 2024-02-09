@@ -1,9 +1,9 @@
-﻿using Testably.Expectations.Internal.ConstraintBuilders;
+﻿using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
 public class ShouldEnd : ShouldVerb
 {
-	internal ShouldEnd(IConstraintBuilder constraintBuilder)
-		: base(constraintBuilder) { }
+	internal ShouldEnd(IExpectationBuilder expectationBuilder)
+		: base(expectationBuilder) { }
 }

@@ -1,38 +1,90 @@
-﻿/* Unmerged change from project 'Testably.Expectations (net6.0)'
-Before:
-namespace Testably.Expectations.Core.Internal;
-After:
-using Testably;
-using Testably.Expectations;
-using Testably.Expectations.Core;
-using Testably.Expectations.Core;
-using Testably.Expectations.Core.Internal;
-*/
+﻿using System;
+using static Testably.Expectations.Core.ExpectationResult;
+
 namespace Testably.Expectations.Core;
 
-internal class ExpectationResult
+public abstract class ExpectationResult
 {
-	public string ExpectationText { get; }
-	public bool IsSuccess { get; }
-
-	public ExpectationResult(string expectationText, bool isSuccess)
+	public class Success : ExpectationResult
 	{
-		ExpectationText = expectationText;
-		IsSuccess = isSuccess;
+		public Success()
+		{
+
+		}
 	}
 
-	public static ExpectationResult Success(string expectationText)
+	public class Success<T> : Success
 	{
-		return new ExpectationResult(expectationText, true);
+		public T? Value { get; }
+		public Success(T? value)
+		{
+			Value = value;
+		}
 	}
-}
 
-internal class ExpectationResult<T> : ExpectationResult
-{
-	public T? Value { get; }
-
-	public ExpectationResult(T? value, string expectationText, bool isSuccess) : base(expectationText, isSuccess)
+	public class Failure : ExpectationResult
 	{
-		Value = value;
+		public Failure(string expectationText, string resultText)
+		{
+			ExpectationText = expectationText;
+			ResultText = resultText;
+		}
+
+		public string ExpectationText { get; }
+		public string ResultText { get; }
+	}
+
+	public class Failure<T> : Failure
+	{
+		public T? Value { get; }
+		public Failure(T? value, string expectationText, string resultText) : base(expectationText, resultText)
+		{
+			Value = value;
+		}
+	}
+
+	public static ExpectationResult Copy(
+		ExpectationResult result,
+		Func<Failure, string>? expectationText = null,
+		Func<Failure, string>? resultText = null)
+	{
+		if (result is not Failure failure)
+		{
+			return new Success();
+		}
+
+		expectationText ??= f => f.ExpectationText;
+		resultText ??= f => f.ResultText;
+		return new Failure(expectationText.Invoke(failure), resultText.Invoke(failure));
+	}
+
+	public static ExpectationResult Copy<T>(
+		ExpectationResult result,
+		T value,
+		Func<Failure, string>? expectationText = null,
+		Func<Failure, string>? resultText = null)
+	{
+		if (result is not Failure failure)
+		{
+			return new Success<T>(value);
+		}
+
+		expectationText ??= f => f.ExpectationText;
+		resultText ??= f => f.ResultText;
+		return new Failure<T>(value, expectationText.Invoke(failure), resultText.Invoke(failure));
+	}
+
+	public static ExpectationResult BySuccess<T>(
+		bool isSuccess,
+		T value,
+		string expectationText,
+		string resultText)
+	{
+		if (isSuccess)
+		{
+			return new Success<T>(value);
+		}
+
+		return new Failure<T>(value, expectationText, resultText);
 	}
 }

@@ -16,4 +16,8 @@
 		<ProjectReference Include="..\..\Source\Testably.Expectations\Testably.Expectations.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Core\" />
+	</ItemGroup>
+
 </Project>

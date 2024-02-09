@@ -1,37 +1,37 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Testably.Expectations.Internal.ConstraintBuilders;
+using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
 public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>,
 	IShould<TStart, TCurrent>
 {
-	private readonly IConstraintBuilder _constraintBuilder;
+	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal ExpectationWhich(IConstraintBuilder constraintBuilder) : base(constraintBuilder)
+	internal ExpectationWhich(IExpectationBuilder expectationBuilder) : base(expectationBuilder)
 	{
-		_constraintBuilder = constraintBuilder;
+		_expectationBuilder = expectationBuilder;
 	}
 
 	public Expectation<TStart, TCurrent> Which<TProperty>(
 		Expression<Func<TCurrent, TProperty>> propertySelector,
-		Expectation<TProperty> constraint)
-		=> new(new WhichConstraintBuilder<TCurrent, TProperty>(_constraintBuilder, propertySelector, constraint));
+		Expectation<TProperty> expectation)
+		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(_expectationBuilder, propertySelector, expectation));
 
 	#region IShould<TStart,TCurrent> Members
 
-	public ShouldBe Be => new(_constraintBuilder);
+	public ShouldBe Be => new(_expectationBuilder);
 
-	public ShouldContain Contain => new(_constraintBuilder);
+	public ShouldContain Contain => new(_expectationBuilder);
 
-	public ShouldEnd End => new(_constraintBuilder);
+	public ShouldEnd End => new(_expectationBuilder);
 
-	public ShouldHave Have => new(_constraintBuilder);
+	public ShouldHave Have => new(_expectationBuilder);
 
-	public ShouldStart Start => new(_constraintBuilder);
+	public ShouldStart Start => new(_expectationBuilder);
 
-	public ShouldThrow Throw => new(_constraintBuilder);
+	public ShouldThrow Throw => new(_expectationBuilder);
 
 	#endregion
 }
