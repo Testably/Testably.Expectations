@@ -1,9 +1,8 @@
-﻿using System;
-using Testably.Expectations.Expectations;
+﻿using Testably.Expectations;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Testably.Expectations.Tests;
+namespace TestFramework.XUnit2.Tests;
 
 public sealed class XUnit2TestFrameworkTests
 {

@@ -1,7 +1,7 @@
 <Project>
 
-	<Import Project="$(MSBuildThisFileDirectory)/../Directory.Build.props"
-	        Condition="Exists('$(MSBuildThisFileDirectory)/../Directory.Build.props')" />
+	<Import Project="$(MSBuildThisFileDirectory)/../../Directory.Build.props"
+	        Condition="Exists('$(MSBuildThisFileDirectory)/../../Directory.Build.props')" />
 
 	<PropertyGroup>
 		<TargetFrameworks Condition="'$(NetCoreOnly)' != 'True'">net6.0;net48</TargetFrameworks>
@@ -14,7 +14,7 @@
 		<Nullable>enable</Nullable>
 		<IsPackable>false</IsPackable>
 		<NoWarn>701;1702;CA1845</NoWarn>
-		<OutputPath>..\..\Build\Tests\$(MSBuildProjectName)</OutputPath>
+		<OutputPath>..\..\..\Build\Tests\$(MSBuildProjectName)</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
@@ -22,11 +22,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="xunit" Version="2.6.3" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.5">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
 		<PackageReference Include="AutoFixture.Xunit2" Version="4.18.1" />
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
 		<PackageReference Include="Nullable" Version="1.3.1">

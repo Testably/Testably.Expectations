@@ -21,7 +21,7 @@ internal class StartWith : IExpectation<string?>
 			return new ExpectationResult.Success();
 		}
 
-		return new ExpectationResult.Failure(ToString(), "TODO");
+		return new ExpectationResult.Failure(ToString(), $"found '{actual}'");
 	}
 
 	#endregion

@@ -9,22 +9,6 @@ namespace Testably.Expectations;
 [StackTraceHidden]
 public static class Expect
 {
-	public static void That<TActual>([NotNull] TActual actual,
-		Expectation expectation,
-		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
-	{
-		ExpectationResult result = expectation.ApplyTo(actual);
-
-		if (result is ExpectationResult.Failure failure)
-		{
-			ReportFailure(failure, actual, null, actualExpression);
-		}
-		else
-		{
-			Debug.Assert(actual != null);
-		}
-	}
-
 	public static void That<TActual, TTarget>([NotNull] TActual actual,
 		Expectation<TActual, TTarget> expectation,
 		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
@@ -33,23 +17,11 @@ public static class Expect
 
 		if (result is ExpectationResult.Failure failure)
 		{
-			ReportFailure(failure, actual, null, actualExpression);
+			ReportFailure(failure, null, actualExpression);
 		}
 		else
 		{
 			Debug.Assert(actual != null);
-		}
-	}
-
-	public static void That<TActual>(TActual actual,
-		NullableExpectation nullableExpectation,
-		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
-	{
-		ExpectationResult result = nullableExpectation.ApplyTo(actual);
-
-		if (result is ExpectationResult.Failure failure)
-		{
-			ReportFailure(failure, actual, null, actualExpression);
 		}
 	}
 
@@ -61,14 +33,13 @@ public static class Expect
 
 		if (result is ExpectationResult.Failure failure)
 		{
-			ReportFailure(failure, actual, null, actualExpression);
+			ReportFailure(failure, null, actualExpression);
 		}
 	}
 
 	[DoesNotReturn]
-	private static void ReportFailure<TActual>(
+	private static void ReportFailure(
 		ExpectationResult.Failure result,
-		TActual? actual,
 		string? because,
 		string actualExpression)
 	{

@@ -6,7 +6,7 @@ namespace Testably.Expectations.Core.ExpectationBuilders;
 
 internal class WhichExpectationBuilder<TExpectation, TProperty> : IExpectationBuilder
 {
-	private readonly Expectation<TProperty> _expectation;
+	private readonly Func<TProperty, ExpectationResult> _expectation;
 	private readonly IExpectationBuilder _expectationBuilder;
 	private readonly Expression<Func<TExpectation, TProperty>> _propertySelector;
 
@@ -16,7 +16,16 @@ internal class WhichExpectationBuilder<TExpectation, TProperty> : IExpectationBu
 	{
 		_expectationBuilder = expectationBuilder;
 		_propertySelector = propertySelector;
-		_expectation = expectation;
+		_expectation = expectation.ApplyTo;
+	}
+
+	public WhichExpectationBuilder(IExpectationBuilder expectationBuilder,
+		Expression<Func<TExpectation, TProperty>> propertySelector,
+		NullableExpectation<TProperty> expectation)
+	{
+		_expectationBuilder = expectationBuilder;
+		_propertySelector = propertySelector;
+		_expectation = expectation.ApplyTo;
 	}
 
 	#region IExpectationBuilder Members
@@ -62,7 +71,7 @@ internal class WhichExpectationBuilder<TExpectation, TProperty> : IExpectationBu
 		object? propertyValue = propInfo.GetValue(outerResult2.Value);
 		if (propertyValue is TProperty castedPropertyValue)
 		{
-			ExpectationResult result = _expectation.ApplyTo(castedPropertyValue);
+			ExpectationResult result = _expectation.Invoke(castedPropertyValue);
 			return ExpectationResult.Copy(result, castedPropertyValue, f => $"property '{propInfo.Name}' {f.ExpectationText}");
 		}
 

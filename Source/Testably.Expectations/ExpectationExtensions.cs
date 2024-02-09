@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Testably.Expectations.Core;
 using Testably.Expectations.Expectations;
 using Testably.Expectations.Expectations.Action;
@@ -10,7 +11,7 @@ namespace Testably.Expectations;
 
 public static class ExpectationExtensions
 {
-	public static Expectation<T> EqualTo<T>(this ShouldBe shouldBe, T expected)
+	public static NullableExpectation<T> EqualTo<T>(this ShouldBe shouldBe, T expected)
 		=> shouldBe.WithExpectation(new BeEqualTo<T>(expected));
 
 	public static NullableExpectation<object?> Null(this ShouldBe shouldBe)
@@ -62,7 +63,7 @@ public static class ExpectationExtensions
 
 	public static Expectation<TStart, Exception> WhichMessage<TStart>(
 		this ExpectationWhich<TStart, Exception> which,
-		Expectation<string> expectation)
+		NullableExpectation<string> expectation)
 		=> which.Which(m => m.Message, expectation);
 
 	#endregion

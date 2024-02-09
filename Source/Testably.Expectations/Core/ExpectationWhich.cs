@@ -19,15 +19,16 @@ public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>,
 		Expectation<TProperty> expectation)
 		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(_expectationBuilder, propertySelector, expectation));
 
+	public Expectation<TStart, TCurrent> Which<TProperty>(
+		Expression<Func<TCurrent, TProperty>> propertySelector,
+		NullableExpectation<TProperty> expectation)
+		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(_expectationBuilder, propertySelector, expectation));
+
 	#region IShould<TStart,TCurrent> Members
 
 	public ShouldBe Be => new(_expectationBuilder);
 
-	public ShouldContain Contain => new(_expectationBuilder);
-
 	public ShouldEnd End => new(_expectationBuilder);
-
-	public ShouldHave Have => new(_expectationBuilder);
 
 	public ShouldStart Start => new(_expectationBuilder);
 

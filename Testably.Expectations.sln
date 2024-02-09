@@ -45,15 +45,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stryker", "stryker", "{CC17
 		.github\stryker\Stryker.Config.json = .github\stryker\Stryker.Config.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFrameworks", "TestFrameworks", "{93C35842-4266-467E-AE87-3E91F83D5DDD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFrameworks", "TestFrameworks", "{7B19CA1F-23D0-437C-948A-DCEF7120FDDD}"
+	ProjectSection(SolutionItems) = preProject
+		Tests\TestFrameworks\Directory.Build.props = Tests\TestFrameworks\Directory.Build.props
+	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testably.Expectations", "Source\Testably.Expectations\Testably.Expectations.csproj", "{401EAFD1-B29B-4C3A-BC5F-F44C654C3D06}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testably.Expectations.Tests", "Tests\Testably.Expectations.Tests\Testably.Expectations.Tests.csproj", "{78D5E43B-EE46-47F2-8091-F4D76A3E2D98}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B} = {8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B}
+	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.XUnit2.Tests", "Tests\TestFramework.XUnit2.Tests\TestFramework.XUnit2.Tests.csproj", "{233D3137-C6C6-4F1C-9A09-0EAF3D848979}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.XUnit2.Tests", "Tests\TestFrameworks\TestFramework.XUnit2.Tests\TestFramework.XUnit2.Tests.csproj", "{233D3137-C6C6-4F1C-9A09-0EAF3D848979}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.NUnit3.Tests", "Tests\TestFramework.NUnit3.Tests\TestFramework.NUnit3.Tests.csproj", "{4913DD7C-18AC-402C-9A6D-27D5EA797AD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.NUnit3.Tests", "Tests\TestFrameworks\TestFramework.NUnit3.Tests\TestFramework.NUnit3.Tests.csproj", "{4913DD7C-18AC-402C-9A6D-27D5EA797AD3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.NUnit4.Tests", "Tests\TestFramework.NUnit4.Tests\TestFramework.NUnit4.Tests.csproj", "{9B940AB8-47CE-46C9-90D7-2866E280441A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.NUnit4.Tests", "Tests\TestFrameworks\TestFramework.NUnit4.Tests\TestFramework.NUnit4.Tests.csproj", "{9B940AB8-47CE-46C9-90D7-2866E280441A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework.FallbackTest", "Tests\TestFrameworks\TestFramework.FallbackTest\TestFramework.FallbackTest.csproj", "{8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +93,10 @@ Global
 		{9B940AB8-47CE-46C9-90D7-2866E280441A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B940AB8-47CE-46C9-90D7-2866E280441A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B940AB8-47CE-46C9-90D7-2866E280441A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,10 +107,13 @@ Global
 		{5F53E3C1-216C-4948-B5D6-1E96170CD083} = {FB8ADCFE-9A76-463C-AECC-62553DECF308}
 		{61D8BE6C-D930-4B4F-ABA2-586F73ACC2B8} = {5F53E3C1-216C-4948-B5D6-1E96170CD083}
 		{CC17C3DF-BF07-4C00-A4C1-9C61A66283F8} = {5F53E3C1-216C-4948-B5D6-1E96170CD083}
+		{93C35842-4266-467E-AE87-3E91F83D5DDD} = {E08785BF-6C98-4CAC-BFC2-BBB79B522DD6}
+		{7B19CA1F-23D0-437C-948A-DCEF7120FDDD} = {7D94B2A0-9ED6-4186-9635-64637C55556F}
 		{78D5E43B-EE46-47F2-8091-F4D76A3E2D98} = {E08785BF-6C98-4CAC-BFC2-BBB79B522DD6}
-		{233D3137-C6C6-4F1C-9A09-0EAF3D848979} = {E08785BF-6C98-4CAC-BFC2-BBB79B522DD6}
-		{4913DD7C-18AC-402C-9A6D-27D5EA797AD3} = {E08785BF-6C98-4CAC-BFC2-BBB79B522DD6}
-		{9B940AB8-47CE-46C9-90D7-2866E280441A} = {E08785BF-6C98-4CAC-BFC2-BBB79B522DD6}
+		{233D3137-C6C6-4F1C-9A09-0EAF3D848979} = {93C35842-4266-467E-AE87-3E91F83D5DDD}
+		{4913DD7C-18AC-402C-9A6D-27D5EA797AD3} = {93C35842-4266-467E-AE87-3E91F83D5DDD}
+		{9B940AB8-47CE-46C9-90D7-2866E280441A} = {93C35842-4266-467E-AE87-3E91F83D5DDD}
+		{8BCA1B9C-5687-4F5A-8F7F-F6270D12B83B} = {93C35842-4266-467E-AE87-3E91F83D5DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65C0CC2C-5F10-4F18-9057-176DC70833FA}

@@ -1,8 +1,7 @@
 ﻿using NUnit.Framework;
-using System;
-using Testably.Expectations.Expectations;
+using Testably.Expectations;
 
-namespace Testably.Expectations.Tests;
+namespace TestFramework.NUnit4.Tests;
 
 public sealed class NUnit4TestFrameworkTests
 {
