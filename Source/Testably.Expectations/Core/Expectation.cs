@@ -1,13 +1,15 @@
-﻿using System;
+﻿using System.Diagnostics;
 using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
+[StackTraceHidden]
 public class Expectation<TExpectation> : Expectation<TExpectation, TExpectation>
 {
 	internal Expectation(IExpectationBuilder expectationBuilder) : base(expectationBuilder) { }
 }
 
+[StackTraceHidden]
 public class Expectation<TExpectation, TProperty>
 {
 	private readonly IExpectationBuilder _expectationBuilder;

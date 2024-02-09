@@ -17,17 +17,17 @@ public static class ExpectationExtensions
 		=> shouldBe.WithExpectation(new BeNull<object?>());
 
 	public static ExpectationWhich<object?, TType> OfType<TType>(this ShouldBe shouldBe)
-		=> shouldBe.WithMappedExpectation(new BeOfType<TType>());
+		=> shouldBe.WithExpectation(new BeOfType<TType>());
 
 	#region Action
 
 	public static ExpectationWhich<Action, TException> TypeOf<TException>(
 		this ShouldThrow shouldThrow)
 		where TException : Exception
-		=> shouldThrow.WithMappedExpectation(new ThrowException<TException>());
+		=> shouldThrow.WithExpectation(new ThrowException<TException>());
 
 	public static ExpectationWhich<Action, Exception> Exception(this ShouldThrow shouldThrow)
-		=> shouldThrow.WithMappedExpectation(new ThrowException<Exception>());
+		=> shouldThrow.WithExpectation(new ThrowException<Exception>());
 
 	#endregion
 

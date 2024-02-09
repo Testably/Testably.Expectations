@@ -15,7 +15,7 @@ public sealed class WhichExpectationBuilderTests
 		};
 
 		Expect.That(sut,
-			Should.Be.AMappedTest<Dummy>().Which(p => p.Value, Should.Be.EqualTo("foo")));
+			Should.Be.AMappedTest<Dummy>().Which(p => p.Value, Should.Start.With("f")));
 	}
 
 	[Fact]

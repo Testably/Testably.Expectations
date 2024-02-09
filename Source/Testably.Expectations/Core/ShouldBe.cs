@@ -4,6 +4,6 @@ namespace Testably.Expectations.Core;
 
 public class ShouldBe : ShouldVerb
 {
-	internal ShouldBe(IExpectationBuilder expectationBuilder)
+	internal ShouldBe(IExpectationBuilderStart expectationBuilder)
 		: base(expectationBuilder) { }
 }

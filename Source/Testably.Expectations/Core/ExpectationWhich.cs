@@ -7,9 +7,9 @@ namespace Testably.Expectations.Core;
 public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>,
 	IShould<TStart, TCurrent>
 {
-	private readonly IExpectationBuilder _expectationBuilder;
+	private readonly IExpectationBuilderStart _expectationBuilder;
 
-	internal ExpectationWhich(IExpectationBuilder expectationBuilder) : base(expectationBuilder)
+	internal ExpectationWhich(IExpectationBuilderStart expectationBuilder) : base(expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
@@ -17,12 +17,12 @@ public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>,
 	public Expectation<TStart, TCurrent> Which<TProperty>(
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		Expectation<TProperty> expectation)
-		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(_expectationBuilder, propertySelector, expectation));
+		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(_expectationBuilder is IExpectationBuilderCombination b ? b.Left : _expectationBuilder, propertySelector, expectation));
 
 	public Expectation<TStart, TCurrent> Which<TProperty>(
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		NullableExpectation<TProperty> expectation)
-		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(_expectationBuilder, propertySelector, expectation));
+		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(_expectationBuilder is IExpectationBuilderCombination b ? b.Left : _expectationBuilder, propertySelector, expectation));
 
 	#region IShould<TStart,TCurrent> Members
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Testably.Expectations.Core.ExpectationBuilders;
+﻿using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
@@ -10,7 +9,7 @@ public class NullableExpectation<TExpectation> : NullableExpectation<TExpectatio
 	}
 }
 
-public class NullableExpectation<TExpectation, TCurrent>
+public class NullableExpectation<TExpectation, TProperty>
 {
 	private readonly IExpectationBuilder _expectationBuilder;
 
@@ -19,23 +18,12 @@ public class NullableExpectation<TExpectation, TCurrent>
 		_expectationBuilder = expectationBuilder;
 	}
 
-	public IShould<TExpectation, TCurrent> And() => throw new NotImplementedException();
+	public ExpectationWhich<TExpectation, TProperty> And()
+		=> new(new AndExpectationBuilder(_expectationBuilder));
+
+	public ExpectationWhich<TExpectation, TProperty> Or()
+		=> new(new OrExpectationBuilder(_expectationBuilder));
 
 	internal ExpectationResult ApplyTo(TExpectation? actual)
-		=> _expectationBuilder.ApplyTo(actual);
-}
-
-public class NullableExpectation
-{
-	private readonly IExpectationBuilder _expectationBuilder;
-
-	internal NullableExpectation(IExpectationBuilder expectationBuilder)
-	{
-		_expectationBuilder = expectationBuilder;
-	}
-
-	public IShould And() => throw new NotImplementedException();
-
-	internal ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
 		=> _expectationBuilder.ApplyTo(actual);
 }

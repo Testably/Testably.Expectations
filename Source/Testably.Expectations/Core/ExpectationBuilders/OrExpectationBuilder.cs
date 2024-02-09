@@ -1,19 +1,22 @@
-﻿namespace Testably.Expectations.Core.ExpectationBuilders;
+﻿using System.Diagnostics;
 
-internal class OrExpectationBuilder : IExpectationBuilder
+namespace Testably.Expectations.Core.ExpectationBuilders;
+
+[StackTraceHidden]
+internal class OrExpectationBuilder : IExpectationBuilderCombination, IExpectationBuilderStart
 {
-	private readonly IExpectationBuilder _left;
-	private readonly IExpectationBuilder _right = new SimpleExpectationBuilder();
+	public IExpectationBuilder Left { get; }
+	private readonly IExpectationBuilderStart _right = new SimpleExpectationBuilder();
 
 	internal OrExpectationBuilder(IExpectationBuilder left)
 	{
-		_left = left;
+		Left = left;
 	}
 
 	#region IExpectationBuilder Members
 
-	/// <inheritdoc cref="IExpectationBuilder.Add(IExpectation)" />
-	public IExpectationBuilder Add(IExpectation expectation)
+	/// <inheritdoc cref="IExpectationBuilderStart.Add(IExpectation)" />
+	public IExpectationBuilderStart Add(IExpectation expectation)
 	{
 		_right.Add(expectation);
 		return this;
@@ -22,7 +25,7 @@ internal class OrExpectationBuilder : IExpectationBuilder
 	/// <inheritdoc cref="IExpectationBuilder.ApplyTo{TExpectation}(TExpectation)" />
 	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
 	{
-		ExpectationResult leftResult = _left.ApplyTo(actual);
+		ExpectationResult leftResult = Left.ApplyTo(actual);
 		ExpectationResult rightResult = _right.ApplyTo(actual);
 
 		if (leftResult is ExpectationResult.Failure leftFailure &&

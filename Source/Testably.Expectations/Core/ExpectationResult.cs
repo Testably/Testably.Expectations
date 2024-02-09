@@ -36,21 +36,6 @@ public abstract class ExpectationResult
 		}
 	}
 
-	public static ExpectationResult Copy(
-		ExpectationResult result,
-		Func<Failure, string>? expectationText = null,
-		Func<Failure, string>? resultText = null)
-	{
-		if (result is not Failure failure)
-		{
-			return new Success();
-		}
-
-		expectationText ??= f => f.ExpectationText;
-		resultText ??= f => f.ResultText;
-		return new Failure(expectationText.Invoke(failure), resultText.Invoke(failure));
-	}
-
 	public static ExpectationResult Copy<T>(
 		ExpectationResult result,
 		T value,
@@ -65,19 +50,5 @@ public abstract class ExpectationResult
 		expectationText ??= f => f.ExpectationText;
 		resultText ??= f => f.ResultText;
 		return new Failure<T>(value, expectationText.Invoke(failure), resultText.Invoke(failure));
-	}
-
-	public static ExpectationResult BySuccess<T>(
-		bool isSuccess,
-		T value,
-		string expectationText,
-		string resultText)
-	{
-		if (isSuccess)
-		{
-			return new Success<T>(value);
-		}
-
-		return new Failure<T>(value, expectationText, resultText);
 	}
 }

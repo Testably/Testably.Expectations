@@ -10,9 +10,15 @@ public static class TestExtensions
 			new TestExpectation<object>(
 				new ExpectationResult.Failure(expectationText, resultText)));
 
+	public static Expectation<object> w(this ShouldBe shouldBe, string expectationText,
+		string resultText)
+		=> shouldBe.WithExpectation(
+			new TestExpectation<object>(
+				new ExpectationResult.Failure(expectationText, resultText)));
+
 	public static ExpectationWhich<TSource, TSource> AMappedTest<TSource>(
 		this ShouldBe shouldBe)
-		=> shouldBe.WithMappedExpectation(
+		=> shouldBe.WithExpectation(
 			new MappedTestExpectation<TSource, TSource>());
 
 	public static Expectation<object> ASuccessfulTest(this ShouldBe shouldBe)

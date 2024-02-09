@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Text;
 
 namespace Testably.Expectations.Core.ExpectationBuilders;
 
+[StackTraceHidden]
 internal class WhichExpectationBuilder<TSource, TProperty> : IExpectationBuilder
 {
 	private readonly Func<TProperty, ExpectationResult> _expectation;
@@ -30,12 +32,6 @@ internal class WhichExpectationBuilder<TSource, TProperty> : IExpectationBuilder
 
 	#region IExpectationBuilder Members
 
-	/// <inheritdoc cref="IExpectationBuilder.Add(IExpectation)" />
-	public IExpectationBuilder Add(IExpectation expectation)
-	{
-		throw new NotImplementedException();
-	}
-
 	/// <inheritdoc cref="IExpectationBuilder.ApplyTo{TExpectation}(TExpectation)" />
 	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
 	{
@@ -53,7 +49,7 @@ internal class WhichExpectationBuilder<TSource, TProperty> : IExpectationBuilder
 		}
 
 		ExpectationResult result = _expectation.Invoke(castedPropertyValue);
-		return ExpectationResult.Copy(result, propertyValue,
+		return ExpectationResult.Copy(result, castedPropertyValue,
 			f => $".{_propertySelector} {f.ExpectationText}");
 	}
 

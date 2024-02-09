@@ -1,21 +1,24 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Testably.Expectations.Core.ExpectationBuilders;
 
-internal class SimpleExpectationBuilder : IExpectationBuilder
+[StackTraceHidden]
+internal class SimpleExpectationBuilder : IExpectationBuilderStart
 {
 	private IExpectation? _expectation;
 
 	#region IExpectationBuilder Members
 
 	/// <inheritdoc />
-	public IExpectationBuilder Add(IExpectation expectation)
+	public IExpectationBuilderStart Add(IExpectation expectation)
 	{
 		if (_expectation != null)
 		{
 			throw new InvalidOperationException(
 				$"Cannot add multiple expectations to a {nameof(SimpleExpectationBuilder)}");
 		}
+
 		_expectation = expectation;
 		return this;
 	}
@@ -27,11 +30,15 @@ internal class SimpleExpectationBuilder : IExpectationBuilder
 			return typedExpectation.IsMetBy(actual);
 		}
 
-		return new ExpectationResult.Success();
+		if (_expectation == null)
+		{
+			// TODO check how this can occur!
+			throw new InvalidOperationException("No expectation was specified!!!");
+		}
+
+		throw new InvalidOperationException(
+			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
 	}
 
 	#endregion
-
-	public override string ToString()
-		=> _expectation?.ToString() ?? "no expectation yet";
 }

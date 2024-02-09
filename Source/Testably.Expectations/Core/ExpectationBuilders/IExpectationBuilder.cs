@@ -2,6 +2,16 @@
 
 internal interface IExpectationBuilder
 {
-	IExpectationBuilder Add(IExpectation expectation);
 	ExpectationResult ApplyTo<TExpectation>(TExpectation actual);
+}
+
+internal interface IExpectationBuilderStart : IExpectationBuilder
+{
+	IExpectationBuilderStart Add(IExpectation expectation);
+}
+
+
+internal interface IExpectationBuilderCombination : IExpectationBuilder
+{
+	IExpectationBuilder Left { get; }
 }

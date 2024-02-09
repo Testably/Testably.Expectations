@@ -4,9 +4,9 @@ namespace Testably.Expectations.Core;
 
 public abstract class ShouldVerb
 {
-	private readonly IExpectationBuilder _expectationBuilder;
+	private readonly IExpectationBuilderStart _expectationBuilder;
 
-	internal ShouldVerb(IExpectationBuilder expectationBuilder)
+	internal ShouldVerb(IExpectationBuilderStart expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
@@ -17,7 +17,7 @@ public abstract class ShouldVerb
 	public NullableExpectation<T> WithExpectation<T>(INullableExpectation<T> expectation)
 		=> new(_expectationBuilder.Add(expectation));
 
-	public ExpectationWhich<T1, T2> WithMappedExpectation<T1, T2>(
+	public ExpectationWhich<T1, T2> WithExpectation<T1, T2>(
 		IExpectation<T1, T2> expectation)
 		=> new(_expectationBuilder.Add(expectation));
 }
