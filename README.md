@@ -5,37 +5,16 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Testably_Testably.Expectations&branch=main&metric=coverage)](https://sonarcloud.io/summary/overall?id=Testably_Testably.Expectations&branch=main)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FTestably%2FTestably.Expectations%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/Testably/Testably.Expectations/main)
 
-This library is used to define architecture rules as expectations that can be run and checked as part of the unit test execution.
+This library is used to assert unit tests in natural language by specifying expectations.
 
 ## Examples
 
-- Test classes should have `Tests` as suffix:
   ```csharp
   [Fact]
-  public void ExpectTestClassesToBeSuffixedWithTests()
+  public void SomeMethod_ShouldThrowArgumentNullException()
   {
-    IRule rule = Expect.That.Types
-        .Which(Have.Method.WithAttribute<FactAttribute>().OrAttribute<TheoryAttribute>())
-        .ShouldMatchName("*Tests");
-
-    rule.Check
-        .InAllLoadedAssemblies()
-        .ThrowIfViolated();
-  }
-  ```
-  
-- Methods that return `Task` should have `Async` as suffix:
-  ```csharp
-  [Fact]
-  public void AsyncMethodsShouldHaveAsyncSuffix()
-  {
-    IRule rule = Expect.That.Methods
-      .WithReturnType<Task>().OrReturnType(typeof(Task<>))
-      .ShouldMatchName("*Async")
-      .AllowEmpty();
-
-    rule.Check
-      .InTestAssembly()
-      .ThrowIfViolated();
+	Expect.That(SomeMethod, Should.Throw.TypeOf<ArgumentNullException>()
+			.WhichMessage(Should.Be.EqualTo("Value cannot be null")).And()
+			.Which(p => p.ParamName, Should.Be.EqualTo("value")));
   }
   ```
