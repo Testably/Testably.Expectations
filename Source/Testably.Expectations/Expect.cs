@@ -6,9 +6,15 @@ using Testably.Expectations.Core.Ambient;
 
 namespace Testably.Expectations;
 
+/// <summary>
+///     Starting point for checking expectations.
+/// </summary>
 [StackTraceHidden]
 public static class Expect
 {
+	/// <summary>
+	///     Define an <paramref name="expectation" /> on the <paramref name="actual" /> value.
+	/// </summary>
 	public static void That<TActual, TTarget>([NotNull] TActual actual,
 		Expectation<TActual, TTarget> expectation,
 		[CallerArgumentExpression(nameof(actual))]
@@ -26,6 +32,9 @@ public static class Expect
 		}
 	}
 
+	/// <summary>
+	///     Define a <paramref name="nullableExpectation" /> on the <paramref name="actual" /> value.
+	/// </summary>
 	public static void That<TActual, TTarget>(TActual? actual,
 		NullableExpectation<TActual, TTarget> nullableExpectation,
 		[CallerArgumentExpression(nameof(actual))]
