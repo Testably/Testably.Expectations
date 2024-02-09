@@ -11,6 +11,8 @@ internal class BeEqualTo<T> : INullableExpectation<T>
 		_expected = expected;
 	}
 
+	#region INullableExpectation<T> Members
+
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(T actual)
 	{
@@ -24,8 +26,11 @@ internal class BeEqualTo<T> : INullableExpectation<T>
 			return new ExpectationResult.Success();
 		}
 
-		return new ExpectationResult.Failure(ToString(), $"found {(actual is null ? "null" : actual)}");
+		return new ExpectationResult.Failure(ToString(),
+			$"found {(actual is null ? "null" : actual)}");
 	}
+
+	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()

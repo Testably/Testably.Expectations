@@ -42,7 +42,7 @@ public sealed class BeOfTypeTests
 
 	private class Dummy
 	{
-		public int Id { get; set; }
+		public int Id { get; }
 
 		/// <inheritdoc />
 		public override string ToString()

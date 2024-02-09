@@ -24,6 +24,5 @@ public sealed class StartWithTests
 			Should.Throw.Exception().Which(
 				p => p.Message,
 				Should.Be.EqualTo("Expected sut to start with ' fo', but found 'foo'.")));
-
 	}
 }

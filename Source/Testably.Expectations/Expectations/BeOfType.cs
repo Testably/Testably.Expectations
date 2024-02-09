@@ -4,6 +4,8 @@ namespace Testably.Expectations.Expectations;
 
 internal class BeOfType<TType> : IExpectation<object?, TType>
 {
+	#region IExpectation<object?,TType> Members
+
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(object? actual)
 	{
@@ -19,6 +21,8 @@ internal class BeOfType<TType> : IExpectation<object?, TType>
 
 		return new ExpectationResult.Failure(ToString(), $"it was of type {actual.GetType().Name}");
 	}
+
+	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()

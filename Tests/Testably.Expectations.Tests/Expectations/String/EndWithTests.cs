@@ -24,6 +24,5 @@ public sealed class EndWithTests
 			Should.Throw.Exception().Which(
 				p => p.Message,
 				Should.Be.EqualTo("Expected sut to end with 'oo1', but found 'foo'.")));
-
 	}
 }

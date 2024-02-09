@@ -10,16 +10,21 @@ public static class TestExtensions
 			new TestExpectation<object>(
 				new ExpectationResult.Failure(expectationText, resultText)));
 
-	public static Expectation<object> w(this ShouldBe shouldBe, string expectationText,
-		string resultText)
-		=> shouldBe.WithExpectation(
-			new TestExpectation<object>(
-				new ExpectationResult.Failure(expectationText, resultText)));
-
 	public static ExpectationWhich<TSource, TSource> AMappedTest<TSource>(
 		this ShouldBe shouldBe)
 		=> shouldBe.WithExpectation(
 			new MappedTestExpectation<TSource, TSource>());
+
+	public static Expectation<object> AnExpectation(this ShouldBe shouldBe, bool isSuccessful,
+		string expectationText = "", string resultText = "")
+		=> shouldBe.WithExpectation(
+			new TestExpectation<object>(isSuccessful, expectationText, resultText));
+
+	public static NullableExpectation<object> ANullableExpectation(this ShouldBe shouldBe,
+		bool isSuccessful,
+		string expectationText = "", string resultText = "")
+		=> shouldBe.WithExpectation(
+			new NullableTestExpectation<object>(isSuccessful, expectationText, resultText));
 
 	public static Expectation<object> ASuccessfulTest(this ShouldBe shouldBe)
 		=> shouldBe.WithExpectation(new TestExpectation<object>(new ExpectationResult.Success()));
@@ -33,7 +38,42 @@ public static class TestExtensions
 			_result = result;
 		}
 
+		public TestExpectation(bool isSuccessful,
+			string expectationText = "",
+			string resultText = "")
+		{
+			_result = isSuccessful
+				? new ExpectationResult.Success()
+				: new ExpectationResult.Failure(expectationText, resultText);
+		}
+
 		#region IExpectation<T> Members
+
+		public ExpectationResult IsMetBy(T actual)
+			=> _result;
+
+		#endregion
+	}
+
+	private class NullableTestExpectation<T> : INullableExpectation<T>
+	{
+		private readonly ExpectationResult _result;
+
+		public NullableTestExpectation(ExpectationResult result)
+		{
+			_result = result;
+		}
+
+		public NullableTestExpectation(bool isSuccessful,
+			string expectationText = "",
+			string resultText = "")
+		{
+			_result = isSuccessful
+				? new ExpectationResult.Success()
+				: new ExpectationResult.Failure(expectationText, resultText);
+		}
+
+		#region INullableExpectation<T> Members
 
 		public ExpectationResult IsMetBy(T actual)
 			=> _result;

@@ -5,7 +5,6 @@ namespace Testably.Expectations.Core.ExpectationBuilders;
 [StackTraceHidden]
 internal class OrExpectationBuilder : IExpectationBuilderCombination, IExpectationBuilderStart
 {
-	public IExpectationBuilder Left { get; }
 	private readonly IExpectationBuilderStart _right = new SimpleExpectationBuilder();
 
 	internal OrExpectationBuilder(IExpectationBuilder left)
@@ -13,14 +12,9 @@ internal class OrExpectationBuilder : IExpectationBuilderCombination, IExpectati
 		Left = left;
 	}
 
-	#region IExpectationBuilder Members
+	#region IExpectationBuilderCombination Members
 
-	/// <inheritdoc cref="IExpectationBuilderStart.Add(IExpectation)" />
-	public IExpectationBuilderStart Add(IExpectation expectation)
-	{
-		_right.Add(expectation);
-		return this;
-	}
+	public IExpectationBuilder Left { get; }
 
 	/// <inheritdoc cref="IExpectationBuilder.ApplyTo{TExpectation}(TExpectation)" />
 	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
@@ -37,6 +31,17 @@ internal class OrExpectationBuilder : IExpectationBuilderCombination, IExpectati
 		}
 
 		return new ExpectationResult.Success();
+	}
+
+	#endregion
+
+	#region IExpectationBuilderStart Members
+
+	/// <inheritdoc cref="IExpectationBuilderStart.Add(IExpectation)" />
+	public IExpectationBuilderStart Add(IExpectation expectation)
+	{
+		_right.Add(expectation);
+		return this;
 	}
 
 	#endregion

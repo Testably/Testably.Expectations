@@ -4,6 +4,8 @@ namespace Testably.Expectations.Expectations;
 
 internal class BeNull<TActual> : INullableExpectation<TActual>
 {
+	#region INullableExpectation<TActual> Members
+
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(TActual? actual)
 	{
@@ -14,6 +16,8 @@ internal class BeNull<TActual> : INullableExpectation<TActual>
 
 		return new ExpectationResult.Failure(ToString(), $"found {actual}");
 	}
+
+	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()

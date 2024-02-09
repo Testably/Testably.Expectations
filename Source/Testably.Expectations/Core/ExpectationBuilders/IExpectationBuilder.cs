@@ -10,7 +10,6 @@ internal interface IExpectationBuilderStart : IExpectationBuilder
 	IExpectationBuilderStart Add(IExpectation expectation);
 }
 
-
 internal interface IExpectationBuilderCombination : IExpectationBuilder
 {
 	IExpectationBuilder Left { get; }

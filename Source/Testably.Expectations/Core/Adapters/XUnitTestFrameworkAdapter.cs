@@ -41,7 +41,8 @@ internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 	public void Throw(string message)
 	{
 		Type exceptionType = _assembly?.GetType("Xunit.Sdk.XunitException")
-							 ?? throw new NotSupportedException("Failed to create the XUnit assertion type");
+		                     ?? throw new NotSupportedException(
+			                     "Failed to create the XUnit assertion type");
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}

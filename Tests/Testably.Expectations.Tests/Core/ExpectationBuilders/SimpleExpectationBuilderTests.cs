@@ -20,6 +20,7 @@ public sealed class SimpleExpectationBuilderTests
 				Should.Be.EqualTo(
 					"Cannot add multiple expectations to a SimpleExpectationBuilder")));
 	}
+
 	[Fact]
 	public void WhenTypeDoesNotMatch_ShouldThrowInvalidOperationException()
 	{
@@ -32,6 +33,5 @@ public sealed class SimpleExpectationBuilderTests
 			Should.Throw.TypeOf<InvalidOperationException>().WhichMessage(
 				Should.Be.EqualTo(
 					"The expectation does not support Int32 4")));
-
 	}
 }

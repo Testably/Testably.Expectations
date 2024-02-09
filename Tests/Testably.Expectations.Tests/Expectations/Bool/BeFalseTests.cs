@@ -1,6 +1,7 @@
 ﻿using Xunit;
 
 namespace Testably.Expectations.Tests.Expectations.Bool;
+
 public sealed class BeFalseTests
 {
 	[Fact]
@@ -22,6 +23,5 @@ public sealed class BeFalseTests
 		Expect.That(Act,
 			Should.Throw.Exception().WhichMessage(
 				Should.Be.EqualTo($"Expected {nameof(sut)} to be False, but found True.")));
-
 	}
 }

@@ -11,7 +11,8 @@ public static class Expect
 {
 	public static void That<TActual, TTarget>([NotNull] TActual actual,
 		Expectation<TActual, TTarget> expectation,
-		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
+		[CallerArgumentExpression(nameof(actual))]
+		string actualExpression = "")
 	{
 		ExpectationResult result = expectation.ApplyTo(actual);
 
@@ -27,7 +28,8 @@ public static class Expect
 
 	public static void That<TActual, TTarget>(TActual? actual,
 		NullableExpectation<TActual, TTarget> nullableExpectation,
-		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
+		[CallerArgumentExpression(nameof(actual))]
+		string actualExpression = "")
 	{
 		ExpectationResult result = nullableExpectation.ApplyTo(actual);
 
@@ -44,7 +46,8 @@ public static class Expect
 		string actualExpression)
 	{
 		because ??= "";
-		var failureMessage = $"Expected {actualExpression} {result.ExpectationText}{because}, but {result.ResultText}.";
+		string failureMessage =
+			$"Expected {actualExpression} {result.ExpectationText}{because}, but {result.ResultText}.";
 		Initialization.State.Value.Throw(failureMessage);
 	}
 }

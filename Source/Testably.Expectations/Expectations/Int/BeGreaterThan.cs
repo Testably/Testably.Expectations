@@ -11,6 +11,8 @@ internal class BeGreaterThan : IExpectation<int>
 		_expected = expected;
 	}
 
+	#region IExpectation<int> Members
+
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(int actual)
 	{
@@ -21,6 +23,8 @@ internal class BeGreaterThan : IExpectation<int>
 
 		return new ExpectationResult.Failure(ToString(), $"found {actual}");
 	}
+
+	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()

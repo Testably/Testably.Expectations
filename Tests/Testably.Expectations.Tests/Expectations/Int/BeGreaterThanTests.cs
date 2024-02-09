@@ -13,21 +13,6 @@ public sealed class BeGreaterThanTests
 	}
 
 	[Fact]
-	public void OneShouldNotBeGreaterThanTwo()
-	{
-		int sut = 1;
-
-		void Act()
-			=> Expect.That(sut, Should.Be.GreaterThan(2));
-
-		Expect.That(Act,
-			Should.Throw.Exception().Which(
-				p => p.Message,
-				Should.Be.EqualTo("Expected sut to be greater than 2, but found 1.")));
-
-	}
-
-	[Fact]
 	public void OneShouldNotBeGreaterThanOne()
 	{
 		int sut = 1;
@@ -39,6 +24,19 @@ public sealed class BeGreaterThanTests
 			Should.Throw.Exception().Which(
 				p => p.Message,
 				Should.Be.EqualTo("Expected sut to be greater than 1, but found 1.")));
+	}
 
+	[Fact]
+	public void OneShouldNotBeGreaterThanTwo()
+	{
+		int sut = 1;
+
+		void Act()
+			=> Expect.That(sut, Should.Be.GreaterThan(2));
+
+		Expect.That(Act,
+			Should.Throw.Exception().Which(
+				p => p.Message,
+				Should.Be.EqualTo("Expected sut to be greater than 2, but found 1.")));
 	}
 }

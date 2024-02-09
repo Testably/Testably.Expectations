@@ -14,6 +14,27 @@ public sealed class ExpectationResultTests
 		{
 			Value = 1
 		};
+		ExpectationResult.Failure sut = new(expectationText, resultText);
+
+		ExpectationResult result =
+			ExpectationResult.Copy(sut, value);
+
+		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.Value, Should.Be.EqualTo(value)).And()
+			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)).And()
+			.Which(p => p.ResultText, Should.Be.EqualTo(resultText)).And()
+			.Be.OfType<ExpectationResult>());
+	}
+
+	[Theory]
+	[AutoData]
+	public void Copy_FromFailure_ShouldIncludeValueAndOverwriteText(string expectationText,
+		string resultText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
 		ExpectationResult.Failure sut = new("foo", "bar");
 
 		ExpectationResult result =

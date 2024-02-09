@@ -7,7 +7,7 @@ namespace Testably.Expectations.Expectations.Action;
 internal class ThrowException<TException> : IExpectation<System.Action, TException>
 	where TException : Exception
 {
-	#region IExpectation<Action,TException?> Members
+	#region IExpectation<Action,TException> Members
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(System.Action actual)
@@ -44,6 +44,5 @@ internal class ThrowException<TException> : IExpectation<System.Action, TExcepti
 		}
 
 		return $"a {name}";
-
 	}
 }

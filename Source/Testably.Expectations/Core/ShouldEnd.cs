@@ -5,5 +5,7 @@ namespace Testably.Expectations.Core;
 public class ShouldEnd : ShouldVerb
 {
 	internal ShouldEnd(IExpectationBuilderStart expectationBuilder)
-		: base(expectationBuilder) { }
+		: base(expectationBuilder)
+	{
+	}
 }

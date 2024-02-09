@@ -8,7 +8,18 @@ internal class SimpleExpectationBuilder : IExpectationBuilderStart
 {
 	private IExpectation? _expectation;
 
-	#region IExpectationBuilder Members
+	#region IExpectationBuilderStart Members
+
+	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	{
+		if (_expectation is IExpectation<TExpectation> typedExpectation)
+		{
+			return typedExpectation.IsMetBy(actual);
+		}
+
+		throw new InvalidOperationException(
+			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
+	}
 
 	/// <inheritdoc />
 	public IExpectationBuilderStart Add(IExpectation expectation)
@@ -21,23 +32,6 @@ internal class SimpleExpectationBuilder : IExpectationBuilderStart
 
 		_expectation = expectation;
 		return this;
-	}
-
-	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
-	{
-		if (_expectation is IExpectation<TExpectation> typedExpectation)
-		{
-			return typedExpectation.IsMetBy(actual);
-		}
-
-		if (_expectation == null)
-		{
-			// TODO check how this can occur!
-			throw new InvalidOperationException("No expectation was specified!!!");
-		}
-
-		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
 	}
 
 	#endregion

@@ -26,7 +26,8 @@ internal class NUnitTestFrameworkAdapter : ITestFrameworkAdapter
 			const string prefix = "nunit.framework,";
 
 			_assembly = AppDomain.CurrentDomain.GetAssemblies()
-				.FirstOrDefault(a => a.FullName?.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) == true);
+				.FirstOrDefault(a
+					=> a.FullName?.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) == true);
 
 			return _assembly is not null;
 		}
@@ -37,7 +38,8 @@ internal class NUnitTestFrameworkAdapter : ITestFrameworkAdapter
 	public void Throw(string message)
 	{
 		Type exceptionType = _assembly?.GetType("NUnit.Framework.AssertionException")
-							 ?? throw new NotSupportedException("Failed to create the NUnit assertion type");
+		                     ?? throw new NotSupportedException(
+			                     "Failed to create the NUnit assertion type");
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}
