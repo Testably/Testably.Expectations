@@ -13,6 +13,9 @@ public interface IExpectation
 /// </summary>
 public interface IExpectation<in TExpectation> : IExpectation
 {
+	/// <summary>
+	/// Checks if the <paramref name="actual"/> value meets the expectation.
+	/// </summary>
 	public ExpectationResult IsMetBy(TExpectation actual);
 }
 

@@ -7,6 +7,10 @@ namespace Testably.Expectations.Core;
 /// </summary>
 public abstract class ExpectationResult
 {
+	/// <summary>
+	///     Copies the <paramref name="result" /> by keeping the result, adding the <paramref name="value" /> and (optionally)
+	///     updating the <paramref name="expectationText" /> and <paramref name="resultText" />.
+	/// </summary>
 	public static ExpectationResult Copy<T>(
 		ExpectationResult result,
 		T value,
