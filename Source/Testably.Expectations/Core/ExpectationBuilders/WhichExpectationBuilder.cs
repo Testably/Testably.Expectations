@@ -57,7 +57,7 @@ internal class WhichExpectationBuilder<TSource, TProperty> : IExpectationBuilder
 
 	public static object? GetPropertyValue(object? obj, string propertyPath)
 	{
-		if (propertyPath.IndexOf(".", StringComparison.Ordinal) < 0)
+		if (propertyPath.IndexOf('.', StringComparison.Ordinal) < 0)
 		{
 			Type? objType = obj?.GetType();
 			return objType?.GetProperty(propertyPath)?.GetValue(obj, null);
