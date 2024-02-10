@@ -14,6 +14,9 @@ public abstract class ExpectationResult
 	/// </summary>
 	public string ExpectationText { get; }
 
+	/// <summary>
+	///     Initializes a new instance of <see cref="ExpectationResult" />.
+	/// </summary>
 	protected ExpectationResult(string expectationText)
 	{
 		ExpectationText = expectationText;

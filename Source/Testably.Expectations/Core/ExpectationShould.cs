@@ -2,6 +2,9 @@
 
 namespace Testably.Expectations.Core;
 
+/// <summary>
+///     Expect the actual value to...
+/// </summary>
 public class ExpectationShould
 {
 	private readonly IExpectationBuilderStart _expectationBuilder;
@@ -10,6 +13,7 @@ public class ExpectationShould
 	{
 		_expectationBuilder = expectationBuilder;
 	}
+
 	/// <summary>
 	///     Expect the actual value to be...
 	/// </summary>
