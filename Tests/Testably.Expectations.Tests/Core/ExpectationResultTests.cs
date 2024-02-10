@@ -49,6 +49,26 @@ public sealed class ExpectationResultTests
 
 	[Theory]
 	[AutoData]
+	public void Copy_FromFailure_ShouldIncludeValueAndOverwriteText2(string expectationText,
+		string resultText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
+		ExpectationResult.Failure sut = new("foo", "bar");
+
+		ExpectationResult result =
+			ExpectationResult.Copy(sut, value, _ => expectationText, _ => resultText);
+
+		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.Value, Should.Be.EqualTo(value)).And()
+			.Which(p => p.ExpectationText, Should.End.With("expectationText")).And()
+			.Which(p => p.ResultText, Should.Start.With("slakfejil")));
+	}
+
+	[Theory]
+	[AutoData]
 	public void Copy_FromSuccess_ShouldIncludeValue(string expectationText)
 	{
 		Dummy value = new()

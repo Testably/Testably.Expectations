@@ -23,7 +23,7 @@ internal class BeEqualTo<T> : INullableExpectation<T>
 
 		if (_expected?.Equals(actual) == true)
 		{
-			return new ExpectationResult.Success(ToString());
+			return new ExpectationResult.Success<T>(actual, ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(),

@@ -49,7 +49,7 @@ internal class WhichExpectationBuilder<TSource, TProperty> : IExpectationBuilder
 		}
 
 		ExpectationResult result = _expectation.Invoke(castedPropertyValue);
-		return ExpectationResult.Copy(result, castedPropertyValue,
+		return ExpectationResult.Copy(result, actual,
 			f => $".{_propertySelector} {f.ExpectationText}");
 	}
 
@@ -114,4 +114,8 @@ internal class WhichExpectationBuilder<TSource, TProperty> : IExpectationBuilder
 
 		return path.ToString();
 	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"{_propertySelector} {_expectationBuilder}";
 }

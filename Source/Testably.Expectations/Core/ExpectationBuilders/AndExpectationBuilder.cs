@@ -68,4 +68,8 @@ internal class AndExpectationBuilder : IExpectationBuilderCombination, IExpectat
 	}
 
 	#endregion
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"{Left} AND {_right}";
 }

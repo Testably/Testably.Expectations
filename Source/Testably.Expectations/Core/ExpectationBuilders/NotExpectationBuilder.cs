@@ -28,4 +28,8 @@ internal class NotExpectationBuilder : IExpectationBuilderStart
 	}
 
 	#endregion
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"NOT {_expectationBuilder}";
 }

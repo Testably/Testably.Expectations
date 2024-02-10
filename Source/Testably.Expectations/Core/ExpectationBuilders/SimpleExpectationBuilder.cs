@@ -40,4 +40,8 @@ internal class SimpleExpectationBuilder : IExpectationBuilderStart
 	}
 
 	#endregion
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"{_expectation}";
 }

@@ -52,5 +52,5 @@ public abstract class ShouldVerb
 	public override int GetHashCode()
 		// ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
 		=> base.GetHashCode();
-#pragma warning restore CS0809
+	#pragma warning restore CS0809
 }

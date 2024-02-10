@@ -14,9 +14,9 @@ internal class BeOfType<TType> : IExpectation<object?, TType>
 			return new ExpectationResult.Failure(ToString(), "found null");
 		}
 
-		if (actual is TType)
+		if (actual is TType value)
 		{
-			return new ExpectationResult.Success(ToString());
+			return new ExpectationResult.Success<TType>(value, ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(), $"it was of type {actual.GetType().Name}");

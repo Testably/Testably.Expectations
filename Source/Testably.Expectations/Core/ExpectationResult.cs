@@ -38,7 +38,7 @@ public abstract class ExpectationResult
 			return new Success<T>(value, expectationText.Invoke(result));
 		}
 
-		resultText ??= f => f.ResultText;
+		resultText = f => f.ResultText;
 		return new Failure<T>(value, expectationText.Invoke(result), resultText.Invoke(failure));
 	}
 

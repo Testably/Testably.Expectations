@@ -41,4 +41,8 @@ public class Expectation<TExpectation, TProperty>
 
 	internal ExpectationResult ApplyTo(TExpectation actual)
 		=> _expectationBuilder.ApplyTo(actual);
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"Expect {_expectationBuilder}";
 }

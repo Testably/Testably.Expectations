@@ -54,4 +54,8 @@ internal class OrExpectationBuilder : IExpectationBuilderCombination, IExpectati
 	}
 
 	#endregion
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"{Left} OR {_right}";
 }
