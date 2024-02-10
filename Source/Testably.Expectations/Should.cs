@@ -11,6 +11,11 @@ namespace Testably.Expectations;
 public static class Should
 {
 	/// <summary>
+	///     Negates the remaining expectation.
+	/// </summary>
+	public static ExpectationShould Not => new(new NotExpectationBuilder(new SimpleExpectationBuilder()));
+
+	/// <summary>
 	///     Expect the actual value to be...
 	/// </summary>
 	public static ShouldBe Be => new(new SimpleExpectationBuilder());

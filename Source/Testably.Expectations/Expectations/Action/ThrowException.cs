@@ -18,7 +18,7 @@ internal class ThrowException<TException> : IExpectation<System.Action, TExcepti
 		}
 		catch (TException ex)
 		{
-			return new ExpectationResult.Success<TException>(ex);
+			return new ExpectationResult.Success<TException>(ex, ToString());
 		}
 		catch (Exception ex)
 		{

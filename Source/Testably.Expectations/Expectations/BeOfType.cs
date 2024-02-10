@@ -16,7 +16,7 @@ internal class BeOfType<TType> : IExpectation<object?, TType>
 
 		if (actual is TType)
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(), $"it was of type {actual.GetType().Name}");

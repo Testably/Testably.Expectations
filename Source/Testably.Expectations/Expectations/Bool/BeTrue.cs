@@ -11,7 +11,7 @@ internal class BeTrue : IExpectation<bool>
 	{
 		if (true.Equals(actual))
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(), $"found {actual}");

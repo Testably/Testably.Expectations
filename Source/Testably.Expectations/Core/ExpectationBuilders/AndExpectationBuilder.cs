@@ -5,7 +5,7 @@ namespace Testably.Expectations.Core.ExpectationBuilders;
 [StackTraceHidden]
 internal class AndExpectationBuilder : IExpectationBuilderCombination, IExpectationBuilderStart
 {
-	private readonly IExpectationBuilderStart _right = new SimpleExpectationBuilder();
+	private IExpectationBuilderStart _right = new SimpleExpectationBuilder();
 
 	internal AndExpectationBuilder(IExpectationBuilder left)
 	{
@@ -16,26 +16,44 @@ internal class AndExpectationBuilder : IExpectationBuilderCombination, IExpectat
 
 	public IExpectationBuilder Left { get; }
 
+	/// <inheritdoc />
+	public IExpectationBuilderStart ReplaceRight(IExpectationBuilderStart right)
+	{
+		_right = right;
+		return this;
+	}
+
 	/// <inheritdoc cref="IExpectationBuilder.ApplyTo{TExpectation}(TExpectation)" />
 	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
 	{
 		ExpectationResult leftResult = Left.ApplyTo(actual);
 		ExpectationResult rightResult = _right.ApplyTo(actual);
 
+		var combinedExpectation = $"{leftResult.ExpectationText} and {rightResult.ExpectationText}";
+
 		if (leftResult is ExpectationResult.Failure leftFailure &&
 		    rightResult is ExpectationResult.Failure rightFailure)
 		{
 			return new ExpectationResult.Failure(
-				$"{leftFailure.ExpectationText} and {rightFailure.ExpectationText}",
+				combinedExpectation,
 				$"{leftFailure.ResultText} and {rightFailure.ResultText}");
 		}
 
-		if (leftResult is ExpectationResult.Success)
+		if (leftResult is ExpectationResult.Failure onlyLeftFailure)
 		{
-			return rightResult;
+			return new ExpectationResult.Failure(
+				combinedExpectation,
+				onlyLeftFailure.ResultText);
 		}
 
-		return leftResult;
+		if (rightResult is ExpectationResult.Failure onlyRightFailure)
+		{
+			return new ExpectationResult.Failure(
+				combinedExpectation,
+				onlyRightFailure.ResultText);
+		}
+
+		return new ExpectationResult.Success(combinedExpectation);
 	}
 
 	#endregion

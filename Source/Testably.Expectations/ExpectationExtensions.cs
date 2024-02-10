@@ -24,7 +24,7 @@ public static class ExpectationExtensions
 	/// <summary>
 	///     Expects the <see cref="Action" /> to throw an exception.
 	/// </summary>
-	public static ExpectationWhich<Action, Exception> Exception(this ShouldThrow shouldThrow)
+	public static ExpectationWhichShould<Action, Exception> Exception(this ShouldThrow shouldThrow)
 		=> shouldThrow.WithExpectation(new ThrowException<Exception>());
 
 	/// <summary>
@@ -48,7 +48,7 @@ public static class ExpectationExtensions
 	/// <summary>
 	///     Expects the actual value to be of type <typeparamref name="TType" />.
 	/// </summary>
-	public static ExpectationWhich<object?, TType> OfType<TType>(this ShouldBe shouldBe)
+	public static ExpectationWhichShould<object?, TType> OfType<TType>(this ShouldBe shouldBe)
 		=> shouldBe.WithExpectation(new BeOfType<TType>());
 
 	/// <summary>
@@ -60,7 +60,7 @@ public static class ExpectationExtensions
 	/// <summary>
 	///     Expects the <see cref="Action" /> to throw an exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public static ExpectationWhich<Action, TException> TypeOf<TException>(
+	public static ExpectationWhichShould<Action, TException> TypeOf<TException>(
 		this ShouldThrow shouldThrow)
 		where TException : Exception
 		=> shouldThrow.WithExpectation(new ThrowException<TException>());
@@ -69,10 +69,10 @@ public static class ExpectationExtensions
 	///     Expects the <typeparamref name="TException" /> to have a message that meets the <paramref name="expectation" />.
 	/// </summary>
 	public static Expectation<TStart, TException> WhichMessage<TStart, TException>(
-		this ExpectationWhich<TStart, TException> which,
+		this ExpectationWhichShould<TStart, TException> whichShould,
 		NullableExpectation<string?> expectation)
 		where TException : Exception
-		=> which.Which(m => m.Message, expectation);
+		=> whichShould.Which(m => m.Message, expectation);
 
 	/// <summary>
 	///     Expects the actual value to start with the <paramref name="expected" /> string.

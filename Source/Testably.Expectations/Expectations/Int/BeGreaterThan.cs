@@ -18,7 +18,7 @@ internal class BeGreaterThan : IExpectation<int>
 	{
 		if (actual > _expected)
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(), $"found {actual}");

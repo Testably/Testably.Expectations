@@ -11,7 +11,7 @@ internal class BeNull<TActual> : INullableExpectation<TActual>
 	{
 		if (actual == null)
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(), $"found {actual}");

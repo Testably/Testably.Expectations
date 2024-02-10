@@ -29,14 +29,14 @@ public class Expectation<TExpectation, TProperty>
 	///     Combines the expectation with another expectation using AND.
 	/// </summary>
 	/// <remarks>Both expectations must be met by the actual value.</remarks>
-	public ExpectationWhich<TExpectation, TProperty> And()
+	public ExpectationWhichShould<TExpectation, TProperty> And()
 		=> new(new AndExpectationBuilder(_expectationBuilder));
 
 	/// <summary>
 	///     Combines the expectation with another expectation using OR.
 	/// </summary>
 	/// <remarks>At least one expectation must be met by the actual value.</remarks>
-	public ExpectationWhich<TExpectation, TProperty> Or()
+	public ExpectationWhichShould<TExpectation, TProperty> Or()
 		=> new(new OrExpectationBuilder(_expectationBuilder));
 
 	internal ExpectationResult ApplyTo(TExpectation actual)
