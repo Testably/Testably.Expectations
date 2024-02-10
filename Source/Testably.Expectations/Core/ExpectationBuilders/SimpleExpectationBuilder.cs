@@ -17,6 +17,11 @@ internal class SimpleExpectationBuilder : IExpectationBuilderStart
 			return typedExpectation.IsMetBy(actual);
 		}
 
+		if (_expectation is null)
+		{
+			throw new InvalidOperationException("The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");
+		}
+
 		throw new InvalidOperationException(
 			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
 	}

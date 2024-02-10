@@ -3,7 +3,7 @@
 namespace Testably.Expectations.Core;
 
 /// <summary>
-///     Expect the actual value to be...
+///     Expect the actual value to be…
 /// </summary>
 public class ShouldBe : ShouldVerb
 {

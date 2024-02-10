@@ -15,35 +15,35 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	public ExpectationShould Not => new(_expectationBuilder is IExpectationBuilderCombination b ? b.ReplaceRight(new NotExpectationBuilder(new SimpleExpectationBuilder())) : new NotExpectationBuilder(_expectationBuilder));
 
 	/// <summary>
-	///     Expect the actual value to be...
+	///     Expect the actual value to be…
 	/// </summary>
 	public ShouldBe Be => new(_expectationBuilder);
 
 	/// <summary>
-	///     Expect the actual value to end...
+	///     Expect the actual value to end…
 	/// </summary>
 	public ShouldEnd End => new(_expectationBuilder);
 
 	/// <summary>
-	///     Expect the actual value to start...
+	///     Expect the actual value to start…
 	/// </summary>
 	public ShouldStart Start => new(_expectationBuilder);
 
 	/// <summary>
-	///     Expect the actual value to throw...
+	///     Expect the actual value to throw…
 	/// </summary>
 	public ShouldThrow Throw => new(_expectationBuilder);
 
 	private readonly IExpectationBuilderStart _expectationBuilder;
 
-	internal ExpectationWhichShould(IExpectationBuilderStart expectationBuilder) : base(
-		expectationBuilder)
+	internal ExpectationWhichShould(IExpectationBuilderStart expectationBuilder)
+		: base(expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
 
 	/// <summary>
-	///     Accesses a property from <typeparamref name="TCurrent" /> and add an <paramref name="expectation" /> on it.
+	///     Specifies an <paramref name="expectation"/> on a property from <typeparamref name="TCurrent" />.
 	/// </summary>
 	/// <remarks>
 	///     The <paramref name="propertySelector" /> specifies which property to use.
