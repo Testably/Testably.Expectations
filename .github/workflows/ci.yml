@@ -143,3 +143,8 @@ jobs:
         run: |
           cd Tests
           ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.CI.Config.json -v "${GITHUB_REF#refs/heads/}" -r "Dashboard" -r "cleartext"
+      - name: Mutation Annotation Report
+        uses: johanholmerin/mutation-report-action@0.2.0
+        if: ${{ always() }} # Upload even if tests don't pass testing threshold
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'

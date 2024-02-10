@@ -19,7 +19,8 @@
 		"reporters": [
 			"html",
 			"progress",
-			"cleartext"
+			"cleartext",
+			"json"
 		],
 		"mutation-level": "Advanced"
 	}
