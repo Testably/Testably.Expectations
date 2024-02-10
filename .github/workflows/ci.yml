@@ -137,14 +137,13 @@ jobs:
         run: |
           dotnet tool install dotnet-stryker --tool-path ../tools
       - name: Analyze Testably.Expectations
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
         shell: bash
         run: |
           cd Tests
-          ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.CI.Config.json -v "${GITHUB_REF#refs/heads/}" -r "Dashboard" -r "cleartext"
+          ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.CI.Config.json -v "${GITHUB_REF#refs/heads/}" -r "json" -r "cleartext" -O "./StrykerOutput"
       - name: Mutation Annotation Report
         uses: johanholmerin/mutation-report-action@0.2.0
         if: ${{ always() }} # Upload even if tests don't pass testing threshold
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          report-json: './Tests/StrykerOutput/reports/mutation-report.json'
