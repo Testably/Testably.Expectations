@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
@@ -33,6 +34,21 @@ public static class Expect
 		{
 			Debug.Assert(actual != null);
 		}
+	}
+
+	/// <summary>
+	///     This is only for testing purposes!
+	/// </summary>
+	public static void SomethingNew(bool condition,
+		string? actualExpression = "")
+	{
+		if (condition)
+		{
+			actualExpression ??= "something";
+			Console.WriteLine("bar" + actualExpression);
+		}
+
+		Console.WriteLine("foo");
 	}
 
 	/// <summary>
