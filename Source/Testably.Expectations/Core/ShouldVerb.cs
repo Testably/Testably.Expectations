@@ -11,7 +11,7 @@ public abstract class ShouldVerb
 {
 	private readonly IExpectationBuilderStart _expectationBuilder;
 
-	internal ShouldVerb(IExpectationBuilderStart expectationBuilder)
+	private protected ShouldVerb(IExpectationBuilderStart expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
@@ -40,17 +40,17 @@ public abstract class ShouldVerb
 
 	#pragma warning disable CS0809
 	/// <inheritdoc />
-	[Obsolete]
+	[Obsolete("Equals is not part of Testably.Expectations.")]
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public override bool Equals(object? obj)
-		=> throw new NotSupportedException(
-			"Equals is not part of Testably.Expectations.");
+		// ReSharper disable once BaseObjectEqualsIsObjectEquals
+		=> base.Equals(obj);
 
 	/// <inheritdoc />
-	[Obsolete]
+	[Obsolete("Equals is not part of Testably.Expectations.")]
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public override int GetHashCode()
-		=> throw new NotSupportedException(
-			"Equals is not part of Testably.Expectations.");
-	#pragma warning restore CS0809
+		// ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
+		=> base.GetHashCode();
+#pragma warning restore CS0809
 }

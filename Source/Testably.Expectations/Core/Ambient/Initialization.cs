@@ -57,7 +57,7 @@ internal static class Initialization
 		public void Throw(string message) => _testFramework.Throw(message);
 	}
 
-	private class FallbackTestFramework : ITestFrameworkAdapter
+	private sealed class FallbackTestFramework : ITestFrameworkAdapter
 	{
 		#region ITestFrameworkAdapter Members
 
