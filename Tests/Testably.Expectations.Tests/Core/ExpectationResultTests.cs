@@ -47,19 +47,21 @@ public sealed class ExpectationResultTests
 			.Be.OfType<ExpectationResult>());
 	}
 
-	[Fact]
-	public void Copy_FromSuccess_ShouldIncludeValue()
+	[Theory]
+	[AutoData]
+	public void Copy_FromSuccess_ShouldIncludeValue(string expectationText)
 	{
 		Dummy value = new()
 		{
 			Value = 1
 		};
-		ExpectationResult.Success sut = new();
+		ExpectationResult.Success sut = new(expectationText);
 
 		ExpectationResult result = ExpectationResult.Copy(sut, value);
 
 		Expect.That(result, Should.Be.OfType<ExpectationResult.Success<Dummy>>()
-			.Which(p => p.Value, Should.Be.EqualTo(value)));
+			.Which(p => p.Value, Should.Be.EqualTo(value)).And()
+			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)));
 	}
 
 	[Theory]
@@ -89,17 +91,19 @@ public sealed class ExpectationResultTests
 		Expect.That(sut.ResultText, Should.Be.EqualTo(resultText));
 	}
 
-	[Fact]
-	public void Success_WithValue_ShouldStoreValue()
+	[Theory]
+	[AutoData]
+	public void Success_WithValue_ShouldStoreValue(string expectationText)
 	{
 		Dummy value = new()
 		{
 			Value = 1
 		};
 
-		ExpectationResult.Success<Dummy> sut = new(value);
+		ExpectationResult.Success<Dummy> sut = new(value, expectationText);
 
 		Expect.That(sut.Value, Should.Be.EqualTo(value));
+		Expect.That(sut.ExpectationText, Should.Be.EqualTo(expectationText));
 	}
 
 	private class Dummy

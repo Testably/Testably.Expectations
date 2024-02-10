@@ -34,7 +34,7 @@ public abstract class ShouldVerb
 	///     Adds a complex expectation.
 	/// </summary>
 	/// <remarks>This is called from the extension methods.</remarks>
-	public ExpectationWhich<T1, T2> WithExpectation<T1, T2>(
+	public ExpectationWhichShould<T1, T2> WithExpectation<T1, T2>(
 		IExpectation<T1, T2> expectation)
 		=> new(_expectationBuilder.Add(expectation));
 

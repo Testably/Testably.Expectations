@@ -18,7 +18,7 @@ internal class EndWith : IExpectation<string?>
 	{
 		if (actual?.EndsWith(_expected) == true)
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(), $"found '{actual}'");

@@ -18,7 +18,7 @@ internal class StartWith : IExpectation<string?>
 	{
 		if (actual?.StartsWith(_expected) == true)
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(), $"found '{actual}'");

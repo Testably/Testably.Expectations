@@ -10,7 +10,7 @@ public static class TestExtensions
 			new TestExpectation<object>(
 				new ExpectationResult.Failure(expectationText, resultText)));
 
-	public static ExpectationWhich<TSource, TSource> AMappedTest<TSource>(
+	public static ExpectationWhichShould<TSource, TSource> AMappedTest<TSource>(
 		this ShouldBe shouldBe)
 		=> shouldBe.WithExpectation(
 			new MappedTestExpectation<TSource, TSource>());
@@ -26,8 +26,8 @@ public static class TestExtensions
 		=> shouldBe.WithExpectation(
 			new NullableTestExpectation<object>(isSuccessful, expectationText, resultText));
 
-	public static Expectation<object> ASuccessfulTest(this ShouldBe shouldBe)
-		=> shouldBe.WithExpectation(new TestExpectation<object>(new ExpectationResult.Success()));
+	public static Expectation<object> ASuccessfulTest(this ShouldBe shouldBe, string expectationText = "")
+		=> shouldBe.WithExpectation(new TestExpectation<object>(new ExpectationResult.Success(expectationText)));
 
 	private class TestExpectation<T> : IExpectation<T>
 	{
@@ -43,7 +43,7 @@ public static class TestExtensions
 			string resultText = "")
 		{
 			_result = isSuccessful
-				? new ExpectationResult.Success()
+				? new ExpectationResult.Success(expectationText)
 				: new ExpectationResult.Failure(expectationText, resultText);
 		}
 
@@ -69,7 +69,7 @@ public static class TestExtensions
 			string resultText = "")
 		{
 			_result = isSuccessful
-				? new ExpectationResult.Success()
+				? new ExpectationResult.Success(expectationText)
 				: new ExpectationResult.Failure(expectationText, resultText);
 		}
 
@@ -87,7 +87,7 @@ public static class TestExtensions
 
 		/// <inheritdoc />
 		public ExpectationResult IsMetBy(TSource actual)
-			=> new ExpectationResult.Success<TSource>(actual);
+			=> new ExpectationResult.Success<TSource>(actual, "");
 
 		#endregion
 	}

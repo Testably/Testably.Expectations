@@ -18,12 +18,12 @@ internal class BeEqualTo<T> : INullableExpectation<T>
 	{
 		if (actual is null && _expected is null)
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		if (_expected?.Equals(actual) == true)
 		{
-			return new ExpectationResult.Success();
+			return new ExpectationResult.Success(ToString());
 		}
 
 		return new ExpectationResult.Failure(ToString(),

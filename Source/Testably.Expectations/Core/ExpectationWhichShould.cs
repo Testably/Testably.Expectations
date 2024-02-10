@@ -7,8 +7,13 @@ namespace Testably.Expectations.Core;
 /// <summary>
 ///     A complex expectation that allows access to underlying properties.
 /// </summary>
-public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>
+public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCurrent>
 {
+	/// <summary>
+	///     Negates the remaining expectation.
+	/// </summary>
+	public ExpectationShould Not => new(_expectationBuilder is IExpectationBuilderCombination b ? b.ReplaceRight(new NotExpectationBuilder(new SimpleExpectationBuilder())) : new NotExpectationBuilder(_expectationBuilder));
+
 	/// <summary>
 	///     Expect the actual value to be...
 	/// </summary>
@@ -31,7 +36,7 @@ public class ExpectationWhich<TStart, TCurrent> : Expectation<TStart, TCurrent>
 
 	private readonly IExpectationBuilderStart _expectationBuilder;
 
-	internal ExpectationWhich(IExpectationBuilderStart expectationBuilder) : base(
+	internal ExpectationWhichShould(IExpectationBuilderStart expectationBuilder) : base(
 		expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;

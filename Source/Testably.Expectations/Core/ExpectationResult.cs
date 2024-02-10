@@ -7,6 +7,21 @@ namespace Testably.Expectations.Core;
 /// </summary>
 public abstract class ExpectationResult
 {
+	private const string InvertDefaultResultText = "it did";
+
+	/// <summary>
+	///     A human-readable representation of the expectation.
+	/// </summary>
+	public string ExpectationText { get; }
+
+	/// <summary>
+	///     Initializes a new instance of <see cref="ExpectationResult" />.
+	/// </summary>
+	protected ExpectationResult(string expectationText)
+	{
+		ExpectationText = expectationText;
+	}
+
 	/// <summary>
 	///     Copies the <paramref name="result" /> by keeping the result, adding the <paramref name="value" /> and (optionally)
 	///     updating the <paramref name="expectationText" /> and <paramref name="resultText" />.
@@ -14,23 +29,52 @@ public abstract class ExpectationResult
 	public static ExpectationResult Copy<T>(
 		ExpectationResult result,
 		T value,
-		Func<Failure, string>? expectationText = null,
+		Func<ExpectationResult, string>? expectationText = null,
 		Func<Failure, string>? resultText = null)
 	{
+		expectationText ??= f => f.ExpectationText;
 		if (result is not Failure failure)
 		{
-			return new Success<T>(value);
+			return new Success<T>(value, expectationText.Invoke(result));
 		}
 
-		expectationText ??= f => f.ExpectationText;
 		resultText ??= f => f.ResultText;
-		return new Failure<T>(value, expectationText.Invoke(failure), resultText.Invoke(failure));
+		return new Failure<T>(value, expectationText.Invoke(result), resultText.Invoke(failure));
 	}
+
+	/// <inheritdoc cref="object.ToString()" />
+	public override string ToString()
+		=> ExpectationText;
+
+	/// <summary>
+	///     Inverts the result.
+	/// </summary>
+	/// <returns></returns>
+	internal abstract ExpectationResult Invert(
+		Func<ExpectationResult, string>? expectationText = null,
+		string? resultText = null);
 
 	/// <summary>
 	///     The actual value met the expectation.
 	/// </summary>
-	public class Success : ExpectationResult;
+	public class Success : ExpectationResult
+	{
+		/// <summary>
+		///     Initializes a new instance of <see cref="ExpectationResult.Success" />.
+		/// </summary>
+		public Success(string expectationText) : base(expectationText)
+		{
+		}
+
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		internal override ExpectationResult Invert(
+			Func<ExpectationResult, string>? expectationText = null,
+			string? resultText = null)
+		{
+			expectationText ??= f => f.ExpectationText;
+			return new Failure(expectationText.Invoke(this), resultText ?? InvertDefaultResultText);
+		}
+	}
 
 	/// <summary>
 	///     The actual value met the expectation and a <see cref="Value" /> is stored for further processing.
@@ -45,9 +89,19 @@ public abstract class ExpectationResult
 		/// <summary>
 		///     Initializes a new instance of <see cref="ExpectationResult.Success{T}" />.
 		/// </summary>
-		public Success(T? value)
+		public Success(T? value, string expectationText) : base(expectationText)
 		{
 			Value = value;
+		}
+
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		internal override ExpectationResult Invert(
+			Func<ExpectationResult, string>? expectationText = null,
+			string? resultText = null)
+		{
+			expectationText ??= f => f.ExpectationText;
+			return new Failure<T>(Value, expectationText.Invoke(this),
+				resultText ?? InvertDefaultResultText);
 		}
 	}
 
@@ -57,11 +111,6 @@ public abstract class ExpectationResult
 	public class Failure : ExpectationResult
 	{
 		/// <summary>
-		///     A human-readable representation of the expectation.
-		/// </summary>
-		public string ExpectationText { get; }
-
-		/// <summary>
 		///     A human-readable representation of the reason for the failure.
 		/// </summary>
 		public string ResultText { get; }
@@ -69,10 +118,18 @@ public abstract class ExpectationResult
 		/// <summary>
 		///     Initializes a new instance of <see cref="ExpectationResult.Failure" />.
 		/// </summary>
-		public Failure(string expectationText, string resultText)
+		public Failure(string expectationText, string resultText) : base(expectationText)
 		{
-			ExpectationText = expectationText;
 			ResultText = resultText;
+		}
+
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		internal override ExpectationResult Invert(
+			Func<ExpectationResult, string>? expectationText = null,
+			string? resultText = null)
+		{
+			expectationText ??= f => f.ExpectationText;
+			return new Success(expectationText.Invoke(this));
 		}
 	}
 
@@ -93,6 +150,15 @@ public abstract class ExpectationResult
 			resultText)
 		{
 			Value = value;
+		}
+
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		internal override ExpectationResult Invert(
+			Func<ExpectationResult, string>? expectationText = null,
+			string? resultText = null)
+		{
+			expectationText ??= f => f.ExpectationText;
+			return new Success<T>(Value, expectationText.Invoke(this));
 		}
 	}
 }
