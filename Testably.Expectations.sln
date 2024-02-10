@@ -32,7 +32,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{61D8BE6C-D930-4B4F-ABA2-586F73ACC2B8}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build.yml = .github\workflows\build.yml
-		.github\workflows\ci-stryker.yml = .github\workflows\ci-stryker.yml
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 		.github\workflows\pr.yml = .github\workflows\pr.yml
 		.github\workflows\release.yml = .github\workflows\release.yml
@@ -42,6 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stryker", "stryker", "{CC17C3DF-BF07-4C00-A4C1-9C61A66283F8}"
 	ProjectSection(SolutionItems) = preProject
+		.github\stryker\Stryker.CI.Config.json = .github\stryker\Stryker.CI.Config.json
 		.github\stryker\Stryker.Config.json = .github\stryker\Stryker.Config.json
 	EndProjectSection
 EndProject
