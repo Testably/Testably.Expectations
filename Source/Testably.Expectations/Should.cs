@@ -5,7 +5,7 @@ using Testably.Expectations.Core.ExpectationBuilders;
 namespace Testably.Expectations;
 
 /// <summary>
-///     Starting point for defining expectations.
+///     The starting point for defining expectations.
 /// </summary>
 [StackTraceHidden]
 public static class Should
@@ -16,22 +16,22 @@ public static class Should
 	public static ExpectationShould Not => new(new NotExpectationBuilder(new SimpleExpectationBuilder()));
 
 	/// <summary>
-	///     Expect the actual value to be...
+	///     Expect the actual value to be…
 	/// </summary>
 	public static ShouldBe Be => new(new SimpleExpectationBuilder());
 
 	/// <summary>
-	///     Expect the actual value to end...
+	///     Expect the actual value to end…
 	/// </summary>
 	public static ShouldEnd End => new(new SimpleExpectationBuilder());
 
 	/// <summary>
-	///     Expect the actual value to start...
+	///     Expect the actual value to start…
 	/// </summary>
 	public static ShouldStart Start => new(new SimpleExpectationBuilder());
 
 	/// <summary>
-	///     Expect the actual value to throw...
+	///     Expect the actual value to throw…
 	/// </summary>
 	public static ShouldThrow Throw => new(new SimpleExpectationBuilder());
 }

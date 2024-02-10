@@ -7,14 +7,17 @@ using Testably.Expectations.Core.Ambient;
 namespace Testably.Expectations;
 
 /// <summary>
-///     Starting point for checking expectations.
+///     The starting point for checking expectations.
 /// </summary>
 [StackTraceHidden]
 public static class Expect
 {
 	/// <summary>
-	///     Define an <paramref name="expectation" /> on the <paramref name="actual" /> value.
+	///     Checks that the <paramref name="actual" /> value meets the <paramref name="expectation" />.
 	/// </summary>
+	/// <remarks>
+	///     Throws when the <paramref name="actual" /> value is <see langword="null" />.
+	/// </remarks>
 	public static void That<TActual, TTarget>([NotNull] TActual actual,
 		Expectation<TActual, TTarget> expectation,
 		[CallerArgumentExpression(nameof(actual))]
@@ -33,14 +36,17 @@ public static class Expect
 	}
 
 	/// <summary>
-	///     Define a <paramref name="nullableExpectation" /> on the <paramref name="actual" /> value.
+	///     Checks that the <paramref name="actual" /> value meets the <paramref name="expectation" />.
 	/// </summary>
+	/// <remarks>
+	///     The <paramref name="actual" /> value can be <see langword="null" />.
+	/// </remarks>
 	public static void That<TActual, TTarget>(TActual? actual,
-		NullableExpectation<TActual, TTarget> nullableExpectation,
+		NullableExpectation<TActual, TTarget> expectation,
 		[CallerArgumentExpression(nameof(actual))]
 		string actualExpression = "")
 	{
-		ExpectationResult result = nullableExpectation.ApplyTo(actual);
+		ExpectationResult result = expectation.ApplyTo(actual);
 
 		if (result is ExpectationResult.Failure failure)
 		{

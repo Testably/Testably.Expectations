@@ -1,4 +1,5 @@
-﻿using Testably.Expectations.Tests.TestHelpers;
+﻿using System;
+using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
 
 namespace Testably.Expectations.Tests.Core.ExpectationBuilders;
@@ -25,6 +26,17 @@ public sealed class AndExpectationBuilderTests
 
 		Expect.That(Act, Should.Throw.Exception().WhichMessage(
 			Should.Be.EqualTo("Expected 1 to be A and to be B, but found D.")));
+	}
+
+	[Fact]
+	public void WithTrailingAnd_ShouldThrowInvalidOperationException()
+	{
+		void Act()
+			=> Expect.That(1,
+				Should.Be.AFailedTest("to be A", "found C").And());
+
+		Expect.That(Act, Should.Throw.TypeOf<InvalidOperationException>().WhichMessage(
+			Should.Be.EqualTo("The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?")));
 	}
 
 	[Fact]

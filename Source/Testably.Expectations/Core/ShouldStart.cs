@@ -3,7 +3,7 @@
 namespace Testably.Expectations.Core;
 
 /// <summary>
-///     Expect the actual value to start...
+///     Expect the actual value to start…
 /// </summary>
 public class ShouldStart : ShouldVerb
 {
