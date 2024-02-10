@@ -8,8 +8,9 @@
 			"./Testably.Expectations.Tests/Testably.Expectations.Tests.csproj"
 		],
 		"project": "Testably.Expectations.csproj",
-		"target-framework": "net6.0",
+		"target-framework": "net8.0",
 		"since": {
+			"target": "main",
 			"ignore-changes-in": [
 				"**/.github/**/*.*"
 			]
