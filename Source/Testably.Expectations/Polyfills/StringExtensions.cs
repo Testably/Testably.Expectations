@@ -11,6 +11,16 @@ namespace Testably.Expectations.Polyfills;
 internal static class StringExtensionMethods
 {
 	/// <summary>
+	///     Determines whether the end of this string instance matches the specified character.
+	/// </summary>
+	internal static bool EndsWith(
+		this string @this,
+		char value)
+	{
+		return @this.EndsWith($"{value}");
+	}
+
+	/// <summary>
 	///     Reports the zero-based index of the first occurrence of the specified Unicode character in this string. A parameter
 	///     specifies the type of search to use for the specified character.
 	/// </summary>
@@ -23,6 +33,16 @@ internal static class StringExtensionMethods
 		StringComparison comparisonType)
 	{
 		return @this.IndexOf($"{value}", comparisonType);
+	}
+
+	/// <summary>
+	///     Determines whether this string instance starts with the specified character.
+	/// </summary>
+	internal static bool StartsWith(
+		this string @this,
+		char value)
+	{
+		return @this.StartsWith($"{value}");
 	}
 }
 #endif

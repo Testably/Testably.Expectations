@@ -5,30 +5,29 @@ namespace Testably.Expectations.Tests.TestHelpers;
 public static class TestExtensions
 {
 	public static Expectation<object?> AFailedTest(this ShouldBe shouldBe,
-		string expectationText = "to fail",
-		string resultText = "")
+		string expectationText,
+		string resultText)
 		=> shouldBe.WithExpectation(
 			new TestExpectation<object?>(
 				new ExpectationResult.Failure(expectationText, resultText)));
 
 	public static ExpectationWhichShould<TSource, TSource> AMappedTest<TSource>(
-		this ShouldBe shouldBe)
+		this ShouldBe shouldBe,
+		string expectationText)
 		=> shouldBe.WithExpectation(
-			new MappedTestExpectation<TSource, TSource>());
+			new MappedTestExpectation<TSource, TSource>(expectationText));
 
-	public static Expectation<object> AnExpectation(this ShouldBe shouldBe, bool isSuccessful,
-		string expectationText = "", string resultText = "")
+	public static Expectation<object> AnExpectation(this ShouldBe shouldBe, bool isSuccessful)
 		=> shouldBe.WithExpectation(
-			new TestExpectation<object>(isSuccessful, expectationText, resultText));
+			new TestExpectation<object>(isSuccessful, $"to be {isSuccessful}", $"found {!isSuccessful}"));
 
 	public static NullableExpectation<object> ANullableExpectation(this ShouldBe shouldBe,
-		bool isSuccessful,
-		string expectationText = "", string resultText = "")
+		bool isSuccessful)
 		=> shouldBe.WithExpectation(
-			new NullableTestExpectation<object>(isSuccessful, expectationText, resultText));
+			new NullableTestExpectation<object>(isSuccessful, $"to be {isSuccessful}", $"found {!isSuccessful}"));
 
 	public static Expectation<object?> ASuccessfulTest(this ShouldBe shouldBe,
-		string expectationText = "to succeed")
+		string expectationText)
 		=> shouldBe.WithExpectation(
 			new TestExpectation<object?>(new ExpectationResult.Success(expectationText)));
 
@@ -66,14 +65,9 @@ public static class TestExtensions
 	{
 		private readonly ExpectationResult _result;
 
-		public NullableTestExpectation(ExpectationResult result)
-		{
-			_result = result;
-		}
-
 		public NullableTestExpectation(bool isSuccessful,
-			string expectationText = "",
-			string resultText = "")
+			string expectationText,
+			string resultText)
 		{
 			_result = isSuccessful
 				? new ExpectationResult.Success(expectationText)
@@ -94,11 +88,18 @@ public static class TestExtensions
 
 	private class MappedTestExpectation<TSource, TProperty> : IExpectation<TSource, TProperty>
 	{
+		private readonly string _expectationText;
+
+		public MappedTestExpectation(string expectationText)
+		{
+			_expectationText = expectationText;
+		}
+
 		#region IExpectation<TSource,TProperty> Members
 
 		/// <inheritdoc />
 		public ExpectationResult IsMetBy(TSource actual)
-			=> new ExpectationResult.Success<TSource>(actual, "");
+			=> new ExpectationResult.Success<TSource>(actual, _expectationText);
 
 		#endregion
 

@@ -135,7 +135,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 		if (_setCurrent != null)
 		{
 			_setCurrent(
-				new WhichNode<TSource, TProperty>(property, new ExpectationNode(expectation)));
+				new WhichNode<TProperty>(property, new ExpectationNode(expectation)));
 			_setCurrent = null;
 			_getCurrent = null;
 		}
@@ -154,7 +154,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 	public override string ToString()
 	{
 		string s = _root.ToString() ?? "{}";
-		if (s.StartsWith("(") && s.EndsWith(")"))
+		if (s.StartsWith('(') && s.EndsWith(')'))
 		{
 			return s.Substring(1, s.Length - 2);
 		}

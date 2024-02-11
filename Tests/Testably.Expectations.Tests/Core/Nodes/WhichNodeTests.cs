@@ -20,7 +20,7 @@ public sealed class WhichNodeTests
 
 		void Act()
 			=> Expect.That(sut,
-				Should.Be.AMappedTest<Dummy>()
+				Should.Be.AMappedTest<Dummy>("to map")
 					.Which(p => p.Inner!.Id, Should.Be.EqualTo(1)).And()
 					.Which(p => p.Value, Should.Start.With("other-value")).And()
 					.Which(p => p.Value, Should.End.With("oo")));
@@ -39,7 +39,7 @@ public sealed class WhichNodeTests
 		};
 
 		Expect.That(sut,
-			Should.Be.AMappedTest<Dummy>().Which(p => p.Value, Should.Start.With("f")));
+			Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Value, Should.Start.With("f")));
 	}
 
 	[Fact]
@@ -52,7 +52,7 @@ public sealed class WhichNodeTests
 
 		void Act()
 			=> Expect.That(sut,
-				Should.Be.AMappedTest<Dummy>().Which(p => p.Value, Should.Be.EqualTo("foo2")));
+				Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Value, Should.Be.EqualTo("foo2")));
 
 		Expect.That(Act, Should.Throw.Exception().WhichMessage(
 			Should.Be.EqualTo("Expected sut .Value to be equal to foo2, but found foo.")));
@@ -71,7 +71,7 @@ public sealed class WhichNodeTests
 		};
 
 		Expect.That(sut,
-			Should.Be.AMappedTest<Dummy>().Which(p => p.Inner!.Id, Should.Be.EqualTo(1)));
+			Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Inner!.Id, Should.Be.EqualTo(1)));
 	}
 
 	[Fact]
@@ -88,7 +88,7 @@ public sealed class WhichNodeTests
 
 		void Act()
 			=> Expect.That(sut,
-				Should.Be.AMappedTest<Dummy>().Which(p => p.Inner!.Id, Should.Be.EqualTo(2)));
+				Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Inner!.Id, Should.Be.EqualTo(2)));
 
 		Expect.That(Act, Should.Throw.Exception().WhichMessage(
 			Should.Be.EqualTo("Expected sut .Inner.Id to be equal to 2, but found 1.")));
