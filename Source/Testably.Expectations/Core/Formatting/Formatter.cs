@@ -15,7 +15,7 @@ internal class Formatter
 
 	public static string Format<T>(T? value, FormattingOptions? options = null)
 	{
-		StringBuilder? stringBuilder = new();
+		StringBuilder stringBuilder = new();
 		options ??= FormattingOptions.Default;
 		Initialization.State.Value.Formatter.Format(value, stringBuilder, options);
 		return stringBuilder.ToString();
@@ -23,7 +23,7 @@ internal class Formatter
 
 	public void Format<T>(T? value, StringBuilder stringBuilder, FormattingOptions options)
 	{
-		if (value == null)
+		if (value is null)
 		{
 			stringBuilder.Append(NullString);
 			return;
