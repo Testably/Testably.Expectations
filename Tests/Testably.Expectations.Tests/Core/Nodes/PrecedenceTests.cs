@@ -1,5 +1,4 @@
-﻿using Testably.Expectations.Core;
-using Testably.Expectations.Tests.TestHelpers;
+﻿using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
 using Xunit.Sdk;
 
@@ -9,7 +8,7 @@ public sealed class PrecedenceTests
 {
 	private class Dummy
 	{
-		public int Value { get; }
+		public int Value { get; set; }
 	}
 
 	public sealed class OrOverAnd
@@ -111,18 +110,4 @@ public sealed class PrecedenceTests
 			Expect.That(Act, Should.Not.Throw.Exception());
 		}
 	}
-}
-
-public class D : Expectation<string>
-{
-	private readonly string _bar;
-
-	public D(string bar) : base(new ExpectationBuilder())
-	{
-		_bar = bar;
-	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> _bar;
 }
