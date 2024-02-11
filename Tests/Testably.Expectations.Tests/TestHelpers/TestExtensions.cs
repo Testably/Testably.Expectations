@@ -19,12 +19,14 @@ public static class TestExtensions
 
 	public static Expectation<object> AnExpectation(this ShouldBe shouldBe, bool isSuccessful)
 		=> shouldBe.WithExpectation(
-			new TestExpectation<object>(isSuccessful, $"to be {isSuccessful}", $"found {!isSuccessful}"));
+			new TestExpectation<object>(isSuccessful, $"to be {isSuccessful}",
+				$"found {!isSuccessful}"));
 
 	public static NullableExpectation<object> ANullableExpectation(this ShouldBe shouldBe,
 		bool isSuccessful)
 		=> shouldBe.WithExpectation(
-			new NullableTestExpectation<object>(isSuccessful, $"to be {isSuccessful}", $"found {!isSuccessful}"));
+			new NullableTestExpectation<object>(isSuccessful, $"to be {isSuccessful}",
+				$"found {!isSuccessful}"));
 
 	public static Expectation<object?> ASuccessfulTest(this ShouldBe shouldBe,
 		string expectationText)

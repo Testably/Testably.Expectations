@@ -52,7 +52,8 @@ public sealed class WhichNodeTests
 
 		void Act()
 			=> Expect.That(sut,
-				Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Value, Should.Be.EqualTo("foo2")));
+				Should.Be.AMappedTest<Dummy>("to map")
+					.Which(p => p.Value, Should.Be.EqualTo("foo2")));
 
 		Expect.That(Act, Should.Throw.Exception().WhichMessage(
 			Should.Be.EqualTo("Expected sut .Value to be equal to \"foo2\", but found \"foo\".")));
@@ -88,7 +89,8 @@ public sealed class WhichNodeTests
 
 		void Act()
 			=> Expect.That(sut,
-				Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Inner!.Id, Should.Be.EqualTo(2)));
+				Should.Be.AMappedTest<Dummy>("to map")
+					.Which(p => p.Inner!.Id, Should.Be.EqualTo(2)));
 
 		Expect.That(Act, Should.Throw.Exception().WhichMessage(
 			Should.Be.EqualTo("Expected sut .Inner.Id to be equal to 2, but found 1.")));

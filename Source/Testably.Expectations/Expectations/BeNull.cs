@@ -15,7 +15,8 @@ internal class BeNull<TActual> : INullableExpectation<TActual>
 			return new ExpectationResult.Success<TActual>(default, ToString());
 		}
 
-		return new ExpectationResult.Failure<TActual>(actual, ToString(), $"found {Formatter.Format(actual)}");
+		return new ExpectationResult.Failure<TActual>(actual, ToString(),
+			$"found {Formatter.Format(actual)}");
 	}
 
 	#endregion
