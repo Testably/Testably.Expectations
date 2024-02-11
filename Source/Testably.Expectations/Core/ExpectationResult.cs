@@ -147,7 +147,7 @@ public abstract class ExpectationResult
 		public override string ToString()
 			=> $"FAILED {ExpectationText}";
 
-		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		internal override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
 			Func<object?, string>? resultText = null)
@@ -181,7 +181,7 @@ public abstract class ExpectationResult
 			Value = value;
 		}
 
-		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		internal override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
 			Func<object?, string>? resultText = null)
