@@ -154,7 +154,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 	public override string ToString()
 	{
 		string s = _root.ToString() ?? "{}";
-		if (s.StartsWith("(") && s.EndsWith(")"))
+		if (s.StartsWith('(') && s.EndsWith(')'))
 		{
 			return s.Substring(1, s.Length - 2);
 		}

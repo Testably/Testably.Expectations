@@ -8,7 +8,7 @@ internal abstract class Node
 
 	public abstract ExpectationResult ApplyTo<TExpectation>(TExpectation actual);
 
-	private class NoneNode : Node
+	private sealed class NoneNode : Node
 	{
 		/// <inheritdoc />
 		public override ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
