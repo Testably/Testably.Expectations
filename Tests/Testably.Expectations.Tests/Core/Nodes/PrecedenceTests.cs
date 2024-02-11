@@ -8,7 +8,7 @@ public sealed class PrecedenceTests
 {
 	private class Dummy
 	{
-		public int Value { get; set; }
+		public int Value { get; }
 	}
 
 	public sealed class OrOverAnd

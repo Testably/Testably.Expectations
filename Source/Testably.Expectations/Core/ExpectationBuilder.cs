@@ -42,7 +42,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 	{
 		if (_setCurrent != null && _getCurrent != null)
 		{
-			CastNode<T1, T2> castNode = new CastNode<T1, T2>(expectation, _getCurrent());
+			CastNode<T1, T2> castNode = new(expectation, _getCurrent());
 			_setCurrent(castNode);
 			_setCurrent = n => castNode.Inner = n;
 			_getCurrent = () => castNode.Inner;
@@ -67,14 +67,14 @@ internal class ExpectationBuilder : IExpectationBuilder
 
 		if (_root is OrNode orNode)
 		{
-			AndNode andNode = new AndNode(orNode.Right, Node.None);
+			AndNode andNode = new(orNode.Right, Node.None);
 			orNode.Right = andNode;
 			_setCurrent = n => andNode.Right = n;
 			_getCurrent = () => andNode.Right;
 		}
 		else
 		{
-			AndNode andNode = new AndNode(_root, Node.None);
+			AndNode andNode = new(_root, Node.None);
 			_root = andNode;
 			_setCurrent = n => andNode.Right = n;
 			_getCurrent = () => andNode.Right;
@@ -93,7 +93,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 	{
 		if (_setCurrent != null && _getCurrent != null)
 		{
-			NotNode notNode = new NotNode(_getCurrent());
+			NotNode notNode = new(_getCurrent());
 			_setCurrent(notNode);
 			_setCurrent = n => notNode.Inner = n;
 			_getCurrent = () => notNode.Inner;
@@ -116,7 +116,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 				"You have to specify an expectation before starting a combination with `Or()`.");
 		}
 
-		OrNode orNode = new OrNode(_root, Node.None);
+		OrNode orNode = new(_root, Node.None);
 		_root = orNode;
 		_setCurrent = n => orNode.Right = n;
 		_getCurrent = () => orNode.Right;

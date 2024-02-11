@@ -23,6 +23,6 @@ public sealed class EndWithTests
 		Expect.That(Act,
 			Should.Throw.Exception().Which(
 				p => p.Message,
-				Should.Be.EqualTo("Expected sut to end with 'oo1', but found 'foo'.")));
+				Should.Be.EqualTo("Expected sut to end with \"oo1\", but found \"foo\".")));
 	}
 }

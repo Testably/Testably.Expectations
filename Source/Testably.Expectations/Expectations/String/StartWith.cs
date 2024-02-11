@@ -1,4 +1,5 @@
 ﻿using Testably.Expectations.Core;
+using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations.String;
 
@@ -21,12 +22,12 @@ internal class StartWith : IExpectation<string?>
 			return new ExpectationResult.Success(ToString());
 		}
 
-		return new ExpectationResult.Failure(ToString(), $"found '{actual}'");
+		return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
 	}
 
 	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $"to start with '{_expected}'";
+		=> $"to start with {Formatter.Format(_expected)}";
 }

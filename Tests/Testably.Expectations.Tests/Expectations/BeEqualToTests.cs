@@ -27,7 +27,7 @@ public sealed class BeEqualToTests
 		Expect.That(Act,
 			Should.Throw.Exception().WhichMessage(
 				Should.Be.EqualTo(
-					$"Expected {nameof(sut)} to be equal to Dummy#1, but found null.")));
+					$"Expected {nameof(sut)} to be equal to Dummy#1, but found <null>.")));
 	}
 
 	[Fact]

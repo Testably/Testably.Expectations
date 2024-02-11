@@ -8,6 +8,7 @@ internal interface IExpectationBuilder
 	ExpectationResult ApplyTo<TExpectation>(TExpectation actual);
 	IExpectationBuilder Not();
 	IExpectationBuilder Or();
+
 	IExpectationBuilder Which<TSource, TProperty>(string property,
 		IExpectation<TProperty> expectation);
 }

@@ -9,13 +9,15 @@ public sealed class OrNodeTests
 	[Fact]
 	public void WithFirstFailedTests_ShouldNotThrow()
 	{
-		Expect.That(1, Should.Be.AFailedTest("to be A", "found C").Or().Be.ASuccessfulTest("to be B"));
+		Expect.That(1,
+			Should.Be.AFailedTest("to be A", "found C").Or().Be.ASuccessfulTest("to be B"));
 	}
 
 	[Fact]
 	public void WithSecondFailedTests_ShouldNotThrow()
 	{
-		Expect.That(1, Should.Be.ASuccessfulTest("to be A").Or().Be.AFailedTest("to be B", "found D"));
+		Expect.That(1,
+			Should.Be.ASuccessfulTest("to be A").Or().Be.AFailedTest("to be B", "found D"));
 	}
 
 	[Fact]

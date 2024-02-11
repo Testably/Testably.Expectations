@@ -23,7 +23,7 @@ public sealed class BeOfTypeTests
 		Expect.That(Act,
 			Should.Throw.Exception().WhichMessage(
 				Should.Be.EqualTo(
-					$"Expected {nameof(sut)} to be of type Dummy, but found null.")));
+					$"Expected {nameof(sut)} to be of type Dummy, but found <null>.")));
 	}
 
 	[Fact]

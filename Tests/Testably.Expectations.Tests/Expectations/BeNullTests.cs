@@ -22,7 +22,7 @@ public sealed class BeNullTests
 
 		Expect.That(Act,
 			Should.Throw.Exception().WhichMessage(
-				Should.Be.EqualTo($"Expected {nameof(sut)} to be null, but found bar.")));
+				Should.Be.EqualTo($"Expected {nameof(sut)} to be <null>, but found bar.")));
 	}
 
 	private class Dummy
