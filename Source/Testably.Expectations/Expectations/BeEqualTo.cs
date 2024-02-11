@@ -1,4 +1,5 @@
 ﻿using Testably.Expectations.Core;
+using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations;
 
@@ -27,12 +28,12 @@ internal class BeEqualTo<T> : INullableExpectation<T>
 		}
 
 		return new ExpectationResult.Failure(ToString(),
-			$"found {(actual is null ? "null" : actual)}");
+			$"found {Formatter.Format(actual)}");
 	}
 
 	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $"to be equal to {_expected}";
+		=> $"to be equal to {Formatter.Format(_expected)}";
 }

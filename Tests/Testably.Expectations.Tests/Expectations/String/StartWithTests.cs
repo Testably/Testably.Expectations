@@ -23,6 +23,6 @@ public sealed class StartWithTests
 		Expect.That(Act,
 			Should.Throw.Exception().Which(
 				p => p.Message,
-				Should.Be.EqualTo("Expected sut to start with ' fo', but found 'foo'.")));
+				Should.Be.EqualTo("Expected sut to start with \" fo\", but found \"foo\".")));
 	}
 }

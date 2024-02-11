@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Testably.Expectations.Core.Adapters;
+using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Core.Ambient;
 
@@ -45,11 +46,13 @@ internal static class Initialization
 
 	internal class InitializationState
 	{
+		public Formatter Formatter { get; }
 		private readonly ITestFrameworkAdapter _testFramework;
 
 		public InitializationState(ITestFrameworkAdapter testFramework)
 		{
 			_testFramework = testFramework;
+			Formatter = new Formatter();
 		}
 
 		[DoesNotReturn]

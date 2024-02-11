@@ -15,7 +15,7 @@ public sealed class NotNodeTests
 				Should.Not.Be.Null().And().Not.Be.ASuccessfulTest("to be A"));
 
 		Expect.That(Act, Should.Throw.Exception().WhichMessage(
-			Should.Be.EqualTo("Expected sut not to be null and not to be A, but it did.")));
+			Should.Be.EqualTo("Expected sut not to be <null> and not to be A, but it did.")));
 	}
 
 	[Fact]

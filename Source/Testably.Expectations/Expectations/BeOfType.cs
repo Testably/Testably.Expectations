@@ -1,4 +1,5 @@
 ﻿using Testably.Expectations.Core;
+using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations;
 
@@ -11,7 +12,7 @@ internal class BeOfType<TType> : IExpectation<object?, TType>
 	{
 		if (actual is null)
 		{
-			return new ExpectationResult.Failure(ToString(), "found null");
+			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format<object?>(null)}");
 		}
 
 		if (actual is TType value)

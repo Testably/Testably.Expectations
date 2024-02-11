@@ -1,4 +1,5 @@
 ﻿using Testably.Expectations.Core;
+using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations.Bool;
 
@@ -14,12 +15,12 @@ internal class BeTrue : IExpectation<bool>
 			return new ExpectationResult.Success(ToString());
 		}
 
-		return new ExpectationResult.Failure(ToString(), $"found {actual}");
+		return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
 	}
 
 	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> "to be True";
+		=> $"to be {Formatter.Format(true)}";
 }

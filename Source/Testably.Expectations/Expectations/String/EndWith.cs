@@ -1,4 +1,6 @@
 ﻿using Testably.Expectations.Core;
+using Testably.Expectations.Core.Ambient;
+using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations.String;
 
@@ -21,12 +23,12 @@ internal class EndWith : IExpectation<string?>
 			return new ExpectationResult.Success(ToString());
 		}
 
-		return new ExpectationResult.Failure(ToString(), $"found '{actual}'");
+		return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
 	}
 
 	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $"to end with '{_expected}'";
+		=> $"to end with {Formatter.Format(_expected)}";
 }
