@@ -4,10 +4,11 @@ namespace Testably.Expectations.Tests.TestHelpers;
 
 public static class TestExtensions
 {
-	public static Expectation<object> AFailedTest(this ShouldBe shouldBe, string expectationText,
-		string resultText)
+	public static Expectation<object?> AFailedTest(this ShouldBe shouldBe,
+		string expectationText = "to fail",
+		string resultText = "")
 		=> shouldBe.WithExpectation(
-			new TestExpectation<object>(
+			new TestExpectation<object?>(
 				new ExpectationResult.Failure(expectationText, resultText)));
 
 	public static ExpectationWhichShould<TSource, TSource> AMappedTest<TSource>(
@@ -26,8 +27,10 @@ public static class TestExtensions
 		=> shouldBe.WithExpectation(
 			new NullableTestExpectation<object>(isSuccessful, expectationText, resultText));
 
-	public static Expectation<object> ASuccessfulTest(this ShouldBe shouldBe, string expectationText = "")
-		=> shouldBe.WithExpectation(new TestExpectation<object>(new ExpectationResult.Success(expectationText)));
+	public static Expectation<object?> ASuccessfulTest(this ShouldBe shouldBe,
+		string expectationText = "to succeed")
+		=> shouldBe.WithExpectation(
+			new TestExpectation<object?>(new ExpectationResult.Success(expectationText)));
 
 	private class TestExpectation<T> : IExpectation<T>
 	{
@@ -53,6 +56,10 @@ public static class TestExtensions
 			=> _result;
 
 		#endregion
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> _result is ExpectationResult.Success ? "Success" : "Failure";
 	}
 
 	private class NullableTestExpectation<T> : INullableExpectation<T>
@@ -79,6 +86,10 @@ public static class TestExtensions
 			=> _result;
 
 		#endregion
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> _result is ExpectationResult.Success ? "Success" : "Failure";
 	}
 
 	private class MappedTestExpectation<TSource, TProperty> : IExpectation<TSource, TProperty>
@@ -90,5 +101,9 @@ public static class TestExtensions
 			=> new ExpectationResult.Success<TSource>(actual, "");
 
 		#endregion
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"Map({typeof(TSource).Name} -> {typeof(TProperty).Name})";
 	}
 }

@@ -2,9 +2,9 @@
 using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
 
-namespace Testably.Expectations.Tests.Core.ExpectationBuilders;
+namespace Testably.Expectations.Tests.Core.Nodes;
 
-public sealed class AndExpectationBuilderTests
+public sealed class AndNodeTests
 {
 	[Fact]
 	public void WithFirstFailedTests_ShouldIncludeSingleFailureInMessage()
@@ -36,7 +36,8 @@ public sealed class AndExpectationBuilderTests
 				Should.Be.AFailedTest("to be A", "found C").And());
 
 		Expect.That(Act, Should.Throw.TypeOf<InvalidOperationException>().WhichMessage(
-			Should.Be.EqualTo("The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?")));
+			Should.Be.EqualTo(
+				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?")));
 	}
 
 	[Fact]

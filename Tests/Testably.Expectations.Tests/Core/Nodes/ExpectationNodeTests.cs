@@ -2,9 +2,9 @@
 using Testably.Expectations.Core;
 using Xunit;
 
-namespace Testably.Expectations.Tests.Core.ExpectationBuilders;
+namespace Testably.Expectations.Tests.Core.Nodes;
 
-public sealed class SimpleExpectationBuilderTests
+public sealed class ExpectationNodeTests
 {
 	[Fact]
 	public void CanOnlyAddASingleExpectation()
@@ -18,7 +18,7 @@ public sealed class SimpleExpectationBuilderTests
 		Expect.That(Act,
 			Should.Throw.TypeOf<InvalidOperationException>().WhichMessage(
 				Should.Be.EqualTo(
-					"Cannot add multiple expectations to a SimpleExpectationBuilder")));
+					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.")));
 	}
 
 	[Fact]

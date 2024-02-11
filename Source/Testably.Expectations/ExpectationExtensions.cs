@@ -75,6 +75,15 @@ public static class ExpectationExtensions
 		=> whichShould.Which(m => m.Message, expectation);
 
 	/// <summary>
+	///     Expect the <typeparamref name="TException" /> to have a message that meets the <paramref name="expectation" />.
+	/// </summary>
+	public static Expectation<TStart, TException> WhichMessage<TStart, TException>(
+		this ExpectationWhichShould<TStart, TException> whichShould,
+		Expectation<string?> expectation)
+		where TException : Exception
+		=> whichShould.Which(m => m.Message, expectation);
+
+	/// <summary>
 	///     Expect the actual value to start with the <paramref name="expected" /> string.
 	/// </summary>
 	public static Expectation<string?> With(this ShouldStart shouldStart, string expected)

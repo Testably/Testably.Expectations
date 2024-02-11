@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
@@ -19,7 +18,7 @@ public class NullableExpectation<TExpectation> : NullableExpectation<TExpectatio
 ///     <typeparamref name="TProperty" />.
 /// </summary>
 [StackTraceHidden]
-public class NullableExpectation<TExpectation, TProperty>
+public class NullableExpectation<TExpectation, TProperty> : IExpectation<TExpectation, TProperty>
 {
 	private readonly IExpectationBuilder _expectationBuilder;
 
@@ -28,20 +27,29 @@ public class NullableExpectation<TExpectation, TProperty>
 		_expectationBuilder = expectationBuilder;
 	}
 
+	#region IExpectation<TExpectation,TProperty> Members
+
+	/// <inheritdoc />
+	public ExpectationResult IsMetBy(TExpectation? actual)
+		=> _expectationBuilder.ApplyTo(actual);
+
+	#endregion
+
 	/// <summary>
 	///     Combines the expectation with another expectation using AND.
 	/// </summary>
 	/// <remarks>Both expectations must be met by the actual value.</remarks>
 	public ExpectationWhichShould<TExpectation, TProperty> And()
-		=> new(new AndExpectationBuilder(_expectationBuilder));
+		=> new(_expectationBuilder.And());
 
 	/// <summary>
 	///     Combines the expectation with another expectation using OR.
 	/// </summary>
 	/// <remarks>At least one expectation must be met by the actual value.</remarks>
 	public ExpectationWhichShould<TExpectation, TProperty> Or()
-		=> new(new OrExpectationBuilder(_expectationBuilder));
+		=> new(_expectationBuilder.Or());
 
-	internal ExpectationResult ApplyTo(TExpectation? actual)
-		=> _expectationBuilder.ApplyTo(actual);
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"expect {_expectationBuilder}";
 }

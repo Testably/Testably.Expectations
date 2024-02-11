@@ -1,11 +1,35 @@
-﻿using System;
-using Testably.Expectations.Tests.TestHelpers;
+﻿using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
+using Xunit.Sdk;
 
-namespace Testably.Expectations.Tests.Core.ExpectationBuilders;
+namespace Testably.Expectations.Tests.Core.Nodes;
 
-public sealed class WhichExpectationBuilderTests
+public sealed class WhichNodeTests
 {
+	[Fact]
+	public void CombineMultipleWhich_ShouldEvaluateBothExpectations()
+	{
+		Dummy sut = new()
+		{
+			Inner = new Dummy.Nested
+			{
+				Id = 1
+			},
+			Value = "foo"
+		};
+
+		void Act()
+			=> Expect.That(sut,
+				Should.Be.AMappedTest<Dummy>()
+					.Which(p => p.Inner!.Id, Should.Be.EqualTo(1)).And()
+					.Which(p => p.Value, Should.Start.With("other-value")).And()
+					.Which(p => p.Value, Should.End.With("oo")));
+
+		Expect.That(Act, Should.Throw.TypeOf<XunitException>().WhichMessage(
+			Should.Be.EqualTo(
+				"Expected sut .Inner.Id to be equal to 1 and .Value to start with 'other-value' and .Value to end with 'oo', but found 'foo'.")));
+	}
+
 	[Fact]
 	public void ShouldAccessCorrectPropertyValue()
 	{
@@ -32,34 +56,6 @@ public sealed class WhichExpectationBuilderTests
 
 		Expect.That(Act, Should.Throw.Exception().WhichMessage(
 			Should.Be.EqualTo("Expected sut .Value to be equal to foo2, but found foo.")));
-	}
-
-	[Fact]
-	public void WhenExpressionRefersToAField_ShouldThrowArgumentException()
-	{
-		Dummy? sut = new();
-
-		void Act()
-			=> Expect.That(sut,
-				Should.Be.AMappedTest<Dummy>()
-					.Which(p => p.Inner!.Field, Should.Be.ASuccessfulTest()));
-
-		Expect.That(Act, Should.Throw.TypeOf<ArgumentException>().WhichMessage(
-			Should.Be.EqualTo("Expression 'p.Inner.Field' does not refer to a property.")));
-	}
-
-	[Fact]
-	public void WhenExpressionRefersToAMethod_ShouldThrowArgumentException()
-	{
-		Dummy? sut = new();
-
-		void Act()
-			=> Expect.That(sut,
-				Should.Be.AMappedTest<Dummy>()
-					.Which(p => p.Inner!.Method(), Should.Be.ASuccessfulTest()));
-
-		Expect.That(Act, Should.Throw.TypeOf<ArgumentException>().WhichMessage(
-			Should.Be.EqualTo("Expression 'p.Inner.Method()' does not refer to a property.")));
 	}
 
 	[Fact]

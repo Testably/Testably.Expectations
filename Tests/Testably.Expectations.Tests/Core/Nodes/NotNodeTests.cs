@@ -1,9 +1,9 @@
 ﻿using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
 
-namespace Testably.Expectations.Tests.Core.ExpectationBuilders;
+namespace Testably.Expectations.Tests.Core.Nodes;
 
-public sealed class NotExpectationBuilderTests
+public sealed class NotNodeTests
 {
 	[Fact]
 	public void ShouldAlsoWorkWithAndCombinations()

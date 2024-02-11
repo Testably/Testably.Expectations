@@ -23,7 +23,7 @@ public static class Expect
 		[CallerArgumentExpression(nameof(actual))]
 		string actualExpression = "")
 	{
-		ExpectationResult result = expectation.ApplyTo(actual);
+		ExpectationResult result = expectation.IsMetBy(actual);
 
 		if (result is ExpectationResult.Failure failure)
 		{
@@ -46,7 +46,7 @@ public static class Expect
 		[CallerArgumentExpression(nameof(actual))]
 		string actualExpression = "")
 	{
-		ExpectationResult result = expectation.ApplyTo(actual);
+		ExpectationResult result = expectation.IsMetBy(actual);
 
 		if (result is ExpectationResult.Failure failure)
 		{

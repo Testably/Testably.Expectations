@@ -1,19 +1,10 @@
-﻿using Testably.Expectations.Core.ExpectationBuilders;
-
-namespace Testably.Expectations.Core;
+﻿namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     Expect the actual value to...
 /// </summary>
 public class ExpectationShould
 {
-	private readonly IExpectationBuilderStart _expectationBuilder;
-
-	internal ExpectationShould(IExpectationBuilderStart expectationBuilder)
-	{
-		_expectationBuilder = expectationBuilder;
-	}
-
 	/// <summary>
 	///     Expect the actual value to be…
 	/// </summary>
@@ -33,4 +24,11 @@ public class ExpectationShould
 	///     Expect the actual value to throw…
 	/// </summary>
 	public ShouldThrow Throw => new(_expectationBuilder);
+
+	private readonly IExpectationBuilder _expectationBuilder;
+
+	internal ExpectationShould(IExpectationBuilder expectationBuilder)
+	{
+		_expectationBuilder = expectationBuilder;
+	}
 }

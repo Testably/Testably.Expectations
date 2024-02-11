@@ -1,13 +1,11 @@
-﻿using Testably.Expectations.Core.ExpectationBuilders;
-
-namespace Testably.Expectations.Core;
+﻿namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     Expect the actual value to be…
 /// </summary>
 public class ShouldBe : ShouldVerb
 {
-	internal ShouldBe(IExpectationBuilderStart expectationBuilder)
+	internal ShouldBe(IExpectationBuilder expectationBuilder)
 		: base(expectationBuilder)
 	{
 	}

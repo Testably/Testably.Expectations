@@ -23,7 +23,7 @@ internal class ThrowException<TException> : IExpectation<System.Action, TExcepti
 		catch (Exception ex)
 		{
 			return new ExpectationResult.Failure<Exception>(ex, ToString(),
-				$"the thrown exception was {PrependArticle(ex.GetType().Name)}");
+				$"the thrown exception was {PrependArticle(ex.GetType().Name)} with message '{ex.Message}'");
 		}
 
 		return new ExpectationResult.Failure(ToString(), "none was thrown");

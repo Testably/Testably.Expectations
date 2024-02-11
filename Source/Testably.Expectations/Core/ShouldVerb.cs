@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations.Core;
 
@@ -9,9 +8,9 @@ namespace Testably.Expectations.Core;
 /// </summary>
 public abstract class ShouldVerb
 {
-	private readonly IExpectationBuilderStart _expectationBuilder;
+	private readonly IExpectationBuilder _expectationBuilder;
 
-	private protected ShouldVerb(IExpectationBuilderStart expectationBuilder)
+	private protected ShouldVerb(IExpectationBuilder expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
@@ -36,7 +35,7 @@ public abstract class ShouldVerb
 	/// <remarks>This is called from the extension methods.</remarks>
 	public ExpectationWhichShould<T1, T2> WithExpectation<T1, T2>(
 		IExpectation<T1, T2> expectation)
-		=> new(_expectationBuilder.Add(expectation));
+		=> new(_expectationBuilder.AddCast(expectation));
 
 	#pragma warning disable CS0809
 	/// <inheritdoc />
@@ -52,5 +51,5 @@ public abstract class ShouldVerb
 	public override int GetHashCode()
 		// ReSharper disable once BaseObjectGetHashCodeCallInGetHashCode
 		=> base.GetHashCode();
-#pragma warning restore CS0809
+	#pragma warning restore CS0809
 }
