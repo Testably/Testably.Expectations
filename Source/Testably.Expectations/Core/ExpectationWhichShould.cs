@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Testably.Expectations.Core.ExpectationBuilders;
+using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core;
 
@@ -9,11 +9,6 @@ namespace Testably.Expectations.Core;
 /// </summary>
 public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCurrent>
 {
-	/// <summary>
-	///     Negates the remaining expectation.
-	/// </summary>
-	public ExpectationShould Not => new(_expectationBuilder is IExpectationBuilderCombination b ? b.ReplaceRight(new NotExpectationBuilder(new SimpleExpectationBuilder())) : new NotExpectationBuilder(_expectationBuilder));
-
 	/// <summary>
 	///     Expect the actual value to be…
 	/// </summary>
@@ -25,6 +20,11 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	public ShouldEnd End => new(_expectationBuilder);
 
 	/// <summary>
+	///     Negates the remaining expectation.
+	/// </summary>
+	public ExpectationShould Not => new(_expectationBuilder.Not());
+
+	/// <summary>
 	///     Expect the actual value to start…
 	/// </summary>
 	public ShouldStart Start => new(_expectationBuilder);
@@ -34,16 +34,16 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	/// </summary>
 	public ShouldThrow Throw => new(_expectationBuilder);
 
-	private readonly IExpectationBuilderStart _expectationBuilder;
+	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal ExpectationWhichShould(IExpectationBuilderStart expectationBuilder)
+	internal ExpectationWhichShould(IExpectationBuilder expectationBuilder)
 		: base(expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
 
 	/// <summary>
-	///     Specifies an <paramref name="expectation"/> on a property from <typeparamref name="TCurrent" />.
+	///     Specifies an <paramref name="expectation" /> on a property from <typeparamref name="TCurrent" />.
 	/// </summary>
 	/// <remarks>
 	///     The <paramref name="propertySelector" /> specifies which property to use.
@@ -52,9 +52,8 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	public Expectation<TStart, TCurrent> Which<TProperty>(
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		Expectation<TProperty> expectation)
-		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(
-			_expectationBuilder is IExpectationBuilderCombination b ? b.Left : _expectationBuilder,
-			propertySelector, expectation));
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
+			ExpressionHelpers.GetPropertyPath(propertySelector), expectation));
 
 	/// <summary>
 	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
@@ -66,7 +65,31 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	public Expectation<TStart, TCurrent> Which<TProperty>(
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		NullableExpectation<TProperty> nullableExpectation)
-		=> new(new WhichExpectationBuilder<TCurrent, TProperty>(
-			_expectationBuilder is IExpectationBuilderCombination b ? b.Left : _expectationBuilder,
-			propertySelector, nullableExpectation));
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
+			ExpressionHelpers.GetPropertyPath(propertySelector), nullableExpectation));
+
+	/// <summary>
+	///     Specifies an <paramref name="expectation" /> on a property from <typeparamref name="TCurrent" />.
+	/// </summary>
+	/// <remarks>
+	///     The <paramref name="propertySelector" /> specifies which property to use.
+	///     Nested properties are supported.
+	/// </remarks>
+	public Expectation<TStart, TCurrent> Which<TProperty>(
+		string propertySelector,
+		Expectation<TProperty> expectation)
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(propertySelector, expectation));
+
+	/// <summary>
+	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
+	/// </summary>
+	/// <remarks>
+	///     The <paramref name="propertySelector" /> specifies which property to use.
+	///     Nested properties are supported.
+	/// </remarks>
+	public Expectation<TStart, TCurrent> Which<TProperty>(
+		string propertySelector,
+		NullableExpectation<TProperty> nullableExpectation)
+		=> new(
+			_expectationBuilder.Which<TCurrent, TProperty>(propertySelector, nullableExpectation));
 }

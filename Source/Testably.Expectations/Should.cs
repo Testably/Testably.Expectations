@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.ExpectationBuilders;
 
 namespace Testably.Expectations;
 
@@ -11,27 +10,27 @@ namespace Testably.Expectations;
 public static class Should
 {
 	/// <summary>
-	///     Negates the remaining expectation.
-	/// </summary>
-	public static ExpectationShould Not => new(new NotExpectationBuilder(new SimpleExpectationBuilder()));
-
-	/// <summary>
 	///     Expect the actual value to be…
 	/// </summary>
-	public static ShouldBe Be => new(new SimpleExpectationBuilder());
+	public static ShouldBe Be => new(new ExpectationBuilder());
 
 	/// <summary>
 	///     Expect the actual value to end…
 	/// </summary>
-	public static ShouldEnd End => new(new SimpleExpectationBuilder());
+	public static ShouldEnd End => new(new ExpectationBuilder());
+
+	/// <summary>
+	///     Negates the remaining expectation.
+	/// </summary>
+	public static ExpectationShould Not => new(new ExpectationBuilder().Not());
 
 	/// <summary>
 	///     Expect the actual value to start…
 	/// </summary>
-	public static ShouldStart Start => new(new SimpleExpectationBuilder());
+	public static ShouldStart Start => new(new ExpectationBuilder());
 
 	/// <summary>
 	///     Expect the actual value to throw…
 	/// </summary>
-	public static ShouldThrow Throw => new(new SimpleExpectationBuilder());
+	public static ShouldThrow Throw => new(new ExpectationBuilder());
 }

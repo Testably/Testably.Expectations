@@ -5,7 +5,7 @@ namespace Testably.Expectations.Tests.TestHelpers;
 public static class TestExtensions
 {
 	public static Expectation<object?> AFailedTest(this ShouldBe shouldBe,
-		string expectationText = "",
+		string expectationText = "to fail",
 		string resultText = "")
 		=> shouldBe.WithExpectation(
 			new TestExpectation<object?>(
@@ -27,8 +27,10 @@ public static class TestExtensions
 		=> shouldBe.WithExpectation(
 			new NullableTestExpectation<object>(isSuccessful, expectationText, resultText));
 
-	public static Expectation<object?> ASuccessfulTest(this ShouldBe shouldBe, string expectationText = "")
-		=> shouldBe.WithExpectation(new TestExpectation<object?>(new ExpectationResult.Success(expectationText)));
+	public static Expectation<object?> ASuccessfulTest(this ShouldBe shouldBe,
+		string expectationText = "to succeed")
+		=> shouldBe.WithExpectation(
+			new TestExpectation<object?>(new ExpectationResult.Success(expectationText)));
 
 	private class TestExpectation<T> : IExpectation<T>
 	{

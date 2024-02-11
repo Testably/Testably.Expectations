@@ -38,7 +38,7 @@ public abstract class ExpectationResult
 			return new Success<T>(value, expectationText.Invoke(result));
 		}
 
-		resultText = f => f.ResultText;
+		resultText ??= f => f.ResultText;
 		return new Failure<T>(value, expectationText.Invoke(result), resultText.Invoke(failure));
 	}
 
@@ -49,10 +49,15 @@ public abstract class ExpectationResult
 	/// <summary>
 	///     Inverts the result.
 	/// </summary>
-	/// <returns></returns>
 	internal abstract ExpectationResult Invert(
 		Func<ExpectationResult, string>? expectationText = null,
-		string? resultText = null);
+		Func<object?, string>? resultText = null);
+
+	/// <summary>
+	///     Updates the expectation text of the current <see cref="ExpectationResult" />.
+	/// </summary>
+	internal abstract ExpectationResult UpdateExpectationText(
+		Func<ExpectationResult, string> expectationText);
 
 	/// <summary>
 	///     The actual value met the expectation.
@@ -66,14 +71,24 @@ public abstract class ExpectationResult
 		{
 		}
 
-		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"SUCCEEDED {ExpectationText}";
+
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		internal override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
-			string? resultText = null)
+			Func<object?, string>? resultText = null)
 		{
 			expectationText ??= f => f.ExpectationText;
-			return new Failure(expectationText.Invoke(this), resultText ?? InvertDefaultResultText);
+			return new Failure(expectationText.Invoke(this),
+				resultText?.Invoke(null) ?? InvertDefaultResultText);
 		}
+
+		/// <inheritdoc />
+		internal override ExpectationResult UpdateExpectationText(
+			Func<ExpectationResult, string> expectationText)
+			=> new Success(expectationText.Invoke(this));
 	}
 
 	/// <summary>
@@ -94,15 +109,20 @@ public abstract class ExpectationResult
 			Value = value;
 		}
 
-		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
+		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		internal override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
-			string? resultText = null)
+			Func<object?, string>? resultText = null)
 		{
 			expectationText ??= f => f.ExpectationText;
 			return new Failure<T>(Value, expectationText.Invoke(this),
-				resultText ?? InvertDefaultResultText);
+				resultText?.Invoke(Value) ?? InvertDefaultResultText);
 		}
+
+		/// <inheritdoc />
+		internal override ExpectationResult UpdateExpectationText(
+			Func<ExpectationResult, string> expectationText)
+			=> new Success<T>(Value, expectationText.Invoke(this));
 	}
 
 	/// <summary>
@@ -123,14 +143,23 @@ public abstract class ExpectationResult
 			ResultText = resultText;
 		}
 
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"FAILED {ExpectationText}";
+
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
 		internal override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
-			string? resultText = null)
+			Func<object?, string>? resultText = null)
 		{
 			expectationText ??= f => f.ExpectationText;
 			return new Success(expectationText.Invoke(this));
 		}
+
+		/// <inheritdoc />
+		internal override ExpectationResult UpdateExpectationText(
+			Func<ExpectationResult, string> expectationText)
+			=> new Failure(expectationText.Invoke(this), ResultText);
 	}
 
 	/// <summary>
@@ -155,10 +184,15 @@ public abstract class ExpectationResult
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, string)" />
 		internal override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
-			string? resultText = null)
+			Func<object?, string>? resultText = null)
 		{
 			expectationText ??= f => f.ExpectationText;
 			return new Success<T>(Value, expectationText.Invoke(this));
 		}
+
+		/// <inheritdoc />
+		internal override ExpectationResult UpdateExpectationText(
+			Func<ExpectationResult, string> expectationText)
+			=> new Failure<T>(Value, expectationText.Invoke(this), ResultText);
 	}
 }

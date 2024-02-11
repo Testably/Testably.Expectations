@@ -19,7 +19,7 @@ public sealed class ThrowExceptionTests
 		Expect.That(Act,
 			Should.Throw.Exception().WhichMessage(
 				Should.Be.EqualTo(
-					$"Expected {nameof(Sut)} to throw a {nameof(NullReferenceException)}, but the thrown exception was an {nameof(ArgumentException)}.")));
+					$"Expected {nameof(Sut)} to throw a {nameof(NullReferenceException)}, but the thrown exception was an {nameof(ArgumentException)} with message 'Value does not fall within the expected range.'.")));
 	}
 
 	[Fact]

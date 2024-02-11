@@ -63,8 +63,8 @@ public sealed class ExpectationResultTests
 
 		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
 			.Which(p => p.Value, Should.Be.EqualTo(value)).And()
-			.Which(p => p.ExpectationText, Should.End.With("expectationText")).And()
-			.Which(p => p.ResultText, Should.Start.With("slakfejil")));
+			.Which(p => p.ExpectationText, Should.End.With(expectationText)).And()
+			.Which(p => p.ResultText, Should.Start.With(resultText)));
 	}
 
 	[Theory]
