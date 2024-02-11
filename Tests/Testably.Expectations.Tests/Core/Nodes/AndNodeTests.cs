@@ -55,6 +55,6 @@ public sealed class AndNodeTests
 	[Fact]
 	public void WithTwoSuccessfulTests_ShouldNotThrow()
 	{
-		Expect.That(1, Should.Be.ASuccessfulTest().And().Be.ASuccessfulTest());
+		Expect.That(1, Should.Be.ASuccessfulTest("to be A").And().Be.ASuccessfulTest("to be B"));
 	}
 }

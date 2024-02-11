@@ -135,7 +135,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 		if (_setCurrent != null)
 		{
 			_setCurrent(
-				new WhichNode<TSource, TProperty>(property, new ExpectationNode(expectation)));
+				new WhichNode<TProperty>(property, new ExpectationNode(expectation)));
 			_setCurrent = null;
 			_getCurrent = null;
 		}

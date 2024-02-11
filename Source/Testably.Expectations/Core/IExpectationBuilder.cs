@@ -1,14 +1,4 @@
-﻿/* Unmerged change from project 'Testably.Expectations (net6.0)'
-Before:
-namespace Testably.Expectations.Core.ExpectationBuilders;
-After:
-using Testably;
-using Testably.Expectations;
-using Testably.Expectations.Core;
-using Testably.Expectations.Core;
-using Testably.Expectations.Core.ExpectationBuilders;
-*/
-namespace Testably.Expectations.Core;
+﻿namespace Testably.Expectations.Core;
 
 internal interface IExpectationBuilder
 {

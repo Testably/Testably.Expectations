@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class WhichNode<TSource, TProperty> : Node
+internal class WhichNode<TProperty> : Node
 {
 	public Node Inner { get; }
 
