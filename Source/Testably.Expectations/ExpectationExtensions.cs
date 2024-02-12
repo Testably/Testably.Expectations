@@ -52,6 +52,12 @@ public static class ExpectationExtensions
 		=> shouldBe.WithExpectation(new BeOfType<TType>());
 
 	/// <summary>
+	///     Expect the actual value contain the <paramref name="expected" /> string.
+	/// </summary>
+	public static Expectation<string?> Substring(this ShouldContain shouldEnd, string expected)
+		=> shouldEnd.WithExpectation(new ContainSubstring(expected));
+
+	/// <summary>
 	///     Expect the actual value to be <see langword="true" />.
 	/// </summary>
 	public static Expectation<bool> True(this ShouldBe shouldBe)

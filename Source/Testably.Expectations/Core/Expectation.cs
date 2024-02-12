@@ -48,5 +48,5 @@ public class Expectation<TExpectation, TProperty> : IExpectation<TExpectation, T
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $"expect {_expectationBuilder}";
+		=> $"Expect {_expectationBuilder}";
 }

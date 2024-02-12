@@ -11,6 +11,11 @@ public class ExpectationShould
 	public ShouldBe Be => new(_expectationBuilder);
 
 	/// <summary>
+	///     Expect the actual value to contain…
+	/// </summary>
+	public ShouldContain Contain => new(_expectationBuilder);
+
+	/// <summary>
 	///     Expect the actual value to end…
 	/// </summary>
 	public ShouldEnd End => new(_expectationBuilder);

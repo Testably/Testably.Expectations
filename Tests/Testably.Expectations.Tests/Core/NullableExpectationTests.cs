@@ -42,4 +42,14 @@ public sealed class NullableExpectationTests
 		Expect.That(true, Should.Be.ANullableExpectation(false).Or().Be.ANullableExpectation(true));
 		Expect.That(true, Should.Be.ANullableExpectation(true).Or().Be.ANullableExpectation(false));
 	}
+
+	[Fact]
+	public void ToString_ShouldStartWithExpect()
+	{
+		var sut = Should.Be.ANullableExpectation(false);
+
+		var result = sut.ToString();
+
+		Expect.That(result, Should.Start.With("Expect "));
+	}
 }

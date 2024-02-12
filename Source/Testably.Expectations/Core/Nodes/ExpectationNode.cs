@@ -4,15 +4,11 @@ namespace Testably.Expectations.Core.Nodes;
 
 internal class ExpectationNode : Node
 {
-	public IExpectation? Expectation { get; private set; }
+	public IExpectation Expectation { get; }
 
 	public ExpectationNode(IExpectation expectation)
 	{
 		Expectation = expectation;
-	}
-
-	public ExpectationNode()
-	{
 	}
 
 	/// <inheritdoc />
@@ -23,19 +19,8 @@ internal class ExpectationNode : Node
 			return typedExpectation.IsMetBy(actual);
 		}
 
-		if (Expectation is null)
-		{
-			throw new InvalidOperationException(
-				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");
-		}
-
 		throw new InvalidOperationException(
 			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
-	}
-
-	public void SetExpectation(IExpectation expectation)
-	{
-		Expectation = expectation;
 	}
 
 	/// <inheritdoc />
