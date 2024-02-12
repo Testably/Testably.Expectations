@@ -23,33 +23,9 @@ public abstract class ExpectationResult
 	}
 
 	/// <summary>
-	///     Copies the <paramref name="result" /> by keeping the result, adding the <paramref name="value" /> and (optionally)
-	///     updating the <paramref name="expectationText" /> and <paramref name="resultText" />.
-	/// </summary>
-	public static ExpectationResult Copy<T>(
-		ExpectationResult result,
-		T value,
-		Func<ExpectationResult, string>? expectationText = null,
-		Func<Failure, string>? resultText = null)
-	{
-		expectationText ??= f => f.ExpectationText;
-		if (result is not Failure failure)
-		{
-			return new Success<T>(value, expectationText.Invoke(result));
-		}
-
-		resultText ??= f => f.ResultText;
-		return new Failure<T>(value, expectationText.Invoke(result), resultText.Invoke(failure));
-	}
-
-	/// <inheritdoc cref="object.ToString()" />
-	public override string ToString()
-		=> ExpectationText;
-
-	/// <summary>
 	///     Inverts the result.
 	/// </summary>
-	internal abstract ExpectationResult Invert(
+	public abstract ExpectationResult Invert(
 		Func<ExpectationResult, string>? expectationText = null,
 		Func<object?, string>? resultText = null);
 
@@ -76,7 +52,7 @@ public abstract class ExpectationResult
 			=> $"SUCCEEDED {ExpectationText}";
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
-		internal override ExpectationResult Invert(
+		public override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
 			Func<object?, string>? resultText = null)
 		{
@@ -110,7 +86,7 @@ public abstract class ExpectationResult
 		}
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
-		internal override ExpectationResult Invert(
+		public override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
 			Func<object?, string>? resultText = null)
 		{
@@ -148,7 +124,7 @@ public abstract class ExpectationResult
 			=> $"FAILED {ExpectationText}";
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
-		internal override ExpectationResult Invert(
+		public override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
 			Func<object?, string>? resultText = null)
 		{
@@ -182,7 +158,7 @@ public abstract class ExpectationResult
 		}
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
-		internal override ExpectationResult Invert(
+		public override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
 			Func<object?, string>? resultText = null)
 		{

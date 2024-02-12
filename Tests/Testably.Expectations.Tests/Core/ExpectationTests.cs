@@ -39,4 +39,14 @@ public sealed class ExpectationTests
 		Expect.That(true, Should.Be.AnExpectation(false).Or().Be.AnExpectation(true));
 		Expect.That(true, Should.Be.AnExpectation(true).Or().Be.AnExpectation(false));
 	}
+
+	[Fact]
+	public void ToString_ShouldStartWithExpect()
+	{
+		var sut = Should.Be.AnExpectation(false);
+
+		var result = sut.ToString();
+
+		Expect.That(result, Should.Start.With("Expect "));
+	}
 }

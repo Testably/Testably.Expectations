@@ -51,5 +51,5 @@ public class NullableExpectation<TExpectation, TProperty> : IExpectation<TExpect
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $"expect {_expectationBuilder}";
+		=> $"Expect {_expectationBuilder}";
 }
