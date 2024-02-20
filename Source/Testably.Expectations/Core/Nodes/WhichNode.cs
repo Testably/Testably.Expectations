@@ -1,4 +1,5 @@
-﻿using Testably.Expectations.Core.Helpers;
+﻿using System;
+using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -24,8 +25,7 @@ internal class WhichNode<TProperty> : Node
 				.UpdateExpectationText(r => $".{Property} {r.ExpectationText}");
 		}
 
-		return Inner.IsMetBy(propertyValue)
-			.UpdateExpectationText(r => $".{Property} {r.ExpectationText}");
+		throw new InvalidOperationException($"The property type for the which node did not match. Expected {typeof(TProperty).Name}, but found {propertyValue?.GetType().Name}");
 	}
 
 	/// <inheritdoc />
