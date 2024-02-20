@@ -2,10 +2,10 @@
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class WhichNode<TProperty> : Node
+internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
 	private readonly PropertyAccessor _propertyAccessor;
-	public Node Inner { get; }
+	public override Node Inner { get; set; }
 
 	public WhichNode(PropertyAccessor propertyAccessor, Node inner)
 	{
@@ -16,9 +16,13 @@ internal class WhichNode<TProperty> : Node
 	/// <inheritdoc />
 	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
-		if (_propertyAccessor is PropertyAccessor<TExpectation, TProperty> propertyAccessor)
+		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
-			if (propertyAccessor.TryAccessProperty(actual, out var matchingValue))
+			if (actual is not TSource matchingActualValue)
+			{
+				throw new InvalidOperationException($"The property type for the actual value in the which node did not match. Expected {typeof(TSource).Name}, but found {actual?.GetType().Name}");
+			}
+			if (propertyAccessor.TryAccessProperty(matchingActualValue, out var matchingValue))
 			{
 				return Inner.IsMetBy(matchingValue)
 					.UpdateExpectationText(r => $".{_propertyAccessor} {r.ExpectationText}");

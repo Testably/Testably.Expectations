@@ -1,125 +1,193 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Testably.Expectations.Core.Nodes;
+[assembly: InternalsVisibleTo("Testably.Expectations.Tests")]
 
 namespace Testably.Expectations.Core;
+
 
 [StackTraceHidden]
 internal class ExpectationBuilder : IExpectationBuilder
 {
-	private Func<Node>? _getCurrent;
-	private Node _root = Node.None;
-	private Action<Node>? _setCurrent;
-
-	public ExpectationBuilder()
+	internal class Tree
 	{
-		_setCurrent = n => _root = n;
-		_getCurrent = () => _root;
+		private class TreeNode
+		{
+			public Node Node { get; set; } = Node.None;
+			public TreeNode? Parent { get; set; }
+			public int Precedence { get; set; }
+
+			/// <inheritdoc />
+			public override string ToString()
+				=> $"{Parent} -> {Node}";
+		}
+
+		private TreeNode _current;
+		private Action<Node>? _setExpectationNode;
+
+		public Node GetRoot()
+		{
+			var current = _current;
+			while (current.Parent != null)
+			{
+				current = current.Parent;
+			}
+
+			return current.Node;
+		}
+
+		public Tree()
+		{
+			_current = new TreeNode();
+			_setExpectationNode = n => _current.Node = n;
+		}
+
+		public void AddExpectation(IExpectation expectation)
+		{
+			if (_setExpectationNode == null)
+			{
+				throw new InvalidOperationException(
+					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+			}
+			var node = new ExpectationNode(expectation);
+			_setExpectationNode.Invoke(node);
+			_setExpectationNode = null;
+		}
+
+		public bool TryAddCombination(Func<Node, CombinationNode> nodeGenerator, int precedence)
+		{
+			if (_setExpectationNode != null)
+			{
+				return false;
+			}
+
+			var current = _current;
+			do
+			{
+				if (current.Node is CombinationNode parentCombinationNode && current.Precedence < precedence)
+				{
+					var newCombinationNode = nodeGenerator(parentCombinationNode.Right);
+					parentCombinationNode.Right = newCombinationNode;
+					_current = new TreeNode()
+					{
+						Node = newCombinationNode,
+						Parent = current,
+						Precedence = precedence
+					};
+					_setExpectationNode = n => newCombinationNode.Right = n;
+					return true;
+				}
+				current = current.Parent;
+			} while (current != null);
+
+			var combinationNode = nodeGenerator(_current.Node);
+			_current = new TreeNode
+			{
+				Node = combinationNode,
+				Parent = _current.Parent,
+				Precedence = precedence
+			};
+			_setExpectationNode = n => combinationNode.Right = n;
+			return true;
+		}
+
+		public void AddCombination(Func<Node, CombinationNode> nodeGenerator, int precedence)
+		{
+			if (!TryAddCombination(nodeGenerator, precedence))
+			{
+				throw new InvalidOperationException(
+					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+			}
+		}
+
+		public void AddManipulation(Func<Node, ManipulationNode> nodeGenerator)
+		{
+			if (_setExpectationNode == null)
+			{
+				throw new InvalidOperationException(
+					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+			}
+
+			if (_current.Node is CombinationNode combinationNode)
+			{
+				var manipulationNode2 = nodeGenerator(combinationNode.Right);
+				combinationNode.Right = manipulationNode2;
+				_setExpectationNode = n => manipulationNode2.Inner = n;
+				return;
+			}
+
+
+			if (_current.Node is ManipulationNode manipulationNode4)
+			{
+				var manipulationNode3 = nodeGenerator(manipulationNode4.Inner);
+				manipulationNode4.Inner = manipulationNode3;
+				_setExpectationNode = n => manipulationNode3.Inner = n;
+				return;
+			}
+
+			var manipulationNode = nodeGenerator(_current.Node);
+			_current = new TreeNode
+			{
+				Node = manipulationNode,
+				Parent = _current.Parent
+			};
+			_setExpectationNode = n => manipulationNode.Inner = n;
+		}
+
+		/// <inheritdoc />
+		public override string ToString()
+		{
+			string s = GetRoot().ToString();
+			if (s.StartsWith('(') && s.EndsWith(')'))
+			{
+				return s.Substring(1, s.Length - 2);
+			}
+
+			return s;
+		}
 	}
+	private Tree _tree = new();
 
 	#region IExpectationBuilder Members
 
 	/// <inheritdoc />
 	public IExpectationBuilder Add(IExpectation expectation)
 	{
-		if (_setCurrent != null)
-		{
-			_setCurrent(new ExpectationNode(expectation));
-			_setCurrent = null;
-			_getCurrent = null;
-		}
-		else
-		{
-			throw new InvalidOperationException(
-				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-		}
-
+		_tree.AddExpectation(expectation);
 		return this;
 	}
 
 	/// <inheritdoc />
 	public IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation)
 	{
-		if (_setCurrent != null && _getCurrent != null)
-		{
-			CastNode<T1, T2> castNode = new(expectation, _getCurrent());
-			_setCurrent(castNode);
-			_setCurrent = n => castNode.Inner = n;
-			_getCurrent = () => castNode.Inner;
-		}
-		else
-		{
-			throw new InvalidOperationException(
-				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-		}
-
+		_tree.AddManipulation(n => new CastNode<T1, T2>(expectation, n));
 		return this;
 	}
 
 	/// <inheritdoc />
 	public IExpectationBuilder And()
 	{
-		if (_root == Node.None)
-		{
-			throw new InvalidOperationException(
-				"You have to specify an expectation before starting a combination with `And()`.");
-		}
-
-		if (_root is OrNode orNode)
-		{
-			AndNode andNode = new(orNode.Right, Node.None);
-			orNode.Right = andNode;
-			_setCurrent = n => andNode.Right = n;
-			_getCurrent = () => andNode.Right;
-		}
-		else
-		{
-			AndNode andNode = new(_root, Node.None);
-			_root = andNode;
-			_setCurrent = n => andNode.Right = n;
-			_getCurrent = () => andNode.Right;
-		}
-
+		_tree.AddCombination(n => new AndNode(n, Node.None), 5);
 		return this;
 	}
 
 	public ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
-		return _root.IsMetBy(actual);
+		return _tree.GetRoot().IsMetBy(actual);
 	}
 
 	/// <inheritdoc />
 	public IExpectationBuilder Not()
 	{
-		if (_setCurrent != null && _getCurrent != null)
-		{
-			NotNode notNode = new(_getCurrent());
-			_setCurrent(notNode);
-			_setCurrent = n => notNode.Inner = n;
-			_getCurrent = () => notNode.Inner;
-		}
-		else
-		{
-			throw new InvalidOperationException(
-				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-		}
-
+		_tree.AddManipulation(n => new NotNode(n));
 		return this;
 	}
 
 	/// <inheritdoc />
 	public IExpectationBuilder Or()
 	{
-		if (_root == Node.None)
-		{
-			throw new InvalidOperationException(
-				"You have to specify an expectation before starting a combination with `Or()`.");
-		}
-
-		OrNode orNode = new(_root, Node.None);
-		_root = orNode;
-		_setCurrent = n => orNode.Right = n;
-		_getCurrent = () => orNode.Right;
+		_tree.AddCombination(n => new OrNode(n, Node.None), 4);
 		return this;
 	}
 
@@ -127,23 +195,9 @@ internal class ExpectationBuilder : IExpectationBuilder
 	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation)
 	{
-		if (_setCurrent == null && _getCurrent == null)
-		{
-			And();
-		}
-
-		if (_setCurrent != null)
-		{
-			_setCurrent(
-				new WhichNode<TProperty>(propertyAccessor, new ExpectationNode(expectation)));
-			_setCurrent = null;
-			_getCurrent = null;
-		}
-		else
-		{
-			throw new InvalidOperationException(
-				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-		}
+		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
+		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+		_tree.AddExpectation(expectation);
 
 		return this;
 	}
@@ -153,12 +207,6 @@ internal class ExpectationBuilder : IExpectationBuilder
 	/// <inheritdoc />
 	public override string ToString()
 	{
-		string s = _root.ToString() ?? "{}";
-		if (s.StartsWith('(') && s.EndsWith(')'))
-		{
-			return s.Substring(1, s.Length - 2);
-		}
-
-		return s;
+		return _tree.ToString();
 	}
 }

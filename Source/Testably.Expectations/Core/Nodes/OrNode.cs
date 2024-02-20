@@ -1,9 +1,9 @@
 ﻿namespace Testably.Expectations.Core.Nodes;
 
-internal class OrNode : Node
+internal class OrNode : CombinationNode
 {
-	public Node Left { get; }
-	public Node Right { get; set; }
+	public override Node Left { get; }
+	public override Node Right { get; set; }
 
 	public OrNode(Node left, Node right)
 	{

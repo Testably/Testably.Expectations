@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal abstract class Node
+public abstract class Node
 {
 	public static Node None { get; } = new NoneNode();
 
@@ -15,4 +15,8 @@ internal abstract class Node
 			=> throw new InvalidOperationException(
 				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");
 	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> "NONE";
 }

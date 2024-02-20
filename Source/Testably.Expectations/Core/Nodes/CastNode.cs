@@ -2,10 +2,10 @@
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class CastNode<T1, T2> : Node
+internal class CastNode<T1, T2> : ManipulationNode
 {
 	public IExpectation<T1, T2> Expectation { get; }
-	public Node Inner { get; set; }
+	public override Node Inner { get; set; }
 
 	public CastNode(IExpectation<T1, T2> expectation, Node inner)
 	{

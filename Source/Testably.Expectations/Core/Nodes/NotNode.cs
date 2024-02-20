@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Core.Nodes;
 
-internal class NotNode : Node
+internal class NotNode : ManipulationNode
 {
-	public Node Inner { get; set; }
+	public override Node Inner { get; set; }
 
 	public NotNode(Node inner)
 	{
