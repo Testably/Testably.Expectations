@@ -1,4 +1,5 @@
-﻿using Testably.Expectations.Core;
+﻿using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
 
 namespace Testably.Expectations.Tests.TestHelpers;
 
@@ -10,6 +11,14 @@ public static class TestExtensions
 		=> shouldBe.WithExpectation(
 			new TestExpectation<object?>(
 				new ExpectationResult.Failure(expectationText, resultText)));
+
+	public static Expectation<object?> AVariable(this ShouldBe shouldBe,
+		bool variableValue,
+		[CallerArgumentExpression(nameof(variableValue))] string variableExpression = "")
+		=> shouldBe.WithExpectation(
+			new TestExpectation<object?>(variableValue
+				? new ExpectationResult.Success(variableExpression)
+				: new ExpectationResult.Failure(variableExpression, "it did")));
 
 	public static ExpectationWhichShould<TSource, TSource> AMappedTest<TSource>(
 		this ShouldBe shouldBe,

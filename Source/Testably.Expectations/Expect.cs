@@ -20,8 +20,7 @@ public static class Expect
 	/// </remarks>
 	public static void That<TActual, TTarget>([NotNull] TActual actual,
 		Expectation<TActual, TTarget> expectation,
-		[CallerArgumentExpression(nameof(actual))]
-		string actualExpression = "")
+		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
 	{
 		ExpectationResult result = expectation.IsMetBy(actual);
 

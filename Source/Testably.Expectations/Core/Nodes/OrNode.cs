@@ -25,10 +25,20 @@ internal class OrNode : CombinationNode
 		{
 			return new ExpectationResult.Failure(
 				combinedExpectation,
-				$"{leftFailure.ResultText} and {rightFailure.ResultText}");
+				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
 		return new ExpectationResult.Success(combinedExpectation);
+	}
+
+	private static string CombineResultTexts(string leftResultText, string rightResultText)
+	{
+		if (leftResultText == rightResultText)
+		{
+			return leftResultText;
+		}
+
+		return $"{leftResultText} and {rightResultText}";
 	}
 
 	/// <inheritdoc />

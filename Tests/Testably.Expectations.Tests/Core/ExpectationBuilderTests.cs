@@ -1,5 +1,4 @@
-﻿using Testably.Expectations.Core;
-using Testably.Expectations.Core.Nodes;
+﻿using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
 
 namespace Testably.Expectations.Tests.Core;
@@ -8,88 +7,121 @@ public sealed class ExpectationBuilderTests
 {
 	public sealed class TreeValidation
 	{
-		[Fact]
-		public void A_And_B_Or_C()
-		{
-			ExpectationBuilder.Tree tree = new();
-			tree.AddExpectation(new DummyExpectation("a"));
-			tree.AddCombination(n => new AndNode(n, Node.None), 2);
-			tree.AddExpectation(new DummyExpectation("b"));
-			tree.AddCombination(n => new OrNode(n, Node.None), 1);
-			tree.AddExpectation(new DummyExpectation("c"));
+		private const int AnyValue = 1;
 
-			Expect.That(tree.ToString(), Should.Be.EqualTo("(a AND b) OR c"));
+		[Theory]
+		[InlineData(true, true)]
+		[InlineData(false, false)]
+		public void A(bool a, bool shouldSucceed)
+		{
+			void Act()
+				=> Expect.That(AnyValue, Should.Be
+					.AVariable(a));
+
+			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
+				Should.Contain.Substring("a, but it did.")));
 		}
 
-		[Fact]
-		public void A_And_B_Or_Not_C()
+		[Theory]
+		[InlineData(true, false)]
+		[InlineData(false, true)]
+		public void Not_A(bool a, bool shouldSucceed)
 		{
-			ExpectationBuilder.Tree tree = new();
-			tree.AddExpectation(new DummyExpectation("a"));
-			tree.AddCombination(n => new AndNode(n, Node.None), 2);
-			tree.AddExpectation(new DummyExpectation("b"));
-			tree.AddCombination(n => new OrNode(n, Node.None), 1);
-			tree.AddManipulation(n => new NotNode(n));
-			tree.AddExpectation(new DummyExpectation("c"));
+			void Act()
+				=> Expect.That(AnyValue, Should
+					.Not.Be
+					.AVariable(a));
 
-			Expect.That(tree.ToString(), Should.Be.EqualTo("(a AND b) OR NOT c"));
+			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
+				Should.Contain.Substring("a, but it did.")));
 		}
 
-		[Fact]
-		public void A_And_B()
+		[Theory]
+		[InlineData(false, false, false)]
+		[InlineData(false, true, false)]
+		[InlineData(true, false, false)]
+		[InlineData(true, true, true)]
+		public void A_And_B(bool a, bool b, bool shouldSucceed)
 		{
-			ExpectationBuilder.Tree tree = new();
-			tree.AddExpectation(new DummyExpectation("a"));
-			tree.AddCombination(n => new AndNode(n, Node.None), 2);
-			tree.AddExpectation(new DummyExpectation("b"));
+			void Act()
+				=> Expect.That(AnyValue, Should.Be
+					.AVariable(a)
+					.And().Be
+					.AVariable(b));
 
-			Expect.That(tree.ToString(), Should.Be.EqualTo("a AND b"));
+			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
+				Should.Contain.Substring("a and b, but it did.")));
 		}
 
-		[Fact]
-		public void A_Or_B_And_C()
+		[Theory]
+		[InlineData(false, false, false)]
+		[InlineData(false, true, true)]
+		[InlineData(true, false, true)]
+		[InlineData(true, true, true)]
+		public void A_Or_B(bool a, bool b, bool shouldSucceed)
 		{
-			ExpectationBuilder.Tree tree = new();
-			tree.AddExpectation(new DummyExpectation("a"));
-			tree.AddCombination(n => new OrNode(n, Node.None), 1);
-			tree.AddExpectation(new DummyExpectation("b"));
-			tree.AddCombination(n => new AndNode(n, Node.None), 2);
-			tree.AddExpectation(new DummyExpectation("c"));
+			void Act()
+				=> Expect.That(AnyValue, Should.Be
+					.AVariable(a)
+					.Or().Be
+					.AVariable(b));
 
-			Expect.That(tree.ToString(), Should.Be.EqualTo("a OR (b AND c)"));
+			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
+				Should.Contain.Substring("a or b, but it did.")));
 		}
 
-		[Fact]
-		public void A()
+		[Theory]
+		[InlineData(false, true, false, false)]
+		[InlineData(true, true, false, true)]
+		[InlineData(false, false, true, true)]
+		public void A_And_B_Or_C(bool a, bool b, bool c, bool shouldSucceed)
 		{
-			ExpectationBuilder.Tree tree = new();
-			tree.AddExpectation(new DummyExpectation("a"));
+			void Act()
+				=> Expect.That(AnyValue, Should.Be
+					.AVariable(a)
+					.And().Be
+					.AVariable(b)
+					.Or().Be
+					.AVariable(c));
 
-			Expect.That(tree.ToString(), Should.Be.EqualTo("a"));
+			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
+				Should.Contain.Substring("a and b or c, but it did.")));
 		}
 
-		[Fact]
-		public void Not_A()
+		[Theory]
+		[InlineData(false, true, true, false)]
+		[InlineData(true, true, true, true)]
+		public void A_And_B_Or_Not_C(bool a, bool b, bool c, bool shouldSucceed)
 		{
-			ExpectationBuilder.Tree tree = new();
-			tree.AddManipulation(n => new NotNode(n));
-			tree.AddExpectation(new DummyExpectation("a"));
+			void Act()
+				=> Expect.That(AnyValue, Should.Be
+					.AVariable(a)
+					.And().Be
+					.AVariable(b)
+					.Or()
+					.Not.Be
+					.AVariable(c));
 
-			Expect.That(tree.ToString(), Should.Be.EqualTo("NOT a"));
+			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
+				Should.Contain.Substring("a and b or not c, but it did.")));
 		}
 
-		private class DummyExpectation : IExpectation
+		[Theory]
+		[InlineData(false, true, true, true)]
+		[InlineData(true, true, true, true)]
+		[InlineData(true, false, false, true)]
+		public void A_Or_B_And_C(bool a, bool b, bool c, bool shouldSucceed)
 		{
-			private readonly string _name;
+			void Act()
+				=> Expect.That(AnyValue, Should.Be
+					.AVariable(a)
+					.Or().Be
+					.AVariable(b)
+					.And().Be
+					.AVariable(c));
 
-			public DummyExpectation(string name)
-			{
-				_name = name;
-			}
-
-			/// <inheritdoc />
-			public override string ToString()
-				=> _name;
+			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
+				Should.Contain.Substring("a or b and c, but it did.")));
 		}
 	}
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core.Nodes;
-[assembly: InternalsVisibleTo("Testably.Expectations.Tests")]
 
 namespace Testably.Expectations.Core;
 

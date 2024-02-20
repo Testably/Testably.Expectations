@@ -25,7 +25,7 @@ internal class AndNode : CombinationNode
 		{
 			return new ExpectationResult.Failure(
 				combinedExpectation,
-				$"{leftFailure.ResultText} and {rightFailure.ResultText}");
+				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
 		if (leftResult is ExpectationResult.Failure onlyLeftFailure)
@@ -43,6 +43,16 @@ internal class AndNode : CombinationNode
 		}
 
 		return new ExpectationResult.Success(combinedExpectation);
+	}
+
+	private static string CombineResultTexts(string leftResultText, string rightResultText)
+	{
+		if (leftResultText == rightResultText)
+		{
+			return leftResultText;
+		}
+
+		return $"{leftResultText} and {rightResultText}";
 	}
 
 	/// <inheritdoc />
