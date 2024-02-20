@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Core.Nodes;
 
-public abstract class Node
+internal abstract class Node
 {
 	public static Node None { get; } = new NoneNode();
 

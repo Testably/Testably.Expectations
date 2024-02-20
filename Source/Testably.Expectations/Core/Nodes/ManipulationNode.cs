@@ -1,6 +1,6 @@
 ﻿namespace Testably.Expectations.Core.Nodes;
 
-public abstract class ManipulationNode : Node
+internal abstract class ManipulationNode : Node
 {
 	public abstract Node Inner { get; set; }
 }

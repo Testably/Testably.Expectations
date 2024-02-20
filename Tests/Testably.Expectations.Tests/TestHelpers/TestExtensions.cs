@@ -12,7 +12,7 @@ public static class TestExtensions
 			new TestExpectation<object?>(
 				new ExpectationResult.Failure(expectationText, resultText)));
 
-	public static Expectation<object?> AVariable(this ShouldBe shouldBe,
+	public static Expectation<object?> Variable(this ShouldBe shouldBe,
 		bool variableValue,
 		[CallerArgumentExpression(nameof(variableValue))] string variableExpression = "")
 		=> shouldBe.WithExpectation(

@@ -16,7 +16,7 @@ public sealed class ExpectationBuilderTests
 		{
 			void Act()
 				=> Expect.That(AnyValue, Should.Be
-					.AVariable(a));
+					.Variable(a));
 
 			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
 				Should.Contain.Substring("a, but it did.")));
@@ -30,7 +30,7 @@ public sealed class ExpectationBuilderTests
 			void Act()
 				=> Expect.That(AnyValue, Should
 					.Not.Be
-					.AVariable(a));
+					.Variable(a));
 
 			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
 				Should.Contain.Substring("a, but it did.")));
@@ -45,9 +45,9 @@ public sealed class ExpectationBuilderTests
 		{
 			void Act()
 				=> Expect.That(AnyValue, Should.Be
-					.AVariable(a)
+					.Variable(a)
 					.And().Be
-					.AVariable(b));
+					.Variable(b));
 
 			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
 				Should.Contain.Substring("a and b, but it did.")));
@@ -62,9 +62,9 @@ public sealed class ExpectationBuilderTests
 		{
 			void Act()
 				=> Expect.That(AnyValue, Should.Be
-					.AVariable(a)
+					.Variable(a)
 					.Or().Be
-					.AVariable(b));
+					.Variable(b));
 
 			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
 				Should.Contain.Substring("a or b, but it did.")));
@@ -78,11 +78,11 @@ public sealed class ExpectationBuilderTests
 		{
 			void Act()
 				=> Expect.That(AnyValue, Should.Be
-					.AVariable(a)
+					.Variable(a)
 					.And().Be
-					.AVariable(b)
+					.Variable(b)
 					.Or().Be
-					.AVariable(c));
+					.Variable(c));
 
 			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
 				Should.Contain.Substring("a and b or c, but it did.")));
@@ -95,12 +95,12 @@ public sealed class ExpectationBuilderTests
 		{
 			void Act()
 				=> Expect.That(AnyValue, Should.Be
-					.AVariable(a)
+					.Variable(a)
 					.And().Be
-					.AVariable(b)
+					.Variable(b)
 					.Or()
 					.Not.Be
-					.AVariable(c));
+					.Variable(c));
 
 			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
 				Should.Contain.Substring("a and b or not c, but it did.")));
@@ -114,11 +114,11 @@ public sealed class ExpectationBuilderTests
 		{
 			void Act()
 				=> Expect.That(AnyValue, Should.Be
-					.AVariable(a)
+					.Variable(a)
 					.Or().Be
-					.AVariable(b)
+					.Variable(b)
 					.And().Be
-					.AVariable(c));
+					.Variable(c));
 
 			Expect.That(Act, Should.Throw.ExceptionIf(!shouldSucceed).WhichMessage(
 				Should.Contain.Substring("a or b and c, but it did.")));
