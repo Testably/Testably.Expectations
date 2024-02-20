@@ -1,34 +1,36 @@
 ﻿using System;
-using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core.Nodes;
 
 internal class WhichNode<TProperty> : Node
 {
+	private readonly PropertyAccessor _propertyAccessor;
 	public Node Inner { get; }
 
-	public string Property { get; }
-
-	public WhichNode(string property, Node inner)
+	public WhichNode(PropertyAccessor propertyAccessor, Node inner)
 	{
-		Property = property;
+		_propertyAccessor = propertyAccessor;
 		Inner = inner;
 	}
 
 	/// <inheritdoc />
 	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
-		object? propertyValue = ExpressionHelpers.GetPropertyValue(actual, Property);
-		if (propertyValue is TProperty matchingValue)
+		if (_propertyAccessor is PropertyAccessor<TExpectation, TProperty> propertyAccessor)
 		{
-			return Inner.IsMetBy(matchingValue)
-				.UpdateExpectationText(r => $".{Property} {r.ExpectationText}");
+			if (propertyAccessor.TryAccessProperty(actual, out var matchingValue))
+			{
+				return Inner.IsMetBy(matchingValue)
+					.UpdateExpectationText(r => $".{_propertyAccessor} {r.ExpectationText}");
+			}
+
+			throw new InvalidOperationException($"The property type for the which node did not match. Expected {typeof(TProperty).Name}, but found {matchingValue?.GetType().Name}");
 		}
 
-		throw new InvalidOperationException($"The property type for the which node did not match. Expected {typeof(TProperty).Name}, but found {propertyValue?.GetType().Name}");
+		throw new InvalidOperationException($"The property accessor for the which node did not match. Expected {typeof(PropertyAccessor<TExpectation, TProperty>).FullName}, but found {_propertyAccessor.GetType().FullName}");
 	}
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $".{Property} {Inner}";
+		=> $".{_propertyAccessor} {Inner}";
 }

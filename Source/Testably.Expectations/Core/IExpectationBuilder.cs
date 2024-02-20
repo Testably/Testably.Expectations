@@ -9,6 +9,6 @@ internal interface IExpectationBuilder
 	IExpectationBuilder Not();
 	IExpectationBuilder Or();
 
-	IExpectationBuilder Which<TSource, TProperty>(string property,
+	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation);
 }

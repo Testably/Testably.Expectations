@@ -124,7 +124,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder Which<TSource, TProperty>(string property,
+	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation)
 	{
 		if (_setCurrent == null && _getCurrent == null)
@@ -135,7 +135,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 		if (_setCurrent != null)
 		{
 			_setCurrent(
-				new WhichNode<TProperty>(property, new ExpectationNode(expectation)));
+				new WhichNode<TProperty>(propertyAccessor, new ExpectationNode(expectation)));
 			_setCurrent = null;
 			_getCurrent = null;
 		}

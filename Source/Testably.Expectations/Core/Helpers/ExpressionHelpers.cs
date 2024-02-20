@@ -53,4 +53,15 @@ internal static class ExpressionHelpers
 
 		return propertyValue;
 	}
+
+	public static TProperty? GetPropertyValue<TProperty>(object? obj, string propertyPath)
+	{
+		object? propertyValue = GetPropertyValue(obj, propertyPath);
+		if (propertyValue is TProperty property)
+		{
+			return property;
+		}
+
+		return default;
+	}
 }
