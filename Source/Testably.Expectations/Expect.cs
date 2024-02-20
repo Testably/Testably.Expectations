@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Ambient;
 
@@ -52,6 +53,31 @@ public static class Expect
 			ReportFailure(failure, null, actualExpression);
 		}
 	}
+
+	/// <summary>
+	///     Checks that the <paramref name="actual" /> value meets the <paramref name="expectation" />.
+	/// </summary>
+	/// <remarks>
+	///     Throws when the <paramref name="actual" /> value is <see langword="null" />.
+	/// </remarks>
+	public static async Task That<TActual, TTarget>([NotNull] TActual actual,
+		AsyncExpectation<TActual, TTarget> expectation,
+		[CallerArgumentExpression(nameof(actual))]
+		string actualExpression = "")
+	{
+		ExpectationResult result = await expectation.IsMetByAsync(actual);
+
+		if (result is ExpectationResult.Failure failure)
+		{
+			ReportFailure(failure, null, actualExpression);
+		}
+		else
+		{
+			Debug.Assert(actual != null);
+		}
+	}
+
+
 
 	[DoesNotReturn]
 	private static void ReportFailure(

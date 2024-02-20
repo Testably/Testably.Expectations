@@ -25,5 +25,5 @@ internal class ExpectationNode : Node
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> Expectation?.ToString() ?? "<EMPTY EXPECTATION>";
+		=> Expectation.ToString() ?? "<EMPTY EXPECTATION>";
 }

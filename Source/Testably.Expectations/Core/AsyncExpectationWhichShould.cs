@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core;
@@ -8,7 +7,7 @@ namespace Testably.Expectations.Core;
 /// <summary>
 ///     A complex expectation that allows access to underlying properties.
 /// </summary>
-public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCurrent>
+public class AsyncExpectationWhichShould<TStart, TCurrent> : AsyncExpectation<TStart, TCurrent>
 {
 	/// <summary>
 	///     Expect the actual value to be…
@@ -42,7 +41,7 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 
 	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal ExpectationWhichShould(IExpectationBuilder expectationBuilder)
+	internal AsyncExpectationWhichShould(IExpectationBuilder expectationBuilder)
 		: base(expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
@@ -55,40 +54,11 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	///     The <paramref name="propertySelector" /> specifies which property to use.
 	///     Nested properties are supported.
 	/// </remarks>
-	public AsyncExpectation<TStart, TCurrent> WhichAsync<TProperty>(
-		Expression<Func<TCurrent, TProperty>> propertySelector,
-		AsyncExpectation<TProperty> expectation)
-		=> new(_expectationBuilder.WhichAsync<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), expectation));
-
-
-
-	/// <summary>
-	///     Specifies an <paramref name="expectation" /> on a property from <typeparamref name="TCurrent" />.
-	/// </summary>
-	/// <remarks>
-	///     The <paramref name="propertySelector" /> specifies which property to use.
-	///     Nested properties are supported.
-	/// </remarks>
-	public AsyncExpectation<TStart, TCurrent> WhichAsync<TProperty>(
-		Expression<Func<TCurrent, Task<TProperty>>> propertySelector,
-		Expectation<TProperty> expectation)
-		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), expectation));
-
-	/// <summary>
-	///     Specifies an <paramref name="expectation" /> on a property from <typeparamref name="TCurrent" />.
-	/// </summary>
-	/// <remarks>
-	///     The <paramref name="propertySelector" /> specifies which property to use.
-	///     Nested properties are supported.
-	/// </remarks>
-	public Expectation<TStart, TCurrent> Which<TProperty>(
+	public AsyncExpectation<TStart, TCurrent> Which<TProperty>(
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		Expectation<TProperty> expectation)
 		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)),
-			expectation));
+			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), expectation));
 
 	/// <summary>
 	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
@@ -97,12 +67,11 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	///     The <paramref name="propertySelector" /> specifies which property to use.
 	///     Nested properties are supported.
 	/// </remarks>
-	public Expectation<TStart, TCurrent> Which<TProperty>(
+	public AsyncExpectation<TStart, TCurrent> Which<TProperty>(
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		NullableExpectation<TProperty> nullableExpectation)
 		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), 
-			nullableExpectation));
+			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), nullableExpectation));
 
 	/// <summary>
 	///     Specifies an <paramref name="expectation" /> on a property from <typeparamref name="TCurrent" />.
@@ -111,12 +80,10 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	///     The <paramref name="propertySelector" /> specifies which property to use.
 	///     Nested properties are supported.
 	/// </remarks>
-	public Expectation<TStart, TCurrent> Which<TProperty>(
+	public AsyncExpectation<TStart, TCurrent> Which<TProperty>(
 		string propertySelector,
 		Expectation<TProperty> expectation)
-		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector),
-			expectation));
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector), expectation));
 
 	/// <summary>
 	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
@@ -125,10 +92,9 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	///     The <paramref name="propertySelector" /> specifies which property to use.
 	///     Nested properties are supported.
 	/// </remarks>
-	public Expectation<TStart, TCurrent> Which<TProperty>(
+	public AsyncExpectation<TStart, TCurrent> Which<TProperty>(
 		string propertySelector,
 		NullableExpectation<TProperty> nullableExpectation)
-		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector),
-			nullableExpectation));
+		=> new(
+			_expectationBuilder.Which<TCurrent, TProperty>(PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector), nullableExpectation));
 }

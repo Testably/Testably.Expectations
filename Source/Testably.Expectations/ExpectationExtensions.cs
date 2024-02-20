@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Expectations;
 using Testably.Expectations.Expectations.Action;
@@ -34,6 +35,12 @@ public static class ExpectationExtensions
 	public static ExpectationWhichShould<Action, Exception> ExceptionIf(this ShouldThrow shouldThrow, bool predicate,
 	[CallerArgumentExpression(nameof(predicate))] string predicateExpression = "")
 		=> shouldThrow.WithExpectation(new ConditionallyThrowException<Exception>(predicate, predicateExpression));
+
+	/// <summary>
+	///     Expect the <see cref="Action" /> to throw an exception.
+	/// </summary>
+	public static AsyncExpectationWhichShould<Func<Task>, Exception> ExceptionAsync(this ShouldThrow shouldThrow)
+		=> shouldThrow.WithExpectation(new ThrowAsyncException<Exception>());
 
 	/// <summary>
 	///     Expect the actual value to be <see langword="false" />.

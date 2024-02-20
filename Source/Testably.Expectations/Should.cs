@@ -15,6 +15,11 @@ public static class Should
 	public static ShouldBe Be => new(new ExpectationBuilder());
 
 	/// <summary>
+	///     Expect the actual value to be…
+	/// </summary>
+	public static ShouldBe BeAsync => new(new ExpectationBuilder());
+
+	/// <summary>
 	///     Expect the actual value to contain…
 	/// </summary>
 	public static ShouldContain Contain => new(new ExpectationBuilder());

@@ -37,7 +37,22 @@ public abstract class ShouldVerb
 		IExpectation<T1, T2> expectation)
 		=> new(_expectationBuilder.AddCast(expectation));
 
-	#pragma warning disable CS0809
+	/// <summary>
+	///     Adds an expectation.
+	/// </summary>
+	/// <remarks>This is called from the extension methods.</remarks>
+	public AsyncExpectation<T> WithExpectation<T>(IAsyncExpectation<T> expectation)
+		=> new(_expectationBuilder.Add(expectation));
+
+	/// <summary>
+	///     Adds a complex expectation.
+	/// </summary>
+	/// <remarks>This is called from the extension methods.</remarks>
+	public AsyncExpectationWhichShould<T1, T2> WithExpectation<T1, T2>(
+		IAsyncExpectation<T1, T2> expectation)
+		=> new(_expectationBuilder.AddCast(expectation));
+
+#pragma warning disable CS0809
 	/// <inheritdoc />
 	[Obsolete("Equals is not part of Testably.Expectations.")]
 	[EditorBrowsable(EditorBrowsableState.Never)]

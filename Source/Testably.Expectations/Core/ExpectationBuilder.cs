@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Testably.Expectations.Core.Nodes;
 
 namespace Testably.Expectations.Core;
@@ -49,6 +50,18 @@ internal class ExpectationBuilder : IExpectationBuilder
 					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
 			}
 			var node = new ExpectationNode(expectation);
+			_setExpectationNode.Invoke(node);
+			_setExpectationNode = null;
+		}
+
+		public void AddExpectation(IAsyncExpectation expectation)
+		{
+			if (_setExpectationNode == null)
+			{
+				throw new InvalidOperationException(
+					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+			}
+			var node = new AsyncExpectationNode(expectation);
 			_setExpectationNode.Invoke(node);
 			_setExpectationNode = null;
 		}
@@ -157,9 +170,23 @@ internal class ExpectationBuilder : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
+	public IExpectationBuilder Add(IAsyncExpectation expectation)
+	{
+		_tree.AddExpectation(expectation);
+		return this;
+	}
+
+	/// <inheritdoc />
 	public IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation)
 	{
 		_tree.AddManipulation(n => new CastNode<T1, T2>(expectation, n));
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder AddCast<T1, T2>(IAsyncExpectation<T1, T2> expectation)
+	{
+		_tree.AddManipulation(n => new AsyncCastNode<T1, T2>(expectation, n));
 		return this;
 	}
 
@@ -173,6 +200,12 @@ internal class ExpectationBuilder : IExpectationBuilder
 	public ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
 		return _tree.GetRoot().IsMetBy(actual);
+	}
+
+	/// <inheritdoc />
+	public Task<ExpectationResult> IsMetByAsync<TExpectation>(TExpectation actual)
+	{
+		return _tree.GetRoot().IsMetByAsync(actual);
 	}
 
 	/// <inheritdoc />
@@ -192,6 +225,16 @@ internal class ExpectationBuilder : IExpectationBuilder
 	/// <inheritdoc />
 	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation)
+	{
+		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
+		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+		_tree.AddExpectation(expectation);
+
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder WhichAsync<TSource, TProperty>(PropertyAccessor propertyAccessor, IAsyncExpectation<TProperty> expectation)
 	{
 		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
 		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
