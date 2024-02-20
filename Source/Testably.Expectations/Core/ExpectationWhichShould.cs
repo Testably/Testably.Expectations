@@ -58,7 +58,8 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		Expectation<TProperty> expectation)
 		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			ExpressionHelpers.GetPropertyPath(propertySelector), expectation));
+			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)),
+			expectation));
 
 	/// <summary>
 	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
@@ -71,7 +72,8 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		NullableExpectation<TProperty> nullableExpectation)
 		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			ExpressionHelpers.GetPropertyPath(propertySelector), nullableExpectation));
+			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), 
+			nullableExpectation));
 
 	/// <summary>
 	///     Specifies an <paramref name="expectation" /> on a property from <typeparamref name="TCurrent" />.
@@ -83,7 +85,9 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	public Expectation<TStart, TCurrent> Which<TProperty>(
 		string propertySelector,
 		Expectation<TProperty> expectation)
-		=> new(_expectationBuilder.Which<TCurrent, TProperty>(propertySelector, expectation));
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
+			PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector),
+			expectation));
 
 	/// <summary>
 	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
@@ -95,6 +99,7 @@ public class ExpectationWhichShould<TStart, TCurrent> : Expectation<TStart, TCur
 	public Expectation<TStart, TCurrent> Which<TProperty>(
 		string propertySelector,
 		NullableExpectation<TProperty> nullableExpectation)
-		=> new(
-			_expectationBuilder.Which<TCurrent, TProperty>(propertySelector, nullableExpectation));
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
+			PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector),
+			nullableExpectation));
 }

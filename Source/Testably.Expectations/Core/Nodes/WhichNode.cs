@@ -1,34 +1,40 @@
-﻿using Testably.Expectations.Core.Helpers;
+﻿using System;
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class WhichNode<TProperty> : Node
+internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
-	public Node Inner { get; }
+	private readonly PropertyAccessor _propertyAccessor;
+	public override Node Inner { get; set; }
 
-	public string Property { get; }
-
-	public WhichNode(string property, Node inner)
+	public WhichNode(PropertyAccessor propertyAccessor, Node inner)
 	{
-		Property = property;
+		_propertyAccessor = propertyAccessor;
 		Inner = inner;
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
-		object? propertyValue = ExpressionHelpers.GetPropertyValue(actual, Property);
-		if (propertyValue is TProperty matchingValue)
+		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
-			return Inner.ApplyTo(matchingValue)
-				.UpdateExpectationText(r => $".{Property} {r.ExpectationText}");
+			if (actual is not TSource matchingActualValue)
+			{
+				throw new InvalidOperationException($"The property type for the actual value in the which node did not match. Expected {typeof(TSource).Name}, but found {actual?.GetType().Name}");
+			}
+			if (propertyAccessor.TryAccessProperty(matchingActualValue, out var matchingValue))
+			{
+				return Inner.IsMetBy(matchingValue)
+					.UpdateExpectationText(r => $".{_propertyAccessor} {r.ExpectationText}");
+			}
+
+			throw new InvalidOperationException($"The property type for the which node did not match. Expected {typeof(TProperty).Name}, but found {matchingValue?.GetType().Name}");
 		}
 
-		return Inner.ApplyTo(propertyValue)
-			.UpdateExpectationText(r => $".{Property} {r.ExpectationText}");
+		throw new InvalidOperationException($"The property accessor for the which node did not match. Expected {typeof(PropertyAccessor<TExpectation, TProperty>).FullName}, but found {_propertyAccessor.GetType().FullName}");
 	}
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $".{Property} {Inner}";
+		=> $".{_propertyAccessor} {Inner}";
 }

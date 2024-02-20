@@ -28,7 +28,7 @@ public class Expectation<TExpectation, TProperty> : IExpectation<TExpectation, T
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(TExpectation actual)
-		=> _expectationBuilder.ApplyTo(actual);
+		=> _expectationBuilder.IsMetBy(actual);
 
 	#endregion
 

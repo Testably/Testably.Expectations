@@ -31,7 +31,7 @@ public class NullableExpectation<TExpectation, TProperty> : IExpectation<TExpect
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(TExpectation? actual)
-		=> _expectationBuilder.ApplyTo(actual);
+		=> _expectationBuilder.IsMetBy(actual);
 
 	#endregion
 

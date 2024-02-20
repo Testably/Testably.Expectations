@@ -1,9 +1,9 @@
 ﻿namespace Testably.Expectations.Core.Nodes;
 
-internal class AndNode : Node
+internal class AndNode : CombinationNode
 {
-	public Node Left { get; }
-	public Node Right { get; set; }
+	public override Node Left { get; }
+	public override Node Right { get; set; }
 
 	public AndNode(Node left, Node right)
 	{
@@ -12,10 +12,10 @@ internal class AndNode : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
-		ExpectationResult leftResult = Left.ApplyTo(actual);
-		ExpectationResult rightResult = Right.ApplyTo(actual);
+		ExpectationResult leftResult = Left.IsMetBy(actual);
+		ExpectationResult rightResult = Right.IsMetBy(actual);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText} and {rightResult.ExpectationText}";
@@ -25,7 +25,7 @@ internal class AndNode : Node
 		{
 			return new ExpectationResult.Failure(
 				combinedExpectation,
-				$"{leftFailure.ResultText} and {rightFailure.ResultText}");
+				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
 		if (leftResult is ExpectationResult.Failure onlyLeftFailure)
@@ -43,6 +43,16 @@ internal class AndNode : Node
 		}
 
 		return new ExpectationResult.Success(combinedExpectation);
+	}
+
+	private static string CombineResultTexts(string leftResultText, string rightResultText)
+	{
+		if (leftResultText == rightResultText)
+		{
+			return leftResultText;
+		}
+
+		return $"{leftResultText} and {rightResultText}";
 	}
 
 	/// <inheritdoc />

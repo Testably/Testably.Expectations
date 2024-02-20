@@ -12,7 +12,7 @@ internal class ExpectationNode : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
 		if (Expectation is IExpectation<TExpectation> typedExpectation)
 		{
