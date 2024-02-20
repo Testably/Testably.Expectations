@@ -14,14 +14,14 @@ internal class CastNode<T1, T2> : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
 		if (Expectation is IExpectation<TExpectation> typedExpectation)
 		{
 			ExpectationResult result = typedExpectation.IsMetBy(actual);
 			if (Inner != None && result is ExpectationResult.Success<T2> success)
 			{
-				return Inner.ApplyTo(success.Value);
+				return Inner.IsMetBy(success.Value);
 			}
 
 			return result;

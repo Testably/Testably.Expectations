@@ -15,16 +15,16 @@ internal class WhichNode<TProperty> : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
 		object? propertyValue = ExpressionHelpers.GetPropertyValue(actual, Property);
 		if (propertyValue is TProperty matchingValue)
 		{
-			return Inner.ApplyTo(matchingValue)
+			return Inner.IsMetBy(matchingValue)
 				.UpdateExpectationText(r => $".{Property} {r.ExpectationText}");
 		}
 
-		return Inner.ApplyTo(propertyValue)
+		return Inner.IsMetBy(propertyValue)
 			.UpdateExpectationText(r => $".{Property} {r.ExpectationText}");
 	}
 

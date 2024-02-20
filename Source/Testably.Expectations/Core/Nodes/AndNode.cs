@@ -12,10 +12,10 @@ internal class AndNode : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
-		ExpectationResult leftResult = Left.ApplyTo(actual);
-		ExpectationResult rightResult = Right.ApplyTo(actual);
+		ExpectationResult leftResult = Left.IsMetBy(actual);
+		ExpectationResult rightResult = Right.IsMetBy(actual);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText} and {rightResult.ExpectationText}";

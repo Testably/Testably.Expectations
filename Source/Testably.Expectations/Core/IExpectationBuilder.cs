@@ -5,7 +5,7 @@ internal interface IExpectationBuilder
 	IExpectationBuilder Add(IExpectation expectation);
 	IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation);
 	IExpectationBuilder And();
-	ExpectationResult ApplyTo<TExpectation>(TExpectation actual);
+	ExpectationResult IsMetBy<TExpectation>(TExpectation actual);
 	IExpectationBuilder Not();
 	IExpectationBuilder Or();
 

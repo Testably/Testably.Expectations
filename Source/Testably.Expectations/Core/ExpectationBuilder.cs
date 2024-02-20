@@ -83,9 +83,9 @@ internal class ExpectationBuilder : IExpectationBuilder
 		return this;
 	}
 
-	public ExpectationResult ApplyTo<TExpectation>(TExpectation actual)
+	public ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
-		return _root.ApplyTo(actual);
+		return _root.IsMetBy(actual);
 	}
 
 	/// <inheritdoc />
