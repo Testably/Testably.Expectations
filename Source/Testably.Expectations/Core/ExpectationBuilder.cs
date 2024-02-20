@@ -67,7 +67,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 				{
 					var newCombinationNode = nodeGenerator(parentCombinationNode.Right);
 					parentCombinationNode.Right = newCombinationNode;
-					_current = new TreeNode()
+					_current = new TreeNode
 					{
 						Node = newCombinationNode,
 						Parent = current,
@@ -145,7 +145,7 @@ internal class ExpectationBuilder : IExpectationBuilder
 			return s;
 		}
 	}
-	private Tree _tree = new();
+	private readonly Tree _tree = new();
 
 	#region IExpectationBuilder Members
 

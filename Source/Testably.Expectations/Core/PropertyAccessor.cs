@@ -30,7 +30,7 @@ internal class PropertyAccessor<TActual, TProperty> : PropertyAccessor
 	public bool TryAccessProperty(TActual value, [NotNullWhen(true)] out TProperty? property)
 	{
 		property = _accessor.Invoke(value);
-		return property != null;
+		return property is not null;
 	}
 
 	public static PropertyAccessor<TActual, TProperty?> FromString(string propertyAccessor)
