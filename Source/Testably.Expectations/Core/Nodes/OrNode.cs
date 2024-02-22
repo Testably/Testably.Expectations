@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core.Nodes;
+﻿using System.Threading.Tasks;
+
+namespace Testably.Expectations.Core.Nodes;
 
 internal class OrNode : CombinationNode
 {
@@ -16,6 +18,26 @@ internal class OrNode : CombinationNode
 	{
 		ExpectationResult leftResult = Left.IsMetBy(actual);
 		ExpectationResult rightResult = Right.IsMetBy(actual);
+
+		string combinedExpectation =
+			$"{leftResult.ExpectationText} or {rightResult.ExpectationText}";
+
+		if (leftResult is ExpectationResult.Failure leftFailure &&
+		    rightResult is ExpectationResult.Failure rightFailure)
+		{
+			return new ExpectationResult.Failure(
+				combinedExpectation,
+				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
+		}
+
+		return new ExpectationResult.Success(combinedExpectation);
+	}
+
+	/// <inheritdoc />
+	public override async Task<ExpectationResult> IsMetByAsync<TExpectation>(TExpectation actual)
+	{
+		ExpectationResult leftResult = await Left.IsMetByAsync(actual);
+		ExpectationResult rightResult = await Right.IsMetByAsync(actual);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText} or {rightResult.ExpectationText}";

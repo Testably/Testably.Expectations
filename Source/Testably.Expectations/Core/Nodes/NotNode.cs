@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core.Nodes;
+﻿using System.Threading.Tasks;
+
+namespace Testably.Expectations.Core.Nodes;
 
 internal class NotNode : ManipulationNode
 {
@@ -13,6 +15,14 @@ internal class NotNode : ManipulationNode
 	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
 	{
 		ExpectationResult result = Inner.IsMetBy(actual);
+		return result.Invert(e => $"not {e.ExpectationText}",
+			v => v == null ? "it did" : $"found {v}");
+	}
+
+	/// <inheritdoc />
+	public override async Task<ExpectationResult> IsMetByAsync<TExpectation>(TExpectation actual)
+	{
+		ExpectationResult result = await Inner.IsMetByAsync(actual);
 		return result.Invert(e => $"not {e.ExpectationText}",
 			v => v == null ? "it did" : $"found {v}");
 	}

@@ -17,6 +17,12 @@ internal interface IExpectationBuilder
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation);
 
-	IExpectationBuilder WhichAsync<TSource, TProperty>(PropertyAccessor propertyAccessor,
+	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
+		IAsyncExpectation<TProperty> expectation);
+
+	IExpectationBuilder Which<TSource, TProperty>(AsyncPropertyAccessor propertyAccessor,
+		IExpectation<TProperty> expectation);
+
+	IExpectationBuilder Which<TSource, TProperty>(AsyncPropertyAccessor propertyAccessor,
 		IAsyncExpectation<TProperty> expectation);
 }

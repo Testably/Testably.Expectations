@@ -40,14 +40,14 @@ public class AsyncExpectation<TExpectation, TProperty> : IAsyncExpectation<TExpe
 	///     Combines the expectation with another expectation using AND.
 	/// </summary>
 	/// <remarks>Both expectations must be met by the actual value.</remarks>
-	public ExpectationWhichShould<TExpectation, TProperty> And()
+	public AsyncExpectationWhichShould<TExpectation, TProperty> And()
 		=> new(_expectationBuilder.And());
 
 	/// <summary>
 	///     Combines the expectation with another expectation using OR.
 	/// </summary>
 	/// <remarks>At least one expectation must be met by the actual value.</remarks>
-	public ExpectationWhichShould<TExpectation, TProperty> Or()
+	public AsyncExpectationWhichShould<TExpectation, TProperty> Or()
 		=> new(_expectationBuilder.Or());
 
 	/// <inheritdoc />

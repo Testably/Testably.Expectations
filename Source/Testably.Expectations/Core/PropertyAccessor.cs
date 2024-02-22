@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core;
@@ -33,7 +34,12 @@ internal class PropertyAccessor<TActual, TProperty> : PropertyAccessor
 		return property is not null;
 	}
 
-	public static PropertyAccessor<TActual, TProperty?> FromString(string propertyAccessor)
-		=> new(value => ExpressionHelpers.GetPropertyValue<TProperty>(value, propertyAccessor),
-			propertyAccessor);
+	public static PropertyAccessor<TActual, TProperty> Create(Func<TActual, TProperty> accessor, string name)
+		=> new(accessor, name);
+
+	public static PropertyAccessor<TActual, TProperty> FromExpression(Expression<Func<TActual, TProperty>> expression)
+	{
+		var accessor = expression.Compile();
+		return Create(accessor, ExpressionHelpers.ExtractExpressionName(expression));
+	}
 }

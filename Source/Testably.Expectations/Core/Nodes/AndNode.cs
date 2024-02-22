@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core.Nodes;
+﻿using System.Threading.Tasks;
+
+namespace Testably.Expectations.Core.Nodes;
 
 internal class AndNode : CombinationNode
 {
@@ -16,6 +18,40 @@ internal class AndNode : CombinationNode
 	{
 		ExpectationResult leftResult = Left.IsMetBy(actual);
 		ExpectationResult rightResult = Right.IsMetBy(actual);
+
+		string combinedExpectation =
+			$"{leftResult.ExpectationText} and {rightResult.ExpectationText}";
+
+		if (leftResult is ExpectationResult.Failure leftFailure &&
+		    rightResult is ExpectationResult.Failure rightFailure)
+		{
+			return new ExpectationResult.Failure(
+				combinedExpectation,
+				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
+		}
+
+		if (leftResult is ExpectationResult.Failure onlyLeftFailure)
+		{
+			return new ExpectationResult.Failure(
+				combinedExpectation,
+				onlyLeftFailure.ResultText);
+		}
+
+		if (rightResult is ExpectationResult.Failure onlyRightFailure)
+		{
+			return new ExpectationResult.Failure(
+				combinedExpectation,
+				onlyRightFailure.ResultText);
+		}
+
+		return new ExpectationResult.Success(combinedExpectation);
+	}
+
+	/// <inheritdoc />
+	public override async Task<ExpectationResult> IsMetByAsync<TExpectation>(TExpectation actual)
+	{
+		ExpectationResult leftResult = await Left.IsMetByAsync(actual);
+		ExpectationResult rightResult = await Right.IsMetByAsync(actual);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText} and {rightResult.ExpectationText}";

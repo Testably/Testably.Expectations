@@ -54,9 +54,9 @@ public sealed class PrecedenceTests
 			void Act()
 				=> Expect.That(sut,
 					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.AFailedTest("to be A", "found X")).Or()
-						.Which("Value", Should.Be.ASuccessfulTest("to be B")).And()
-						.Which("Value", Should.Be.AFailedTest("to be C", "found Y")));
+						.Which(v => v.Value, Should.Be.AFailedTest("to be A", "found X")).Or()
+						.Which(v => v.Value, Should.Be.ASuccessfulTest("to be B")).And()
+						.Which(v => v.Value, Should.Be.AFailedTest("to be C", "found Y")));
 
 			Expect.That(Act, Should.Throw.Exception().WhichMessage(
 				Should.Be.EqualTo(
@@ -71,9 +71,9 @@ public sealed class PrecedenceTests
 			void Act()
 				=> Expect.That(sut,
 					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.ASuccessfulTest("to be A")).And()
-						.Which("Value", Should.Be.AFailedTest("to be B", "found X")).Or()
-						.Which("Value", Should.Be.AFailedTest("to be C", "found Y")));
+						.Which(v => v.Value, Should.Be.ASuccessfulTest("to be A")).And()
+						.Which(v => v.Value, Should.Be.AFailedTest("to be B", "found X")).Or()
+						.Which(v => v.Value, Should.Be.AFailedTest("to be C", "found Y")));
 
 			Expect.That(Act, Should.Throw.Exception().WhichMessage(
 				Should.Be.EqualTo(
@@ -88,9 +88,9 @@ public sealed class PrecedenceTests
 			void Act()
 				=> Expect.That(sut,
 					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.ASuccessfulTest("to be A")).And()
-						.Which("Value", Should.Be.AFailedTest("to be B", "found X")).Or()
-						.Which("Value", Should.Be.ASuccessfulTest("to be C")));
+						.Which(v => v.Value, Should.Be.ASuccessfulTest("to be A")).And()
+						.Which(v => v.Value, Should.Be.AFailedTest("to be B", "found X")).Or()
+						.Which(v => v.Value, Should.Be.ASuccessfulTest("to be C")));
 
 			Expect.That(Act, Should.Not.Throw.Exception());
 		}
@@ -103,9 +103,9 @@ public sealed class PrecedenceTests
 			void Act()
 				=> Expect.That(sut,
 					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.ASuccessfulTest("to be A")).Or()
-						.Which("Value", Should.Be.ASuccessfulTest("to be B")).And()
-						.Which("Value", Should.Be.AFailedTest("to be C", "found X")));
+						.Which(v => v.Value, Should.Be.ASuccessfulTest("to be A")).Or()
+						.Which(v => v.Value, Should.Be.ASuccessfulTest("to be B")).And()
+						.Which(v => v.Value, Should.Be.AFailedTest("to be C", "found X")));
 
 			Expect.That(Act, Should.Not.Throw.Exception());
 		}

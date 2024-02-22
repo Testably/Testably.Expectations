@@ -234,10 +234,32 @@ internal class ExpectationBuilder : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder WhichAsync<TSource, TProperty>(PropertyAccessor propertyAccessor, IAsyncExpectation<TProperty> expectation)
+	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
+		IAsyncExpectation<TProperty> expectation)
 	{
 		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
 		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+		_tree.AddExpectation(expectation);
+
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder Which<TSource, TProperty>(AsyncPropertyAccessor propertyAccessor,
+		IExpectation<TProperty> expectation)
+	{
+		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
+		_tree.AddManipulation(n => new AsyncWhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+		_tree.AddExpectation(expectation);
+
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder Which<TSource, TProperty>(AsyncPropertyAccessor propertyAccessor, IAsyncExpectation<TProperty> expectation)
+	{
+		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
+		_tree.AddManipulation(n => new AsyncWhichNode<TSource, TProperty>(propertyAccessor, Node.None));
 		_tree.AddExpectation(expectation);
 
 		return this;

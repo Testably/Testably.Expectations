@@ -6,6 +6,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\Source\Testably.Expectations\Testably.Expectations.csproj" />
+		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 
 </Project>

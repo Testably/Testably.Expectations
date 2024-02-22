@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core;
@@ -58,7 +59,8 @@ public class AsyncExpectationWhichShould<TStart, TCurrent> : AsyncExpectation<TS
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		Expectation<TProperty> expectation)
 		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), expectation));
+			PropertyAccessor<TCurrent, TProperty>.FromExpression(propertySelector),
+			expectation));
 
 	/// <summary>
 	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
@@ -71,19 +73,9 @@ public class AsyncExpectationWhichShould<TStart, TCurrent> : AsyncExpectation<TS
 		Expression<Func<TCurrent, TProperty>> propertySelector,
 		NullableExpectation<TProperty> nullableExpectation)
 		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
-			PropertyAccessor<TCurrent, TProperty>.FromString(ExpressionHelpers.GetPropertyPath(propertySelector)), nullableExpectation));
+			PropertyAccessor<TCurrent, TProperty>.FromExpression(propertySelector),
+			nullableExpectation));
 
-	/// <summary>
-	///     Specifies an <paramref name="expectation" /> on a property from <typeparamref name="TCurrent" />.
-	/// </summary>
-	/// <remarks>
-	///     The <paramref name="propertySelector" /> specifies which property to use.
-	///     Nested properties are supported.
-	/// </remarks>
-	public AsyncExpectation<TStart, TCurrent> Which<TProperty>(
-		string propertySelector,
-		Expectation<TProperty> expectation)
-		=> new(_expectationBuilder.Which<TCurrent, TProperty>(PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector), expectation));
 
 	/// <summary>
 	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
@@ -93,8 +85,23 @@ public class AsyncExpectationWhichShould<TStart, TCurrent> : AsyncExpectation<TS
 	///     Nested properties are supported.
 	/// </remarks>
 	public AsyncExpectation<TStart, TCurrent> Which<TProperty>(
-		string propertySelector,
-		NullableExpectation<TProperty> nullableExpectation)
-		=> new(
-			_expectationBuilder.Which<TCurrent, TProperty>(PropertyAccessor<TCurrent, TProperty>.FromString(propertySelector), nullableExpectation));
+		Expression<Func<TCurrent, Task<TProperty>>> propertySelector,
+		NullableExpectation<TProperty?> nullableExpectation)
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
+			AsyncPropertyAccessor<TCurrent, TProperty>.FromExpression(propertySelector),
+			nullableExpectation));
+
+	/// <summary>
+	///     Accesses a property from <typeparamref name="TCurrent" /> and add a <paramref name="nullableExpectation" /> on it.
+	/// </summary>
+	/// <remarks>
+	///     The <paramref name="propertySelector" /> specifies which property to use.
+	///     Nested properties are supported.
+	/// </remarks>
+	public AsyncExpectation<TStart, TCurrent> Which<TProperty>(
+		Expression<Func<TCurrent, Task<TProperty>>> propertySelector,
+		Expectation<TProperty?> nullableExpectation)
+		=> new(_expectationBuilder.Which<TCurrent, TProperty>(
+			AsyncPropertyAccessor<TCurrent, TProperty>.FromExpression(propertySelector),
+			nullableExpectation));
 }

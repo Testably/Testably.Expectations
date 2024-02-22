@@ -1,67 +1,37 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Linq.Expressions;
 
 namespace Testably.Expectations.Core.Helpers;
 
 internal static class ExpressionHelpers
 {
-	public static MemberExpression? GetMemberExpression(Expression? expression)
-		=> expression switch
-		{
-			MemberExpression memberExpression => memberExpression,
-			LambdaExpression lambdaExpression => lambdaExpression.Body switch
-			{
-				MemberExpression body => body,
-				UnaryExpression unaryExpression => (MemberExpression)unaryExpression.Operand,
-				_ => null
-			},
-			_ => null
-		};
-
-	public static string GetPropertyPath(Expression expression)
+	public static string ExtractExpressionName(Expression expression, string? parameterName = null)
 	{
-		MemberExpression? memberExpression = GetMemberExpression(expression);
-		StringBuilder path = new();
-		while (memberExpression != null)
+		if (expression is LambdaExpression lambdaExpression)
 		{
-			if (path.Length > 0)
+			if (parameterName == null && lambdaExpression.Parameters.Count > 0)
 			{
-				path.Insert(0, ".");
+				parameterName = lambdaExpression.Parameters[0].Name;
+			}
+			if (lambdaExpression.Body is UnaryExpression unaryExpression)
+			{
+				return ExtractExpressionName(unaryExpression.Operand, parameterName);
+			}
+			return ExtractExpressionName(lambdaExpression.Body, parameterName);
+		}
+
+		if (expression is MemberExpression memberExpression)
+		{
+			var name = memberExpression.ToString();
+			if (parameterName != null &&
+			    name.StartsWith($"{parameterName}."))
+			{
+				name = name.Substring(parameterName.Length + 1);
 			}
 
-			path.Insert(0, memberExpression.Member.Name);
-			memberExpression = GetMemberExpression(memberExpression.Expression);
+			return name;
 		}
 
-		return path.ToString();
-	}
 
-	public static object? GetPropertyValue(object? obj, string propertyPath)
-	{
-		if (propertyPath.IndexOf('.', StringComparison.Ordinal) < 0)
-		{
-			Type? objType = obj?.GetType();
-			return objType?.GetProperty(propertyPath)?.GetValue(obj, null);
-		}
-
-		object? propertyValue = obj;
-		foreach (string propertyName in propertyPath.Split('.'))
-		{
-			propertyValue = GetPropertyValue(propertyValue, propertyName);
-		}
-
-		return propertyValue;
-	}
-
-	public static TProperty? GetPropertyValue<TProperty>(object? obj, string propertyPath)
-	{
-		object? propertyValue = GetPropertyValue(obj, propertyPath);
-		if (propertyValue is TProperty property)
-		{
-			return property;
-		}
-
-		return default;
+		return expression.ToString();
 	}
 }
