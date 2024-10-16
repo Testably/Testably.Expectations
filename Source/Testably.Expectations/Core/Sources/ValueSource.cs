@@ -14,5 +14,5 @@ internal class ValueSource<TValue> : IValueSource<TValue>
 		_value = value;
 	}
 
-	public Task<(TValue?, Exception?)> GetValue() => Task.FromResult((_value, (Exception?)null));
+	public Task<SourceValue<TValue>> GetValue() => Task.FromResult<SourceValue<TValue>>(new(_value, (Exception?)null));
 }

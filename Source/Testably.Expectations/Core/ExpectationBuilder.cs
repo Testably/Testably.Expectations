@@ -195,7 +195,7 @@ internal class ExpectationBuilder<TActual> : IExpectationBuilder
 	public async Task<ExpectationResult> IsMet()
 	{
 		var data = await _subjectSource.GetValue();
-		return _tree.GetRoot().IsMetBy(data.Item1, data.Item2);
+		return _tree.GetRoot().IsMetBy(data.Value, data.Exception);
 	}
 
 	/// <inheritdoc />

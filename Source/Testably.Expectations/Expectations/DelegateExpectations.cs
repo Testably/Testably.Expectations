@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.CoreVoid.Helpers;
+using Testably.Expectations.Expectations.Exceptions;
 using Testably.Expectations.Expectations.Strings;
 
 namespace Testably.Expectations.Expectations;
@@ -41,13 +42,12 @@ public abstract class DelegateExpectations
 		_expectationBuilder = expectationBuilder;
 	}
 
-
-	public AssertionResult<Exception> ThrowsException()
+	public ExceptionAssertionResult<Exception> ThrowsException()
 	=> new(_expectationBuilder.Add(
 		new Throws<Exception>(),
 		b => b.AppendMethod(nameof(ThrowsException))));
 
-	public AssertionResult<TException> Throws<TException>()
+	public ExceptionAssertionResult<TException> Throws<TException>()
 	  where TException : Exception
 	=> new(_expectationBuilder.Add(
 		new Throws<TException>(),

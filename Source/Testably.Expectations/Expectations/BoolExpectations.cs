@@ -1,8 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core;
 using Testably.Expectations.CoreVoid.Helpers;
 using Testably.Expectations.Expectations.Bool;
-using Testably.Expectations.Expectations.Strings;
 
 namespace Testably.Expectations.Expectations;
 

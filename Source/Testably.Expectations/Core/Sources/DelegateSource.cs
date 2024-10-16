@@ -11,16 +11,16 @@ internal class DelegateSource : IValueSource<object>
 	{
 		_action = action;
 	}
-	public Task<(object?, Exception?)> GetValue()
+	public Task<SourceValue<object>> GetValue()
 	{
 		try
 		{
 			_action();
-			return Task.FromResult<(object?, Exception?)>((null, null));
+			return Task.FromResult<SourceValue<object>>(new(null, null));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<(object?, Exception?)>((null, ex));
+			return Task.FromResult<SourceValue<object>>(new(null, ex));
 		}
 	}
 }
@@ -34,16 +34,16 @@ internal class DelegateValueSource<TValue> : IValueSource<TValue>
 	{
 		_action = action;
 	}
-	public Task<(TValue?, Exception?)> GetValue()
+	public Task<SourceValue<TValue>> GetValue()
 	{
 		try
 		{
 			var value = _action();
-			return Task.FromResult<(TValue?, Exception?)>((value, null));
+			return Task.FromResult<SourceValue<TValue>>(new(value, null));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<(TValue?, Exception?)>((default, ex));
+			return Task.FromResult<SourceValue<TValue>>(new(default, ex));
 		}
 	}
 }

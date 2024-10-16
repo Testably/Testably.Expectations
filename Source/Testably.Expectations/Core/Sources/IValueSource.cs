@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Sources;
 
-public interface IValueSource<TValue>
+internal interface IValueSource<TValue>
 {
-	Task<(TValue?, Exception?)> GetValue();
+	Task<SourceValue<TValue>> GetValue();
 }
