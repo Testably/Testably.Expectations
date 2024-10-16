@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Sources;
 using Testably.Expectations.Expectations;
@@ -22,6 +23,23 @@ public static class Expect
 	{
 		return new(new ExpectationBuilder<TActual>(new DelegateValueSource<TActual>(subject), doNotPopulateThisValue));
 	}
+
+	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<Task<TActual>> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		return new(new ExpectationBuilder<TActual>(new DelegateAsyncValueSource<TActual>(subject), doNotPopulateThisValue));
+	}
+
+	public static DelegateExpectations.WithoutValue That(Func<Task> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		return new(new ExpectationBuilder<object>(new DelegateAsyncSource(subject), doNotPopulateThisValue));
+	}
+
+	//public static DelegateExpectations.WithoutValue That(Func<Task> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	//{
+	//	return new DelegateExpectations.WithoutValue(
+	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
+	//		subject);
+	//}
 
 
 	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
@@ -74,7 +92,12 @@ public static class Expect
 		return new(new ExpectationBuilder<string?>(subject, doNotPopulateThisValue));
 	}
 
-	public static BoolExpectations That(bool? subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static BooleanExpectations That(bool subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		return new(new ExpectationBuilder<bool>(subject, doNotPopulateThisValue));
+	}
+
+	public static BooleanExpectations.Nullable That(bool? subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		return new(new ExpectationBuilder<bool?>(subject, doNotPopulateThisValue));
 	}

@@ -20,9 +20,9 @@ internal class ExpectationNode : Node
 			return exceptionExpectation.IsMetBy(value);
 		}
 
-		if (Expectation is IExpectation<TExpectation?> typedExpectation)
+		if (Expectation is IExpectation<TExpectation?> nullableTypedExpectation)
 		{
-			return typedExpectation.IsMetBy(value.Value);
+			return nullableTypedExpectation.IsMetBy(value.Value);
 		}
 
 		if (Expectation is IDelegateExpectation exceptionExpectationWithoutValue)
