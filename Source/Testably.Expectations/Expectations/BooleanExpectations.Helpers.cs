@@ -5,7 +5,7 @@ namespace Testably.Expectations.Expectations;
 
 public sealed partial class BooleanExpectations
 {
-	internal readonly struct ImpliesExpectation(bool consequent) : IExpectation<bool>
+	private readonly struct ImpliesExpectation(bool consequent) : IExpectation<bool>
 	{
 		public ExpectationResult IsMetBy(bool actual)
 		{
@@ -21,7 +21,7 @@ public sealed partial class BooleanExpectations
 			=> $"implies {Formatter.Format(consequent)}";
 	}
 
-	internal readonly struct IsNotExpectation(bool unexpected) : IExpectation<bool>
+	private readonly struct IsNotExpectation(bool unexpected) : IExpectation<bool>
 	{
 		public ExpectationResult IsMetBy(bool actual)
 		{
@@ -37,7 +37,7 @@ public sealed partial class BooleanExpectations
 			=> $"is not {Formatter.Format(unexpected)}";
 	}
 
-	internal readonly struct NullableIsNotExpectation(bool? unexpected) : IExpectation<bool?>
+	private readonly struct NullableIsNotExpectation(bool? unexpected) : IExpectation<bool?>
 	{
 		public ExpectationResult IsMetBy(bool? actual)
 		{
@@ -53,7 +53,7 @@ public sealed partial class BooleanExpectations
 			=> $"is not {Formatter.Format(unexpected)}";
 	}
 
-	internal readonly struct NullableIsExpectation(bool? expected) : IExpectation<bool?>
+	private readonly struct NullableIsExpectation(bool? expected) : IExpectation<bool?>
 	{
 		public ExpectationResult IsMetBy(bool? actual)
 		{
@@ -69,7 +69,7 @@ public sealed partial class BooleanExpectations
 			=> $"is {Formatter.Format(expected)}";
 	}
 
-	internal readonly struct IsExpectation(bool expected) : IExpectation<bool>
+	private readonly struct IsExpectation(bool expected) : IExpectation<bool>
 	{
 		public ExpectationResult IsMetBy(bool actual)
 		{

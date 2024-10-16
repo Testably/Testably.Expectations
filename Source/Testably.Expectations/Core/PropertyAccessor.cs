@@ -18,25 +18,25 @@ internal abstract class PropertyAccessor
 		=> _name == "" ? "" : $".{_name} ";
 }
 
-internal class PropertyAccessor<TActual, TProperty> : PropertyAccessor
+internal class PropertyAccessor<TValue, TProperty> : PropertyAccessor
 {
-	private readonly Func<SourceValue<TActual>, TProperty> _accessor;
+	private readonly Func<SourceValue<TValue>, TProperty> _accessor;
 
-	private PropertyAccessor(Func<SourceValue<TActual>, TProperty> accessor, string name) :
+	private PropertyAccessor(Func<SourceValue<TValue>, TProperty> accessor, string name) :
 		base(name)
 	{
 		_accessor = accessor;
 	}
 
-	public static PropertyAccessor<TActual, TProperty?> FromFunc(
-		Func<SourceValue<TActual>, TProperty> propertyAccessor, string name)
+	public static PropertyAccessor<TValue, TProperty?> FromFunc(
+		Func<SourceValue<TValue>, TProperty> propertyAccessor, string name)
 		=> new(propertyAccessor, name);
 
-	public static PropertyAccessor<TActual, TProperty?> FromString(string propertyAccessor)
+	public static PropertyAccessor<TValue, TProperty?> FromString(string propertyAccessor)
 		=> new(value => ExpressionHelpers.GetPropertyValue<TProperty>(value, propertyAccessor),
 			propertyAccessor);
 
-	public bool TryAccessProperty(SourceValue<TActual> value,
+	public bool TryAccessProperty(SourceValue<TValue> value,
 		[NotNullWhen(true)] out TProperty? property)
 	{
 		property = _accessor.Invoke(value);

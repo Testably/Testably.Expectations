@@ -10,88 +10,69 @@ namespace Testably.Expectations;
 public static partial class Expect
 {
 	/// <summary>
-	///     Start asserting the current <see cref="Action" /> <paramref name="subject" />.
+	///     Start delegate assertions on the current <see cref="Action" /> <paramref name="delegate" />.
 	/// </summary>
-	public static DelegateExpectations.WithoutValue That(Action subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<object>(new DelegateSource(subject), doNotPopulateThisValue));
+	public static DelegateExpectations.WithoutValue That(Action @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(
+			new ExpectationBuilder<object>(new DelegateSource(@delegate), doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start asserting the current <see cref="Func{TActual}" /> <paramref name="subject" />.
+	///     Start asserting the current <see cref="Func{Task}" /> <paramref name="delegate" />.
 	/// </summary>
-	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		return new DelegateExpectations.WithValue<TActual>(
-			new ExpectationBuilder<TActual>(new DelegateValueSource<TActual>(subject),
-				doNotPopulateThisValue));
-	}
+	public static DelegateExpectations.WithoutValue That(Func<Task> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<object>(new DelegateAsyncSource(@delegate),
+			doNotPopulateThisValue));
 
-	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<Task<TActual>> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		return new DelegateExpectations.WithValue<TActual>(
-			new ExpectationBuilder<TActual>(new DelegateAsyncValueSource<TActual>(subject),
-				doNotPopulateThisValue));
-	}
+	/// <summary>
+	///     Start asserting the current <see cref="Task" /> <paramref name="delegate" />.
+	/// </summary>
+	public static DelegateExpectations.WithoutValue That(Task @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<object>(new DelegateAsyncSource(() => @delegate),
+			doNotPopulateThisValue));
 
-	public static DelegateExpectations.WithoutValue That(Func<Task> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		return new DelegateExpectations.WithoutValue(
-			new ExpectationBuilder<object>(new DelegateAsyncSource(subject),
-				doNotPopulateThisValue));
-	}
+	/// <summary>
+	///     Start delegate assertions on the current <see cref="Func{TValue}" /> <paramref name="delegate" />.
+	/// </summary>
+	public static DelegateExpectations.WithValue<TValue> That<TValue>(Func<TValue> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<TValue>(new DelegateValueSource<TValue>(@delegate),
+			doNotPopulateThisValue));
 
-	//public static DelegateExpectations.WithoutValue That(Func<Task> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//{
-	//	return new DelegateExpectations.WithoutValue(
-	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
-	//		subject);
-	//}
+	/// <summary>
+	///     Start asserting the current <see cref="Func{T}" /> of <see cref="Task{TValue}" /> <paramref name="delegate" />.
+	/// </summary>
+	public static DelegateExpectations.WithValue<TValue> That<TValue>(Func<Task<TValue>> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<TValue>(new DelegateAsyncValueSource<TValue>(@delegate),
+			doNotPopulateThisValue));
 
-	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//{
-	//	return new DelegateExpectations.WithValue<TActual>(
-	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
-	//		() => Task.Run(subject));
-	//}
+	/// <summary>
+	///     Start asserting the current <see cref="Task{TValue}" /> <paramref name="delegate" />.
+	/// </summary>
+	public static DelegateExpectations.WithValue<TValue> That<TValue>(Task<TValue> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<TValue>(new DelegateAsyncValueSource<TValue>(() => @delegate),
+			doNotPopulateThisValue));
 
-	//public static DelegateExpectations.WithoutValue That(Task subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//{
-	//	return new DelegateExpectations.WithoutValue(
-	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
-	//		() => subject);
-	//}
+#if NET6_0_OR_GREATER
+	/// <summary>
+	///     Start asserting the current <see cref="ValueTask" /> <paramref name="delegate" />.
+	/// </summary>
+	public static DelegateExpectations.WithoutValue That(ValueTask @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<object>(new DelegateAsyncSource(async () => await @delegate),
+			doNotPopulateThisValue));
 
-	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Task<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//{
-	//	return new DelegateExpectations.WithValue<TActual>(
-	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
-	//		() => subject);
-	//}
-
-	//public static DelegateExpectations.WithoutValue That(Func<Task> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//{
-	//	return new DelegateExpectations.WithoutValue(
-	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
-	//		subject);
-	//}
-
-	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<Task<TActual>> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//{
-	//	return new DelegateExpectations.WithValue<TActual>(
-	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
-	//		subject);
-	//}
-
-	//public static AsyncDelegateAssertionBuilder That(ValueTask value, [CallerArgumentExpression("value")] string doNotPopulateThisValue = "")
-	//{
-	//	return new AsyncDelegateAssertionBuilder(async () => await value, doNotPopulateThisValue);
-	//}
-
-	//public static AsyncValueDelegateAssertionBuilder<TActual> That<TActual>(ValueTask<TActual> value, [CallerArgumentExpression("value")] string doNotPopulateThisValue = "")
-	//{
-	//	return new AsyncValueDelegateAssertionBuilder<TActual>(async () => await value, doNotPopulateThisValue);
-	//}
+	/// <summary>
+	///     Start asserting the current <see cref="ValueTask{TValue}" /> <paramref name="delegate" />.
+	/// </summary>
+	public static DelegateExpectations.WithValue<TValue> That<TValue>(ValueTask<TValue> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<TValue>(
+			new DelegateAsyncValueSource<TValue>(async () => await @delegate),
+			doNotPopulateThisValue));
+#endif
 }

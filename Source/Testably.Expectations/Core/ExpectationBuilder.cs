@@ -8,24 +8,24 @@ using Testably.Expectations.Core.Sources;
 namespace Testably.Expectations.Core;
 
 [StackTraceHidden]
-internal class ExpectationBuilder<TActual> : IExpectationBuilder
+internal class ExpectationBuilder<TValue> : IExpectationBuilder
 {
 	private readonly FailureMessageBuilder _failureMessageBuilder;
 
 	/// <summary>
 	///     The subject.
 	/// </summary>
-	private readonly IValueSource<TActual> _subjectSource;
+	private readonly IValueSource<TValue> _subjectSource;
 
 	private readonly Tree _tree = new();
 
-	public ExpectationBuilder(TActual subject, string subjectExpression)
+	public ExpectationBuilder(TValue subject, string subjectExpression)
 	{
 		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
-		_subjectSource = new ValueSource<TActual>(subject);
+		_subjectSource = new ValueSource<TValue>(subject);
 	}
 
-	public ExpectationBuilder(IValueSource<TActual> subjectSource, string subjectExpression)
+	public ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression)
 	{
 		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
 		_subjectSource = subjectSource;
@@ -60,7 +60,7 @@ internal class ExpectationBuilder<TActual> : IExpectationBuilder
 
 	public async Task<ExpectationResult> IsMet()
 	{
-		SourceValue<TActual> data = await _subjectSource.GetValue();
+		SourceValue<TValue> data = await _subjectSource.GetValue();
 		return _tree.GetRoot().IsMetBy(data);
 	}
 

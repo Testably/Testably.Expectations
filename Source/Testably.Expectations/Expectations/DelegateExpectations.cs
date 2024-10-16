@@ -2,11 +2,10 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Expectations.Exceptions;
-using Testably.Expectations.Expectations.Strings;
 
 namespace Testably.Expectations.Expectations;
 
-public abstract class DelegateExpectations
+public abstract partial class DelegateExpectations
 {
 	private readonly IExpectationBuilder _expectationBuilder;
 
@@ -15,57 +14,29 @@ public abstract class DelegateExpectations
 		_expectationBuilder = expectationBuilder;
 	}
 
+	/// <summary>
+	///     Verifies that the delegate throws an exception of type <typeparamref name="TException" />.
+	/// </summary>
 	public ExceptionAssertionResult<TException> Throws<TException>()
 		where TException : Exception
 		=> new(_expectationBuilder.Add(
-			new Throws<TException>(),
+			new ThrowsExpectation<TException>(),
 			b => b.AppendMethod(nameof(ThrowsException))));
 
+	/// <summary>
+	///     Verifies that the delegate throws exactly an exception of type <typeparamref name="TException" />.
+	/// </summary>
+	public ExceptionAssertionResult<TException> ThrowsExactly<TException>()
+		where TException : Exception
+		=> new(_expectationBuilder.Add(
+			new ThrowsExactlyExpectation<TException>(),
+			b => b.AppendMethod(nameof(ThrowsException))));
+
+	/// <summary>
+	///     Verifies that the delegate throws an exception.
+	/// </summary>
 	public ExceptionAssertionResult<Exception> ThrowsException()
 		=> new(_expectationBuilder.Add(
-			new Throws<Exception>(),
+			new ThrowsExpectation<Exception>(),
 			b => b.AppendMethod(nameof(ThrowsException))));
-
-	public class WithValue<TValue> : DelegateExpectations
-	{
-		internal WithValue(IExpectationBuilder expectationBuilder)
-			: base(expectationBuilder)
-		{
-		}
-
-		public AssertionResult<TValue> DoesNotThrow()
-			=> new(_expectationBuilder.Add(
-				new DoesNotThrow<TValue>(),
-				b => b.AppendMethod(nameof(DoesNotThrow))));
-	}
-
-	public class WithoutValue : DelegateExpectations
-	{
-		internal WithoutValue(IExpectationBuilder expectationBuilder)
-			: base(expectationBuilder)
-		{
-		}
-
-		public AssertionResult DoesNotThrow()
-			=> new(_expectationBuilder.Add(
-				new DoesNotThrow<object?>(),
-				b => b.AppendMethod(nameof(DoesNotThrow))));
-	}
-
-	//public DelegateAssertionResult<Exception> ThrowsException()
-	//{
-	//	return null!;//new AssertionResult<Exception, DelegateAssertions>(_value, this);
-	//}
-
-	//public DelegateAssertionResult<TException> Throws<TException>()
-	//where TException : Exception
-	//{
-	//	return null!;//new AssertionResult<Exception, DelegateAssertions>(_value, this);
-	//}
-
-	//public DelegateAssertionResult<TException> ThrowsExactly<TException>()
-	//	where TException : Exception
-	//{
-	//	return null!;//new AssertionResult<Exception, DelegateAssertions>(_value, this);
-	//}
 }

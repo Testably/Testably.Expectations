@@ -5,7 +5,7 @@ using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Expectations.Delegates;
 
-public class DoesNotThrowTests
+public class DoesNotThrowExpectationTests
 {
 	[Fact]
 	public async Task FailsWhenExceptionIsThrown()

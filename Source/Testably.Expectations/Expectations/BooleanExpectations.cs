@@ -14,7 +14,7 @@ public sealed partial class BooleanExpectations
 	}
 
 	/// <summary>
-	///     Asserts that the value implies the specified <paramref name="consequent" /> value..
+	///     Verifies that the value implies the specified <paramref name="consequent" /> value.
 	/// </summary>
 	public AssertionResult<bool, BooleanExpectations> Implies(bool consequent,
 		[CallerArgumentExpression("consequent")]
@@ -25,7 +25,7 @@ public sealed partial class BooleanExpectations
 			this);
 
 	/// <summary>
-	///     Asserts that the value is equal to the specified <paramref name="expected" /> value.
+	///     Verifies that the value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
 	public AssertionResult<bool, BooleanExpectations> Is(bool expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -35,7 +35,7 @@ public sealed partial class BooleanExpectations
 			this);
 
 	/// <summary>
-	///     Asserts that the value is <see langword="false" />.
+	///     Verifies that the value is <see langword="false" />.
 	/// </summary>
 	public AssertionResult<bool, BooleanExpectations> IsFalse()
 		=> new(_expectationBuilder.Add(
@@ -44,7 +44,7 @@ public sealed partial class BooleanExpectations
 			this);
 
 	/// <summary>
-	///     Asserts that the value is not equal to the specified <paramref name="unexpected" /> value.
+	///     Verifies that the value is not equal to the specified <paramref name="unexpected" /> value.
 	/// </summary>
 	public AssertionResult<bool, BooleanExpectations> IsNot(bool unexpected,
 		[CallerArgumentExpression("unexpected")]
@@ -55,7 +55,7 @@ public sealed partial class BooleanExpectations
 			this);
 
 	/// <summary>
-	///     Asserts that the value is <see langword="true" />.
+	///     Verifies that the value is <see langword="true" />.
 	/// </summary>
 	public AssertionResult<bool, BooleanExpectations> IsTrue()
 		=> new(_expectationBuilder.Add(
