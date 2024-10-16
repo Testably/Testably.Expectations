@@ -30,7 +30,6 @@ internal class ExpectationNode : Node
 			return exceptionExpectationWithoutValue.IsMetBy(value.Exception);
 		}
 
-
 		throw new InvalidOperationException(
 			$"The expectation does not support {typeof(TExpectation).Name} {value.Value}");
 	}

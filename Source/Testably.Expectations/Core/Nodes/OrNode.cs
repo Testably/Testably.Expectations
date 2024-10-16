@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Testably.Expectations.Core.Nodes;
+﻿namespace Testably.Expectations.Core.Nodes;
 
 internal class OrNode : CombinationNode
 {
@@ -34,6 +32,10 @@ internal class OrNode : CombinationNode
 		return leftResult.CombineWith(combinedExpectation, "");
 	}
 
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"({Left} OR {Right})";
+
 	private static string CombineResultTexts(string leftResultText, string rightResultText)
 	{
 		if (leftResultText == rightResultText)
@@ -43,8 +45,4 @@ internal class OrNode : CombinationNode
 
 		return $"{leftResultText} and {rightResultText}";
 	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> $"({Left} OR {Right})";
 }

@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace Testably.Expectations.Core.Nodes;
+﻿namespace Testably.Expectations.Core.Nodes;
 
 internal class AndNode : CombinationNode
 {
-	private readonly string _andText;
-
 	public override Node Left { get; }
 	public override Node Right { get; set; }
+	private readonly string _andText;
 
 	public AndNode(Node left, Node right, string andText = " and ")
 	{
@@ -51,6 +48,10 @@ internal class AndNode : CombinationNode
 		return leftResult.CombineWith(combinedExpectation, "");
 	}
 
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"({Left} AND {Right})";
+
 	private static string CombineResultTexts(string leftResultText, string rightResultText)
 	{
 		if (leftResultText == rightResultText)
@@ -60,8 +61,4 @@ internal class AndNode : CombinationNode
 
 		return $"{leftResultText} and {rightResultText}";
 	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> $"({Left} AND {Right})";
 }

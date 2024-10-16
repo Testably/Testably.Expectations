@@ -22,6 +22,8 @@ public abstract class ExpectationResult
 		ExpectationText = expectationText;
 	}
 
+	public abstract ExpectationResult CombineWith(string expectationText, string resultText);
+
 	/// <summary>
 	///     Inverts the result.
 	/// </summary>
@@ -34,8 +36,6 @@ public abstract class ExpectationResult
 	/// </summary>
 	internal abstract ExpectationResult UpdateExpectationText(
 		Func<ExpectationResult, string> expectationText);
-
-	public abstract ExpectationResult CombineWith(string expectationText, string resultText);
 
 	/// <summary>
 	///     The actual value met the expectation.
@@ -54,10 +54,6 @@ public abstract class ExpectationResult
 			return new Success(expectationText);
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"SUCCEEDED {ExpectationText}";
-
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		public override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
@@ -67,6 +63,10 @@ public abstract class ExpectationResult
 			return new Failure(expectationText.Invoke(this),
 				resultText?.Invoke(null) ?? InvertDefaultResultText);
 		}
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"SUCCEEDED {ExpectationText}";
 
 		/// <inheritdoc />
 		internal override ExpectationResult UpdateExpectationText(
@@ -136,10 +136,6 @@ public abstract class ExpectationResult
 			return new Failure(expectationText, resultText);
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"FAILED {ExpectationText}";
-
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		public override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
@@ -148,6 +144,10 @@ public abstract class ExpectationResult
 			expectationText ??= f => f.ExpectationText;
 			return new Success(expectationText.Invoke(this));
 		}
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"FAILED {ExpectationText}";
 
 		/// <inheritdoc />
 		internal override ExpectationResult UpdateExpectationText(

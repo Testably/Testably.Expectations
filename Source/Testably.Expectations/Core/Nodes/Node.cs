@@ -8,6 +8,10 @@ internal abstract class Node
 
 	public abstract ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value);
 
+	/// <inheritdoc />
+	public override string ToString()
+		=> "NONE";
+
 	private sealed class NoneNode : Node
 	{
 		/// <inheritdoc />
@@ -16,8 +20,4 @@ internal abstract class Node
 			=> throw new InvalidOperationException(
 				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");
 	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> "NONE";
 }

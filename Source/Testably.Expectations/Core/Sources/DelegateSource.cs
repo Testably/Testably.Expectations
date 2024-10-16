@@ -11,20 +11,24 @@ internal class DelegateSource : IValueSource<object>
 	{
 		_action = action;
 	}
+
+	#region IValueSource<object> Members
+
 	public Task<SourceValue<object>> GetValue()
 	{
 		try
 		{
 			_action();
-			return Task.FromResult<SourceValue<object>>(new(null, null));
+			return Task.FromResult<SourceValue<object>>(new SourceValue<object>(null, null));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<SourceValue<object>>(new(null, ex));
+			return Task.FromResult<SourceValue<object>>(new SourceValue<object>(null, ex));
 		}
 	}
-}
 
+	#endregion
+}
 
 internal class DelegateAsyncSource : IValueSource<object>
 {
@@ -34,6 +38,9 @@ internal class DelegateAsyncSource : IValueSource<object>
 	{
 		_action = action;
 	}
+
+	#region IValueSource<object> Members
+
 	public async Task<SourceValue<object>> GetValue()
 	{
 		try
@@ -46,8 +53,9 @@ internal class DelegateAsyncSource : IValueSource<object>
 			return new SourceValue<object>(null, ex);
 		}
 	}
-}
 
+	#endregion
+}
 
 internal class DelegateValueSource<TValue> : IValueSource<TValue>
 {
@@ -57,20 +65,24 @@ internal class DelegateValueSource<TValue> : IValueSource<TValue>
 	{
 		_action = action;
 	}
+
+	#region IValueSource<TValue> Members
+
 	public Task<SourceValue<TValue>> GetValue()
 	{
 		try
 		{
-			var value = _action();
-			return Task.FromResult<SourceValue<TValue>>(new(value, null));
+			TValue? value = _action();
+			return Task.FromResult<SourceValue<TValue>>(new SourceValue<TValue>(value, null));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<SourceValue<TValue>>(new(default, ex));
+			return Task.FromResult<SourceValue<TValue>>(new SourceValue<TValue>(default, ex));
 		}
 	}
-}
 
+	#endregion
+}
 
 internal class DelegateAsyncValueSource<TValue> : IValueSource<TValue>
 {
@@ -80,11 +92,14 @@ internal class DelegateAsyncValueSource<TValue> : IValueSource<TValue>
 	{
 		_action = action;
 	}
+
+	#region IValueSource<TValue> Members
+
 	public async Task<SourceValue<TValue>> GetValue()
 	{
 		try
 		{
-			var value = await _action();
+			TValue? value = await _action();
 			return new SourceValue<TValue>(value, null);
 		}
 		catch (Exception ex)
@@ -92,4 +107,6 @@ internal class DelegateAsyncValueSource<TValue> : IValueSource<TValue>
 			return new SourceValue<TValue>(default, ex);
 		}
 	}
+
+	#endregion
 }

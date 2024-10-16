@@ -14,24 +14,35 @@ namespace Testably.Expectations;
 [StackTraceHidden]
 public static class Expect
 {
-	public static DelegateExpectations.WithoutValue That(Action subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static DelegateExpectations.WithoutValue That(Action subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new(new ExpectationBuilder<object>(new DelegateSource(subject), doNotPopulateThisValue));
+		return new DelegateExpectations.WithoutValue(
+			new ExpectationBuilder<object>(new DelegateSource(subject), doNotPopulateThisValue));
 	}
 
-	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new(new ExpectationBuilder<TActual>(new DelegateValueSource<TActual>(subject), doNotPopulateThisValue));
+		return new DelegateExpectations.WithValue<TActual>(
+			new ExpectationBuilder<TActual>(new DelegateValueSource<TActual>(subject),
+				doNotPopulateThisValue));
 	}
 
-	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<Task<TActual>> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<Task<TActual>> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new(new ExpectationBuilder<TActual>(new DelegateAsyncValueSource<TActual>(subject), doNotPopulateThisValue));
+		return new DelegateExpectations.WithValue<TActual>(
+			new ExpectationBuilder<TActual>(new DelegateAsyncValueSource<TActual>(subject),
+				doNotPopulateThisValue));
 	}
 
-	public static DelegateExpectations.WithoutValue That(Func<Task> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static DelegateExpectations.WithoutValue That(Func<Task> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new(new ExpectationBuilder<object>(new DelegateAsyncSource(subject), doNotPopulateThisValue));
+		return new DelegateExpectations.WithoutValue(
+			new ExpectationBuilder<object>(new DelegateAsyncSource(subject),
+				doNotPopulateThisValue));
 	}
 
 	//public static DelegateExpectations.WithoutValue That(Func<Task> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
@@ -40,7 +51,6 @@ public static class Expect
 	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
 	//		subject);
 	//}
-
 
 	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	//{
@@ -87,24 +97,32 @@ public static class Expect
 	//	return new AsyncValueDelegateAssertionBuilder<TActual>(async () => await value, doNotPopulateThisValue);
 	//}
 
-	public static StringExpectations That(string? subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static StringExpectations That(string? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new(new ExpectationBuilder<string?>(subject, doNotPopulateThisValue));
+		return new StringExpectations(
+			new ExpectationBuilder<string?>(subject, doNotPopulateThisValue));
 	}
 
-	public static BooleanExpectations That(bool subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static BooleanExpectations That(bool subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new(new ExpectationBuilder<bool>(subject, doNotPopulateThisValue));
+		return new BooleanExpectations(
+			new ExpectationBuilder<bool>(subject, doNotPopulateThisValue));
 	}
 
-	public static BooleanExpectations.Nullable That(bool? subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static BooleanExpectations.Nullable That(bool? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new(new ExpectationBuilder<bool?>(subject, doNotPopulateThisValue));
+		return new BooleanExpectations.Nullable(
+			new ExpectationBuilder<bool?>(subject, doNotPopulateThisValue));
 	}
 
-	public static ExceptionExpectations<TException> That<TException>(TException subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static ExceptionExpectations<TException> That<TException>(TException subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		where TException : Exception
 	{
-		return new(new ExpectationBuilder<TException>(subject, doNotPopulateThisValue));
+		return new ExceptionExpectations<TException>(
+			new ExpectationBuilder<TException>(subject, doNotPopulateThisValue));
 	}
 }

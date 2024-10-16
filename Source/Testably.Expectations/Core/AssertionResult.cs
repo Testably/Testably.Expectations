@@ -5,14 +5,14 @@ namespace Testably.Expectations.Core;
 
 public class AssertionResult<TResult, TExpectation> : AssertionResult<TResult>
 {
+	public TExpectation And => _assertion;
 	private readonly TExpectation _assertion;
 
-	internal AssertionResult(IExpectationBuilder expectationBuilder, TExpectation assertion) : base(expectationBuilder)
+	internal AssertionResult(IExpectationBuilder expectationBuilder, TExpectation assertion) : base(
+		expectationBuilder)
 	{
 		_assertion = assertion;
 	}
-
-	public TExpectation And => _assertion;
 }
 
 public class AssertionResult<TResult>
@@ -26,7 +26,7 @@ public class AssertionResult<TResult>
 
 	public TaskAwaiter<TResult> GetAwaiter()
 	{
-		var result = GetResult();
+		Task<TResult>? result = GetResult();
 		return result.GetAwaiter();
 	}
 
@@ -42,6 +42,7 @@ public class AssertionResult<TResult>
 		{
 			return success.Value;
 		}
+
 		throw new ExpectationException("You should not be here (with value)!");
 	}
 }
@@ -57,7 +58,7 @@ public class AssertionResult
 
 	public TaskAwaiter GetAwaiter()
 	{
-		var result = GetResult();
+		Task? result = GetResult();
 		return result.GetAwaiter();
 	}
 
@@ -73,7 +74,7 @@ public class AssertionResult
 		{
 			return;
 		}
+
 		throw new ExpectationException("You should not be here (without value)!");
 	}
 }
-

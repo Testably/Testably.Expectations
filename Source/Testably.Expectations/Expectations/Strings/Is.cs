@@ -12,7 +12,7 @@ internal class Is : INullableExpectation<string?>
 		_expected = expected;
 	}
 
-	#region INullableExpectation<T> Members
+	#region INullableExpectation<string?> Members
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(string? actual)

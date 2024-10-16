@@ -4,7 +4,7 @@ namespace Testably.Expectations.Expectations.Strings;
 
 internal class IsNotNull : IExpectation<string>
 {
-	#region INullableExpectation<T> Members
+	#region IExpectation<string> Members
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(string? actual)

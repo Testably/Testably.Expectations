@@ -4,7 +4,10 @@ using System.Linq;
 
 namespace Testably.Expectations.Core.Helpers;
 
-internal class StringDifference(string? actualValue, string? expectedValue, IEqualityComparer<string>? comparer = null)
+internal class StringDifference(
+	string? actualValue,
+	string? expectedValue,
+	IEqualityComparer<string>? comparer = null)
 {
 	private const char ArrowDown = '\u2193';
 	private const char ArrowUp = '\u2191';
@@ -12,7 +15,7 @@ internal class StringDifference(string? actualValue, string? expectedValue, IEqu
 	private readonly IEqualityComparer<string> _comparer = comparer ?? StringComparer.Ordinal;
 
 	/// <summary>
-	/// Returns the first index at which the two values do not match.
+	///     Returns the first index at which the two values do not match.
 	/// </summary>
 	public int IndexOfFirstMismatch()
 	{
@@ -29,12 +32,52 @@ internal class StringDifference(string? actualValue, string? expectedValue, IEqu
 		return IndexOfFirstMismatch(actualValue, expectedValue, _comparer);
 	}
 
-	private static int IndexOfFirstMismatch(string actualValue, string expectedValue, IEqualityComparer<string> comparer)
+	public override string ToString()
 	{
-		for (var index = 0; index < Math.Max(actualValue.Length, expectedValue.Length); index++)
+		return ToString("differs at index");
+	}
+
+	/// <summary>
+	///     Writes a string representation of the difference, starting with the <paramref name="prefix" />.
+	/// </summary>
+	/// <param name="prefix">The prefix, e.g. <c>differs at index</c></param>
+	/// <returns></returns>
+	public string ToString(string prefix)
+	{
+		int initialIndexOfDifference = IndexOfFirstMismatch();
+
+		int startIndex = Math.Max(0, initialIndexOfDifference - 25);
+
+		string? actualLine = actualValue
+			?.Substring(startIndex, Math.Min(actualValue.Length - startIndex, 55))
+			.ShowNewLines()
+			.Trim()
+			.TruncateWithEllipsis(50) ?? string.Empty;
+
+		string? expectedLine = expectedValue
+			?.Substring(startIndex, Math.Min(expectedValue.Length - startIndex, 55))
+			.ShowNewLines()
+			.Trim()
+			.TruncateWithEllipsis(50) ?? string.Empty;
+
+		int spacesBeforeArrow = IndexOfFirstMismatch(actualLine, expectedLine, _comparer) + 1;
+
+		return $"""
+		        {prefix} {initialIndexOfDifference}:
+		           {new string(' ', spacesBeforeArrow)}{ArrowDown}
+		           "{actualLine}"
+		           "{expectedLine}"
+		           {new string(' ', spacesBeforeArrow)}{ArrowUp}
+		        """;
+	}
+
+	private static int IndexOfFirstMismatch(string actualValue, string expectedValue,
+		IEqualityComparer<string> comparer)
+	{
+		for (int index = 0; index < Math.Max(actualValue.Length, expectedValue.Length); index++)
 		{
-			var actualChar = actualValue.ElementAtOrDefault(index).ToString();
-			var expectedChar = expectedValue.ElementAtOrDefault(index).ToString();
+			string? actualChar = actualValue.ElementAtOrDefault(index).ToString();
+			string? expectedChar = expectedValue.ElementAtOrDefault(index).ToString();
 			if (index >= expectedValue.Length || !comparer.Equals(actualChar, expectedChar))
 			{
 				return index;
@@ -47,44 +90,5 @@ internal class StringDifference(string? actualValue, string? expectedValue, IEqu
 		}
 
 		return -1;
-	}
-
-	public override string ToString()
-	{
-		return ToString("differs at index");
-	}
-
-	/// <summary>
-	/// Writes a string representation of the difference, starting with the <paramref name="prefix"/>.
-	/// </summary>
-	/// <param name="prefix">The prefix, e.g. <c>differs at index</c></param>
-	/// <returns></returns>
-	public string ToString(string prefix)
-	{
-		var initialIndexOfDifference = IndexOfFirstMismatch();
-
-		var startIndex = Math.Max(0, initialIndexOfDifference - 25);
-
-		var actualLine = actualValue
-			?.Substring(startIndex, Math.Min(actualValue.Length - startIndex, 55))
-			.ShowNewLines()
-			.Trim()
-			.TruncateWithEllipsis(50) ?? string.Empty;
-
-		var expectedLine = expectedValue
-			?.Substring(startIndex, Math.Min(expectedValue.Length - startIndex, 55))
-			.ShowNewLines()
-			.Trim()
-			.TruncateWithEllipsis(50) ?? string.Empty;
-
-		var spacesBeforeArrow = IndexOfFirstMismatch(actualLine, expectedLine, _comparer) + 1;
-
-		return $"""
-                {prefix} {initialIndexOfDifference}:
-                   {new string(' ', spacesBeforeArrow)}{ArrowDown}
-                   "{actualLine}"
-                   "{expectedLine}"
-                   {new string(' ', spacesBeforeArrow)}{ArrowUp}
-                """;
 	}
 }

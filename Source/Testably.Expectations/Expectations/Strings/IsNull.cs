@@ -1,12 +1,11 @@
-﻿using System;
-using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations.Strings;
 
 internal class IsNull : IExpectation<string>
 {
-	#region INullableExpectation<T> Members
+	#region IExpectation<string> Members
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(string? actual)

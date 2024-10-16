@@ -4,6 +4,7 @@ using Xunit;
 using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Expectations.Strings;
+
 public class IsNotNullTests
 {
 	[Fact]
@@ -14,13 +15,13 @@ public class IsNotNullTests
 		async Task Act()
 			=> await Expect.That(actual).IsNotNull();
 
-		var exception = await Assert.ThrowsAsync<XunitException>(Act);
-		Assert.Equal($"""
-			Expected that actual
-			is not null,
-			but it was
-			at Expect.That(actual).IsNotNull()
-			""", exception.Message);
+		XunitException exception = await Assert.ThrowsAsync<XunitException>(Act);
+		Assert.Equal("""
+		             Expected that actual
+		             is not null,
+		             but it was
+		             at Expect.That(actual).IsNotNull()
+		             """, exception.Message);
 	}
 
 	[Theory]

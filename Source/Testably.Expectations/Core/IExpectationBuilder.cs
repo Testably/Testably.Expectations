@@ -6,6 +6,7 @@ namespace Testably.Expectations.Core;
 
 internal interface IExpectationBuilder
 {
+	IFailureMessageBuilder FailureMessageBuilder { get; }
 	IExpectationBuilder Add(IExpectation expectation, Action<StringBuilder> expressionBuilder);
 	IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation);
 	IExpectationBuilder And();
@@ -16,7 +17,6 @@ internal interface IExpectationBuilder
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation);
 
-	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor, Action<StringBuilder> expressionBuilder, string textSeparator = "");
-
-	IFailureMessageBuilder FailureMessageBuilder { get; }
+	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
+		Action<StringBuilder> expressionBuilder, string textSeparator = "");
 }

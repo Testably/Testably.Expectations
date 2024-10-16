@@ -1,4 +1,5 @@
 ﻿namespace Testably.Expectations.Core.Helpers;
+
 internal static class StringExtensions
 {
 	public static string ShowNewLines(this string value)

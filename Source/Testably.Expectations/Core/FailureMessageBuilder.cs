@@ -4,12 +4,13 @@ namespace Testably.Expectations.Core;
 
 internal class FailureMessageBuilder : IFailureMessageBuilder
 {
-	private string _subject;
+	public StringBuilder ExpressionBuilder { get; }
+	private readonly string _subject;
 
 	public FailureMessageBuilder(string subject)
 	{
 		_subject = subject;
-		ExpressionBuilder = new();
+		ExpressionBuilder = new StringBuilder();
 		ExpressionBuilder
 			.Append(nameof(Expect))
 			.Append(".")
@@ -19,15 +20,17 @@ internal class FailureMessageBuilder : IFailureMessageBuilder
 			.Append(")");
 	}
 
-	public StringBuilder ExpressionBuilder { get; }
+	#region IFailureMessageBuilder Members
 
 	public string FromFailure(ExpectationResult.Failure failure)
 	{
 		return $"""
-			Expected that {_subject}
-			{failure.ExpectationText},
-			but {failure.ResultText}
-			at {ExpressionBuilder}
-			""";
+		        Expected that {_subject}
+		        {failure.ExpectationText},
+		        but {failure.ResultText}
+		        at {ExpressionBuilder}
+		        """;
 	}
+
+	#endregion
 }

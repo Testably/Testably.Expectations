@@ -3,10 +3,20 @@ using Testably.Expectations.Core;
 
 namespace Testably.Expectations.Expectations.Exceptions;
 
-internal class HasInnerException<TException> : INullableExpectation<Exception>, IDelegateExpectation<object>
-	  where TException : Exception
+internal class HasInnerException<TException> : INullableExpectation<Exception>,
+	IDelegateExpectation<object>
+	where TException : Exception
 {
-	#region INullableExpectation<T> Members
+	#region IDelegateExpectation<object> Members
+
+	public ExpectationResult IsMetBy(SourceValue<object> value)
+	{
+		return IsMetBy(value.Exception as TException);
+	}
+
+	#endregion
+
+	#region INullableExpectation<Exception> Members
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(Exception? actual)
@@ -17,17 +27,12 @@ internal class HasInnerException<TException> : INullableExpectation<Exception>, 
 		}
 
 		return new ExpectationResult.Failure(ToString(),
-			$"found none");
-	}
-
-	public ExpectationResult IsMetBy(SourceValue<object> value)
-	{
-		return IsMetBy(value.Exception as TException);
+			"found none");
 	}
 
 	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $"has InnerException";
+		=> "has InnerException";
 }

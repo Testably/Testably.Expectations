@@ -39,13 +39,15 @@ internal class ConditionallyThrowException<TException> : IExpectation<System.Act
 
 			return new ExpectationResult.Failure(ToString(), "none was thrown");
 		}
+
 		try
 		{
 			actual.Invoke();
 		}
 		catch (TException ex)
 		{
-			return new ExpectationResult.Failure<TException>(ex, ToString(), $"{PrependArticle(typeof(TException).Name)} was thrown");
+			return new ExpectationResult.Failure<TException>(ex, ToString(),
+				$"{PrependArticle(typeof(TException).Name)} was thrown");
 		}
 		catch (Exception ex)
 		{

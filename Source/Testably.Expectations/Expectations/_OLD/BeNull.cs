@@ -5,7 +5,7 @@ namespace Testably.Expectations.Expectations;
 
 internal class BeNull<TActual> : INullableExpectation<TActual?>
 {
-	#region INullableExpectation<TActual> Members
+	#region INullableExpectation<TActual?> Members
 
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(TActual? actual)

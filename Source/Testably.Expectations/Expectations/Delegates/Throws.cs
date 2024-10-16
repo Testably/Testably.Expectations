@@ -5,8 +5,10 @@ using Testably.Expectations.Core.Formatting;
 namespace Testably.Expectations.Expectations.Strings;
 
 internal class Throws<TException> : IDelegateExpectation
-	  where TException : Exception
+	where TException : Exception
 {
+	#region IDelegateExpectation Members
+
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(Exception? exception)
 	{
@@ -17,11 +19,14 @@ internal class Throws<TException> : IDelegateExpectation
 
 		if (exception is null)
 		{
-			return new ExpectationResult.Failure<TException?>(null, ToString(), $"it did not");
+			return new ExpectationResult.Failure<TException?>(null, ToString(), "it did not");
 		}
 
-		return new ExpectationResult.Failure<TException?>(null, ToString(), $"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
+		return new ExpectationResult.Failure<TException?>(null, ToString(),
+			$"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
 	}
+
+	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()

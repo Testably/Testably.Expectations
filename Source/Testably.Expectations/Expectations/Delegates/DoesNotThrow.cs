@@ -6,6 +6,8 @@ namespace Testably.Expectations.Expectations.Strings;
 
 internal class DoesNotThrow<TActual> : IDelegateExpectation<TActual>
 {
+	#region IDelegateExpectation<TActual> Members
+
 	/// <inheritdoc />
 	public ExpectationResult IsMetBy(SourceValue<TActual> value)
 	{
@@ -17,6 +19,8 @@ internal class DoesNotThrow<TActual> : IDelegateExpectation<TActual>
 
 		return new ExpectationResult.Success<TActual?>(value.Value, ToString());
 	}
+
+	#endregion
 
 	/// <inheritdoc />
 	public override string ToString()

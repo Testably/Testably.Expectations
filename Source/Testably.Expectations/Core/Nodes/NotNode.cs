@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Testably.Expectations.Core.Nodes;
+﻿namespace Testably.Expectations.Core.Nodes;
 
 internal class NotNode : ManipulationNode
 {
