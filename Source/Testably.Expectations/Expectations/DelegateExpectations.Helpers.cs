@@ -20,7 +20,7 @@ public abstract partial class DelegateExpectations
 		}
 
 		public override string ToString()
-			=> "does not throw";
+			=> "does not throw any exception";
 	}
 
 	private readonly struct ThrowsExpectation<TException> : IDelegateExpectation
