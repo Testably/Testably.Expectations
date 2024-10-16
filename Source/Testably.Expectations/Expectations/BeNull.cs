@@ -3,7 +3,7 @@ using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations;
 
-internal class BeNull<TActual> : INullableExpectation<TActual>
+internal class BeNull<TActual> : INullableExpectation<TActual?>
 {
 	#region INullableExpectation<TActual> Members
 
@@ -12,7 +12,7 @@ internal class BeNull<TActual> : INullableExpectation<TActual>
 	{
 		if (actual == null)
 		{
-			return new ExpectationResult.Success<TActual>(default, ToString());
+			return new ExpectationResult.Success<TActual?>(default, ToString());
 		}
 
 		return new ExpectationResult.Failure<TActual>(actual, ToString(),

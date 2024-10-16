@@ -14,7 +14,8 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+		where TExpectation : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
@@ -24,7 +25,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 			}
 			if (propertyAccessor.TryAccessProperty(matchingActualValue, out var matchingValue))
 			{
-				return Inner.IsMetBy(matchingValue)
+				return Inner.IsMetBy(matchingValue, exception)
 					.UpdateExpectationText(r => $".{_propertyAccessor} {r.ExpectationText}");
 			}
 

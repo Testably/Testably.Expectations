@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core.Nodes;
+﻿using System;
+
+namespace Testably.Expectations.Core.Nodes;
 
 internal class NotNode : ManipulationNode
 {
@@ -10,9 +12,10 @@ internal class NotNode : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+		where TExpectation : default
 	{
-		ExpectationResult result = Inner.IsMetBy(actual);
+		ExpectationResult result = Inner.IsMetBy(actual, exception);
 		return result.Invert(e => $"not {e.ExpectationText}",
 			v => v == null ? "it did" : $"found {v}");
 	}

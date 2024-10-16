@@ -25,7 +25,7 @@ internal class ConditionallyThrowException<TException> : IExpectation<System.Act
 		{
 			try
 			{
-				actual?.Invoke();
+				actual.Invoke();
 			}
 			catch (TException ex)
 			{
@@ -41,7 +41,7 @@ internal class ConditionallyThrowException<TException> : IExpectation<System.Act
 		}
 		try
 		{
-			actual?.Invoke();
+			actual.Invoke();
 		}
 		catch (TException ex)
 		{

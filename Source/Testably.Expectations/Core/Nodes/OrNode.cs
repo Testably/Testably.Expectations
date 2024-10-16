@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core.Nodes;
+﻿using System;
+
+namespace Testably.Expectations.Core.Nodes;
 
 internal class OrNode : CombinationNode
 {
@@ -12,10 +14,11 @@ internal class OrNode : CombinationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+		where TExpectation : default
 	{
-		ExpectationResult leftResult = Left.IsMetBy(actual);
-		ExpectationResult rightResult = Right.IsMetBy(actual);
+		ExpectationResult leftResult = Left.IsMetBy(actual, exception);
+		ExpectationResult rightResult = Right.IsMetBy(actual, exception);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText} or {rightResult.ExpectationText}";

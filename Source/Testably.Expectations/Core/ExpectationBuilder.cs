@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
+using System.Threading.Tasks;
 using Testably.Expectations.Core.Nodes;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core;
 
-
 [StackTraceHidden]
-internal class ExpectationBuilder : IExpectationBuilder
+internal class ExpectationBuilder<TActual> : IExpectationBuilder
 {
 	internal class Tree
 	{
@@ -147,11 +149,31 @@ internal class ExpectationBuilder : IExpectationBuilder
 	}
 	private readonly Tree _tree = new();
 
+	/// <summary>
+	/// The subject.
+	/// </summary>
+	private IValueSource<TActual> _subjectSource;
+	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
+	private FailureMessageBuilder _failureMessageBuilder;
+
+	public ExpectationBuilder(TActual subject, string subjectExpression)
+	{
+		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
+		_subjectSource = new ValueSource<TActual>(subject);
+	}
+
+	public ExpectationBuilder(IValueSource<TActual> subjectSource, string subjectExpression)
+	{
+		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
+		_subjectSource = subjectSource;
+	}
+
 	#region IExpectationBuilder Members
 
 	/// <inheritdoc />
-	public IExpectationBuilder Add(IExpectation expectation)
+	public IExpectationBuilder Add(IExpectation expectation, Action<StringBuilder> expressionBuilder)
 	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.AddExpectation(expectation);
 		return this;
 	}
@@ -170,9 +192,10 @@ internal class ExpectationBuilder : IExpectationBuilder
 		return this;
 	}
 
-	public ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public async Task<ExpectationResult> IsMet()
 	{
-		return _tree.GetRoot().IsMetBy(actual);
+		var data = await _subjectSource.GetValue();
+		return _tree.GetRoot().IsMetBy(data.Item1, data.Item2);
 	}
 
 	/// <inheritdoc />

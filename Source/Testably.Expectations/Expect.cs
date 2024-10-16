@@ -1,8 +1,9 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Ambient;
+using Testably.Expectations.Core.Sources;
+using Testably.Expectations.Expectations;
 
 namespace Testably.Expectations;
 
@@ -12,56 +13,68 @@ namespace Testably.Expectations;
 [StackTraceHidden]
 public static class Expect
 {
-	/// <summary>
-	///     Checks that the <paramref name="actual" /> value meets the <paramref name="expectation" />.
-	/// </summary>
-	/// <remarks>
-	///     Throws when the <paramref name="actual" /> value is <see langword="null" />.
-	/// </remarks>
-	public static void That<TActual, TTarget>([NotNull] TActual actual,
-		Expectation<TActual, TTarget> expectation,
-		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
+	public static DelegateExpectations.WithoutValue That(Action subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		ExpectationResult result = expectation.IsMetBy(actual);
-
-		if (result is ExpectationResult.Failure failure)
-		{
-			ReportFailure(failure, null, actualExpression);
-		}
-		else
-		{
-			Debug.Assert(actual != null);
-		}
+		return new(new ExpectationBuilder<object>(new DelegateSource(subject), doNotPopulateThisValue));
+	}
+	public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		return new(new ExpectationBuilder<TActual>(new DelegateValueSource<TActual>(subject), doNotPopulateThisValue));
 	}
 
-	/// <summary>
-	///     Checks that the <paramref name="actual" /> value meets the <paramref name="expectation" />.
-	/// </summary>
-	/// <remarks>
-	///     The <paramref name="actual" /> value can be <see langword="null" />.
-	/// </remarks>
-	public static void That<TActual, TTarget>(TActual? actual,
-		NullableExpectation<TActual, TTarget> expectation,
-		[CallerArgumentExpression(nameof(actual))]
-		string actualExpression = "")
-	{
-		ExpectationResult result = expectation.IsMetBy(actual);
 
-		if (result is ExpectationResult.Failure failure)
-		{
-			ReportFailure(failure, null, actualExpression);
-		}
+	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	//{
+	//	return new DelegateExpectations.WithValue<TActual>(
+	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
+	//		() => Task.Run(subject));
+	//}
+
+	//public static DelegateExpectations.WithoutValue That(Task subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	//{
+	//	return new DelegateExpectations.WithoutValue(
+	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
+	//		() => subject);
+	//}
+
+	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Task<TActual> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	//{
+	//	return new DelegateExpectations.WithValue<TActual>(
+	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
+	//		() => subject);
+	//}
+
+	//public static DelegateExpectations.WithoutValue That(Func<Task> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	//{
+	//	return new DelegateExpectations.WithoutValue(
+	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
+	//		subject);
+	//}
+
+	//public static DelegateExpectations.WithValue<TActual> That<TActual>(Func<Task<TActual>> subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	//{
+	//	return new DelegateExpectations.WithValue<TActual>(
+	//		AssertionBuilder.FromSubject(doNotPopulateThisValue),
+	//		subject);
+	//}
+
+	//public static AsyncDelegateAssertionBuilder That(ValueTask value, [CallerArgumentExpression("value")] string doNotPopulateThisValue = "")
+	//{
+	//	return new AsyncDelegateAssertionBuilder(async () => await value, doNotPopulateThisValue);
+	//}
+
+	//public static AsyncValueDelegateAssertionBuilder<TActual> That<TActual>(ValueTask<TActual> value, [CallerArgumentExpression("value")] string doNotPopulateThisValue = "")
+	//{
+	//	return new AsyncValueDelegateAssertionBuilder<TActual>(async () => await value, doNotPopulateThisValue);
+	//}
+
+	public static StringExpectations That(string? subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		return new(new ExpectationBuilder<string?>(subject, doNotPopulateThisValue));
 	}
 
-	[DoesNotReturn]
-	private static void ReportFailure(
-		ExpectationResult.Failure result,
-		string? because,
-		string actualExpression)
+	public static BoolExpectations That(bool? subject, [CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		because ??= "";
-		string failureMessage =
-			$"Expected {actualExpression} {result.ExpectationText}{because}, but {result.ResultText}.";
-		Initialization.State.Value.Throw(failureMessage);
+		return new(new ExpectationBuilder<bool?>(subject, doNotPopulateThisValue));
 	}
 }

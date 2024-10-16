@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core;
+﻿using System;
+
+namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     An expectation.
@@ -17,6 +19,28 @@ public interface IExpectation<in TExpectation> : IExpectation
 	///     Checks if the <paramref name="actual" /> value meets the expectation.
 	/// </summary>
 	public ExpectationResult IsMetBy(TExpectation actual);
+}
+
+/// <summary>
+///     A delegate expectation on type <typeparamref name="TExpectation" />.
+/// </summary>
+public interface IDelegateExpectation<in TExpectation> : IExpectation
+{
+	/// <summary>
+	///     Checks if the <paramref name="actual" /> value meets the expectation.
+	/// </summary>
+	public ExpectationResult IsMetBy(TExpectation? actual, Exception? exception);
+}
+
+/// <summary>
+///     A delegate expectation on type <typeparamref name="TExpectation" />.
+/// </summary>
+public interface IDelegateExpectation : IExpectation
+{
+	/// <summary>
+	///     Checks if the <paramref name="actual" /> value meets the expectation.
+	/// </summary>
+	public ExpectationResult IsMetBy(Exception? exception);
 }
 
 /// <summary>

@@ -13,6 +13,16 @@ internal class Formatter
 		new StringValueFormatter()
 	];
 
+	public static string PrependAOrAn(string value)
+	{
+		char[] vocals = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+		if (value.Length > 0 && vocals.Contains(value[0]))
+		{
+			return $"an {value}";
+		}
+		return $"a {value}";
+	}
+
 	public static string Format<T>(T? value, FormattingOptions? options = null)
 	{
 		StringBuilder stringBuilder = new();

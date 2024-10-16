@@ -14,14 +14,15 @@ internal class CastNode<T1, T2> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+		where TExpectation : default
 	{
-		if (Expectation is IExpectation<TExpectation> typedExpectation)
+		if (Expectation is IExpectation<TExpectation?> typedExpectation)
 		{
 			ExpectationResult result = typedExpectation.IsMetBy(actual);
 			if (Inner != None && result is ExpectationResult.Success<T2> success)
 			{
-				return Inner.IsMetBy(success.Value);
+				return Inner.IsMetBy(success.Value, exception);
 			}
 
 			return result;

@@ -18,5 +18,5 @@ where TException : Exception
 		_assertionBuilder = assertionBuilder;
 	}
 
-	public ExceptionAssertions Which => new ExceptionAssertions(_assertionBuilder, null);
+	public ExceptionAssertions<TException> Which => new ExceptionAssertions<TException>(_assertionBuilder, null);
 }

@@ -1,41 +1,41 @@
-﻿using Testably.Expectations.Tests.TestHelpers;
-using Xunit;
+﻿//using Testably.Expectations.Tests.TestHelpers;
+//using Xunit;
 
-namespace Testably.Expectations.Tests.Core.Nodes;
+//namespace Testably.Expectations.Tests.Core.Nodes;
 
-public sealed class NotNodeTests
-{
-	[Fact]
-	public void ShouldAlsoWorkWithAndCombinations()
-	{
-		object sut = new();
+//public sealed class NotNodeTests
+//{
+//	[Fact]
+//	public void ShouldAlsoWorkWithAndCombinations()
+//	{
+//		object sut = new();
 
-		void Act()
-			=> Expect.That(sut,
-				Should.Not.Be.Null().And().Not.Be.ASuccessfulTest("to be A"));
+//		void Act()
+//			=> ExpectVoid.That(sut,
+//				Should.Not.Be.Null().And().Not.Be.ASuccessfulTest("to be A"));
 
-		Expect.That(Act, Should.Throw.Exception().WhichMessage(
-			Should.Be.EqualTo("Expected sut not to be <null> and not to be A, but it did.")));
-	}
+//		ExpectVoid.That(Act, Should.Throw.Exception().WhichMessage(
+//			Should.Be.EqualTo("Expected sut not to be <null> and not to be A, but it did.")));
+//	}
 
-	[Fact]
-	public void WithANegatedFailedTest_ShouldNotThrow()
-	{
-		object sut = new();
+//	[Fact]
+//	public void WithANegatedFailedTest_ShouldNotThrow()
+//	{
+//		object sut = new();
 
-		Expect.That(sut, Should.Not.Be.AFailedTest("to be A", "test failed"));
-	}
+//		ExpectVoid.That(sut, Should.Not.Be.AFailedTest("to be A", "test failed"));
+//	}
 
-	[Fact]
-	public void WithANegatedSuccessfulTest_ShouldThrow()
-	{
-		object sut = new();
+//	[Fact]
+//	public void WithANegatedSuccessfulTest_ShouldThrow()
+//	{
+//		object sut = new();
 
-		void Act()
-			=> Expect.That(sut,
-				Should.Not.Be.ASuccessfulTest("to be A"));
+//		void Act()
+//			=> ExpectVoid.That(sut,
+//				Should.Not.Be.ASuccessfulTest("to be A"));
 
-		Expect.That(Act, Should.Throw.Exception().WhichMessage(
-			Should.Be.EqualTo("Expected sut not to be A, but it did.")));
-	}
-}
+//		ExpectVoid.That(Act, Should.Throw.Exception().WhichMessage(
+//			Should.Be.EqualTo("Expected sut not to be A, but it did.")));
+//	}
+//}

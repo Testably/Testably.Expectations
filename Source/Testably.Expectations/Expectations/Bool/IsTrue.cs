@@ -3,7 +3,7 @@ using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations.Bool;
 
-internal class BeTrue : IExpectation<bool>
+internal class IsTrue : IExpectation<bool>
 {
 	#region IExpectation<bool> Members
 

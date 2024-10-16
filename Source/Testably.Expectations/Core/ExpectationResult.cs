@@ -75,12 +75,12 @@ public abstract class ExpectationResult
 		/// <summary>
 		///     A value for further processing.
 		/// </summary>
-		public T? Value { get; }
+		public T Value { get; }
 
 		/// <summary>
 		///     Initializes a new instance of <see cref="ExpectationResult.Success{T}" />.
 		/// </summary>
-		public Success(T? value, string expectationText) : base(expectationText)
+		public Success(T value, string expectationText) : base(expectationText)
 		{
 			Value = value;
 		}
@@ -146,12 +146,12 @@ public abstract class ExpectationResult
 		/// <summary>
 		///     A value for further processing.
 		/// </summary>
-		public T? Value { get; }
+		public T Value { get; }
 
 		/// <summary>
 		///     Initializes a new instance of <see cref="ExpectationResult.Failure{T}" />.
 		/// </summary>
-		public Failure(T? value, string expectationText, string resultText) : base(expectationText,
+		public Failure(T value, string expectationText, string resultText) : base(expectationText,
 			resultText)
 		{
 			Value = value;
