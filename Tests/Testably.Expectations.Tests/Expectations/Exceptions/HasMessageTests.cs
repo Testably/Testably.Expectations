@@ -30,7 +30,11 @@ public class HasMessageTests
 		Assert.Equal($"""
 			Expected that sut
 			has Message equal to "{expected}",
-			but found "{sut.Message}"
+			but found "{actual}" which differs at index 0:
+			    ↓
+			   "{actual}"
+			   "{expected}"
+			    ↑
 			at Expect.That(sut).HasMessage(expected)
 			""", exception.Message);
 	}

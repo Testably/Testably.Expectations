@@ -14,11 +14,11 @@ internal class OrNode : CombinationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
 		where TExpectation : default
 	{
-		ExpectationResult leftResult = Left.IsMetBy(actual, exception);
-		ExpectationResult rightResult = Right.IsMetBy(actual, exception);
+		ExpectationResult leftResult = Left.IsMetBy(value);
+		ExpectationResult rightResult = Right.IsMetBy(value);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText} or {rightResult.ExpectationText}";
@@ -26,12 +26,12 @@ internal class OrNode : CombinationNode
 		if (leftResult is ExpectationResult.Failure leftFailure &&
 		    rightResult is ExpectationResult.Failure rightFailure)
 		{
-			return new ExpectationResult.Failure(
+			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
-		return new ExpectationResult.Success(combinedExpectation);
+		return leftResult.CombineWith(combinedExpectation, "");
 	}
 
 	private static string CombineResultTexts(string leftResultText, string rightResultText)

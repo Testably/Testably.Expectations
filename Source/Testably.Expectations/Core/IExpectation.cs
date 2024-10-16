@@ -24,12 +24,12 @@ public interface IExpectation<in TExpectation> : IExpectation
 /// <summary>
 ///     A delegate expectation on type <typeparamref name="TExpectation" />.
 /// </summary>
-public interface IDelegateExpectation<in TExpectation> : IExpectation
+public interface IDelegateExpectation<TExpectation> : IExpectation
 {
 	/// <summary>
 	///     Checks if the <paramref name="actual" /> value meets the expectation.
 	/// </summary>
-	public ExpectationResult IsMetBy(TExpectation? actual, Exception? exception);
+	public ExpectationResult IsMetBy(SourceValue<TExpectation> value);
 }
 
 /// <summary>

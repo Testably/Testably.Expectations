@@ -44,7 +44,11 @@ public class ThrowsExceptionTests
 		Assert.Equal($"""
 			Expected that action
 			throws an Exception which has Message equal to "{expected}",
-			but found "{actual}"
+			but found "{actual}" which differs at index 0:
+			    ↓
+			   "{actual}"
+			   "{expected}"
+			    ↑
 			at Expect.That(action).ThrowsException().Which.HasMessage(expected)
 			""", exception.Message);
 	}

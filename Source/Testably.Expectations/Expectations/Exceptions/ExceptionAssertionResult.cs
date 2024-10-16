@@ -16,7 +16,11 @@ public class ExceptionAssertionResult<TException> : AssertionResult<TException>
 	{
 		get
 		{
-			return new ExceptionExpectations<TException>(_expectationBuilder.And());
+			return new ExceptionExpectations<TException>(
+				_expectationBuilder.Which<object?, TException>(
+					PropertyAccessor<object?, TException?>.FromFunc(p => p.Exception as TException, ""),
+					b => b.Append(".").Append(nameof(Which)),
+					" which "));
 		}
 	}
 }

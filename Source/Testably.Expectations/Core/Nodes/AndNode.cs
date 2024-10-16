@@ -4,48 +4,51 @@ namespace Testably.Expectations.Core.Nodes;
 
 internal class AndNode : CombinationNode
 {
+	private readonly string _andText;
+
 	public override Node Left { get; }
 	public override Node Right { get; set; }
 
-	public AndNode(Node left, Node right)
+	public AndNode(Node left, Node right, string andText = " and ")
 	{
 		Left = left;
 		Right = right;
+		_andText = andText;
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
 		where TExpectation : default
 	{
-		ExpectationResult leftResult = Left.IsMetBy(actual, exception);
-		ExpectationResult rightResult = Right.IsMetBy(actual, exception);
+		ExpectationResult leftResult = Left.IsMetBy(value);
+		ExpectationResult rightResult = Right.IsMetBy(value);
 
 		string combinedExpectation =
-			$"{leftResult.ExpectationText} and {rightResult.ExpectationText}";
+			$"{leftResult.ExpectationText}{_andText}{rightResult.ExpectationText}";
 
 		if (leftResult is ExpectationResult.Failure leftFailure &&
 		    rightResult is ExpectationResult.Failure rightFailure)
 		{
-			return new ExpectationResult.Failure(
+			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
 		if (leftResult is ExpectationResult.Failure onlyLeftFailure)
 		{
-			return new ExpectationResult.Failure(
+			return onlyLeftFailure.CombineWith(
 				combinedExpectation,
 				onlyLeftFailure.ResultText);
 		}
 
 		if (rightResult is ExpectationResult.Failure onlyRightFailure)
 		{
-			return new ExpectationResult.Failure(
+			return onlyRightFailure.CombineWith(
 				combinedExpectation,
 				onlyRightFailure.ResultText);
 		}
 
-		return new ExpectationResult.Success(combinedExpectation);
+		return leftResult.CombineWith(combinedExpectation, "");
 	}
 
 	private static string CombineResultTexts(string leftResultText, string rightResultText)

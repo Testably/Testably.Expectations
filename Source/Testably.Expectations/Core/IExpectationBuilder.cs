@@ -16,5 +16,7 @@ internal interface IExpectationBuilder
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation);
 
+	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor, Action<StringBuilder> expressionBuilder, string textSeparator = "");
+
 	IFailureMessageBuilder FailureMessageBuilder { get; }
 }

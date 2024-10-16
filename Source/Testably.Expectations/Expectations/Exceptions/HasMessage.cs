@@ -1,6 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Expectations.Exceptions;
 
@@ -25,11 +26,13 @@ internal class HasMessage<TException> : INullableExpectation<TException>, IDeleg
 		}
 
 		return new ExpectationResult.Failure(ToString(),
-			$"found {Formatter.Format(actual?.Message)}");
+			$"found {Formatter.Format(actual?.Message)} which {new StringDifference(actual?.Message, _expected)}");
 	}
 
-	public ExpectationResult IsMetBy(object? actual, Exception? exception)
-		=> IsMetBy(exception as TException);
+	public ExpectationResult IsMetBy(SourceValue<object> value)
+	{
+		return IsMetBy(value.Exception as TException);
+	}
 
 	#endregion
 

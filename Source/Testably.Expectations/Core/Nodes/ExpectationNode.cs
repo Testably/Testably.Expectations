@@ -12,26 +12,27 @@ internal class ExpectationNode : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
 		where TExpectation : default
 	{
 		if (Expectation is IDelegateExpectation<TExpectation> exceptionExpectation)
 		{
-			return exceptionExpectation.IsMetBy(actual, exception);
+			return exceptionExpectation.IsMetBy(value);
 		}
 
 		if (Expectation is IExpectation<TExpectation?> typedExpectation)
 		{
-			return typedExpectation.IsMetBy(actual);
+			return typedExpectation.IsMetBy(value.Value);
 		}
+
 		if (Expectation is IDelegateExpectation exceptionExpectationWithoutValue)
 		{
-			return exceptionExpectationWithoutValue.IsMetBy(exception);
+			return exceptionExpectationWithoutValue.IsMetBy(value.Exception);
 		}
 
 
 		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
+			$"The expectation does not support {typeof(TExpectation).Name} {value.Value}");
 	}
 
 	/// <inheritdoc />

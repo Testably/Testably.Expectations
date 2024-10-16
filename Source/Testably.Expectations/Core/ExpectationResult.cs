@@ -35,6 +35,8 @@ public abstract class ExpectationResult
 	internal abstract ExpectationResult UpdateExpectationText(
 		Func<ExpectationResult, string> expectationText);
 
+	public abstract ExpectationResult CombineWith(string expectationText, string resultText);
+
 	/// <summary>
 	///     The actual value met the expectation.
 	/// </summary>
@@ -45,6 +47,11 @@ public abstract class ExpectationResult
 		/// </summary>
 		public Success(string expectationText) : base(expectationText)
 		{
+		}
+
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Success(expectationText);
 		}
 
 		/// <inheritdoc />
@@ -85,6 +92,11 @@ public abstract class ExpectationResult
 			Value = value;
 		}
 
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Success<T>(Value, expectationText);
+		}
+
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		public override ExpectationResult Invert(
 			Func<ExpectationResult, string>? expectationText = null,
@@ -117,6 +129,11 @@ public abstract class ExpectationResult
 		public Failure(string expectationText, string resultText) : base(expectationText)
 		{
 			ResultText = resultText;
+		}
+
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Failure(expectationText, resultText);
 		}
 
 		/// <inheritdoc />
@@ -155,6 +172,11 @@ public abstract class ExpectationResult
 			resultText)
 		{
 			Value = value;
+		}
+
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Failure<T>(Value, expectationText, resultText);
 		}
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />

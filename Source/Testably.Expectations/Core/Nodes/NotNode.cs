@@ -12,10 +12,10 @@ internal class NotNode : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
 		where TExpectation : default
 	{
-		ExpectationResult result = Inner.IsMetBy(actual, exception);
+		ExpectationResult result = Inner.IsMetBy(value);
 		return result.Invert(e => $"not {e.ExpectationText}",
 			v => v == null ? "it did" : $"found {v}");
 	}

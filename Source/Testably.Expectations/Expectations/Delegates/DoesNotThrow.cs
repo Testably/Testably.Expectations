@@ -7,15 +7,15 @@ namespace Testably.Expectations.Expectations.Strings;
 internal class DoesNotThrow<TActual> : IDelegateExpectation<TActual>
 {
 	/// <inheritdoc />
-	public ExpectationResult IsMetBy(TActual? actual, Exception? exception)
+	public ExpectationResult IsMetBy(SourceValue<TActual> value)
 	{
-		if (exception is not null)
+		if (value.Exception is not null)
 		{
-			return new ExpectationResult.Failure<TActual?>(actual, ToString(),
-				$"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
+			return new ExpectationResult.Failure<TActual?>(value.Value, ToString(),
+				$"it did throw {Formatter.PrependAOrAn(value.Exception.GetType().Name)}:{Environment.NewLine}\t{value.Exception.Message}");
 		}
 
-		return new ExpectationResult.Success<TActual?>(actual, ToString());
+		return new ExpectationResult.Success<TActual?>(value.Value, ToString());
 	}
 
 	/// <inheritdoc />

@@ -15,19 +15,19 @@ internal abstract class PropertyAccessor
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> _name;
+		=> _name == "" ? "" : $".{_name} ";
 }
 
 internal class PropertyAccessor<TActual, TProperty> : PropertyAccessor
 {
-	private readonly Func<TActual, TProperty> _accessor;
+	private readonly Func<SourceValue<TActual>, TProperty> _accessor;
 
-	private PropertyAccessor(Func<TActual, TProperty> accessor, string name) : base(name)
+	private PropertyAccessor(Func<SourceValue<TActual>, TProperty> accessor, string name) : base(name)
 	{
 		_accessor = accessor;
 	}
 
-	public bool TryAccessProperty(TActual value, [NotNullWhen(true)] out TProperty? property)
+	public bool TryAccessProperty(SourceValue<TActual> value, [NotNullWhen(true)] out TProperty? property)
 	{
 		property = _accessor.Invoke(value);
 		return property is not null;
@@ -36,4 +36,7 @@ internal class PropertyAccessor<TActual, TProperty> : PropertyAccessor
 	public static PropertyAccessor<TActual, TProperty?> FromString(string propertyAccessor)
 		=> new(value => ExpressionHelpers.GetPropertyValue<TProperty>(value, propertyAccessor),
 			propertyAccessor);
+
+	public static PropertyAccessor<TActual, TProperty?> FromFunc(Func<SourceValue<TActual>, TProperty> propertyAccessor, string name)
+		=> new(propertyAccessor, name);
 }

@@ -14,19 +14,19 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation? actual, Exception? exception)
+	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
 		where TExpectation : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
-			if (actual is not TSource matchingActualValue)
+			if (value is not SourceValue<TSource> matchingActualValue)
 			{
-				throw new InvalidOperationException($"The property type for the actual value in the which node did not match. Expected {typeof(TSource).Name}, but found {actual?.GetType().Name}");
+				throw new InvalidOperationException($"The property type for the actual value in the which node did not match. Expected {typeof(TSource).Name}, but found {value.Value?.GetType().Name}");
 			}
 			if (propertyAccessor.TryAccessProperty(matchingActualValue, out var matchingValue))
 			{
-				return Inner.IsMetBy(matchingValue, exception)
-					.UpdateExpectationText(r => $".{_propertyAccessor} {r.ExpectationText}");
+				return Inner.IsMetBy(value)
+					.UpdateExpectationText(r => $"{_propertyAccessor}{r.ExpectationText}");
 			}
 
 			throw new InvalidOperationException($"The property type for the which node did not match. Expected {typeof(TProperty).Name}, but found {matchingValue?.GetType().Name}");

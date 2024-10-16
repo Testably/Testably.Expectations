@@ -195,7 +195,7 @@ internal class ExpectationBuilder<TActual> : IExpectationBuilder
 	public async Task<ExpectationResult> IsMet()
 	{
 		var data = await _subjectSource.GetValue();
-		return _tree.GetRoot().IsMetBy(data.Value, data.Exception);
+		return _tree.GetRoot().IsMetBy(data);
 	}
 
 	/// <inheritdoc />
@@ -222,6 +222,14 @@ internal class ExpectationBuilder<TActual> : IExpectationBuilder
 
 		return this;
 	}
+	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor, Action<StringBuilder> expressionBuilder, string textSeparator)
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.TryAddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
+		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+
+		return this;
+	}
 
 	#endregion
 
@@ -230,4 +238,5 @@ internal class ExpectationBuilder<TActual> : IExpectationBuilder
 	{
 		return _tree.ToString();
 	}
+
 }
