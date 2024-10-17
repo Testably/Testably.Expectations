@@ -1,5 +1,6 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Expectations;
 
@@ -17,7 +18,7 @@ public abstract partial class ThatDelegate
 		/// </summary>
 		public AssertionResult DoesNotThrow()
 			=> new(_expectationBuilder.Add(
-				new DoesNotThrowExpectation<object?>(),
+				new DoesNotThrowExpectation<DelegateSource.WithoutValue>(),
 				b => b.AppendMethod(nameof(DoesNotThrow))));
 	}
 }

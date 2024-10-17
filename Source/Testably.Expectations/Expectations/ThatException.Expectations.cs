@@ -2,6 +2,7 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Expectations;
 
@@ -35,7 +36,7 @@ public sealed partial class ThatException<TException>
 	}
 
 	private readonly struct HasMessageExpectation<T> : INullableExpectation<T>,
-		IDelegateExpectation<object>
+		IDelegateExpectation<DelegateSource.WithoutValue>
 		where T : Exception
 	{
 		private readonly string _expected;
@@ -45,7 +46,7 @@ public sealed partial class ThatException<TException>
 			_expected = expected;
 		}
 
-		public ExpectationResult IsMetBy(SourceValue<object> value)
+		public ExpectationResult IsMetBy(SourceValue<DelegateSource.WithoutValue> value)
 		{
 			return IsMetBy(value.Exception as T);
 		}
