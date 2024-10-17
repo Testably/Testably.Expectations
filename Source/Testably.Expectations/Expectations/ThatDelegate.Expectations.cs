@@ -1,6 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Expectations;
 
@@ -23,23 +24,23 @@ public abstract partial class ThatDelegate
 			=> "does not throw any exception";
 	}
 
-	private readonly struct ThrowsExpectation<TException> : IDelegateExpectation
+	private readonly struct ThrowsExpectation<TException> : IDelegateExpectation<DelegateSource.WithoutValue>
 		where TException : Exception
 	{
-		public ExpectationResult IsMetBy(Exception? exception)
+		public ExpectationResult IsMetBy(SourceValue<DelegateSource.WithoutValue> actual)
 		{
-			if (exception is TException typedException)
+			if (actual.Exception is TException typedException)
 			{
 				return new ExpectationResult.Success<TException?>(typedException, ToString());
 			}
 
-			if (exception is null)
+			if (actual.Exception is null)
 			{
 				return new ExpectationResult.Failure<TException?>(null, ToString(), "it did not");
 			}
 
 			return new ExpectationResult.Failure<TException?>(null, ToString(),
-				$"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
+				$"it did throw {Formatter.PrependAOrAn(actual.Exception.GetType().Name)}:{Environment.NewLine}\t{actual.Exception.Message}");
 		}
 
 		public override string ToString()

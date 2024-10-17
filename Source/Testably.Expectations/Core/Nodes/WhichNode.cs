@@ -22,7 +22,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 			if (value is not SourceValue<TSource> matchingActualValue)
 			{
 				throw new InvalidOperationException(
-					$"The property type for the actual value in the which node did not match. Expected {typeof(TSource).Name}, but found {value.Value?.GetType().Name}");
+					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
 			}
 
 			if (propertyAccessor.TryAccessProperty(matchingActualValue,
@@ -33,11 +33,11 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 			}
 
 			throw new InvalidOperationException(
-				$"The property type for the which node did not match. Expected {typeof(TProperty).Name}, but found {matchingValue?.GetType().Name}");
+				$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TProperty).Name},{Environment.NewLine}but found {matchingValue?.GetType().Name}");
 		}
 
 		throw new InvalidOperationException(
-			$"The property accessor for the which node did not match. Expected {typeof(PropertyAccessor<TValue, TProperty>).FullName}, but found {_propertyAccessor.GetType().FullName}");
+			$"The property accessor for the which node did not match.{Environment.NewLine}Expected {typeof(PropertyAccessor<TValue, TProperty>).FullName},{Environment.NewLine}but found {_propertyAccessor.GetType().FullName}");
 	}
 
 	/// <inheritdoc />

@@ -11,7 +11,7 @@ public abstract partial class ThatDelegate
 	{
 		public ThatException<TException> Which
 			=> new(_expectationBuilder.Which<DelegateSource.WithoutValue, TException>(
-				PropertyAccessor<DelegateSource.WithoutValue, TException?>.FromFunc(p => p.Exception as TException,
+				PropertyAccessor<TException?, Exception?>.FromFunc(p => p.Exception?.InnerException,
 					""),
 				b => b.Append(".").Append(nameof(Which)),
 				" which "));

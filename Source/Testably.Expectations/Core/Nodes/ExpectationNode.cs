@@ -1,4 +1,5 @@
 ﻿using System;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -18,6 +19,11 @@ internal class ExpectationNode : Node
 		if (Expectation is IDelegateExpectation<TValue> exceptionExpectation)
 		{
 			return exceptionExpectation.IsMetBy(value);
+		}
+
+		if (Expectation is IDelegateExpectation<DelegateSource.WithoutValue> delegateWithoutValueExpectation)
+		{
+			return delegateWithoutValueExpectation.IsMetBy(new SourceValue<DelegateSource.WithoutValue>(DelegateSource.WithoutValue.Instance, value.Exception));
 		}
 
 		if (Expectation is IExpectation<TValue?> nullableTypedExpectation)
