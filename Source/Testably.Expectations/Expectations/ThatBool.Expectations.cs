@@ -3,7 +3,7 @@ using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations;
 
-public sealed partial class BooleanExpectations
+public sealed partial class ThatBool
 {
 	private readonly struct ImpliesExpectation(bool consequent) : IExpectation<bool>
 	{

@@ -12,15 +12,15 @@ internal class ExpectationNode : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
-		where TExpectation : default
+	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
-		if (Expectation is IDelegateExpectation<TExpectation> exceptionExpectation)
+		if (Expectation is IDelegateExpectation<TValue> exceptionExpectation)
 		{
 			return exceptionExpectation.IsMetBy(value);
 		}
 
-		if (Expectation is IExpectation<TExpectation?> nullableTypedExpectation)
+		if (Expectation is IExpectation<TValue?> nullableTypedExpectation)
 		{
 			return nullableTypedExpectation.IsMetBy(value.Value);
 		}
@@ -31,7 +31,7 @@ internal class ExpectationNode : Node
 		}
 
 		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TExpectation).Name} {value.Value}");
+			$"The expectation does not support {typeof(TValue).Name} {value.Value}");
 	}
 
 	/// <inheritdoc />

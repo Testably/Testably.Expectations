@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core;
 
-public class AssertionResult<TResult, TExpectation> : AssertionResult<TResult>
+public class AssertionResult<TResult, TValue> : AssertionResult<TResult>
 {
-	public TExpectation And => _assertion;
-	private readonly TExpectation _assertion;
+	public TValue And => _assertion;
+	private readonly TValue _assertion;
 
-	internal AssertionResult(IExpectationBuilder expectationBuilder, TExpectation assertion) : base(
+	internal AssertionResult(IExpectationBuilder expectationBuilder, TValue assertion) : base(
 		expectationBuilder)
 	{
 		_assertion = assertion;

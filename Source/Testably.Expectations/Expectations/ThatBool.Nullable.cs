@@ -4,7 +4,7 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Expectations;
 
-public sealed partial class BooleanExpectations
+public sealed partial class ThatBool
 {
 	public sealed class Nullable
 	{

@@ -1,15 +1,14 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Expectations.Exceptions;
 
 namespace Testably.Expectations.Expectations;
 
-public abstract partial class DelegateExpectations
+public abstract partial class ThatDelegate
 {
 	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal DelegateExpectations(IExpectationBuilder expectationBuilder)
+	internal ThatDelegate(IExpectationBuilder expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
@@ -17,7 +16,7 @@ public abstract partial class DelegateExpectations
 	/// <summary>
 	///     Verifies that the delegate throws an exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public ExceptionAssertionResult<TException> Throws<TException>()
+	public ThrowsExceptionResult<TException> Throws<TException>()
 		where TException : Exception
 		=> new(_expectationBuilder.Add(
 			new ThrowsExpectation<TException>(),
@@ -26,7 +25,7 @@ public abstract partial class DelegateExpectations
 	/// <summary>
 	///     Verifies that the delegate throws exactly an exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public ExceptionAssertionResult<TException> ThrowsExactly<TException>()
+	public ThrowsExceptionResult<TException> ThrowsExactly<TException>()
 		where TException : Exception
 		=> new(_expectationBuilder.Add(
 			new ThrowsExactlyExpectation<TException>(),
@@ -35,7 +34,7 @@ public abstract partial class DelegateExpectations
 	/// <summary>
 	///     Verifies that the delegate throws an exception.
 	/// </summary>
-	public ExceptionAssertionResult<Exception> ThrowsException()
+	public ThrowsExceptionResult<Exception> ThrowsException()
 		=> new(_expectationBuilder.Add(
 			new ThrowsExpectation<Exception>(),
 			b => b.AppendMethod(nameof(ThrowsException))));

@@ -1,15 +1,14 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Expectations.Strings;
 
 namespace Testably.Expectations.Expectations;
 
-public class StringExpectations
+public sealed partial class ThatString
 {
 	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal StringExpectations(IExpectationBuilder expectationBuilder)
+	internal ThatString(IExpectationBuilder expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
@@ -17,28 +16,28 @@ public class StringExpectations
 	/// <summary>
 	///     Expect the actual value to be equal to <paramref name="expected" />.
 	/// </summary>
-	public AssertionResult<string, StringExpectations> Is(string expected,
+	public AssertionResult<string, ThatString> Is(string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(_expectationBuilder.Add(
-				new Is(expected),
+				new IsExpectation(expected),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
 			this);
 
 	/// <summary>
 	///     Expect the actual value to not be null.
 	/// </summary>
-	public AssertionResult<string, StringExpectations> IsNotNull()
+	public AssertionResult<string, ThatString> IsNotNull()
 		=> new(_expectationBuilder.Add(
-				new IsNotNull(),
+				new IsNotNullExpectation(),
 				b => b.AppendMethod(nameof(IsNotNull))),
 			this);
 
 	/// <summary>
 	///     Expect the actual value to not be null.
 	/// </summary>
-	public AssertionResult<string?, StringExpectations> IsNull()
+	public AssertionResult<string?, ThatString> IsNull()
 		=> new(_expectationBuilder.Add(
-				new IsNull(),
+				new IsNullExpectation(),
 				b => b.AppendMethod(nameof(IsNull))),
 			this);
 }

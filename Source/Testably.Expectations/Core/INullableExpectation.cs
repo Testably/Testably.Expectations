@@ -1,9 +1,9 @@
 ﻿namespace Testably.Expectations.Core;
 
 /// <summary>
-///     A simple nullable expectation on type <typeparamref name="TExpectation" />.
+///     A simple nullable expectation on type <typeparamref name="TValue" />.
 /// </summary>
-public interface INullableExpectation<in TExpectation> : IExpectation<TExpectation>
+public interface INullableExpectation<in TValue> : IExpectation<TValue>
 {
 }
 

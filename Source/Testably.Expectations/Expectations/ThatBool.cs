@@ -4,11 +4,11 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Expectations;
 
-public sealed partial class BooleanExpectations
+public sealed partial class ThatBool
 {
 	private readonly IExpectationBuilder _expectationBuilder;
 
-	internal BooleanExpectations(IExpectationBuilder expectationBuilder)
+	internal ThatBool(IExpectationBuilder expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
 	}
@@ -16,7 +16,7 @@ public sealed partial class BooleanExpectations
 	/// <summary>
 	///     Verifies that the value implies the specified <paramref name="consequent" /> value.
 	/// </summary>
-	public AssertionResult<bool, BooleanExpectations> Implies(bool consequent,
+	public AssertionResult<bool, ThatBool> Implies(bool consequent,
 		[CallerArgumentExpression("consequent")]
 		string doNotPopulateThisValue = "")
 		=> new(_expectationBuilder.Add(
@@ -27,7 +27,7 @@ public sealed partial class BooleanExpectations
 	/// <summary>
 	///     Verifies that the value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public AssertionResult<bool, BooleanExpectations> Is(bool expected,
+	public AssertionResult<bool, ThatBool> Is(bool expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(_expectationBuilder.Add(
 				new IsExpectation(expected),
@@ -37,7 +37,7 @@ public sealed partial class BooleanExpectations
 	/// <summary>
 	///     Verifies that the value is <see langword="false" />.
 	/// </summary>
-	public AssertionResult<bool, BooleanExpectations> IsFalse()
+	public AssertionResult<bool, ThatBool> IsFalse()
 		=> new(_expectationBuilder.Add(
 				new IsExpectation(false),
 				b => b.AppendMethod(nameof(IsFalse))),
@@ -46,7 +46,7 @@ public sealed partial class BooleanExpectations
 	/// <summary>
 	///     Verifies that the value is not equal to the specified <paramref name="unexpected" /> value.
 	/// </summary>
-	public AssertionResult<bool, BooleanExpectations> IsNot(bool unexpected,
+	public AssertionResult<bool, ThatBool> IsNot(bool unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		=> new(_expectationBuilder.Add(
@@ -57,7 +57,7 @@ public sealed partial class BooleanExpectations
 	/// <summary>
 	///     Verifies that the value is <see langword="true" />.
 	/// </summary>
-	public AssertionResult<bool, BooleanExpectations> IsTrue()
+	public AssertionResult<bool, ThatBool> IsTrue()
 		=> new(_expectationBuilder.Add(
 				new IsExpectation(true),
 				b => b.AppendMethod(nameof(IsTrue))),

@@ -12,8 +12,8 @@ internal class OrNode : CombinationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
-		where TExpectation : default
+	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
 		ExpectationResult leftResult = Left.IsMetBy(value);
 		ExpectationResult rightResult = Right.IsMetBy(value);

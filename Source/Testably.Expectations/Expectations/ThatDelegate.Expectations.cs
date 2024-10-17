@@ -4,7 +4,7 @@ using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Expectations;
 
-public abstract partial class DelegateExpectations
+public abstract partial class ThatDelegate
 {
 	private readonly struct DoesNotThrowExpectation<TValue> : IDelegateExpectation<TValue>
 	{

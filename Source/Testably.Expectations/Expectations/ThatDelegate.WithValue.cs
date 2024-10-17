@@ -3,9 +3,9 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Expectations;
 
-public abstract partial class DelegateExpectations
+public abstract partial class ThatDelegate
 {
-	public sealed class WithValue<TValue> : DelegateExpectations
+	public sealed class WithValue<TValue> : ThatDelegate
 	{
 		internal WithValue(IExpectationBuilder expectationBuilder)
 			: base(expectationBuilder)

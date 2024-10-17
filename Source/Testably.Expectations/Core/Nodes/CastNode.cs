@@ -14,10 +14,10 @@ internal class CastNode<T1, T2> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
-		where TExpectation : default
+	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
-		if (Expectation is IExpectation<TExpectation?> typedExpectation)
+		if (Expectation is IExpectation<TValue?> typedExpectation)
 		{
 			ExpectationResult result = typedExpectation.IsMetBy(value.Value);
 			if (Inner != None && result is ExpectationResult.Success<T2> success)
@@ -29,7 +29,7 @@ internal class CastNode<T1, T2> : ManipulationNode
 		}
 
 		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TExpectation).Name} {value.Value}");
+			$"The expectation does not support {typeof(TValue).Name} {value.Value}");
 	}
 
 	/// <inheritdoc />

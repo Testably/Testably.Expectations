@@ -14,8 +14,8 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(SourceValue<TExpectation> value)
-		where TExpectation : default
+	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
@@ -37,7 +37,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 		}
 
 		throw new InvalidOperationException(
-			$"The property accessor for the which node did not match. Expected {typeof(PropertyAccessor<TExpectation, TProperty>).FullName}, but found {_propertyAccessor.GetType().FullName}");
+			$"The property accessor for the which node did not match. Expected {typeof(PropertyAccessor<TValue, TProperty>).FullName}, but found {_propertyAccessor.GetType().FullName}");
 	}
 
 	/// <inheritdoc />
