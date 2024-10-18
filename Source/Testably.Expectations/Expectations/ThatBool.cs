@@ -17,10 +17,8 @@ public sealed partial class ThatBool
 	///     Verifies that the value implies the specified <paramref name="consequent" /> value.
 	/// </summary>
 	public AssertionResult<bool, ThatBool> Implies(bool consequent,
-		[CallerArgumentExpression("consequent")]
-		string doNotPopulateThisValue = "")
-		=> new(_expectationBuilder.Add(
-				new ImpliesExpectation(consequent),
+		[CallerArgumentExpression("consequent")] string doNotPopulateThisValue = "")
+		=> new(_expectationBuilder.Add(new ImpliesExpectation(consequent),
 				b => b.AppendMethod(nameof(Implies), doNotPopulateThisValue)),
 			this);
 
@@ -29,8 +27,7 @@ public sealed partial class ThatBool
 	/// </summary>
 	public AssertionResult<bool, ThatBool> Is(bool expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(_expectationBuilder.Add(
-				new IsExpectation(expected),
+		=> new(_expectationBuilder.Add(new IsExpectation(expected),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
 			this);
 
@@ -38,8 +35,7 @@ public sealed partial class ThatBool
 	///     Verifies that the value is <see langword="false" />.
 	/// </summary>
 	public AssertionResult<bool, ThatBool> IsFalse()
-		=> new(_expectationBuilder.Add(
-				new IsExpectation(false),
+		=> new(_expectationBuilder.Add(new IsExpectation(false),
 				b => b.AppendMethod(nameof(IsFalse))),
 			this);
 
@@ -47,10 +43,8 @@ public sealed partial class ThatBool
 	///     Verifies that the value is not equal to the specified <paramref name="unexpected" /> value.
 	/// </summary>
 	public AssertionResult<bool, ThatBool> IsNot(bool unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
-		=> new(_expectationBuilder.Add(
-				new IsNotExpectation(unexpected),
+		[CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
+		=> new(_expectationBuilder.Add(new IsNotExpectation(unexpected),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),
 			this);
 
@@ -58,8 +52,7 @@ public sealed partial class ThatBool
 	///     Verifies that the value is <see langword="true" />.
 	/// </summary>
 	public AssertionResult<bool, ThatBool> IsTrue()
-		=> new(_expectationBuilder.Add(
-				new IsExpectation(true),
+		=> new(_expectationBuilder.Add(new IsExpectation(true),
 				b => b.AppendMethod(nameof(IsTrue))),
 			this);
 }
