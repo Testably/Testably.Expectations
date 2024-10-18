@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Expectations;
 
@@ -10,9 +9,8 @@ public abstract partial class ThatDelegate
 		where TException : Exception
 	{
 		public ThatException<TException> Which
-			=> new(_expectationBuilder.Which<DelegateSource.WithoutValue, TException>(
-				PropertyAccessor<TException?, Exception?>.FromFunc(p => p.Exception?.InnerException,
-					""),
+			=> new(_expectationBuilder.Which<TException, TException>(
+				PropertyAccessor<TException?, TException?>.FromFunc(p =>p.Value, ""),
 				b => b.Append(".").Append(nameof(Which)),
 				" which "));
 

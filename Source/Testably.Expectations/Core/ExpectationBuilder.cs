@@ -45,19 +45,23 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation)
+	public IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation,
+		Action<StringBuilder> expressionBuilder)
 	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.AddManipulation(n => new CastNode<T1, T2>(expectation, n));
 		return this;
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder And()
+	public IExpectationBuilder And(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
 	{
-		_tree.AddCombination(n => new AndNode(n, Node.None), 5);
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
 		return this;
 	}
 
+	[StackTraceHidden]
 	public async Task<ExpectationResult> IsMet()
 	{
 		SourceValue<TValue> data = await _subjectSource.GetValue();

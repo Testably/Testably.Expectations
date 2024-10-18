@@ -11,13 +11,12 @@ public partial class DelegateExpectationTests
         [Fact]
         public async Task Fails_For_Code_With_Other_Exceptions()
         {
-            var expectedMessage = """
+            var expectedMessage = $"""
                                   Expected that action
-                                  throws a CustomException
-                                  
-                                  but an OtherException was thrown
-                                  
-                                  at Assert.That(action).Throws<CustomException>()
+                                  throws a CustomException,
+                                  but it did throw an OtherException:
+                                  	{nameof(Fails_For_Code_With_Other_Exceptions)}
+                                  at Expect.That(action).Throws<CustomException>()
                                   """;
             Exception exception = CreateOtherException();
             Action action = () => throw exception;
@@ -32,12 +31,12 @@ public partial class DelegateExpectationTests
         [Fact]
         public async Task Fails_For_Code_With_Supertype_Exceptions()
         {
-            var expectedMessage = """
-                                  Expected action to throw a SubCustomException
-                                  
-                                  but a CustomException was thrown
-                                  
-                                  at Assert.That(action).Throws<SubCustomException>()
+            var expectedMessage = $"""
+                                  Expected that action
+                                  throws a SubCustomException,
+                                  but it did throw a CustomException:
+                                  	{nameof(Fails_For_Code_With_Supertype_Exceptions)}
+                                  at Expect.That(action).Throws<SubCustomException>()
                                   """;
             Exception exception = CreateCustomException();
             Action action = () => throw exception;
@@ -53,11 +52,10 @@ public partial class DelegateExpectationTests
         public async Task Fails_For_Code_Without_Exceptions()
         {
             var expectedMessage = """
-                                  Expected action to throw a CustomException
-                                  
-                                  but none was thrown
-                                  
-                                  at Assert.That(action).Throws<CustomException>()
+                                  Expected that action
+                                  throws a CustomException,
+                                  but it did not
+                                  at Expect.That(action).Throws<CustomException>()
                                   """;
             var action = () => { };
 

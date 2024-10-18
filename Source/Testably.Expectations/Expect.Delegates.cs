@@ -15,14 +15,14 @@ public static partial class Expect
 	public static ThatDelegate.WithoutValue That(Action @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new(
-			new ExpectationBuilder<DelegateSource.WithoutValue>(new DelegateSource(@delegate), doNotPopulateThisValue));
+			new ExpectationBuilder<DelegateSource.NoValue>(new DelegateSource(@delegate), doNotPopulateThisValue));
 
 	/// <summary>
 	///     Start asserting the current <see cref="Func{Task}" /> <paramref name="delegate" />.
 	/// </summary>
 	public static ThatDelegate.WithoutValue That(Func<Task> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<DelegateSource.WithoutValue>(new DelegateAsyncSource(@delegate),
+		=> new(new ExpectationBuilder<DelegateSource.NoValue>(new DelegateAsyncSource(@delegate),
 			doNotPopulateThisValue));
 
 	/// <summary>
@@ -30,7 +30,7 @@ public static partial class Expect
 	/// </summary>
 	public static ThatDelegate.WithoutValue That(Task @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<DelegateSource.WithoutValue>(new DelegateAsyncSource(() => @delegate),
+		=> new(new ExpectationBuilder<DelegateSource.NoValue>(new DelegateAsyncSource(() => @delegate),
 			doNotPopulateThisValue));
 
 #if NET6_0_OR_GREATER
@@ -39,7 +39,7 @@ public static partial class Expect
 	/// </summary>
 	public static ThatDelegate.WithoutValue That(ValueTask @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<DelegateSource.WithoutValue>(new DelegateAsyncSource(async () => await @delegate),
+		=> new(new ExpectationBuilder<DelegateSource.NoValue>(new DelegateAsyncSource(async () => await @delegate),
 			doNotPopulateThisValue));
 #endif
 

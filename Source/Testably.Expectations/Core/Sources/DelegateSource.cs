@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Sources;
 
-internal class DelegateSource : IValueSource<DelegateSource.WithoutValue>
+internal class DelegateSource : IValueSource<DelegateSource.NoValue>
 {
 	private readonly Action _action;
 
@@ -12,21 +12,21 @@ internal class DelegateSource : IValueSource<DelegateSource.WithoutValue>
 		_action = action;
 	}
 
-	public Task<SourceValue<WithoutValue>> GetValue()
+	public Task<SourceValue<NoValue>> GetValue()
 	{
 		try
 		{
 			_action();
-			return Task.FromResult(new SourceValue<WithoutValue>(WithoutValue.Instance, null));
+			return Task.FromResult(new SourceValue<NoValue>(NoValue.Instance, null));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult(new SourceValue<WithoutValue>(WithoutValue.Instance, ex));
+			return Task.FromResult(new SourceValue<NoValue>(NoValue.Instance, ex));
 		}
 	}
 
-	internal struct WithoutValue
+	internal struct NoValue
 	{
-		internal static WithoutValue Instance { get; } = new();
+		internal static NoValue Instance { get; } = new();
 	}
 }

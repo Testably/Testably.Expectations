@@ -24,6 +24,10 @@ public interface IExpectation<in TValue> : IExpectation
 /// <summary>
 ///     A complex expectation from type <typeparamref name="TValue" /> to type <typeparamref name="TProperty" />.
 /// </summary>
-public interface IExpectation<in TValue, TProperty> : IExpectation<TValue>
+public interface IExpectation<in TValue, TProperty> : IExpectation
 {
+	/// <summary>
+	///     Checks if the <paramref name="actual" /> value and the <paramref name="exception"/> meets the expectation.
+	/// </summary>
+	public ExpectationResult IsMetBy(TValue? actual, Exception? exception);
 }

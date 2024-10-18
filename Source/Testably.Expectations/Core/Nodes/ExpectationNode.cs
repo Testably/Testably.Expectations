@@ -15,30 +15,7 @@ internal class ExpectationNode : Node
 	/// <inheritdoc />
 	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
-	{
-		if (Expectation is IDelegateExpectation<TValue> exceptionExpectation)
-		{
-			return exceptionExpectation.IsMetBy(value);
-		}
-
-		if (Expectation is IDelegateExpectation<DelegateSource.WithoutValue> delegateWithoutValueExpectation)
-		{
-			return delegateWithoutValueExpectation.IsMetBy(new SourceValue<DelegateSource.WithoutValue>(DelegateSource.WithoutValue.Instance, value.Exception));
-		}
-
-		if (Expectation is IExpectation<TValue?> nullableTypedExpectation)
-		{
-			return nullableTypedExpectation.IsMetBy(value.Value);
-		}
-
-		if (Expectation is IDelegateExpectation exceptionExpectationWithoutValue)
-		{
-			return exceptionExpectationWithoutValue.IsMetBy(value.Exception);
-		}
-
-		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TValue).Name} {value.Value}");
-	}
+		=> TryMeet(Expectation, value);
 
 	/// <inheritdoc />
 	public override string ToString()

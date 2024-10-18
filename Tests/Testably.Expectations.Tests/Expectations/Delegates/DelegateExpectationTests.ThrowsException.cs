@@ -12,11 +12,10 @@ public partial class DelegateExpectationTests
         public async Task Fails_For_Code_Without_Exceptions()
         {
             var expectedMessage = """
-                                  Expected action to throw an exception
-                                  
-                                  but none was thrown
-                                  
-                                  at Assert.That(action).ThrowsException()
+                                  Expected that action
+                                  throws an Exception,
+                                  but it did not
+                                  at Expect.That(action).ThrowsException()
                                   """;
             var action = () => { };
 

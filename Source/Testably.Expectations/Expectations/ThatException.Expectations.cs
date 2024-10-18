@@ -36,7 +36,7 @@ public sealed partial class ThatException<TException>
 	}
 
 	private readonly struct HasMessageExpectation<T> : INullableExpectation<T>,
-		IDelegateExpectation<DelegateSource.WithoutValue>
+		IDelegateExpectation<DelegateSource.NoValue>
 		where T : Exception
 	{
 		private readonly string _expected;
@@ -46,7 +46,7 @@ public sealed partial class ThatException<TException>
 			_expected = expected;
 		}
 
-		public ExpectationResult IsMetBy(SourceValue<DelegateSource.WithoutValue> value)
+		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 		{
 			return IsMetBy(value.Exception as T);
 		}

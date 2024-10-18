@@ -24,36 +24,39 @@ public abstract partial class ThatDelegate
 			=> "does not throw any exception";
 	}
 
-	private readonly struct ThrowsExpectation<TException> : IDelegateExpectation<DelegateSource.WithoutValue>
+	private readonly struct ThrowsExpectation<TException> : IExpectation<DelegateSource.NoValue, TException>, IDelegateExpectation<DelegateSource.NoValue>
 		where TException : Exception
 	{
-		public ExpectationResult IsMetBy(SourceValue<DelegateSource.WithoutValue> actual)
+		/// <inheritdoc />
+		public ExpectationResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
-			if (actual.Exception is TException typedException)
+			if (exception is TException typedException)
 			{
 				return new ExpectationResult.Success<TException?>(typedException, ToString());
 			}
 
-			if (actual.Exception is null)
+			if (exception is null)
 			{
 				return new ExpectationResult.Failure<TException?>(null, ToString(), "it did not");
 			}
 
 			return new ExpectationResult.Failure<TException?>(null, ToString(),
-				$"it did throw {Formatter.PrependAOrAn(actual.Exception.GetType().Name)}:{Environment.NewLine}\t{actual.Exception.Message}");
+				$"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
 		}
+
+		/// <inheritdoc />
+		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+			=> IsMetBy(value.Value, value.Exception);
 
 		public override string ToString()
 			=> $"throws {Formatter.PrependAOrAn(typeof(TException).Name)}";
 	}
 
-	private readonly struct ThrowsExactlyExpectation<TException> : IDelegateExpectation
+	private readonly struct ThrowsExactlyExpectation<TException> : IExpectation<DelegateSource.NoValue, TException>, IDelegateExpectation<DelegateSource.NoValue>
 		where TException : Exception
 	{
-		#region IDelegateExpectation Members
-
 		/// <inheritdoc />
-		public ExpectationResult IsMetBy(Exception? exception)
+		public ExpectationResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
 			if (exception is TException typedException && exception.GetType() == typeof(TException))
 			{
@@ -69,10 +72,12 @@ public abstract partial class ThatDelegate
 				$"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
 		}
 
-		#endregion
+		/// <inheritdoc />
+		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+			=> IsMetBy(value.Value, value.Exception);
 
 		/// <inheritdoc />
 		public override string ToString()
-			=> $"throws {Formatter.PrependAOrAn(typeof(TException).Name)}";
+			=> $"throws exactly {Formatter.PrependAOrAn(typeof(TException).Name)}";
 	}
 }

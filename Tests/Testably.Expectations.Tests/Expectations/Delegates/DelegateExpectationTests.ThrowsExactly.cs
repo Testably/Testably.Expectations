@@ -11,11 +11,11 @@ public partial class DelegateExpectationTests
         [Fact]
         public async Task Fails_For_Code_With_Other_Exceptions()
         {
-            var expectedMessage = """
-                                  Expected action to throw exactly a CustomException
-
-                                  but an OtherException was thrown
-
+            var expectedMessage = $"""
+                                  Expected that action
+                                  throws exactly a CustomException,
+                                  but it did throw an OtherException:
+                                  	{nameof(Fails_For_Code_With_Other_Exceptions)}
                                   at Expect.That(action).ThrowsExactly<CustomException>()
                                   """;
             Exception exception = CreateOtherException();
@@ -31,13 +31,13 @@ public partial class DelegateExpectationTests
         [Fact]
         public async Task Fails_For_Code_With_Subtype_Exceptions()
         {
-            var expectedMessage = """
-                                  Expected action to throw exactly a CustomException
-
-                                  but a SubCustomException was thrown
-
-                                  at Expect.That(action).ThrowsExactly<CustomException>()
-                                  """;
+            var expectedMessage = $"""
+                                   Expected that action
+                                   throws exactly a CustomException,
+                                   but it did throw a SubCustomException:
+                                   	{nameof(Fails_For_Code_With_Subtype_Exceptions)}
+                                   at Expect.That(action).ThrowsExactly<CustomException>()
+                                   """;
             Exception exception = CreateSubCustomException();
             Action action = () => throw exception;
 
@@ -52,12 +52,11 @@ public partial class DelegateExpectationTests
         public async Task Fails_For_Code_Without_Exceptions()
         {
             var expectedMessage = """
-                                  Expected action to throw exactly a CustomException
-
-                                  but none was thrown
-
-                                  at Expect.That(action).ThrowsExactly<CustomException>()
-                                  """;
+                                   Expected that action
+                                   throws exactly a CustomException,
+                                   but it did not
+                                   at Expect.That(action).ThrowsExactly<CustomException>()
+                                   """;
             var action = () => { };
 
             var sut = async ()

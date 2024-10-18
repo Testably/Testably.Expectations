@@ -1,4 +1,6 @@
 ﻿using System;
+using Testably.Expectations.Core.Sources;
+using Testably.Expectations.Expectations;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -17,19 +19,13 @@ internal class CastNode<T1, T2> : ManipulationNode
 	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
-		if (Expectation is IExpectation<TValue?> typedExpectation)
+		ExpectationResult result = TryMeet(Expectation, value);
+		if (Inner != None && result is ExpectationResult.Success<T2> success)
 		{
-			ExpectationResult result = typedExpectation.IsMetBy(value.Value);
-			if (Inner != None && result is ExpectationResult.Success<T2> success)
-			{
-				return Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
-			}
-
-			return result;
+			return Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
 		}
 
-		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TValue).Name} {value.Value}");
+		return result;
 	}
 
 	/// <inheritdoc />

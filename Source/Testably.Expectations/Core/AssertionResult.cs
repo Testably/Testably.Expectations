@@ -1,8 +1,10 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core;
 
+[StackTraceHidden]
 public class AssertionResult<TResult, TValue> : AssertionResult<TResult>
 {
 	public TValue And => _assertion;
@@ -15,6 +17,7 @@ public class AssertionResult<TResult, TValue> : AssertionResult<TResult>
 	}
 }
 
+[StackTraceHidden]
 public class AssertionResult<TResult>
 {
 	private readonly IExpectationBuilder _expectationBuilder;
@@ -24,12 +27,14 @@ public class AssertionResult<TResult>
 		_expectationBuilder = expectationBuilder;
 	}
 
+	[StackTraceHidden]
 	public TaskAwaiter<TResult> GetAwaiter()
 	{
 		Task<TResult>? result = GetResult();
 		return result.GetAwaiter();
 	}
 
+	[StackTraceHidden]
 	private async Task<TResult> GetResult()
 	{
 		ExpectationResult result = await _expectationBuilder.IsMet();
@@ -56,12 +61,14 @@ public class AssertionResult
 		_expectationBuilder = expectationBuilder;
 	}
 
+	[StackTraceHidden]
 	public TaskAwaiter GetAwaiter()
 	{
 		Task? result = GetResult();
 		return result.GetAwaiter();
 	}
 
+	[StackTraceHidden]
 	private async Task GetResult()
 	{
 		ExpectationResult result = await _expectationBuilder.IsMet();
