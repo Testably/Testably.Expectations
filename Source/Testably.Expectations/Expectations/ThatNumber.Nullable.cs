@@ -4,7 +4,7 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Expectations;
 
-public sealed partial class ThatNumber<TNumber>
+public abstract partial class ThatNumber<TNumber, TSelf>
 {
 	public sealed class Nullable
 	{

@@ -5,12 +5,13 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Expectations;
 
-public sealed partial class ThatNumber<TNumber>
+public abstract partial class ThatNumber<TNumber, TSelf>
 #if NET8_0_OR_GREATER
 	where TNumber : struct, INumber<TNumber>
 #else
     where TNumber : struct, System.IComparable<TNumber>
 #endif
+	where TSelf : ThatNumber<TNumber, TSelf>
 {
 	private readonly IExpectationBuilder _expectationBuilder;
 
@@ -22,27 +23,27 @@ public sealed partial class ThatNumber<TNumber>
 	/// <summary>
 	///     Verifies that the value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public AssertionResult<TNumber, ThatNumber<TNumber>> Is(TNumber expected,
+	public AssertionResult<TNumber, TSelf> Is(TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(_expectationBuilder.Add(new IsExpectation(expected),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
-			this);
+			(TSelf)this);
 
 	/// <summary>
 	///     Verifies that the value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public AssertionResult<TNumber, ThatNumber<TNumber>> Is(TNumber? expected,
+	public AssertionResult<TNumber, TSelf> Is(TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(_expectationBuilder.Add(new IsExpectation(expected),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
-			this);
+			(TSelf)this);
 
 	/// <summary>
-	///     Verifies that the value is equal to the specified <paramref name="expected" /> value.
+	///     Verifies that the value is not equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public AssertionResult<TNumber, ThatNumber<TNumber>> IsNot(TNumber expected,
+	public AssertionResult<TNumber, TSelf> IsNot(TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(_expectationBuilder.Add(new IsNotExpectation(expected),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),
-			this);
+			(TSelf)this);
 }

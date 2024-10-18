@@ -7,12 +7,22 @@ namespace Testably.Expectations.Core;
 [StackTraceHidden]
 public class AssertionResult<TResult, TValue> : AssertionResult<TResult>
 {
-	public TValue And => _assertion;
+	public TValue And
+	{
+		get
+		{
+			_expectationBuilder.And(b => b.Append(".").Append(nameof(And)));
+			return _assertion;
+		}
+	}
+
+	private readonly IExpectationBuilder _expectationBuilder;
 	private readonly TValue _assertion;
 
 	internal AssertionResult(IExpectationBuilder expectationBuilder, TValue assertion) : base(
 		expectationBuilder)
 	{
+		_expectationBuilder = expectationBuilder;
 		_assertion = assertion;
 	}
 }
