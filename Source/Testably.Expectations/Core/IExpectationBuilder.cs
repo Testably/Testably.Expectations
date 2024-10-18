@@ -11,8 +11,8 @@ internal interface IExpectationBuilder
 	IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation, Action<StringBuilder> expressionBuilde);
 	IExpectationBuilder And(Action<StringBuilder> expressionBuilder, string textSeparator = " and ");
 	Task<ExpectationResult> IsMet();
-	IExpectationBuilder Not();
-	IExpectationBuilder Or();
+	IExpectationBuilder Not(Action<StringBuilder> expressionBuilder, string textSeparator = "not ");
+	IExpectationBuilder Or(Action<StringBuilder> expressionBuilder, string textSeparator = " or ");
 
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation);

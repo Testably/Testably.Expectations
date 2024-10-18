@@ -69,16 +69,18 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder Not()
+	public IExpectationBuilder Not(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
 	{
-		_tree.AddManipulation(n => new NotNode(n));
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddManipulation(n => new NotNode(n, textSeparator));
 		return this;
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder Or()
+	public IExpectationBuilder Or(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
 	{
-		_tree.AddCombination(n => new OrNode(n, Node.None), 4);
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
 		return this;
 	}
 
@@ -87,7 +89,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		IExpectation<TProperty> expectation)
 	{
 		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
-		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
 		_tree.AddExpectation(expectation);
 
 		return this;
@@ -98,7 +100,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
-		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
 
 		return this;
 	}
@@ -139,7 +141,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
 			}
 
-			ExpectationNode? node = new ExpectationNode(expectation);
+			ExpectationNode node = new(expectation);
 			_setExpectationNode.Invoke(node);
 			_setExpectationNode = null;
 		}
@@ -154,7 +156,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 
 			if (_current.Node is CombinationNode combinationNode)
 			{
-				ManipulationNode? manipulationNode2 = nodeGenerator(combinationNode.Right);
+				ManipulationNode manipulationNode2 = nodeGenerator(combinationNode.Right);
 				combinationNode.Right = manipulationNode2;
 				_setExpectationNode = n => manipulationNode2.Inner = n;
 				return;
@@ -162,13 +164,13 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 
 			if (_current.Node is ManipulationNode manipulationNode4)
 			{
-				ManipulationNode? manipulationNode3 = nodeGenerator(manipulationNode4.Inner);
+				ManipulationNode manipulationNode3 = nodeGenerator(manipulationNode4.Inner);
 				manipulationNode4.Inner = manipulationNode3;
 				_setExpectationNode = n => manipulationNode3.Inner = n;
 				return;
 			}
 
-			ManipulationNode? manipulationNode = nodeGenerator(_current.Node);
+			ManipulationNode manipulationNode = nodeGenerator(_current.Node);
 			_current = new TreeNode
 			{
 				Node = manipulationNode,
@@ -213,7 +215,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 				if (current.Node is CombinationNode parentCombinationNode &&
 				    current.Precedence < precedence)
 				{
-					CombinationNode? newCombinationNode =
+					CombinationNode newCombinationNode =
 						nodeGenerator(parentCombinationNode.Right);
 					parentCombinationNode.Right = newCombinationNode;
 					_current = new TreeNode
@@ -229,7 +231,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 				current = current.Parent;
 			} while (current != null);
 
-			CombinationNode? combinationNode = nodeGenerator(_current.Node);
+			CombinationNode combinationNode = nodeGenerator(_current.Node);
 			_current = new TreeNode
 			{
 				Node = combinationNode,

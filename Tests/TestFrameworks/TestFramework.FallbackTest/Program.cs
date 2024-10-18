@@ -4,11 +4,11 @@ namespace TestFramework.FallbackTest;
 
 internal class Program
 {
-	private static int Main()
+	private static async Task<int> Main()
 	{
 		try
 		{
-			Expect.That(true).IsFalse();
+			await Expect.That(true).IsFalse();
 		}
 		catch (ExpectationException)
 		{

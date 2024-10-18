@@ -1,62 +1,64 @@
-﻿//using System;
-//using Testably.Expectations.Tests.TestHelpers;
-//using Xunit;
+﻿using System;
+using System.Threading.Tasks;
+using Xunit;
 
-//namespace Testably.Expectations.Tests.Core.Nodes;
+namespace Testably.Expectations.Tests.Core.Nodes;
 
-//public sealed class AndNodeTests
-//{
-//	[Fact]
-//	public void WithFirstFailedTests_ShouldIncludeSingleFailureInMessage()
-//	{
-//		void Act()
-//			=> ExpectVoid.That(1,
-//				Should.Be.AFailedTest("to be A", "found C").And().Be.ASuccessfulTest("to be B"));
+public sealed class AndNodeTests
+{
+	[Fact]
+	public async Task WithFirstFailedTests_ShouldIncludeSingleFailureInMessage()
+	{
+		async Task Act()
+			=> await Expect.That(true).IsFalse().And.IsTrue();
 
-//		ExpectVoid.That(Act, Should.Throw.Exception().WhichMessage(
-//			Should.Be.EqualTo("Expected 1 to be A and to be B, but found C.")));
-//	}
+		await Expect.That(Act).ThrowsException()
+			.Which.HasMessage("""
+			                  Expected that true
+			                  is False and is True,
+			                  but found True
+			                  at Expect.That(true).IsFalse().And.IsTrue()
+			                  """);
+	}
 
-//	[Fact]
-//	public void WithSecondFailedTests_ShouldIncludeSingleFailureInMessage()
-//	{
-//		void Act()
-//			=> ExpectVoid.That(1,
-//				Should.Be.ASuccessfulTest("to be A").And().Be.AFailedTest("to be B", "found D"));
+	[Fact]
+	public async Task WithSecondFailedTests_ShouldIncludeSingleFailureInMessage()
+	{
+		async Task Act()
+			=> await Expect.That(true).IsTrue().And.IsFalse();
 
-//		ExpectVoid.That(Act, Should.Throw.Exception().WhichMessage(
-//			Should.Be.EqualTo("Expected 1 to be A and to be B, but found D.")));
-//	}
+		await Expect.That(Act).ThrowsException()
+			.Which.HasMessage("""
+			                  Expected that true
+			                  is True and is False,
+			                  but found True
+			                  at Expect.That(true).IsTrue().And.IsFalse()
+			                  """);
+	}
 
-//	[Fact]
-//	public void WithTrailingAnd_ShouldThrowInvalidOperationException()
-//	{
-//		void Act()
-//			=> ExpectVoid.That(1,
-//				Should.Be.AFailedTest("to be A", "found C").And());
+	[Fact]
+	public async Task WithTwoFailedTests_ShouldIncludeBothFailuresInMessage()
+	{
+		async Task Act()
+			=> await Expect.That(true).IsFalse().And.Implies(false);
 
-//		ExpectVoid.That(Act, Should.Throw.TypeOf<InvalidOperationException>().WhichMessage(
-//			Should.Be.EqualTo(
-//				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?")));
-//	}
+		await Expect.That(Act).ThrowsException()
+			.Which.HasMessage("""
+			                  Expected that true
+			                  is False and implies False,
+			                  but found True and it did not
+			                  at Expect.That(true).IsFalse().And.Implies(false)
+			                  """);
+	}
 
-//	[Fact]
-//	public void WithTwoFailedTests_ShouldIncludeBothFailuresInMessage()
-//	{
-//		void Act()
-//			=> ExpectVoid.That(1,
-//				Should.Be.AFailedTest("to be A", "found C").And().Be
-//					.AFailedTest("to be B", "found D"));
+	[Fact]
+	public async Task WithTwoSuccessfulTests_ShouldNotThrow()
+	{
+		async Task Act()
+			=> await Expect.That(true).IsTrue().And.IsNot(false);
 
-//		ExpectVoid.That(Act, Should.Throw.Exception().WhichMessage(
-//			Should.Be.EqualTo("Expected 1 to be A and to be B, but found C and found D.")));
-//	}
-
-//	[Fact]
-//	public void WithTwoSuccessfulTests_ShouldNotThrow()
-//	{
-//		ExpectVoid.That(1, Should.Be.ASuccessfulTest("to be A").And().Be.ASuccessfulTest("to be B"));
-//	}
-//}
+		await Expect.That(Act).DoesNotThrow();
+	}
+}
 
 

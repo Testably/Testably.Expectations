@@ -15,6 +15,14 @@ public class AssertionResult<TResult, TValue> : AssertionResult<TResult>
 			return _assertion;
 		}
 	}
+	public TValue Or
+	{
+		get
+		{
+			_expectationBuilder.Or(b => b.Append(".").Append(nameof(Or)));
+			return _assertion;
+		}
+	}
 
 	private readonly IExpectationBuilder _expectationBuilder;
 	private readonly TValue _assertion;

@@ -7,13 +7,13 @@ internal class AndNode : CombinationNode
 {
 	public override Node Left { get; }
 	public override Node Right { get; set; }
-	private readonly string _andText;
+	private readonly string _textSeparator;
 
-	public AndNode(Node left, Node right, string andText = " and ")
+	public AndNode(Node left, Node right, string textSeparator = " and ")
 	{
 		Left = left;
 		Right = right;
-		_andText = andText;
+		_textSeparator = textSeparator;
 	}
 
 	/// <inheritdoc />
@@ -24,7 +24,7 @@ internal class AndNode : CombinationNode
 		ExpectationResult rightResult = Right.IsMetBy(value);
 
 		string combinedExpectation =
-			$"{leftResult.ExpectationText}{_andText}{rightResult.ExpectationText}";
+			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";
 
 		if (leftResult is ExpectationResult.Failure leftFailure &&
 		    rightResult is ExpectationResult.Failure rightFailure)

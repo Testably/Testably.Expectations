@@ -2,10 +2,12 @@
 
 internal class NotNode : ManipulationNode
 {
+	private readonly string _textSeparator;
 	public override Node Inner { get; set; }
 
-	public NotNode(Node inner)
+	public NotNode(Node inner, string textSeparator = "not ")
 	{
+		_textSeparator = textSeparator;
 		Inner = inner;
 	}
 
@@ -14,7 +16,7 @@ internal class NotNode : ManipulationNode
 		where TValue : default
 	{
 		ExpectationResult result = Inner.IsMetBy(value);
-		return result.Invert(e => $"not {e.ExpectationText}",
+		return result.Invert(e => $"{_textSeparator}{e.ExpectationText}",
 			v => v == null ? "it did" : $"found {v}");
 	}
 

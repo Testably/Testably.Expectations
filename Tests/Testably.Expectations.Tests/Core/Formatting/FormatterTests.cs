@@ -1,20 +1,26 @@
-﻿//using Xunit;
+﻿using System.Threading.Tasks;
+using Xunit;
 
-//namespace Testably.Expectations.Tests.Core.Formatting;
+namespace Testably.Expectations.Tests.Core.Formatting;
 
-//public sealed class FormatterTests
-//{
-//	[Fact]
-//	public void StringFormatter_ShouldUseDoubleQuotationMarks()
-//	{
-//		string? sut = "foo";
+public sealed class FormatterTests
+{
+	[Fact]
+	public async Task StringFormatter_ShouldUseDoubleQuotationMarks()
+	{
+		string sut = "foo";
 
-//		void Act()
-//			=> ExpectVoid.That(sut, Should.Be.Null());
+		async Task Act()
+			=> await Expect.That(sut).IsNull();
 
-//		ExpectVoid.That(Act, Should.Throw.Exception()
-//			.WhichMessage(Should.Be.EqualTo("Expected sut to be <null>, but found \"foo\".")));
-//	}
-//}
+		await Expect.That(Act).ThrowsException()
+			.Which.HasMessage("""
+			                  Expected that sut
+			                  is null,
+			                  but found "foo"
+			                  at Expect.That(sut).IsNull()
+			                  """);
+	}
+}
 
 

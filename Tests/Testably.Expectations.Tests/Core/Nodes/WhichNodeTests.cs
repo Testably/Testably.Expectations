@@ -7,7 +7,7 @@
 //public sealed class WhichNodeTests
 //{
 //	[Fact]
-//	public void CombineMultipleWhich_ShouldEvaluateBothExpectations()
+//	public async Task CombineMultipleWhich_ShouldEvaluateBothExpectations()
 //	{
 //		Dummy sut = new()
 //		{
@@ -19,31 +19,31 @@
 //		};
 
 //		void Act()
-//			=> ExpectVoid.That(sut,
+//			=> await Expect.That(sut,
 //				Should.Be.AMappedTest<Dummy>("to map")
 //					.Which(p => p.Inner!.Id, Should.Be.EqualTo(1)).And()
 //					.Which(p => p.Value, Should.Start.With("other-value")).And()
 //					.Which(p => p.Value, Should.End.With("oo")));
 
-//		ExpectVoid.That(Act, Should.Throw.TypeOf<XunitException>().WhichMessage(
+//		await Expect.That(Act, Should.Throw.TypeOf<XunitException>().WhichMessage(
 //			Should.Be.EqualTo(
 //				"Expected sut .Inner.Id to be equal to 1 and .Value to start with \"other-value\" and .Value to end with \"oo\", but found \"foo\".")));
 //	}
 
 //	[Fact]
-//	public void ShouldAccessCorrectPropertyValue()
+//	public async Task ShouldAccessCorrectPropertyValue()
 //	{
 //		Dummy sut = new()
 //		{
 //			Value = "foo"
 //		};
 
-//		ExpectVoid.That(sut,
+//		await Expect.That(sut,
 //			Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Value, Should.Start.With("f")));
 //	}
 
 //	[Fact]
-//	public void ShouldIncludeCorrectPropertyPathInMessage()
+//	public async Task ShouldIncludeCorrectPropertyPathInMessage()
 //	{
 //		Dummy? sut = new()
 //		{
@@ -51,16 +51,16 @@
 //		};
 
 //		void Act()
-//			=> ExpectVoid.That(sut,
+//			=> await Expect.That(sut,
 //				Should.Be.AMappedTest<Dummy>("to map")
 //					.Which(p => p.Value, Should.Be.EqualTo("foo2")));
 
-//		ExpectVoid.That(Act, Should.Throw.Exception().WhichMessage(
+//		await Expect.That(Act, Should.Throw.Exception().WhichMessage(
 //			Should.Be.EqualTo("Expected sut .Value to be equal to \"foo2\", but found \"foo\".")));
 //	}
 
 //	[Fact]
-//	public void WhenReferringToANestedProperty_ShouldAccessCorrectPropertyValue()
+//	public async Task WhenReferringToANestedProperty_ShouldAccessCorrectPropertyValue()
 //	{
 //		Dummy sut = new()
 //		{
@@ -71,12 +71,12 @@
 //			Value = "foo"
 //		};
 
-//		ExpectVoid.That(sut,
+//		await Expect.That(sut,
 //			Should.Be.AMappedTest<Dummy>("to map").Which(p => p.Inner!.Id, Should.Be.EqualTo(1)));
 //	}
 
 //	[Fact]
-//	public void WhenReferringToANestedProperty_ShouldIncludeCorrectPropertyPathInMessage()
+//	public async Task WhenReferringToANestedProperty_ShouldIncludeCorrectPropertyPathInMessage()
 //	{
 //		Dummy? sut = new()
 //		{
@@ -88,11 +88,11 @@
 //		};
 
 //		void Act()
-//			=> ExpectVoid.That(sut,
+//			=> await Expect.That(sut,
 //				Should.Be.AMappedTest<Dummy>("to map")
 //					.Which(p => p.Inner!.Id, Should.Be.EqualTo(2)));
 
-//		ExpectVoid.That(Act, Should.Throw.Exception().WhichMessage(
+//		await Expect.That(Act, Should.Throw.Exception().WhichMessage(
 //			Should.Be.EqualTo("Expected sut .Inner.Id to be equal to 2, but found 1.")));
 //	}
 

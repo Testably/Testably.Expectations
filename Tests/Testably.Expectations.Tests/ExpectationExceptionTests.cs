@@ -1,18 +1,19 @@
-﻿//using AutoFixture.Xunit2;
-//using Xunit;
+﻿using AutoFixture.Xunit2;
+using System.Threading.Tasks;
+using Xunit;
 
-//namespace Testably.Expectations.Tests;
+namespace Testably.Expectations.Tests;
 
-//public sealed class ExpectationExceptionTests
-//{
-//	[Theory]
-//	[AutoData]
-//	public void Message_ShouldBeSet(string message)
-//	{
-//		ExpectationException sut = new(message);
+public sealed class ExpectationExceptionTests
+{
+	[Theory]
+	[AutoData]
+	public async Task Message_ShouldBeSet(string message)
+	{
+		ExpectationException sut = new(message);
 
-//		ExpectVoid.That(sut.Message, Should.Be.EqualTo(message));
-//	}
-//}
+		await Expect.That(sut.Message).Is(message);
+	}
+}
 
 

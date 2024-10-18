@@ -2,11 +2,13 @@
 
 internal class OrNode : CombinationNode
 {
+	private readonly string _textSeparator;
 	public override Node Left { get; }
 	public override Node Right { get; set; }
 
-	public OrNode(Node left, Node right)
+	public OrNode(Node left, Node right, string textSeparator = " or ")
 	{
+		_textSeparator = textSeparator;
 		Left = left;
 		Right = right;
 	}
@@ -19,7 +21,7 @@ internal class OrNode : CombinationNode
 		ExpectationResult rightResult = Right.IsMetBy(value);
 
 		string combinedExpectation =
-			$"{leftResult.ExpectationText} or {rightResult.ExpectationText}";
+			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";
 
 		if (leftResult is ExpectationResult.Failure leftFailure &&
 		    rightResult is ExpectationResult.Failure rightFailure)
@@ -27,6 +29,10 @@ internal class OrNode : CombinationNode
 			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
+		}
+		if (leftResult is ExpectationResult.Failure)
+		{
+			return rightResult.CombineWith(combinedExpectation, "");
 		}
 
 		return leftResult.CombineWith(combinedExpectation, "");

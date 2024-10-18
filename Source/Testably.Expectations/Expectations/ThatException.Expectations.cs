@@ -11,7 +11,7 @@ public sealed partial class ThatException<TException>
 {
 	private readonly struct HasInnerExceptionExpectation<TInnerException>(
 		Action<ThatException<TInnerException>> assertions)
-		: INullableExpectation<TInnerException>,
+		: IExpectation<TInnerException>,
 			IDelegateExpectation<DelegateSource.NoValue>
 		where TInnerException : Exception
 	{
@@ -44,7 +44,7 @@ public sealed partial class ThatException<TException>
 			=> "has an inner exception";
 	}
 
-	private readonly struct HasMessageExpectation<T>(string expected) : INullableExpectation<T>,
+	private readonly struct HasMessageExpectation<T>(string expected) : IExpectation<T>,
 		IDelegateExpectation<DelegateSource.NoValue>
 		where T : Exception
 	{

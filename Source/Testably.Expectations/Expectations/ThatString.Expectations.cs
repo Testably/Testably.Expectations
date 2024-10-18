@@ -5,7 +5,7 @@ namespace Testably.Expectations.Expectations;
 
 public sealed partial class ThatString
 {
-	private readonly struct IsExpectation : INullableExpectation<string?>
+	private readonly struct IsExpectation : IExpectation<string?>
 	{
 		private readonly string? _expected;
 
