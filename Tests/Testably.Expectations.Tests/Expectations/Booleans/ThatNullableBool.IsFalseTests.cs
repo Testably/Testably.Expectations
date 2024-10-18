@@ -4,24 +4,24 @@ using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Expectations.Booleans;
 
-public sealed partial class NullableBooleanExpectationTests
+public sealed partial class ThatNullableBool
 {
-	public sealed class IsNull
+	public sealed class IsFalseTests
 	{
 		[Fact]
-		public async Task Fails_For_False_Value()
+		public async Task Fails_For_Null_Value()
 		{
-			bool? value = false;
+			bool? value = null;
 
 			async Task Act()
-				=> await Expect.That(value).IsNull();
+				=> await Expect.That(value).IsFalse();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that value
-				                  is <null>,
-				                  but found False
-				                  at Expect.That(value).IsNull()
+				                  is False,
+				                  but found <null>
+				                  at Expect.That(value).IsFalse()
 				                  """);
 		}
 
@@ -31,24 +31,24 @@ public sealed partial class NullableBooleanExpectationTests
 			bool? value = true;
 
 			async Task Act()
-				=> await Expect.That(value).IsNull();
+				=> await Expect.That(value).IsFalse();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that value
-				                  is <null>,
+				                  is False,
 				                  but found True
-				                  at Expect.That(value).IsNull()
+				                  at Expect.That(value).IsFalse()
 				                  """);
 		}
 
 		[Fact]
-		public async Task Succeeds_For_Null_Value()
+		public async Task Succeeds_For_False_Value()
 		{
-			bool? value = null;
+			bool? value = false;
 
 			async Task Act()
-				=> await Expect.That(value).IsNull();
+				=> await Expect.That(value).IsFalse();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

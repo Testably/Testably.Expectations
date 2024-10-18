@@ -4,34 +4,34 @@ using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Expectations.Booleans;
 
-public sealed partial class NullableBooleanExpectationTests
+public sealed partial class ThatBool
 {
-	public sealed class IsNotFalse
+	public sealed class IsTrueTests
 	{
 		[Fact]
 		public async Task Fails_For_False_Value()
 		{
-			bool? value = false;
+			bool value = false;
 
 			async Task Act()
-				=> await Expect.That(value).IsNotFalse();
+				=> await Expect.That(value).IsTrue();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that value
-				                  is not False,
+				                  is True,
 				                  but found False
-				                  at Expect.That(value).IsNotFalse()
+				                  at Expect.That(value).IsTrue()
 				                  """);
 		}
 
-		[Theory]
-		[InlineData(true)]
-		[InlineData(null)]
-		public async Task Succeeds_For_True_Or_Null_Value(bool? value)
+		[Fact]
+		public async Task Succeeds_For_True_Value()
 		{
+			bool value = true;
+
 			async Task Act()
-				=> await Expect.That(value).IsNotFalse();
+				=> await Expect.That(value).IsTrue();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

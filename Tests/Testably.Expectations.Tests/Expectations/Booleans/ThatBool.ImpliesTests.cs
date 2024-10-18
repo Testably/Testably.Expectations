@@ -4,9 +4,9 @@ using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Expectations.Booleans;
 
-public sealed partial class BooleanExpectationTests
+public sealed partial class ThatBool
 {
-	public sealed class Implies
+	public sealed class ImpliesTests
 	{
 		[Fact]
 		public async Task Fails_For_Not_Implying_Values()

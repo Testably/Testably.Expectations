@@ -4,9 +4,9 @@ using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Expectations.Booleans;
 
-public sealed partial class NullableBooleanExpectationTests
+public sealed partial class ThatNullableBool
 {
-	public sealed class IsNotTrue
+	public sealed class IsNotTrueTests
 	{
 		[Fact]
 		public async Task Fails_For_True_Value()

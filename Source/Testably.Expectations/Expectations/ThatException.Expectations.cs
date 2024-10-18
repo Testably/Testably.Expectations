@@ -9,43 +9,45 @@ namespace Testably.Expectations.Expectations;
 public sealed partial class ThatException<TException>
 	where TException : Exception
 {
-	private readonly struct HasInnerExceptionExpectation<T> : INullableExpectation<Exception>,
-		IDelegateExpectation<object>
-		where T : Exception
+	private readonly struct HasInnerExceptionExpectation<TInnerException>(
+		Action<ThatException<TInnerException>> assertions)
+		: INullableExpectation<TInnerException>,
+			IDelegateExpectation<DelegateSource.NoValue>
+		where TInnerException : Exception
 	{
-		public ExpectationResult IsMetBy(SourceValue<object> value)
-		{
-			return IsMetBy(value.Exception as T);
-		}
-
-
 		/// <inheritdoc />
-		public ExpectationResult IsMetBy(Exception? actual)
+		public ExpectationResult IsMetBy(TInnerException actual)
 		{
-			if (actual?.InnerException is T exception)
+			_ = assertions;
+			if (actual?.InnerException is TInnerException exception)
 			{
-				return new ExpectationResult.Success<T?>(exception, ToString());
+				return new ExpectationResult.Success<TInnerException?>(exception, ToString());
 			}
 
 			return new ExpectationResult.Failure(ToString(),
-				"found none");
+				"it did not");
+		}
+
+		/// <inheritdoc />
+		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		{
+			if (value.Exception?.InnerException is TInnerException exception)
+			{
+				return new ExpectationResult.Success<TInnerException?>(exception, ToString());
+			}
+
+			return new ExpectationResult.Failure(ToString(),
+				"it did not");
 		}
 
 		public override string ToString()
-			=> "has InnerException";
+			=> "has an inner exception";
 	}
 
-	private readonly struct HasMessageExpectation<T> : INullableExpectation<T>,
+	private readonly struct HasMessageExpectation<T>(string expected) : INullableExpectation<T>,
 		IDelegateExpectation<DelegateSource.NoValue>
 		where T : Exception
 	{
-		private readonly string _expected;
-
-		public HasMessageExpectation(string expected)
-		{
-			_expected = expected;
-		}
-
 		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 		{
 			return IsMetBy(value.Exception as T);
@@ -53,16 +55,16 @@ public sealed partial class ThatException<TException>
 
 		public ExpectationResult IsMetBy(T? actual)
 		{
-			if (_expected.Equals(actual?.Message))
+			if (expected.Equals(actual?.Message))
 			{
 				return new ExpectationResult.Success<T?>(actual, ToString());
 			}
 
 			return new ExpectationResult.Failure(ToString(),
-				$"found {Formatter.Format(actual?.Message)} which {new StringDifference(actual?.Message, _expected)}");
+				$"found {Formatter.Format(actual?.Message)} which {new StringDifference(actual?.Message, expected)}");
 		}
 
 		public override string ToString()
-			=> $"has Message equal to {Formatter.Format(_expected)}";
+			=> $"has Message equal to {Formatter.Format(expected)}";
 	}
 }

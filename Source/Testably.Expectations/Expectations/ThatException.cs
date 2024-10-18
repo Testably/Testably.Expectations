@@ -24,4 +24,13 @@ public sealed partial class ThatException<TException>
 				new HasMessageExpectation<TException>(expected),
 				b => b.AppendMethod(nameof(HasMessage), doNotPopulateThisValue)),
 			this);
+
+	/// <summary>
+	///     Expect the <typeparamref type="TException" /> has an inner exception.
+	/// </summary>
+	public AssertionResult<TException, ThatException<TException>> HasInnerException()
+		=> new(_expectationBuilder.Add(
+				new HasInnerExceptionExpectation<Exception>(),
+				b => b.AppendMethod(nameof(HasInnerException))),
+			this);
 }

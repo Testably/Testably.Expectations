@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Testably.Expectations.Tests.Expectations.Delegates;
 
-public partial class DelegateExpectationTests
+public sealed partial class ThatDelegate
 {
     private static CustomException CreateCustomException(
         [CallerMemberName] string message = "",

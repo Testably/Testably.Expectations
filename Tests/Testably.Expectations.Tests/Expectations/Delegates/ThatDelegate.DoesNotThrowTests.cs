@@ -4,9 +4,9 @@ using Xunit;
 
 namespace Testably.Expectations.Tests.Expectations.Delegates;
 
-public partial class DelegateExpectationTests
+public sealed partial class ThatDelegate
 {
-    public class DoesNotThrow
+    public sealed class DoesNotThrowTests
     {
         [Fact]
         public async Task Fails_For_Code_With_Exceptions()
