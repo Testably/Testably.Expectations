@@ -6,6 +6,9 @@ namespace Testably.Expectations.Expectations;
 
 public abstract partial class ThatDelegate
 {
+	/// <summary>
+	///     A delegate without value.
+	/// </summary>
 	public sealed class WithoutValue : ThatDelegate
 	{
 		internal WithoutValue(IExpectationBuilder expectationBuilder)

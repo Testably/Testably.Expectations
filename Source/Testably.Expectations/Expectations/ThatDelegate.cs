@@ -4,6 +4,9 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Expectations;
 
+/// <summary>
+///     Expectations on delegate values.
+/// </summary>
 public abstract partial class ThatDelegate
 {
 	private readonly IExpectationBuilder _expectationBuilder;

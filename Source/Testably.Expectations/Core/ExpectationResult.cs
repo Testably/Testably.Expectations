@@ -23,6 +23,9 @@ public abstract class ExpectationResult
 		ExpectationText = expectationText;
 	}
 
+	/// <summary>
+	///     Combines the result with the provided <paramref name="expectationText" /> and <paramref name="resultText" />.
+	/// </summary>
 	public abstract ExpectationResult CombineWith(string expectationText, string resultText);
 
 	/// <summary>
@@ -50,6 +53,7 @@ public abstract class ExpectationResult
 		{
 		}
 
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
 		public override ExpectationResult CombineWith(string expectationText, string resultText)
 		{
 			return new Success(expectationText);
@@ -69,16 +73,16 @@ public abstract class ExpectationResult
 		public override string ToString()
 			=> $"SUCCEEDED {ExpectationText}";
 
-		/// <inheritdoc />
-		internal override ExpectationResult UpdateExpectationText(
-			Func<ExpectationResult, string> expectationText)
-			=> new Success(expectationText.Invoke(this));
-
 		internal virtual bool TryGetValue<TValue>([NotNullWhen(true)] out TValue? value)
 		{
 			value = default;
 			return false;
 		}
+
+		/// <inheritdoc />
+		internal override ExpectationResult UpdateExpectationText(
+			Func<ExpectationResult, string> expectationText)
+			=> new Success(expectationText.Invoke(this));
 	}
 
 	/// <summary>
@@ -99,6 +103,7 @@ public abstract class ExpectationResult
 			Value = value;
 		}
 
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
 		public override ExpectationResult CombineWith(string expectationText, string resultText)
 		{
 			return new Success<T>(Value, expectationText);
@@ -114,10 +119,6 @@ public abstract class ExpectationResult
 				resultText?.Invoke(Value) ?? InvertDefaultResultText);
 		}
 
-		/// <inheritdoc />
-		internal override ExpectationResult UpdateExpectationText(
-			Func<ExpectationResult, string> expectationText)
-			=> new Success<T>(Value, expectationText.Invoke(this));
 		internal override bool TryGetValue<TValue>([NotNullWhen(true)] out TValue? value)
 			where TValue : default
 		{
@@ -126,9 +127,15 @@ public abstract class ExpectationResult
 				value = v;
 				return true;
 			}
+
 			value = default;
 			return false;
 		}
+
+		/// <inheritdoc />
+		internal override ExpectationResult UpdateExpectationText(
+			Func<ExpectationResult, string> expectationText)
+			=> new Success<T>(Value, expectationText.Invoke(this));
 	}
 
 	/// <summary>
@@ -149,6 +156,7 @@ public abstract class ExpectationResult
 			ResultText = resultText;
 		}
 
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
 		public override ExpectationResult CombineWith(string expectationText, string resultText)
 		{
 			return new Failure(expectationText, resultText);
@@ -192,6 +200,7 @@ public abstract class ExpectationResult
 			Value = value;
 		}
 
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
 		public override ExpectationResult CombineWith(string expectationText, string resultText)
 		{
 			return new Failure<T>(Value, expectationText, resultText);

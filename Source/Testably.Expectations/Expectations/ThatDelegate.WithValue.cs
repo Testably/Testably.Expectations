@@ -5,6 +5,9 @@ namespace Testably.Expectations.Expectations;
 
 public abstract partial class ThatDelegate
 {
+	/// <summary>
+	///     A delegate with value of type <typeparamref name="TValue" />.
+	/// </summary>
 	public sealed class WithValue<TValue> : ThatDelegate
 	{
 		internal WithValue(IExpectationBuilder expectationBuilder)

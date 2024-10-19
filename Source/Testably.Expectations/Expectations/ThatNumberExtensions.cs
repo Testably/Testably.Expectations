@@ -7,6 +7,9 @@ using Testably.Expectations.Core.Helpers;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
+/// <summary>
+///     Expectations on numeric values.
+/// </summary>
 public static partial class ThatNumberExtensions
 {
 	/// <summary>

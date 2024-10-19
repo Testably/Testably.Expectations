@@ -4,6 +4,9 @@ using Testably.Expectations.Core.Ambient;
 
 namespace Testably.Expectations;
 
+/// <summary>
+///     Fail methods.
+/// </summary>
 [StackTraceHidden]
 public static class Fail
 {

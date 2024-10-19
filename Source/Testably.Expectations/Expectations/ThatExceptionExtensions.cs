@@ -9,6 +9,9 @@ using Testably.Expectations.Core.Sources;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
+/// <summary>
+///     Expectations on <see cref="Exception" /> values.
+/// </summary>
 public static class ThatExceptionExtensions
 {
 	/// <summary>
@@ -40,7 +43,7 @@ public static class ThatExceptionExtensions
 		=> new(source.ExpectationBuilder.Which<Exception, Exception?>(
 				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException, "has an inner exception which "),
 				expectations,
-				b => b.AppendMethod(nameof(HasInnerException), doNotPopulateThisValue), ""),
+				b => b.AppendMethod(nameof(HasInnerException), doNotPopulateThisValue), whichTextSeparator: ""),
 			source);
 
 	/// <summary>
@@ -57,7 +60,7 @@ public static class ThatExceptionExtensions
 				b => b.AppendGenericMethod<TException>(nameof(HasInner), doNotPopulateThisValue), ""),
 			source);
 
-	public class CastException<TBase, TTarget> : IExpectation<TBase?, TTarget?>
+	private class CastException<TBase, TTarget> : IExpectation<TBase?, TTarget?>
 		where TBase : Exception
 		where TTarget : Exception
 	{

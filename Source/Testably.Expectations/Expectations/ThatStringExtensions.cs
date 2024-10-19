@@ -6,6 +6,9 @@ using Testably.Expectations.Core.Helpers;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
+/// <summary>
+///     Expectations on <see cref="string" /> values.
+/// </summary>
 public static class ThatStringExtensions
 {
 	/// <summary>

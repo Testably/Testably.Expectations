@@ -5,11 +5,15 @@ using Testably.Expectations.Core.Formatting.Formatters;
 
 namespace Testably.Expectations.Core.Formatting;
 
+/// <summary>
+///     Formatter for arbitrary objects in exception messages.
+/// </summary>
 public class Formatter
 {
 	internal const string NullString = "<null>";
 
 	private readonly IValueFormatter _defaultFormatter = new DefaultFormatter();
+
 	private readonly IValueFormatter[] _internalValueFormatters =
 	[
 		new BooleanFormatter(),
@@ -28,6 +32,9 @@ public class Formatter
 		new NumberFormatter<decimal>()
 	];
 
+	/// <summary>
+	///     Formats the <paramref name="value" /> according to the formatting <paramref name="options" />.
+	/// </summary>
 	public static string Format<T>(T? value, FormattingOptions? options = null)
 	{
 		StringBuilder stringBuilder = new();

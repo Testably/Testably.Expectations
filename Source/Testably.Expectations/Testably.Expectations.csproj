@@ -4,6 +4,7 @@
 		<RootNamespace>Testably.Expectations</RootNamespace>
 		<Description>Assert unit tests in natural language by specifying expectations.</Description>
 		<PackageReadmeFile>Docs/README.md</PackageReadmeFile>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
