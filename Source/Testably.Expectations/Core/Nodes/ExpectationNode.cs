@@ -1,5 +1,4 @@
-﻿using System;
-using Testably.Expectations.Core.Sources;
+﻿using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -13,7 +12,7 @@ internal class ExpectationNode : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+	public override Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 		=> TryMeet(Expectation, value);
 

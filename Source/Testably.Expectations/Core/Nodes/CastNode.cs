@@ -1,6 +1,4 @@
-﻿using System;
-using Testably.Expectations.Core.Sources;
-using Testably.Expectations.Expectations;
+﻿using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -16,13 +14,13 @@ internal class CastNode<T1, T2> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
-		ExpectationResult result = TryMeet(Expectation, value);
+		var result = await TryMeet(Expectation, value);
 		if (Inner != None && result is ExpectationResult.Success<T2> success)
 		{
-			return Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
+			return await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
 		}
 
 		return result;

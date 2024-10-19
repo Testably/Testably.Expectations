@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -16,7 +17,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
@@ -30,7 +31,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 			if (propertyAccessor.TryAccessProperty(new SourceValue<TSource>(typedValue, value.Exception),
 				out TProperty? matchingValue))
 			{
-				return Inner.IsMetBy(new SourceValue<TProperty>(matchingValue, value.Exception))
+				return (await Inner.IsMetBy(new SourceValue<TProperty>(matchingValue, value.Exception)))
 					.UpdateExpectationText(r => $" which {_propertyAccessor} {r.ExpectationText}");
 			}
 

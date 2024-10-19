@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -12,7 +13,7 @@ internal class DeferredNode<TProperty> : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
 		if (value is not SourceValue<TProperty> matchingActualValue)
@@ -23,7 +24,7 @@ internal class DeferredNode<TProperty> : Node
 
 		var expectationBuilder = new ExpectationBuilder<TProperty?>(matchingActualValue.Value, "");
 		_expectation.Invoke(new That<TProperty>(expectationBuilder));
-		return expectationBuilder.IsMet().Result;
+		return await expectationBuilder.IsMet();
 	}
 
 	/// <inheritdoc />
