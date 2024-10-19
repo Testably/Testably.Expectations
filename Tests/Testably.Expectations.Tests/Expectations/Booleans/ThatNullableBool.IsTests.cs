@@ -18,9 +18,9 @@ public sealed partial class ThatNullableBool
 		public async Task Fails_For_Different_Value(bool? value, bool? expected)
 		{
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await That(value).Is(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that value
 				                   is {expected?.ToString() ?? "<null>"},
@@ -38,9 +38,9 @@ public sealed partial class ThatNullableBool
 			bool? expected = value;
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await That(value).Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 	}
 }

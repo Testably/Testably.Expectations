@@ -11,9 +11,9 @@ public sealed class FormatterTests
 		string sut = "foo";
 
 		async Task Act()
-			=> await Expect.That(sut).IsNull();
+			=> await That(sut).IsNull();
 
-		await Expect.That(Act).ThrowsException()
+		await That(Act).ThrowsException()
 			.Which.HasMessage("""
 			                  Expected that sut
 			                  is null,

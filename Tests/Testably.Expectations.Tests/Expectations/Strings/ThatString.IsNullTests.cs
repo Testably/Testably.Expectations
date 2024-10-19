@@ -14,15 +14,15 @@ public sealed partial class ThatString
 		public async Task FailsWhenNotNull(string? actual)
 		{
 			async Task Act()
-				=> await Expect.That(actual).IsNull();
+				=> await That(actual).IsNull();
 
-			XunitException exception = await Assert.ThrowsAsync<XunitException>(Act);
-			Assert.Equal($"""
-			              Expected that actual
-			              is null,
-			              but found "{actual}"
-			              at Expect.That(actual).IsNull()
-			              """, exception.Message);
+			await That(Act).Throws<XunitException>()
+				.Which.HasMessage($"""
+				                   Expected that actual
+				                   is null,
+				                   but found "{actual}"
+				                   at Expect.That(actual).IsNull()
+				                   """);
 		}
 
 		[Fact]
@@ -31,7 +31,7 @@ public sealed partial class ThatString
 			string? actual = null;
 
 			async Task Act()
-				=> await Expect.That(actual).IsNull();
+				=> await That(actual).IsNull();
 
 			await Act();
 		}

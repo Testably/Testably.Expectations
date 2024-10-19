@@ -20,9 +20,9 @@ public sealed partial class ThatDelegate
             var action = () => { };
 
             var sut = async ()
-                => await Expect.That(action).ThrowsException();
+                => await That(action).ThrowsException();
 
-            await Expect.That(sut).ThrowsException()
+            await That(sut).ThrowsException()
                 .Which.HasMessage(expectedMessage);
         }
 
@@ -32,10 +32,10 @@ public sealed partial class ThatDelegate
             Exception exception = CreateCustomException();
             Action action = () => throw exception;
 
-            var result = await Expect.That(action).ThrowsException();
+            var result = await That(action).ThrowsException();
 
-            Assert.Same(exception, result);
-        }
+            await That(result).IsSameAs(exception);
+		}
 
         [Fact]
         public async Task Succeeds_For_Code_With_Exceptions()
@@ -44,9 +44,9 @@ public sealed partial class ThatDelegate
             Action action = () => throw exception;
 
             var sut = async ()
-                => await Expect.That(action).ThrowsException();
+                => await That(action).ThrowsException();
 
-            await Expect.That(sut).DoesNotThrow();
+            await That(sut).DoesNotThrow();
         }
     }
 }

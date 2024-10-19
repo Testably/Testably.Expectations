@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core;
@@ -15,7 +16,7 @@ public abstract class PropertyAccessor
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> _name == "" ? "" : $".{_name} ";
+		=> _name;
 }
 
 public class PropertyAccessor<TValue, TProperty> : PropertyAccessor
@@ -31,6 +32,14 @@ public class PropertyAccessor<TValue, TProperty> : PropertyAccessor
 	public static PropertyAccessor<TValue, TProperty?> FromFunc(
 		Func<SourceValue<TValue>, TProperty> propertyAccessor, string name)
 		=> new(propertyAccessor, name);
+
+	public static PropertyAccessor<TValue, TProperty?> FromExpression(
+		Expression<Func<TValue, TProperty>> propertyAccessor)
+	{
+		var compiled = propertyAccessor.Compile();
+		//TODO Check nullability
+		return new(v => compiled(v.Value!), ExpressionHelpers.GetPropertyPath(propertyAccessor));
+	}
 
 	public static PropertyAccessor<TValue, TProperty?> FromString(string propertyAccessor)
 		=> new(value => ExpressionHelpers.GetPropertyValue<TProperty>(value, propertyAccessor),

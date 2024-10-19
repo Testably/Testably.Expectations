@@ -16,9 +16,9 @@ public sealed partial class ThatBool
 			bool unexpected = value;
 
 			async Task Act()
-				=> await Expect.That(value).IsNot(unexpected);
+				=> await That(value).IsNot(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that value
 				                   is not {unexpected},
@@ -35,9 +35,9 @@ public sealed partial class ThatBool
 			bool unexpected = !value;
 
 			async Task Act()
-				=> await Expect.That(value).IsNot(unexpected);
+				=> await That(value).IsNot(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 	}
 }

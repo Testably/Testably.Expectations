@@ -17,9 +17,9 @@ public sealed partial class ThatException
 			Exception sut = new Exception(actual);
 
 			async Task Act()
-				=> await Expect.That(sut).HasMessage(expected);
+				=> await That(sut).HasMessage(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that sut
 				                   has Message equal to "{expected}",
@@ -39,9 +39,9 @@ public sealed partial class ThatException
 			Exception sut = new Exception(actual);
 
 			async Task Act()
-				=> await Expect.That(sut).HasMessage(actual);
+				=> await That(sut).HasMessage(actual);
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 	}
 

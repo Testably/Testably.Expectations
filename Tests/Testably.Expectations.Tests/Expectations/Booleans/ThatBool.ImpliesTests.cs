@@ -15,9 +15,9 @@ public sealed partial class ThatBool
 			bool consequent = false;
 
 			async Task Act()
-				=> await Expect.That(antecedent).Implies(consequent);
+				=> await That(antecedent).Implies(consequent);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that antecedent
 				                   implies {consequent},
@@ -33,9 +33,9 @@ public sealed partial class ThatBool
 		public async Task Succeeds_For_Implying_Values(bool antecedent, bool consequent)
 		{
 			async Task Act()
-				=> await Expect.That(antecedent).Implies(consequent);
+				=> await That(antecedent).Implies(consequent);
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 	}
 }

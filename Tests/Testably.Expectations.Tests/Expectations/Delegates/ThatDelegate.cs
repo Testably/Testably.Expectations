@@ -26,7 +26,7 @@ public sealed partial class ThatDelegate
         return new OtherException(message, innerException);
     }
 
-    private class CustomException : System.Exception
+    private class CustomException : Exception
     {
         public CustomException(string message, Exception? innerException = null)
             : base(message, innerException)
@@ -46,7 +46,7 @@ public sealed partial class ThatDelegate
         }
     }
 
-    private class OtherException : System.Exception
+    private class OtherException : Exception
     {
         public OtherException(string message, Exception? innerException = null)
             : base(message, innerException)

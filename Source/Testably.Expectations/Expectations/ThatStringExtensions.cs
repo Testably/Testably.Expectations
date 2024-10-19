@@ -11,8 +11,8 @@ public static class ThatStringExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to <paramref name="expected" />.
 	/// </summary>
-	public static AssertionResult<string, That<string>> Is(this That<string> source,
-		string expected,
+	public static AssertionResult<string?, That<string?>> Is(this That<string?> source,
+		string? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
 				new IsExpectation(expected),
@@ -94,7 +94,7 @@ public static class ThatStringExtensions
 			=> "is not null";
 	}
 
-	private readonly struct IsNullExpectation : IExpectation<string>
+	private readonly struct IsNullExpectation : IExpectation<string?>
 	{
 		#region IExpectation<string> Members
 
@@ -107,7 +107,7 @@ public static class ThatStringExtensions
 					$"found {Formatter.Format(actual)}");
 			}
 
-			return new ExpectationResult.Success<string?>(actual, ToString());
+			return new ExpectationResult.Success<string?>(null, ToString());
 		}
 
 		#endregion

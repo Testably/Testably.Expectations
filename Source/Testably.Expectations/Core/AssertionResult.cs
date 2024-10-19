@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Helpers;
@@ -51,16 +52,15 @@ public class AssertionResultWhich<TResult, TValue> : AssertionResult<TResult, TV
 		_assertion = assertion;
 	}
 
-	public AssertionResultWhich<TResult, TValue> Which<TProperty>(Func<TResult, TProperty> selector,
+	public AssertionResultWhich<TResult, TValue> Which<TProperty>(Expression<Func<TResult, TProperty>> selector,
 		Action<That<TProperty>> expectations,
 		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",
 		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue2 = "")
 	{
 		_expectationBuilder.Which<TResult, TProperty>(
-			//TODO: Check nullability
-			PropertyAccessor<TResult, TProperty>.FromFunc(v=> selector(v.Value!), ""),
-			//b => b.AppendMethod(nameof(Which), doNotPopulateThisValue),
-			null!);
+			PropertyAccessor<TResult, TProperty>.FromExpression(selector),
+			expectations,
+			b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1, doNotPopulateThisValue2));
 		return this;
 	}
 }

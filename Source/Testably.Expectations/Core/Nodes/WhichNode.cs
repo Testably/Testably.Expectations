@@ -21,17 +21,17 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
-			if (value is not SourceValue<TSource> matchingActualValue)
+			if (value.Value is not TSource typedValue)
 			{
 				throw new InvalidOperationException(
 					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
 			}
 
-			if (propertyAccessor.TryAccessProperty(matchingActualValue,
+			if (propertyAccessor.TryAccessProperty(new SourceValue<TSource>(typedValue, value.Exception),
 				out TProperty? matchingValue))
 			{
-				return Inner.IsMetBy(value)
-					.UpdateExpectationText(r => $"{_propertyAccessor}{r.ExpectationText}");
+				return Inner.IsMetBy(new SourceValue<TProperty>(matchingValue, value.Exception))
+					.UpdateExpectationText(r => $" which {_propertyAccessor} {r.ExpectationText}");
 			}
 
 			throw new InvalidOperationException(

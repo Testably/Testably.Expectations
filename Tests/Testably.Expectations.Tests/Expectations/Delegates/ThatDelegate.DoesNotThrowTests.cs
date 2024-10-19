@@ -22,9 +22,9 @@ public sealed partial class ThatDelegate
             Action action = () => throw exception;
 
             var sut = async ()
-                => await Expect.That(action).DoesNotThrow();
+                => await That(action).DoesNotThrow();
 
-            await Expect.That(sut).ThrowsException()
+            await That(sut).ThrowsException()
                 .Which.HasMessage(expectedMessage);
         }
 
@@ -34,9 +34,9 @@ public sealed partial class ThatDelegate
             var action = () => { };
 
             var sut = async ()
-                => await Expect.That(action).DoesNotThrow();
+                => await That(action).DoesNotThrow();
 
-            await Expect.That(sut).DoesNotThrow();
+            await That(sut).DoesNotThrow();
         }
 
         [Fact]
@@ -45,9 +45,8 @@ public sealed partial class ThatDelegate
             var value = 42;
             var action = () => value;
 
-            var result = await Expect.That(action).DoesNotThrow();
-
-            Assert.Equal(value, result);
+            var result = await That(action).DoesNotThrow();
+            await That(result).Is(value);
         }
     }
 }

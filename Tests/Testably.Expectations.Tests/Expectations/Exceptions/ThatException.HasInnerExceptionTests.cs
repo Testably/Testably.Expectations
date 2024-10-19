@@ -15,9 +15,9 @@ public sealed partial class ThatException
 			Exception sut = new("outer");
 
 			async Task Act()
-				=> await Expect.That(sut).HasInnerException();
+				=> await That(sut).HasInnerException();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that sut
 				                  has an inner exception,
@@ -33,9 +33,9 @@ public sealed partial class ThatException
 				new Exception("inner"));
 
 			async Task Act()
-				=> await Expect.That(sut).HasInnerException();
+				=> await That(sut).HasInnerException();
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 	}
 }

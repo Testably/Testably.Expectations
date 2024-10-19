@@ -12,9 +12,9 @@ public sealed class ExpectationTests
 	public async Task And_ShouldFailWhenAnyArgumentFails(bool a, bool b)
 	{
 		async Task Act()
-			=> await Expect.That(true).Is(a).And.Is(b);
+			=> await That(true).Is(a).And.Is(b);
 
-		await Expect.That(Act).ThrowsException();
+		await That(Act).ThrowsException();
 	}
 
 	[Theory]
@@ -22,9 +22,9 @@ public sealed class ExpectationTests
 	public async Task And_ShouldRequireBothArgumentsToSucceed(bool a, bool b)
 	{
 		async Task Act()
-			=> await Expect.That(true).Is(a).And.Is(b);
+			=> await That(true).Is(a).And.Is(b);
 
-		await Expect.That(Act).DoesNotThrow();
+		await That(Act).DoesNotThrow();
 	}
 
 	[Theory]
@@ -32,9 +32,9 @@ public sealed class ExpectationTests
 	public async Task Or_ShouldFailWhenBothArgumentsFail(bool a, bool b)
 	{
 		async Task Act()
-			=> await Expect.That(true).Is(a).Or.Is(b);
+			=> await That(true).Is(a).Or.Is(b);
 
-		await Expect.That(Act).ThrowsException();
+		await That(Act).ThrowsException();
 	}
 
 	[Theory]
@@ -44,8 +44,8 @@ public sealed class ExpectationTests
 	public async Task Or_ShouldRequireAnyArgumentToSucceed(bool a, bool b)
 	{
 		async Task Act()
-			=> await Expect.That(true).Is(a).Or.Is(b);
+			=> await That(true).Is(a).Or.Is(b);
 
-		await Expect.That(Act).DoesNotThrow();
+		await That(Act).DoesNotThrow();
 	}
 }

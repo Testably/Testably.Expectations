@@ -13,9 +13,9 @@ public sealed partial class ThatNumber
 		{
 			double value = double.NaN;
 
-			async Task Act() => await Expect.That(value).IsNaN();
+			async Task Act() => await That(value).IsNaN();
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 
 		[Fact]
@@ -24,9 +24,9 @@ public sealed partial class ThatNumber
 			float value = float.NaN;
 
 			async Task Act()
-				=> await Expect.That(value).IsNaN();
+				=> await That(value).IsNaN();
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 
 		[Fact]
@@ -35,10 +35,10 @@ public sealed partial class ThatNumber
 			double value = double.NaN;
 
 			async Task Act()
-				=> await Expect.That(value).IsNaN()
+				=> await That(value).IsNaN()
 					.And.Is(value);
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 
 		[Fact]
@@ -46,10 +46,10 @@ public sealed partial class ThatNumber
 		{
 			float value = float.NaN;
 
-			async Task Act() => await Expect.That(value).IsNaN()
+			async Task Act() => await That(value).IsNaN()
 				.And.Is(value);
 
-			await Expect.That(Act).DoesNotThrow();
+			await That(Act).DoesNotThrow();
 		}
 
 		[Theory]
@@ -64,9 +64,9 @@ public sealed partial class ThatNumber
 		public async Task Should_fail_when_asserting_normal_double_value_to_be_NaN(double value)
 		{
 			async Task Act()
-				=> await Expect.That(value).IsNaN();
+				=> await That(value).IsNaN();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that value
 				                   is NaN,
@@ -87,9 +87,9 @@ public sealed partial class ThatNumber
 		public async Task Should_fail_when_asserting_normal_float_value_to_be_NaN(float value)
 		{
 			async Task Act()
-				=> await Expect.That(value).IsNaN();
+				=> await That(value).IsNaN();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that value
 				                   is NaN,
