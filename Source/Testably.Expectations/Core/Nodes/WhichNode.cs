@@ -1,37 +1,49 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Nodes;
 
+[StackTraceHidden]
 internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
-	private readonly PropertyAccessor _propertyAccessor;
 	public override Node Inner { get; set; }
+	private readonly PropertyAccessor _propertyAccessor;
+	private readonly string _textSeparator;
 
-	public WhichNode(PropertyAccessor propertyAccessor, Node inner)
+	public WhichNode(PropertyAccessor propertyAccessor, Node inner,
+		string textSeparator = " which ")
 	{
 		_propertyAccessor = propertyAccessor;
+		_textSeparator = textSeparator;
 		Inner = inner;
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
-			if (actual is not TSource matchingActualValue)
+			if (value.Value is not TSource typedValue)
 			{
-				throw new InvalidOperationException($"The property type for the actual value in the which node did not match. Expected {typeof(TSource).Name}, but found {actual?.GetType().Name}");
-			}
-			if (propertyAccessor.TryAccessProperty(matchingActualValue, out var matchingValue))
-			{
-				return Inner.IsMetBy(matchingValue)
-					.UpdateExpectationText(r => $".{_propertyAccessor} {r.ExpectationText}");
+				throw new InvalidOperationException(
+					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
 			}
 
-			throw new InvalidOperationException($"The property type for the which node did not match. Expected {typeof(TProperty).Name}, but found {matchingValue?.GetType().Name}");
+			if (propertyAccessor.TryAccessProperty(new SourceValue<TSource>(typedValue, value.Exception),
+				out TProperty? matchingValue))
+			{
+				return (await Inner.IsMetBy(new SourceValue<TProperty>(matchingValue, value.Exception)))
+					.UpdateExpectationText(r => $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
+			}
+
+			throw new InvalidOperationException(
+				$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TProperty).Name},{Environment.NewLine}but found {matchingValue?.GetType().Name}");
 		}
 
-		throw new InvalidOperationException($"The property accessor for the which node did not match. Expected {typeof(PropertyAccessor<TExpectation, TProperty>).FullName}, but found {_propertyAccessor.GetType().FullName}");
+		throw new InvalidOperationException(
+			$"The property accessor for the which node did not match.{Environment.NewLine}Expected {typeof(PropertyAccessor<TValue, TProperty>).FullName},{Environment.NewLine}but found {_propertyAccessor.GetType().FullName}");
 	}
 
 	/// <inheritdoc />

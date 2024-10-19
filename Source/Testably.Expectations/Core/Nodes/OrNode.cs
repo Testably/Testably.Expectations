@@ -1,35 +1,48 @@
-﻿namespace Testably.Expectations.Core.Nodes;
+﻿using System.Threading.Tasks;
+
+namespace Testably.Expectations.Core.Nodes;
 
 internal class OrNode : CombinationNode
 {
+	private readonly string _textSeparator;
 	public override Node Left { get; }
 	public override Node Right { get; set; }
 
-	public OrNode(Node left, Node right)
+	public OrNode(Node left, Node right, string textSeparator = " or ")
 	{
+		_textSeparator = textSeparator;
 		Left = left;
 		Right = right;
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
-		ExpectationResult leftResult = Left.IsMetBy(actual);
-		ExpectationResult rightResult = Right.IsMetBy(actual);
+		ExpectationResult leftResult = await Left.IsMetBy(value);
+		ExpectationResult rightResult = await Right.IsMetBy(value);
 
 		string combinedExpectation =
-			$"{leftResult.ExpectationText} or {rightResult.ExpectationText}";
+			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";
 
 		if (leftResult is ExpectationResult.Failure leftFailure &&
 		    rightResult is ExpectationResult.Failure rightFailure)
 		{
-			return new ExpectationResult.Failure(
+			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
+		if (leftResult is ExpectationResult.Failure)
+		{
+			return rightResult.CombineWith(combinedExpectation, "");
+		}
 
-		return new ExpectationResult.Success(combinedExpectation);
+		return leftResult.CombineWith(combinedExpectation, "");
 	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"({Left} OR {Right})";
 
 	private static string CombineResultTexts(string leftResultText, string rightResultText)
 	{
@@ -40,8 +53,4 @@ internal class OrNode : CombinationNode
 
 		return $"{leftResultText} and {rightResultText}";
 	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> $"({Left} OR {Right})";
 }

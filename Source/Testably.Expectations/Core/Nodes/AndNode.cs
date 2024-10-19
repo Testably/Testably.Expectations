@@ -1,49 +1,60 @@
-﻿namespace Testably.Expectations.Core.Nodes;
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
 
+namespace Testably.Expectations.Core.Nodes;
+
+[StackTraceHidden]
 internal class AndNode : CombinationNode
 {
 	public override Node Left { get; }
 	public override Node Right { get; set; }
+	private readonly string _textSeparator;
 
-	public AndNode(Node left, Node right)
+	public AndNode(Node left, Node right, string textSeparator = " and ")
 	{
 		Left = left;
 		Right = right;
+		_textSeparator = textSeparator;
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
-		ExpectationResult leftResult = Left.IsMetBy(actual);
-		ExpectationResult rightResult = Right.IsMetBy(actual);
+		ExpectationResult leftResult = await Left.IsMetBy(value);
+		ExpectationResult rightResult = await Right.IsMetBy(value);
 
 		string combinedExpectation =
-			$"{leftResult.ExpectationText} and {rightResult.ExpectationText}";
+			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";
 
 		if (leftResult is ExpectationResult.Failure leftFailure &&
 		    rightResult is ExpectationResult.Failure rightFailure)
 		{
-			return new ExpectationResult.Failure(
+			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
 		if (leftResult is ExpectationResult.Failure onlyLeftFailure)
 		{
-			return new ExpectationResult.Failure(
+			return onlyLeftFailure.CombineWith(
 				combinedExpectation,
 				onlyLeftFailure.ResultText);
 		}
 
 		if (rightResult is ExpectationResult.Failure onlyRightFailure)
 		{
-			return new ExpectationResult.Failure(
+			return onlyRightFailure.CombineWith(
 				combinedExpectation,
 				onlyRightFailure.ResultText);
 		}
 
-		return new ExpectationResult.Success(combinedExpectation);
+		return leftResult.CombineWith(combinedExpectation, "");
 	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"({Left} AND {Right})";
 
 	private static string CombineResultTexts(string leftResultText, string rightResultText)
 	{
@@ -54,8 +65,4 @@ internal class AndNode : CombinationNode
 
 		return $"{leftResultText} and {rightResultText}";
 	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> $"({Left} AND {Right})";
 }

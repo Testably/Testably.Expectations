@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -14,21 +14,16 @@ internal class CastNode<T1, T2> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
+	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
 	{
-		if (Expectation is IExpectation<TExpectation> typedExpectation)
+		var result = await TryMeet(Expectation, value);
+		if (Inner != None && result is ExpectationResult.Success<T2> success)
 		{
-			ExpectationResult result = typedExpectation.IsMetBy(actual);
-			if (Inner != None && result is ExpectationResult.Success<T2> success)
-			{
-				return Inner.IsMetBy(success.Value);
-			}
-
-			return result;
+			return await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
 		}
 
-		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
+		return result;
 	}
 
 	/// <inheritdoc />

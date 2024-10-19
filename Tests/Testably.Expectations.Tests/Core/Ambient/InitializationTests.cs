@@ -1,6 +1,7 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Testably.Expectations.Tests.Core.Ambient;
@@ -8,7 +9,7 @@ namespace Testably.Expectations.Tests.Core.Ambient;
 public sealed class InitializationTests
 {
 	[Fact]
-	public void AssemblyWithoutReferenceOnSupportedFramework_ShouldThrowExpectationException()
+	public async Task AssemblyWithoutReferenceOnSupportedFramework_ShouldThrowExpectationException()
 	{
 		if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 		{
@@ -24,7 +25,9 @@ public sealed class InitializationTests
 		fallbackTestProcess.Start();
 		fallbackTestProcess.WaitForExit(30000);
 
-		Expect.That(fallbackTestProcess.ExitCode, Should.Be.EqualTo(1));
+		await Expect.That(fallbackTestProcess.ExitCode).Is(1);
 	}
 }
 #endif
+
+

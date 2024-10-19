@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core;
 
-internal abstract class PropertyAccessor
+/// <summary>
+/// The property accessor.
+/// </summary>
+public abstract class PropertyAccessor
 {
 	private readonly string _name;
 
+	/// <summary>
+	/// Creates a new property accessor.
+	/// </summary>
+	/// <param name="name"></param>
 	protected PropertyAccessor(string name)
 	{
 		_name = name;
@@ -18,22 +26,40 @@ internal abstract class PropertyAccessor
 		=> _name;
 }
 
-internal class PropertyAccessor<TActual, TProperty> : PropertyAccessor
+/// <summary>
+/// The property accessor from <typeparamref name="TSource"/> to <typeparamref name="TTarget"/>.
+/// </summary>
+public class PropertyAccessor<TSource, TTarget> : PropertyAccessor
 {
-	private readonly Func<TActual, TProperty> _accessor;
+	private readonly Func<SourceValue<TSource>, TTarget> _accessor;
 
-	private PropertyAccessor(Func<TActual, TProperty> accessor, string name) : base(name)
+	private PropertyAccessor(Func<SourceValue<TSource>, TTarget> accessor, string name) :
+		base(name)
 	{
 		_accessor = accessor;
 	}
 
-	public bool TryAccessProperty(TActual value, [NotNullWhen(true)] out TProperty? property)
+	/// <summary>
+	/// Creates a property accessor from the given <paramref name="func"/>.
+	/// </summary>
+	internal static PropertyAccessor<TSource, TTarget?> FromFunc(
+		Func<SourceValue<TSource>, TTarget> func, string name)
+		=> new(func, name);
+
+	/// <summary>
+	/// Creates a property accessor from the given <paramref name="expression"/>.
+	/// </summary>
+	public static PropertyAccessor<TSource, TTarget?> FromExpression(
+		Expression<Func<TSource, TTarget?>> expression)
+	{
+		var compiled = expression.Compile();
+		return new(v => v.Value == null ? default : compiled(v.Value), $"{ExpressionHelpers.GetPropertyPath(expression)} ");
+	}
+
+	internal bool TryAccessProperty(SourceValue<TSource> value,
+		[NotNullWhen(true)] out TTarget? property)
 	{
 		property = _accessor.Invoke(value);
 		return property is not null;
 	}
-
-	public static PropertyAccessor<TActual, TProperty?> FromString(string propertyAccessor)
-		=> new(value => ExpressionHelpers.GetPropertyValue<TProperty>(value, propertyAccessor),
-			propertyAccessor);
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Testably.Expectations.Tests.TestHelpers;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace Testably.Expectations.Tests.Core.Nodes;
@@ -7,46 +6,46 @@ namespace Testably.Expectations.Tests.Core.Nodes;
 public sealed class OrNodeTests
 {
 	[Fact]
-	public void WithFirstFailedTests_ShouldNotThrow()
+	public async Task WithFirstFailedTests_ShouldNotThrow()
 	{
-		Expect.That(1,
-			Should.Be.AFailedTest("to be A", "found C").Or().Be.ASuccessfulTest("to be B"));
+		async Task Act()
+			=> await Expect.That(true).IsFalse().Or.IsTrue();
+
+		await Expect.That(Act).DoesNotThrow();
 	}
 
 	[Fact]
-	public void WithSecondFailedTests_ShouldNotThrow()
+	public async Task WithSecondFailedTests_ShouldNotThrow()
 	{
-		Expect.That(1,
-			Should.Be.ASuccessfulTest("to be A").Or().Be.AFailedTest("to be B", "found D"));
+		async Task Act()
+			=> await Expect.That(true).IsTrue().Or.IsFalse();
+
+		await Expect.That(Act).DoesNotThrow();
 	}
 
 	[Fact]
-	public void WithTrailingOr_ShouldThrowInvalidOperationException()
+	public async Task WithTwoFailedTests_ShouldIncludeBothFailuresInMessage()
 	{
-		void Act()
-			=> Expect.That(1,
-				Should.Be.AFailedTest("to be A", "found C").Or());
+		async Task Act()
+			=> await Expect.That(true).IsFalse().Or.Implies(false);
 
-		Expect.That(Act, Should.Throw.TypeOf<InvalidOperationException>().WhichMessage(
-			Should.Be.EqualTo(
-				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?")));
+		await Expect.That(Act).ThrowsException()
+			.Which.HasMessage("""
+			                  Expected that true
+			                  is False or implies False,
+			                  but found True and it did not
+			                  at Expect.That(true).IsFalse().Or.Implies(false)
+			                  """);
 	}
 
 	[Fact]
-	public void WithTwoFailedTests_ShouldIncludeBothFailuresInMessage()
+	public async Task WithTwoSuccessfulTests_ShouldNotThrow()
 	{
-		void Act()
-			=> Expect.That(1,
-				Should.Be.AFailedTest("to be A", "found C").Or().Be
-					.AFailedTest("to be B", "found D"));
+		async Task Act()
+			=> await Expect.That(true).IsTrue().Or.IsNot(false);
 
-		Expect.That(Act, Should.Throw.Exception().WhichMessage(
-			Should.Be.EqualTo("Expected 1 to be A or to be B, but found C and found D.")));
-	}
-
-	[Fact]
-	public void WithTwoSuccessfulTests_ShouldNotThrow()
-	{
-		Expect.That(1, Should.Be.ASuccessfulTest("to be A").Or().Be.ASuccessfulTest("to be B"));
+		await Expect.That(Act).DoesNotThrow();
 	}
 }
+
+

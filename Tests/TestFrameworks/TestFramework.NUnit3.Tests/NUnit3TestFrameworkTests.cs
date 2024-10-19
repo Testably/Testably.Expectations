@@ -9,8 +9,8 @@ public sealed class NUnit3TestFrameworkTests
 	public void WhenUsingNUnit3AsTestFramework_ShouldThrowAssertionException()
 	{
 		void Act()
-			=> Expect.That(true, Should.Be.False());
+			=> Expect.That(true).IsFalse();
 
-		Expect.That(Act, Should.Throw.TypeOf<AssertionException>());
+		Expect.That(Act).Throws<AssertionException>();
 	}
 }

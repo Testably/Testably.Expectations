@@ -1,93 +1,132 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
+using System.Threading.Tasks;
 using Testably.Expectations.Core.Nodes;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core;
 
-
 [StackTraceHidden]
-internal class ExpectationBuilder : IExpectationBuilder
+internal class ExpectationBuilder<TValue> : IExpectationBuilder
 {
+	private readonly FailureMessageBuilder _failureMessageBuilder;
+
+	/// <summary>
+	///     The subject.
+	/// </summary>
+	private readonly IValueSource<TValue> _subjectSource;
+
+	private readonly Tree _tree = new();
+
+	public ExpectationBuilder(TValue subject, string subjectExpression)
+	{
+		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
+		_subjectSource = new ValueSource<TValue>(subject);
+	}
+
+	public ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression)
+	{
+		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
+		_subjectSource = subjectSource;
+	}
+
+	#region IExpectationBuilder Members
+
+	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
+
+	/// <inheritdoc />
+	public IExpectationBuilder Add(IExpectation expectation,
+		Action<StringBuilder> expressionBuilder)
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddExpectation(expectation);
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation,
+		Action<StringBuilder> expressionBuilder)
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddManipulation(n => new CastNode<T1, T2>(expectation, n));
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder And(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
+		return this;
+	}
+
+	[StackTraceHidden]
+	public async Task<ExpectationResult> IsMet()
+	{
+		SourceValue<TValue> data = await _subjectSource.GetValue();
+		return await _tree.GetRoot().IsMetBy(data);
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder Or(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
+		Action<That<TProperty>>? expectation,
+		Action<StringBuilder> expressionBuilder,
+		string andTextSeparator = "",
+		string whichTextSeparator = " which ")
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
+		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(
+			propertyAccessor,
+			expectation == null
+				? Node.None
+				: new DeferredNode<TProperty>(expectation),
+			whichTextSeparator));
+
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder WhichCast<TSource, TBase, TProperty>(
+		PropertyAccessor propertyAccessor,
+		IExpectation<TBase, TProperty> cast,
+		Action<That<TProperty>> expectation,
+		Action<StringBuilder> expressionBuilder,
+		string textSeparator = " which ") where TProperty : TBase
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
+		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor, cast, new DeferredNode<TProperty>(expectation), textSeparator));
+
+		return this;
+	}
+
+	#endregion
+
+	/// <inheritdoc />
+	public override string ToString()
+	{
+		return _tree.ToString();
+	}
+
 	internal class Tree
 	{
-		private class TreeNode
-		{
-			public Node Node { get; set; } = Node.None;
-			public TreeNode? Parent { get; set; }
-			public int Precedence { get; set; }
-
-			/// <inheritdoc />
-			public override string ToString()
-				=> $"{Parent} -> {Node}";
-		}
-
 		private TreeNode _current;
 		private Action<Node>? _setExpectationNode;
-
-		public Node GetRoot()
-		{
-			var current = _current;
-			while (current.Parent != null)
-			{
-				current = current.Parent;
-			}
-
-			return current.Node;
-		}
 
 		public Tree()
 		{
 			_current = new TreeNode();
 			_setExpectationNode = n => _current.Node = n;
-		}
-
-		public void AddExpectation(IExpectation expectation)
-		{
-			if (_setExpectationNode == null)
-			{
-				throw new InvalidOperationException(
-					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-			}
-			var node = new ExpectationNode(expectation);
-			_setExpectationNode.Invoke(node);
-			_setExpectationNode = null;
-		}
-
-		public bool TryAddCombination(Func<Node, CombinationNode> nodeGenerator, int precedence)
-		{
-			if (_setExpectationNode != null)
-			{
-				return false;
-			}
-
-			var current = _current;
-			do
-			{
-				if (current.Node is CombinationNode parentCombinationNode && current.Precedence < precedence)
-				{
-					var newCombinationNode = nodeGenerator(parentCombinationNode.Right);
-					parentCombinationNode.Right = newCombinationNode;
-					_current = new TreeNode
-					{
-						Node = newCombinationNode,
-						Parent = current,
-						Precedence = precedence
-					};
-					_setExpectationNode = n => newCombinationNode.Right = n;
-					return true;
-				}
-				current = current.Parent;
-			} while (current != null);
-
-			var combinationNode = nodeGenerator(_current.Node);
-			_current = new TreeNode
-			{
-				Node = combinationNode,
-				Parent = _current.Parent,
-				Precedence = precedence
-			};
-			_setExpectationNode = n => combinationNode.Right = n;
-			return true;
 		}
 
 		public void AddCombination(Func<Node, CombinationNode> nodeGenerator, int precedence)
@@ -97,6 +136,19 @@ internal class ExpectationBuilder : IExpectationBuilder
 				throw new InvalidOperationException(
 					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
 			}
+		}
+
+		public void AddExpectation(IExpectation expectation)
+		{
+			if (_setExpectationNode == null)
+			{
+				throw new InvalidOperationException(
+					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+			}
+
+			ExpectationNode node = new(expectation);
+			_setExpectationNode.Invoke(node);
+			_setExpectationNode = null;
 		}
 
 		public void AddManipulation(Func<Node, ManipulationNode> nodeGenerator)
@@ -109,28 +161,38 @@ internal class ExpectationBuilder : IExpectationBuilder
 
 			if (_current.Node is CombinationNode combinationNode)
 			{
-				var manipulationNode2 = nodeGenerator(combinationNode.Right);
+				ManipulationNode manipulationNode2 = nodeGenerator(combinationNode.Right);
 				combinationNode.Right = manipulationNode2;
 				_setExpectationNode = n => manipulationNode2.Inner = n;
 				return;
 			}
 
-
 			if (_current.Node is ManipulationNode manipulationNode4)
 			{
-				var manipulationNode3 = nodeGenerator(manipulationNode4.Inner);
+				ManipulationNode manipulationNode3 = nodeGenerator(manipulationNode4.Inner);
 				manipulationNode4.Inner = manipulationNode3;
 				_setExpectationNode = n => manipulationNode3.Inner = n;
 				return;
 			}
 
-			var manipulationNode = nodeGenerator(_current.Node);
+			ManipulationNode manipulationNode = nodeGenerator(_current.Node);
 			_current = new TreeNode
 			{
 				Node = manipulationNode,
 				Parent = _current.Parent
 			};
 			_setExpectationNode = n => manipulationNode.Inner = n;
+		}
+
+		public Node GetRoot()
+		{
+			TreeNode? current = _current;
+			while (current.Parent != null)
+			{
+				current = current.Parent;
+			}
+
+			return current.Node;
 		}
 
 		/// <inheritdoc />
@@ -144,67 +206,56 @@ internal class ExpectationBuilder : IExpectationBuilder
 
 			return s;
 		}
-	}
-	private readonly Tree _tree = new();
 
-	#region IExpectationBuilder Members
+		public bool TryAddCombination(Func<Node, CombinationNode> nodeGenerator, int precedence)
+		{
+			if (_setExpectationNode != null)
+			{
+				return false;
+			}
 
-	/// <inheritdoc />
-	public IExpectationBuilder Add(IExpectation expectation)
-	{
-		_tree.AddExpectation(expectation);
-		return this;
-	}
+			TreeNode? current = _current;
+			do
+			{
+				if (current.Node is CombinationNode parentCombinationNode &&
+				    current.Precedence < precedence)
+				{
+					CombinationNode newCombinationNode =
+						nodeGenerator(parentCombinationNode.Right);
+					parentCombinationNode.Right = newCombinationNode;
+					_current = new TreeNode
+					{
+						Node = newCombinationNode,
+						Parent = current,
+						Precedence = precedence
+					};
+					_setExpectationNode = n => newCombinationNode.Right = n;
+					return true;
+				}
 
-	/// <inheritdoc />
-	public IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation)
-	{
-		_tree.AddManipulation(n => new CastNode<T1, T2>(expectation, n));
-		return this;
-	}
+				current = current.Parent;
+			} while (current != null);
 
-	/// <inheritdoc />
-	public IExpectationBuilder And()
-	{
-		_tree.AddCombination(n => new AndNode(n, Node.None), 5);
-		return this;
-	}
+			CombinationNode combinationNode = nodeGenerator(_current.Node);
+			_current = new TreeNode
+			{
+				Node = combinationNode,
+				Parent = _current.Parent,
+				Precedence = precedence
+			};
+			_setExpectationNode = n => combinationNode.Right = n;
+			return true;
+		}
 
-	public ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
-	{
-		return _tree.GetRoot().IsMetBy(actual);
-	}
+		private class TreeNode
+		{
+			public Node Node { get; set; } = Node.None;
+			public TreeNode? Parent { get; set; }
+			public int Precedence { get; set; }
 
-	/// <inheritdoc />
-	public IExpectationBuilder Not()
-	{
-		_tree.AddManipulation(n => new NotNode(n));
-		return this;
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder Or()
-	{
-		_tree.AddCombination(n => new OrNode(n, Node.None), 4);
-		return this;
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
-		IExpectation<TProperty> expectation)
-	{
-		_tree.TryAddCombination(n => new AndNode(n, Node.None), 5);
-		_tree.AddManipulation(n => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
-		_tree.AddExpectation(expectation);
-
-		return this;
-	}
-
-	#endregion
-
-	/// <inheritdoc />
-	public override string ToString()
-	{
-		return _tree.ToString();
+			/// <inheritdoc />
+			public override string ToString()
+				=> $"{Parent} -> {Node}";
+		}
 	}
 }

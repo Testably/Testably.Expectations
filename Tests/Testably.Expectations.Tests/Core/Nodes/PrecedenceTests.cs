@@ -1,113 +1,82 @@
-﻿using Testably.Expectations.Tests.TestHelpers;
+﻿using System.Threading.Tasks;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Core.Nodes;
 
 public sealed class PrecedenceTests
 {
-	private class Dummy
-	{
-		public int Value { get; }
-	}
-
 	public sealed class OrOverAnd
 	{
 		[Fact]
-		public void F_and_T_or_F_ShouldFail()
+		public async Task F_and_T_or_F_ShouldFail()
 		{
-			Dummy sut = new();
+			async Task Act()
+				=> await Expect.That(true).IsFalse().And.IsTrue().Or.IsFalse();
 
-			void Act()
-				=> Expect.That(sut,
-					Should.Be.AMappedTest<Dummy>("to map")
-						.Which(p => p.Value, Should.Be.AFailedTest("to be A", "found X")).And()
-						.Which(p => p.Value, Should.Be.ASuccessfulTest("to be B")).Or()
-						.Which(p => p.Value, Should.Be.AFailedTest("to be C", "found Y")));
-
-			Assert.Throws<XunitException>(Act);
-			Expect.That(Act, Should.Throw.Exception().WhichMessage(
-				Should.Be.EqualTo(
-					"Expected sut .Value to be A and .Value to be B or .Value to be C, but found X and found Y.")));
+			await Expect.That(Act).ThrowsException()
+				.Which.HasMessage("""
+				                  Expected that true
+				                  is False and is True or is False,
+				                  but found True
+				                  at Expect.That(true).IsFalse().And.IsTrue().Or.IsFalse()
+				                  """);
 		}
 
 		[Fact]
-		public void F_and_T_or_T_ShouldSucceed()
+		public async Task F_and_T_or_T_ShouldSucceed()
 		{
-			Dummy sut = new();
+			async Task Act()
+				=> await Expect.That(true).IsFalse().And.IsTrue().Or.IsTrue();
 
-			void Act()
-				=> Expect.That(sut,
-					Should.Be.AMappedTest<Dummy>("to map")
-						.Which(p => p.Value, Should.Be.AFailedTest("to be A", "found X")).And()
-						.Which(p => p.Value, Should.Be.ASuccessfulTest("to be B")).Or()
-						.Which(p => p.Value, Should.Be.ASuccessfulTest("to be C")));
-
-			Expect.That(Act, Should.Not.Throw.Exception());
+			await Expect.That(Act).DoesNotThrow();
 		}
 
 		[Fact]
-		public void F_or_T_and_F_ShouldFail()
+		public async Task F_or_T_and_F_ShouldFail()
 		{
-			Dummy sut = new();
+			async Task Act()
+				=> await Expect.That(true).IsFalse().Or.IsTrue().And.IsFalse();
 
-			void Act()
-				=> Expect.That(sut,
-					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.AFailedTest("to be A", "found X")).Or()
-						.Which("Value", Should.Be.ASuccessfulTest("to be B")).And()
-						.Which("Value", Should.Be.AFailedTest("to be C", "found Y")));
-
-			Expect.That(Act, Should.Throw.Exception().WhichMessage(
-				Should.Be.EqualTo(
-					"Expected sut .Value to be A or .Value to be B and .Value to be C, but found X and found Y.")));
+			await Expect.That(Act).ThrowsException()
+				.Which.HasMessage("""
+				                  Expected that true
+				                  is False or is True and is False,
+				                  but found True
+				                  at Expect.That(true).IsFalse().Or.IsTrue().And.IsFalse()
+				                  """);
 		}
 
 		[Fact]
-		public void T_and_F_or_F_ShouldFail()
+		public async Task T_and_F_or_F_ShouldFail()
 		{
-			Dummy sut = new();
+			async Task Act()
+				=> await Expect.That(true).IsTrue().And.IsFalse().Or.IsFalse();
 
-			void Act()
-				=> Expect.That(sut,
-					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.ASuccessfulTest("to be A")).And()
-						.Which("Value", Should.Be.AFailedTest("to be B", "found X")).Or()
-						.Which("Value", Should.Be.AFailedTest("to be C", "found Y")));
-
-			Expect.That(Act, Should.Throw.Exception().WhichMessage(
-				Should.Be.EqualTo(
-					"Expected sut .Value to be A and .Value to be B or .Value to be C, but found X and found Y.")));
+			await Expect.That(Act).ThrowsException()
+				.Which.HasMessage("""
+				                  Expected that true
+				                  is True and is False or is False,
+				                  but found True
+				                  at Expect.That(true).IsTrue().And.IsFalse().Or.IsFalse()
+				                  """);
 		}
 
 		[Fact]
-		public void T_and_F_or_T_ShouldSucceed()
+		public async Task T_and_F_or_T_ShouldSucceed()
 		{
-			Dummy sut = new();
+			async Task Act()
+				=> await Expect.That(true).IsTrue().And.IsFalse().Or.IsTrue();
 
-			void Act()
-				=> Expect.That(sut,
-					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.ASuccessfulTest("to be A")).And()
-						.Which("Value", Should.Be.AFailedTest("to be B", "found X")).Or()
-						.Which("Value", Should.Be.ASuccessfulTest("to be C")));
-
-			Expect.That(Act, Should.Not.Throw.Exception());
+			await Expect.That(Act).DoesNotThrow();
 		}
 
 		[Fact]
-		public void T_or_T_and_F_ShouldSucceed()
+		public async Task T_or_T_and_F_ShouldSucceed()
 		{
-			Dummy sut = new();
+			async Task Act()
+				=> await Expect.That(true).IsTrue().Or.IsTrue().And.IsFalse();
 
-			void Act()
-				=> Expect.That(sut,
-					Should.Be.AMappedTest<Dummy>("to map")
-						.Which("Value", Should.Be.ASuccessfulTest("to be A")).Or()
-						.Which("Value", Should.Be.ASuccessfulTest("to be B")).And()
-						.Which("Value", Should.Be.AFailedTest("to be C", "found X")));
-
-			Expect.That(Act, Should.Not.Throw.Exception());
+			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

@@ -1,52 +1,51 @@
-﻿using Testably.Expectations.Tests.TestHelpers;
+﻿using System.Threading.Tasks;
 using Xunit;
 
 namespace Testably.Expectations.Tests.Core;
 
 public sealed class ExpectationTests
 {
-	[Fact]
-	public void And_ShouldFailWhenAnyArgumentFails()
+	[Theory]
+	[InlineData(false, true)]
+	[InlineData(true, false)]
+	[InlineData(false, false)]
+	public async Task And_ShouldFailWhenAnyArgumentFails(bool a, bool b)
 	{
-		void Act1()
-			=> Expect.That(true, Should.Be.AnExpectation(false).And().Be.AnExpectation(true));
+		async Task Act()
+			=> await Expect.That(true).Is(a).And.Is(b);
 
-		void Act2()
-			=> Expect.That(true, Should.Be.AnExpectation(true).And().Be.AnExpectation(false));
-
-		Expect.That(Act1, Should.Throw.Exception());
-		Expect.That(Act2, Should.Throw.Exception());
+		await Expect.That(Act).ThrowsException();
 	}
 
-	[Fact]
-	public void And_ShouldRequireBothArgumentsToSucceed()
+	[Theory]
+	[InlineData(true, true)]
+	public async Task And_ShouldRequireBothArgumentsToSucceed(bool a, bool b)
 	{
-		Expect.That(true, Should.Be.AnExpectation(true).And().Be.AnExpectation(true));
+		async Task Act()
+			=> await Expect.That(true).Is(a).And.Is(b);
+
+		await Expect.That(Act).DoesNotThrow();
 	}
 
-	[Fact]
-	public void Or_ShouldFailWhenBothArgumentsFail()
+	[Theory]
+	[InlineData(false, false)]
+	public async Task Or_ShouldFailWhenBothArgumentsFail(bool a, bool b)
 	{
-		void Act()
-			=> Expect.That(true, Should.Be.AnExpectation(false).Or().Be.AnExpectation(false));
+		async Task Act()
+			=> await Expect.That(true).Is(a).Or.Is(b);
 
-		Expect.That(Act, Should.Throw.Exception());
+		await Expect.That(Act).ThrowsException();
 	}
 
-	[Fact]
-	public void Or_ShouldRequireAnyArgumentToSucceed()
+	[Theory]
+	[InlineData(false, true)]
+	[InlineData(true, false)]
+	[InlineData(true, true)]
+	public async Task Or_ShouldRequireAnyArgumentToSucceed(bool a, bool b)
 	{
-		Expect.That(true, Should.Be.AnExpectation(false).Or().Be.AnExpectation(true));
-		Expect.That(true, Should.Be.AnExpectation(true).Or().Be.AnExpectation(false));
-	}
+		async Task Act()
+			=> await Expect.That(true).Is(a).Or.Is(b);
 
-	[Fact]
-	public void ToString_ShouldStartWithExpect()
-	{
-		var sut = Should.Be.AnExpectation(false);
-
-		var result = sut.ToString();
-
-		Expect.That(result, Should.Start.With("Expect "));
+		await Expect.That(Act).DoesNotThrow();
 	}
 }

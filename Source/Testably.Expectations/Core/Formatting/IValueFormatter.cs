@@ -9,5 +9,5 @@ internal interface IValueFormatter<in T> : IValueFormatter
 
 internal interface IValueFormatter
 {
-	bool TryFormat(object? value, StringBuilder stringBuilder, FormattingOptions options);
+	bool TryFormat(object value, StringBuilder stringBuilder, FormattingOptions options);
 }

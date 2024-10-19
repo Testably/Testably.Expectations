@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Ambient;
 
 namespace Testably.Expectations;
 
@@ -10,58 +9,41 @@ namespace Testably.Expectations;
 ///     The starting point for checking expectations.
 /// </summary>
 [StackTraceHidden]
-public static class Expect
+public static partial class Expect
 {
 	/// <summary>
-	///     Checks that the <paramref name="actual" /> value meets the <paramref name="expectation" />.
+	///     Start asserting the current <see cref="bool" /> <paramref name="subject" />.
 	/// </summary>
-	/// <remarks>
-	///     Throws when the <paramref name="actual" /> value is <see langword="null" />.
-	/// </remarks>
-	public static void That<TActual, TTarget>([NotNull] TActual actual,
-		Expectation<TActual, TTarget> expectation,
-		[CallerArgumentExpression(nameof(actual))] string actualExpression = "")
-	{
-		ExpectationResult result = expectation.IsMetBy(actual);
-
-		if (result is ExpectationResult.Failure failure)
-		{
-			ReportFailure(failure, null, actualExpression);
-		}
-		else
-		{
-			Debug.Assert(actual != null);
-		}
-	}
+	public static That<bool> That(bool subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<bool>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Checks that the <paramref name="actual" /> value meets the <paramref name="expectation" />.
+	///     Start asserting the current <see cref="bool" />? <paramref name="subject" />.
 	/// </summary>
-	/// <remarks>
-	///     The <paramref name="actual" /> value can be <see langword="null" />.
-	/// </remarks>
-	public static void That<TActual, TTarget>(TActual? actual,
-		NullableExpectation<TActual, TTarget> expectation,
-		[CallerArgumentExpression(nameof(actual))]
-		string actualExpression = "")
-	{
-		ExpectationResult result = expectation.IsMetBy(actual);
+	public static That<bool?> That(bool? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<bool?>(subject, doNotPopulateThisValue));
 
-		if (result is ExpectationResult.Failure failure)
-		{
-			ReportFailure(failure, null, actualExpression);
-		}
-	}
+	/// <summary>
+	///     Start asserting the current <typeparamref name="TException" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<TException> That<TException>(TException subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		where TException : Exception
+		=> new(new ExpectationBuilder<TException>(subject, doNotPopulateThisValue));
 
-	[DoesNotReturn]
-	private static void ReportFailure(
-		ExpectationResult.Failure result,
-		string? because,
-		string actualExpression)
-	{
-		because ??= "";
-		string failureMessage =
-			$"Expected {actualExpression} {result.ExpectationText}{because}, but {result.ResultText}.";
-		Initialization.State.Value.Throw(failureMessage);
-	}
+	/// <summary>
+	///     Start asserting the current <see cref="object" />? <paramref name="subject" />.
+	/// </summary>
+	public static That<object?> That(object? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<object?>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start asserting the current <see cref="string" />? <paramref name="subject" />.
+	/// </summary>
+	public static That<string?> That(string? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<string?>(subject, doNotPopulateThisValue));
 }

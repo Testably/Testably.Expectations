@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Xunit;
 
@@ -8,17 +9,17 @@ public sealed class ExpectationResultTests
 {
 	[Theory]
 	[AutoData]
-	public void Failure_WithoutValue_ShouldStoreTexts(string expectationText, string resultText)
+	public async Task Failure_WithoutValue_ShouldStoreTexts(string expectationText, string resultText)
 	{
 		ExpectationResult.Failure sut = new(expectationText, resultText);
 
-		Expect.That(sut.ExpectationText, Should.Be.EqualTo(expectationText));
-		Expect.That(sut.ResultText, Should.Be.EqualTo(resultText));
+		await Expect.That(sut.ExpectationText).Is(expectationText);
+		await Expect.That(sut.ResultText).Is(resultText);
 	}
 
 	[Theory]
 	[AutoData]
-	public void Failure_WithValue_ShouldStoreValueAndTexts(string expectationText,
+	public async Task Failure_WithValue_ShouldStoreValueAndTexts(string expectationText,
 		string resultText)
 	{
 		Dummy value = new()
@@ -28,40 +29,40 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult.Failure<Dummy> sut = new(value, expectationText, resultText);
 
-		Expect.That(sut.Value, Should.Be.EqualTo(value));
-		Expect.That(sut.ExpectationText, Should.Be.EqualTo(expectationText));
-		Expect.That(sut.ResultText, Should.Be.EqualTo(resultText));
+		await Expect.That(sut.Value).IsEquivalentTo(value);
+		await Expect.That(sut.ExpectationText).Is(expectationText);
+		await Expect.That(sut.ResultText).Is(resultText);
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromFailure_ShouldKeepExpectationText(string expectationText,
+	public async Task Invert_FromFailure_ShouldKeepExpectationText(string expectationText,
 		string resultText)
 	{
 		ExpectationResult.Failure sut = new(expectationText, resultText);
 
 		ExpectationResult result = sut.Invert();
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Success>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)));
+		await Expect.That(result).Is<ExpectationResult.Success>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromFailure_ShouldUpdateExpectationText(string expectationText,
+	public async Task Invert_FromFailure_ShouldUpdateExpectationText(string expectationText,
 		string resultText)
 	{
 		ExpectationResult.Failure sut = new("foo", "bar");
 
 		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Success>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)));
+		await Expect.That(result).Is<ExpectationResult.Success>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromFailureWithValue_ShouldIncludeValue(string expectationText,
+	public async Task Invert_FromFailureWithValue_ShouldIncludeValue(string expectationText,
 		string resultText)
 	{
 		Dummy value = new()
@@ -72,13 +73,13 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult result = sut.Invert();
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Success<Dummy>>()
-			.Which(p => p.Value, Should.Be.EqualTo(value)));
+		await Expect.That(result).Is<ExpectationResult.Success<Dummy>>()
+			.Which(s => s.Value, e => e.IsEquivalentTo(value));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromFailureWithValue_ShouldKeepExpectationText(string expectationText,
+	public async Task Invert_FromFailureWithValue_ShouldKeepExpectationText(string expectationText,
 		string resultText)
 	{
 		Dummy value = new()
@@ -89,13 +90,13 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult result = sut.Invert();
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Success<Dummy>>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)));
+		await Expect.That(result).Is<ExpectationResult.Success<Dummy>>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromFailureWithValue_ShouldUpdateExpectationText(string expectationText,
+	public async Task Invert_FromFailureWithValue_ShouldUpdateExpectationText(string expectationText,
 		string resultText)
 	{
 		Dummy value = new()
@@ -106,41 +107,41 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Success<Dummy>>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)));
+		await Expect.That(result).Is<ExpectationResult.Success<Dummy>>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromSuccess_ShouldKeepExpectationTextAndUseDefaultResultText(
+	public async Task Invert_FromSuccess_ShouldKeepExpectationTextAndUseDefaultResultText(
 		string expectationText)
 	{
 		ExpectationResult.Success sut = new(expectationText);
 
 		ExpectationResult result = sut.Invert();
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)).And()
-			.Which(p => p.ResultText, Should.Be.EqualTo("it did")));
+		await Expect.That(result).Is<ExpectationResult.Failure>()
+				.Which(s => s.ExpectationText, e => e.Is(expectationText))
+				.Which(s => s.ResultText, e => e.Is("it did"));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromSuccess_ShouldUpdateExpectationAndDefaultResultText(
+	public async Task Invert_FromSuccess_ShouldUpdateExpectationAndDefaultResultText(
 		string expectationText, string resultText)
 	{
 		ExpectationResult.Success sut = new("foo");
 
 		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)).And()
-			.Which(p => p.ResultText, Should.Be.EqualTo(resultText)));
+		await Expect.That(result).Is<ExpectationResult.Failure>()
+			.Which(p => p.ExpectationText, e => e.Is(expectationText))
+			.Which(p => p.ResultText, e => e.Is(resultText));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromSuccessWithValue_ShouldIncludeValue(string expectationText)
+	public async Task Invert_FromSuccessWithValue_ShouldIncludeValue(string expectationText)
 	{
 		Dummy value = new()
 		{
@@ -150,13 +151,13 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult result = sut.Invert();
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
-			.Which(p => p.Value, Should.Be.EqualTo(value)));
+		await Expect.That(result).Is<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.Value, e => e.IsEquivalentTo(value));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromSuccessWithValue_ShouldKeepExpectationTextAndUseDefaultResultText(
+	public async Task Invert_FromSuccessWithValue_ShouldKeepExpectationTextAndUseDefaultResultText(
 		string expectationText)
 	{
 		Dummy value = new()
@@ -167,14 +168,14 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult result = sut.Invert();
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)).And()
-			.Which(p => p.ResultText, Should.Be.EqualTo("it did")));
+		await Expect.That(result).Is<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.ExpectationText, e => e.Is(expectationText))
+			.Which(p => p.ResultText, e => e.Is("it did"));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Invert_FromSuccessWithValue_ShouldUpdateExpectationAndResultText(
+	public async Task Invert_FromSuccessWithValue_ShouldUpdateExpectationAndResultText(
 		string expectationText, string resultText)
 	{
 		Dummy value = new()
@@ -185,14 +186,14 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-		Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
-			.Which(p => p.ExpectationText, Should.Be.EqualTo(expectationText)).And()
-			.Which(p => p.ResultText, Should.Be.EqualTo(resultText)));
+		await Expect.That(result).Is<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.ExpectationText, e => e.Is(expectationText))
+			.Which(p => p.ResultText, e => e.Is(resultText));
 	}
 
 	[Theory]
 	[AutoData]
-	public void Success_WithValue_ShouldStoreValue(string expectationText)
+	public async Task Success_WithValue_ShouldStoreValue(string expectationText)
 	{
 		Dummy value = new()
 		{
@@ -201,31 +202,31 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult.Success<Dummy> sut = new(value, expectationText);
 
-		Expect.That(sut.Value, Should.Be.EqualTo(value));
-		Expect.That(sut.ExpectationText, Should.Be.EqualTo(expectationText));
+		await Expect.That(sut.Value).IsEquivalentTo(value);
+		await Expect.That(sut.ExpectationText).Is(expectationText);
 	}
 
 	[Theory]
 	[AutoData]
-	public void ToString_Failure_ShouldBeExpectationTextWithPrependedFailed(string expectationText)
+	public async Task ToString_Failure_ShouldBeExpectationTextWithPrependedFailed(string expectationText)
 	{
 		ExpectationResult.Failure sut = new(expectationText, "result text");
 
 		string result = sut.ToString();
 
-		Expect.That(result, Should.Be.EqualTo($"FAILED {expectationText}"));
+		await Expect.That(result).Is($"FAILED {expectationText}");
 	}
 
 	[Theory]
 	[AutoData]
-	public void ToString_Success_ShouldBeExpectationTextWithPrependedSucceeded(
+	public async Task ToString_Success_ShouldBeExpectationTextWithPrependedSucceeded(
 		string expectationText)
 	{
 		ExpectationResult.Success sut = new(expectationText);
 
 		string result = sut.ToString();
 
-		Expect.That(result, Should.Be.EqualTo($"SUCCEEDED {expectationText}"));
+		await Expect.That(result).Is($"SUCCEEDED {expectationText}");
 	}
 
 	private class Dummy
@@ -233,3 +234,5 @@ public sealed class ExpectationResultTests
 		public int Value { get; set; }
 	}
 }
+
+

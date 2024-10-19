@@ -1,18 +1,40 @@
 ﻿using System.Linq;
 using System.Text;
 using Testably.Expectations.Core.Ambient;
+using Testably.Expectations.Core.Formatting.Formatters;
 
 namespace Testably.Expectations.Core.Formatting;
 
-internal class Formatter
+/// <summary>
+///     Formatter for arbitrary objects in exception messages.
+/// </summary>
+public class Formatter
 {
-	public const string NullString = "<null>";
+	internal const string NullString = "<null>";
+
+	private readonly IValueFormatter _defaultFormatter = new DefaultFormatter();
 
 	private readonly IValueFormatter[] _internalValueFormatters =
 	[
-		new StringValueFormatter()
+		new BooleanFormatter(),
+		new StringFormatter(),
+		new TypeFormatter(),
+		new NumberFormatter<int>(),
+		new NumberFormatter<uint>(),
+		new NumberFormatter<byte>(),
+		new NumberFormatter<sbyte>(),
+		new NumberFormatter<short>(),
+		new NumberFormatter<ushort>(),
+		new NumberFormatter<long>(),
+		new NumberFormatter<ulong>(),
+		new NumberFormatter<float>(),
+		new NumberFormatter<double>(),
+		new NumberFormatter<decimal>()
 	];
 
+	/// <summary>
+	///     Formats the <paramref name="value" /> according to the formatting <paramref name="options" />.
+	/// </summary>
 	public static string Format<T>(T? value, FormattingOptions? options = null)
 	{
 		StringBuilder stringBuilder = new();
@@ -21,7 +43,7 @@ internal class Formatter
 		return stringBuilder.ToString();
 	}
 
-	public void Format<T>(T? value, StringBuilder stringBuilder, FormattingOptions options)
+	private void Format<T>(T? value, StringBuilder stringBuilder, FormattingOptions options)
 	{
 		if (value is null)
 		{
@@ -46,6 +68,6 @@ internal class Formatter
 			}
 		}
 
-		stringBuilder.Append(value);
+		_defaultFormatter.TryFormat(value, stringBuilder, options);
 	}
 }

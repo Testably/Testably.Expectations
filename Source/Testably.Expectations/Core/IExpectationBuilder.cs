@@ -1,14 +1,78 @@
-﻿namespace Testably.Expectations.Core;
+﻿using System;
+using System.Text;
+using System.Threading.Tasks;
 
-internal interface IExpectationBuilder
+namespace Testably.Expectations.Core;
+
+/// <summary>
+///     The builder for collecting all expectations.
+/// </summary>
+public interface IExpectationBuilder
 {
-	IExpectationBuilder Add(IExpectation expectation);
-	IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation);
-	IExpectationBuilder And();
-	ExpectationResult IsMetBy<TExpectation>(TExpectation actual);
-	IExpectationBuilder Not();
-	IExpectationBuilder Or();
+	/// <summary>
+	///     The builder for the failure message.
+	/// </summary>
+	IFailureMessageBuilder FailureMessageBuilder { get; }
 
-	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
-		IExpectation<TProperty> expectation);
+	/// <summary>
+	///     Add a new <paramref name="expectation" />.
+	///     Also update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder Add(
+		IExpectation expectation,
+		Action<StringBuilder> expressionBuilder);
+
+	/// <summary>
+	///     Add a new <paramref name="expectation" /> that casts from <typeparamref name="TSource" /> to
+	///     <typeparamref name="TTarget" />.
+	///     Also update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder AddCast<TSource, TTarget>(
+		IExpectation<TSource, TTarget> expectation,
+		Action<StringBuilder> expressionBuilder);
+
+	/// <summary>
+	///     Add an AND node, using the <paramref name="textSeparator" />.
+	///     Also update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder And(
+		Action<StringBuilder> expressionBuilder,
+		string textSeparator = " and ");
+
+	/// <summary>
+	///     Verifies, if the expectations are met.
+	/// </summary>
+	Task<ExpectationResult> IsMet();
+
+	/// <summary>
+	///     Add an OR node, using the <paramref name="textSeparator" />.
+	///     Also update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder Or(
+		Action<StringBuilder> expressionBuilder,
+		string textSeparator = " or ");
+
+	/// <summary>
+	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor"/>.
+	///     Also update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder Which<TSource, TProperty>(
+		PropertyAccessor propertyAccessor,
+		Action<That<TProperty>>? expectation,
+		Action<StringBuilder> expressionBuilder,
+		string andTextSeparator = "",
+		string whichTextSeparator = " which ");
+
+	/// <summary>
+	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor"/> and casts from <typeparamref name="TBase" /> to
+	///     <typeparamref name="TProperty" />.
+	///     Also update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder WhichCast<TSource, TBase, TProperty>(
+		PropertyAccessor propertyAccessor,
+		IExpectation<TBase, TProperty> cast,
+		Action<That<TProperty>> expectation,
+		Action<StringBuilder> expressionBuilder,
+		string textSeparator = " which ")
+		where TProperty : TBase;
 }

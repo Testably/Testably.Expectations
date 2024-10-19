@@ -10,8 +10,8 @@ public sealed class XUnit2TestFrameworkTests
 	public void WhenUsingXunit2AsTestFramework_ShouldThrowXunitException()
 	{
 		void Act()
-			=> Expect.That(true, Should.Be.False());
+			=> Expect.That(true).IsFalse();
 
-		Expect.That(Act, Should.Throw.TypeOf<XunitException>());
+		Expect.That(Act).Throws<XunitException>();
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Testably.Expectations.Core;
 
@@ -21,6 +22,11 @@ public abstract class ExpectationResult
 	{
 		ExpectationText = expectationText;
 	}
+
+	/// <summary>
+	///     Combines the result with the provided <paramref name="expectationText" /> and <paramref name="resultText" />.
+	/// </summary>
+	public abstract ExpectationResult CombineWith(string expectationText, string resultText);
 
 	/// <summary>
 	///     Inverts the result.
@@ -47,9 +53,11 @@ public abstract class ExpectationResult
 		{
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"SUCCEEDED {ExpectationText}";
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Success(expectationText);
+		}
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		public override ExpectationResult Invert(
@@ -59,6 +67,16 @@ public abstract class ExpectationResult
 			expectationText ??= f => f.ExpectationText;
 			return new Failure(expectationText.Invoke(this),
 				resultText?.Invoke(null) ?? InvertDefaultResultText);
+		}
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"SUCCEEDED {ExpectationText}";
+
+		internal virtual bool TryGetValue<TValue>([NotNullWhen(true)] out TValue? value)
+		{
+			value = default;
+			return false;
 		}
 
 		/// <inheritdoc />
@@ -75,14 +93,20 @@ public abstract class ExpectationResult
 		/// <summary>
 		///     A value for further processing.
 		/// </summary>
-		public T? Value { get; }
+		public T Value { get; }
 
 		/// <summary>
 		///     Initializes a new instance of <see cref="ExpectationResult.Success{T}" />.
 		/// </summary>
-		public Success(T? value, string expectationText) : base(expectationText)
+		public Success(T value, string expectationText) : base(expectationText)
 		{
 			Value = value;
+		}
+
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Success<T>(Value, expectationText);
 		}
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
@@ -93,6 +117,19 @@ public abstract class ExpectationResult
 			expectationText ??= f => f.ExpectationText;
 			return new Failure<T>(Value, expectationText.Invoke(this),
 				resultText?.Invoke(Value) ?? InvertDefaultResultText);
+		}
+
+		internal override bool TryGetValue<TValue>([NotNullWhen(true)] out TValue? value)
+			where TValue : default
+		{
+			if (Value is TValue v)
+			{
+				value = v;
+				return true;
+			}
+
+			value = default;
+			return false;
 		}
 
 		/// <inheritdoc />
@@ -119,9 +156,11 @@ public abstract class ExpectationResult
 			ResultText = resultText;
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"FAILED {ExpectationText}";
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Failure(expectationText, resultText);
+		}
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />
 		public override ExpectationResult Invert(
@@ -131,6 +170,10 @@ public abstract class ExpectationResult
 			expectationText ??= f => f.ExpectationText;
 			return new Success(expectationText.Invoke(this));
 		}
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"FAILED {ExpectationText}";
 
 		/// <inheritdoc />
 		internal override ExpectationResult UpdateExpectationText(
@@ -146,15 +189,21 @@ public abstract class ExpectationResult
 		/// <summary>
 		///     A value for further processing.
 		/// </summary>
-		public T? Value { get; }
+		public T Value { get; }
 
 		/// <summary>
 		///     Initializes a new instance of <see cref="ExpectationResult.Failure{T}" />.
 		/// </summary>
-		public Failure(T? value, string expectationText, string resultText) : base(expectationText,
+		public Failure(T value, string expectationText, string resultText) : base(expectationText,
 			resultText)
 		{
 			Value = value;
+		}
+
+		/// <inheritdoc cref="ExpectationResult.CombineWith(string, string)" />
+		public override ExpectationResult CombineWith(string expectationText, string resultText)
+		{
+			return new Failure<T>(Value, expectationText, resultText);
 		}
 
 		/// <inheritdoc cref="ExpectationResult.Invert(Func{ExpectationResult, string}, Func{object?, string})" />

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -12,16 +12,9 @@ internal class ExpectationNode : Node
 	}
 
 	/// <inheritdoc />
-	public override ExpectationResult IsMetBy<TExpectation>(TExpectation actual)
-	{
-		if (Expectation is IExpectation<TExpectation> typedExpectation)
-		{
-			return typedExpectation.IsMetBy(actual);
-		}
-
-		throw new InvalidOperationException(
-			$"The expectation does not support {typeof(TExpectation).Name} {actual}");
-	}
+	public override Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+		where TValue : default
+		=> TryMeet(Expectation, value);
 
 	/// <inheritdoc />
 	public override string ToString()
