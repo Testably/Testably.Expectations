@@ -28,7 +28,7 @@ public static partial class Expect
 	/// <summary>
 	///     Start asserting the current <typeparamref name="TException" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<TException> That<TException>(TException subject,
+	public static That<TException?> That<TException>(TException subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		where TException : Exception
 		=> new(new ExpectationBuilder<TException>(subject, doNotPopulateThisValue));

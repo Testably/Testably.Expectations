@@ -19,6 +19,7 @@ public class Formatter
 		new BooleanFormatter(),
 		new StringFormatter(),
 		new TypeFormatter(),
+		new CollectionFormatter(),
 		new NumberFormatter<int>(),
 		new NumberFormatter<uint>(),
 		new NumberFormatter<byte>(),

@@ -15,6 +15,12 @@ public interface IExpectationBuilder
 	IFailureMessageBuilder FailureMessageBuilder { get; }
 
 	/// <summary>
+	///     Update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder AppendExpression(
+		Action<StringBuilder> expressionBuilder);
+
+	/// <summary>
 	///     Add a new <paramref name="expectation" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
