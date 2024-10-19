@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Linq.Expressions;
+using System;
+using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
@@ -20,23 +22,12 @@ public static class ThatObjectExtensions
 	/// <summary>
 	///     Expect the actual value to be equivalent to the <paramref name="expected"/> value.
 	/// </summary>
-	public static AssertionResult<object, That<object>> IsEquivalentTo(this That<object> source,
+	public static AssertionResult<T, That<T>> IsEquivalentTo<T>(this That<T> source,
 		object expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
 				new IsEquivalentToExpectation(expected),
 				b => b.AppendMethod(nameof(IsEquivalentTo), doNotPopulateThisValue)),
-			source);
-
-	/// <summary>
-	///     Expect the actual value to be the same as the <paramref name="expected"/> value.
-	/// </summary>
-	public static AssertionResult<T, That<T>> IsSameAs<T>(this That<T> source,
-		object? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new IsSameAsExpectation<T>(expected),
-				b => b.AppendMethod(nameof(IsSameAs), doNotPopulateThisValue)),
 			source);
 
 	private readonly struct IsExpectation<TType> : IExpectation<object?>
@@ -70,21 +61,5 @@ public static class ThatObjectExtensions
 
 		public override string ToString()
 			=> $"is equivalent to {Formatter.Format(expected)}";
-	}
-	private readonly struct IsSameAsExpectation<T>(object? expected) : IExpectation<T?>
-	{
-		public ExpectationResult IsMetBy(T? actual)
-		{
-			if (ReferenceEquals(actual, expected))
-			{
-				return new ExpectationResult.Success<T?>(actual, ToString());
-			}
-
-			return new ExpectationResult.Failure(ToString(),
-				$"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"is same as {Formatter.Format(expected)}";
 	}
 }

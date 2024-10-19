@@ -81,10 +81,10 @@ public static class ThatExceptionExtensions
 			}
 
 			return new ExpectationResult.Failure(ToString(),
-				$"found {Formatter.Format(actual?.Message)} which {new StringDifference(actual?.Message, expected)}");
+				$"found {Formatter.Format(actual?.Message, FormattingOptions.SingleLine)} which {new StringDifference(actual?.Message, expected)}");
 		}
 
 		public override string ToString()
-			=> $"has Message equal to {Formatter.Format(expected)}";
+			=> $"has Message equal to {Formatter.Format(expected, FormattingOptions.SingleLine)}";
 	}
 }

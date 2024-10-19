@@ -1,17 +1,31 @@
 ﻿using System.Linq;
 using System.Text;
 using Testably.Expectations.Core.Ambient;
+using Testably.Expectations.Core.Formatting.Formatters;
 
 namespace Testably.Expectations.Core.Formatting;
 
-internal class Formatter
+public class Formatter
 {
-	public const string NullString = "<null>";
+	internal const string NullString = "<null>";
 
+	private readonly IValueFormatter _defaultFormatter = new DefaultFormatter();
 	private readonly IValueFormatter[] _internalValueFormatters =
 	[
-		new StringValueFormatter(),
-		new TypeValueFormatter()
+		new BoolFormatter(),
+		new StringFormatter(),
+		new TypeFormatter(),
+		new NumberFormatter<int>(),
+		new NumberFormatter<uint>(),
+		new NumberFormatter<byte>(),
+		new NumberFormatter<sbyte>(),
+		new NumberFormatter<short>(),
+		new NumberFormatter<ushort>(),
+		new NumberFormatter<long>(),
+		new NumberFormatter<ulong>(),
+		new NumberFormatter<float>(),
+		new NumberFormatter<double>(),
+		new NumberFormatter<decimal>()
 	];
 
 	public static string Format<T>(T? value, FormattingOptions? options = null)
@@ -22,7 +36,7 @@ internal class Formatter
 		return stringBuilder.ToString();
 	}
 
-	public void Format<T>(T? value, StringBuilder stringBuilder, FormattingOptions options)
+	private void Format<T>(T? value, StringBuilder stringBuilder, FormattingOptions options)
 	{
 		if (value is null)
 		{
@@ -47,17 +61,6 @@ internal class Formatter
 			}
 		}
 
-		stringBuilder.Append(value);
-	}
-
-	public static string PrependAOrAn(string value)
-	{
-		char[] vocals = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
-		if (value.Length > 0 && vocals.Contains(value[0]))
-		{
-			return $"an {value}";
-		}
-
-		return $"a {value}";
+		_defaultFormatter.TryFormat(value, stringBuilder, options);
 	}
 }

@@ -12,7 +12,7 @@ public sealed class ExpectationExceptionTests
 	{
 		ExpectationException sut = new(message);
 
-		await That(sut.Message).Is(message);
+		await Expect.That(sut.Message).Is(message);
 	}
 }
 

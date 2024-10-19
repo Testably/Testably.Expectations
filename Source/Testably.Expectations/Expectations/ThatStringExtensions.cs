@@ -22,7 +22,7 @@ public static class ThatStringExtensions
 	/// <summary>
 	///     Verifies that the actual value is not <see langword="null" />.
 	/// </summary>
-	public static AssertionResult<string, That<string>> IsNotNull(this That<string> source)
+	public static AssertionResult<string, That<string?>> IsNotNull(this That<string?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNotNullExpectation(),
 				b => b.AppendMethod(nameof(IsNotNull))),
@@ -31,7 +31,7 @@ public static class ThatStringExtensions
 	/// <summary>
 	///     Verifies that the actual value is <see langword="null" />.
 	/// </summary>
-	public static AssertionResult<string?, That<string>> IsNull(this That<string> source)
+	public static AssertionResult<string?, That<string?>> IsNull(this That<string?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNullExpectation(),
 				b => b.AppendMethod(nameof(IsNull))),

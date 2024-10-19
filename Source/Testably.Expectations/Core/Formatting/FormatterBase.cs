@@ -2,11 +2,11 @@
 
 namespace Testably.Expectations.Core.Formatting;
 
-internal abstract class FormatterBase<T> : IValueFormatter<T>
+internal abstract class FormatterBase<T> : IValueFormatter
 {
 	#region IValueFormatter<T> Members
 
-	public bool TryFormat(object? value, StringBuilder stringBuilder, FormattingOptions options)
+	public bool TryFormat(object value, StringBuilder stringBuilder, FormattingOptions options)
 	{
 		if (value is T match)
 		{

@@ -50,13 +50,13 @@ internal class StringDifference(
 
 		string? actualLine = actualValue
 			?.Substring(startIndex, Math.Min(actualValue.Length - startIndex, 55))
-			.ShowNewLines()
+			.ToSingleLine()
 			.Trim()
 			.TruncateWithEllipsis(50) ?? string.Empty;
 
 		string? expectedLine = expectedValue
 			?.Substring(startIndex, Math.Min(expectedValue.Length - startIndex, 55))
-			.ShowNewLines()
+			.ToSingleLine()
 			.Trim()
 			.TruncateWithEllipsis(50) ?? string.Empty;
 

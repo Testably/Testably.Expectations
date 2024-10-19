@@ -93,7 +93,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
-		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None));
+		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(propertyAccessor, Node.None, textSeparator));
 
 		return this;
 	}

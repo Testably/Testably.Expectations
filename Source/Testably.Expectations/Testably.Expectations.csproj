@@ -8,6 +8,7 @@
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<Nullable>annotations</Nullable>
+		<Nullable>annotations</Nullable>
 	</PropertyGroup>
 
 	<ItemGroup>

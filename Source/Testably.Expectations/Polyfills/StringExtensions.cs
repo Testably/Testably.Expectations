@@ -1,6 +1,7 @@
 ﻿#if NETSTANDARD2_0
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Testably.Expectations.Polyfills;
 
@@ -10,6 +11,38 @@ namespace Testably.Expectations.Polyfills;
 [ExcludeFromCodeCoverage]
 internal static class StringExtensionMethods
 {
+	/// <summary>
+	///     Returns a value indicating whether a specified character occurs within this string, using the specified comparison
+	///     rules.
+	/// </summary>
+	/// <returns>
+	///     <see langword="true" /> if the <paramref name="value" /> parameter occurs withing this string; otherwise,
+	///     <see langword="false" />.
+	/// </returns>
+	internal static bool Contains(
+		this string @this,
+		char value,
+		StringComparison comparisonType)
+	{
+		return @this.Contains(value);
+	}
+
+	/// <summary>
+	///     Returns a value indicating whether a specified character occurs within this string, using the specified comparison
+	///     rules.
+	/// </summary>
+	/// <returns>
+	///     <see langword="true" /> if the <paramref name="value" /> parameter occurs withing this string; otherwise,
+	///     <see langword="false" />.
+	/// </returns>
+	internal static bool Contains(
+		this string @this,
+		string value,
+		StringComparison comparisonType)
+	{
+		return @this.Contains(value);
+	}
+
 	/// <summary>
 	///     Determines whether the end of this string instance matches the specified character.
 	/// </summary>

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 
-namespace Testably.Expectations.Core.Formatting;
+namespace Testably.Expectations.Core.Formatting.Formatters;
 
-internal class TypeValueFormatter : FormatterBase<Type>
+internal class TypeFormatter : FormatterBase<Type>
 {
 	/// <inheritdoc />
 	public override void Format(Type value, StringBuilder stringBuilder,

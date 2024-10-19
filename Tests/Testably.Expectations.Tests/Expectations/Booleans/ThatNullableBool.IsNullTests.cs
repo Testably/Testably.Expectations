@@ -14,9 +14,9 @@ public sealed partial class ThatNullableBool
 			bool? value = false;
 
 			async Task Act()
-				=> await That(value).IsNull();
+				=> await Expect.That(value).IsNull();
 
-			await That(Act).Throws<XunitException>()
+			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that value
 				                  is <null>,
@@ -31,9 +31,9 @@ public sealed partial class ThatNullableBool
 			bool? value = true;
 
 			async Task Act()
-				=> await That(value).IsNull();
+				=> await Expect.That(value).IsNull();
 
-			await That(Act).Throws<XunitException>()
+			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that value
 				                  is <null>,
@@ -48,9 +48,9 @@ public sealed partial class ThatNullableBool
 			bool? value = null;
 
 			async Task Act()
-				=> await That(value).IsNull();
+				=> await Expect.That(value).IsNull();
 
-			await That(Act).DoesNotThrow();
+			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

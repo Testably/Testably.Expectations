@@ -1,6 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Expectations;
@@ -14,7 +15,7 @@ public abstract partial class ThatDelegate
 			if (value.Exception is not null)
 			{
 				return new ExpectationResult.Failure<TValue?>(value.Value, ToString(),
-					$"it did throw {Formatter.PrependAOrAn(value.Exception.GetType().Name)}:{Environment.NewLine}\t{value.Exception.Message}");
+					$"it did throw {value.Exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}\t{value.Exception.Message}");
 			}
 
 			return new ExpectationResult.Success<TValue?>(value.Value, ToString());
@@ -41,7 +42,7 @@ public abstract partial class ThatDelegate
 			}
 
 			return new ExpectationResult.Failure<TException?>(null, ToString(),
-				$"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
+				$"it did throw {exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}\t{exception.Message}");
 		}
 
 		/// <inheritdoc />
@@ -49,7 +50,7 @@ public abstract partial class ThatDelegate
 			=> IsMetBy(value.Value, value.Exception);
 
 		public override string ToString()
-			=> $"throws {Formatter.PrependAOrAn(typeof(TException).Name)}";
+			=> $"throws {typeof(TException).Name.PrependAOrAn()}";
 	}
 
 	private readonly struct ThrowsExactlyExpectation<TException> : IExpectation<DelegateSource.NoValue, TException>, IDelegateExpectation<DelegateSource.NoValue>
@@ -69,7 +70,7 @@ public abstract partial class ThatDelegate
 			}
 
 			return new ExpectationResult.Failure<TException?>(null, ToString(),
-				$"it did throw {Formatter.PrependAOrAn(exception.GetType().Name)}:{Environment.NewLine}\t{exception.Message}");
+				$"it did throw {exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}\t{exception.Message}");
 		}
 
 		/// <inheritdoc />
@@ -78,6 +79,6 @@ public abstract partial class ThatDelegate
 
 		/// <inheritdoc />
 		public override string ToString()
-			=> $"throws exactly {Formatter.PrependAOrAn(typeof(TException).Name)}";
+			=> $"throws exactly {typeof(TException).Name.PrependAOrAn()}";
 	}
 }

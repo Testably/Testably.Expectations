@@ -15,9 +15,9 @@ public sealed partial class ThatString
 			string? actual = null;
 
 			async Task Act()
-				=> await That(actual).IsNotNull();
+				=> await Expect.That(actual).IsNotNull();
 
-			await That(Act).Throws<XunitException>()
+			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that actual
 				                  is not null,
@@ -31,9 +31,9 @@ public sealed partial class ThatString
 		public async Task SucceedsWhenNotNull(string? actual)
 		{
 			async Task Act()
-				=> await That(actual).IsNotNull();
+				=> await Expect.That(actual).IsNotNull();
 
-			await That(Act).DoesNotThrow();
+			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

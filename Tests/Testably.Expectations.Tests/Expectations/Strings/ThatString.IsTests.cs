@@ -14,9 +14,9 @@ public sealed partial class ThatString
 		public async Task FailsWhenNotNull(string actual, string expected)
 		{
 			async Task Act()
-				=> await That(actual).Is(expected);
+				=> await Expect.That(actual).Is(expected);
 
-			await That(Act).Throws<XunitException>()
+			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that actual
 				                   is equal to "{expected}",
@@ -30,7 +30,7 @@ public sealed partial class ThatString
 		public async Task SucceedsForSameStrings(string actual)
 		{
 			async Task Act()
-				=> await That(actual).Is(actual);
+				=> await Expect.That(actual).Is(actual);
 
 			await Act();
 		}

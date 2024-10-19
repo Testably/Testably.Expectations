@@ -9,10 +9,12 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
 	public override Node Inner { get; set; }
 	private readonly PropertyAccessor _propertyAccessor;
+	private readonly string _textSeparator;
 
-	public WhichNode(PropertyAccessor propertyAccessor, Node inner)
+	public WhichNode(PropertyAccessor propertyAccessor, Node inner, string textSeparator = " which ")
 	{
 		_propertyAccessor = propertyAccessor;
+		_textSeparator = textSeparator;
 		Inner = inner;
 	}
 
@@ -32,7 +34,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 				out TProperty? matchingValue))
 			{
 				return (await Inner.IsMetBy(new SourceValue<TProperty>(matchingValue, value.Exception)))
-					.UpdateExpectationText(r => $" which {_propertyAccessor} {r.ExpectationText}");
+					.UpdateExpectationText(r => $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
 			}
 
 			throw new InvalidOperationException(

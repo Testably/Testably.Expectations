@@ -22,9 +22,9 @@ public sealed partial class ThatDelegate
             Action action = () => throw exception;
 
             var sut = async ()
-                => await That(action).Throws<CustomException>();
+                => await Expect.That(action).Throws<CustomException>();
 
-            await That(sut).ThrowsException()
+            await Expect.That(sut).ThrowsException()
                 .Which.HasMessage(expectedMessage);
         }
 
@@ -42,9 +42,9 @@ public sealed partial class ThatDelegate
             Action action = () => throw exception;
 
             var sut = async ()
-                => await That(action).Throws<SubCustomException>();
+                => await Expect.That(action).Throws<SubCustomException>();
 
-            await That(sut).ThrowsException()
+            await Expect.That(sut).ThrowsException()
                 .Which.HasMessage(expectedMessage);
         }
 
@@ -60,9 +60,9 @@ public sealed partial class ThatDelegate
             var action = () => { };
 
             var sut = async ()
-                => await That(action).Throws<CustomException>();
+                => await Expect.That(action).Throws<CustomException>();
 
-            await That(sut).ThrowsException()
+            await Expect.That(sut).ThrowsException()
                 .Which.HasMessage(expectedMessage);
         }
 
@@ -72,9 +72,9 @@ public sealed partial class ThatDelegate
             Exception exception = CreateCustomException();
             Action action = () => throw exception;
 
-            var result = await That(action).Throws<CustomException>();
+            var result = await Expect.That(action).Throws<CustomException>();
 
-            await That(result).IsSameAs(exception);
+            await Expect.That(result).IsSameAs(exception);
 		}
 
         [Fact]
@@ -84,9 +84,9 @@ public sealed partial class ThatDelegate
             Action action = () => throw exception;
 
             var sut = async ()
-                => await That(action).Throws<CustomException>();
+                => await Expect.That(action).Throws<CustomException>();
 
-            await That(sut).DoesNotThrow();
+            await Expect.That(sut).DoesNotThrow();
         }
 
         [Fact]
@@ -96,9 +96,9 @@ public sealed partial class ThatDelegate
             Action action = () => throw exception;
 
             var sut = async ()
-                => await That(action).Throws<CustomException>();
+                => await Expect.That(action).Throws<CustomException>();
 
-            await That(sut).DoesNotThrow();
+            await Expect.That(sut).DoesNotThrow();
         }
     }
 }
