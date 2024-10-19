@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Testably.Expectations.Tests.Expectations.Exceptions;
+namespace Testably.Expectations.Tests.Primitives.Exceptions;
 
 public sealed partial class ThatException
 {

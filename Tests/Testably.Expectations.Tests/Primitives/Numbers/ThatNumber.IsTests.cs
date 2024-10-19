@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Testably.Expectations.Tests.Expectations.Numbers;
+namespace Testably.Expectations.Tests.Primitives.Numbers;
 
 public sealed partial class ThatNumber
 {

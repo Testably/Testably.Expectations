@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Testably.Expectations.Tests.Expectations.Strings;
+namespace Testably.Expectations.Tests.Primitives.Strings;
 
 public sealed partial class ThatString
 {

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Testably.Expectations.Tests.Expectations.Delegates;
+namespace Testably.Expectations.Tests.Delegates;
 
 public sealed partial class ThatDelegate
 {

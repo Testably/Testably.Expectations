@@ -2,7 +2,7 @@
 using Xunit;
 using Xunit.Sdk;
 
-namespace Testably.Expectations.Tests.Expectations.Booleans;
+namespace Testably.Expectations.Tests.Primitives.Booleans;
 
 public sealed partial class ThatBool
 {

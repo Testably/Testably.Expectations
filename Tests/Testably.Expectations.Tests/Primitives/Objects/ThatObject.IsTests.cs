@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Testably.Expectations.Tests.Expectations.Objects;
+namespace Testably.Expectations.Tests.Primitives.Objects;
 
 public sealed partial class ThatObject
 {
