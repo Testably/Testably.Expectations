@@ -36,7 +36,7 @@ public static partial class Expect
 	/// <summary>
 	///     Start asserting the current <see cref="object" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<object> That(object? subject,
+	public static That<object?> That(object? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<object?>(subject, doNotPopulateThisValue));
 
@@ -46,12 +46,4 @@ public static partial class Expect
 	public static That<string?> That(string? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<string?>(subject, doNotPopulateThisValue));
-
-	///// <summary>
-	/////     Start asserting the current <paramref name="subject" /> of type <typeparamref name="T"/>.
-	///// </summary>
-	//public static That<T> That<T>(T? subject,
-	//	[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//	where T : class
-	//	=> new(new ExpectationBuilder<object?>(subject, doNotPopulateThisValue));
 }

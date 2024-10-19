@@ -12,7 +12,7 @@ public class Formatter
 	private readonly IValueFormatter _defaultFormatter = new DefaultFormatter();
 	private readonly IValueFormatter[] _internalValueFormatters =
 	[
-		new BoolFormatter(),
+		new BooleanFormatter(),
 		new StringFormatter(),
 		new TypeFormatter(),
 		new NumberFormatter<int>(),

@@ -20,18 +20,45 @@ public static partial class Expect
 		=> new(new ExpectationBuilder<int?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start asserting the current <see cref="int" /> <paramref name="subject" />.
+	///     Start asserting the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<uint> That(uint subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<uint>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start asserting the current <see cref="int" /> <paramref name="subject" />.
+	///     Start asserting the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<uint?> That(uint? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<uint?>(subject, doNotPopulateThisValue));
+	/// <summary>
+	///     Start asserting the current <see cref="nint" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<nint> That(nint subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<nint>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start asserting the current <see cref="nint" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<nint?> That(nint? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<nint?>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start asserting the current <see cref="nuint" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<nuint> That(nuint subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<nuint>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start asserting the current <see cref="nuint" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<nuint?> That(nuint? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<nuint?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
 	///     Start asserting the current <see cref="int" /> <paramref name="subject" />.

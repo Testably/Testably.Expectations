@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Core.Formatting.Formatters;
 
-internal class BoolFormatter : FormatterBase<bool>
+internal class BooleanFormatter : FormatterBase<bool>
 {
 	/// <inheritdoc />
 	public override void Format(bool value, StringBuilder stringBuilder,

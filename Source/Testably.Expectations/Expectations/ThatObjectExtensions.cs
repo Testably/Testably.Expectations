@@ -30,6 +30,16 @@ public static class ThatObjectExtensions
 				b => b.AppendMethod(nameof(IsEquivalentTo), doNotPopulateThisValue)),
 			source);
 
+
+	public static AssertionResult<T, That<object?>> Satisfies<T, TProperty>(this That<object?> source, Expression<Func<T, TProperty?>> selector,
+		Action<That<TProperty?>> expectations,
+		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",
+		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue2 = "")
+		=> new(source.ExpectationBuilder.Which<T, TProperty?>(
+			PropertyAccessor<T, TProperty?>.FromExpression(selector),
+			expectations,
+			b => b.AppendGenericMethod<T, TProperty>(nameof(Satisfies), doNotPopulateThisValue1, doNotPopulateThisValue2), "satisfies "),
+			source);
 	private readonly struct IsExpectation<TType> : IExpectation<object?>
 	{
 		public ExpectationResult IsMetBy(object? actual)

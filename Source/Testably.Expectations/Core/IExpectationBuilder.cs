@@ -13,7 +13,8 @@ public interface IExpectationBuilder
 	IExpectationBuilder Or(Action<StringBuilder> expressionBuilder, string textSeparator = " or ");
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		Action<That<TProperty>> expectation,
-		Action<StringBuilder> expressionBuilder);
+		Action<StringBuilder> expressionBuilder,
+		string textSeparator = " which ");
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		Action<StringBuilder> expressionBuilder, string textSeparator = "");
 	Task<ExpectationResult> IsMet();

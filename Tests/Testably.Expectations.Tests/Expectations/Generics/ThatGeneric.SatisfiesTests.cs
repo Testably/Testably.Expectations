@@ -16,16 +16,16 @@ public sealed partial class ThatGeneric
 				Value = 1
 			};
 
-			//async Task Act()
-			//	=> await Expect.That(value).Satisfies(o => o.Value, v => v.Is(1));
+			async Task Act()
+				=> await Expect.That(value).Satisfies<Other, int>(o => o.Value, v => v.Is(2));
 
-			//await Expect.That(Act).Throws<XunitException>()
-			//	.Which.HasMessage("""
-			//	                  Expected that value
-			//	                  refers to other {"Value":1},
-			//	                  but found {"Value":1}
-			//	                  at Expect.That(value).IsSameAs(other)
-			//	                  """);
+			await Expect.That(Act).Throws<XunitException>()
+				.Which.HasMessage("""
+				                  Expected that value
+				                  satisfies Value is 2,
+				                  but found 1
+				                  at Expect.That(value).Satisfies<Other, int>(o => o.Value, v => v.Is(2))
+				                  """);
 		}
 
 		[Fact]
