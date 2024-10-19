@@ -36,6 +36,13 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
 
 	/// <inheritdoc />
+	public IExpectationBuilder AppendExpression(Action<StringBuilder> expressionBuilder)
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		return this;
+	}
+
+	/// <inheritdoc />
 	public IExpectationBuilder Add(IExpectation expectation,
 		Action<StringBuilder> expressionBuilder)
 	{
