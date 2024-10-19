@@ -4,7 +4,7 @@ using Xunit.Sdk;
 
 namespace Testably.Expectations.Tests.Collections;
 
-public sealed partial class ThatStringCollection
+public sealed partial class ThatCollection
 {
 	public sealed class AtMostAreTests
 	{
