@@ -16,7 +16,7 @@ public static class ThatObjectExtensions
 	/// <summary>
 	///     Expect the actual value to be of type <typeparamref name="TType" />.
 	/// </summary>
-	public static AssertionResultWhich<TType, That<object>> Is<TType>(this That<object> source)
+	public static AssertionResultWhich<TType, That<object?>> Is<TType>(this That<object?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsExpectation<TType>(),
 				b => b.Append('.').Append(nameof(Is)).Append('<').Append(typeof(TType).Name)

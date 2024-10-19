@@ -44,153 +44,152 @@ public sealed class ExpectationResultTests
 		ExpectationResult result = sut.Invert();
 
 		await Expect.That(result).Is<ExpectationResult.Success>()
-			.Which(s => s.ExpectationText,
-				e => e.Is(expectationText));
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromFailure_ShouldUpdateExpectationText(string expectationText,
-	//	string resultText)
-	//{
-	//	ExpectationResult.Failure sut = new("foo", "bar");
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromFailure_ShouldUpdateExpectationText(string expectationText,
+		string resultText)
+	{
+		ExpectationResult.Failure sut = new("foo", "bar");
 
-	//	ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Success>()
-	//		.Which(p => p.ExpectationText).Is(expectationText));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Success>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromFailureWithValue_ShouldIncludeValue(string expectationText,
-	//	string resultText)
-	//{
-	//	Dummy value = new()
-	//	{
-	//		Value = 1
-	//	};
-	//	ExpectationResult.Failure<Dummy> sut = new(value, expectationText, resultText);
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromFailureWithValue_ShouldIncludeValue(string expectationText,
+		string resultText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
+		ExpectationResult.Failure<Dummy> sut = new(value, expectationText, resultText);
 
-	//	ExpectationResult result = sut.Invert();
+		ExpectationResult result = sut.Invert();
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Success<Dummy>>()
-	//		.Which(p => p.Value).Is(value));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Success<Dummy>>()
+			.Which(s => s.Value, e => e.IsEquivalentTo(value));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromFailureWithValue_ShouldKeepExpectationText(string expectationText,
-	//	string resultText)
-	//{
-	//	Dummy value = new()
-	//	{
-	//		Value = 1
-	//	};
-	//	ExpectationResult.Failure<Dummy> sut = new(value, expectationText, resultText);
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromFailureWithValue_ShouldKeepExpectationText(string expectationText,
+		string resultText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
+		ExpectationResult.Failure<Dummy> sut = new(value, expectationText, resultText);
 
-	//	ExpectationResult result = sut.Invert();
+		ExpectationResult result = sut.Invert();
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Success<Dummy>>()
-	//		.Which(p => p.ExpectationText).Is(expectationText));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Success<Dummy>>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromFailureWithValue_ShouldUpdateExpectationText(string expectationText,
-	//	string resultText)
-	//{
-	//	Dummy value = new()
-	//	{
-	//		Value = 1
-	//	};
-	//	ExpectationResult.Failure<Dummy> sut = new(value, "foo", "bar");
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromFailureWithValue_ShouldUpdateExpectationText(string expectationText,
+		string resultText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
+		ExpectationResult.Failure<Dummy> sut = new(value, "foo", "bar");
 
-	//	ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Success<Dummy>>()
-	//		.Which(p => p.ExpectationText).Is(expectationText));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Success<Dummy>>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromSuccess_ShouldKeepExpectationTextAndUseDefaultResultText(
-	//	string expectationText)
-	//{
-	//	ExpectationResult.Success sut = new(expectationText);
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromSuccess_ShouldKeepExpectationTextAndUseDefaultResultText(
+		string expectationText)
+	{
+		ExpectationResult.Success sut = new(expectationText);
 
-	//	ExpectationResult result = sut.Invert();
+		ExpectationResult result = sut.Invert();
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Failure>()
-	//		.Which(p => p.ExpectationText).Is(expectationText)).And()
-	//		.Which(p => p.ResultText).Is("it did"));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Failure>()
+				.Which(s => s.ExpectationText, e => e.Is(expectationText))
+				.Which(s => s.ResultText, e => e.Is("it did"));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromSuccess_ShouldUpdateExpectationAndDefaultResultText(
-	//	string expectationText, string resultText)
-	//{
-	//	ExpectationResult.Success sut = new("foo");
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromSuccess_ShouldUpdateExpectationAndDefaultResultText(
+		string expectationText, string resultText)
+	{
+		ExpectationResult.Success sut = new("foo");
 
-	//	ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Failure>()
-	//		.Which(p => p.ExpectationText).Is(expectationText)).And()
-	//		.Which(p => p.ResultText).Is(resultText));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Failure>()
+			.Which(p => p.ExpectationText, e => e.Is(expectationText))
+			.Which(p => p.ResultText, e => e.Is(resultText));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromSuccessWithValue_ShouldIncludeValue(string expectationText)
-	//{
-	//	Dummy value = new()
-	//	{
-	//		Value = 1
-	//	};
-	//	ExpectationResult.Success<Dummy> sut = new(value, expectationText);
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromSuccessWithValue_ShouldIncludeValue(string expectationText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
+		ExpectationResult.Success<Dummy> sut = new(value, expectationText);
 
-	//	ExpectationResult result = sut.Invert();
+		ExpectationResult result = sut.Invert();
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
-	//		.Which(p => p.Value).Is(value));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.Value, e => e.IsEquivalentTo(value));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromSuccessWithValue_ShouldKeepExpectationTextAndUseDefaultResultText(
-	//	string expectationText)
-	//{
-	//	Dummy value = new()
-	//	{
-	//		Value = 1
-	//	};
-	//	ExpectationResult.Success<Dummy> sut = new(value, expectationText);
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromSuccessWithValue_ShouldKeepExpectationTextAndUseDefaultResultText(
+		string expectationText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
+		ExpectationResult.Success<Dummy> sut = new(value, expectationText);
 
-	//	ExpectationResult result = sut.Invert();
+		ExpectationResult result = sut.Invert();
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
-	//		.Which(p => p.ExpectationText).Is(expectationText)).And()
-	//		.Which(p => p.ResultText).Is("it did"));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.ExpectationText, e => e.Is(expectationText))
+			.Which(p => p.ResultText, e => e.Is("it did"));
+	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromSuccessWithValue_ShouldUpdateExpectationAndResultText(
-	//	string expectationText, string resultText)
-	//{
-	//	Dummy value = new()
-	//	{
-	//		Value = 1
-	//	};
-	//	ExpectationResult.Success<Dummy> sut = new(value, "foo");
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromSuccessWithValue_ShouldUpdateExpectationAndResultText(
+		string expectationText, string resultText)
+	{
+		Dummy value = new()
+		{
+			Value = 1
+		};
+		ExpectationResult.Success<Dummy> sut = new(value, "foo");
 
-	//	ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ExpectationResult result = sut.Invert(_ => expectationText, _ => resultText);
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Failure<Dummy>>()
-	//		.Which(p => p.ExpectationText).Is(expectationText)).And()
-	//		.Which(p => p.ResultText).Is(resultText));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Failure<Dummy>>()
+			.Which(p => p.ExpectationText, e => e.Is(expectationText))
+			.Which(p => p.ResultText, e => e.Is(resultText));
+	}
 
 	[Theory]
 	[AutoData]
