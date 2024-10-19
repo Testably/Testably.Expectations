@@ -4,6 +4,10 @@ namespace Testably.Expectations.Core.Helpers;
 
 internal static class StringExtensions
 {
+	public static string Indent(this string value, string indentation = "  ")
+	{
+		return indentation + value.Replace("\n", $"\n{indentation}");
+	}
 	public static string ToSingleLine(this string value)
 	{
 		return value.Replace("\n", "\\n").Replace("\r", "\\r");

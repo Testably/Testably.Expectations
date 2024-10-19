@@ -4,6 +4,7 @@ using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
+using static Testably.Expectations.Core.Sources.DelegateSource;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
@@ -11,7 +12,7 @@ namespace Testably.Expectations;
 public static class ThatExceptionExtensions
 {
 	/// <summary>
-	///     Expect the <typeparamref type="TException" /> has a message equal to <paramref name="expected" />
+	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
 	public static AssertionResult<TException, That<TException>> HasMessage<TException>(this That<TException> source,
 	string expected, [CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -22,26 +23,41 @@ public static class ThatExceptionExtensions
 			source);
 
 	/// <summary>
-	///     Expect the <typeparamref type="TException" /> has an inner exception.
+	///     Verifies that the actual exception has an inner exception.
 	/// </summary>
-	public static AssertionResult<TException, That<TException>> HasInnerException<TException>(this That<TException> source)
+	public static AssertionResult<Exception, That<Exception>> HasInnerException(this That<Exception> source)
 		=> new(source.ExpectationBuilder.Add(
 				new HasInnerExceptionExpectation<Exception>(),
 				b => b.AppendMethod(nameof(HasInnerException))),
 			source);
-	private readonly struct HasInnerExceptionExpectation<TInnerException>(
-		Action<That<TInnerException>> assertions)
-		: IExpectation<TInnerException>,
+
+	/// <summary>
+	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TInnerException"/>.
+	/// </summary>
+	public static AssertionResult<Exception, That<Exception>> HasInner<TInnerException>(this That<Exception> source)
+		where TInnerException : Exception
+		=> new(source.ExpectationBuilder.Add(
+				new HasInnerExceptionExpectation<TInnerException>(),
+				b => b.AppendGenericMethod<TInnerException>(nameof(HasInner))),
+			source);
+
+	private readonly struct HasInnerExceptionExpectation<TInnerException>
+		: IExpectation<Exception?>,
 			IDelegateExpectation<DelegateSource.NoValue>
 		where TInnerException : Exception
 	{
 		/// <inheritdoc />
-		public ExpectationResult IsMetBy(TInnerException actual)
+		public ExpectationResult IsMetBy(Exception? actual)
 		{
-			_ = assertions;
+			var innerException = actual?.InnerException;
 			if (actual?.InnerException is TInnerException exception)
 			{
-				return new ExpectationResult.Success<TInnerException?>(exception, ToString());
+				return new ExpectationResult.Success<Exception?>(exception, ToString());
+			}
+
+			if (innerException is not null)
+			{
+				return new ExpectationResult.Failure<Exception?>(innerException, ToString(), $"found {innerException.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{innerException.Message.Indent("  ")}");
 			}
 
 			return new ExpectationResult.Failure(ToString(),
@@ -51,17 +67,11 @@ public static class ThatExceptionExtensions
 		/// <inheritdoc />
 		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 		{
-			if (value.Exception?.InnerException is TInnerException exception)
-			{
-				return new ExpectationResult.Success<TInnerException?>(exception, ToString());
-			}
-
-			return new ExpectationResult.Failure(ToString(),
-				"it did not");
+			return IsMetBy(value.Exception);
 		}
 
 		public override string ToString()
-			=> "has an inner exception";
+			=> $"has an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
 	private readonly struct HasMessageExpectation<T>(string expected) : IExpectation<T>,

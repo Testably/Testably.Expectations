@@ -15,7 +15,7 @@ public abstract partial class ThatDelegate
 			if (value.Exception is not null)
 			{
 				return new ExpectationResult.Failure<TValue?>(value.Value, ToString(),
-					$"it did throw {value.Exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}\t{value.Exception.Message}");
+					$"it did throw {value.Exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{value.Exception.Message.Indent("  ")}");
 			}
 
 			return new ExpectationResult.Success<TValue?>(value.Value, ToString());

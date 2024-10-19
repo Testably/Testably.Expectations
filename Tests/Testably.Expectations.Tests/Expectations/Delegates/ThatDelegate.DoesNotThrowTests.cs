@@ -15,7 +15,7 @@ public sealed partial class ThatDelegate
                                     Expected that action
                                     does not throw any exception,
                                     but it did throw a CustomException:
-                                    	{nameof(Fails_For_Code_With_Exceptions)}
+                                      {nameof(Fails_For_Code_With_Exceptions)}
                                     at Expect.That(action).DoesNotThrow()
                                     """;
             Exception exception = CreateCustomException();
