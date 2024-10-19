@@ -34,11 +34,10 @@ public class PropertyAccessor<TValue, TProperty> : PropertyAccessor
 		=> new(propertyAccessor, name);
 
 	public static PropertyAccessor<TValue, TProperty?> FromExpression(
-		Expression<Func<TValue, TProperty>> propertyAccessor)
+		Expression<Func<TValue, TProperty?>> propertyAccessor)
 	{
 		var compiled = propertyAccessor.Compile();
-		//TODO Check nullability
-		return new(v => compiled(v.Value!), ExpressionHelpers.GetPropertyPath(propertyAccessor));
+		return new(v => v.Value == null ? default : compiled(v.Value), $"{ExpressionHelpers.GetPropertyPath(propertyAccessor)} ");
 	}
 
 	public static PropertyAccessor<TValue, TProperty?> FromString(string propertyAccessor)

@@ -52,13 +52,13 @@ public class AssertionResultWhich<TResult, TValue> : AssertionResult<TResult, TV
 		_assertion = assertion;
 	}
 
-	public AssertionResultWhich<TResult, TValue> Which<TProperty>(Expression<Func<TResult, TProperty>> selector,
-		Action<That<TProperty>> expectations,
+	public AssertionResultWhich<TResult, TValue> Which<TProperty>(Expression<Func<TResult, TProperty?>> selector,
+		Action<That<TProperty?>> expectations,
 		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",
 		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue2 = "")
 	{
-		_expectationBuilder.Which<TResult, TProperty>(
-			PropertyAccessor<TResult, TProperty>.FromExpression(selector),
+		_expectationBuilder.Which<TResult, TProperty?>(
+			PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
 			expectations,
 			b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1, doNotPopulateThisValue2));
 		return this;

@@ -43,10 +43,9 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult result = sut.Invert();
 
-		//TODO VAB
-		//await Expect.That(result).Is<ExpectationResult.Success>()
-		//	.Which(s => s.ExpectationText,
-		//		e => e.Is(expectationText));
+		await Expect.That(result).Is<ExpectationResult.Success>()
+			.Which(s => s.ExpectationText,
+				e => e.Is(expectationText));
 	}
 
 	//[Theory]

@@ -21,12 +21,12 @@ public static class ThatGenericExtensions
 	b => b.AppendMethod(nameof(IsSameAs), doNotPopulateThisValue)),
 	source);
 
-	public static AssertionResult<T, That<T>> Satisfies<T, TProperty>(this That<T> source, Expression<Func<T, TProperty>> selector,
-		Action<That<TProperty>> expectations,
+	public static AssertionResult<T, That<T>> Satisfies<T, TProperty>(this That<T> source, Expression<Func<T, TProperty?>> selector,
+		Action<That<TProperty?>> expectations,
 		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",
 		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue2 = "")
-		=> new(source.ExpectationBuilder.Which<T, TProperty>(
-			PropertyAccessor<T, TProperty>.FromExpression(selector),
+		=> new(source.ExpectationBuilder.Which<T, TProperty?>(
+			PropertyAccessor<T, TProperty?>.FromExpression(selector),
 			expectations,
 			b => b.AppendMethod(nameof(Satisfies), doNotPopulateThisValue1, doNotPopulateThisValue2)),
 			source);
