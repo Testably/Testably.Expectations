@@ -15,6 +15,37 @@ namespace Testably.Expectations;
 public static class ThatCollectionExtensions
 {
 	/// <summary>
+	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
+	/// </summary>
+	public static AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> Contains<TItem>(
+		this That<IEnumerable<TItem>> source,
+		TItem expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(new ContainsExpectation<TItem>(expected),
+				b => b.AppendMethod(nameof(Contains), doNotPopulateThisValue)),
+			source);
+
+	/// <summary>
+	///     Verifies that the actual collection is empty.
+	/// </summary>
+	public static AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsEmpty<TItem>(
+		this That<IEnumerable<TItem>> source)
+		=> new(source.ExpectationBuilder.Add(new IsEmptyExpectation<TItem>(),
+				b => b.AppendMethod(nameof(IsEmpty))),
+			source);
+
+	/// <summary>
+	///     Verifies that the actual collection is not empty.
+	/// </summary>
+	public static AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsNotEmpty<TItem>(
+		this That<IEnumerable<TItem>> source)
+		=> new(source.ExpectationBuilder.Add(new IsNotEmptyExpectation<TItem>(),
+				b => b.AppendMethod(nameof(IsNotEmpty))),
+			source);
+
+	#region Quantifiable Collections
+
+	/// <summary>
 	///     Verifies that all items in the collection...
 	/// </summary>
 	public static QuantifiableCollection<TItem> All<TItem>(this That<IEnumerable<TItem>> source)
@@ -59,35 +90,6 @@ public static class ThatCollectionExtensions
 	}
 
 	/// <summary>
-	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
-	/// </summary>
-	public static AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> Contains<TItem>(
-		this That<IEnumerable<TItem>> source,
-		TItem expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ContainsExpectation<TItem>(expected),
-				b => b.AppendMethod(nameof(Contains), doNotPopulateThisValue)),
-			source);
-
-	/// <summary>
-	///     Verifies that the actual collection is empty.
-	/// </summary>
-	public static AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsEmpty<TItem>(
-		this That<IEnumerable<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsEmptyExpectation<TItem>(),
-				b => b.AppendMethod(nameof(IsEmpty))),
-			source);
-
-	/// <summary>
-	///     Verifies that the actual collection is not empty.
-	/// </summary>
-	public static AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsNotEmpty<TItem>(
-		this That<IEnumerable<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsNotEmptyExpectation<TItem>(),
-				b => b.AppendMethod(nameof(IsNotEmpty))),
-			source);
-
-	/// <summary>
 	///     Verifies that no items in the collection...
 	/// </summary>
 	public static QuantifiableCollection<TItem> None<TItem>(this That<IEnumerable<TItem>> source)
@@ -95,6 +97,8 @@ public static class ThatCollectionExtensions
 		source.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(None)));
 		return new QuantifiableCollection<TItem>(source, Quantifier.None);
 	}
+
+	#endregion
 
 	private readonly struct ContainsExpectation<TItem>(TItem expected)
 		: IExpectation<IEnumerable<TItem>>

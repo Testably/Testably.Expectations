@@ -27,7 +27,7 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception>> HasInnerException(this That<Exception> source)
+	public static AssertionResult<Exception, That<Exception?>> HasInnerException(this That<Exception?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new HasInnerExceptionExpectation<Exception>(),
 				b => b.AppendMethod(nameof(HasInnerException))),
@@ -36,7 +36,7 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception which satisfies the <paramref name="expectations"/>.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception>> HasInnerException(this That<Exception> source,
+	public static AssertionResult<Exception, That<Exception?>> HasInnerException(this That<Exception?> source,
 		Action<That<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Which<Exception, Exception?>(
@@ -48,7 +48,7 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException"/> which satisfies the <paramref name="expectations"/>.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception>> HasInner<TException>(this That<Exception> source,
+	public static AssertionResult<Exception, That<Exception?>> HasInner<TException>(this That<Exception?> source,
 		Action<That<TException?>> expectations,
 		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
 		where TException : Exception
@@ -71,14 +71,14 @@ public static class ThatExceptionExtensions
 				return new ExpectationResult.Success<TTarget>(casted, "");
 			}
 
-			return new ExpectationResult.Failure<Exception?>(actual, "", actual == null ? "found <null>" : $"found {actual.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{actual.Message.Indent("  ")}");
+			return new ExpectationResult.Failure<Exception?>(actual, "", actual == null ? "found <null>" : $"found {actual.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{actual.Message.Indent()}");
 		}
 	}
 
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException"/>.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception>> HasInner<TException>(this That<Exception> source)
+	public static AssertionResult<Exception, That<Exception?>> HasInner<TException>(this That<Exception?> source)
 		where TException : Exception
 		=> new(source.ExpectationBuilder.Add(
 				new HasInnerExceptionExpectation<TException>(),
@@ -101,7 +101,7 @@ public static class ThatExceptionExtensions
 
 			if (innerException is not null)
 			{
-				return new ExpectationResult.Failure<Exception?>(innerException, ToString(), $"found {innerException.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{innerException.Message.Indent("  ")}");
+				return new ExpectationResult.Failure<Exception?>(innerException, ToString(), $"found {innerException.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{innerException.Message.Indent()}");
 			}
 
 			return new ExpectationResult.Failure(ToString(),
