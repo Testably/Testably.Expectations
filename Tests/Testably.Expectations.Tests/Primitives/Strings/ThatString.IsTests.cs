@@ -10,8 +10,41 @@ public sealed partial class ThatString
 	public class IsTests
 	{
 		[Theory]
+		[InlineData("some message", "*me me*", true)]
+		[InlineData("some message", "*ME ME*", false)]
+		[InlineData("some message", "some?message", true)]
+		[InlineData("some message", "some*message", true)]
+		[InlineData("some message", "some me?age", false)]
+		[InlineData("some message", "some me??age", true)]
+		public async Task AsWildcard_ShouldDefaultToCaseSensitiveMatch(
+			string actual, string pattern, bool expectMatch)
+		{
+			async Task Act()
+				=> await Expect.That(actual).Is(pattern).AsWildcard();
+
+			if (expectMatch)
+			{
+				await Expect.That(Act).DoesNotThrow();
+			}
+			else
+			{
+				await Expect.That(Act).ThrowsException();
+			}
+		}
+
+		[Theory]
 		[AutoData]
-		public async Task FailsWhenNotNull(string actual, string expected)
+		public async Task WhenStringsAreTheSame_ShouldSucceed(string actual)
+		{
+			async Task Act()
+				=> await Expect.That(actual).Is(actual);
+
+			await Act();
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task WhenStringsDiffer_ShouldFail(string actual, string expected)
 		{
 			async Task Act()
 				=> await Expect.That(actual).Is(expected);
@@ -20,19 +53,13 @@ public sealed partial class ThatString
 				.Which.HasMessage($"""
 				                   Expected that actual
 				                   is equal to "{expected}",
-				                   but found "{actual}"
+				                   but found "{actual}" which differs at index 0:
+				                       ↓
+				                      "{actual}"
+				                      "{expected}"
+				                       ↑
 				                   at Expect.That(actual).Is(expected)
 				                   """);
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task SucceedsForSameStrings(string actual)
-		{
-			async Task Act()
-				=> await Expect.That(actual).Is(actual);
-
-			await Act();
 		}
 	}
 }

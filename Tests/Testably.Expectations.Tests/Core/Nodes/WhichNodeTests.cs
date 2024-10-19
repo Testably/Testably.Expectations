@@ -27,7 +27,11 @@ public sealed class WhichNodeTests
 			.Which.HasMessage("""
 			                  Expected that sut
 			                  is type Dummy which Value is equal to "bar",
-			                  but found "foo"
+			                  but found "foo" which differs at index 0:
+			                      ↓
+			                     "foo"
+			                     "bar"
+			                      ↑
 			                  at Expect.That(sut).Is<Dummy>().Which(p => p.Value, e => e.Is("bar"))
 			                  """);
 	}

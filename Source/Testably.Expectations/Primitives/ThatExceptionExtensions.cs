@@ -16,13 +16,14 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public static AssertionResult<TException, That<TException?>> HasMessage<TException>(this That<TException?> source,
-	string expected, [CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+	public static MatcherAssertionResult<TException, That<TException?>> HasMessage<TException>(this That<TException?> source,
+		StringMatcher expected, [CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TException : Exception
 		=> new(source.ExpectationBuilder.Add(
 				new HasMessageExpectation<TException>(expected),
 				b => b.AppendMethod(nameof(HasMessage), doNotPopulateThisValue)),
-			source);
+			source,
+			expected);
 
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception.
@@ -118,7 +119,7 @@ public static class ThatExceptionExtensions
 			=> $"has an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
-	private readonly struct HasMessageExpectation<T>(string expected) : IExpectation<T>,
+	private readonly struct HasMessageExpectation<T>(StringMatcher expected) : IExpectation<T>,
 		IDelegateExpectation<DelegateSource.NoValue>
 		where T : Exception
 	{
@@ -129,16 +130,40 @@ public static class ThatExceptionExtensions
 
 		public ExpectationResult IsMetBy(T? actual)
 		{
-			if (expected.Equals(actual?.Message))
+			if (expected.Matches(actual?.Message))
 			{
 				return new ExpectationResult.Success<T?>(actual, ToString());
 			}
 
 			return new ExpectationResult.Failure(ToString(),
-				$"found {Formatter.Format(actual?.Message, FormattingOptions.SingleLine)} which {new StringDifference(actual?.Message, expected)}");
+				$"found {Formatter.Format(actual?.Message, FormattingOptions.SingleLine)}{expected.GetExtendedFailure(actual?.Message)}");
 		}
 
 		public override string ToString()
-			=> $"has Message equal to {Formatter.Format(expected, FormattingOptions.SingleLine)}";
+			=> $"has Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
+	}
+
+	private readonly struct HasMessageMatchingExpectation<T>(StringMatcher pattern) : IExpectation<T>,
+		IDelegateExpectation<DelegateSource.NoValue>
+		where T : Exception
+	{
+		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		{
+			return IsMetBy(value.Exception as T);
+		}
+
+		public ExpectationResult IsMetBy(T? actual)
+		{
+			if (pattern.Matches(actual?.Message))
+			{
+				return new ExpectationResult.Success<T?>(actual, ToString());
+			}
+
+			return new ExpectationResult.Failure(ToString(),
+				$"found {Formatter.Format(actual?.Message, FormattingOptions.SingleLine)}");
+		}
+
+		public override string ToString()
+			=> $"has Message matching {Formatter.Format(pattern, FormattingOptions.SingleLine)}";
 	}
 }

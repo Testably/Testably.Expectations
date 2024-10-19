@@ -14,13 +14,14 @@ public static class ThatStringExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to <paramref name="expected" />.
 	/// </summary>
-	public static AssertionResult<string?, That<string?>> Is(this That<string?> source,
-		string? expected,
+	public static MatcherAssertionResult<string?, That<string?>> Is(this That<string?> source,
+		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
 				new IsExpectation(expected),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
-			source);
+			source,
+			expected);
 
 	/// <summary>
 	///     Verifies that the actual value is not <see langword="null" />.
@@ -40,39 +41,23 @@ public static class ThatStringExtensions
 				b => b.AppendMethod(nameof(IsNull))),
 			source);
 
-	private readonly struct IsExpectation : IExpectation<string?>
+	private readonly struct IsExpectation(StringMatcher expected) : IExpectation<string?>
 	{
-		private readonly string? _expected;
-
-		public IsExpectation(string? expected)
-		{
-			_expected = expected;
-		}
-
-		#region INullableExpectation<string?> Members
-
 		/// <inheritdoc />
 		public ExpectationResult IsMetBy(string? actual)
 		{
-			if (actual is null && _expected is null)
-			{
-				return new ExpectationResult.Success(ToString());
-			}
-
-			if (_expected?.Equals(actual) == true)
+			if (expected.Matches(actual))
 			{
 				return new ExpectationResult.Success<string?>(actual, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(),
-				$"found {Formatter.Format(actual)}");
+			return new ExpectationResult.Failure<string?>(actual, ToString(),
+				$"found {Formatter.Format(actual)}{expected.GetExtendedFailure(actual)}");
 		}
-
-		#endregion
 
 		/// <inheritdoc />
 		public override string ToString()
-			=> $"is equal to {Formatter.Format(_expected)}";
+		    => expected.GetExpectation(GrammaticVoice.ActiveVoice);
 	}
 
 	private readonly struct IsNotNullExpectation : IExpectation<string>

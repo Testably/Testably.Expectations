@@ -1,6 +1,7 @@
 ﻿using AutoFixture.Xunit2;
 using System;
 using System.Threading.Tasks;
+using Testably.Expectations.Core;
 using Xunit;
 using Xunit.Sdk;
 
@@ -40,6 +41,17 @@ public sealed partial class ThatException
 
 			async Task Act()
 				=> await Expect.That(sut).HasMessage(actual);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+		[Theory]
+		[AutoData]
+		public async Task SucceedsForSameStrings2(string actual)
+		{
+			Exception sut = new Exception("foo-bar");
+
+			async Task Act()
+				=> await Expect.That(sut).HasMessage("foo*").AsWildcard();
 
 			await Expect.That(Act).DoesNotThrow();
 		}
