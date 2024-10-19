@@ -1,16 +1,36 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
 
-namespace Testably.Expectations.Expectations;
+// ReSharper disable once CheckNamespace
+namespace Testably.Expectations;
 
-public sealed partial class ThatException<TException>
-	where TException : Exception
+public static class ThatExceptionExtensions
 {
+	/// <summary>
+	///     Expect the <typeparamref type="TException" /> has a message equal to <paramref name="expected" />
+	/// </summary>
+	public static AssertionResult<TException, That<TException>> HasMessage<TException>(this That<TException> source,
+	string expected, [CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		where TException : Exception
+		=> new(source.ExpectationBuilder.Add(
+				new HasMessageExpectation<TException>(expected),
+				b => b.AppendMethod(nameof(HasMessage), doNotPopulateThisValue)),
+			source);
+
+	/// <summary>
+	///     Expect the <typeparamref type="TException" /> has an inner exception.
+	/// </summary>
+	public static AssertionResult<TException, That<TException>> HasInnerException<TException>(this That<TException> source)
+		=> new(source.ExpectationBuilder.Add(
+				new HasInnerExceptionExpectation<Exception>(),
+				b => b.AppendMethod(nameof(HasInnerException))),
+			source);
 	private readonly struct HasInnerExceptionExpectation<TInnerException>(
-		Action<ThatException<TInnerException>> assertions)
+		Action<That<TInnerException>> assertions)
 		: IExpectation<TInnerException>,
 			IDelegateExpectation<DelegateSource.NoValue>
 		where TInnerException : Exception

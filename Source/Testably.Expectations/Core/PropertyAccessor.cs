@@ -4,7 +4,7 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core;
 
-internal abstract class PropertyAccessor
+public abstract class PropertyAccessor
 {
 	private readonly string _name;
 
@@ -18,7 +18,7 @@ internal abstract class PropertyAccessor
 		=> _name == "" ? "" : $".{_name} ";
 }
 
-internal class PropertyAccessor<TValue, TProperty> : PropertyAccessor
+public class PropertyAccessor<TValue, TProperty> : PropertyAccessor
 {
 	private readonly Func<SourceValue<TValue>, TProperty> _accessor;
 

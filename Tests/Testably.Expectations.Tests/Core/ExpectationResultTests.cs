@@ -29,24 +29,23 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult.Failure<Dummy> sut = new(value, expectationText, resultText);
 
-		//TODO: Check type
-		await Expect.That(sut.Value.Value).Is(value.Value);
+		await Expect.That(sut.Value).IsEquivalentTo(value);
 		await Expect.That(sut.ExpectationText).Is(expectationText);
 		await Expect.That(sut.ResultText).Is(resultText);
 	}
 
-	//[Theory]
-	//[AutoData]
-	//public async Task Invert_FromFailure_ShouldKeepExpectationText(string expectationText,
-	//	string resultText)
-	//{
-	//	ExpectationResult.Failure sut = new(expectationText, resultText);
+	[Theory]
+	[AutoData]
+	public async Task Invert_FromFailure_ShouldKeepExpectationText(string expectationText,
+		string resultText)
+	{
+		ExpectationResult.Failure sut = new(expectationText, resultText);
 
-	//	ExpectationResult result = sut.Invert();
+		ExpectationResult result = sut.Invert();
 
-	//	await Expect.That(result, Should.Be.OfType<ExpectationResult.Success>()
-	//		.Which(p => p.ExpectationText).Is(expectationText));
-	//}
+		await Expect.That(result).Is<ExpectationResult.Success>()
+			.Which(s => s.ExpectationText, e => e.Is(expectationText));
+	}
 
 	//[Theory]
 	//[AutoData]
@@ -203,8 +202,7 @@ public sealed class ExpectationResultTests
 
 		ExpectationResult.Success<Dummy> sut = new(value, expectationText);
 
-		//TODO: Check type
-		await Expect.That(sut.Value.Value).Is(value.Value);
+		await Expect.That(sut.Value).IsEquivalentTo(value);
 		await Expect.That(sut.ExpectationText).Is(expectationText);
 	}
 

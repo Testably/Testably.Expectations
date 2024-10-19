@@ -8,7 +8,7 @@ public abstract partial class ThatDelegate
 	public class ThrowsExceptionResult<TException> : AssertionResult<TException>
 		where TException : Exception
 	{
-		public ThatException<TException> Which
+		public That<TException> Which
 			=> new(_expectationBuilder.Which<TException, TException>(
 				PropertyAccessor<TException?, TException?>.FromFunc(p =>p.Value, ""),
 				b => b.Append(".").Append(nameof(Which)),

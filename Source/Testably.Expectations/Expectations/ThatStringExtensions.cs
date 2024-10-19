@@ -1,10 +1,42 @@
-﻿using Testably.Expectations.Core;
+﻿using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Core.Helpers;
 
-namespace Testably.Expectations.Expectations;
+// ReSharper disable once CheckNamespace
+namespace Testably.Expectations;
 
-public sealed partial class ThatString
+public static class ThatStringExtensions
 {
+	/// <summary>
+	///     Verifies that the actual value is equal to <paramref name="expected" />.
+	/// </summary>
+	public static AssertionResult<string, That<string>> Is(this That<string> source,
+		string expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(
+				new IsExpectation(expected),
+				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
+			source);
+
+	/// <summary>
+	///     Verifies that the actual value is not <see langword="null" />.
+	/// </summary>
+	public static AssertionResult<string, That<string>> IsNotNull(this That<string> source)
+		=> new(source.ExpectationBuilder.Add(
+				new IsNotNullExpectation(),
+				b => b.AppendMethod(nameof(IsNotNull))),
+			source);
+
+	/// <summary>
+	///     Verifies that the actual value is <see langword="null" />.
+	/// </summary>
+	public static AssertionResult<string?, That<string>> IsNull(this That<string> source)
+		=> new(source.ExpectationBuilder.Add(
+				new IsNullExpectation(),
+				b => b.AppendMethod(nameof(IsNull))),
+			source);
+
 	private readonly struct IsExpectation : IExpectation<string?>
 	{
 		private readonly string? _expected;

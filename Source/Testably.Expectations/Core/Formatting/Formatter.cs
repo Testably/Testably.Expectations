@@ -10,7 +10,8 @@ internal class Formatter
 
 	private readonly IValueFormatter[] _internalValueFormatters =
 	[
-		new StringValueFormatter()
+		new StringValueFormatter(),
+		new TypeValueFormatter()
 	];
 
 	public static string Format<T>(T? value, FormattingOptions? options = null)

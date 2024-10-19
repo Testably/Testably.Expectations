@@ -69,14 +69,6 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder Not(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddManipulation(n => new NotNode(n, textSeparator));
-		return this;
-	}
-
-	/// <inheritdoc />
 	public IExpectationBuilder Or(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);

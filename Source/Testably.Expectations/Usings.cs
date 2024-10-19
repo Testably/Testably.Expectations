@@ -2,6 +2,4 @@
 global using Testably.Expectations.Polyfills;
 #endif
 
-#if NET8_0_OR_GREATER
 global using System.Numerics;
-#endif

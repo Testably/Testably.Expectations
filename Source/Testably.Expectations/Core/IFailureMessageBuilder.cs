@@ -1,6 +1,6 @@
 ﻿namespace Testably.Expectations.Core;
 
-internal interface IFailureMessageBuilder
+public interface IFailureMessageBuilder
 {
 	string FromFailure(ExpectationResult.Failure failure);
 }

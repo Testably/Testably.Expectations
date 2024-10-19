@@ -4,19 +4,16 @@ using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core;
 
-internal interface IExpectationBuilder
+public interface IExpectationBuilder
 {
 	IFailureMessageBuilder FailureMessageBuilder { get; }
 	IExpectationBuilder Add(IExpectation expectation, Action<StringBuilder> expressionBuilder);
-	IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation, Action<StringBuilder> expressionBuilde);
+	IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation, Action<StringBuilder> expressionBuilder);
 	IExpectationBuilder And(Action<StringBuilder> expressionBuilder, string textSeparator = " and ");
-	Task<ExpectationResult> IsMet();
-	IExpectationBuilder Not(Action<StringBuilder> expressionBuilder, string textSeparator = "not ");
 	IExpectationBuilder Or(Action<StringBuilder> expressionBuilder, string textSeparator = " or ");
-
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		IExpectation<TProperty> expectation);
-
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		Action<StringBuilder> expressionBuilder, string textSeparator = "");
+	Task<ExpectationResult> IsMet();
 }
