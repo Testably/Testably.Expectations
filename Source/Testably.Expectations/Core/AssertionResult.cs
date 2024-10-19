@@ -91,9 +91,13 @@ public class AssertionResult<TResult>
 		{
 			Fail.Test(_expectationBuilder.FailureMessageBuilder.FromFailure(failure));
 		}
-		else if (result is ExpectationResult.Success<TResult> success)
+		else if (result is ExpectationResult.Success<TResult> matchingSuccess)
 		{
-			return success.Value;
+			return matchingSuccess.Value;
+		}
+		else if (result is ExpectationResult.Success success && success.TryGetValue<TResult>(out var value))
+		{
+			return value;
 		}
 
 		throw new ExpectationException("You should not be here (with value)!");
@@ -125,7 +129,7 @@ public class AssertionResult
 		{
 			Fail.Test(_expectationBuilder.FailureMessageBuilder.FromFailure(failure));
 		}
-		else if (result is ExpectationResult.Success success)
+		else if (result is ExpectationResult.Success)
 		{
 			return;
 		}

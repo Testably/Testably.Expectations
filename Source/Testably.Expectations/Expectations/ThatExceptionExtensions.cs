@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
-using static Testably.Expectations.Core.Sources.DelegateSource;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
@@ -14,7 +14,7 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public static AssertionResult<TException, That<TException>> HasMessage<TException>(this That<TException> source,
+	public static AssertionResult<TException, That<TException?>> HasMessage<TException>(this That<TException?> source,
 	string expected, [CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TException : Exception
 		=> new(source.ExpectationBuilder.Add(
@@ -32,13 +32,55 @@ public static class ThatExceptionExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TInnerException"/>.
+	///     Verifies that the actual exception has an inner exception which satisfies the <paramref name="expectations"/>.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception>> HasInner<TInnerException>(this That<Exception> source)
-		where TInnerException : Exception
+	public static AssertionResult<Exception, That<Exception>> HasInnerException(this That<Exception> source,
+		Action<That<Exception?>> expectations,
+		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Which<Exception, Exception?>(
+				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException, "has an inner exception which "),
+				expectations,
+				b => b.AppendMethod(nameof(HasInnerException), doNotPopulateThisValue), ""),
+			source);
+
+	/// <summary>
+	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException"/> which satisfies the <paramref name="expectations"/>.
+	/// </summary>
+	public static AssertionResult<Exception, That<Exception>> HasInner<TException>(this That<Exception> source,
+		Action<That<TException?>> expectations,
+		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
+		where TException : Exception
+		=> new (source.ExpectationBuilder.WhichCast<Exception, Exception?, TException?>(
+				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException, $"has an inner {typeof(TException).Name} which "),
+				new CastException<Exception, TException>(),
+				expectations,
+				b => b.AppendGenericMethod<TException>(nameof(HasInner), doNotPopulateThisValue), ""),
+			source);
+
+	public class CastException<TBase, TTarget> : IExpectation<TBase?, TTarget?>
+		where TBase : Exception
+		where TTarget : Exception
+	{
+		/// <inheritdoc />
+		public ExpectationResult IsMetBy(TBase? actual, Exception? exception)
+		{
+			if (actual is TTarget casted)
+			{
+				return new ExpectationResult.Success<TTarget>(casted, "");
+			}
+
+			return new ExpectationResult.Failure<Exception?>(actual, "", actual == null ? "found <null>" : $"found {actual.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{actual.Message.Indent("  ")}");
+		}
+	}
+
+	/// <summary>
+	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException"/>.
+	/// </summary>
+	public static AssertionResult<Exception, That<Exception>> HasInner<TException>(this That<Exception> source)
+		where TException : Exception
 		=> new(source.ExpectationBuilder.Add(
-				new HasInnerExceptionExpectation<TInnerException>(),
-				b => b.AppendGenericMethod<TInnerException>(nameof(HasInner))),
+				new HasInnerExceptionExpectation<TException>(),
+				b => b.AppendGenericMethod<TException>(nameof(HasInner))),
 			source);
 
 	private readonly struct HasInnerExceptionExpectation<TInnerException>

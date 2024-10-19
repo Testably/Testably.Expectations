@@ -89,6 +89,21 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		return this;
 	}
 
+	/// <inheritdoc />
+	public IExpectationBuilder WhichCast<TSource, TBase, TProperty>(
+		PropertyAccessor propertyAccessor,
+		IExpectation<TBase, TProperty> cast,
+		Action<That<TProperty>> expectation,
+		Action<StringBuilder> expressionBuilder,
+		string textSeparator = " which ") where TProperty : TBase
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
+		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor, cast, new DeferredNode<TProperty>(expectation), textSeparator));
+
+		return this;
+	}
+
 	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		Action<StringBuilder> expressionBuilder, string textSeparator)
 	{

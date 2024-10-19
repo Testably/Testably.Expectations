@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Testably.Expectations.Core;
 
@@ -72,6 +73,12 @@ public abstract class ExpectationResult
 		internal override ExpectationResult UpdateExpectationText(
 			Func<ExpectationResult, string> expectationText)
 			=> new Success(expectationText.Invoke(this));
+
+		internal virtual bool TryGetValue<TValue>([NotNullWhen(true)] out TValue? value)
+		{
+			value = default;
+			return false;
+		}
 	}
 
 	/// <summary>
@@ -111,6 +118,17 @@ public abstract class ExpectationResult
 		internal override ExpectationResult UpdateExpectationText(
 			Func<ExpectationResult, string> expectationText)
 			=> new Success<T>(Value, expectationText.Invoke(this));
+		internal override bool TryGetValue<TValue>([NotNullWhen(true)] out TValue? value)
+			where TValue : default
+		{
+			if (Value is TValue v)
+			{
+				value = v;
+				return true;
+			}
+			value = default;
+			return false;
+		}
 	}
 
 	/// <summary>

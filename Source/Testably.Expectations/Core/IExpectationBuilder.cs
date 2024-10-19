@@ -15,6 +15,13 @@ public interface IExpectationBuilder
 		Action<That<TProperty>> expectation,
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ");
+
+	IExpectationBuilder WhichCast<TSource, TBase, TProperty>(PropertyAccessor propertyAccessor,
+		IExpectation<TBase, TProperty> cast,
+		Action<That<TProperty>> expectation,
+		Action<StringBuilder> expressionBuilder,
+		string textSeparator = " which ")
+		where TProperty : TBase;
 	IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
 		Action<StringBuilder> expressionBuilder, string textSeparator = "");
 	Task<ExpectationResult> IsMet();

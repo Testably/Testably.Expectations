@@ -1,8 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Testably.Expectations.Core.Ambient;
 
 namespace Testably.Expectations;
 
+[StackTraceHidden]
 public static class Fail
 {
 	/// <summary>

@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
@@ -20,16 +18,6 @@ public static class ThatGenericExtensions
 				new IsSameAsExpectation<T>(expected, doNotPopulateThisValue),
 	b => b.AppendMethod(nameof(IsSameAs), doNotPopulateThisValue)),
 	source);
-
-	//public static AssertionResult<T, That<T>> Satisfies<T, TProperty>(this That<T> source, Expression<Func<T, TProperty?>> selector,
-	//	Action<That<TProperty?>> expectations,
-	//	[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",
-	//	[CallerArgumentExpression("expectations")] string doNotPopulateThisValue2 = "")
-	//	=> new(source.ExpectationBuilder.Which<T, TProperty?>(
-	//		PropertyAccessor<T, TProperty?>.FromExpression(selector),
-	//		expectations,
-	//		b => b.AppendMethod(nameof(Satisfies), doNotPopulateThisValue1, doNotPopulateThisValue2)),
-	//		source);
 
 	private readonly struct IsSameAsExpectation<T>(object? expected, string expectedExpression) : IExpectation<T?>
 	{
