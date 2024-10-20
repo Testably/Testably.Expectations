@@ -9,47 +9,6 @@ public class StringMatcherTests
 {
 	public class ExactMatch
 	{
-
-		[Fact]
-		public async Task ShouldIncludeTheLineNumberForMismatchesInMultilineTexts()
-		{
-			var expectedIndex = 100 + (4 * Environment.NewLine.Length);
-
-			var subject = """
-			              @startuml
-			              Alice -> Bob : Authentication Request
-			              Bob --> Alice : Authentication Response
-
-			              Alice -> Bob : Another authentication Request
-			              Alice <-- Bob : Another authentication Response
-			              @enduml
-			              """;
-
-			var expected = """
-			               @startuml
-			               Alice -> Bob : Authentication Request
-			               Bob --> Alice : Authentication Response
-
-			               Alice -> Bob : Invalid authentication Request
-			               Alice <-- Bob : Another authentication Response
-			               @enduml
-			               """;
-
-			async Task Act()
-				=> await Expect.That(subject).Is(expected);
-
-			await Expect.That(Act).ThrowsException()
-				.Which.HasMessage($"""
-				                   Expected that subject
-				                   is equal to "@startuml\r\nAlice -> Bob :…",
-				                   but found "@startuml\r\nAlice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
-				                                ↓ (actual)
-				                     "…-> Bob : Another…"
-				                     "…-> Bob : Invalid…"
-				                                ↑ (expected)
-				                   at Expect.That(subject).Is(expected)
-				                   """);
-		}
 		[Theory]
 		// ReSharper disable once StringLiteralTypo
 		[InlineData("ThisIsUsedTo Chec k a difference after 4 characters",
@@ -69,6 +28,66 @@ public class StringMatcherTests
 		}
 
 		[Theory]
+		[InlineData("ThisLongTextIsUsedToCheckADifferenceAtTheEndO after 10 + 4 characters",
+			"eAtTheEndOfThe WordB…\"")]
+		// ReSharper disable once StringLiteralTypo
+		[InlineData("ThisLongTextIsUsedToCheckADiffere after 10 + 16 characters",
+			"ckADifferenceAtTheEn…\"")]
+		public async Task
+			ShouldFallbackTo20CharactersIfNoWordBoundaryCanBeFoundAfterTheMismatchingIndex(
+				string expected, string expectedMessagePart)
+		{
+			string subject =
+				"ThisLongTextIsUsedToCheckADifferenceAtTheEndOfThe WordBoundaryAlgorithm";
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).ThrowsWithMessage($"*{expectedMessagePart}*");
+		}
+
+		[Fact]
+		public async Task ShouldIncludeTheLineNumberForMismatchesInMultilineTexts()
+		{
+			int expectedIndex = 100 + (4 * Environment.NewLine.Length);
+
+			string subject = """
+			                 @startuml
+			                 Alice -> Bob : Authentication Request
+			                 Bob --> Alice : Authentication Response
+
+			                 Alice -> Bob : Another authentication Request
+			                 Alice <-- Bob : Another authentication Response
+			                 @enduml
+			                 """;
+
+			string expected = """
+			                  @startuml
+			                  Alice -> Bob : Authentication Request
+			                  Bob --> Alice : Authentication Response
+
+			                  Alice -> Bob : Invalid authentication Request
+			                  Alice <-- Bob : Another authentication Response
+			                  @enduml
+			                  """;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).ThrowsException()
+				.Which.HasMessage($"""
+				                   Expected that subject
+				                   is equal to "@startuml\r\nAlice -> Bob :…",
+				                   but found "@startuml\r\nAlice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
+				                                ↓ (actual)
+				                     "…-> Bob : Another…"
+				                     "…-> Bob : Invalid…"
+				                                ↑ (expected)
+				                   at Expect.That(subject).Is(expected)
+				                   """);
+		}
+
+		[Theory]
 		[InlineData("ThisLongTextIsUsedToCheckADifferenceAtTheEnd after 10 + 5 characters")]
 		// ReSharper disable once StringLiteralTypo
 		[InlineData("ThisLongTextIsUsedToCheckADifferen after 10 + 15 characters")]
@@ -83,20 +102,6 @@ public class StringMatcherTests
 				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).ThrowsWithMessage("*AtTheEndOfThe…\"*");
-		}
-		[Theory]
-		[InlineData("ThisLongTextIsUsedToCheckADifferenceAtTheEndO after 10 + 4 characters", "eAtTheEndOfThe WordB…\"")]
-		// ReSharper disable once StringLiteralTypo
-		[InlineData("ThisLongTextIsUsedToCheckADiffere after 10 + 16 characters", "ckADifferenceAtTheEn…\"")]
-		public async Task ShouldFallbackTo20CharactersIfNoWordBoundaryCanBeFoundAfterTheMismatchingIndex(
-			string expected, string expectedMessagePart)
-		{
-			string subject = "ThisLongTextIsUsedToCheckADifferenceAtTheEndOfThe WordBoundaryAlgorithm";
-
-			async Task Act()
-				=> await Expect.That(subject).Is(expected);
-
-			await Expect.That(Act).ThrowsWithMessage($"*{expectedMessagePart}*");
 		}
 
 		[Theory]
