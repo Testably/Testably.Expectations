@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Results;
 
@@ -10,7 +9,7 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="bool" />? values.
 /// </summary>
-public static class ThatBoolNullableExtensions
+public static partial class ThatNullableBoolExtensions
 {
 	/// <summary>
 	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
@@ -19,7 +18,7 @@ public static class ThatBoolNullableExtensions
 		bool? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsExpectation(expected),
+				new IsConstraint(expected),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
 			source);
 
@@ -28,7 +27,7 @@ public static class ThatBoolNullableExtensions
 	/// </summary>
 	public static AssertionResultAndOr<bool?, That<bool?>> IsFalse(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsExpectation(false),
+				new IsConstraint(false),
 				b => b.AppendMethod(nameof(IsFalse))),
 			source);
 
@@ -40,7 +39,7 @@ public static class ThatBoolNullableExtensions
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsNotExpectation(unexpected),
+				new IsNotConstraint(unexpected),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),
 			source);
 
@@ -49,7 +48,7 @@ public static class ThatBoolNullableExtensions
 	/// </summary>
 	public static AssertionResultAndOr<bool?, That<bool?>> IsNotFalse(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsNotExpectation(false),
+				new IsNotConstraint(false),
 				b => b.AppendMethod(nameof(IsNotFalse))),
 			source);
 
@@ -58,7 +57,7 @@ public static class ThatBoolNullableExtensions
 	/// </summary>
 	public static AssertionResultAndOr<bool?, That<bool?>> IsNotNull(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsNotExpectation(null),
+				new IsNotConstraint(null),
 				b => b.AppendMethod(nameof(IsNotNull))),
 			source);
 
@@ -67,7 +66,7 @@ public static class ThatBoolNullableExtensions
 	/// </summary>
 	public static AssertionResultAndOr<bool?, That<bool?>> IsNotTrue(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsNotExpectation(true),
+				new IsNotConstraint(true),
 				b => b.AppendMethod(nameof(IsNotTrue))),
 			source);
 
@@ -76,7 +75,7 @@ public static class ThatBoolNullableExtensions
 	/// </summary>
 	public static AssertionResultAndOr<bool?, That<bool?>> IsNull(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsExpectation(null),
+				new IsConstraint(null),
 				b => b.AppendMethod(nameof(IsNull))),
 			source);
 
@@ -85,39 +84,7 @@ public static class ThatBoolNullableExtensions
 	/// </summary>
 	public static AssertionResultAndOr<bool?, That<bool?>> IsTrue(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new NullableIsExpectation(true),
+				new IsConstraint(true),
 				b => b.AppendMethod(nameof(IsTrue))),
 			source);
-
-	private readonly struct NullableIsNotExpectation(bool? unexpected) : IExpectation<bool?>
-	{
-		public ExpectationResult IsMetBy(bool? actual)
-		{
-			if (!unexpected.Equals(actual))
-			{
-				return new ExpectationResult.Success<bool?>(actual, ToString());
-			}
-
-			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"is not {Formatter.Format(unexpected)}";
-	}
-
-	private readonly struct NullableIsExpectation(bool? expected) : IExpectation<bool?>
-	{
-		public ExpectationResult IsMetBy(bool? actual)
-		{
-			if (expected.Equals(actual))
-			{
-				return new ExpectationResult.Success<bool?>(actual, ToString());
-			}
-
-			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"is {Formatter.Format(expected)}";
-	}
 }

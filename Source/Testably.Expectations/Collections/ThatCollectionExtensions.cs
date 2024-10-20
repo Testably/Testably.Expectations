@@ -100,15 +100,15 @@ public static class ThatCollectionExtensions
 	private readonly struct ContainsExpectation<TItem>(TItem expected)
 		: IExpectation<IEnumerable<TItem>>
 	{
-		public ExpectationResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
-			List<TItem>? list = actual.ToList();
+			List<TItem> list = actual.ToList();
 			if (list.Contains(expected))
 			{
-				return new ExpectationResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(list)}");
+			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(list)}");
 		}
 
 		public override string ToString()
@@ -117,15 +117,15 @@ public static class ThatCollectionExtensions
 
 	private readonly struct IsEmptyExpectation<TItem> : IExpectation<IEnumerable<TItem>>
 	{
-		public ExpectationResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
-			List<TItem>? list = actual.ToList();
+			List<TItem> list = actual.ToList();
 			if (!list.Any())
 			{
-				return new ExpectationResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(list)}");
+			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(list)}");
 		}
 
 		public override string ToString()
@@ -134,15 +134,15 @@ public static class ThatCollectionExtensions
 
 	private readonly struct IsNotEmptyExpectation<TItem> : IExpectation<IEnumerable<TItem>>
 	{
-		public ExpectationResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
-			List<TItem>? list = actual.ToList();
+			List<TItem> list = actual.ToList();
 			if (list.Any())
 			{
-				return new ExpectationResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(), "it was");
+			return new ConstraintResult.Failure(ToString(), "it was");
 		}
 
 		public override string ToString()

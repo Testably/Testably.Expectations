@@ -49,9 +49,9 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 	private readonly struct AreEquivalentToExpectation(TItem expected, Quantifier quantifier)
 		: IExpectation<IEnumerable<TItem>>
 	{
-		public ExpectationResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
-			List<TItem>? list = actual.ToList();
+			List<TItem> list = actual.ToList();
 			int count = 0;
 			foreach (TItem? item in list)
 			{
@@ -64,10 +64,10 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 
 			if (quantifier.CheckCondition(list.Count, count, out string? error))
 			{
-				return new ExpectationResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(), $"found {error} items");
+			return new ConstraintResult.Failure(ToString(), $"found {error} items");
 		}
 
 		public override string ToString()
@@ -79,9 +79,9 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 		string expression,
 		Quantifier quantifier) : IExpectation<IEnumerable<TItem>>
 	{
-		public ExpectationResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
-			List<TItem>? list = actual.ToList();
+			List<TItem> list = actual.ToList();
 			int count = 0;
 			foreach (TItem? item in list)
 			{
@@ -93,10 +93,10 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 
 			if (quantifier.CheckCondition(list.Count, count, out string? error))
 			{
-				return new ExpectationResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(), $"found {error} items");
+			return new ConstraintResult.Failure(ToString(), $"found {error} items");
 		}
 
 		public override string ToString()
@@ -106,9 +106,9 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 	private readonly struct AreEqualExpectation(TItem expected, Quantifier quantifier)
 		: IExpectation<IEnumerable<TItem>>
 	{
-		public ExpectationResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
-			List<TItem>? list = actual.ToList();
+			List<TItem> list = actual.ToList();
 			int count = 0;
 			foreach (TItem? item in list)
 			{
@@ -120,10 +120,10 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 
 			if (quantifier.CheckCondition(list.Count, count, out string? error))
 			{
-				return new ExpectationResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(), $"{error} items were equal");
+			return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
 		}
 
 		public override string ToString()

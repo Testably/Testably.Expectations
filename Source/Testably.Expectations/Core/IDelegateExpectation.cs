@@ -10,7 +10,7 @@ public interface IDelegateExpectation<TValue> : IExpectation
 	/// <summary>
 	///     Checks if the <paramref name="value" /> value meets the expectation.
 	/// </summary>
-	public ExpectationResult IsMetBy(SourceValue<TValue> value);
+	public ConstraintResult IsMetBy(SourceValue<TValue> value);
 }
 
 /// <summary>
@@ -21,5 +21,5 @@ public interface IDelegateExpectation : IExpectation
 	/// <summary>
 	///     Checks if the <paramref name="exception" /> value meets the expectation.
 	/// </summary>
-	public ExpectationResult IsMetBy(Exception? exception);
+	public ConstraintResult IsMetBy(Exception? exception);
 }

@@ -48,7 +48,7 @@ public interface IExpectationBuilder
 	/// <summary>
 	///     Verifies, if the expectations are met.
 	/// </summary>
-	Task<ExpectationResult> IsMet();
+	Task<ConstraintResult> IsMet();
 
 	/// <summary>
 	///     Add an OR node, using the <paramref name="textSeparator" />.

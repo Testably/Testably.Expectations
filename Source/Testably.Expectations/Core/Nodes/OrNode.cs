@@ -16,24 +16,24 @@ internal class OrNode : CombinationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
-		ExpectationResult leftResult = await Left.IsMetBy(value);
-		ExpectationResult rightResult = await Right.IsMetBy(value);
+		ConstraintResult leftResult = await Left.IsMetBy(value);
+		ConstraintResult rightResult = await Right.IsMetBy(value);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";
 
-		if (leftResult is ExpectationResult.Failure leftFailure &&
-		    rightResult is ExpectationResult.Failure rightFailure)
+		if (leftResult is ConstraintResult.Failure leftFailure &&
+		    rightResult is ConstraintResult.Failure rightFailure)
 		{
 			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
-		if (leftResult is ExpectationResult.Failure)
+		if (leftResult is ConstraintResult.Failure)
 		{
 			return rightResult.CombineWith(combinedExpectation, "");
 		}

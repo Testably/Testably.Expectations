@@ -13,7 +13,7 @@ internal class DeferredNode<TProperty> : Node
 	}
 
 	/// <inheritdoc />
-	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
 		if (value is not SourceValue<TProperty> matchingActualValue)

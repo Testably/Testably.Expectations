@@ -22,7 +22,7 @@ internal class FailureMessageBuilder : IFailureMessageBuilder
 
 	#region IFailureMessageBuilder Members
 
-	public string FromFailure(ExpectationResult.Failure failure)
+	public string FromFailure(ConstraintResult.Failure failure)
 	{
 		return $"""
 		        Expected that {_subject}

@@ -22,7 +22,7 @@ internal struct BecauseReason(string reason)
 		return _message;
 	}
 
-	public ExpectationResult ApplyTo(ExpectationResult result)
+	public ConstraintResult ApplyTo(ConstraintResult result)
 	{
 		var message = CreateMessage();
 		return result.UpdateExpectationText(e => e.ExpectationText + message);

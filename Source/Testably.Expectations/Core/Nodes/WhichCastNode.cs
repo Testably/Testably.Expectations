@@ -23,7 +23,7 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TBase> propertyAccessor)
@@ -38,8 +38,8 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 				new SourceValue<TSource>(typedValue, value.Exception),
 				out TBase? baseValue))
 			{
-				ExpectationResult? castedResult = _cast.IsMetBy(baseValue, value.Exception);
-				if (castedResult is ExpectationResult.Success success &&
+				ConstraintResult? castedResult = _cast.IsMetBy(baseValue, value.Exception);
+				if (castedResult is ConstraintResult.Success success &&
 				    success.TryGetValue<TProperty>(out TProperty? matchingValue))
 				{
 					return (await Inner.IsMetBy(
@@ -48,7 +48,7 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 							=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
 				}
 
-				ExpectationResult? failure =
+				ConstraintResult? failure =
 					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception));
 				return castedResult.UpdateExpectationText(_
 					=> $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");

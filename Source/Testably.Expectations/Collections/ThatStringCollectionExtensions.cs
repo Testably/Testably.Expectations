@@ -27,15 +27,15 @@ public static class ThatStringCollectionExtensions
 
 	private readonly struct ContainsExpectation(string expected) : IExpectation<IEnumerable<string>>
 	{
-		public ExpectationResult IsMetBy(IEnumerable<string> actual)
+		public ConstraintResult IsMetBy(IEnumerable<string> actual)
 		{
-			List<string>? list = actual.ToList();
+			List<string> list = actual.ToList();
 			if (list.Contains(expected))
 			{
-				return new ExpectationResult.Success<IEnumerable<string>>(list, ToString());
+				return new ConstraintResult.Success<IEnumerable<string>>(list, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(list)}");
+			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(list)}");
 		}
 
 		public override string ToString()

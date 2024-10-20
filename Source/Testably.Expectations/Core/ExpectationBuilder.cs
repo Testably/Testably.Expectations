@@ -70,7 +70,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	[StackTraceHidden]
-	public async Task<ExpectationResult> IsMet()
+	public async Task<ConstraintResult> IsMet()
 	{
 		SourceValue<TValue> data = await _subjectSource.GetValue();
 		return await _tree.GetRoot().IsMetBy(data);

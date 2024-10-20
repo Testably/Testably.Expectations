@@ -34,13 +34,13 @@ public class AssertionResult(IExpectationBuilder expectationBuilder)
 	[StackTraceHidden]
 	private async Task GetResult()
 	{
-		ExpectationResult result = await expectationBuilder.IsMet();
+		ConstraintResult result = await expectationBuilder.IsMet();
 
-		if (result is ExpectationResult.Failure failure)
+		if (result is ConstraintResult.Failure failure)
 		{
 			Fail.Test(expectationBuilder.FailureMessageBuilder.FromFailure(failure));
 		}
-		else if (result is ExpectationResult.Success)
+		else if (result is ConstraintResult.Success)
 		{
 			return;
 		}
@@ -89,17 +89,17 @@ public class AssertionResult<TResult, TSelf>(IExpectationBuilder expectationBuil
 	[StackTraceHidden]
 	private async Task<TResult> GetResult()
 	{
-		ExpectationResult result = await expectationBuilder.IsMet();
+		ConstraintResult result = await expectationBuilder.IsMet();
 
-		if (result is ExpectationResult.Failure failure)
+		if (result is ConstraintResult.Failure failure)
 		{
 			Fail.Test(expectationBuilder.FailureMessageBuilder.FromFailure(failure));
 		}
-		else if (result is ExpectationResult.Success<TResult> matchingSuccess)
+		else if (result is ConstraintResult.Success<TResult> matchingSuccess)
 		{
 			return matchingSuccess.Value;
 		}
-		else if (result is ExpectationResult.Success success &&
+		else if (result is ConstraintResult.Success success &&
 		         success.TryGetValue(out TResult? value))
 		{
 			return value;

@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Results;
 
@@ -10,7 +9,7 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="bool" /> values.
 /// </summary>
-public static class ThatBoolExtensions
+public static partial class ThatBoolExtensions
 {
 	/// <summary>
 	///     Verifies that the actual value implies the specified <paramref name="consequent" /> value.
@@ -19,7 +18,7 @@ public static class ThatBoolExtensions
 		bool consequent,
 		[CallerArgumentExpression("consequent")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ImpliesExpectation(consequent),
+		=> new(source.ExpectationBuilder.Add(new ImpliesConstraint(consequent),
 				b => b.AppendMethod(nameof(Implies), doNotPopulateThisValue)),
 			source);
 
@@ -29,7 +28,7 @@ public static class ThatBoolExtensions
 	public static AssertionResultAndOr<bool, That<bool>> Is(this That<bool> source,
 		bool expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new IsExpectation(expected),
+		=> new(source.ExpectationBuilder.Add(new IsConstraint(expected),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
 			source);
 
@@ -37,7 +36,7 @@ public static class ThatBoolExtensions
 	///     Verifies that the actual value is <see langword="false" />.
 	/// </summary>
 	public static AssertionResultAndOr<bool, That<bool>> IsFalse(this That<bool> source)
-		=> new(source.ExpectationBuilder.Add(new IsExpectation(false),
+		=> new(source.ExpectationBuilder.Add(new IsConstraint(false),
 				b => b.AppendMethod(nameof(IsFalse))),
 			source);
 
@@ -48,7 +47,7 @@ public static class ThatBoolExtensions
 		bool unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new IsNotExpectation(unexpected),
+		=> new(source.ExpectationBuilder.Add(new IsNotConstraint(unexpected),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),
 			source);
 
@@ -56,55 +55,7 @@ public static class ThatBoolExtensions
 	///     Verifies that the actual value is <see langword="true" />.
 	/// </summary>
 	public static AssertionResultAndOr<bool, That<bool>> IsTrue(this That<bool> source)
-		=> new(source.ExpectationBuilder.Add(new IsExpectation(true),
+		=> new(source.ExpectationBuilder.Add(new IsConstraint(true),
 				b => b.AppendMethod(nameof(IsTrue))),
 			source);
-
-	private readonly struct ImpliesExpectation(bool consequent) : IExpectation<bool>
-	{
-		public ExpectationResult IsMetBy(bool actual)
-		{
-			if (!actual || consequent)
-			{
-				return new ExpectationResult.Success<bool>(actual, ToString());
-			}
-
-			return new ExpectationResult.Failure(ToString(), "it did not");
-		}
-
-		public override string ToString()
-			=> $"implies {Formatter.Format(consequent)}";
-	}
-
-	private readonly struct IsNotExpectation(bool unexpected) : IExpectation<bool>
-	{
-		public ExpectationResult IsMetBy(bool actual)
-		{
-			if (!unexpected.Equals(actual))
-			{
-				return new ExpectationResult.Success<bool>(actual, ToString());
-			}
-
-			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"is not {Formatter.Format(unexpected)}";
-	}
-
-	private readonly struct IsExpectation(bool expected) : IExpectation<bool>
-	{
-		public ExpectationResult IsMetBy(bool actual)
-		{
-			if (expected.Equals(actual))
-			{
-				return new ExpectationResult.Success<bool>(actual, ToString());
-			}
-
-			return new ExpectationResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"is {Formatter.Format(expected)}";
-	}
 }

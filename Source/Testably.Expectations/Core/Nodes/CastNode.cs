@@ -14,11 +14,11 @@ internal class CastNode<T1, T2> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
-		ExpectationResult? result = await TryMeet(Expectation, value);
-		if (Inner != None && result is ExpectationResult.Success<T2> success)
+		ConstraintResult? result = await TryMeet(Expectation, value);
+		if (Inner != None && result is ConstraintResult.Success<T2> success)
 		{
 			return await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
 		}

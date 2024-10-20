@@ -9,15 +9,15 @@ public abstract partial class ThatDelegate
 {
 	private readonly struct DoesNotThrowExpectation<TValue> : IDelegateExpectation<TValue>
 	{
-		public ExpectationResult IsMetBy(SourceValue<TValue> value)
+		public ConstraintResult IsMetBy(SourceValue<TValue> value)
 		{
 			if (value.Exception is not null)
 			{
-				return new ExpectationResult.Failure<TValue?>(value.Value, ToString(),
+				return new ConstraintResult.Failure<TValue?>(value.Value, ToString(),
 					$"it did throw {value.Exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{value.Exception.Message.Indent()}");
 			}
 
-			return new ExpectationResult.Success<TValue?>(value.Value, ToString());
+			return new ConstraintResult.Success<TValue?>(value.Value, ToString());
 		}
 
 		public override string ToString()
@@ -30,24 +30,24 @@ public abstract partial class ThatDelegate
 		where TException : Exception
 	{
 		/// <inheritdoc />
-		public ExpectationResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
 			if (exception is TException typedException)
 			{
-				return new ExpectationResult.Success<TException?>(typedException, ToString());
+				return new ConstraintResult.Success<TException?>(typedException, ToString());
 			}
 
 			if (exception is null)
 			{
-				return new ExpectationResult.Failure<TException?>(null, ToString(), "it did not");
+				return new ConstraintResult.Failure<TException?>(null, ToString(), "it did not");
 			}
 
-			return new ExpectationResult.Failure<TException?>(null, ToString(),
+			return new ConstraintResult.Failure<TException?>(null, ToString(),
 				$"it did throw {exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}\t{exception.Message}");
 		}
 
 		/// <inheritdoc />
-		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 			=> IsMetBy(value.Value, value.Exception);
 
 		public override string ToString()
@@ -60,24 +60,24 @@ public abstract partial class ThatDelegate
 		where TException : Exception
 	{
 		/// <inheritdoc />
-		public ExpectationResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
 			if (exception is TException typedException && exception.GetType() == typeof(TException))
 			{
-				return new ExpectationResult.Success<TException?>(typedException, ToString());
+				return new ConstraintResult.Success<TException?>(typedException, ToString());
 			}
 
 			if (exception is null)
 			{
-				return new ExpectationResult.Failure<TException?>(null, ToString(), "it did not");
+				return new ConstraintResult.Failure<TException?>(null, ToString(), "it did not");
 			}
 
-			return new ExpectationResult.Failure<TException?>(null, ToString(),
+			return new ConstraintResult.Failure<TException?>(null, ToString(),
 				$"it did throw {exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}\t{exception.Message}");
 		}
 
 		/// <inheritdoc />
-		public ExpectationResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 			=> IsMetBy(value.Value, value.Exception);
 
 		/// <inheritdoc />

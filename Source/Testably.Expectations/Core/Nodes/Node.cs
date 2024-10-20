@@ -9,13 +9,13 @@ internal abstract class Node
 	private BecauseReason? _reason;
 	public static Node None { get; } = new NoneNode();
 
-	public abstract Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value);
+	public abstract Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value);
 
 	/// <inheritdoc />
 	public override string ToString()
 		=> "NONE";
 
-	protected Task<ExpectationResult> TryMeet<TValue>(IExpectation expectation,
+	protected Task<ConstraintResult> TryMeet<TValue>(IExpectation expectation,
 		SourceValue<TValue> value)
 	{
 		if (expectation is IExpectation<TValue?> typedExpectation)
@@ -53,7 +53,7 @@ internal abstract class Node
 	private sealed class NoneNode : Node
 	{
 		/// <inheritdoc />
-		public override Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+		public override Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 			where TValue : default
 			=> throw new InvalidOperationException(
 				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");
