@@ -12,7 +12,7 @@ namespace Testably.Expectations.Collections;
 /// </summary>
 public partial class QuantifiableCollection<TItem>(
 	That<IEnumerable<TItem>> source,
-	Quantifier quantity)
+	CollectionQuantifier quantity)
 {
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.

@@ -12,7 +12,7 @@ public partial class QuantifiableCollection<TItem>
 	private readonly struct SatisfyConstraint(
 		Func<TItem, bool> predicate,
 		string expression,
-		Quantifier quantifier) : IConstraint<IEnumerable<TItem>>
+		CollectionQuantifier quantifier) : IConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{

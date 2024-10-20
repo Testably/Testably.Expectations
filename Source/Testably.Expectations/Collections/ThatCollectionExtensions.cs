@@ -19,7 +19,7 @@ public static partial class ThatCollectionExtensions
 	public static QuantifiableCollection<TItem> All<TItem>(this That<IEnumerable<TItem>> source)
 	{
 		source.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(All)));
-		return new QuantifiableCollection<TItem>(source, Quantifier.All);
+		return new QuantifiableCollection<TItem>(source, CollectionQuantifier.All);
 	}
 
 	/// <summary>
@@ -30,7 +30,7 @@ public static partial class ThatCollectionExtensions
 	{
 		source.ExpectationBuilder.AppendExpression(b
 			=> b.AppendMethod(nameof(AtLeast), doNotPopulateThisValue));
-		return new QuantifiableCollection<TItem>(source, Quantifier.AtLeast(minimum));
+		return new QuantifiableCollection<TItem>(source, CollectionQuantifier.AtLeast(minimum));
 	}
 
 	/// <summary>
@@ -41,7 +41,7 @@ public static partial class ThatCollectionExtensions
 	{
 		source.ExpectationBuilder.AppendExpression(b
 			=> b.AppendMethod(nameof(AtMost), doNotPopulateThisValue));
-		return new QuantifiableCollection<TItem>(source, Quantifier.AtMost(maximum));
+		return new QuantifiableCollection<TItem>(source, CollectionQuantifier.AtMost(maximum));
 	}
 
 	/// <summary>
@@ -54,7 +54,7 @@ public static partial class ThatCollectionExtensions
 	{
 		source.ExpectationBuilder.AppendExpression(b
 			=> b.AppendMethod(nameof(Between), doNotPopulateThisValue1, doNotPopulateThisValue2));
-		return new QuantifiableCollection<TItem>(source, Quantifier.Between(minimum, maximum));
+		return new QuantifiableCollection<TItem>(source, CollectionQuantifier.Between(minimum, maximum));
 	}
 
 	/// <summary>
@@ -95,6 +95,6 @@ public static partial class ThatCollectionExtensions
 	public static QuantifiableCollection<TItem> None<TItem>(this That<IEnumerable<TItem>> source)
 	{
 		source.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(None)));
-		return new QuantifiableCollection<TItem>(source, Quantifier.None);
+		return new QuantifiableCollection<TItem>(source, CollectionQuantifier.None);
 	}
 }

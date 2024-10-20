@@ -13,7 +13,8 @@ public class AndOrExpectationResult<TResult, TValue>(
 	IExpectationBuilder expectationBuilder,
 	TValue returnValue)
 	: AndOrExpectationResult<TResult, TValue, AndOrExpectationResult<TResult, TValue>>(
-		expectationBuilder, returnValue);
+		expectationBuilder,
+		returnValue);
 
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.

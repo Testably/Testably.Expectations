@@ -9,19 +9,37 @@ namespace Testably.Expectations.Core.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows accessing underlying
+///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows accessing
+///     underlying
+///     properties with <see cref="AndOrWhichExpectationResult{TResult,TValue,TSelf}.Which{TProperty}" />.
+/// </summary>
+[StackTraceHidden]
+public class AndOrWhichExpectationResult<TResult, TValue>(
+	IExpectationBuilder expectationBuilder,
+	TValue returnValue)
+	: AndOrWhichExpectationResult<TResult, TValue, AndOrWhichExpectationResult<TResult, TValue>>(
+		expectationBuilder, returnValue);
+
+/// <summary>
+///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     <para />
+///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows accessing
+///     underlying
 ///     properties with <see cref="Which{TProperty}" />.
 /// </summary>
 [StackTraceHidden]
-public class AndOrWhichExpectationResult<TResult, TValue>(IExpectationBuilder expectationBuilder, TValue returnValue)
-	: AndOrExpectationResult<TResult, TValue>(expectationBuilder, returnValue)
+public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
+	IExpectationBuilder expectationBuilder,
+	TValue returnValue)
+	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
+	where TSelf : AndOrWhichExpectationResult<TResult, TValue, TSelf>
 {
 	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Allows specifying expectations on a property of the current value.
 	/// </summary>
-	public AndOrWhichExpectationResult<TResult, TValue> Which<TProperty>(
+	public AndOrWhichExpectationResult<TResult, TValue, TSelf> Which<TProperty>(
 		Expression<Func<TResult, TProperty?>> selector,
 		Action<That<TProperty?>> expectations,
 		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",

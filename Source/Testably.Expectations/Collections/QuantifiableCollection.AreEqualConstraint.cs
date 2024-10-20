@@ -8,7 +8,7 @@ namespace Testably.Expectations.Collections;
 
 public partial class QuantifiableCollection<TItem>
 {
-	private readonly struct AreEqualConstraint(TItem expected, Quantifier quantifier)
+	private readonly struct AreEqualConstraint(TItem expected, CollectionQuantifier quantifier)
 		: IConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
