@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Results;
 
@@ -82,7 +83,7 @@ public static partial class ThatExceptionExtensions
 			source,
 			expected);
 
-	private class CastException<TBase, TTarget> : IExpectation<TBase?, TTarget?>
+	private class CastException<TBase, TTarget> : IConstraint<TBase?, TTarget?>
 		where TBase : Exception
 		where TTarget : Exception
 	{

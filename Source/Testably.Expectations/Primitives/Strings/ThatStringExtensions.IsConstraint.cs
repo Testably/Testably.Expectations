@@ -1,11 +1,12 @@
 ﻿using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 public static partial class ThatStringExtensions
 {
-	private readonly struct IsConstraint(StringMatcher expected) : IExpectation<string?>
+	private readonly struct IsConstraint(StringMatcher expected) : IConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)

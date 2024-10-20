@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Collections;
@@ -11,7 +12,7 @@ public partial class QuantifiableCollection<TItem>
 	private readonly struct SatisfyConstraint(
 		Func<TItem, bool> predicate,
 		string expression,
-		Quantifier quantifier) : IExpectation<IEnumerable<TItem>>
+		Quantifier quantifier) : IConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{

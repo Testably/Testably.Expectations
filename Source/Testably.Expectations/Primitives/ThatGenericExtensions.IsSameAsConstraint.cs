@@ -1,4 +1,4 @@
-﻿using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -7,7 +7,7 @@ namespace Testably.Expectations;
 public static partial class ThatGenericExtensions
 {
 	private readonly struct IsSameAsConstraint<T>(object? expected, string expectedExpression)
-		: IExpectation<T?>
+		: IConstraint<T?>
 	{
 		public ConstraintResult IsMetBy(T? actual)
 		{

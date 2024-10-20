@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Sources;
-using Testably.Expectations.Expectations;
 
 namespace Testably.Expectations;
 

@@ -1,4 +1,4 @@
-﻿using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -6,7 +6,7 @@ namespace Testably.Expectations;
 
 public static partial class ThatNullableBoolExtensions
 {
-	private readonly struct IsNotConstraint(bool? unexpected) : IExpectation<bool?>
+	private readonly struct IsNotConstraint(bool? unexpected) : IConstraint<bool?>
 	{
 		public ConstraintResult IsMetBy(bool? actual)
 		{

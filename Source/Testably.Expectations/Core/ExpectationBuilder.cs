@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Core.Sources;
 
@@ -36,20 +37,20 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
 
 	/// <inheritdoc />
-	public IExpectationBuilder Add(IExpectation expectation,
+	public IExpectationBuilder Add(IConstraint constraint,
 		Action<StringBuilder> expressionBuilder)
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddExpectation(expectation);
+		_tree.AddExpectation(constraint);
 		return this;
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder AddCast<T1, T2>(IExpectation<T1, T2> expectation,
+	public IExpectationBuilder AddCast<T1, T2>(IConstraint<T1, T2> constraint,
 		Action<StringBuilder> expressionBuilder)
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddManipulation(n => new CastNode<T1, T2>(expectation, n));
+		_tree.AddManipulation(n => new CastNode<T1, T2>(constraint, n));
 		return this;
 	}
 
@@ -107,7 +108,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	/// <inheritdoc />
 	public IExpectationBuilder WhichCast<TSource, TBase, TProperty>(
 		PropertyAccessor propertyAccessor,
-		IExpectation<TBase, TProperty> cast,
+		IConstraint<TBase, TProperty> cast,
 		Action<That<TProperty>> expectation,
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ") where TProperty : TBase
@@ -155,7 +156,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 			}
 		}
 
-		public void AddExpectation(IExpectation expectation)
+		public void AddExpectation(IConstraint constraint)
 		{
 			if (_setExpectationNode == null)
 			{
@@ -163,7 +164,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
 			}
 
-			ExpectationNode node = new(expectation);
+			ExpectationNode node = new(constraint);
 			_setExpectationNode.Invoke(node);
 			_setExpectationNode = null;
 		}

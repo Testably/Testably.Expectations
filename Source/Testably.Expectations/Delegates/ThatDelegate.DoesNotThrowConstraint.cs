@@ -1,5 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 
 // ReSharper disable once CheckNamespace
@@ -7,7 +8,7 @@ namespace Testably.Expectations;
 
 public abstract partial class ThatDelegate
 {
-	private readonly struct DoesNotThrowConstraint<TValue> : IDelegateExpectation<TValue>
+	private readonly struct DoesNotThrowConstraint<TValue> : IDelegateConstraint<TValue>
 	{
 		public ConstraintResult IsMetBy(SourceValue<TValue> value)
 		{

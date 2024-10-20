@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
 ///     The result of the check if an expectation is met.
@@ -47,7 +47,7 @@ public abstract class ConstraintResult
 	public class Success : ConstraintResult
 	{
 		/// <summary>
-		///     Initializes a new instance of <see cref="ConstraintResult.Success" />.
+		///     Initializes a new instance of <see cref="Success" />.
 		/// </summary>
 		public Success(string expectationText) : base(expectationText)
 		{
@@ -96,7 +96,7 @@ public abstract class ConstraintResult
 		public T Value { get; }
 
 		/// <summary>
-		///     Initializes a new instance of <see cref="ConstraintResult.Success{T}" />.
+		///     Initializes a new instance of <see cref="Success{T}" />.
 		/// </summary>
 		public Success(T value, string expectationText) : base(expectationText)
 		{
@@ -149,7 +149,7 @@ public abstract class ConstraintResult
 		public string ResultText { get; }
 
 		/// <summary>
-		///     Initializes a new instance of <see cref="ConstraintResult.Failure" />.
+		///     Initializes a new instance of <see cref="Failure" />.
 		/// </summary>
 		public Failure(string expectationText, string resultText) : base(expectationText)
 		{
@@ -192,7 +192,7 @@ public abstract class ConstraintResult
 		public T Value { get; }
 
 		/// <summary>
-		///     Initializes a new instance of <see cref="ConstraintResult.Failure{T}" />.
+		///     Initializes a new instance of <see cref="Failure{T}" />.
 		/// </summary>
 		public Failure(T value, string expectationText, string resultText) : base(expectationText,
 			resultText)

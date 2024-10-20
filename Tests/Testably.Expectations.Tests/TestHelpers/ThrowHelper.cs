@@ -1,7 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Results;
-using Testably.Expectations.Expectations;
 
 namespace Testably.Expectations.Tests.TestHelpers;
 

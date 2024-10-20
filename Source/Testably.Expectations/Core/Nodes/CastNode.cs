@@ -1,15 +1,16 @@
 ﻿using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
 
 internal class CastNode<T1, T2> : ManipulationNode
 {
-	public IExpectation<T1, T2> Expectation { get; }
+	public IConstraint<T1, T2> Constraint { get; }
 	public override Node Inner { get; set; }
 
-	public CastNode(IExpectation<T1, T2> expectation, Node inner)
+	public CastNode(IConstraint<T1, T2> constraint, Node inner)
 	{
-		Expectation = expectation;
+		Constraint = constraint;
 		Inner = inner;
 	}
 
@@ -17,7 +18,7 @@ internal class CastNode<T1, T2> : ManipulationNode
 	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
-		ConstraintResult? result = await TryMeet(Expectation, value);
+		ConstraintResult? result = await TryMeet(Constraint, value);
 		if (Inner != None && result is ConstraintResult.Success<T2> success)
 		{
 			return await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
@@ -28,5 +29,5 @@ internal class CastNode<T1, T2> : ManipulationNode
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> Expectation.ToString() ?? "<EMPTY EXPECTATION>";
+		=> Constraint.ToString() ?? "<EMPTY EXPECTATION>";
 }

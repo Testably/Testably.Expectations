@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 public static partial class ThatCollectionExtensions
 {
-	private readonly struct IsNotEmptyConstraint<TItem> : IExpectation<IEnumerable<TItem>>
+	private readonly struct IsNotEmptyConstraint<TItem> : IConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{

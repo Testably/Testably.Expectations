@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -7,12 +8,12 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 	where TProperty : TBase
 {
 	public override Node Inner { get; set; }
-	private readonly IExpectation<TBase, TProperty> _cast;
+	private readonly IConstraint<TBase, TProperty> _cast;
 	private readonly PropertyAccessor _propertyAccessor;
 	private readonly string _textSeparator;
 
 	public WhichCastNode(PropertyAccessor propertyAccessor,
-		IExpectation<TBase, TProperty> cast,
+		IConstraint<TBase, TProperty> cast,
 		Node inner,
 		string textSeparator = " which ")
 	{

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core.Nodes;
@@ -15,24 +16,24 @@ internal abstract class Node
 	public override string ToString()
 		=> "NONE";
 
-	protected Task<ConstraintResult> TryMeet<TValue>(IExpectation expectation,
+	protected Task<ConstraintResult> TryMeet<TValue>(IConstraint constraint,
 		SourceValue<TValue> value)
 	{
-		if (expectation is IExpectation<TValue?> typedExpectation)
+		if (constraint is IConstraint<TValue?> typedExpectation)
 		{
 			var result = typedExpectation.IsMetBy(value.Value);
 			result = _reason?.ApplyTo(result) ?? result;
 			return Task.FromResult(result);
 		}
 
-		if (expectation is IDelegateExpectation<TValue> typedDelegateExpectation)
+		if (constraint is IDelegateConstraint<TValue> typedDelegateExpectation)
 		{
 			var result = typedDelegateExpectation.IsMetBy(value);
 			result = _reason?.ApplyTo(result) ?? result;
 			return Task.FromResult(result);
 		}
 
-		if (expectation is IDelegateExpectation<DelegateSource.NoValue> delegateExpectation)
+		if (constraint is IDelegateConstraint<DelegateSource.NoValue> delegateExpectation)
 		{
 			var result = delegateExpectation.IsMetBy(
 				new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance,

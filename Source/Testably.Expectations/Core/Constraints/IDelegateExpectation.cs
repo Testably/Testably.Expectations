@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
 ///     A delegate expectation on type <typeparamref name="TValue" />.
 /// </summary>
-public interface IDelegateExpectation<TValue> : IExpectation
+public interface IDelegateConstraint<TValue> : IConstraint
 {
 	/// <summary>
 	///     Checks if the <paramref name="value" /> value meets the expectation.
@@ -16,7 +16,7 @@ public interface IDelegateExpectation<TValue> : IExpectation
 /// <summary>
 ///     A delegate expectation.
 /// </summary>
-public interface IDelegateExpectation : IExpectation
+public interface IDelegateConstraint : IConstraint
 {
 	/// <summary>
 	///     Checks if the <paramref name="exception" /> value meets the expectation.

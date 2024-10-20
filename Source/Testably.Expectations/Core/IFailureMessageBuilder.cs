@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core;
+﻿using Testably.Expectations.Core.Constraints;
+
+namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     The failure message builder.

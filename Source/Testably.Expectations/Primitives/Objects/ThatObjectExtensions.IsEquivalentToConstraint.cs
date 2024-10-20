@@ -1,4 +1,4 @@
-﻿using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -6,7 +6,7 @@ namespace Testably.Expectations;
 
 public static partial class ThatObjectExtensions
 {
-	private readonly struct IsEquivalentToConstraint(object? expected) : IExpectation<object?>
+	private readonly struct IsEquivalentToConstraint(object? expected) : IConstraint<object?>
 	{
 		public ConstraintResult IsMetBy(object? actual)
 		{

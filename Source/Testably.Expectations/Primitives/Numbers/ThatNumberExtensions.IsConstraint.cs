@@ -1,5 +1,5 @@
 ﻿using System;
-using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -7,7 +7,7 @@ namespace Testably.Expectations;
 
 public static partial class ThatNumberExtensions
 {
-	private readonly struct IsConstraint<TNumber>(TNumber? expected) : IExpectation<TNumber>
+	private readonly struct IsConstraint<TNumber>(TNumber? expected) : IConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)

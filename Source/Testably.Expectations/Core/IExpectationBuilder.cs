@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core;
 
@@ -15,20 +16,20 @@ public interface IExpectationBuilder
 	IFailureMessageBuilder FailureMessageBuilder { get; }
 
 	/// <summary>
-	///     Add a new <paramref name="expectation" />.
+	///     Add a new <paramref name="constraint" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
 	IExpectationBuilder Add(
-		IExpectation expectation,
+		IConstraint constraint,
 		Action<StringBuilder> expressionBuilder);
 
 	/// <summary>
-	///     Add a new <paramref name="expectation" /> that casts from <typeparamref name="TSource" /> to
+	///     Add a new <paramref name="constraint" /> that casts from <typeparamref name="TSource" /> to
 	///     <typeparamref name="TTarget" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
 	IExpectationBuilder AddCast<TSource, TTarget>(
-		IExpectation<TSource, TTarget> expectation,
+		IConstraint<TSource, TTarget> constraint,
 		Action<StringBuilder> expressionBuilder);
 
 	/// <summary>
@@ -77,7 +78,7 @@ public interface IExpectationBuilder
 	/// </summary>
 	IExpectationBuilder WhichCast<TSource, TBase, TProperty>(
 		PropertyAccessor propertyAccessor,
-		IExpectation<TBase, TProperty> cast,
+		IConstraint<TBase, TProperty> cast,
 		Action<That<TProperty>> expectation,
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ")

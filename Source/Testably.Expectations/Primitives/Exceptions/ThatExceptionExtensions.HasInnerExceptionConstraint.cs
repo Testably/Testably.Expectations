@@ -1,5 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
@@ -10,8 +11,8 @@ namespace Testably.Expectations;
 public static partial class ThatExceptionExtensions
 {
 	private readonly struct HasInnerExceptionConstraint<TInnerException>
-		: IExpectation<Exception?>,
-			IDelegateExpectation<DelegateSource.NoValue>
+		: IConstraint<Exception?>,
+			IDelegateConstraint<DelegateSource.NoValue>
 		where TInnerException : Exception
 	{
 		/// <inheritdoc />

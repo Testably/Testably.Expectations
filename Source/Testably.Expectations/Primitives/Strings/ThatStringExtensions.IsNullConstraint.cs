@@ -1,4 +1,4 @@
-﻿using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -6,7 +6,7 @@ namespace Testably.Expectations;
 
 public static partial class ThatStringExtensions
 {
-	private readonly struct IsNullConstraint : IExpectation<string?>
+	private readonly struct IsNullConstraint : IConstraint<string?>
 	{
 		#region IExpectation<string> Members
 

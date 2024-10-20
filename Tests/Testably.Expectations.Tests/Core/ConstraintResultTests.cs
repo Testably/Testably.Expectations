@@ -1,6 +1,6 @@
 ﻿using AutoFixture.Xunit2;
 using System.Threading.Tasks;
-using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Xunit;
 
 namespace Testably.Expectations.Tests.Core;

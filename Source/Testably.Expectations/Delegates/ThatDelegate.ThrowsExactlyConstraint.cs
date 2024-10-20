@@ -1,5 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
 
@@ -9,8 +10,8 @@ namespace Testably.Expectations;
 public abstract partial class ThatDelegate
 {
 	private readonly struct ThrowsExactlyConstraint<TException> :
-		IExpectation<DelegateSource.NoValue, TException>,
-		IDelegateExpectation<DelegateSource.NoValue>
+		IConstraint<DelegateSource.NoValue, TException>,
+		IDelegateConstraint<DelegateSource.NoValue>
 		where TException : Exception
 	{
 		/// <inheritdoc />
