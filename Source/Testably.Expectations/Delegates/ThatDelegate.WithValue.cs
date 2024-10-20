@@ -2,7 +2,8 @@
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Results;
 
-namespace Testably.Expectations.Expectations;
+// ReSharper disable once CheckNamespace
+namespace Testably.Expectations;
 
 public abstract partial class ThatDelegate
 {
@@ -21,7 +22,7 @@ public abstract partial class ThatDelegate
 		/// </summary>
 		public ExpectationResult<TValue> DoesNotThrow()
 			=> new(_expectationBuilder.Add(
-				new DoesNotThrowExpectation<TValue>(),
+				new DoesNotThrowConstraint<TValue>(),
 				b => b.AppendMethod(nameof(DoesNotThrow))));
 	}
 }

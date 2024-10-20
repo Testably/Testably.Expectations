@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Testably.Expectations.Collections;
+namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     Quantifier for collections.
