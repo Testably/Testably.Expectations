@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Results;
 
 /// <summary>
 ///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
@@ -88,7 +88,7 @@ public class AssertionResult<TResult>
 			return matchingSuccess.Value;
 		}
 		else if (result is ExpectationResult.Success success &&
-		         success.TryGetValue(out TResult? value))
+				 success.TryGetValue(out TResult? value))
 		{
 			return value;
 		}

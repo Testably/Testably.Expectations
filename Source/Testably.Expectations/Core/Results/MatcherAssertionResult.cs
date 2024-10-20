@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Testably.Expectations.Core.Helpers;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Results;
 
 /// <summary>
 ///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.

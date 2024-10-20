@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Results;
 
 namespace Testably.Expectations.Collections;
 

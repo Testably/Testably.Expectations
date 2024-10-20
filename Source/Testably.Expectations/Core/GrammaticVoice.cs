@@ -3,7 +3,7 @@
 /// <summary>
 ///     Mode for English Grammar
 /// </summary>
-public enum GrammaticVoice
+internal enum GrammaticVoice
 {
 	/// <summary>
 	///     The text should be in active voice.

@@ -2,6 +2,7 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Results;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
