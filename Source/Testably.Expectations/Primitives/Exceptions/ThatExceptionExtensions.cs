@@ -83,6 +83,19 @@ public static partial class ThatExceptionExtensions
 			source,
 			expected);
 
+	/// <summary>
+	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
+	/// </summary>
+	public static AndOrExpectationResult<TException, That<TException?>> HasParamName<TException>(
+		this That<TException?> source,
+		string expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		where TException : ArgumentException
+		=> new(source.ExpectationBuilder.Add(
+				new HasParamNameConstraint<TException>(expected),
+				b => b.AppendMethod(nameof(HasMessage), doNotPopulateThisValue)),
+			source);
+
 	private class CastException<TBase, TTarget> : IConstraint<TBase?, TTarget?>
 		where TBase : Exception
 		where TTarget : Exception

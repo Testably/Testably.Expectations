@@ -1,152 +1,138 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Core.Helpers;
+using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
 
 namespace Testably.Expectations.Core;
 
 /// <summary>
-///     Quantifier for collections.
+///     Quantifier an occurrence.
 /// </summary>
-public abstract class Quantifier
+public class Quantifier
 {
-	/// <summary>
-	///     Matches all items in the collection.
-	/// </summary>
-	public static Quantifier All => new AllQuantifier();
+	private int? _minimum = 1;
+	private int? _maximum;
 
 	/// <summary>
-	///     Matches no items in the collection.
+	///     Verifies the amount against the conditions.
 	/// </summary>
-	public static Quantifier None => new NoneQuantifier();
-
-	/// <summary>
-	///     Matches at least <paramref name="minimum" /> items.
-	/// </summary>
-	public static Quantifier AtLeast(int minimum) => new AtLeastQuantifier(minimum);
-
-	/// <summary>
-	///     Matches at most <paramref name="maximum" /> items.
-	/// </summary>
-	public static Quantifier AtMost(int maximum) => new AtMostQuantifier(maximum);
-
-	/// <summary>
-	///     Matches between <paramref name="minimum" /> and <paramref name="maximum" /> items.
-	/// </summary>
-	public static Quantifier Between(int minimum, int maximum)
-		=> new BetweenQuantifier(minimum, maximum);
-
-	/// <summary>
-	///     Checks if the number of <paramref name="actual" /> items of the <paramref name="total" /> items match the
-	///     condition.
-	///     <para />
-	///     If not, the <paramref name="error" /> contains the error message.
-	/// </summary>
-	public abstract bool CheckCondition(int total, int actual,
-		[NotNullWhen(false)] out string? error);
-
-	private class NoneQuantifier : Quantifier
+	public bool Check(int amount)
 	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
+		if (_minimum != null && amount < _minimum)
 		{
-			if (actual == 0)
-			{
-				error = null;
-				return true;
-			}
-
-			error = $"{actual}";
 			return false;
 		}
-
-		/// <inheritdoc />
-		public override string ToString() => "no items";
+		if (_maximum != null && amount > _maximum)
+		{
+			return false;
+		}
+		return true;
 	}
 
-	private class AllQuantifier : Quantifier
+	/// <inheritdoc />
+	public override string ToString()
 	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
+		string? specialCases = (_minimum, _maximum) switch
 		{
-			if (actual == total)
-			{
-				error = null;
-				return true;
-			}
-
-			error = $"only {actual} of {total}";
-			return false;
+			(1, null) => "at least once",
+			(_, 0) => "never",
+			(1, 1) => "exactly once",
+			(null, 1) => "at most once",
+			(_, _) => null
+		};
+		if (specialCases != null)
+		{
+			return specialCases;
 		}
 
-		/// <inheritdoc />
-		public override string ToString() => "all items";
+		if (_minimum == _maximum)
+		{
+			return $"exactly {_minimum} times";
+		}
+
+		if (_maximum == null)
+		{
+			return $"at least {_minimum} times";
+		}
+
+		if (_minimum == null)
+		{
+			return $"at most {_maximum} times";
+		}
+
+		return $"between {_minimum} and {_maximum} times";
 	}
 
-	private class AtLeastQuantifier(int minimum) : Quantifier
+	/// <summary>
+	///     Verifies, that it occurs at least <paramref name="minimum"/> times.
+	/// </summary>
+	public void AtLeast(int minimum)
 	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
+		if (minimum < 0)
 		{
-			if (actual >= minimum)
-			{
-				error = null;
-				return true;
-			}
-
-			error = $"only {actual} of {total}";
-			return false;
+			throw new ArgumentOutOfRangeException(nameof(minimum),
+				"The parameter 'minimum' must be greater than zero");
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"at least {minimum} {(minimum == 1 ? "item" : "items")}";
+		_minimum = minimum;
+		_maximum = null;
 	}
 
-	private class BetweenQuantifier(int minimum, int maximum) : Quantifier
+	/// <summary>
+	///     Verifies, that it occurs at most <paramref name="maximum"/> times.
+	/// </summary>
+	public void AtMost(int maximum)
 	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
+		if (maximum < 0)
 		{
-			if (actual >= minimum && actual <= maximum)
-			{
-				error = null;
-				return true;
-			}
-
-			if (actual >= minimum)
-			{
-				error = $"{actual}";
-				return false;
-			}
-
-			error = $"only {actual}";
-			return false;
+			throw new ArgumentOutOfRangeException(nameof(maximum),
+				"The parameter 'maximum' must be greater than zero");
 		}
 
-		/// <inheritdoc />
-		public override string ToString() => $"between {minimum} and {maximum} items";
+		_minimum = null;
+		_maximum = maximum;
 	}
 
-	private class AtMostQuantifier(int maximum) : Quantifier
+	/// <summary>
+	///     Verifies, that it occurs exactly <paramref name="expected"/> times.
+	/// </summary>
+	public void Exactly(int expected)
 	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
+		if (expected < 0)
 		{
-			if (actual <= maximum)
-			{
-				error = null;
-				return true;
-			}
-
-			error = $"{actual} of {total}";
-			return false;
+			throw new ArgumentOutOfRangeException(nameof(expected),
+				"The parameter 'expected' must be greater than zero");
 		}
 
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"at most {maximum} {(maximum == 1 ? "item" : "items")}";
+		_minimum = expected;
+		_maximum = expected;
+	}
+
+	/// <summary>
+	///     Verifies, that it occurs between <paramref name="minimum"/> and <paramref name="maximum"/> times.
+	/// </summary>
+	public void Between(int minimum, int maximum)
+	{
+		if (minimum < 0)
+		{
+			throw new ArgumentOutOfRangeException(nameof(minimum),
+				"The parameter 'minimum' must be greater than zero");
+		}
+
+		if (maximum < 0)
+		{
+			throw new ArgumentOutOfRangeException(nameof(maximum),
+				"The parameter 'maximum' must be greater than zero");
+		}
+
+		if (minimum > maximum)
+		{
+			throw new ArgumentException("The parameter 'maximum' must be greater than 'minimum'");
+		}
+
+		_minimum = minimum;
+		_maximum = maximum;
 	}
 }
