@@ -27,13 +27,17 @@ public static partial class ThatObjectExtensions
 	/// <summary>
 	///     Expect the actual value to be equivalent to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<T, That<T>> IsEquivalentTo<T>(this That<T> source,
+	public static EquivalencyOptionsExpectationResult<T, That<T>> IsEquivalentTo<T>(this That<T> source,
 		object expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new IsEquivalentToConstraint(expected),
+	{
+		var options = new EquivalencyOptions();
+		return new(source.ExpectationBuilder.Add(
+				new IsEquivalentToConstraint(expected, doNotPopulateThisValue, options),
 				b => b.AppendMethod(nameof(IsEquivalentTo), doNotPopulateThisValue)),
-			source);
+			source,
+			options);
+	}
 
 	/// <summary>
 	///     Verifies that the value satisfies the <paramref name="expectations" /> on the properties selected by the

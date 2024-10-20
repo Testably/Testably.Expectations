@@ -2,13 +2,18 @@
 using System.Linq;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Equivalency;
 using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Collections;
 
 public partial class QuantifiableCollection<TItem>
 {
-	private readonly struct AreEquivalentToConstraint(TItem expected, CollectionQuantifier quantifier)
+	private readonly struct AreEquivalentToConstraint(
+		TItem expected,
+		string expectedExpression,
+		CollectionQuantifier quantifier,
+		EquivalencyOptions options)
 		: IConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
@@ -17,8 +22,12 @@ public partial class QuantifiableCollection<TItem>
 			int count = 0;
 			foreach (TItem? item in list)
 			{
-				//TODO Change to IsEquivalentTo
-				if (item?.Equals(expected) != false)
+				IEnumerable<ComparisonFailure> failures = Compare.CheckEquivalent(item, expected,
+					new CompareOptions
+					{
+						MembersToIgnore = [.. options.MembersToIgnore],
+					});
+				if (!failures.Any())
 				{
 					count++;
 				}
@@ -29,10 +38,10 @@ public partial class QuantifiableCollection<TItem>
 				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {error} items");
+			return new ConstraintResult.Failure(ToString(), $"{error} items were equivalent");
 		}
 
 		public override string ToString()
-			=> $"has {quantifier} items equivalent to {Formatter.Format(expected)}";
+			=> $"has {quantifier} equivalent to {expectedExpression}";
 	}
 }

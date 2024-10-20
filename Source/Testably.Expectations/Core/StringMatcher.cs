@@ -41,6 +41,15 @@ public class StringMatcher(string? pattern)
 	}
 
 	/// <summary>
+	///     Interprets the expected <see langword="string" /> to be exactly equal.
+	/// </summary>
+	public StringMatcher Exactly()
+	{
+		_type = ExactMatch;
+		return this;
+	}
+
+	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
 	public StringMatcher IgnoringCase(bool ignoreCase = true)
