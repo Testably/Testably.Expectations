@@ -33,8 +33,8 @@ public partial class QuantifiableCollection<TItem>(
 	{
 		var options = new EquivalencyOptions();
 		return new EquivalencyOptionsExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>>(
-			source.ExpectationBuilder.Add(new AreEquivalentToConstraint(expected, quantity, options),
-				b => b.AppendMethod(nameof(Are), doNotPopulateThisValue)),
+			source.ExpectationBuilder.Add(new AreEquivalentToConstraint(expected, doNotPopulateThisValue, quantity, options),
+				b => b.AppendMethod(nameof(AreEquivalentTo), doNotPopulateThisValue)),
 			source,
 			options);
 	}
