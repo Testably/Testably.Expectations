@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
@@ -91,8 +90,8 @@ public class BecauseTests
 		async Task Act()
 			=> await Expect.That(variable).IsFalse().Because(because);
 
-		await Expect.That(Act).ThrowsWithMessage("*because*");
-		//TODO.And.DoesNotContain("because because");
+		Exception exception = await Expect.That(Act).ThrowsWithMessage("*because*");
+		await Expect.That(exception.Message).DoesNotContain("because because");
 	}
 
 	[Fact]

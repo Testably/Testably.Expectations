@@ -37,7 +37,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "in" at least 5 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).AtLeast(5)
+				                  at Expect.That(actual).Contains(expected).AtLeast(5)
 				                  """);
 		}
 
@@ -56,7 +56,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "text that does not occur" at least once,
 				                  but found it 0 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).AtLeast(1)
+				                  at Expect.That(actual).Contains(expected).AtLeast(1)
 				                  """);
 		}
 
@@ -90,7 +90,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "in" at most 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).AtMost(2)
+				                  at Expect.That(actual).Contains(expected).AtMost(2)
 				                  """);
 		}
 
@@ -150,7 +150,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "in" between 4 and 9 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).Between(4, 9)
+				                  at Expect.That(actual).Contains(expected).Between(4, 9)
 				                  """);
 		}
 
@@ -169,7 +169,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "in" between 1 and 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).Between(1, 2)
+				                  at Expect.That(actual).Contains(expected).Between(1, 2)
 				                  """);
 		}
 
@@ -287,7 +287,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "in" exactly 4 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).Exactly(4)
+				                  at Expect.That(actual).Contains(expected).Exactly(4)
 				                  """);
 		}
 
@@ -306,7 +306,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "in" exactly 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).Exactly(2)
+				                  at Expect.That(actual).Contains(expected).Exactly(2)
 				                  """);
 		}
 
@@ -325,7 +325,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "in" at least 7 times ignoring case,
 				                  but found it 5 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).AtLeast(7).IgnoringCase()
+				                  at Expect.That(actual).Contains(expected).AtLeast(7).IgnoringCase()
 				                  """);
 		}
 
@@ -369,9 +369,9 @@ public sealed partial class ThatString
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that actual
-				                  contains "investigator" never,
+				                  does not contain "investigator",
 				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).Never()
+				                  at Expect.That(actual).Contains(expected).Never()
 				                  """);
 		}
 
@@ -403,7 +403,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "detective" exactly once,
 				                  but found it 0 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).Once()
+				                  at Expect.That(actual).Contains(expected).Once()
 				                  """);
 		}
 
@@ -422,7 +422,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "word" exactly once,
 				                  but found it 2 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Is(expected).Once()
+				                  at Expect.That(actual).Contains(expected).Once()
 				                  """);
 		}
 
@@ -452,7 +452,7 @@ public sealed partial class ThatString
 				                  Expected that actual
 				                  contains "not" at least once,
 				                  but found it 0 times in "some text"
-				                  at Expect.That(actual).Is(expected)
+				                  at Expect.That(actual).Contains(expected)
 				                  """);
 		}
 	}

@@ -46,7 +46,9 @@ public static partial class ThatStringExtensions
 			int index = 0;
 			while (index < actual.Length)
 			{
-				if (comparer.Equals(actual.Substring(index, Math.Min(expected.Length, actual.Length - index)), expected))
+				if (comparer.Equals(
+					actual.Substring(index, Math.Min(expected.Length, actual.Length - index)),
+					expected))
 				{
 					count++;
 					index += expected.Length;
@@ -62,6 +64,14 @@ public static partial class ThatStringExtensions
 
 		/// <inheritdoc />
 		public override string ToString()
-			=> $"contains {Formatter.Format(expected)} {quantifier}{options}";
+		{
+			string quantifierString = quantifier.ToString();
+			if (quantifierString == "never")
+			{
+				return $"does not contain {Formatter.Format(expected)}{options}";
+			}
+
+			return $"contains {Formatter.Format(expected)} {quantifier}{options}";
+		}
 	}
 }

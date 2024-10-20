@@ -36,9 +36,27 @@ public static partial class ThatStringExtensions
 		var options = new StringOptions();
 		return new StringCountExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
 				new ContainsConstraint(expected, quantifier, options),
-				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
+				b => b.AppendMethod(nameof(Contains), doNotPopulateThisValue)),
 			source,
 			quantifier,
+			options);
+	}
+
+	/// <summary>
+	///     Verifies that the actual value contains the <paramref name="unexpected" /> <see langword="string" />.
+	/// </summary>
+	public static StringExpectationResult<string?, That<string?>> DoesNotContain(
+		this That<string?> source,
+		string unexpected,
+		[CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
+	{
+		var quantifier = new Quantifier();
+		quantifier.Exactly(0);
+		var options = new StringOptions();
+		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+				new ContainsConstraint(unexpected, quantifier, options),
+				b => b.AppendMethod(nameof(DoesNotContain), doNotPopulateThisValue)),
+			source,
 			options);
 	}
 
