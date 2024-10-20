@@ -17,7 +17,8 @@ public static class ThatStringCollectionExtensions
 	/// <summary>
 	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static AssertionResult<IEnumerable<string>, That<IEnumerable<string>>> Contains(this That<IEnumerable<string>> source,
+	public static AssertionResult<IEnumerable<string>, That<IEnumerable<string>>> Contains(
+		this That<IEnumerable<string>> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new ContainsExpectation(expected),
@@ -28,7 +29,7 @@ public static class ThatStringCollectionExtensions
 	{
 		public ExpectationResult IsMetBy(IEnumerable<string> actual)
 		{
-			var list = actual.ToList();
+			List<string>? list = actual.ToList();
 			if (list.Contains(expected))
 			{
 				return new ExpectationResult.Success<IEnumerable<string>>(list, ToString());

@@ -52,16 +52,16 @@ public sealed partial class ThatString
 				=> await Expect.That(actual).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
-				.Which.HasMessage($"""
-				                   Expected that actual
-				                   is equal to "expected other text",
-				                   but found "actual text" which differs at index 0:
-				                      ↓ (actual)
-				                     "actual text"
-				                     "expected other text"
-				                      ↑ (expected)
-				                   at Expect.That(actual).Is(expected)
-				                   """);
+				.Which.HasMessage("""
+				                  Expected that actual
+				                  is equal to "expected other text",
+				                  but found "actual text" which differs at index 0:
+				                     ↓ (actual)
+				                    "actual text"
+				                    "expected other text"
+				                     ↑ (expected)
+				                  at Expect.That(actual).Is(expected)
+				                  """);
 		}
 	}
 }

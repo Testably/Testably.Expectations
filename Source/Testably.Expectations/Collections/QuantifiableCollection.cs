@@ -35,7 +35,7 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 			source);
 
 	/// <summary>
-	///     ...satisfy the <paramref name="predicate"/>.
+	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
 	public AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> Satisfy(
 		Func<TItem, bool> predicate,

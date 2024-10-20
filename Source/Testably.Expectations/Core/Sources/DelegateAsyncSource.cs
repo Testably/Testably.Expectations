@@ -12,6 +12,8 @@ internal class DelegateAsyncSource : IValueSource<DelegateSource.NoValue>
 		_action = action;
 	}
 
+	#region IValueSource<NoValue> Members
+
 	public async Task<SourceValue<DelegateSource.NoValue>> GetValue()
 	{
 		try
@@ -24,4 +26,6 @@ internal class DelegateAsyncSource : IValueSource<DelegateSource.NoValue>
 			return new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance, ex);
 		}
 	}
+
+	#endregion
 }

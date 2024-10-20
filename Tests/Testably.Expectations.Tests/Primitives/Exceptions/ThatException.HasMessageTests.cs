@@ -15,7 +15,7 @@ public sealed partial class ThatException
 		{
 			string actual = "actual text";
 			string expected = "expected other text";
-			Exception sut = new Exception(actual);
+			Exception sut = new(actual);
 
 			async Task Act()
 				=> await Expect.That(sut).HasMessage(expected);
@@ -37,7 +37,7 @@ public sealed partial class ThatException
 		[AutoData]
 		public async Task SucceedsForSameStrings(string actual)
 		{
-			Exception sut = new Exception(actual);
+			Exception sut = new(actual);
 
 			async Task Act()
 				=> await Expect.That(sut).HasMessage(actual);
@@ -45,5 +45,4 @@ public sealed partial class ThatException
 			await Expect.That(Act).DoesNotThrow();
 		}
 	}
-
 }

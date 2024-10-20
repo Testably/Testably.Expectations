@@ -6,7 +6,6 @@ namespace Testably.Expectations.Tests.Core.Nodes;
 
 public sealed class WhichNodeTests
 {
-
 	[Fact]
 	public async Task WhichCreatesGoodMessage()
 	{
@@ -21,7 +20,7 @@ public sealed class WhichNodeTests
 
 		async Task Act()
 			=> await Expect.That(sut).Is<Dummy>()
-			.Which(p => p.Value, e => e.Is("bar"));
+				.Which(p => p.Value, e => e.Is("bar"));
 
 		await Expect.That(Act).Throws<XunitException>()
 			.Which.HasMessage("""
@@ -44,13 +43,11 @@ public sealed class WhichNodeTests
 		public class Nested
 		{
 			public int Id { get; set; }
-#pragma warning disable CS0649
+			#pragma warning disable CS0649
 			public int Field;
-#pragma warning restore CS0649
+			#pragma warning restore CS0649
 
 			public int Method() => Id + 1;
 		}
 	}
 }
-
-

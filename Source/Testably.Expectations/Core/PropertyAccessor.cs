@@ -6,14 +6,14 @@ using Testably.Expectations.Core.Helpers;
 namespace Testably.Expectations.Core;
 
 /// <summary>
-/// The property accessor.
+///     The property accessor.
 /// </summary>
 public abstract class PropertyAccessor
 {
 	private readonly string _name;
 
 	/// <summary>
-	/// Creates a new property accessor.
+	///     Creates a new property accessor.
 	/// </summary>
 	/// <param name="name"></param>
 	protected PropertyAccessor(string name)
@@ -27,7 +27,7 @@ public abstract class PropertyAccessor
 }
 
 /// <summary>
-/// The property accessor from <typeparamref name="TSource"/> to <typeparamref name="TTarget"/>.
+///     The property accessor from <typeparamref name="TSource" /> to <typeparamref name="TTarget" />.
 /// </summary>
 public class PropertyAccessor<TSource, TTarget> : PropertyAccessor
 {
@@ -40,21 +40,23 @@ public class PropertyAccessor<TSource, TTarget> : PropertyAccessor
 	}
 
 	/// <summary>
-	/// Creates a property accessor from the given <paramref name="func"/>.
-	/// </summary>
-	internal static PropertyAccessor<TSource, TTarget?> FromFunc(
-		Func<SourceValue<TSource>, TTarget> func, string name)
-		=> new(func, name);
-
-	/// <summary>
-	/// Creates a property accessor from the given <paramref name="expression"/>.
+	///     Creates a property accessor from the given <paramref name="expression" />.
 	/// </summary>
 	public static PropertyAccessor<TSource, TTarget?> FromExpression(
 		Expression<Func<TSource, TTarget?>> expression)
 	{
-		var compiled = expression.Compile();
-		return new(v => v.Value == null ? default : compiled(v.Value), $"{ExpressionHelpers.GetPropertyPath(expression)} ");
+		Func<TSource, TTarget?> compiled = expression.Compile();
+		return new PropertyAccessor<TSource, TTarget?>(
+			v => v.Value == null ? default : compiled(v.Value),
+			$"{ExpressionHelpers.GetPropertyPath(expression)} ");
 	}
+
+	/// <summary>
+	///     Creates a property accessor from the given <paramref name="func" />.
+	/// </summary>
+	internal static PropertyAccessor<TSource, TTarget?> FromFunc(
+		Func<SourceValue<TSource>, TTarget> func, string name)
+		=> new(func, name);
 
 	internal bool TryAccessProperty(SourceValue<TSource> value,
 		[NotNullWhen(true)] out TTarget? property)

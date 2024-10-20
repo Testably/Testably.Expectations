@@ -9,6 +9,5 @@ public sealed partial class ThatObject
 
 	private class Other : OtherBase
 	{
-
 	}
 }

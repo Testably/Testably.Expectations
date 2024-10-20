@@ -15,5 +15,3 @@ public sealed class ExpectationExceptionTests
 		await Expect.That(sut.Message).Is(message);
 	}
 }
-
-

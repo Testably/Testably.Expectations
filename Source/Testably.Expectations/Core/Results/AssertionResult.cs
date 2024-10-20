@@ -88,7 +88,7 @@ public class AssertionResult<TResult>
 			return matchingSuccess.Value;
 		}
 		else if (result is ExpectationResult.Success success &&
-				 success.TryGetValue(out TResult? value))
+		         success.TryGetValue(out TResult? value))
 		{
 			return value;
 		}

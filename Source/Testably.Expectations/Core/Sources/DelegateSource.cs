@@ -12,6 +12,8 @@ internal class DelegateSource : IValueSource<DelegateSource.NoValue>
 		_action = action;
 	}
 
+	#region IValueSource<NoValue> Members
+
 	public Task<SourceValue<NoValue>> GetValue()
 	{
 		try
@@ -24,6 +26,8 @@ internal class DelegateSource : IValueSource<DelegateSource.NoValue>
 			return Task.FromResult(new SourceValue<NoValue>(NoValue.Instance, ex));
 		}
 	}
+
+	#endregion
 
 	internal struct NoValue
 	{

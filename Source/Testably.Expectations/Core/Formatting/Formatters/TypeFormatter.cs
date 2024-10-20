@@ -9,31 +9,67 @@ internal class TypeFormatter : FormatterBase<Type>
 {
 	private static readonly Dictionary<Type, string> Aliases = new()
 	{
-		{ typeof(byte), "byte" },
-		{ typeof(sbyte), "sbyte" },
-		{ typeof(short), "short" },
-		{ typeof(ushort), "ushort" },
-		{ typeof(int), "int" },
-		{ typeof(uint), "uint" },
-		{ typeof(long), "long" },
-		{ typeof(ulong), "ulong" },
-		{ typeof(float), "float" },
-		{ typeof(double), "double" },
-		{ typeof(decimal), "decimal" },
-		{ typeof(object), "object" },
-		{ typeof(bool), "bool" },
-		{ typeof(char), "char" },
-		{ typeof(string), "string" },
-		{ typeof(void), "void" },
-		{ typeof(nint), "nint" },
-		{ typeof(nuint), "nuint" },
+		{
+			typeof(byte), "byte"
+		},
+		{
+			typeof(sbyte), "sbyte"
+		},
+		{
+			typeof(short), "short"
+		},
+		{
+			typeof(ushort), "ushort"
+		},
+		{
+			typeof(int), "int"
+		},
+		{
+			typeof(uint), "uint"
+		},
+		{
+			typeof(long), "long"
+		},
+		{
+			typeof(ulong), "ulong"
+		},
+		{
+			typeof(float), "float"
+		},
+		{
+			typeof(double), "double"
+		},
+		{
+			typeof(decimal), "decimal"
+		},
+		{
+			typeof(object), "object"
+		},
+		{
+			typeof(bool), "bool"
+		},
+		{
+			typeof(char), "char"
+		},
+		{
+			typeof(string), "string"
+		},
+		{
+			typeof(void), "void"
+		},
+		{
+			typeof(nint), "nint"
+		},
+		{
+			typeof(nuint), "nuint"
+		},
 	};
 
 	/// <inheritdoc />
 	public override void Format(Type value, StringBuilder stringBuilder,
 		FormattingOptions options)
 	{
-		if (FindPrimitiveAlias(value, out var alias))
+		if (FindPrimitiveAlias(value, out string? alias))
 		{
 			stringBuilder.Append(alias);
 		}
@@ -45,16 +81,16 @@ internal class TypeFormatter : FormatterBase<Type>
 
 	private static bool FindPrimitiveAlias(Type value, [NotNullWhen(true)] out string? alias)
 	{
-		if (Aliases.TryGetValue(value, out var typeAlias))
+		if (Aliases.TryGetValue(value, out string? typeAlias))
 		{
 			alias = typeAlias;
 			return true;
 		}
 
-		var underlyingType = Nullable.GetUnderlyingType(value);
+		Type? underlyingType = Nullable.GetUnderlyingType(value);
 
 		if (underlyingType != null &&
-		    Aliases.TryGetValue(underlyingType, out var underlyingAlias))
+		    Aliases.TryGetValue(underlyingType, out string? underlyingAlias))
 		{
 			alias = $"{underlyingAlias}?";
 			return true;

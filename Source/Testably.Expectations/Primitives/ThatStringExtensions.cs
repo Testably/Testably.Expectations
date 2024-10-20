@@ -52,12 +52,13 @@ public static class ThatStringExtensions
 				return new ExpectationResult.Success<string?>(actual, ToString());
 			}
 
-			return new ExpectationResult.Failure<string?>(actual, ToString(), expected.GetExtendedFailure(actual));
+			return new ExpectationResult.Failure<string?>(actual, ToString(),
+				expected.GetExtendedFailure(actual));
 		}
 
 		/// <inheritdoc />
 		public override string ToString()
-		    => expected.GetExpectation(GrammaticVoice.ActiveVoice);
+			=> expected.GetExpectation(GrammaticVoice.ActiveVoice);
 	}
 
 	private readonly struct IsNotNullExpectation : IExpectation<string>

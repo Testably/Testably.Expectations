@@ -38,7 +38,7 @@ public static class ThatBoolNullableExtensions
 	public static AssertionResult<bool?, That<bool?>> IsNot(this That<bool?> source,
 		bool? unexpected,
 		[CallerArgumentExpression("unexpected")]
-			string doNotPopulateThisValue = "")
+		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
 				new NullableIsNotExpectation(unexpected),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),

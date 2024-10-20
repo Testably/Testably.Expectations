@@ -9,7 +9,7 @@ public sealed class DefaultFormatterTests
 	[Fact]
 	public async Task ShouldDisplayNestedObjects()
 	{
-		Dummy value = new Dummy
+		Dummy value = new()
 		{
 			Inner = new InnerDummy
 			{

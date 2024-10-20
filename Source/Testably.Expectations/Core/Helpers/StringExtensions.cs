@@ -6,14 +6,27 @@ namespace Testably.Expectations.Core.Helpers;
 internal static class StringExtensions
 {
 	[return: NotNullIfNotNull(nameof(value))]
-	public static string? Indent(this string? value, string indentation = "  ", bool indentFirstLine = true)
+	public static string? Indent(this string? value, string indentation = "  ",
+		bool indentFirstLine = true)
 	{
 		if (value == null)
 		{
 			return null;
 		}
+
 		return (indentFirstLine ? indentation : "")
 		       + value.Replace("\n", $"\n{indentation}");
+	}
+
+	public static string PrependAOrAn(this string value)
+	{
+		char[] vocals = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
+		if (value.Length > 0 && vocals.Contains(value[0]))
+		{
+			return $"an {value}";
+		}
+
+		return $"a {value}";
 	}
 
 	[return: NotNullIfNotNull(nameof(value))]
@@ -29,6 +42,7 @@ internal static class StringExtensions
 		{
 			return value;
 		}
+
 		return value?.Replace("\n", "\\n").Replace("\r", "\\r");
 	}
 
@@ -52,7 +66,7 @@ internal static class StringExtensions
 			return value;
 		}
 
-		var indexOfWordBoundary = value[..maxLength].LastIndexOf(' ');
+		int indexOfWordBoundary = value[..maxLength].LastIndexOf(' ');
 		if (indexOfWordBoundary < maxLength * 0.8)
 		{
 			indexOfWordBoundary = maxLength;
@@ -60,16 +74,5 @@ internal static class StringExtensions
 
 		const char ellipsis = '\u2026';
 		return $"{value.Substring(0, indexOfWordBoundary)}{ellipsis}";
-	}
-
-	public static string PrependAOrAn(this string value)
-	{
-		char[] vocals = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
-		if (value.Length > 0 && vocals.Contains(value[0]))
-		{
-			return $"an {value}";
-		}
-
-		return $"a {value}";
 	}
 }

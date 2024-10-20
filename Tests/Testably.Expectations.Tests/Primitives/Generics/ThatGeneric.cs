@@ -9,6 +9,5 @@ public sealed partial class ThatGeneric
 
 	private class Other : OtherBase
 	{
-
 	}
 }

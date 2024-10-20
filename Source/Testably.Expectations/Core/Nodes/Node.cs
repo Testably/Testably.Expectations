@@ -14,16 +14,8 @@ internal abstract class Node
 	public override string ToString()
 		=> "NONE";
 
-	private sealed class NoneNode : Node
-	{
-		/// <inheritdoc />
-		public override Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
-			where TValue : default
-			=> throw new InvalidOperationException(
-				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");
-	}
-
-	protected Task<ExpectationResult> TryMeet<TValue>(IExpectation expectation, SourceValue<TValue> value)
+	protected Task<ExpectationResult> TryMeet<TValue>(IExpectation expectation,
+		SourceValue<TValue> value)
 	{
 		if (expectation is IExpectation<TValue?> typedExpectation)
 		{
@@ -37,10 +29,21 @@ internal abstract class Node
 
 		if (expectation is IDelegateExpectation<DelegateSource.NoValue> delegateExpectation)
 		{
-			return Task.FromResult(delegateExpectation.IsMetBy(new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance, value.Exception)));
+			return Task.FromResult(delegateExpectation.IsMetBy(
+				new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance,
+					value.Exception)));
 		}
 
 		throw new InvalidOperationException(
 			$"The expectation node does not support {typeof(TValue).Name} {value.Value}");
+	}
+
+	private sealed class NoneNode : Node
+	{
+		/// <inheritdoc />
+		public override Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+			where TValue : default
+			=> throw new InvalidOperationException(
+				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");
 	}
 }

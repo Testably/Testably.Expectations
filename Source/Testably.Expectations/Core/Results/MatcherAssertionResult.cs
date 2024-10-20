@@ -17,7 +17,7 @@ public class MatcherAssertionResult<TResult, TValue>(
 	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
-	///     Interprets the expected <see langword="string" /> as <see cref="Regex"/> pattern.
+	///     Interprets the expected <see langword="string" /> as <see cref="Regex" /> pattern.
 	/// </summary>
 	public MatcherAssertionResult<TResult, TValue> AsRegex()
 	{

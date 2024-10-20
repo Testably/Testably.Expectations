@@ -7,8 +7,8 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 	where TProperty : TBase
 {
 	public override Node Inner { get; set; }
-	private readonly PropertyAccessor _propertyAccessor;
 	private readonly IExpectation<TBase, TProperty> _cast;
+	private readonly PropertyAccessor _propertyAccessor;
 	private readonly string _textSeparator;
 
 	public WhichCastNode(PropertyAccessor propertyAccessor,
@@ -34,19 +34,24 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
 			}
 
-			if (propertyAccessor.TryAccessProperty(new SourceValue<TSource>(typedValue, value.Exception),
+			if (propertyAccessor.TryAccessProperty(
+				new SourceValue<TSource>(typedValue, value.Exception),
 				out TBase? baseValue))
 			{
-				var castedResult = _cast.IsMetBy(baseValue, value.Exception);
+				ExpectationResult? castedResult = _cast.IsMetBy(baseValue, value.Exception);
 				if (castedResult is ExpectationResult.Success success &&
-				    success.TryGetValue<TProperty>(out var matchingValue))
+				    success.TryGetValue<TProperty>(out TProperty? matchingValue))
 				{
-					return (await Inner.IsMetBy(new SourceValue<TProperty>(matchingValue, value.Exception)))
-						.UpdateExpectationText(r => $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
+					return (await Inner.IsMetBy(
+							new SourceValue<TProperty>(matchingValue, value.Exception)))
+						.UpdateExpectationText(r
+							=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
 				}
 
-				var failure = await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception));
-				return castedResult.UpdateExpectationText(_ => $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");
+				ExpectationResult? failure =
+					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception));
+				return castedResult.UpdateExpectationText(_
+					=> $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");
 			}
 
 			throw new InvalidOperationException(

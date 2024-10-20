@@ -25,7 +25,8 @@ public static partial class ThatNumberExtensions
 				b => b.AppendMethod(nameof(IsNaN))),
 			source);
 
-	private readonly struct IsNaNExpectation<TNumber>(Func<TNumber, bool> isNaN) : IExpectation<TNumber>
+	private readonly struct IsNaNExpectation<TNumber>(Func<TNumber, bool> isNaN)
+		: IExpectation<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ExpectationResult IsMetBy(TNumber actual)
