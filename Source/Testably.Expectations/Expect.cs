@@ -12,21 +12,21 @@ namespace Testably.Expectations;
 public static partial class Expect
 {
 	/// <summary>
-	///     Start asserting the current <see cref="bool" /> <paramref name="subject" />.
+	///     Start expectations for current <see cref="bool" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<bool> That(bool subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<bool>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start asserting the current <see cref="bool" />? <paramref name="subject" />.
+	///     Start expectations for the current <see cref="bool" />? <paramref name="subject" />.
 	/// </summary>
 	public static That<bool?> That(bool? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<bool?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start asserting the current <typeparamref name="TException" /> <paramref name="subject" />.
+	///     Start expectations for the current <typeparamref name="TException" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<TException?> That<TException>(TException subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
@@ -34,14 +34,14 @@ public static partial class Expect
 		=> new(new ExpectationBuilder<TException>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start asserting the current <see cref="object" />? <paramref name="subject" />.
+	///     Start expectations for the current <see cref="object" />? <paramref name="subject" />.
 	/// </summary>
 	public static That<object?> That(object? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<object?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start asserting the current <see cref="string" />? <paramref name="subject" />.
+	///     Start expectations for the current <see cref="string" />? <paramref name="subject" />.
 	/// </summary>
 	public static That<string?> That(string? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")

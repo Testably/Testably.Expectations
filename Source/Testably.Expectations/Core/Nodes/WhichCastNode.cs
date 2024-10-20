@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -7,12 +8,12 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 	where TProperty : TBase
 {
 	public override Node Inner { get; set; }
-	private readonly IExpectation<TBase, TProperty> _cast;
+	private readonly IConstraint<TBase, TProperty> _cast;
 	private readonly PropertyAccessor _propertyAccessor;
 	private readonly string _textSeparator;
 
 	public WhichCastNode(PropertyAccessor propertyAccessor,
-		IExpectation<TBase, TProperty> cast,
+		IConstraint<TBase, TProperty> cast,
 		Node inner,
 		string textSeparator = " which ")
 	{
@@ -23,7 +24,7 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TBase> propertyAccessor)
@@ -38,8 +39,8 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 				new SourceValue<TSource>(typedValue, value.Exception),
 				out TBase? baseValue))
 			{
-				ExpectationResult? castedResult = _cast.IsMetBy(baseValue, value.Exception);
-				if (castedResult is ExpectationResult.Success success &&
+				ConstraintResult? castedResult = _cast.IsMetBy(baseValue, value.Exception);
+				if (castedResult is ConstraintResult.Success success &&
 				    success.TryGetValue<TProperty>(out TProperty? matchingValue))
 				{
 					return (await Inner.IsMetBy(
@@ -48,7 +49,7 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 							=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
 				}
 
-				ExpectationResult? failure =
+				ConstraintResult? failure =
 					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception));
 				return castedResult.UpdateExpectationText(_
 					=> $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -18,31 +19,31 @@ internal class AndNode : CombinationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
-		ExpectationResult leftResult = await Left.IsMetBy(value);
-		ExpectationResult rightResult = await Right.IsMetBy(value);
+		ConstraintResult leftResult = await Left.IsMetBy(value);
+		ConstraintResult rightResult = await Right.IsMetBy(value);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";
 
-		if (leftResult is ExpectationResult.Failure leftFailure &&
-		    rightResult is ExpectationResult.Failure rightFailure)
+		if (leftResult is ConstraintResult.Failure leftFailure &&
+		    rightResult is ConstraintResult.Failure rightFailure)
 		{
 			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
-		if (leftResult is ExpectationResult.Failure onlyLeftFailure)
+		if (leftResult is ConstraintResult.Failure onlyLeftFailure)
 		{
 			return onlyLeftFailure.CombineWith(
 				combinedExpectation,
 				onlyLeftFailure.ResultText);
 		}
 
-		if (rightResult is ExpectationResult.Failure onlyRightFailure)
+		if (rightResult is ConstraintResult.Failure onlyRightFailure)
 		{
 			return onlyRightFailure.CombineWith(
 				combinedExpectation,
@@ -50,6 +51,12 @@ internal class AndNode : CombinationNode
 		}
 
 		return leftResult.CombineWith(combinedExpectation, "");
+	}
+
+	/// <inheritdoc />
+	public override void SetReason(BecauseReason reason)
+	{
+		Right.SetReason(reason);
 	}
 
 	/// <inheritdoc />

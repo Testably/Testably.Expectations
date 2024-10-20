@@ -6,15 +6,8 @@ namespace Testably.Expectations;
 
 public static partial class Expect
 {
-	///// <summary>
-	/////     Start delegate assertions on the current <see cref="string" /> values.
-	///// </summary>
-	//public static That<IEnumerable<string>> That(IEnumerable<string> subject,
-	//	[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	//	=> new(new ExpectationBuilder<IEnumerable<string>>(subject, doNotPopulateThisValue));
-
 	/// <summary>
-	///     Start delegate assertions on the current <see cref="string" /> values.
+	///     Start delegate expectations on the current collection of <typeparamref name="TItem"/> values.
 	/// </summary>
 	public static That<IEnumerable<TItem>> That<TItem>(IEnumerable<TItem> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")

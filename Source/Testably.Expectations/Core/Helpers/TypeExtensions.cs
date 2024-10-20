@@ -11,7 +11,7 @@ using System.Text;
 namespace Testably.Expectations.Core.Helpers;
 
 /// <summary>
-///     Determines which members are included in the equivalency assertion
+///     Determines which members are included in the equivalency constraint
 /// </summary>
 [Flags]
 internal enum MemberVisibility

@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core;
+﻿using Testably.Expectations.Core.Constraints;
+
+namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     The failure message builder.
@@ -8,5 +10,5 @@ public interface IFailureMessageBuilder
 	/// <summary>
 	///     Creates the exception message from the <paramref name="failure" />.
 	/// </summary>
-	string FromFailure(ExpectationResult.Failure failure);
+	string FromFailure(ConstraintResult.Failure failure);
 }

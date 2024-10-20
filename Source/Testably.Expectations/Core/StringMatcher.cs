@@ -150,7 +150,7 @@ public class StringMatcher(string? pattern)
 				return "found <null>";
 			}
 
-			string? prefix =
+			string prefix =
 				$"found {Formatter.Format(actual.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}";
 			int minCommonLength = Math.Min(actual.Length, pattern.Length);
 			StringDifference stringDifference = new(actual, pattern, comparer);

@@ -1,22 +1,23 @@
 ﻿using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
 
 internal class ExpectationNode : Node
 {
-	public IExpectation Expectation { get; }
+	public IConstraint Constraint { get; }
 
-	public ExpectationNode(IExpectation expectation)
+	public ExpectationNode(IConstraint constraint)
 	{
-		Expectation = expectation;
+		Constraint = constraint;
 	}
 
 	/// <inheritdoc />
-	public override Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
-		=> TryMeet(Expectation, value);
+		=> TryMeet(Constraint, value);
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> Expectation?.ToString() ?? "<EMPTY EXPECTATION>";
+		=> Constraint?.ToString() ?? "<EMPTY EXPECTATION>";
 }

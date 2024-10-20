@@ -1,33 +1,33 @@
 ﻿using System;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
 ///     An expectation.
 /// </summary>
 /// <remarks>This is a marker interface.</remarks>
-public interface IExpectation
+public interface IConstraint
 {
 }
 
 /// <summary>
 ///     A simple expectation on type <typeparamref name="TValue" />.
 /// </summary>
-public interface IExpectation<in TValue> : IExpectation
+public interface IConstraint<in TValue> : IConstraint
 {
 	/// <summary>
 	///     Checks if the <paramref name="actual" /> value meets the expectation.
 	/// </summary>
-	public ExpectationResult IsMetBy(TValue actual);
+	public ConstraintResult IsMetBy(TValue actual);
 }
 
 /// <summary>
 ///     A complex expectation from type <typeparamref name="TValue" /> to type <typeparamref name="TProperty" />.
 /// </summary>
-public interface IExpectation<in TValue, TProperty> : IExpectation
+public interface IConstraint<in TValue, TProperty> : IConstraint
 {
 	/// <summary>
 	///     Checks if the <paramref name="actual" /> value and the <paramref name="exception" /> meets the expectation.
 	/// </summary>
-	public ExpectationResult IsMetBy(TValue? actual, Exception? exception);
+	public ConstraintResult IsMetBy(TValue? actual, Exception? exception);
 }
