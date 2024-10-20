@@ -8,6 +8,19 @@ namespace Testably.Expectations;
 
 public abstract partial class ThatDelegate
 {
+	private static readonly string DoesNotThrowExpectation = "does not throw any exception";
+
+	private static ConstraintResult DoesNotThrowResult(Exception? exception)
+	{
+		if (exception is not null)
+		{
+			return new ConstraintResult.Failure<Exception?>(exception, DoesNotThrowExpectation,
+				$"it did throw {exception.FormatForMessage()}");
+		}
+
+		return new ConstraintResult.Success<Exception?>(null, DoesNotThrowExpectation);
+	}
+
 	private readonly struct DoesNotThrowConstraint<TValue> : IDelegateConstraint<TValue>
 	{
 		public ConstraintResult IsMetBy(SourceValue<TValue> value)
@@ -15,13 +28,13 @@ public abstract partial class ThatDelegate
 			if (value.Exception is not null)
 			{
 				return new ConstraintResult.Failure<TValue?>(value.Value, ToString(),
-					$"it did throw {value.Exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{value.Exception.Message.Indent()}");
+					$"it did throw {value.Exception.FormatForMessage()}");
 			}
 
 			return new ConstraintResult.Success<TValue?>(value.Value, ToString());
 		}
 
 		public override string ToString()
-			=> "does not throw any exception";
+			=> DoesNotThrowExpectation;
 	}
 }

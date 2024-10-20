@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core.Results;
 
@@ -22,10 +24,27 @@ public class
 			whichTextSeparator: ""));
 
 	private readonly IExpectationBuilder _expectationBuilder;
+	private readonly ThatDelegate.ThrowsOption _throwOptions;
 
-	internal DelegateExpectationResult(IExpectationBuilder expectationBuilder) : base(
-		expectationBuilder)
+	internal DelegateExpectationResult(IExpectationBuilder expectationBuilder,
+		ThatDelegate.ThrowsOption throwOptions)
+		: base(expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;
+		_throwOptions = throwOptions;
+	}
+
+	/// <summary>
+	///     Verifies, that the exception was thrown only if the <paramref name="predicate" /> is <see langword="true" />,
+	///     otherwise it verifies, that no exception was thrown.
+	/// </summary>
+	public DelegateExpectationResult<TException> OnlyIf(bool predicate,
+		[CallerArgumentExpression("predicate")]
+		string doNotPopulateThisValue = "")
+	{
+		_throwOptions.CheckThrow(predicate);
+		_expectationBuilder.AppendExpression(b
+			=> b.AppendMethod(nameof(OnlyIf), doNotPopulateThisValue));
+		return this;
 	}
 }

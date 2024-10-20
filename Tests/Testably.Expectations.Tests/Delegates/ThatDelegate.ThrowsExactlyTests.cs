@@ -15,7 +15,7 @@ public sealed partial class ThatDelegate
 			                          Expected that action
 			                          throws exactly a CustomException,
 			                          but it did throw an OtherException:
-			                          	{nameof(Fails_For_Code_With_Other_Exceptions)}
+			                            {nameof(Fails_For_Code_With_Other_Exceptions)}
 			                          at Expect.That(action).ThrowsExactly<CustomException>()
 			                          """;
 			Exception exception = CreateOtherException();
@@ -35,7 +35,7 @@ public sealed partial class ThatDelegate
 			                          Expected that action
 			                          throws exactly a CustomException,
 			                          but it did throw a SubCustomException:
-			                          	{nameof(Fails_For_Code_With_Subtype_Exceptions)}
+			                            {nameof(Fails_For_Code_With_Subtype_Exceptions)}
 			                          at Expect.That(action).ThrowsExactly<CustomException>()
 			                          """;
 			Exception exception = CreateSubCustomException();

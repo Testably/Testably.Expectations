@@ -9,7 +9,7 @@ namespace Testably.Expectations;
 
 public abstract partial class ThatDelegate
 {
-	private readonly struct ThrowsConstraint<TException> :
+	private readonly struct ThrowsConstraint<TException>(ThrowsOption throwOptions) :
 		IConstraint<DelegateSource.NoValue, TException>,
 		IDelegateConstraint<DelegateSource.NoValue>
 		where TException : Exception
@@ -17,6 +17,11 @@ public abstract partial class ThatDelegate
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
+			if (!throwOptions.DoCheckThrow)
+			{
+				return DoesNotThrowResult(exception);
+			}
+
 			if (exception is TException typedException)
 			{
 				return new ConstraintResult.Success<TException?>(typedException, ToString());
@@ -28,7 +33,7 @@ public abstract partial class ThatDelegate
 			}
 
 			return new ConstraintResult.Failure<TException?>(null, ToString(),
-				$"it did throw {exception.GetType().Name.PrependAOrAn()}:{Environment.NewLine}\t{exception.Message}");
+				$"it did throw {exception.FormatForMessage()}");
 		}
 
 		/// <inheritdoc />
@@ -36,6 +41,13 @@ public abstract partial class ThatDelegate
 			=> IsMetBy(value.Value, value.Exception);
 
 		public override string ToString()
-			=> $"throws {typeof(TException).Name.PrependAOrAn()}";
+		{
+			if (!throwOptions.DoCheckThrow)
+			{
+				return DoesNotThrowExpectation;
+			}
+
+			return $"throws {typeof(TException).Name.PrependAOrAn()}";
+		}
 	}
 }
