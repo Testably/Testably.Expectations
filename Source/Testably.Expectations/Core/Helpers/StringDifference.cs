@@ -13,23 +13,18 @@ internal class StringDifference(
 	private const char ArrowUp = '\u2191';
 
 	private readonly IEqualityComparer<string> _comparer = comparer ?? StringComparer.Ordinal;
+	private int? _indexOfFirstMismatch;
 
 	/// <summary>
 	///     Returns the first index at which the two values do not match.
 	/// </summary>
-	public int IndexOfFirstMismatch()
+	public int IndexOfFirstMismatch
 	{
-		if (actualValue == expectedValue)
+		get
 		{
-			return -1;
+			_indexOfFirstMismatch ??= GetIndexOfFirstMismatch(actualValue, expectedValue, _comparer);
+			return _indexOfFirstMismatch.Value;
 		}
-
-		if (actualValue is null || expectedValue is null)
-		{
-			return 0;
-		}
-
-		return IndexOfFirstMismatch(actualValue, expectedValue, _comparer);
 	}
 
 	public override string ToString()
@@ -44,40 +39,50 @@ internal class StringDifference(
 	/// <returns></returns>
 	public string ToString(string prefix)
 	{
-		int initialIndexOfDifference = IndexOfFirstMismatch();
+		int initialIndexOfDifference = IndexOfFirstMismatch;
 
 		int startIndex = Math.Max(0, initialIndexOfDifference - 25);
 
-		string? actualLine = actualValue
+		string actualLine = actualValue
 			?.Substring(startIndex, Math.Min(actualValue.Length - startIndex, 55))
 			.ToSingleLine()
 			.Trim()
 			.TruncateWithEllipsis(50) ?? string.Empty;
 
-		string? expectedLine = expectedValue
+		string expectedLine = expectedValue
 			?.Substring(startIndex, Math.Min(expectedValue.Length - startIndex, 55))
 			.ToSingleLine()
 			.Trim()
 			.TruncateWithEllipsis(50) ?? string.Empty;
 
-		int spacesBeforeArrow = IndexOfFirstMismatch(actualLine, expectedLine, _comparer) + 1;
+		int spacesBeforeArrow = GetIndexOfFirstMismatch(actualLine, expectedLine, _comparer) + 1;
 
 		return $"""
 		        {prefix} {initialIndexOfDifference}:
-		           {new string(' ', spacesBeforeArrow)}{ArrowDown}
+		           {new string(' ', spacesBeforeArrow)}{ArrowDown} (actual)
 		           "{actualLine}"
 		           "{expectedLine}"
-		           {new string(' ', spacesBeforeArrow)}{ArrowUp}
+		           {new string(' ', spacesBeforeArrow)}{ArrowUp} (expected)
 		        """;
 	}
 
-	private static int IndexOfFirstMismatch(string actualValue, string expectedValue,
+	private static int GetIndexOfFirstMismatch(string? actualValue, string? expectedValue,
 		IEqualityComparer<string> comparer)
 	{
+		if (comparer.Equals(actualValue, expectedValue))
+		{
+			return -1;
+		}
+
+		if (actualValue is null || expectedValue is null)
+		{
+			return 0;
+		}
+
 		for (int index = 0; index < Math.Max(actualValue.Length, expectedValue.Length); index++)
 		{
-			string? actualChar = actualValue.ElementAtOrDefault(index).ToString();
-			string? expectedChar = expectedValue.ElementAtOrDefault(index).ToString();
+			string actualChar = actualValue.ElementAtOrDefault(index).ToString();
+			string expectedChar = expectedValue.ElementAtOrDefault(index).ToString();
 			if (index >= expectedValue.Length || !comparer.Equals(actualChar, expectedChar))
 			{
 				return index;

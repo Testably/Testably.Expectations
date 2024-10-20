@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Testably.Expectations.Core.Helpers;
 
@@ -8,17 +9,21 @@ internal static class StringExtensions
 	{
 		return indentation + value.Replace("\n", $"\n{indentation}");
 	}
-	public static string ToSingleLine(this string value)
+
+	[return: NotNullIfNotNull(nameof(value))]
+	public static string? ToSingleLine(this string? value)
 	{
-		return value.Replace("\n", "\\n").Replace("\r", "\\r");
+		return value?.Replace("\n", "\\n").Replace("\r", "\\r");
 	}
-	public static string ToSingleLineIf(this string value, bool condition)
+
+	[return: NotNullIfNotNull(nameof(value))]
+	public static string? ToSingleLineIf(this string? value, bool condition)
 	{
 		if (!condition)
 		{
 			return value;
 		}
-		return value.Replace("\n", "\\n").Replace("\r", "\\r");
+		return value?.Replace("\n", "\\n").Replace("\r", "\\r");
 	}
 
 	public static string TruncateWithEllipsis(this string value, int maxLength)
