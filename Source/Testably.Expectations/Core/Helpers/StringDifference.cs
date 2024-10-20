@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Xml.Linq;
 
 namespace Testably.Expectations.Core.Helpers;
 
 internal class StringDifference(
-	string? actualValue,
-	string? expectedValue,
+	string actualValue,
+	string expectedValue,
 	IEqualityComparer<string>? comparer = null)
 {
 	private const char ArrowDown = '\u2193';
@@ -29,7 +31,7 @@ internal class StringDifference(
 
 	public override string ToString()
 	{
-		return ToString("differs at index");
+		return ToString("differs");
 	}
 
 	/// <summary>
@@ -39,31 +41,128 @@ internal class StringDifference(
 	/// <returns></returns>
 	public string ToString(string prefix)
 	{
-		int initialIndexOfDifference = IndexOfFirstMismatch;
+		int firstIndexOfMismatch = IndexOfFirstMismatch;
 
-		int startIndex = Math.Max(0, initialIndexOfDifference - 25);
+		int trimStart = GetStartIndexOfPhraseToShowBeforeTheMismatchingIndex(actualValue, firstIndexOfMismatch);
+		const string linePrefix = "  \"";
+		const string suffix = "\"";
+		const char arrowDown = '\u2193';
+		const char arrowUp = '\u2191';
 
-		string actualLine = actualValue
-			?.Substring(startIndex, Math.Min(actualValue.Length - startIndex, 55))
-			.ToSingleLine()
-			.Trim()
-			.TruncateWithEllipsis(50) ?? string.Empty;
+		int whiteSpaceCountBeforeArrow = (firstIndexOfMismatch - trimStart) + linePrefix.Length;
 
-		string expectedLine = expectedValue
-			?.Substring(startIndex, Math.Min(expectedValue.Length - startIndex, 55))
-			.ToSingleLine()
-			.Trim()
-			.TruncateWithEllipsis(50) ?? string.Empty;
+		if (trimStart > 0)
+		{
+			whiteSpaceCountBeforeArrow++;
+		}
 
-		int spacesBeforeArrow = GetIndexOfFirstMismatch(actualLine, expectedLine, _comparer) + 1;
+		var visibleText = actualValue[trimStart..firstIndexOfMismatch];
+		whiteSpaceCountBeforeArrow += visibleText.Count(c => c is '\r' or '\n');
 
-		return $"""
-		        {prefix} {initialIndexOfDifference}:
-		           {new string(' ', spacesBeforeArrow)}{ArrowDown} (actual)
-		           "{actualLine}"
-		           "{expectedLine}"
-		           {new string(' ', spacesBeforeArrow)}{ArrowUp} (expected)
-		        """;
+		var sb = new StringBuilder();
+		var matchingString = actualValue[..IndexOfFirstMismatch];
+		int lineNumber = matchingString.Count(c => c == '\n');
+
+		if (lineNumber > 0)
+		{
+			var indexOfLastNewlineBeforeMismatch = matchingString.LastIndexOf('\n');
+			var column = matchingString.Length - indexOfLastNewlineBeforeMismatch;
+			sb.Append(prefix).Append(" on line ").Append(lineNumber + 1).Append(" and column ").Append(column).Append(" (index ").Append(firstIndexOfMismatch).AppendLine("):");
+		}
+		else
+		{
+			sb.Append(prefix).Append(" at index ").Append(firstIndexOfMismatch).AppendLine(":");
+		}
+		sb.Append(' ', whiteSpaceCountBeforeArrow).Append(arrowDown).AppendLine(" (actual)");
+		AppendPrefixAndEscapedPhraseToShowWithEllipsisAndSuffix(sb, linePrefix, actualValue, trimStart, suffix);
+		AppendPrefixAndEscapedPhraseToShowWithEllipsisAndSuffix(sb, linePrefix, expectedValue, trimStart, suffix);
+		sb.Append(' ', whiteSpaceCountBeforeArrow).Append(arrowUp).Append(" (expected)");
+
+		return sb.ToString();
+	}
+
+	/// <summary>
+	/// Appends the <paramref name="prefix"/>, the escaped visible <paramref name="text"/> phrase decorated with ellipsis and the <paramref name="suffix"/> to the <paramref name="stringBuilder"/>.
+	/// </summary>
+	/// <remarks>When text phrase starts at <paramref name="indexOfStartingPhrase"/> and with a calculated length omits text on start or end, an ellipsis is added.</remarks>
+	private static void AppendPrefixAndEscapedPhraseToShowWithEllipsisAndSuffix(StringBuilder stringBuilder,
+		string prefix, string text, int indexOfStartingPhrase, string suffix)
+	{
+		var subjectLength = GetLengthOfPhraseToShowOrDefaultLength(text[indexOfStartingPhrase..]);
+		const char ellipsis = '\u2026';
+
+		stringBuilder.Append(prefix);
+
+		if (indexOfStartingPhrase > 0)
+		{
+			stringBuilder.Append(ellipsis);
+		}
+
+		stringBuilder.Append(text
+			.Substring(indexOfStartingPhrase, subjectLength).ToSingleLine());
+
+		if (text.Length > (indexOfStartingPhrase + subjectLength))
+		{
+			stringBuilder.Append(ellipsis);
+		}
+
+		stringBuilder.AppendLine(suffix);
+	}
+
+	/// <summary>
+	/// Calculates how many characters to keep in <paramref name="value"/>.
+	/// </summary>
+	/// <remarks>
+	/// If a word end is found between 15 and 25 characters, use this word end, otherwise keep 20 characters.
+	/// </remarks>
+	private static int GetLengthOfPhraseToShowOrDefaultLength(string value)
+	{
+		const int defaultLength = 20;
+		const int minLength = 15;
+		const int maxLength = 25;
+		const int lengthOfWhitespace = 1;
+
+		var indexOfWordBoundary = value
+			.LastIndexOf(' ', Math.Min(maxLength + lengthOfWhitespace, value.Length) - 1);
+
+		if (indexOfWordBoundary >= minLength)
+		{
+			return indexOfWordBoundary;
+		}
+
+		return Math.Min(defaultLength, value.Length);
+	}
+	/// <summary>
+	/// Calculates the start index of the visible segment from <paramref name="value"/> when highlighting the difference at <paramref name="indexOfFirstMismatch"/>.
+	/// </summary>
+	/// <remarks>
+	/// Either keep the last 10 characters before <paramref name="indexOfFirstMismatch"/> or a word begin (separated by whitespace) between 15 and 5 characters before <paramref name="indexOfFirstMismatch"/>.
+	/// </remarks>
+	private static int GetStartIndexOfPhraseToShowBeforeTheMismatchingIndex(string value, int indexOfFirstMismatch)
+	{
+		const int defaultCharactersToKeep = 10;
+		const int minCharactersToKeep = 5;
+		const int maxCharactersToKeep = 15;
+		const int lengthOfWhitespace = 1;
+		const int phraseLengthToCheckForWordBoundary = (maxCharactersToKeep - minCharactersToKeep) + lengthOfWhitespace;
+
+		if (indexOfFirstMismatch <= defaultCharactersToKeep)
+		{
+			return 0;
+		}
+
+		var indexToStartSearchingForWordBoundary = Math.Max(indexOfFirstMismatch - (maxCharactersToKeep + lengthOfWhitespace), 0);
+
+		var indexOfWordBoundary = value
+				.IndexOf(' ', indexToStartSearchingForWordBoundary, phraseLengthToCheckForWordBoundary) -
+			indexToStartSearchingForWordBoundary;
+
+		if (indexOfWordBoundary >= 0)
+		{
+			return indexToStartSearchingForWordBoundary + indexOfWordBoundary + lengthOfWhitespace;
+		}
+
+		return indexOfFirstMismatch - defaultCharactersToKeep;
 	}
 
 	private static int GetIndexOfFirstMismatch(string? actualValue, string? expectedValue,

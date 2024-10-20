@@ -28,10 +28,10 @@ public sealed class WhichNodeTests
 			                  Expected that sut
 			                  is type Dummy which Value is equal to "bar",
 			                  but found "foo" which differs at index 0:
-			                      ↓
-			                     "foo"
-			                     "bar"
-			                      ↑
+			                     ↓ (actual)
+			                    "foo"
+			                    "bar"
+			                     ↑ (expected)
 			                  at Expect.That(sut).Is<Dummy>().Which(p => p.Value, e => e.Is("bar"))
 			                  """);
 	}

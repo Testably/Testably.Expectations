@@ -42,22 +42,24 @@ public sealed partial class ThatString
 			await Act();
 		}
 
-		[Theory]
-		[AutoData]
-		public async Task WhenStringsDiffer_ShouldFail(string actual, string expected)
+		[Fact]
+		public async Task WhenStringsDiffer_ShouldFail()
 		{
+			string actual = "actual text";
+			string expected = "expected other text";
+
 			async Task Act()
 				=> await Expect.That(actual).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that actual
-				                   is equal to "{expected}",
-				                   but found "{actual}" which differs at index 0:
-				                       ↓
-				                      "{actual}"
-				                      "{expected}"
-				                       ↑
+				                   is equal to "expected other text",
+				                   but found "actual text" which differs at index 0:
+				                      ↓ (actual)
+				                     "actual text"
+				                     "expected other text"
+				                      ↑ (expected)
 				                   at Expect.That(actual).Is(expected)
 				                   """);
 		}

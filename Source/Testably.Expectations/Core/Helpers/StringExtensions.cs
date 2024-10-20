@@ -5,9 +5,15 @@ namespace Testably.Expectations.Core.Helpers;
 
 internal static class StringExtensions
 {
-	public static string Indent(this string value, string indentation = "  ")
+	[return: NotNullIfNotNull(nameof(value))]
+	public static string? Indent(this string? value, string indentation = "  ", bool indentFirstLine = true)
 	{
-		return indentation + value.Replace("\n", $"\n{indentation}");
+		if (value == null)
+		{
+			return null;
+		}
+		return (indentFirstLine ? indentation : "")
+		       + value.Replace("\n", $"\n{indentation}");
 	}
 
 	[return: NotNullIfNotNull(nameof(value))]
@@ -26,15 +32,34 @@ internal static class StringExtensions
 		return value?.Replace("\n", "\\n").Replace("\r", "\\r");
 	}
 
-	public static string TruncateWithEllipsis(this string value, int maxLength)
+	[return: NotNullIfNotNull(nameof(value))]
+	public static string? TruncateWithEllipsis(this string? value, int maxLength)
 	{
-		if (value.Length <= maxLength)
+		if (value is null || value.Length <= maxLength)
 		{
 			return value;
 		}
 
 		const char ellipsis = '\u2026';
 		return $"{value.Substring(0, maxLength)}{ellipsis}";
+	}
+
+	[return: NotNullIfNotNull(nameof(value))]
+	public static string? TruncateWithEllipsisOnWord(this string? value, int maxLength)
+	{
+		if (value is null || value.Length <= maxLength)
+		{
+			return value;
+		}
+
+		var indexOfWordBoundary = value[..maxLength].LastIndexOf(' ');
+		if (indexOfWordBoundary < maxLength * 0.8)
+		{
+			indexOfWordBoundary = maxLength;
+		}
+
+		const char ellipsis = '\u2026';
+		return $"{value.Substring(0, indexOfWordBoundary)}{ellipsis}";
 	}
 
 	public static string PrependAOrAn(this string value)

@@ -52,8 +52,7 @@ public static class ThatStringExtensions
 				return new ExpectationResult.Success<string?>(actual, ToString());
 			}
 
-			return new ExpectationResult.Failure<string?>(actual, ToString(),
-				$"found {Formatter.Format(actual.ToSingleLine())}{expected.GetExtendedFailure(actual)}");
+			return new ExpectationResult.Failure<string?>(actual, ToString(), expected.GetExtendedFailure(actual));
 		}
 
 		/// <inheritdoc />

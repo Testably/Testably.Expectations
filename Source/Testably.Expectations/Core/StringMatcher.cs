@@ -11,6 +11,8 @@ namespace Testably.Expectations.Core;
 /// </summary>
 public class StringMatcher(string? pattern)
 {
+	private const int DefaultMaxLength = 30;
+	private const int LongMaxLength = 300;
 	private static readonly IMatchType ExactMatch = new ExactMatchType();
 	private static readonly IMatchType RegexMatch = new RegexMatchType();
 	private static readonly IMatchType WildcardMatch = new WildcardMatchType();
@@ -69,9 +71,9 @@ public class StringMatcher(string? pattern)
 		=> grammaticVoice switch
 		{
 			GrammaticVoice.ActiveVoice =>
-				$"{(_type is ExactMatchType ? "is equal to" : "matches")} {Formatter.Format(pattern.ToSingleLine())}",
+				$"{(_type is ExactMatchType ? "is equal to" : "matches")} {Formatter.Format(pattern.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}",
 			GrammaticVoice.PassiveVoice =>
-				$"{(_type is ExactMatchType ? "equal to" : "matching")} {Formatter.Format(pattern.ToSingleLine())}",
+				$"{(_type is ExactMatchType ? "equal to" : "matching")} {Formatter.Format(pattern.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}",
 			_ => throw new NotSupportedException("Invalid Grammar type")
 		};
 
@@ -104,7 +106,8 @@ public class StringMatcher(string? pattern)
 
 		/// <inheritdoc />
 		public string GetExtendedFailure(string? actual, string? pattern, bool ignoreCase,
-			IEqualityComparer<string> comparer) => "";
+			IEqualityComparer<string> comparer)
+			=> $"found {Formatter.Format(actual.TruncateWithEllipsisOnWord(LongMaxLength).Indent(indentFirstLine: false))}";
 
 		public bool Matches(string? value, string? pattern, bool ignoreCase,
 			IEqualityComparer<string> comparer)
@@ -144,57 +147,57 @@ public class StringMatcher(string? pattern)
 		{
 			if (actual == null || pattern == null)
 			{
-				return "";
+				return "found <null>";
 			}
 
+			string? prefix =
+				$"found {Formatter.Format(actual.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}";
 			int minCommonLength = Math.Min(actual.Length, pattern.Length);
-			StringDifference stringDifference = new StringDifference(actual, pattern, comparer);
+			StringDifference stringDifference = new(actual, pattern, comparer);
 			if (stringDifference.IndexOfFirstMismatch == 0 &&
 			    comparer.Equals(actual.TrimStart(), pattern))
 			{
-				return " which has unexpected whitespace at the beginning";
+				return $"{prefix} which has unexpected whitespace at the beginning";
 			}
 
 			if (stringDifference.IndexOfFirstMismatch == 0 &&
 			    comparer.Equals(actual, pattern.TrimStart()))
 			{
-				return " which misses some whitespace at the beginning";
+				return $"{prefix} which misses some whitespace at the beginning";
 			}
 
 			if (stringDifference.IndexOfFirstMismatch == minCommonLength &&
 			    comparer.Equals(actual.TrimEnd(), pattern))
 			{
-				return " which has unexpected whitespace at the end";
+				return $"{prefix} which has unexpected whitespace at the end";
 			}
 
 			if (stringDifference.IndexOfFirstMismatch == minCommonLength &&
 			    comparer.Equals(actual, pattern.TrimEnd()))
 			{
-				return " which misses some whitespace at the end";
+				return $"{prefix} which misses some whitespace at the end";
 			}
 
-			if (stringDifference.IndexOfFirstMismatch == 0 ||
-			    stringDifference.IndexOfFirstMismatch == minCommonLength)
+			if (comparer.Equals(actual.Trim(), pattern.Trim()))
 			{
-				if (comparer.Equals(actual.Trim(), pattern.Trim()))
-				{
-					return " which differs in whitespace";
-				}
-
-				if (actual.Length < pattern.Length)
-				{
-					return
-						$" with a length of {actual.Length} which is shorter than the expected length of {pattern.Length}";
-				}
-
-				if (actual.Length > pattern.Length)
-				{
-					return
-						$" with a length of {actual.Length} which is longer than the expected length of {pattern.Length}";
-				}
+				return $"{prefix} which differs in whitespace";
 			}
 
-			return $" which {new StringDifference(actual, pattern, comparer)}";
+			if (actual.Length < pattern.Length &&
+			    stringDifference.IndexOfFirstMismatch == actual.Length)
+			{
+				return
+					$"{prefix} with a length of {actual.Length} which is shorter than the expected length of {pattern.Length}";
+			}
+
+			if (actual.Length > pattern.Length &&
+			    stringDifference.IndexOfFirstMismatch == pattern.Length)
+			{
+				return
+					$"{prefix} with a length of {actual.Length} which is longer than the expected length of {pattern.Length}";
+			}
+
+			return $"{prefix} which {new StringDifference(actual, pattern, comparer)}";
 		}
 
 		public bool Matches(string? value, string? pattern, bool ignoreCase,
@@ -222,7 +225,8 @@ public class StringMatcher(string? pattern)
 
 		/// <inheritdoc />
 		public string GetExtendedFailure(string? actual, string? pattern, bool ignoreCase,
-			IEqualityComparer<string> comparer) => "";
+			IEqualityComparer<string> comparer)
+			=> $"found {Formatter.Format(actual.TruncateWithEllipsisOnWord(LongMaxLength).Indent(indentFirstLine: false))}";
 
 		public bool Matches(string? value, string? pattern, bool ignoreCase,
 			IEqualityComparer<string> comparer)

@@ -136,8 +136,7 @@ public static class ThatExceptionExtensions
 				return new ExpectationResult.Success<T?>(actual, ToString());
 			}
 
-			return new ExpectationResult.Failure(ToString(),
-				$"found {Formatter.Format(actual?.Message, FormattingOptions.SingleLine)}{expected.GetExtendedFailure(actual?.Message)}");
+			return new ExpectationResult.Failure(ToString(), expected.GetExtendedFailure(actual?.Message));
 		}
 
 		public override string ToString()
