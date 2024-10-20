@@ -43,6 +43,16 @@ public class StringMatcherExpectationResult<TResult, TValue>(
 	}
 
 	/// <summary>
+	///     Interprets the expected <see langword="string" /> to be exactly equal.
+	/// </summary>
+	public StringMatcherExpectationResult<TResult, TValue> Exactly()
+	{
+		expected.Exactly();
+		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Exactly)));
+		return this;
+	}
+
+	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
 	public StringMatcherExpectationResult<TResult, TValue> IgnoringCase()
