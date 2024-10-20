@@ -50,6 +50,7 @@ public class StringMatcherTests
 		public async Task ShouldIncludeTheLineNumberForMismatchesInMultilineTexts()
 		{
 			int expectedIndex = 100 + (4 * Environment.NewLine.Length);
+			string nl = Environment.NewLine.Replace("\n", "\\n").Replace("\r", "\\r");
 
 			string subject = """
 			                 @startuml
@@ -77,8 +78,8 @@ public class StringMatcherTests
 			await Expect.That(Act).ThrowsException()
 				.Which.HasMessage($"""
 				                   Expected that subject
-				                   is equal to "@startuml\r\nAlice -> Bob :…",
-				                   but found "@startuml\r\nAlice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
+				                   is equal to "@startuml{nl}Alice -> Bob :…",
+				                   but found "@startuml{nl}Alice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
 				                                ↓ (actual)
 				                     "…-> Bob : Another…"
 				                     "…-> Bob : Invalid…"
