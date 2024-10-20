@@ -36,13 +36,6 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
 
 	/// <inheritdoc />
-	public IExpectationBuilder AppendExpression(Action<StringBuilder> expressionBuilder)
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		return this;
-	}
-
-	/// <inheritdoc />
 	public IExpectationBuilder Add(IExpectation expectation,
 		Action<StringBuilder> expressionBuilder)
 	{
@@ -61,10 +54,18 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder And(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
+	public IExpectationBuilder And(Action<StringBuilder> expressionBuilder,
+		string textSeparator = " and ")
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
+		return this;
+	}
+
+	/// <inheritdoc />
+	public IExpectationBuilder AppendExpression(Action<StringBuilder> expressionBuilder)
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		return this;
 	}
 
@@ -76,7 +77,8 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder Or(Action<StringBuilder> expressionBuilder, string textSeparator = " and ")
+	public IExpectationBuilder Or(Action<StringBuilder> expressionBuilder,
+		string textSeparator = " and ")
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
@@ -112,7 +114,8 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
-		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor, cast, new DeferredNode<TProperty>(expectation), textSeparator));
+		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor,
+			cast, new DeferredNode<TProperty>(expectation), textSeparator));
 
 		return this;
 	}

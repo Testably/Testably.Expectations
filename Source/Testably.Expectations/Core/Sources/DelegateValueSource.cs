@@ -19,11 +19,11 @@ internal class DelegateValueSource<TValue> : IValueSource<TValue>
 		try
 		{
 			TValue? value = _action();
-			return Task.FromResult<SourceValue<TValue>>(new SourceValue<TValue>(value, null));
+			return Task.FromResult(new SourceValue<TValue>(value, null));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<SourceValue<TValue>>(new SourceValue<TValue>(default, ex));
+			return Task.FromResult(new SourceValue<TValue>(default, ex));
 		}
 	}
 

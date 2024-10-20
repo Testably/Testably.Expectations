@@ -9,9 +9,26 @@ public sealed partial class ThatString
 {
 	public class IsNullTests
 	{
+		[Fact]
+		public async Task WhenActualIsEmpty_ShouldFail()
+		{
+			string actual = "";
+
+			async Task Act()
+				=> await Expect.That(actual).IsNull();
+
+			await Expect.That(Act).Throws<XunitException>()
+				.Which.HasMessage("""
+				                  Expected that actual
+				                  is null,
+				                  but found ""
+				                  at Expect.That(actual).IsNull()
+				                  """);
+		}
+
 		[Theory]
 		[AutoData]
-		public async Task FailsWhenNotNull(string? actual)
+		public async Task WhenActualIsNotNull_ShouldFail(string? actual)
 		{
 			async Task Act()
 				=> await Expect.That(actual).IsNull();
@@ -26,7 +43,7 @@ public sealed partial class ThatString
 		}
 
 		[Fact]
-		public async Task SucceedsWhenNull()
+		public async Task WhenActualIsNull_ShouldSucceed()
 		{
 			string? actual = null;
 

@@ -8,6 +8,7 @@ namespace Testably.Expectations.Core.Formatting;
 
 internal class DefaultFormatter : IValueFormatter
 {
+	#region IValueFormatter Members
 
 	/// <inheritdoc />
 	public bool TryFormat(object value, StringBuilder stringBuilder, FormattingOptions options)
@@ -30,8 +31,30 @@ internal class DefaultFormatter : IValueFormatter
 		{
 			stringBuilder.Append(value);
 		}
+
 		return true;
 	}
+
+	#endregion
+
+	/// <summary>
+	///     Selects which members of <paramref name="type" /> to format.
+	/// </summary>
+	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
+	/// <returns>The members of <paramref name="type" /> that will be included when formatting this object.</returns>
+	/// <remarks>The default is all non-private members.</remarks>
+	protected virtual MemberInfo[] GetMembers(Type type)
+	{
+		return type.GetMembers(MemberVisibility.Public);
+	}
+
+	/// <summary>
+	///     Selects the name to display for <paramref name="type" />.
+	/// </summary>
+	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
+	/// <returns>The name to be displayed for <paramref name="type" />.</returns>
+	/// <remarks>The default is <see cref="Type.FullName" />.</remarks>
+	protected virtual string? TypeDisplayName(Type type) => type.Name;
 
 	private static bool HasCompilerGeneratedToStringImplementation(object value)
 	{
@@ -47,67 +70,17 @@ internal class DefaultFormatter : IValueFormatter
 		return str is null || str == value.GetType().ToString();
 	}
 
-	private void WriteTypeAndMemberValues(object obj, StringBuilder stringBuilder, FormattingOptions options)
-	{
-		Type type = obj.GetType();
-		WriteTypeName(stringBuilder, type);
-		WriteTypeValue(obj, stringBuilder, type, options);
-	}
-
-	private void WriteTypeName(StringBuilder stringBuilder, Type type)
-	{
-		var typeName = type.HasFriendlyName() ? TypeDisplayName(type) : string.Empty;
-		stringBuilder.Append(typeName);
-	}
-
-	/// <summary>
-	/// Selects which members of <paramref name="type"/> to format.
-	/// </summary>
-	/// <param name="type">The <see cref="Type"/> of the object being formatted.</param>
-	/// <returns>The members of <paramref name="type"/> that will be included when formatting this object.</returns>
-	/// <remarks>The default is all non-private members.</remarks>
-	protected virtual MemberInfo[] GetMembers(Type type)
-	{
-		return type.GetMembers(MemberVisibility.Public);
-	}
-
-	private void WriteTypeValue(object obj, StringBuilder stringBuilder, Type type,
-		FormattingOptions options)
-	{
-		MemberInfo[] members = GetMembers(type);
-		if (members.Length == 0)
-		{
-			stringBuilder.Append("{ }");
-		}
-		else
-		{
-			stringBuilder.Append("{");
-			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");
-			WriteMemberValues(obj, members, stringBuilder, options.UseLineBreaks ? 2 : 0, options);
-			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");
-			stringBuilder.Append("}");
-		}
-	}
-
 	private static void WriteMemberValues(object obj, MemberInfo[] members,
 		StringBuilder stringBuilder, int indentation, FormattingOptions options)
 	{
-		foreach (var member in members.OrderBy(mi => mi.Name, StringComparer.Ordinal))
+		foreach (MemberInfo? member in members.OrderBy(mi => mi.Name, StringComparer.Ordinal))
 		{
 			WriteMemberValueTextFor(obj, member, stringBuilder, indentation, options);
 			stringBuilder.Append(", ");
 		}
 
-		stringBuilder.Length-=2;
+		stringBuilder.Length -= 2;
 	}
-
-	/// <summary>
-	/// Selects the name to display for <paramref name="type"/>.
-	/// </summary>
-	/// <param name="type">The <see cref="Type"/> of the object being formatted.</param>
-	/// <returns>The name to be displayed for <paramref name="type"/>.</returns>
-	/// <remarks>The default is <see cref="Type.FullName"/>.</remarks>
-	protected virtual string? TypeDisplayName(Type type) => type.Name;
 
 	private static void WriteMemberValueTextFor(object value, MemberInfo member,
 		StringBuilder stringBuilder, int indentation, FormattingOptions options)
@@ -130,7 +103,39 @@ internal class DefaultFormatter : IValueFormatter
 		}
 
 		stringBuilder.Append($"{new string(' ', indentation)}{member.Name} = ");
-		var formattedValue = Formatter.Format(memberValue, options);
+		string? formattedValue = Formatter.Format(memberValue, options);
 		stringBuilder.Append(formattedValue);
+	}
+
+	private void WriteTypeAndMemberValues(object obj, StringBuilder stringBuilder,
+		FormattingOptions options)
+	{
+		Type type = obj.GetType();
+		WriteTypeName(stringBuilder, type);
+		WriteTypeValue(obj, stringBuilder, type, options);
+	}
+
+	private void WriteTypeName(StringBuilder stringBuilder, Type type)
+	{
+		string? typeName = type.HasFriendlyName() ? TypeDisplayName(type) : string.Empty;
+		stringBuilder.Append(typeName);
+	}
+
+	private void WriteTypeValue(object obj, StringBuilder stringBuilder, Type type,
+		FormattingOptions options)
+	{
+		MemberInfo[] members = GetMembers(type);
+		if (members.Length == 0)
+		{
+			stringBuilder.Append("{ }");
+		}
+		else
+		{
+			stringBuilder.Append("{");
+			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");
+			WriteMemberValues(obj, members, stringBuilder, options.UseLineBreaks ? 2 : 0, options);
+			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");
+			stringBuilder.Append("}");
+		}
 	}
 }

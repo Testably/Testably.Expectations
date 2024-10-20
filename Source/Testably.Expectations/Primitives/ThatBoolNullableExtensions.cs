@@ -2,6 +2,7 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Results;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
@@ -37,7 +38,7 @@ public static class ThatBoolNullableExtensions
 	public static AssertionResult<bool?, That<bool?>> IsNot(this That<bool?> source,
 		bool? unexpected,
 		[CallerArgumentExpression("unexpected")]
-			string doNotPopulateThisValue = "")
+		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
 				new NullableIsNotExpectation(unexpected),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),

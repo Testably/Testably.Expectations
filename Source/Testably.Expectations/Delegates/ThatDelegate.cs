@@ -23,7 +23,8 @@ public abstract partial class ThatDelegate
 		where TException : Exception
 		=> new(_expectationBuilder.AddCast(
 			new ThrowsExpectation<TException>(),
-			b => b.Append('.').Append(nameof(Throws)).Append('<').Append(typeof(TException).Name).Append(">()")));
+			b => b.Append('.').Append(nameof(Throws)).Append('<').Append(typeof(TException).Name)
+				.Append(">()")));
 
 	/// <summary>
 	///     Verifies that the delegate throws exactly an exception of type <typeparamref name="TException" />.
@@ -32,7 +33,8 @@ public abstract partial class ThatDelegate
 		where TException : Exception
 		=> new(_expectationBuilder.AddCast(
 			new ThrowsExactlyExpectation<TException>(),
-			b => b.Append('.').Append(nameof(ThrowsExactly)).Append('<').Append(typeof(TException).Name).Append(">()")));
+			b => b.Append('.').Append(nameof(ThrowsExactly)).Append('<')
+				.Append(typeof(TException).Name).Append(">()")));
 
 	/// <summary>
 	///     Verifies that the delegate throws an exception.

@@ -5,6 +5,7 @@
 		<Description>Assert unit tests in natural language by specifying expectations.</Description>
 		<PackageReadmeFile>Docs/README.md</PackageReadmeFile>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">

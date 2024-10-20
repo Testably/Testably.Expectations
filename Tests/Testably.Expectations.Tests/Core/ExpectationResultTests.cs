@@ -9,7 +9,8 @@ public sealed class ExpectationResultTests
 {
 	[Theory]
 	[AutoData]
-	public async Task Failure_WithoutValue_ShouldStoreTexts(string expectationText, string resultText)
+	public async Task Failure_WithoutValue_ShouldStoreTexts(string expectationText,
+		string resultText)
 	{
 		ExpectationResult.Failure sut = new(expectationText, resultText);
 
@@ -96,7 +97,8 @@ public sealed class ExpectationResultTests
 
 	[Theory]
 	[AutoData]
-	public async Task Invert_FromFailureWithValue_ShouldUpdateExpectationText(string expectationText,
+	public async Task Invert_FromFailureWithValue_ShouldUpdateExpectationText(
+		string expectationText,
 		string resultText)
 	{
 		Dummy value = new()
@@ -121,8 +123,8 @@ public sealed class ExpectationResultTests
 		ExpectationResult result = sut.Invert();
 
 		await Expect.That(result).Is<ExpectationResult.Failure>()
-				.Which(s => s.ExpectationText, e => e.Is(expectationText))
-				.Which(s => s.ResultText, e => e.Is("it did"));
+			.Which(s => s.ExpectationText, e => e.Is(expectationText))
+			.Which(s => s.ResultText, e => e.Is("it did"));
 	}
 
 	[Theory]
@@ -208,7 +210,8 @@ public sealed class ExpectationResultTests
 
 	[Theory]
 	[AutoData]
-	public async Task ToString_Failure_ShouldBeExpectationTextWithPrependedFailed(string expectationText)
+	public async Task ToString_Failure_ShouldBeExpectationTextWithPrependedFailed(
+		string expectationText)
 	{
 		ExpectationResult.Failure sut = new(expectationText, "result text");
 
@@ -234,5 +237,3 @@ public sealed class ExpectationResultTests
 		public int Value { get; set; }
 	}
 }
-
-

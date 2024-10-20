@@ -43,10 +43,10 @@ public sealed partial class ThatException
 				                  Expected that sut
 				                  has an inner CustomException which has Message equal to "some other message",
 				                  but found "inner" which differs at index 0:
-				                      ↓
-				                     "inner"
-				                     "some other message"
-				                      ↑
+				                     ↓ (actual)
+				                    "inner"
+				                    "some other message"
+				                     ↑ (expected)
 				                  at Expect.That(sut).HasInner<CustomException>(e => e.HasMessage("some other message"))
 				                  """);
 		}
@@ -66,10 +66,10 @@ public sealed partial class ThatException
 				                  Expected that sut
 				                  has an inner exception which has Message equal to "some other message",
 				                  but found "inner" which differs at index 0:
-				                      ↓
-				                     "inner"
-				                     "some other message"
-				                      ↑
+				                     ↓ (actual)
+				                    "inner"
+				                    "some other message"
+				                     ↑ (expected)
 				                  at Expect.That(sut).HasInnerException(e => e.HasMessage("some other message"))
 				                  """);
 		}

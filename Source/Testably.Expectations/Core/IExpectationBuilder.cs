@@ -15,12 +15,6 @@ public interface IExpectationBuilder
 	IFailureMessageBuilder FailureMessageBuilder { get; }
 
 	/// <summary>
-	///     Update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder AppendExpression(
-		Action<StringBuilder> expressionBuilder);
-
-	/// <summary>
 	///     Add a new <paramref name="expectation" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
@@ -46,6 +40,12 @@ public interface IExpectationBuilder
 		string textSeparator = " and ");
 
 	/// <summary>
+	///     Update the <paramref name="expressionBuilder" />.
+	/// </summary>
+	IExpectationBuilder AppendExpression(
+		Action<StringBuilder> expressionBuilder);
+
+	/// <summary>
 	///     Verifies, if the expectations are met.
 	/// </summary>
 	Task<ExpectationResult> IsMet();
@@ -59,7 +59,7 @@ public interface IExpectationBuilder
 		string textSeparator = " or ");
 
 	/// <summary>
-	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor"/>.
+	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
 	IExpectationBuilder Which<TSource, TProperty>(
@@ -70,7 +70,8 @@ public interface IExpectationBuilder
 		string whichTextSeparator = " which ");
 
 	/// <summary>
-	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor"/> and casts from <typeparamref name="TBase" /> to
+	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" /> and casts from
+	///     <typeparamref name="TBase" /> to
 	///     <typeparamref name="TProperty" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>

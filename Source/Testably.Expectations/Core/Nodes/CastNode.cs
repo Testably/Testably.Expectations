@@ -17,7 +17,7 @@ internal class CastNode<T1, T2> : ManipulationNode
 	public override async Task<ExpectationResult> IsMetBy<TValue>(SourceValue<TValue> value)
 		where TValue : default
 	{
-		var result = await TryMeet(Expectation, value);
+		ExpectationResult? result = await TryMeet(Expectation, value);
 		if (Inner != None && result is ExpectationResult.Success<T2> success)
 		{
 			return await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));

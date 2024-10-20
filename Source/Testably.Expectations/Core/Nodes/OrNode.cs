@@ -4,9 +4,9 @@ namespace Testably.Expectations.Core.Nodes;
 
 internal class OrNode : CombinationNode
 {
-	private readonly string _textSeparator;
 	public override Node Left { get; }
 	public override Node Right { get; set; }
+	private readonly string _textSeparator;
 
 	public OrNode(Node left, Node right, string textSeparator = " or ")
 	{
@@ -32,6 +32,7 @@ internal class OrNode : CombinationNode
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
+
 		if (leftResult is ExpectationResult.Failure)
 		{
 			return rightResult.CombineWith(combinedExpectation, "");

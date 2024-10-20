@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Results;
 
 /// <summary>
 ///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.

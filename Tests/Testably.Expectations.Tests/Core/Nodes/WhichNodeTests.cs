@@ -6,7 +6,6 @@ namespace Testably.Expectations.Tests.Core.Nodes;
 
 public sealed class WhichNodeTests
 {
-
 	[Fact]
 	public async Task WhichCreatesGoodMessage()
 	{
@@ -21,13 +20,17 @@ public sealed class WhichNodeTests
 
 		async Task Act()
 			=> await Expect.That(sut).Is<Dummy>()
-			.Which(p => p.Value, e => e.Is("bar"));
+				.Which(p => p.Value, e => e.Is("bar"));
 
 		await Expect.That(Act).Throws<XunitException>()
 			.Which.HasMessage("""
 			                  Expected that sut
 			                  is type Dummy which Value is equal to "bar",
-			                  but found "foo"
+			                  but found "foo" which differs at index 0:
+			                     ↓ (actual)
+			                    "foo"
+			                    "bar"
+			                     ↑ (expected)
 			                  at Expect.That(sut).Is<Dummy>().Which(p => p.Value, e => e.Is("bar"))
 			                  """);
 	}
@@ -40,13 +43,11 @@ public sealed class WhichNodeTests
 		public class Nested
 		{
 			public int Id { get; set; }
-#pragma warning disable CS0649
+			#pragma warning disable CS0649
 			public int Field;
-#pragma warning restore CS0649
+			#pragma warning restore CS0649
 
 			public int Method() => Id + 1;
 		}
 	}
 }
-
-

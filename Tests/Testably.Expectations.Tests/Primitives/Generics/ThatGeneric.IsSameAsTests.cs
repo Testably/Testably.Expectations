@@ -11,11 +11,11 @@ public sealed partial class ThatGeneric
 		[Fact]
 		public async Task Fails_For_True_Value()
 		{
-			var value = new Other
+			Other value = new Other
 			{
 				Value = 1
 			};
-			var other = new Other
+			Other other = new Other
 			{
 				Value = 1
 			};
@@ -39,11 +39,11 @@ public sealed partial class ThatGeneric
 		[Fact]
 		public async Task Succeeds_For_Same_Object_References()
 		{
-			var value = new Other
+			Other value = new Other
 			{
 				Value = 1
 			};
-			var other = value;
+			Other other = value;
 
 			async Task Act()
 				=> await Expect.That(value).IsSameAs(other);

@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Results;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
@@ -44,6 +45,7 @@ public static partial class ThatNumberExtensions
 		=> new(source.ExpectationBuilder.Add(new IsNotExpectation<TNumber>(expected),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),
 			source);
+
 	private readonly struct IsExpectation<TNumber>(TNumber? expected) : IExpectation<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
@@ -60,6 +62,7 @@ public static partial class ThatNumberExtensions
 		public override string ToString()
 			=> $"is {Formatter.Format(expected)}";
 	}
+
 	private readonly struct IsNotExpectation<TNumber>(TNumber expected) : IExpectation<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{

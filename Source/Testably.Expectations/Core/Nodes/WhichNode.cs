@@ -31,11 +31,14 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
 			}
 
-			if (propertyAccessor.TryAccessProperty(new SourceValue<TSource>(typedValue, value.Exception),
+			if (propertyAccessor.TryAccessProperty(
+				new SourceValue<TSource>(typedValue, value.Exception),
 				out TProperty? matchingValue))
 			{
-				return (await Inner.IsMetBy(new SourceValue<TProperty>(matchingValue, value.Exception)))
-					.UpdateExpectationText(r => $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
+				return (await Inner.IsMetBy(
+						new SourceValue<TProperty>(matchingValue, value.Exception)))
+					.UpdateExpectationText(r
+						=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
 			}
 
 			throw new InvalidOperationException(

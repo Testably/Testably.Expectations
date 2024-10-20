@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Results;
 
 namespace Testably.Expectations.Collections;
 
@@ -34,7 +35,7 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 			source);
 
 	/// <summary>
-	///     ...satisfy the <paramref name="predicate"/>.
+	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
 	public AssertionResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> Satisfy(
 		Func<TItem, bool> predicate,

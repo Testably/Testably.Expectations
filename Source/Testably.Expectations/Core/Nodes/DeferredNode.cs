@@ -22,7 +22,7 @@ internal class DeferredNode<TProperty> : Node
 				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TProperty).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
 		}
 
-		var expectationBuilder = new ExpectationBuilder<TProperty?>(matchingActualValue.Value, "");
+		ExpectationBuilder<TProperty?> expectationBuilder = new(matchingActualValue.Value, "");
 		_expectation.Invoke(new That<TProperty>(expectationBuilder));
 		return await expectationBuilder.IsMet();
 	}

@@ -19,5 +19,4 @@ public static partial class Expect
 	public static That<IEnumerable<TItem>> That<TItem>(IEnumerable<TItem> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<IEnumerable<TItem>>(subject, doNotPopulateThisValue));
-
 }

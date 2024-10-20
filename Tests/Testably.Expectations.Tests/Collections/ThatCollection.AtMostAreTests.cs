@@ -9,6 +9,17 @@ public sealed partial class ThatCollection
 	public sealed class AtMostAreTests
 	{
 		[Fact]
+		public async Task WhenCollectionContainsSufficientlyFewEqualItems_ShouldSucceed()
+		{
+			int[] collection = [1, 1, 1, 1, 2, 2, 3];
+
+			async Task Act()
+				=> await Expect.That(collection).AtMost(3).Are(2);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
 		public async Task WhenCollectionContainsTooManyEqualItems_ShouldFail()
 		{
 			int[] collection = [1, 1, 1, 1, 2, 2, 3];
@@ -23,17 +34,6 @@ public sealed partial class ThatCollection
 				                  but 4 of 7 items were equal
 				                  at Expect.That(collection).AtMost(3).Are(1)
 				                  """);
-		}
-
-		[Fact]
-		public async Task WhenCollectionContainsSufficientlyFewEqualItems_ShouldSucceed()
-		{
-			int[] collection = [1, 1, 1, 1, 2, 2, 3];
-
-			async Task Act()
-				=> await Expect.That(collection).AtMost(3).Are(2);
-
-			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

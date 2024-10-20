@@ -33,7 +33,7 @@ internal class TypeFormatter : FormatterBase<Type>
 	public override void Format(Type value, StringBuilder stringBuilder,
 		FormattingOptions options)
 	{
-		if (FindPrimitiveAlias(value, out var alias))
+		if (FindPrimitiveAlias(value, out string? alias))
 		{
 			stringBuilder.Append(alias);
 		}
@@ -45,16 +45,16 @@ internal class TypeFormatter : FormatterBase<Type>
 
 	private static bool FindPrimitiveAlias(Type value, [NotNullWhen(true)] out string? alias)
 	{
-		if (Aliases.TryGetValue(value, out var typeAlias))
+		if (Aliases.TryGetValue(value, out string? typeAlias))
 		{
 			alias = typeAlias;
 			return true;
 		}
 
-		var underlyingType = Nullable.GetUnderlyingType(value);
+		Type? underlyingType = Nullable.GetUnderlyingType(value);
 
 		if (underlyingType != null &&
-		    Aliases.TryGetValue(underlyingType, out var underlyingAlias))
+		    Aliases.TryGetValue(underlyingType, out string? underlyingAlias))
 		{
 			alias = $"{underlyingAlias}?";
 			return true;

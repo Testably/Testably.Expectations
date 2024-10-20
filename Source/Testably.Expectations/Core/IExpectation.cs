@@ -27,7 +27,7 @@ public interface IExpectation<in TValue> : IExpectation
 public interface IExpectation<in TValue, TProperty> : IExpectation
 {
 	/// <summary>
-	///     Checks if the <paramref name="actual" /> value and the <paramref name="exception"/> meets the expectation.
+	///     Checks if the <paramref name="actual" /> value and the <paramref name="exception" /> meets the expectation.
 	/// </summary>
 	public ExpectationResult IsMetBy(TValue? actual, Exception? exception);
 }

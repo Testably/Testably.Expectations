@@ -9,6 +9,17 @@ public sealed partial class ThatCollection
 	public sealed class BetweenAreTests
 	{
 		[Fact]
+		public async Task WhenCollectionContainsSufficientlyEqualItems_ShouldSucceed()
+		{
+			int[] collection = [1, 1, 1, 1, 2, 2, 3];
+
+			async Task Act()
+				=> await Expect.That(collection).Between(3, 4).Are(1);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
 		public async Task WhenCollectionContainsTooFewEqualItems_ShouldFail()
 		{
 			int[] collection = [1, 1, 1, 1, 2, 2, 3];
@@ -24,6 +35,7 @@ public sealed partial class ThatCollection
 				                  at Expect.That(collection).Between(3, 4).Are(2)
 				                  """);
 		}
+
 		[Fact]
 		public async Task WhenCollectionContainsTooManyEqualItems_ShouldFail()
 		{
@@ -39,17 +51,6 @@ public sealed partial class ThatCollection
 				                  but 4 items were equal
 				                  at Expect.That(collection).Between(1, 3).Are(1)
 				                  """);
-		}
-
-		[Fact]
-		public async Task WhenCollectionContainsSufficientlyEqualItems_ShouldSucceed()
-		{
-			int[] collection = [1, 1, 1, 1, 2, 2, 3];
-
-			async Task Act()
-				=> await Expect.That(collection).Between(3, 4).Are(1);
-
-			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

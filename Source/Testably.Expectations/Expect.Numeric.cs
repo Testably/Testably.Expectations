@@ -32,6 +32,7 @@ public static partial class Expect
 	public static That<uint?> That(uint? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<uint?>(subject, doNotPopulateThisValue));
+
 	/// <summary>
 	///     Start asserting the current <see cref="nint" /> <paramref name="subject" />.
 	/// </summary>

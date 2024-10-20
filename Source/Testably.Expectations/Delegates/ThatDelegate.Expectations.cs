@@ -24,7 +24,9 @@ public abstract partial class ThatDelegate
 			=> "does not throw any exception";
 	}
 
-	private readonly struct ThrowsExpectation<TException> : IExpectation<DelegateSource.NoValue, TException>, IDelegateExpectation<DelegateSource.NoValue>
+	private readonly struct ThrowsExpectation<TException> :
+		IExpectation<DelegateSource.NoValue, TException>,
+		IDelegateExpectation<DelegateSource.NoValue>
 		where TException : Exception
 	{
 		/// <inheritdoc />
@@ -52,7 +54,9 @@ public abstract partial class ThatDelegate
 			=> $"throws {typeof(TException).Name.PrependAOrAn()}";
 	}
 
-	private readonly struct ThrowsExactlyExpectation<TException> : IExpectation<DelegateSource.NoValue, TException>, IDelegateExpectation<DelegateSource.NoValue>
+	private readonly struct ThrowsExactlyExpectation<TException> :
+		IExpectation<DelegateSource.NoValue, TException>,
+		IDelegateExpectation<DelegateSource.NoValue>
 		where TException : Exception
 	{
 		/// <inheritdoc />

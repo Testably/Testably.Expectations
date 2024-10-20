@@ -7,23 +7,7 @@ namespace Testably.Expectations.Tests.Core.Formatting.Formatters;
 
 public sealed class TypeFormatterTests
 {
-	[Fact]
-	public async Task Types_ShouldOnlyIncludeTheName()
-	{
-		Type value = typeof(BooleanFormatterTests);
-		string result = Formatter.Format(value);
-
-		await Expect.That(result).Is(nameof(BooleanFormatterTests));
-	}
-
-	[Theory]
-	[MemberData(nameof(SimpleTypes))]
-	public async Task SimpleTypes_ShouldUseSimpleNames(Type value, string expectedResult)
-	{
-		string result = Formatter.Format(value);
-
-		await Expect.That(result).Is(expectedResult);
-	}
+	#region Test Setup
 
 	public static TheoryData<Type, string> SimpleTypes
 		=> new()
@@ -62,4 +46,24 @@ public sealed class TypeFormatterTests
 			{ typeof(char?), "char?" },
 			{ typeof(void), "void" },
 		};
+
+	#endregion
+
+	[Theory]
+	[MemberData(nameof(SimpleTypes))]
+	public async Task SimpleTypes_ShouldUseSimpleNames(Type value, string expectedResult)
+	{
+		string result = Formatter.Format(value);
+
+		await Expect.That(result).Is(expectedResult);
+	}
+
+	[Fact]
+	public async Task Types_ShouldOnlyIncludeTheName()
+	{
+		Type value = typeof(BooleanFormatterTests);
+		string result = Formatter.Format(value);
+
+		await Expect.That(result).Is(nameof(BooleanFormatterTests));
+	}
 }

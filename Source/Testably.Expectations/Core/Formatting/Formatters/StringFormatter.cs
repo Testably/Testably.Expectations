@@ -10,7 +10,7 @@ internal class StringFormatter : FormatterBase<string>
 		FormattingOptions options)
 	{
 		stringBuilder.Append('\"');
-		stringBuilder.Append(value.ToSingleLineIf(!options.UseLineBreaks).TruncateWithEllipsis(100));
+		stringBuilder.Append(value.ToSingleLineIf(!options.UseLineBreaks));
 		stringBuilder.Append('\"');
 	}
 }
