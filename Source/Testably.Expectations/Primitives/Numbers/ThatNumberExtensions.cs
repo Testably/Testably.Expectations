@@ -15,7 +15,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public static ExpectationResultAndOr<TNumber, That<TNumber>> Is<TNumber>(
+	public static AndOrExpectationResult<TNumber, That<TNumber>> Is<TNumber>(
 		this That<TNumber> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -27,7 +27,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public static ExpectationResultAndOr<TNumber?, That<TNumber?>> Is<TNumber>(
+	public static AndOrExpectationResult<TNumber?, That<TNumber?>> Is<TNumber>(
 		this That<TNumber?> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -39,7 +39,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is seen as not a number (<see cref="float.NaN" />).
 	/// </summary>
-	public static ExpectationResultAndOr<float, That<float>> IsNaN(this That<float> source)
+	public static AndOrExpectationResult<float, That<float>> IsNaN(this That<float> source)
 		=> new(source.ExpectationBuilder.Add(new IsNaNConstraint<float>(float.IsNaN),
 				b => b.AppendMethod(nameof(IsNaN))),
 			source);
@@ -47,7 +47,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is seen as not a number (<see cref="double.NaN" />).
 	/// </summary>
-	public static ExpectationResultAndOr<double, That<double>> IsNaN(this That<double> source)
+	public static AndOrExpectationResult<double, That<double>> IsNaN(this That<double> source)
 		=> new(source.ExpectationBuilder.Add(new IsNaNConstraint<double>(double.IsNaN),
 				b => b.AppendMethod(nameof(IsNaN))),
 			source);
@@ -55,7 +55,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is not equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public static ExpectationResultAndOr<TNumber, That<TNumber>> IsNot<TNumber>(
+	public static AndOrExpectationResult<TNumber, That<TNumber>> IsNot<TNumber>(
 		this That<TNumber> source,
 		TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

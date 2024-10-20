@@ -1,6 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Results;
 
 namespace Testably.Expectations.Expectations;
 
@@ -19,7 +20,7 @@ public abstract partial class ThatDelegate
 	/// <summary>
 	///     Verifies that the delegate throws an exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public ThrowsExceptionResult<TException> Throws<TException>()
+	public DelegateExpectationResult<TException> Throws<TException>()
 		where TException : Exception
 		=> new(_expectationBuilder.AddCast(
 			new ThrowsExpectation<TException>(),
@@ -29,7 +30,7 @@ public abstract partial class ThatDelegate
 	/// <summary>
 	///     Verifies that the delegate throws exactly an exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public ThrowsExceptionResult<TException> ThrowsExactly<TException>()
+	public DelegateExpectationResult<TException> ThrowsExactly<TException>()
 		where TException : Exception
 		=> new(_expectationBuilder.AddCast(
 			new ThrowsExactlyExpectation<TException>(),
@@ -39,7 +40,7 @@ public abstract partial class ThatDelegate
 	/// <summary>
 	///     Verifies that the delegate throws an exception.
 	/// </summary>
-	public ThrowsExceptionResult<Exception> ThrowsException()
+	public DelegateExpectationResult<Exception> ThrowsException()
 		=> new(_expectationBuilder.AddCast(
 			new ThrowsExpectation<Exception>(),
 			b => b.AppendMethod(nameof(ThrowsException))));

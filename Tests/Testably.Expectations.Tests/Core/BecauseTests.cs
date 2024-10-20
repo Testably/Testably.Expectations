@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Testably.Expectations.Tests.TestHelpers;
 using Xunit;
 
@@ -6,6 +8,18 @@ namespace Testably.Expectations.Tests.Core;
 
 public class BecauseTests
 {
+	[Fact]
+	public async Task Apply_Because_Reason_On_Action()
+	{
+		string because = "this is the reason";
+		Action variable = () => throw new Exception();
+
+		async Task Act()
+			=> await Expect.That(variable).DoesNotThrow().Because(because);
+
+		await Expect.That(Act).ThrowsWithMessage($"*{because}*");
+	}
+
 	[Fact]
 	public async Task Apply_Because_Reason_When_Combining_With_And()
 	{

@@ -17,7 +17,7 @@ public static class ThatStringCollectionExtensions
 	/// <summary>
 	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static ExpectationResultAndOr<IEnumerable<string>, That<IEnumerable<string>>> Contains(
+	public static AndOrExpectationResult<IEnumerable<string>, That<IEnumerable<string>>> Contains(
 		this That<IEnumerable<string>> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

@@ -14,7 +14,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> Is(this That<bool?> source,
+	public static AndOrExpectationResult<bool?, That<bool?>> Is(this That<bool?> source,
 		bool? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
@@ -25,7 +25,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is <see langword="false" />.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> IsFalse(this That<bool?> source)
+	public static AndOrExpectationResult<bool?, That<bool?>> IsFalse(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsConstraint(false),
 				b => b.AppendMethod(nameof(IsFalse))),
@@ -34,7 +34,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is not equal to the specified <paramref name="unexpected" /> value.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> IsNot(this That<bool?> source,
+	public static AndOrExpectationResult<bool?, That<bool?>> IsNot(this That<bool?> source,
 		bool? unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
@@ -46,7 +46,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is not <see langword="false" />.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> IsNotFalse(this That<bool?> source)
+	public static AndOrExpectationResult<bool?, That<bool?>> IsNotFalse(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNotConstraint(false),
 				b => b.AppendMethod(nameof(IsNotFalse))),
@@ -55,7 +55,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is not <see langword="null" />.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> IsNotNull(this That<bool?> source)
+	public static AndOrExpectationResult<bool?, That<bool?>> IsNotNull(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNotConstraint(null),
 				b => b.AppendMethod(nameof(IsNotNull))),
@@ -64,7 +64,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is not <see langword="true" />.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> IsNotTrue(this That<bool?> source)
+	public static AndOrExpectationResult<bool?, That<bool?>> IsNotTrue(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNotConstraint(true),
 				b => b.AppendMethod(nameof(IsNotTrue))),
@@ -73,7 +73,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is <see langword="null" />.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> IsNull(this That<bool?> source)
+	public static AndOrExpectationResult<bool?, That<bool?>> IsNull(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsConstraint(null),
 				b => b.AppendMethod(nameof(IsNull))),
@@ -82,7 +82,7 @@ public static partial class ThatNullableBoolExtensions
 	/// <summary>
 	///     Verifies that the actual value is <see langword="true" />.
 	/// </summary>
-	public static ExpectationResultAndOr<bool?, That<bool?>> IsTrue(this That<bool?> source)
+	public static AndOrExpectationResult<bool?, That<bool?>> IsTrue(this That<bool?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsConstraint(true),
 				b => b.AppendMethod(nameof(IsTrue))),

@@ -27,7 +27,7 @@ public class ExpectationResult(IExpectationBuilder expectationBuilder)
 	[StackTraceHidden]
 	public TaskAwaiter GetAwaiter()
 	{
-		Task? result = GetResult();
+		Task result = GetResult();
 		return result.GetAwaiter();
 	}
 
@@ -82,7 +82,7 @@ public class ExpectationResult<TResult, TSelf>(IExpectationBuilder expectationBu
 	[StackTraceHidden]
 	public TaskAwaiter<TResult> GetAwaiter()
 	{
-		Task<TResult>? result = GetResult();
+		Task<TResult> result = GetResult();
 		return result.GetAwaiter();
 	}
 

@@ -62,7 +62,7 @@ public static class ThatCollectionExtensions
 	/// <summary>
 	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static ExpectationResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> Contains<TItem>(
+	public static AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> Contains<TItem>(
 		this That<IEnumerable<TItem>> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -73,7 +73,7 @@ public static class ThatCollectionExtensions
 	/// <summary>
 	///     Verifies that the actual collection is empty.
 	/// </summary>
-	public static ExpectationResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsEmpty<TItem>(
+	public static AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsEmpty<TItem>(
 		this That<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder.Add(new IsEmptyExpectation<TItem>(),
 				b => b.AppendMethod(nameof(IsEmpty))),
@@ -82,7 +82,7 @@ public static class ThatCollectionExtensions
 	/// <summary>
 	///     Verifies that the actual collection is not empty.
 	/// </summary>
-	public static ExpectationResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsNotEmpty<TItem>(
+	public static AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> IsNotEmpty<TItem>(
 		this That<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder.Add(new IsNotEmptyExpectation<TItem>(),
 				b => b.AppendMethod(nameof(IsNotEmpty))),
