@@ -14,7 +14,7 @@ public static partial class ThatStringExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to <paramref name="expected" />.
 	/// </summary>
-	public static MatcherAssertionResult<string?, That<string?>> Is(this That<string?> source,
+	public static MatcherExpectationResult<string?, That<string?>> Is(this That<string?> source,
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
@@ -26,7 +26,7 @@ public static partial class ThatStringExtensions
 	/// <summary>
 	///     Verifies that the actual value is not <see langword="null" />.
 	/// </summary>
-	public static AssertionResultAndOr<string, That<string?>> IsNotNull(this That<string?> source)
+	public static ExpectationResultAndOr<string, That<string?>> IsNotNull(this That<string?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNotNullConstraint(),
 				b => b.AppendMethod(nameof(IsNotNull))),
@@ -35,7 +35,7 @@ public static partial class ThatStringExtensions
 	/// <summary>
 	///     Verifies that the actual value is <see langword="null" />.
 	/// </summary>
-	public static AssertionResultAndOr<string?, That<string?>> IsNull(this That<string?> source)
+	public static ExpectationResultAndOr<string?, That<string?>> IsNull(this That<string?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNullConstraint(),
 				b => b.AppendMethod(nameof(IsNull))),

@@ -7,21 +7,21 @@ using Testably.Expectations.Core.Helpers;
 namespace Testably.Expectations.Core.Results;
 
 /// <summary>
-///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AssertionResultAndOr{TResult,TValue}" />, allows accessing underlying
+///     In addition to the combinations from <see cref="ExpectationResultAndOr{TResult,TValue}" />, allows accessing underlying
 ///     properties with <see cref="Which{TProperty}" />.
 /// </summary>
 [StackTraceHidden]
-public class AssertionResultAndOrWhich<TResult, TValue>(IExpectationBuilder expectationBuilder, TValue assertion)
-	: AssertionResultAndOr<TResult, TValue>(expectationBuilder, assertion)
+public class ExpectationResultAndOrWhich<TResult, TValue>(IExpectationBuilder expectationBuilder, TValue returnValue)
+	: ExpectationResultAndOr<TResult, TValue>(expectationBuilder, returnValue)
 {
 	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Allows specifying expectations on a property of the current value.
 	/// </summary>
-	public AssertionResultAndOrWhich<TResult, TValue> Which<TProperty>(
+	public ExpectationResultAndOrWhich<TResult, TValue> Which<TProperty>(
 		Expression<Func<TResult, TProperty?>> selector,
 		Action<That<TProperty?>> expectations,
 		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",

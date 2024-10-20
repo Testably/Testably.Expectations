@@ -5,15 +5,15 @@ using System.Threading.Tasks;
 namespace Testably.Expectations.Core.Results;
 
 /// <summary>
-///     The result of an assertion without an underlying value.
+///     The result of an expectation without an underlying value.
 /// </summary>
-public class AssertionResult(IExpectationBuilder expectationBuilder)
+public class ExpectationResult(IExpectationBuilder expectationBuilder)
 {
 	/// <summary>
-	///     Provide a <paramref name="reason" /> explaining why the assertion is needed.<br />
+	///     Provide a <paramref name="reason" /> explaining why the constraint is needed.<br />
 	///     If the phrase does not start with the word <i>because</i>, it is prepended automatically.
 	/// </summary>
-	public AssertionResult Because(string reason)
+	public ExpectationResult Because(string reason)
 	{
 		expectationBuilder.AddReason(reason);
 		return this;
@@ -50,21 +50,21 @@ public class AssertionResult(IExpectationBuilder expectationBuilder)
 }
 
 /// <summary>
-///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 /// </summary>
 [StackTraceHidden]
-public class AssertionResult<TResult>(IExpectationBuilder expectationBuilder)
-	: AssertionResult<TResult, AssertionResult<TResult>>(expectationBuilder);
+public class ExpectationResult<TResult>(IExpectationBuilder expectationBuilder)
+	: ExpectationResult<TResult, ExpectationResult<TResult>>(expectationBuilder);
 
 /// <summary>
-///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 /// </summary>
 [StackTraceHidden]
-public class AssertionResult<TResult, TSelf>(IExpectationBuilder expectationBuilder)
-	where TSelf : AssertionResult<TResult, TSelf>
+public class ExpectationResult<TResult, TSelf>(IExpectationBuilder expectationBuilder)
+	where TSelf : ExpectationResult<TResult, TSelf>
 {
 	/// <summary>
-	///     Provide a <paramref name="reason" /> explaining why the assertion is needed.<br />
+	///     Provide a <paramref name="reason" /> explaining why the constraint is needed.<br />
 	///     If the phrase does not start with the word <i>because</i>, it is prepended automatically.
 	/// </summary>
 	public TSelf Because(string reason)

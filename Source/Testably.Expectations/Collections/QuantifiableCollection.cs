@@ -17,7 +17,7 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public AssertionResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> Are(
+	public ExpectationResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> Are(
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new AreEqualExpectation(expected, quantity),
@@ -27,7 +27,7 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 	/// <summary>
 	///     ...are equivalent to <paramref name="expected" />.
 	/// </summary>
-	public AssertionResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> AreEquivalentTo(
+	public ExpectationResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> AreEquivalentTo(
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new AreEquivalentToExpectation(expected, quantity),
@@ -37,7 +37,7 @@ public class QuantifiableCollection<TItem>(That<IEnumerable<TItem>> source, Quan
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
-	public AssertionResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> Satisfy(
+	public ExpectationResultAndOr<IEnumerable<TItem>, That<IEnumerable<TItem>>> Satisfy(
 		Func<TItem, bool> predicate,
 		[CallerArgumentExpression("predicate")]
 		string doNotPopulateThisValue = "")

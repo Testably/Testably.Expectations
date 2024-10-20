@@ -10,8 +10,8 @@ public static class ThrowHelper
 	/// <summary>
 	///     Verifies that the message of the thrown exception also matches the <paramref name="expected" /> pattern.
 	/// </summary>
-	public static MatcherAssertionResult<Exception, That<Exception?>> AndWithMessage(
-		this MatcherAssertionResult<Exception, That<Exception?>> source,
+	public static MatcherExpectationResult<Exception, That<Exception?>> AndWithMessage(
+		this MatcherExpectationResult<Exception, That<Exception?>> source,
 		string expected)
 	{
 		return source.And.HasMessage(expected).AsWildcard();
@@ -21,7 +21,7 @@ public static class ThrowHelper
 	///     Verifies that the delegate throws an exception which has a message matching the <paramref name="expected" />
 	///     pattern.
 	/// </summary>
-	public static MatcherAssertionResult<Exception, That<Exception?>> ThrowsWithMessage(
+	public static MatcherExpectationResult<Exception, That<Exception?>> ThrowsWithMessage(
 		this ThatDelegate source,
 		string expected)
 	{

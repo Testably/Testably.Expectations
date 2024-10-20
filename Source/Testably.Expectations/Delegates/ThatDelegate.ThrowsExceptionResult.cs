@@ -10,10 +10,10 @@ namespace Testably.Expectations.Expectations;
 public abstract partial class ThatDelegate
 {
 	/// <summary>
-	///     An <see cref="AssertionResult" /> when an exception was thrown.
+	///     An <see cref="ExpectationResult" /> when an exception was thrown.
 	/// </summary>
 	/// <typeparam name="TException"></typeparam>
-	public class ThrowsExceptionResult<TException> : AssertionResult<TException, ThrowsExceptionResult<TException>>
+	public class ThrowsExceptionResult<TException> : ExpectationResult<TException, ThrowsExceptionResult<TException>>
 		where TException : Exception
 	{
 		/// <summary>

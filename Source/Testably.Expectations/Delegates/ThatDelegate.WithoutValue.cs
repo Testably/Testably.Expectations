@@ -20,7 +20,7 @@ public abstract partial class ThatDelegate
 		/// <summary>
 		///     Verifies that the delegate does not throw any exception.
 		/// </summary>
-		public AssertionResult DoesNotThrow()
+		public ExpectationResult DoesNotThrow()
 			=> new(_expectationBuilder.Add(
 				new DoesNotThrowExpectation<DelegateSource.NoValue>(),
 				b => b.AppendMethod(nameof(DoesNotThrow))));

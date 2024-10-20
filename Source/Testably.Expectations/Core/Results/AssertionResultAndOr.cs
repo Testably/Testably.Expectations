@@ -3,29 +3,29 @@
 namespace Testably.Expectations.Core.Results;
 
 /// <summary>
-///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     Allows combining multiple assertions with <see cref="AssertionResultAndOr{TResult, TValue, TSelf}.And" /> and
-///     <see cref="AssertionResultAndOr{TResult, TValue, TSelf}.Or" />.
+///     Allows combining multiple expectations with <see cref="ExpectationResultAndOr{TResult,TValue,TSelf}.And" /> and
+///     <see cref="ExpectationResultAndOr{TResult,TValue,TSelf}.Or" />.
 /// </summary>
 [StackTraceHidden]
-public class AssertionResultAndOr<TResult, TValue>(
+public class ExpectationResultAndOr<TResult, TValue>(
 	IExpectationBuilder expectationBuilder,
-	TValue assertion)
-	: AssertionResultAndOr<TResult, TValue, AssertionResultAndOr<TResult, TValue>>(
-		expectationBuilder, assertion);
+	TValue returnValue)
+	: ExpectationResultAndOr<TResult, TValue, ExpectationResultAndOr<TResult, TValue>>(
+		expectationBuilder, returnValue);
 
 /// <summary>
-///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     Allows combining multiple assertions with <see cref="And" /> and <see cref="Or" />.
+///     Allows combining multiple expectations with <see cref="And" /> and <see cref="Or" />.
 /// </summary>
 [StackTraceHidden]
-public class AssertionResultAndOr<TResult, TValue, TSelf>(
+public class ExpectationResultAndOr<TResult, TValue, TSelf>(
 	IExpectationBuilder expectationBuilder,
-	TValue assertion)
-	: AssertionResult<TResult, TSelf>(expectationBuilder)
-	where TSelf : AssertionResultAndOr<TResult, TValue, TSelf>
+	TValue returnValue)
+	: ExpectationResult<TResult, TSelf>(expectationBuilder)
+	where TSelf : ExpectationResultAndOr<TResult, TValue, TSelf>
 {
 	/// <summary>
 	///     Combine multiple expectations with AND
@@ -35,7 +35,7 @@ public class AssertionResultAndOr<TResult, TValue, TSelf>(
 		get
 		{
 			_expectationBuilder.And(b => b.Append(".").Append(nameof(And)));
-			return assertion;
+			return returnValue;
 		}
 	}
 
@@ -47,7 +47,7 @@ public class AssertionResultAndOr<TResult, TValue, TSelf>(
 		get
 		{
 			_expectationBuilder.Or(b => b.Append(".").Append(nameof(Or)));
-			return assertion;
+			return returnValue;
 		}
 	}
 

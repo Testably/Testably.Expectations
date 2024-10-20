@@ -35,15 +35,15 @@ public class BecauseTests
 	}
 
 	[Fact]
-	public async Task Apply_Because_Reasons_Only_On_Previous_Assertions()
+	public async Task Apply_Because_Reasons_Only_On_Previous_Constraints()
 	{
 		string expectedMessage = """
 		                         Expected that variable
-		                         is True, because we only apply it to previous assertions and is False,
+		                         is True, because we only apply it to previous constraints and is False,
 		                         but found True
 		                         at Expect.That(variable).IsTrue().And.IsFalse()
 		                         """;
-		string because = "we only apply it to previous assertions";
+		string because = "we only apply it to previous constraints";
 		bool variable = true;
 
 		async Task Act()
