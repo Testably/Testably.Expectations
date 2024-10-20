@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Testably.Expectations.Core;
@@ -23,10 +24,11 @@ public static partial class ThatObjectExtensions
 				return specialCaseResult;
 			}
 
-			var failures = Compare.CheckEquivalent(actual, expected, new CompareOptions
-			{
-				MembersToIgnore = [.. options.MembersToIgnore],
-			}).ToList();
+			List<ComparisonFailure> failures = Compare.CheckEquivalent(actual, expected,
+				new CompareOptions
+				{
+					MembersToIgnore = [.. options.MembersToIgnore],
+				}).ToList();
 
 			if (failures.FirstOrDefault() is { } firstFailure)
 			{
@@ -63,11 +65,13 @@ public static partial class ThatObjectExtensions
 			{
 				isEqual = enumerable.Cast<object>().SequenceEqual(enumerable2.Cast<object>());
 			}
+
 			if (isEqual == true)
 			{
 				constraintResult = new ConstraintResult.Success<object?>(actual, ToString());
 				return true;
 			}
+
 			if (isEqual == false)
 			{
 				constraintResult = new ConstraintResult.Failure(ToString(),

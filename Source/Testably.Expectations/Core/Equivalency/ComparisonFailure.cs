@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) 2024 by Tom Longhurst
+// https://github.com/thomhurst/TUnit
+
+using System;
 
 namespace Testably.Expectations.Core.Equivalency;
 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (c) 2024 by Tom Longhurst
+// https://github.com/thomhurst/TUnit
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,7 +115,7 @@ internal static class Compare
             }
         }
         
-        foreach (var propertyInfo in actual.GetType().GetProperties().Concat(expected!.GetType().GetProperties())
+        foreach (var propertyInfo in actual.GetType().GetProperties().Concat(expected.GetType().GetProperties())
                      .Distinct()
                      .Where(p => p.GetIndexParameters().Length == 0))
         {

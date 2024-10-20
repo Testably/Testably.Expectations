@@ -27,12 +27,17 @@ public partial class QuantifiableCollection<TItem>(
 	/// <summary>
 	///     ...are equivalent to <paramref name="expected" />.
 	/// </summary>
-	public AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> AreEquivalentTo(
+	public EquivalencyOptionsExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> AreEquivalentTo(
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new AreEquivalentToConstraint(expected, quantity),
+	{
+		var options = new EquivalencyOptions();
+		return new EquivalencyOptionsExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>>(
+			source.ExpectationBuilder.Add(new AreEquivalentToConstraint(expected, quantity, options),
 				b => b.AppendMethod(nameof(Are), doNotPopulateThisValue)),
-			source);
+			source,
+			options);
+	}
 
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
