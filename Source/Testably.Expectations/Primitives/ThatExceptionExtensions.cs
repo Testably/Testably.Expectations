@@ -18,7 +18,7 @@ public static class ThatExceptionExtensions
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" /> which
 	///     satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception?>> HasInner<TException>(
+	public static AssertionResultAndOr<Exception, That<Exception?>> HasInner<TException>(
 		this That<Exception?> source,
 		Action<That<TException?>> expectations,
 		[CallerArgumentExpression("expectations")]
@@ -36,7 +36,7 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception?>> HasInner<TException>(
+	public static AssertionResultAndOr<Exception, That<Exception?>> HasInner<TException>(
 		this That<Exception?> source)
 		where TException : Exception
 		=> new(source.ExpectationBuilder.Add(
@@ -47,7 +47,7 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception?>> HasInnerException(
+	public static AssertionResultAndOr<Exception, That<Exception?>> HasInnerException(
 		this That<Exception?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new HasInnerExceptionExpectation<Exception>(),
@@ -57,7 +57,7 @@ public static class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception which satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public static AssertionResult<Exception, That<Exception?>> HasInnerException(
+	public static AssertionResultAndOr<Exception, That<Exception?>> HasInnerException(
 		this That<Exception?> source,
 		Action<That<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]

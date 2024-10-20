@@ -120,6 +120,13 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		return this;
 	}
 
+	/// <inheritdoc />
+	public void AddReason(string reason)
+	{
+		var becauseReason = new BecauseReason(reason);
+		_tree.GetCurrent().SetReason(becauseReason);
+	}
+
 	#endregion
 
 	/// <inheritdoc />
@@ -193,6 +200,9 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 			};
 			_setExpectationNode = n => manipulationNode.Inner = n;
 		}
+
+		public Node GetCurrent()
+			=> _current.Node;
 
 		public Node GetRoot()
 		{

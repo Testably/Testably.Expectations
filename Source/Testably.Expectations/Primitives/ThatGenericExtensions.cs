@@ -15,7 +15,7 @@ public static class ThatGenericExtensions
 	/// <summary>
 	///     Expect the actual value to be the same as the <paramref name="expected" /> value.
 	/// </summary>
-	public static AssertionResult<T, That<T>> IsSameAs<T>(this That<T> source,
+	public static AssertionResultAndOr<T, That<T>> IsSameAs<T>(this That<T> source,
 		object? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(

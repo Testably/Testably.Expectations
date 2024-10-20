@@ -82,4 +82,9 @@ public interface IExpectationBuilder
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ")
 		where TProperty : TBase;
+
+	/// <summary>
+	///     Amends the latest expectation with a <paramref name="reason" /> explaining it is needed.
+	/// </summary>
+	void AddReason(string reason);
 }

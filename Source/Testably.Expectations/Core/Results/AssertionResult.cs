@@ -5,46 +5,47 @@ using System.Threading.Tasks;
 namespace Testably.Expectations.Core.Results;
 
 /// <summary>
-///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
-///     <para />
-///     Allows combining multiple assertions with <see cref="And" /> and <see cref="Or" />.
+///     The result of an assertion without an underlying value.
 /// </summary>
-[StackTraceHidden]
-public class AssertionResult<TResult, TValue> : AssertionResult<TResult>
+public class AssertionResult(IExpectationBuilder expectationBuilder)
 {
 	/// <summary>
-	///     Combine multiple expectations with AND
+	///     Provide a <paramref name="reason" /> explaining why the assertion is needed.<br />
+	///     If the phrase does not start with the word <i>because</i>, it is prepended automatically.
 	/// </summary>
-	public TValue And
+	public AssertionResult Because(string reason)
 	{
-		get
-		{
-			_expectationBuilder.And(b => b.Append(".").Append(nameof(And)));
-			return _assertion;
-		}
+		expectationBuilder.AddReason(reason);
+		return this;
 	}
 
 	/// <summary>
-	///     Combine multiple expectations with OR
+	///     By awaiting the result, the expectations are verified.
+	///     <para />
+	///     Will throw an exception, when the expectations are not met.
 	/// </summary>
-	public TValue Or
+	[StackTraceHidden]
+	public TaskAwaiter GetAwaiter()
 	{
-		get
-		{
-			_expectationBuilder.Or(b => b.Append(".").Append(nameof(Or)));
-			return _assertion;
-		}
+		Task? result = GetResult();
+		return result.GetAwaiter();
 	}
 
-	private readonly TValue _assertion;
-
-	private readonly IExpectationBuilder _expectationBuilder;
-
-	internal AssertionResult(IExpectationBuilder expectationBuilder, TValue assertion) : base(
-		expectationBuilder)
+	[StackTraceHidden]
+	private async Task GetResult()
 	{
-		_expectationBuilder = expectationBuilder;
-		_assertion = assertion;
+		ExpectationResult result = await expectationBuilder.IsMet();
+
+		if (result is ExpectationResult.Failure failure)
+		{
+			Fail.Test(expectationBuilder.FailureMessageBuilder.FromFailure(failure));
+		}
+		else if (result is ExpectationResult.Success)
+		{
+			return;
+		}
+
+		throw new ExpectationException("You should not be here (without value)!");
 	}
 }
 
@@ -52,13 +53,24 @@ public class AssertionResult<TResult, TValue> : AssertionResult<TResult>
 ///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
 /// </summary>
 [StackTraceHidden]
-public class AssertionResult<TResult>
-{
-	private readonly IExpectationBuilder _expectationBuilder;
+public class AssertionResult<TResult>(IExpectationBuilder expectationBuilder)
+	: AssertionResult<TResult, AssertionResult<TResult>>(expectationBuilder);
 
-	internal AssertionResult(IExpectationBuilder expectationBuilder)
+/// <summary>
+///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
+/// </summary>
+[StackTraceHidden]
+public class AssertionResult<TResult, TSelf>(IExpectationBuilder expectationBuilder)
+	where TSelf : AssertionResult<TResult, TSelf>
+{
+	/// <summary>
+	///     Provide a <paramref name="reason" /> explaining why the assertion is needed.<br />
+	///     If the phrase does not start with the word <i>because</i>, it is prepended automatically.
+	/// </summary>
+	public TSelf Because(string reason)
 	{
-		_expectationBuilder = expectationBuilder;
+		expectationBuilder.AddReason(reason);
+		return (TSelf)this;
 	}
 
 	/// <summary>
@@ -77,11 +89,11 @@ public class AssertionResult<TResult>
 	[StackTraceHidden]
 	private async Task<TResult> GetResult()
 	{
-		ExpectationResult result = await _expectationBuilder.IsMet();
+		ExpectationResult result = await expectationBuilder.IsMet();
 
 		if (result is ExpectationResult.Failure failure)
 		{
-			Fail.Test(_expectationBuilder.FailureMessageBuilder.FromFailure(failure));
+			Fail.Test(expectationBuilder.FailureMessageBuilder.FromFailure(failure));
 		}
 		else if (result is ExpectationResult.Success<TResult> matchingSuccess)
 		{
@@ -94,47 +106,5 @@ public class AssertionResult<TResult>
 		}
 
 		throw new ExpectationException("You should not be here (with value)!");
-	}
-}
-
-/// <summary>
-///     The result of an assertion without an underlying value.
-/// </summary>
-public class AssertionResult
-{
-	private readonly IExpectationBuilder _expectationBuilder;
-
-	internal AssertionResult(IExpectationBuilder expectationBuilder)
-	{
-		_expectationBuilder = expectationBuilder;
-	}
-
-	/// <summary>
-	///     By awaiting the result, the expectations are verified.
-	///     <para />
-	///     Will throw an exception, when the expectations are not met.
-	/// </summary>
-	[StackTraceHidden]
-	public TaskAwaiter GetAwaiter()
-	{
-		Task? result = GetResult();
-		return result.GetAwaiter();
-	}
-
-	[StackTraceHidden]
-	private async Task GetResult()
-	{
-		ExpectationResult result = await _expectationBuilder.IsMet();
-
-		if (result is ExpectationResult.Failure failure)
-		{
-			Fail.Test(_expectationBuilder.FailureMessageBuilder.FromFailure(failure));
-		}
-		else if (result is ExpectationResult.Success)
-		{
-			return;
-		}
-
-		throw new ExpectationException("You should not be here (without value)!");
 	}
 }

@@ -13,7 +13,7 @@ public abstract partial class ThatDelegate
 	///     An <see cref="AssertionResult" /> when an exception was thrown.
 	/// </summary>
 	/// <typeparam name="TException"></typeparam>
-	public class ThrowsExceptionResult<TException> : AssertionResult<TException>
+	public class ThrowsExceptionResult<TException> : AssertionResult<TException, ThrowsExceptionResult<TException>>
 		where TException : Exception
 	{
 		/// <summary>

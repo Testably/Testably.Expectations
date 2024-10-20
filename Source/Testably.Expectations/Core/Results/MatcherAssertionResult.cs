@@ -6,13 +6,14 @@ namespace Testably.Expectations.Core.Results;
 /// <summary>
 ///     The result of an assertion with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AssertionResult{TResult, TValue}" />, allows specifying options on
+///     In addition to the combinations from <see cref="AssertionResultAndOr{TResult,TValue}" />, allows specifying options
+///     on
 ///     the <see cref="StringMatcher" />.
 /// </summary>
 public class MatcherAssertionResult<TResult, TValue>(
 	IExpectationBuilder expectationBuilder,
 	TValue assertion,
-	StringMatcher expected) : AssertionResult<TResult, TValue>(expectationBuilder, assertion)
+	StringMatcher expected) : AssertionResultAndOr<TResult, TValue>(expectationBuilder, assertion)
 {
 	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
 

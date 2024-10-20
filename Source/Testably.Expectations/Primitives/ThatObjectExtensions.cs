@@ -17,7 +17,7 @@ public static class ThatObjectExtensions
 	/// <summary>
 	///     Expect the actual value to be of type <typeparamref name="TType" />.
 	/// </summary>
-	public static AssertionResultWhich<TType, That<object?>> Is<TType>(this That<object?> source)
+	public static AssertionResultAndOrWhich<TType, That<object?>> Is<TType>(this That<object?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsExpectation<TType>(),
 				b => b.Append('.').Append(nameof(Is)).Append('<').Append(typeof(TType).Name)
@@ -27,7 +27,7 @@ public static class ThatObjectExtensions
 	/// <summary>
 	///     Expect the actual value to be equivalent to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AssertionResult<T, That<T>> IsEquivalentTo<T>(this That<T> source,
+	public static AssertionResultAndOr<T, That<T>> IsEquivalentTo<T>(this That<T> source,
 		object expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
@@ -39,7 +39,7 @@ public static class ThatObjectExtensions
 	///     Verifies that the value satisfies the <paramref name="expectations" /> on the properties selected by the
 	///     <paramref name="selector" />.
 	/// </summary>
-	public static AssertionResult<T, That<object?>> Satisfies<T, TProperty>(
+	public static AssertionResultAndOr<T, That<object?>> Satisfies<T, TProperty>(
 		this That<object?> source,
 		Expression<Func<T, TProperty?>> selector,
 		Action<That<TProperty?>> expectations,

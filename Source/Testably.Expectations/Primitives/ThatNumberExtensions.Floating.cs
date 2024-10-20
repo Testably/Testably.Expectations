@@ -12,7 +12,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is seen as not a number (<see cref="float.NaN" />).
 	/// </summary>
-	public static AssertionResult<float, That<float>> IsNaN(this That<float> source)
+	public static AssertionResultAndOr<float, That<float>> IsNaN(this That<float> source)
 		=> new(source.ExpectationBuilder.Add(new IsNaNExpectation<float>(float.IsNaN),
 				b => b.AppendMethod(nameof(IsNaN))),
 			source);
@@ -20,7 +20,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is seen as not a number (<see cref="double.NaN" />).
 	/// </summary>
-	public static AssertionResult<double, That<double>> IsNaN(this That<double> source)
+	public static AssertionResultAndOr<double, That<double>> IsNaN(this That<double> source)
 		=> new(source.ExpectationBuilder.Add(new IsNaNExpectation<double>(double.IsNaN),
 				b => b.AppendMethod(nameof(IsNaN))),
 			source);

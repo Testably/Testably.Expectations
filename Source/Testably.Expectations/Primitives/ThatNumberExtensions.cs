@@ -16,7 +16,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public static AssertionResult<TNumber, That<TNumber>> Is<TNumber>(this That<TNumber> source,
+	public static AssertionResultAndOr<TNumber, That<TNumber>> Is<TNumber>(this That<TNumber> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
@@ -27,7 +27,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public static AssertionResult<TNumber?, That<TNumber?>> Is<TNumber>(this That<TNumber?> source,
+	public static AssertionResultAndOr<TNumber?, That<TNumber?>> Is<TNumber>(this That<TNumber?> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
@@ -38,7 +38,7 @@ public static partial class ThatNumberExtensions
 	/// <summary>
 	///     Verifies that the actual value is not equal to the specified <paramref name="expected" /> value.
 	/// </summary>
-	public static AssertionResult<TNumber, That<TNumber>> IsNot<TNumber>(this That<TNumber> source,
+	public static AssertionResultAndOr<TNumber, That<TNumber>> IsNot<TNumber>(this That<TNumber> source,
 		TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>

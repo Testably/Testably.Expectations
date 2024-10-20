@@ -42,6 +42,12 @@ internal class OrNode : CombinationNode
 	}
 
 	/// <inheritdoc />
+	public override void SetReason(BecauseReason reason)
+	{
+		Right.SetReason(reason);
+	}
+
+	/// <inheritdoc />
 	public override string ToString()
 		=> $"({Left} OR {Right})";
 
