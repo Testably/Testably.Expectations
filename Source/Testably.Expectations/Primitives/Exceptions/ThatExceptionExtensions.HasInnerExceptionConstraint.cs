@@ -27,7 +27,7 @@ public static partial class ThatExceptionExtensions
 			if (innerException is not null)
 			{
 				return new ConstraintResult.Failure<Exception?>(innerException, ToString(),
-					$"found {innerException.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{innerException.Message.Indent()}");
+					$"found {innerException.FormatForMessage()}");
 			}
 
 			return new ConstraintResult.Failure(ToString(),

@@ -22,14 +22,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(actual).Is(pattern).AsWildcard();
 
-			if (expectMatch)
-			{
-				await Expect.That(Act).DoesNotThrow();
-			}
-			else
-			{
-				await Expect.That(Act).ThrowsException();
-			}
+			await Expect.That(Act).ThrowsException().OnlyIf(!expectMatch);
 		}
 
 		[Theory]

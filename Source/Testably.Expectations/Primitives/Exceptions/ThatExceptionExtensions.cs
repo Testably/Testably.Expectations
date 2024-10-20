@@ -113,7 +113,7 @@ public static partial class ThatExceptionExtensions
 			return new ConstraintResult.Failure<Exception?>(actual, "",
 				actual == null
 					? "found <null>"
-					: $"found {actual.GetType().Name.PrependAOrAn()}:{Environment.NewLine}{actual.Message.Indent()}");
+					: $"found {actual.FormatForMessage()}");
 		}
 
 		#endregion
