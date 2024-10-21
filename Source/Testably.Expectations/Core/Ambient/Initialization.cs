@@ -58,6 +58,10 @@ internal static class Initialization
 		[DoesNotReturn]
 		[StackTraceHidden]
 		public void Throw(string message) => _testFramework.Throw(message);
+
+		[DoesNotReturn]
+		[StackTraceHidden]
+		public void Skip(string message) => _testFramework.Skip(message);
 	}
 
 	private sealed class FallbackTestFramework : ITestFrameworkAdapter
@@ -68,7 +72,13 @@ internal static class Initialization
 
 		[DoesNotReturn]
 		[StackTraceHidden]
-		public void Throw(string message) => throw new ExpectationException(message);
+		public void Skip(string message)
+			=> throw new SkipException(message);
+
+		[DoesNotReturn]
+		[StackTraceHidden]
+		public void Throw(string message)
+			=> throw new FailException(message);
 
 		#endregion
 	}

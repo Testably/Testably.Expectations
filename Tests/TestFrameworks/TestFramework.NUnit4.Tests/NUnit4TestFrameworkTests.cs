@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Threading.Tasks;
 using Testably.Expectations;
 
 namespace TestFramework.NUnit4.Tests;
@@ -6,11 +7,20 @@ namespace TestFramework.NUnit4.Tests;
 public sealed class NUnit4TestFrameworkTests
 {
 	[Test]
-	public void WhenUsingNUnit4AsTestFramework_ShouldThrowAssertionException()
+	public async Task OnFail_WhenUsingNUnit4AsTestFramework_ShouldThrowAssertionException()
 	{
 		void Act()
-			=> Expect.That(true).IsFalse();
+			=> Fail.Test("my message");
 
-		Expect.That(Act).Throws<AssertionException>();
+		await Expect.That(Act).Throws<AssertionException>();
+	}
+
+	[Test]
+	public async Task OnSkip_WhenUsingNUnit4AsTestFramework_ShouldThrowIgnoreException()
+	{
+		void Act()
+			=> Skip.Test("my message");
+
+		await Expect.That(Act).Throws<IgnoreException>();
 	}
 }
