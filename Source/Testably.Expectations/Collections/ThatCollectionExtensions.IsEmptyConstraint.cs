@@ -8,14 +8,14 @@ namespace Testably.Expectations;
 
 public static partial class ThatCollectionExtensions
 {
-	private readonly struct IsEmptyConstraint<TItem> : IConstraint<IEnumerable<TItem>>
+	private readonly struct IsEmptyConstraint<TItem> : IConstraint<ICollection<TItem>>
 	{
-		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(ICollection<TItem> actual)
 		{
 			List<TItem> list = actual.ToList();
 			if (!list.Any())
 			{
-				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Success<ICollection<TItem>>(list, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(list)}");

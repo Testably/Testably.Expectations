@@ -7,7 +7,7 @@ using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Collections;
 
-public partial class QuantifiableCollection<TItem>
+public partial class QuantifiableCollection<TItem, TCollection>
 {
 	private readonly struct SatisfyConstraint(
 		Func<TItem, bool> predicate,
