@@ -8,7 +8,6 @@ namespace Testably.Expectations.Core.Results;
 ///     Allows combining multiple expectations with <see cref="AndOrExpectationResult{TResult,TValue,TSelf}.And" /> and
 ///     <see cref="AndOrExpectationResult{TResult,TValue,TSelf}.Or" />.
 /// </summary>
-[StackTraceHidden]
 public class AndOrExpectationResult<TResult, TValue>(
 	IExpectationBuilder expectationBuilder,
 	TValue returnValue)
@@ -21,7 +20,6 @@ public class AndOrExpectationResult<TResult, TValue>(
 ///     <para />
 ///     Allows combining multiple expectations with <see cref="And" /> and <see cref="Or" />.
 /// </summary>
-[StackTraceHidden]
 public class AndOrExpectationResult<TResult, TValue, TSelf>(
 	IExpectationBuilder expectationBuilder,
 	TValue returnValue)

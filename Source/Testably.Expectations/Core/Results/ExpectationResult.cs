@@ -8,6 +8,7 @@ namespace Testably.Expectations.Core.Results;
 /// <summary>
 ///     The result of an expectation without an underlying value.
 /// </summary>
+[StackTraceHidden]
 public class ExpectationResult(IExpectationBuilder expectationBuilder)
 {
 	/// <summary>
@@ -25,14 +26,12 @@ public class ExpectationResult(IExpectationBuilder expectationBuilder)
 	///     <para />
 	///     Will throw an exception, when the expectations are not met.
 	/// </summary>
-	[StackTraceHidden]
 	public TaskAwaiter GetAwaiter()
 	{
 		Task result = GetResult();
 		return result.GetAwaiter();
 	}
 
-	[StackTraceHidden]
 	private async Task GetResult()
 	{
 		ConstraintResult result = await expectationBuilder.IsMet();
@@ -53,7 +52,6 @@ public class ExpectationResult(IExpectationBuilder expectationBuilder)
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 /// </summary>
-[StackTraceHidden]
 public class ExpectationResult<TResult>(IExpectationBuilder expectationBuilder)
 	: ExpectationResult<TResult, ExpectationResult<TResult>>(expectationBuilder);
 

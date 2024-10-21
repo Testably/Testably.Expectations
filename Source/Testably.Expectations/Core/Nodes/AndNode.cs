@@ -4,7 +4,6 @@ using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
 
-[StackTraceHidden]
 internal class AndNode : CombinationNode
 {
 	public override Node Left { get; }

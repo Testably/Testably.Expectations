@@ -8,7 +8,6 @@ namespace Testably.Expectations;
 /// <summary>
 ///     The starting point for checking expectations.
 /// </summary>
-[StackTraceHidden]
 public static partial class Expect
 {
 	/// <summary>
