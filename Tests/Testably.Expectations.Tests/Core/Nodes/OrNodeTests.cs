@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xunit;
-
-namespace Testably.Expectations.Tests.Core.Nodes;
+﻿namespace Testably.Expectations.Tests.Core.Nodes;
 
 public sealed class OrNodeTests
 {

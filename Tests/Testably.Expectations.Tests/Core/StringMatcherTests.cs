@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Testably.Expectations.Tests.TestHelpers;
-using Xunit;
+﻿using Testably.Expectations.Tests.TestHelpers;
 
 namespace Testably.Expectations.Tests.Core;
 

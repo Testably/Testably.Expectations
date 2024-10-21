@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
-namespace Testably.Expectations.Tests.Core.Nodes;
+﻿namespace Testably.Expectations.Tests.Core.Nodes;
 
 public sealed class WhichNodeTests
 {

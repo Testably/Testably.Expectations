@@ -1,6 +1,4 @@
-﻿using AutoFixture.Xunit2;
-using System;
-using Testably.Expectations.Extensions;
+﻿using Testably.Expectations.Extensions;
 
 namespace Testably.Expectations.Tests.Extensions;
 

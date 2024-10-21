@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
-namespace Testably.Expectations.Tests.Primitives.Strings;
+﻿namespace Testably.Expectations.Tests.Primitives.Strings;
 
 public sealed partial class ThatString
 {

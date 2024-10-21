@@ -1,7 +1,4 @@
-﻿using AutoFixture.Xunit2;
-using System.Threading.Tasks;
-using Testably.Expectations.Core.Constraints;
-using Xunit;
+﻿using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Tests.Core;
 

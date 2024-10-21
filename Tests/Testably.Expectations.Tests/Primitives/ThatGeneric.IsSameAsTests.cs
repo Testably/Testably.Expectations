@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
-namespace Testably.Expectations.Tests.Primitives.Generics;
+﻿namespace Testably.Expectations.Tests.Primitives.Generics;
 
 public sealed partial class ThatGeneric
 {
