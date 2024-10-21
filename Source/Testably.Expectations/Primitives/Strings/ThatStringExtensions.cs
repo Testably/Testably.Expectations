@@ -43,6 +43,70 @@ public static partial class ThatStringExtensions
 	}
 
 	/// <summary>
+	///     Verifies that the subject starts with the <paramref name="expected" /> <see langword="string" />.
+	/// </summary>
+	public static StringExpectationResult<string?, That<string?>> StartsWith(
+		this That<string?> source,
+		string expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+	{
+		var options = new StringOptions();
+		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+				new StartsWithConstraint(expected, options),
+				b => b.AppendMethod(nameof(StartsWith), doNotPopulateThisValue)),
+			source,
+			options);
+	}
+
+	/// <summary>
+	///     Verifies that the subject ends with the <paramref name="expected" /> <see langword="string" />.
+	/// </summary>
+	public static StringExpectationResult<string?, That<string?>> EndsWith(
+		this That<string?> source,
+		string expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+	{
+		var options = new StringOptions();
+		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+				new EndsWithConstraint(expected, options),
+				b => b.AppendMethod(nameof(EndsWith), doNotPopulateThisValue)),
+			source,
+			options);
+	}
+
+	/// <summary>
+	///     Verifies that the subject does not start with the <paramref name="expected" /> <see langword="string" />.
+	/// </summary>
+	public static StringExpectationResult<string?, That<string?>> DoesNotStartWith(
+		this That<string?> source,
+		string expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+	{
+		var options = new StringOptions();
+		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+				new DoesNotStartWithConstraint(expected, options),
+				b => b.AppendMethod(nameof(DoesNotStartWith), doNotPopulateThisValue)),
+			source,
+			options);
+	}
+
+	/// <summary>
+	///     Verifies that the subject does not end with the <paramref name="expected" /> <see langword="string" />.
+	/// </summary>
+	public static StringExpectationResult<string?, That<string?>> DoesNotEndWith(
+		this That<string?> source,
+		string expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+	{
+		var options = new StringOptions();
+		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+				new DoesNotEndWithConstraint(expected, options),
+				b => b.AppendMethod(nameof(DoesNotEndWith), doNotPopulateThisValue)),
+			source,
+			options);
+	}
+
+	/// <summary>
 	///     Verifies that the subject contains the <paramref name="unexpected" /> <see langword="string" />.
 	/// </summary>
 	public static StringExpectationResult<string?, That<string?>> DoesNotContain(

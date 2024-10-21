@@ -48,6 +48,18 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 	}
 
 	/// <summary>
+	///     Ignores casing when comparing the <see langword="string" />s, according to the <paramref name="ignoreCase" /> parameter.
+	/// </summary>
+	public StringExpectationResult<TResult, TValue, TSelf> IgnoringCase(
+		bool ignoreCase,
+		[CallerArgumentExpression("ignoreCase")] string doNotPopulateThisValue = "")
+	{
+		options.IgnoringCase(ignoreCase);
+		_expectationBuilder1.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase), doNotPopulateThisValue));
+		return this;
+	}
+
+	/// <summary>
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="string" />s.
 	/// </summary>
 	public StringExpectationResult<TResult, TValue, TSelf> Using(
