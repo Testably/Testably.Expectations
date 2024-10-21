@@ -71,10 +71,10 @@ public sealed partial class ThatHttpResponseMessage
 		}
 
 		[Theory]
-		[InlineData(HttpStatusCode.OK)]
-		[InlineData(HttpStatusCode.BadRequest)]
-		[InlineData(HttpStatusCode.InternalServerError)]
-		[InlineData(HttpStatusCode.Redirect)]
+		[MemberData(nameof(SuccessStatusCodes), MemberType = typeof(ThatHttpResponseMessage))]
+		[MemberData(nameof(RedirectStatusCodes), MemberType = typeof(ThatHttpResponseMessage))]
+		[MemberData(nameof(ClientErrorStatusCodes), MemberType = typeof(ThatHttpResponseMessage))]
+		[MemberData(nameof(ServerErrorStatusCodes), MemberType = typeof(ThatHttpResponseMessage))]
 		public async Task WhenStatusCodeIsExpected_ShouldSucceed(HttpStatusCode statusCode)
 		{
 			HttpStatusCode expected = statusCode;

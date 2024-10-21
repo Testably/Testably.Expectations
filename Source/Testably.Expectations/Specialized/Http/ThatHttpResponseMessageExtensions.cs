@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Formatting;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Results;
 
@@ -13,6 +14,21 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatHttpResponseMessageExtensions
 {
+	/// <summary>
+	///     Verifies that the response has a status code different to <paramref name="unexpected" />
+	/// </summary>
+	public static AndOrExpectationResult<HttpResponseMessage, That<HttpResponseMessage?>>
+		DoesNotHaveStatusCode(
+			this That<HttpResponseMessage?> source,
+			HttpStatusCode unexpected,
+			[CallerArgumentExpression("unexpected")]
+			string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(
+				new HasStatusCodeRangeConstraint(statusCode => statusCode != (int)unexpected,
+					$"has StatusCode different to {Formatter.Format(unexpected)}"),
+				b => b.AppendMethod(nameof(DoesNotHaveStatusCode), doNotPopulateThisValue)),
+			source);
+
 	/// <summary>
 	///     Verifies that the response has a client error status code (4xx)
 	/// </summary>
@@ -39,6 +55,19 @@ public static partial class ThatHttpResponseMessageExtensions
 				b => b.AppendMethod(nameof(HasContent), doNotPopulateThisValue)),
 			source,
 			expected);
+
+	/// <summary>
+	///     Verifies that the response has a client or server error status code (4xx or 5xx)
+	/// </summary>
+	public static AndOrExpectationResult<HttpResponseMessage, That<HttpResponseMessage?>>
+		HasError(
+			this That<HttpResponseMessage?> source)
+		=> new(source.ExpectationBuilder.Add(
+				new HasStatusCodeRangeConstraint(
+					statusCode => statusCode >= 400 && statusCode < 600,
+					"has an error (status code 4xx or 5xx)"),
+				b => b.AppendMethod(nameof(HasError))),
+			source);
 
 	/// <summary>
 	///     Verifies that the response has a server error status code (5xx)
