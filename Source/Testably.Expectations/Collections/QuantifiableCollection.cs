@@ -10,14 +10,15 @@ namespace Testably.Expectations.Collections;
 /// <summary>
 ///     A quantifiable collection matching items against the expected <paramref name="quantity" />.
 /// </summary>
-public partial class QuantifiableCollection<TItem>(
-	That<IEnumerable<TItem>> source,
+public partial class QuantifiableCollection<TItem, TCollection>(
+	That<TCollection> source,
 	CollectionQuantifier quantity)
+	where TCollection : IEnumerable<TItem>
 {
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> Are(
+	public AndOrExpectationResult<TCollection, That<TCollection>> Are(
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new AreEqualConstraint(expected, quantity),
@@ -27,12 +28,12 @@ public partial class QuantifiableCollection<TItem>(
 	/// <summary>
 	///     ...are equivalent to <paramref name="expected" />.
 	/// </summary>
-	public EquivalencyOptionsExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> AreEquivalentTo(
+	public EquivalencyOptionsExpectationResult<TCollection, That<TCollection>> AreEquivalentTo(
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		var options = new EquivalencyOptions();
-		return new EquivalencyOptionsExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>>(
+		return new EquivalencyOptionsExpectationResult<TCollection, That<TCollection>>(
 			source.ExpectationBuilder.Add(new AreEquivalentToConstraint(expected, doNotPopulateThisValue, quantity, options),
 				b => b.AppendMethod(nameof(AreEquivalentTo), doNotPopulateThisValue)),
 			source,
@@ -42,7 +43,7 @@ public partial class QuantifiableCollection<TItem>(
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
-	public AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>> Satisfy(
+	public AndOrExpectationResult<TCollection, That<TCollection>> Satisfy(
 		Func<TItem, bool> predicate,
 		[CallerArgumentExpression("predicate")]
 		string doNotPopulateThisValue = "")

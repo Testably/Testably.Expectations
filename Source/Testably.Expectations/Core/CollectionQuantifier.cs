@@ -1,4 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Testably.Expectations.Core;
 
@@ -42,6 +45,15 @@ public abstract class CollectionQuantifier
 	public abstract bool CheckCondition(int total, int actual,
 		[NotNullWhen(false)] out string? error);
 
+	/// <summary>
+	///     Checks if the number of <paramref name="items" /> that match the <paramref name="predicate" /> satisfy the
+	///     quantifier.
+	///     <para />
+	///     If not, the <paramref name="error" /> contains the error message.
+	/// </summary>
+	public abstract bool CheckCondition<T>(IEnumerable<T> items, T expected, Func<T, T, bool> predicate,
+		[NotNullWhen(false)] out string? error);
+
 	private class NoneQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
@@ -56,6 +68,23 @@ public abstract class CollectionQuantifier
 
 			error = $"{actual}";
 			return false;
+		}
+
+		/// <inheritdoc />
+		public override bool CheckCondition<T>(IEnumerable<T> items, T expected, Func<T, T, bool> predicate,
+			[NotNullWhen(false)] out string? error)
+		{
+			foreach (var item in items)
+			{
+				if (predicate(item, expected))
+				{
+					error = "at least one";
+					return false;
+				}
+			}
+
+			error = null;
+			return true;
 		}
 
 		/// <inheritdoc />
@@ -79,6 +108,28 @@ public abstract class CollectionQuantifier
 		}
 
 		/// <inheritdoc />
+		public override bool CheckCondition<T>(IEnumerable<T> items, T expected, Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
+		{
+			if (items is ICollection<T> collection)
+			{
+				var totalCount = collection.Count;
+				var matchingCount = collection.Count(a => predicate(a, expected));
+				if (matchingCount == collection.Count)
+				{
+
+					error = null;
+					return true;
+				}
+
+				error = $"only {matchingCount} of {totalCount}";
+				return false;
+			}
+
+			throw new NotSupportedException(
+				"All quantifier is only supported for Collections and not Enumerables");
+		}
+
+		/// <inheritdoc />
 		public override string ToString() => "all items";
 	}
 
@@ -95,6 +146,30 @@ public abstract class CollectionQuantifier
 			}
 
 			error = $"only {actual} of {total}";
+			return false;
+		}
+
+		/// <inheritdoc />
+		public override bool CheckCondition<T>(IEnumerable<T> items, T expected, Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
+		{
+			int matchingCount = 0;
+			int totalCount = 0;
+
+			foreach (var item in items)
+			{
+				totalCount++;
+				if (predicate(item, expected))
+				{
+					matchingCount++;
+					if (matchingCount >= minimum)
+					{
+						error = null;
+						return true;
+					}
+				}
+			}
+
+			error = $"only {matchingCount} of {totalCount}";
 			return false;
 		}
 
@@ -126,6 +201,34 @@ public abstract class CollectionQuantifier
 		}
 
 		/// <inheritdoc />
+		public override bool CheckCondition<T>(IEnumerable<T> items, T expected, Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
+		{
+			int matchingCount = 0;
+
+			foreach (var item in items)
+			{
+				if (predicate(item, expected))
+				{
+					matchingCount++;
+					if (matchingCount > maximum)
+					{
+						error = $"at least {matchingCount}";
+						return false;
+					}
+				}
+			}
+
+			if (matchingCount < minimum)
+			{
+				error = $"only {matchingCount}";
+				return false;
+			}
+
+			error = null;
+			return true;
+		}
+
+		/// <inheritdoc />
 		public override string ToString() => $"between {minimum} and {maximum} items";
 	}
 
@@ -143,6 +246,28 @@ public abstract class CollectionQuantifier
 
 			error = $"{actual} of {total}";
 			return false;
+		}
+
+		/// <inheritdoc />
+		public override bool CheckCondition<T>(IEnumerable<T> items, T expected, Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
+		{
+			int matchingCount = 0;
+
+			foreach (var item in items)
+			{
+				if (predicate(item, expected))
+				{
+					matchingCount++;
+					if (matchingCount > maximum)
+					{
+						error = $"at least {matchingCount}";
+						return false;
+					}
+				}
+			}
+
+			error = null;
+			return true;
 		}
 
 		/// <inheritdoc />

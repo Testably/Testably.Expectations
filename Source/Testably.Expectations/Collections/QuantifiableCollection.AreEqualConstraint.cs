@@ -6,29 +6,29 @@ using Testably.Expectations.Core.Formatting;
 
 namespace Testably.Expectations.Collections;
 
-public partial class QuantifiableCollection<TItem>
+public partial class QuantifiableCollection<TItem, TCollection>
 {
 	private readonly struct AreEqualConstraint(TItem expected, CollectionQuantifier quantifier)
 		: IConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
-			List<TItem> list = actual.ToList();
-			int count = 0;
-			foreach (TItem? item in list)
+			if (actual is ICollection<TItem> collection)
 			{
-				if (item?.Equals(expected) == true)
+				TItem e = expected;
+				if (!quantifier.CheckCondition(collection.Count,
+					collection.Count(a => a?.Equals(e) == true), out string? error))
 				{
-					count++;
+					return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
 				}
 			}
-
-			if (quantifier.CheckCondition(list.Count, count, out string? error))
+			else if (!quantifier.CheckCondition(actual, expected, (a, e) => a?.Equals(e) == true,
+				out string? error))
 			{
-				return new ConstraintResult.Success<IEnumerable<TItem>>(list, ToString());
+				return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
+			return new ConstraintResult.Success<IEnumerable<TItem>>(actual, ToString());
 		}
 
 		public override string ToString()
