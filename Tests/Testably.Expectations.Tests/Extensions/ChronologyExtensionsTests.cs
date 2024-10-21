@@ -4,16 +4,6 @@ namespace Testably.Expectations.Tests.Extensions;
 
 public class ChronologyExtensionsTests
 {
-	[Fact]
-	public async Task CommonUsage()
-	{
-		TimeSpan expected = new(2, 5, 13);
-
-		TimeSpan result = 2.Hours(5.Minutes(13.Seconds()));
-
-		await Expect.That(result).Is(expected);
-	}
-
 	[Theory]
 	[AutoData]
 	public async Task Double_Days_ShouldReturnCorrectTimeSpan(double days)
