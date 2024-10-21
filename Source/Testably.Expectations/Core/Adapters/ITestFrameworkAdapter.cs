@@ -17,4 +17,10 @@ internal interface ITestFrameworkAdapter
 	/// </summary>
 	[DoesNotReturn]
 	void Throw(string message);
+
+	/// <summary>
+	///     Throws a framework-specific exception to indicate a skipped unit test.
+	/// </summary>
+	[DoesNotReturn]
+	void Skip(string message);
 }

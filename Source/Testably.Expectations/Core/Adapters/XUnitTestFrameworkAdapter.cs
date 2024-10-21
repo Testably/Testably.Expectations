@@ -42,10 +42,18 @@ internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 	{
 		Type exceptionType = _assembly?.GetType("Xunit.Sdk.XunitException")
 		                     ?? throw new NotSupportedException(
-			                     "Failed to create the XUnit assertion type");
+			                     "Failed to create the xunit fail assertion type");
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}
+
+	[DoesNotReturn]
+	[StackTraceHidden]
+	public void Skip(string message)
+	{
+		throw new SkipException($"SKIPPED: {message} (xunit v2 does not support skipping test)");
+	}
+
 
 	#endregion
 }

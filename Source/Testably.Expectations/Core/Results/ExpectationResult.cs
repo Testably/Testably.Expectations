@@ -46,7 +46,7 @@ public class ExpectationResult(IExpectationBuilder expectationBuilder)
 			return;
 		}
 
-		throw new ExpectationException("You should not be here (without value)!");
+		throw new FailException("You should not be here (without value)!");
 	}
 }
 
@@ -106,6 +106,6 @@ public class ExpectationResult<TResult, TSelf>(IExpectationBuilder expectationBu
 			return value;
 		}
 
-		throw new ExpectationException("You should not be here (with value)!");
+		throw new FailException("You should not be here (with value)!");
 	}
 }

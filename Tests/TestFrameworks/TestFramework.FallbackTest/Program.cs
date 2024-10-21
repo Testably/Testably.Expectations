@@ -10,7 +10,7 @@ internal class Program
 		{
 			await Expect.That(true).IsFalse();
 		}
-		catch (ExpectationException)
+		catch (FailException)
 		{
 			return 1;
 		}
