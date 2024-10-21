@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET6_0_OR_GREATER
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -35,3 +36,4 @@ public static partial class ThatHttpResponseMessageExtensions
 			=> $"has StatusCode {Formatter.Format(expected)}";
 	}
 }
+#endif

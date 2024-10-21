@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿#if NET6_0_OR_GREATER
+using System.Net;
 using System.Net.Http;
 
 namespace Testably.Expectations.Tests.Specialized.Http;
@@ -165,3 +166,4 @@ public sealed partial class ThatHttpResponseMessage
 		}
 	}
 }
+#endif

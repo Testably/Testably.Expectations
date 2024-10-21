@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿#if NET6_0_OR_GREATER
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 
@@ -13,3 +14,4 @@ public static partial class Expect
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<HttpResponseMessage?>(subject, doNotPopulateThisValue));
 }
+#endif

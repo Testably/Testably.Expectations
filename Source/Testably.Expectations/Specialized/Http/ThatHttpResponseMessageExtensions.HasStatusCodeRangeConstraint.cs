@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET6_0_OR_GREATER
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
@@ -34,3 +35,4 @@ public static partial class ThatHttpResponseMessageExtensions
 			=> expectation;
 	}
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿#if NET6_0_OR_GREATER
+using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
@@ -121,3 +122,4 @@ public static partial class ThatHttpResponseMessageExtensions
 				b => b.AppendMethod(nameof(IsSuccessful))),
 			source);
 }
+#endif
