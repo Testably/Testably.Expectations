@@ -20,6 +20,12 @@ public sealed partial class ThatHttpResponseMessage
 		public static implicit operator HttpResponseMessage(HttpResponseBuilder builder)
 			=> builder.Build();
 
+		public HttpResponseBuilder WithContent(string content)
+		{
+			_content = new StringContent(content);
+			return this;
+		}
+
 		public HttpRequestBuilder WithRequest(HttpMethod method, string uri)
 		{
 			_requestBuilder = new HttpRequestBuilder(this, method, uri);
@@ -29,12 +35,6 @@ public sealed partial class ThatHttpResponseMessage
 		public HttpResponseBuilder WithStatusCode(HttpStatusCode statusCode)
 		{
 			_statusCode = statusCode;
-			return this;
-		}
-
-		public HttpResponseBuilder WithContent(string content)
-		{
-			_content = new StringContent(content);
 			return this;
 		}
 
