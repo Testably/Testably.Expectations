@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿#if NET6_0_OR_GREATER
+using System.Net.Http;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -33,3 +34,4 @@ public static partial class ThatHttpResponseMessageExtensions
 			=> $"has a string content {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
 	}
 }
+#endif

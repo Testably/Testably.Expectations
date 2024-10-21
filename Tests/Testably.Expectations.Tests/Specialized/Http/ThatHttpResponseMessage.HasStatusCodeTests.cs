@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿#if NET6_0_OR_GREATER
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -88,3 +89,4 @@ public sealed partial class ThatHttpResponseMessage
 		}
 	}
 }
+#endif
