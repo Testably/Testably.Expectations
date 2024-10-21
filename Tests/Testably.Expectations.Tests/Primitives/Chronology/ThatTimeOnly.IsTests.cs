@@ -11,7 +11,7 @@ public sealed partial class ThatTimeOnly
 	public sealed class IsTests
 	{
 		[Fact]
-		public async Task Fails_For_Different_Value()
+		public async Task WhenValuesAreDifferent_ShouldFail()
 		{
 			TimeOnly value = CurrentTime();
 			TimeOnly expected = LaterTime();
@@ -29,7 +29,7 @@ public sealed partial class ThatTimeOnly
 		}
 
 		[Fact]
-		public async Task Succeeds_For_Same_Value()
+		public async Task WhenValuesAreTheSame_ShouldSucceed()
 		{
 			TimeOnly value = CurrentTime();
 			TimeOnly expected = value;

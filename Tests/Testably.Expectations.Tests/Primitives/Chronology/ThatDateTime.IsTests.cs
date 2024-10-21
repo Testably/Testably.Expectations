@@ -10,7 +10,7 @@ public sealed partial class ThatDateTime
 	public sealed class IsTests
 	{
 		[Fact]
-		public async Task Fails_For_Different_Value()
+		public async Task WhenValuesAreDifferent_ShouldFail()
 		{
 			DateTime value = CurrentTime();
 			DateTime expected = LaterTime();
@@ -28,7 +28,7 @@ public sealed partial class ThatDateTime
 		}
 
 		[Fact]
-		public async Task Succeeds_For_Same_Value()
+		public async Task WhenValuesAreTheSame_ShouldSucceed()
 		{
 			DateTime value = CurrentTime();
 			DateTime expected = value;
