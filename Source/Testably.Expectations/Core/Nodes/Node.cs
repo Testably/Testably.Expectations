@@ -16,30 +16,37 @@ internal abstract class Node
 	public override string ToString()
 		=> "NONE";
 
-	protected Task<ConstraintResult> TryMeet<TValue>(IConstraint constraint,
+	protected async Task<ConstraintResult> TryMeet<TValue>(IConstraint constraint,
 		SourceValue<TValue> value)
 	{
-		if (constraint is IConstraint<TValue?> typedExpectation)
+		if (constraint is IConstraint<TValue?> valueConstraint)
 		{
-			var result = typedExpectation.IsMetBy(value.Value);
+			var result = valueConstraint.IsMetBy(value.Value);
 			result = _reason?.ApplyTo(result) ?? result;
-			return Task.FromResult(result);
+			return result;
 		}
 
-		if (constraint is IDelegateConstraint<TValue> typedDelegateExpectation)
+		if (constraint is IAsyncConstraint<TValue?> asyncConstraint)
 		{
-			var result = typedDelegateExpectation.IsMetBy(value);
+			var result = await asyncConstraint.IsMetBy(value.Value);
 			result = _reason?.ApplyTo(result) ?? result;
-			return Task.FromResult(result);
+			return result;
 		}
 
-		if (constraint is IDelegateConstraint<DelegateSource.NoValue> delegateExpectation)
+		if (constraint is IDelegateConstraint<TValue> delegateValueConstraint)
 		{
-			var result = delegateExpectation.IsMetBy(
+			var result = delegateValueConstraint.IsMetBy(value);
+			result = _reason?.ApplyTo(result) ?? result;
+			return result;
+		}
+
+		if (constraint is IDelegateConstraint<DelegateSource.NoValue> delegateConstraint)
+		{
+			var result = delegateConstraint.IsMetBy(
 				new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance,
 					value.Exception));
 			result = _reason?.ApplyTo(result) ?? result;
-			return Task.FromResult(result);
+			return result;
 		}
 
 		throw new InvalidOperationException(

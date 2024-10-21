@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 
@@ -8,11 +9,17 @@ namespace Testably.Expectations;
 public static partial class ThatHttpResponseMessageExtensions
 {
 	private readonly struct HasContentConstraint(StringMatcher expected)
-		: IConstraint<HttpResponseMessage>
+		: IAsyncConstraint<HttpResponseMessage>
 	{
-		public ConstraintResult IsMetBy(HttpResponseMessage? actual)
+		public async Task<ConstraintResult> IsMetBy(HttpResponseMessage? actual)
 		{
-			string? message = actual?.Content.ReadAsStringAsync().Result;
+			if (actual == null)
+			{
+				return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
+					"found <null>");
+			}
+
+			string message = await actual.Content.ReadAsStringAsync();
 			if (expected.Matches(message))
 			{
 				return new ConstraintResult.Success<HttpResponseMessage?>(actual, ToString());
