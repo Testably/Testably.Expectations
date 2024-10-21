@@ -8,12 +8,6 @@ namespace Testably.Expectations.Tests.Core;
 public class BecauseTests
 {
 	[Fact]
-	public void X()
-	{
-		Skip.Test("foo");
-	}
-
-	[Fact]
 	public async Task Apply_Because_Reason_On_Action()
 	{
 		string because = "this is the reason";
