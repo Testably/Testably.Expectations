@@ -1,8 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace Testably.Expectations.Tests.Core.Ambient;
 

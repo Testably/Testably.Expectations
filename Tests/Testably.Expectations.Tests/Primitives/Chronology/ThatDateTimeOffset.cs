@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Testably.Expectations.Tests.Primitives.Chronology;
+﻿namespace Testably.Expectations.Tests.Primitives.Chronology;
 
 public sealed partial class ThatDateTimeOffset
 {

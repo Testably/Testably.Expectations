@@ -1,8 +1,4 @@
-﻿using AutoFixture.Xunit2;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace Testably.Expectations.Tests.Primitives.Objects;
+﻿namespace Testably.Expectations.Tests.Primitives.Objects;
 
 public sealed partial class ThatObject
 {

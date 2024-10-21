@@ -1,8 +1,4 @@
-﻿using AutoFixture.Xunit2;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
+﻿using System.Collections.Generic;
 
 namespace Testably.Expectations.Tests.Collections;
 

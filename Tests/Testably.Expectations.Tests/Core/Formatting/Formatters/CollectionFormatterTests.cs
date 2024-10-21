@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Testably.Expectations.Core.Formatting;
-using Xunit;
 
 namespace Testably.Expectations.Tests.Core.Formatting.Formatters;
 

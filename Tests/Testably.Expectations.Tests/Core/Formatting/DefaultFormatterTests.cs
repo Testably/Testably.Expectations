@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Testably.Expectations.Core.Formatting;
-using Xunit;
-
-namespace Testably.Expectations.Tests.Core.Formatting;
+﻿namespace Testably.Expectations.Tests.Core.Formatting;
 
 public sealed class DefaultFormatterTests
 {

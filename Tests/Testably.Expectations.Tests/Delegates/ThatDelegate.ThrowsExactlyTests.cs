@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace Testably.Expectations.Tests.Delegates;
+﻿namespace Testably.Expectations.Tests.Delegates;
 
 public sealed partial class ThatDelegate
 {

@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xunit;
-
-namespace Testably.Expectations.Tests.Core;
+﻿namespace Testably.Expectations.Tests.Core;
 
 public sealed class ExpectationTests
 {

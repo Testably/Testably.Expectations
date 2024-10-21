@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
-namespace Testably.Expectations.Tests.Primitives.Chronology;
+﻿namespace Testably.Expectations.Tests.Primitives.Chronology;
 
 public sealed partial class ThatDateTime
 {

@@ -1,9 +1,4 @@
 ﻿#if NET6_0_OR_GREATER
-using System;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
 namespace Testably.Expectations.Tests.Primitives.Chronology;
 
 public sealed partial class ThatDateOnly
