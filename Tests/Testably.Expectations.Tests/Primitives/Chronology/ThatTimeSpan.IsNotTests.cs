@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.Formatting;
 using Xunit;
 using Xunit.Sdk;
 
@@ -21,8 +22,8 @@ public sealed partial class ThatTimeSpan
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that value
-				                   is not {unexpected:g},
-				                   but found {value:g}
+				                   is not {Formatter.Format(unexpected)},
+				                   but found {Formatter.Format(value)}
 				                   at Expect.That(value).IsNot(unexpected)
 				                   """);
 		}

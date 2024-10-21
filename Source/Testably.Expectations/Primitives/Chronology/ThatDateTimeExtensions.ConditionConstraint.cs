@@ -1,4 +1,5 @@
 ﻿using System;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
@@ -7,11 +8,16 @@ namespace Testably.Expectations;
 
 public static partial class ThatDateTimeExtensions
 {
-	private readonly struct ConditionConstraint(DateTime expected, Func<DateTime, DateTime, bool> condition, string expectation) : IConstraint<DateTime>
+	private readonly struct ConditionConstraint(
+		DateTime expected,
+		Func<DateTime, DateTime, TimeSpan, bool> condition,
+		string expectation,
+		TimeTolerance tolerance) : IConstraint<DateTime>
 	{
 		public ConstraintResult IsMetBy(DateTime actual)
 		{
-			if (condition(actual, expected))
+			_ = tolerance;
+			if (condition(actual, expected, tolerance.Tolerance ?? TimeSpan.Zero))
 			{
 				return new ConstraintResult.Success<DateTime>(actual, ToString());
 			}
@@ -20,6 +26,6 @@ public static partial class ThatDateTimeExtensions
 		}
 
 		public override string ToString()
-			=> expectation;
+			=> expectation + tolerance;
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Formatting;
 
@@ -7,11 +8,11 @@ namespace Testably.Expectations;
 
 public static partial class ThatDateTimeExtensions
 {
-	private readonly struct IsNotConstraint(DateTime unexpected) : IConstraint<DateTime>
+	private readonly struct IsNotConstraint(DateTime unexpected, TimeTolerance tolerance) : IConstraint<DateTime>
 	{
 		public ConstraintResult IsMetBy(DateTime actual)
 		{
-			if (!unexpected.Equals(actual))
+			if (!tolerance.IsWithinTolerance(actual - unexpected))
 			{
 				return new ConstraintResult.Success<DateTime>(actual, ToString());
 			}
@@ -20,6 +21,6 @@ public static partial class ThatDateTimeExtensions
 		}
 
 		public override string ToString()
-			=> $"is not {Formatter.Format(unexpected)}";
+			=> $"is not {Formatter.Format(unexpected)}{tolerance}";
 	}
 }

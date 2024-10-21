@@ -9,6 +9,25 @@ internal class TimeSpanFormatter : FormatterBase<TimeSpan>
 	public override void Format(TimeSpan value, StringBuilder stringBuilder,
 		FormattingOptions options)
 	{
-		stringBuilder.Append(value.ToString("g"));
+		string formatString;
+		if (value.Days > 0)
+		{
+			formatString = @"d\.hh\:mm\:ss";
+		}
+		else if (value.Hours > 0)
+		{
+			formatString = @"h\:mm\:ss";
+		}
+		else
+		{
+			formatString = @"m\:ss";
+		}
+
+		if (value.Milliseconds > 0)
+		{
+			formatString += @"\.fff";
+		}
+
+		stringBuilder.Append(value.ToString(formatString));
 	}
 }
