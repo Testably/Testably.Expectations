@@ -14,7 +14,7 @@ namespace Testably.Expectations;
 public static partial class ThatObjectExtensions
 {
 	/// <summary>
-	///     Expect the actual value to be of type <typeparamref name="TType" />.
+	///     Verifies that the subject is of type <typeparamref name="TType" />.
 	/// </summary>
 	public static AndOrWhichExpectationResult<TType, That<object?>> Is<TType>(
 		this That<object?> source)
@@ -25,7 +25,7 @@ public static partial class ThatObjectExtensions
 			source);
 
 	/// <summary>
-	///     Expect the actual value to be equivalent to the <paramref name="expected" /> value.
+	///     Verifies that the subject is equivalent to the <paramref name="expected" /> value.
 	/// </summary>
 	public static EquivalencyOptionsExpectationResult<T, That<T>> IsEquivalentTo<T>(this That<T> source,
 		object expected,

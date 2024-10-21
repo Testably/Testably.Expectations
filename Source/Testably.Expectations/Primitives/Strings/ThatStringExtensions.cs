@@ -12,7 +12,7 @@ namespace Testably.Expectations;
 public static partial class ThatStringExtensions
 {
 	/// <summary>
-	///     Verifies that the actual value is equal to <paramref name="expected" />.
+	///     Verifies that the subject is equal to <paramref name="expected" />.
 	/// </summary>
 	public static StringMatcherExpectationResult<string?, That<string?>> Is(
 		this That<string?> source,
@@ -25,7 +25,7 @@ public static partial class ThatStringExtensions
 			expected);
 
 	/// <summary>
-	///     Verifies that the actual value contains the <paramref name="expected" /> <see langword="string" />.
+	///     Verifies that the subject contains the <paramref name="expected" /> <see langword="string" />.
 	/// </summary>
 	public static StringCountExpectationResult<string?, That<string?>> Contains(
 		this That<string?> source,
@@ -43,7 +43,7 @@ public static partial class ThatStringExtensions
 	}
 
 	/// <summary>
-	///     Verifies that the actual value contains the <paramref name="unexpected" /> <see langword="string" />.
+	///     Verifies that the subject contains the <paramref name="unexpected" /> <see langword="string" />.
 	/// </summary>
 	public static StringExpectationResult<string?, That<string?>> DoesNotContain(
 		this That<string?> source,
@@ -61,7 +61,7 @@ public static partial class ThatStringExtensions
 	}
 
 	/// <summary>
-	///     Verifies that the actual value is not <see langword="null" />.
+	///     Verifies that the subject is not <see langword="null" />.
 	/// </summary>
 	public static AndOrExpectationResult<string, That<string?>> IsNotNull(
 		this That<string?> source)
@@ -71,7 +71,7 @@ public static partial class ThatStringExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is <see langword="null" />.
+	///     Verifies that the subject is <see langword="null" />.
 	/// </summary>
 	public static AndOrExpectationResult<string?, That<string?>> IsNull(
 		this That<string?> source)

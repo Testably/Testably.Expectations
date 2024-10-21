@@ -9,9 +9,7 @@ namespace Testably.Expectations.Core.Results;
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
 ///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying
-///     options
-///     on
-///     the <see cref="StringMatcher" />.
+///     options on the <see cref="StringMatcher" />.
 /// </summary>
 public class StringMatcherExpectationResult<TResult, TValue>(
 	IExpectationBuilder expectationBuilder,

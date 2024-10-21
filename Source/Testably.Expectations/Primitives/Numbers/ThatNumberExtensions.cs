@@ -13,7 +13,7 @@ namespace Testably.Expectations;
 public static partial class ThatNumberExtensions
 {
 	/// <summary>
-	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
+	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<TNumber, That<TNumber>> Is<TNumber>(
 		this That<TNumber> source,
@@ -25,7 +25,7 @@ public static partial class ThatNumberExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
+	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<TNumber?, That<TNumber?>> Is<TNumber>(
 		this That<TNumber?> source,
@@ -37,7 +37,7 @@ public static partial class ThatNumberExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is seen as not a number (<see cref="float.NaN" />).
+	///     Verifies that the subject is seen as not a number (<see cref="float.NaN" />).
 	/// </summary>
 	public static AndOrExpectationResult<float, That<float>> IsNaN(this That<float> source)
 		=> new(source.ExpectationBuilder.Add(new IsNaNConstraint<float>(float.IsNaN),
@@ -45,7 +45,7 @@ public static partial class ThatNumberExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is seen as not a number (<see cref="double.NaN" />).
+	///     Verifies that the subject is seen as not a number (<see cref="double.NaN" />).
 	/// </summary>
 	public static AndOrExpectationResult<double, That<double>> IsNaN(this That<double> source)
 		=> new(source.ExpectationBuilder.Add(new IsNaNConstraint<double>(double.IsNaN),
@@ -53,7 +53,7 @@ public static partial class ThatNumberExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is not equal to the specified <paramref name="expected" /> value.
+	///     Verifies that the subject is not equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<TNumber, That<TNumber>> IsNot<TNumber>(
 		this That<TNumber> source,

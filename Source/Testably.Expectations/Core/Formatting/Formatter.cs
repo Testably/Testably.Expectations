@@ -19,8 +19,15 @@ public class Formatter
 		new BooleanFormatter(),
 		new StringFormatter(),
 		new TypeFormatter(),
-		new HttpStatusCodeFormatter(),
 		new CollectionFormatter(),
+		new HttpStatusCodeFormatter(),
+		new DateTimeFormatter(),
+		new DateTimeOffsetFormatter(),
+		new TimeSpanFormatter(),
+#if !NETSTANDARD2_0
+		new DateOnlyFormatter(),
+		new TimeOnlyFormatter(),
+#endif
 		new NumberFormatter<int>(),
 		new NumberFormatter<uint>(),
 		new NumberFormatter<byte>(),

@@ -12,7 +12,7 @@ namespace Testably.Expectations;
 public static partial class ThatBoolExtensions
 {
 	/// <summary>
-	///     Verifies that the actual value implies the specified <paramref name="consequent" /> value.
+	///     Verifies that the subject implies the <paramref name="consequent" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<bool, That<bool>> Implies(this That<bool> source,
 		bool consequent,
@@ -23,7 +23,7 @@ public static partial class ThatBoolExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is equal to the specified <paramref name="expected" /> value.
+	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<bool, That<bool>> Is(this That<bool> source,
 		bool expected,
@@ -33,7 +33,7 @@ public static partial class ThatBoolExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is <see langword="false" />.
+	///     Verifies that the subject is <see langword="false" />.
 	/// </summary>
 	public static AndOrExpectationResult<bool, That<bool>> IsFalse(this That<bool> source)
 		=> new(source.ExpectationBuilder.Add(new IsConstraint(false),
@@ -41,7 +41,7 @@ public static partial class ThatBoolExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is not equal to the specified <paramref name="unexpected" /> value.
+	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<bool, That<bool>> IsNot(this That<bool> source,
 		bool unexpected,
@@ -52,7 +52,7 @@ public static partial class ThatBoolExtensions
 			source);
 
 	/// <summary>
-	///     Verifies that the actual value is <see langword="true" />.
+	///     Verifies that the subject is <see langword="true" />.
 	/// </summary>
 	public static AndOrExpectationResult<bool, That<bool>> IsTrue(this That<bool> source)
 		=> new(source.ExpectationBuilder.Add(new IsConstraint(true),
