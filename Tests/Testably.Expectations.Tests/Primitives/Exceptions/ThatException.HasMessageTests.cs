@@ -1,10 +1,4 @@
-﻿using AutoFixture.Xunit2;
-using System;
-using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
-namespace Testably.Expectations.Tests.Primitives.Exceptions;
+﻿namespace Testably.Expectations.Tests.Primitives.Exceptions;
 
 public sealed partial class ThatException
 {

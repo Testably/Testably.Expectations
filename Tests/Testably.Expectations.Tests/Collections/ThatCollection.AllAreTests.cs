@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
-namespace Testably.Expectations.Tests.Collections;
+﻿namespace Testably.Expectations.Tests.Collections;
 
 public sealed partial class ThatCollection
 {

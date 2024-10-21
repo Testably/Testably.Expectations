@@ -1,8 +1,4 @@
-﻿using System.Threading.Tasks;
-using Xunit;
-using Xunit.Sdk;
-
-namespace Testably.Expectations.Tests.Primitives.Booleans;
+﻿namespace Testably.Expectations.Tests.Primitives.Booleans;
 
 public sealed partial class ThatBool
 {

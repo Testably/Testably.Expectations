@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Testably.Expectations.Tests.TestHelpers;
-using Xunit;
 
 namespace Testably.Expectations.Tests.Primitives.Objects;
 
