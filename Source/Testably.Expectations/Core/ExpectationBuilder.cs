@@ -8,7 +8,6 @@ using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core;
 
-[StackTraceHidden]
 internal class ExpectationBuilder<TValue> : IExpectationBuilder
 {
 	private readonly FailureMessageBuilder _failureMessageBuilder;
@@ -70,7 +69,6 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		return this;
 	}
 
-	[StackTraceHidden]
 	public async Task<ConstraintResult> IsMet()
 	{
 		SourceValue<TValue> data = await _subjectSource.GetValue();

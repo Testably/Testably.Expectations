@@ -13,7 +13,6 @@ namespace Testably.Expectations.Core.Results;
 ///     underlying
 ///     properties with <see cref="AndOrWhichExpectationResult{TResult,TValue,TSelf}.Which{TProperty}" />.
 /// </summary>
-[StackTraceHidden]
 public class AndOrWhichExpectationResult<TResult, TValue>(
 	IExpectationBuilder expectationBuilder,
 	TValue returnValue)
@@ -27,7 +26,6 @@ public class AndOrWhichExpectationResult<TResult, TValue>(
 ///     underlying
 ///     properties with <see cref="Which{TProperty}" />.
 /// </summary>
-[StackTraceHidden]
 public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 	IExpectationBuilder expectationBuilder,
 	TValue returnValue)

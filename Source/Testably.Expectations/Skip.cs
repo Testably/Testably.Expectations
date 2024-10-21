@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Testably.Expectations.Core.Ambient;
 
 namespace Testably.Expectations;
@@ -6,6 +7,7 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Methods for dynamically skipping the running test.
 /// </summary>
+[StackTraceHidden]
 public static class Skip
 {
 	/// <summary>

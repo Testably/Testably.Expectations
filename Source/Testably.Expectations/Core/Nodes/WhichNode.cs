@@ -5,7 +5,6 @@ using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
 
-[StackTraceHidden]
 internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
 	public override Node Inner { get; set; }
