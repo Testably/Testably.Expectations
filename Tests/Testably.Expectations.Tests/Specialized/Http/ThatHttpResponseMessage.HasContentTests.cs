@@ -13,7 +13,8 @@ public sealed partial class ThatHttpResponseMessage
 		public async Task WhenContentDiffersFromExpected_ShouldFail()
 		{
 			string expected = "other content";
-			HttpResponseMessage sut = Create("some content");
+			HttpResponseMessage sut = ResponseBuilder
+				.WithContent("some content");
 
 			async Task Act()
 				=> await Expect.That(sut).HasContent(expected);
@@ -35,7 +36,8 @@ public sealed partial class ThatHttpResponseMessage
 		public async Task WhenContentEqualsExpected_ShouldSucceed()
 		{
 			string expected = "some content";
-			HttpResponseMessage sut = Create(expected);
+			HttpResponseMessage sut = ResponseBuilder
+				.WithContent(expected);
 
 			async Task Act()
 				=> await Expect.That(sut).HasContent(expected);
