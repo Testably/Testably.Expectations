@@ -5,7 +5,7 @@ public sealed partial class ThatDateTime
 	public sealed class IsOnOrBeforeTests
 	{
 		[Fact]
-		public async Task WhenValueIsLater_ShouldFail()
+		public async Task WhenSubjectIsLater_ShouldFail()
 		{
 			DateTime expected = CurrentTime();
 			DateTime subject = LaterTime();
@@ -23,7 +23,7 @@ public sealed partial class ThatDateTime
 		}
 
 		[Fact]
-		public async Task WhenValueIsSame_ShouldSucceed()
+		public async Task WhenSubjectIsSame_ShouldSucceed()
 		{
 			DateTime expected = CurrentTime();
 			DateTime subject = expected;
@@ -35,7 +35,7 @@ public sealed partial class ThatDateTime
 		}
 
 		[Fact]
-		public async Task WhenValuesIsEarlier_ShouldSucceed()
+		public async Task WhenSubjectsIsEarlier_ShouldSucceed()
 		{
 			DateTime expected = CurrentTime();
 			DateTime subject = EarlierTime();

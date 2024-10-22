@@ -7,7 +7,7 @@ public sealed partial class ThatEnum
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValuesAreTheSame_ShouldFail(MyColors subject)
+		public async Task WhenSubjectIsTheSame_ShouldFail(MyColors subject)
 		{
 			MyColors unexpected = subject;
 
@@ -26,7 +26,7 @@ public sealed partial class ThatEnum
 		[Theory]
 		[InlineData(MyColors.Blue, MyColors.Green)]
 		[InlineData(MyColors.Green, MyColors.Blue)]
-		public async Task WhenValuesAreDifferent_ShouldSucceed(MyColors subject, MyColors unexpected)
+		public async Task WhenSubjectIsDifferent_ShouldSucceed(MyColors subject, MyColors unexpected)
 		{
 			async Task Act()
 				=> await Expect.That(subject).IsNot(unexpected);

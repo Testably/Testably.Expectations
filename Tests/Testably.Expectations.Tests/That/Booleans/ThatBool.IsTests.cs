@@ -7,7 +7,7 @@ public sealed partial class ThatBool
 		[Theory]
 		[InlineData(true)]
 		[InlineData(false)]
-		public async Task WhenValuesAreDifferent_ShouldFail(bool subject)
+		public async Task WhenSubjectIsDifferent_ShouldFail(bool subject)
 		{
 			bool expected = !subject;
 
@@ -26,7 +26,7 @@ public sealed partial class ThatBool
 		[Theory]
 		[InlineData(true)]
 		[InlineData(false)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(bool subject)
+		public async Task WhenSubjectIsTheSame_ShouldSucceed(bool subject)
 		{
 			bool expected = subject;
 

@@ -6,7 +6,7 @@ public sealed partial class ThatNumber
 	{
 		[Theory]
 		[AutoData]
-		public async Task WhenValuesAreTheSame_ShouldFail(int subject)
+		public async Task WhenSubjectIsTheSame_ShouldFail(int subject)
 		{
 			int expected = subject;
 
@@ -25,7 +25,7 @@ public sealed partial class ThatNumber
 		[Theory]
 		[InlineData(1, 2)]
 		[InlineData(5, -3)]
-		public async Task WhenValuesAreDifferent_ShouldSucceed(int subject, int expected)
+		public async Task WhenSubjectIsDifferent_ShouldSucceed(int subject, int expected)
 		{
 			async Task Act()
 				=> await Expect.That(subject).IsNot(expected);

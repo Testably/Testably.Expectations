@@ -11,7 +11,7 @@ public sealed partial class ThatNullableEnum
 		[InlineData(MyColors.Green, null)]
 		[InlineData(null, MyColors.Blue)]
 		[InlineData(null, MyColors.Green)]
-		public async Task WhenValuesAreDifferent_ShouldFail(MyColors? subject, MyColors? expected)
+		public async Task WhenSubjectIsDifferent_ShouldFail(MyColors? subject, MyColors? expected)
 		{
 			async Task Act()
 				=> await Expect.That(subject).Is(expected);
@@ -28,7 +28,7 @@ public sealed partial class ThatNullableEnum
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(MyColors? subject)
+		public async Task WhenSubjectIsTheSame_ShouldSucceed(MyColors? subject)
 		{
 			MyColors? expected = subject;
 

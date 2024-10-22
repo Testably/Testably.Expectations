@@ -5,7 +5,7 @@ public sealed partial class ThatDateTime
 	public sealed class IsNotTests
 	{
 		[Fact]
-		public async Task WhenValuesAreDifferent_ShouldSucceed()
+		public async Task WhenSubjectIsDifferent_ShouldSucceed()
 		{
 			DateTime subject = CurrentTime();
 			DateTime unexpected = LaterTime();
@@ -17,7 +17,7 @@ public sealed partial class ThatDateTime
 		}
 
 		[Fact]
-		public async Task WhenValuesAreTheSame_ShouldFail()
+		public async Task WhenSubjectIsTheSame_ShouldFail()
 		{
 			DateTime subject = CurrentTime();
 			DateTime unexpected = subject;

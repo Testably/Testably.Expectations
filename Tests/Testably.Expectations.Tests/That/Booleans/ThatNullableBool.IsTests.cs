@@ -11,7 +11,7 @@ public sealed partial class ThatNullableBool
 		[InlineData(false, null)]
 		[InlineData(null, true)]
 		[InlineData(null, false)]
-		public async Task WhenValuesAreDifferent_ShouldFail(bool? subject, bool? expected)
+		public async Task WhenSubjectIsDifferent_ShouldFail(bool? subject, bool? expected)
 		{
 			async Task Act()
 				=> await Expect.That(subject).Is(expected);
@@ -29,7 +29,7 @@ public sealed partial class ThatNullableBool
 		[InlineData(true)]
 		[InlineData(false)]
 		[InlineData(null)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(bool? subject)
+		public async Task WhenSubjectIsTheSame_ShouldSucceed(bool? subject)
 		{
 			bool? expected = subject;
 

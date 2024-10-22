@@ -5,7 +5,7 @@ public sealed partial class ThatGuid
 	public sealed class IsEmptyTests
 	{
 		[Fact]
-		public async Task WhenValueIsEmpty_ShouldSucceed()
+		public async Task WhenSubjectIsEmpty_ShouldSucceed()
 		{
 			Guid subject = Guid.Empty;
 
@@ -16,7 +16,7 @@ public sealed partial class ThatGuid
 		}
 
 		[Fact]
-		public async Task WhenValueIsNotEmpty_ShouldFail()
+		public async Task WhenSubjectIsNotEmpty_ShouldFail()
 		{
 			Guid subject = OtherGuid();
 
