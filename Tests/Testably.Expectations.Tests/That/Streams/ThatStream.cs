@@ -9,7 +9,8 @@ public sealed partial class ThatStream
 		bool canRead = false,
 		bool canWrite = false,
 		bool canSeek = false,
-		int position = 0)
+		long position = 0,
+		long length = 0)
 		: Stream
 	{
 		private readonly byte[] _buffer = buffer ?? Array.Empty<byte>();
@@ -44,7 +45,7 @@ public sealed partial class ThatStream
 		public override bool CanWrite { get; } = canWrite;
 
 		/// <inheritdoc />
-		public override long Length => _buffer.Length;
+		public override long Length { get; } = length;
 
 		/// <inheritdoc />
 		public override long Position { get; set; } = position;

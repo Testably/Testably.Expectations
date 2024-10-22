@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
@@ -130,4 +132,59 @@ public static partial class ThatStreamExtensions
 					actual => actual == null ? "found <null>" : "it was not"),
 				b => b.AppendMethod(nameof(IsWriteOnly))),
 			source);
+
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> length.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> HasLength(this That<Stream?> source,
+		long expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					$"has length {expected}",
+					actual => actual?.Length == expected,
+					actual => actual == null ? "found <null>" : $"it had length {actual.Length}"),
+				b => b.AppendMethod(nameof(HasLength), doNotPopulateThisValue)),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> position.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> HasPosition(this That<Stream?> source,
+		long expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					$"has position {expected}",
+					actual => actual?.Position == expected,
+					actual => actual == null ? "found <null>" : $"it had position {actual.Position}"),
+				b => b.AppendMethod(nameof(HasPosition), doNotPopulateThisValue)),
+			source);
+
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> length.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> DoesNotHaveLength(this That<Stream?> source,
+		long expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					$"does not have length {expected}",
+					actual => actual != null && actual.Length != expected,
+					actual => actual == null ? "found <null>" : "it had"),
+				b => b.AppendMethod(nameof(DoesNotHaveLength), doNotPopulateThisValue)),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> position.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> DoesNotHavePosition(this That<Stream?> source,
+		long expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					$"does not have position {expected}",
+					actual => actual != null && actual.Position != expected,
+					actual => actual == null ? "found <null>" : "it had"),
+				b => b.AppendMethod(nameof(DoesNotHavePosition), doNotPopulateThisValue)),
+			source);
+
 }
