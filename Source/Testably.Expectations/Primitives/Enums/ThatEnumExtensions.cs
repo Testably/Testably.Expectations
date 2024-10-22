@@ -41,6 +41,28 @@ public static partial class ThatEnumExtensions
 			source);
 
 	/// <summary>
+	///     Verifies that the subject is defined inside the <typeparamref name="TEnum"/>.
+	/// </summary>
+	public static AndOrExpectationResult<TEnum, That<TEnum>> IsDefined<TEnum>(this That<TEnum> source)
+		where TEnum : struct, Enum
+		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+					"is defined",
+					actual => Enum.IsDefined(typeof(TEnum), actual)),
+				b => b.AppendMethod(nameof(IsDefined))),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject is not defined inside the <typeparamref name="TEnum"/>.
+	/// </summary>
+	public static AndOrExpectationResult<TEnum, That<TEnum>> IsNotDefined<TEnum>(this That<TEnum> source)
+		where TEnum : struct, Enum
+		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+					"is not defined",
+					actual => !Enum.IsDefined(typeof(TEnum), actual)),
+				b => b.AppendMethod(nameof(IsNotDefined))),
+			source);
+
+	/// <summary>
 	///     Verifies that the subject has the <paramref name="expectedFlag" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<TEnum, That<TEnum>> HasFlag<TEnum>(this That<TEnum> source,
