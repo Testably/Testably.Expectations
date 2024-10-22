@@ -19,7 +19,7 @@ public abstract partial class ThatDelegate
 		{
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult(exception);
+				return DoesNotThrowResult<TException>(exception);
 			}
 
 			if (exception is TException typedException)
