@@ -19,7 +19,6 @@ public class Formatter
 		new BooleanFormatter(),
 		new StringFormatter(),
 		new TypeFormatter(),
-		new EnumFormatter(),
 		new CollectionFormatter(),
 		new HttpStatusCodeFormatter(),
 		new DateTimeFormatter(),
@@ -39,7 +38,8 @@ public class Formatter
 		new NumberFormatter<ulong>(),
 		new NumberFormatter<float>(),
 		new NumberFormatter<double>(),
-		new NumberFormatter<decimal>()
+		new NumberFormatter<decimal>(),
+		new EnumFormatter(),
 	];
 
 	/// <summary>
