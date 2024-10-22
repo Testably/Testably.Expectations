@@ -23,7 +23,7 @@ public static partial class ThatEnumExtensions
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
 					$"is {Formatter.Format(expected)}",
-					actual => expected.Equals(actual)),
+					actual => actual.Equals(expected)),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
 			source);
 
@@ -37,7 +37,7 @@ public static partial class ThatEnumExtensions
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
 					$"is not {Formatter.Format(unexpected)}",
-					actual => !unexpected.Equals(actual)),
+					actual => !actual.Equals(unexpected)),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),
 			source);
 

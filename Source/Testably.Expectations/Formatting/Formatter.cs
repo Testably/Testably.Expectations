@@ -28,6 +28,7 @@ public class Formatter
 		new DateOnlyFormatter(),
 		new TimeOnlyFormatter(),
 #endif
+		new GuidFormatter(),
 		new NumberFormatter<int>(),
 		new NumberFormatter<uint>(),
 		new NumberFormatter<byte>(),

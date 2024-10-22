@@ -93,6 +93,20 @@ public static partial class Expect
 		=> new(new ExpectationBuilder<Exception>(subject, doNotPopulateThisValue));
 
 	/// <summary>
+	///     Start expectations for current <see cref="Guid" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<Guid> That(Guid subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<Guid>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start expectations for the current <see cref="Guid" />? <paramref name="subject" />.
+	/// </summary>
+	public static That<Guid?> That(Guid? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<Guid?>(subject, doNotPopulateThisValue));
+
+	/// <summary>
 	///     Start expectations for the current <see cref="object" />? <paramref name="subject" />.
 	/// </summary>
 	public static That<object?> That(object? subject,
