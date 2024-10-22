@@ -121,6 +121,15 @@ public static partial class Expect
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<Stream?>(subject, doNotPopulateThisValue));
 
+#if NET6_0_OR_GREATER
+	/// <summary>
+	///     Start expectations for the current <see cref="BufferedStream" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<BufferedStream?> That(BufferedStream? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<BufferedStream?>(subject, doNotPopulateThisValue));
+#endif
+
 	/// <summary>
 	///     Start expectations for the current <see cref="string" />? <paramref name="subject" />.
 	/// </summary>
