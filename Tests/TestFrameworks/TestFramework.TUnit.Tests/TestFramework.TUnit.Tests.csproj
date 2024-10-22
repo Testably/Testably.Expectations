@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="TUnit" Version="0.1.1099" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Source\Testably.Expectations\Testably.Expectations.csproj" />
+	</ItemGroup>
+
+</Project>

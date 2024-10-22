@@ -35,22 +35,22 @@ internal class NUnitTestFrameworkAdapter : ITestFrameworkAdapter
 
 	[DoesNotReturn]
 	[StackTraceHidden]
-	public void Throw(string message)
+	public void Skip(string message)
 	{
-		Type exceptionType = _assembly?.GetType("NUnit.Framework.AssertionException")
+		Type exceptionType = _assembly?.GetType("NUnit.Framework.IgnoreException")
 		                     ?? throw new NotSupportedException(
-			                     "Failed to create the NUnit fail assertion type");
+			                     "Failed to create the NUnit skip assertion type");
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}
 
 	[DoesNotReturn]
 	[StackTraceHidden]
-	public void Skip(string message)
+	public void Throw(string message)
 	{
-		Type exceptionType = _assembly?.GetType("NUnit.Framework.IgnoreException")
+		Type exceptionType = _assembly?.GetType("NUnit.Framework.AssertionException")
 		                     ?? throw new NotSupportedException(
-			                     "Failed to create the NUnit skip assertion type");
+			                     "Failed to create the NUnit fail assertion type");
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}
