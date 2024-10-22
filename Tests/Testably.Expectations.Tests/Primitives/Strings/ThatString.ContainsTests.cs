@@ -138,14 +138,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(actual).Contains(expected).Between(4, 9);
+				=> await Expect.That(actual).Contains(expected).Between(4).And(9);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that actual
 				                  contains "in" between 4 and 9 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Contains(expected).Between(4, 9)
+				                  at Expect.That(actual).Contains(expected).Between(4).And(9)
 				                  """);
 		}
 
@@ -157,14 +157,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(actual).Contains(expected).Between(1, 2);
+				=> await Expect.That(actual).Contains(expected).Between(1).And(2);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that actual
 				                  contains "in" between 1 and 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(actual).Contains(expected).Between(1, 2)
+				                  at Expect.That(actual).Contains(expected).Between(1).And(2)
 				                  """);
 		}
 
@@ -176,7 +176,7 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(actual).Contains(expected).Between(1, 4);
+				=> await Expect.That(actual).Contains(expected).Between(1).And(4);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -189,7 +189,7 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(actual).Contains(expected).Between(1, -3);
+				=> await Expect.That(actual).Contains(expected).Between(1).And(-3);
 
 			await Expect.That(Act).ThrowsExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'maximum'*").AsWildcard().And
@@ -204,7 +204,7 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(actual).Contains(expected).Between(3, 3);
+				=> await Expect.That(actual).Contains(expected).Between(3).And(3);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -217,7 +217,7 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(actual).Contains(expected).Between(4, 3);
+				=> await Expect.That(actual).Contains(expected).Between(4).And(3);
 
 			await Expect.That(Act).ThrowsExactly<ArgumentException>().Which
 				.HasMessage("*'maximum'*greater*'minimum'*").AsWildcard();
@@ -231,7 +231,7 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(actual).Contains(expected).Between(-1, 3);
+				=> await Expect.That(actual).Contains(expected).Between(-1).And(3);
 
 			await Expect.That(Act).ThrowsExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'minimum'*").AsWildcard().And

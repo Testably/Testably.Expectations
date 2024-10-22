@@ -67,18 +67,21 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 	}
 
 	/// <summary>
-	///     Verifies, that it occurs between <paramref name="minimum" /> and <paramref name="maximum" /> times.
+	///     Verifies, that it occurs between <paramref name="minimum" />...
 	/// </summary>
-	public TSelf Between(
+	public BetweenResult<TSelf> Between(
 		int minimum,
-		int maximum,
-		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue1 = "",
-		[CallerArgumentExpression("maximum")] string doNotPopulateThisValue2 = "")
+		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
-		quantifier.Between(minimum, maximum);
 		_expectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(Between), doNotPopulateThisValue1, doNotPopulateThisValue2));
-		return (TSelf)this;
+			=> b.AppendMethod(nameof(Between), doNotPopulateThisValue));
+		return new BetweenResult<TSelf>(
+			maximum =>
+			{
+				quantifier.Between(minimum, maximum);
+				return (TSelf)this;
+			},
+			callback => _expectationBuilder.AppendExpression(callback));
 	}
 
 	/// <summary>

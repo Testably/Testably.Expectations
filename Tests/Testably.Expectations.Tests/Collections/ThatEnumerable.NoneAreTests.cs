@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Testably.Expectations.Tests.TestHelpers;
-using Xunit;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace Testably.Expectations.Tests.Collections;
 
@@ -12,7 +11,7 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task DoesNotEnumerateTwice()
 		{
-			ThrowWhenIteratingTwiceEnumerable enumerable = new ThrowWhenIteratingTwiceEnumerable();
+			ThrowWhenIteratingTwiceEnumerable enumerable = new();
 
 			async Task Act()
 				=> await Expect.That(enumerable).None().Are(15)
