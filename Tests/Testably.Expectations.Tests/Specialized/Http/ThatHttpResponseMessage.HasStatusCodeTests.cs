@@ -11,18 +11,18 @@ public sealed partial class ThatHttpResponseMessage
 		[Fact]
 		public async Task WhenFailing_ShouldIncludeRequestInMessage()
 		{
-			HttpResponseMessage sut = ResponseBuilder
+			HttpResponseMessage subject = ResponseBuilder
 				.WithStatusCode(HttpStatusCode.BadRequest)
 				.WithContent("some content")
 				.WithRequest(HttpMethod.Get, "https://example.com")
 				.WithRequestContent("request content");
 
 			async Task Act()
-				=> await Expect.That(sut).HasStatusCode(HttpStatusCode.OK);
+				=> await Expect.That(subject).HasStatusCode(HttpStatusCode.OK);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that sut
+				                  Expected that subject
 				                  has StatusCode 200 OK,
 				                  but found 400 BadRequest:
 				                    HTTP/1.1 400 BadRequest
@@ -30,40 +30,40 @@ public sealed partial class ThatHttpResponseMessage
 				                    The originating request was:
 				                      GET https://example.com/ HTTP 1.1
 				                      request content
-				                  at Expect.That(sut).HasContent(HttpStatusCode.OK)
+				                  at Expect.That(subject).HasContent(HttpStatusCode.OK)
 				                  """);
 		}
 
 		[Fact]
 		public async Task WhenFailing_ShouldIncludeResponseContentAndStatusCodeInMessage()
 		{
-			HttpResponseMessage sut = ResponseBuilder
+			HttpResponseMessage subject = ResponseBuilder
 				.WithStatusCode(HttpStatusCode.BadRequest)
 				.WithContent("some content");
 
 			async Task Act()
-				=> await Expect.That(sut).HasStatusCode(HttpStatusCode.OK);
+				=> await Expect.That(subject).HasStatusCode(HttpStatusCode.OK);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that sut
+				                  Expected that subject
 				                  has StatusCode 200 OK,
 				                  but found 400 BadRequest:
 				                    HTTP/1.1 400 BadRequest
 				                    some content
 				                    The originating request was <null>
-				                  at Expect.That(sut).HasContent(HttpStatusCode.OK)
+				                  at Expect.That(subject).HasContent(HttpStatusCode.OK)
 				                  """);
 		}
 
 		[Fact]
 		public async Task WhenStatusCodeDiffersFromExpected_ShouldFail()
 		{
-			HttpResponseMessage sut = ResponseBuilder
+			HttpResponseMessage subject = ResponseBuilder
 				.WithStatusCode(HttpStatusCode.BadRequest);
 
 			async Task Act()
-				=> await Expect.That(sut).HasStatusCode(HttpStatusCode.OK);
+				=> await Expect.That(subject).HasStatusCode(HttpStatusCode.OK);
 
 			await Expect.That(Act).Throws<XunitException>();
 		}
@@ -76,11 +76,11 @@ public sealed partial class ThatHttpResponseMessage
 		public async Task WhenStatusCodeIsExpected_ShouldSucceed(HttpStatusCode statusCode)
 		{
 			HttpStatusCode expected = statusCode;
-			HttpResponseMessage sut = ResponseBuilder
+			HttpResponseMessage subject = ResponseBuilder
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(sut).HasStatusCode(expected);
+				=> await Expect.That(subject).HasStatusCode(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

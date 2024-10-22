@@ -6,7 +6,7 @@ public sealed partial class ThatObject
 	{
 		[Theory]
 		[AutoData]
-		public async Task S(int value)
+		public async Task WhenTypeMatches_ShouldSucceed(int value)
 		{
 			object subject = new Other
 			{

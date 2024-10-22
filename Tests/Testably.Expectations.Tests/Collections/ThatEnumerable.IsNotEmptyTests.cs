@@ -11,10 +11,10 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task DoesNotEnumerateTwice()
 		{
-			ThrowWhenIteratingTwiceEnumerable enumerable = new();
+			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await Expect.That(enumerable).IsNotEmpty()
+				=> await Expect.That(subject).IsNotEmpty()
 					.And.IsNotEmpty();
 
 			await Expect.That(Act).DoesNotThrow();
@@ -23,8 +23,10 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task DoesNotMaterializeEnumerable()
 		{
+			var subject = Factory.GetFibonacciNumbers();
+
 			async Task Act()
-				=> await Expect.That(Factory.GetFibonacciNumbers()).IsNotEmpty();
+				=> await Expect.That(subject).IsNotEmpty();
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -32,10 +34,10 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task WhenEnumerableContainsValues_ShouldSucceed()
 		{
-			IEnumerable<int> enumerable = ToEnumerable([1, 1, 2]);
+			IEnumerable<int> subject = ToEnumerable([1, 1, 2]);
 
 			async Task Act()
-				=> await Expect.That(enumerable).IsNotEmpty();
+				=> await Expect.That(subject).IsNotEmpty();
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -43,17 +45,17 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task WhenEnumerableIsEmpty_ShouldFail()
 		{
-			IEnumerable<int> enumerable = ToEnumerable([]);
+			IEnumerable<int> subject = ToEnumerable([]);
 
 			async Task Act()
-				=> await Expect.That(enumerable).IsNotEmpty();
+				=> await Expect.That(subject).IsNotEmpty();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that enumerable
+				                  Expected that subject
 				                  is not empty,
 				                  but it was
-				                  at Expect.That(enumerable).IsNotEmpty()
+				                  at Expect.That(subject).IsNotEmpty()
 				                  """);
 		}
 	}

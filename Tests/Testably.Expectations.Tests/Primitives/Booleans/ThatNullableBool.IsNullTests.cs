@@ -41,10 +41,10 @@ public sealed partial class ThatNullableBool
 		[Fact]
 		public async Task WhenNull_ShouldSucceed()
 		{
-			bool? value = null;
+			bool? subject = null;
 
 			async Task Act()
-				=> await Expect.That(value).IsNull();
+				=> await Expect.That(subject).IsNull();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

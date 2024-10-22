@@ -9,21 +9,21 @@ public sealed partial class ThatException
 		{
 			string actual = "actual text";
 			string expected = "expected other text";
-			Exception sut = new(actual);
+			Exception subject = new(actual);
 
 			async Task Act()
-				=> await Expect.That(sut).HasMessage(expected);
+				=> await Expect.That(subject).HasMessage(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that sut
+				                  Expected that subject
 				                  has Message equal to "expected other text",
 				                  but found "actual text" which differs at index 0:
 				                     ↓ (actual)
 				                    "actual text"
 				                    "expected other text"
 				                     ↑ (expected)
-				                  at Expect.That(sut).HasMessage(expected)
+				                  at Expect.That(subject).HasMessage(expected)
 				                  """);
 		}
 
@@ -31,10 +31,10 @@ public sealed partial class ThatException
 		[AutoData]
 		public async Task SucceedsForSameStrings(string actual)
 		{
-			Exception sut = new(actual);
+			Exception subject = new(actual);
 
 			async Task Act()
-				=> await Expect.That(sut).HasMessage(actual);
+				=> await Expect.That(subject).HasMessage(actual);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

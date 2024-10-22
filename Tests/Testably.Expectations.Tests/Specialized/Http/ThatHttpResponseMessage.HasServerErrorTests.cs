@@ -12,11 +12,11 @@ public sealed partial class ThatHttpResponseMessage
 		[MemberData(nameof(ServerErrorStatusCodes), MemberType = typeof(ThatHttpResponseMessage))]
 		public async Task WhenStatusCodeIsExpected_ShouldSucceed(HttpStatusCode statusCode)
 		{
-			HttpResponseMessage sut = ResponseBuilder
+			HttpResponseMessage subject = ResponseBuilder
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(sut).HasServerError();
+				=> await Expect.That(subject).HasServerError();
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -27,15 +27,15 @@ public sealed partial class ThatHttpResponseMessage
 		[MemberData(nameof(ClientErrorStatusCodes), MemberType = typeof(ThatHttpResponseMessage))]
 		public async Task WhenStatusCodeIsUnexpected_ShouldFail(HttpStatusCode statusCode)
 		{
-			HttpResponseMessage sut = ResponseBuilder
+			HttpResponseMessage subject = ResponseBuilder
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(sut).HasServerError();
+				=> await Expect.That(subject).HasServerError();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage(
-					"*server error (status code 5xx)*Expect.That(sut).HasServerError()")
+					"*server error (status code 5xx)*Expect.That(subject).HasServerError()")
 				.AsWildcard();
 		}
 	}

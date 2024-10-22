@@ -7,20 +7,20 @@ public sealed partial class ThatString
 		[Fact]
 		public async Task WhenActualIsEmpty_ShouldSucceed()
 		{
-			string actual = "";
+			string subject = "";
 
 			async Task Act()
-				=> await Expect.That(actual).IsNotNull();
+				=> await Expect.That(subject).IsNotNull();
 
 			await Expect.That(Act).DoesNotThrow();
 		}
 
 		[Theory]
 		[AutoData]
-		public async Task WhenActualIsNotNull_ShouldSucceed(string? actual)
+		public async Task WhenActualIsNotNull_ShouldSucceed(string? subject)
 		{
 			async Task Act()
-				=> await Expect.That(actual).IsNotNull();
+				=> await Expect.That(subject).IsNotNull();
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -28,17 +28,17 @@ public sealed partial class ThatString
 		[Fact]
 		public async Task WhenActualIsNull_ShouldFail()
 		{
-			string? actual = null;
+			string? subject = null;
 
 			async Task Act()
-				=> await Expect.That(actual).IsNotNull();
+				=> await Expect.That(subject).IsNotNull();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that actual
+				                  Expected that subject
 				                  is not null,
 				                  but it was
-				                  at Expect.That(actual).IsNotNull()
+				                  at Expect.That(subject).IsNotNull()
 				                  """);
 		}
 	}

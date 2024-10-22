@@ -11,19 +11,19 @@ public sealed partial class ThatString
 			IgnoringCase_WhenSubjectStartsWithDifferentCase_ShouldFailUnlessCaseIsIgnored(
 				bool ignoreCase)
 		{
-			string actual = "some arbitrary text";
+			string subject = "some arbitrary text";
 			string expected = "SOME";
 
 			async Task Act()
-				=> await Expect.That(actual).StartsWith(expected).IgnoringCase(ignoreCase);
+				=> await Expect.That(subject).StartsWith(expected).IgnoringCase(ignoreCase);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.OnlyIf(!ignoreCase)
 				.Which.HasMessage("""
-				                  Expected that actual
+				                  Expected that subject
 				                  starts with "SOME",
 				                  but found "some arbitrary text"
-				                  at Expect.That(actual).StartsWith(expected).IgnoringCase(ignoreCase)
+				                  at Expect.That(subject).StartsWith(expected).IgnoringCase(ignoreCase)
 				                  """);
 		}
 
@@ -31,18 +31,18 @@ public sealed partial class ThatString
 		public async Task
 			IgnoringCase_WhenSubjectStartsWithDifferentString_ShouldIncludeIgnoringCaseInMessage()
 		{
-			string actual = "some arbitrary text";
+			string subject = "some arbitrary text";
 			string expected = "TEXT";
 
 			async Task Act()
-				=> await Expect.That(actual).StartsWith(expected).IgnoringCase();
+				=> await Expect.That(subject).StartsWith(expected).IgnoringCase();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that actual
+				                  Expected that subject
 				                  starts with "TEXT" ignoring case,
 				                  but found "some arbitrary text"
-				                  at Expect.That(actual).StartsWith(expected).IgnoringCase()
+				                  at Expect.That(subject).StartsWith(expected).IgnoringCase()
 				                  """);
 		}
 
@@ -50,19 +50,19 @@ public sealed partial class ThatString
 		public async Task
 			Using_WhenSubjectStartsWithIncorrectMatchAccordingToComparer_ShouldIncludeComparerInMessage()
 		{
-			string actual = "some arbitrary text";
+			string subject = "some arbitrary text";
 			string expected = "SOME";
 
 			async Task Act()
-				=> await Expect.That(actual).StartsWith(expected)
+				=> await Expect.That(subject).StartsWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that actual
+				                  Expected that subject
 				                  starts with "SOME" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
-				                  at Expect.That(actual).StartsWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				                  at Expect.That(subject).StartsWith(expected).Using(new IgnoreCaseForVocalsComparer())
 				                  """);
 		}
 
@@ -70,11 +70,11 @@ public sealed partial class ThatString
 		public async Task
 			Using_WhenSubjectStartsWithMatchAccordingToComparer_ShouldSucceed()
 		{
-			string actual = "some arbitrary text";
+			string subject = "some arbitrary text";
 			string expected = "sOmE";
 
 			async Task Act()
-				=> await Expect.That(actual).StartsWith(expected)
+				=> await Expect.That(subject).StartsWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).DoesNotThrow();
@@ -83,29 +83,29 @@ public sealed partial class ThatString
 		[Fact]
 		public async Task WhenSubjectDoesNotStartWithExpected_ShouldFail()
 		{
-			string actual = "some arbitrary text";
+			string subject = "some arbitrary text";
 			string expected = "text";
 
 			async Task Act()
-				=> await Expect.That(actual).StartsWith(expected);
+				=> await Expect.That(subject).StartsWith(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that actual
+				                  Expected that subject
 				                  starts with "text",
 				                  but found "some arbitrary text"
-				                  at Expect.That(actual).StartsWith(expected)
+				                  at Expect.That(subject).StartsWith(expected)
 				                  """);
 		}
 
 		[Fact]
 		public async Task WhenSubjectStartsWithExpected_ShouldSucceed()
 		{
-			string actual = "some arbitrary text";
+			string subject = "some arbitrary text";
 			string expected = "some";
 
 			async Task Act()
-				=> await Expect.That(actual).StartsWith(expected);
+				=> await Expect.That(subject).StartsWith(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
