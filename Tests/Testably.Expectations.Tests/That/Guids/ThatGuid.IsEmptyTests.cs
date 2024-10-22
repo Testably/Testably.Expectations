@@ -10,9 +10,9 @@ public sealed partial class ThatGuid
 			Guid subject = Guid.Empty;
 
 			async Task Act()
-				=> await Expect.That(subject).IsEmpty();
+				=> await Expect.That(subject).Should().IsEmpty();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -21,14 +21,14 @@ public sealed partial class ThatGuid
 			Guid subject = OtherGuid();
 
 			async Task Act()
-				=> await Expect.That(subject).IsEmpty();
+				=> await Expect.That(subject).Should().IsEmpty();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is empty,
 				                   but found {subject}
-				                   at Expect.That(subject).IsEmpty()
+				                   at Expect.That(subject).Should().IsEmpty()
 				                   """);
 		}
 	}

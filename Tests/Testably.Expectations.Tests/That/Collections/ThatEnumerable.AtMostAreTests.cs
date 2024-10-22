@@ -14,10 +14,10 @@ public sealed partial class ThatEnumerable
 			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await Expect.That(subject).AtMost(3).Are(1)
+				=> await Expect.That(subject).Should().AtMost(3).Are(1)
 					.And.AtMost(3).Are(1);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -26,14 +26,14 @@ public sealed partial class ThatEnumerable
 			var subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await Expect.That(subject).AtMost(1).Are(1);
+				=> await Expect.That(subject).Should().AtMost(1).Are(1);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has at most 1 item equal to 1,
 				                  but at least 2 items were equal
-				                  at Expect.That(subject).AtMost(1).Are(1)
+				                  at Expect.That(subject).AtMost(1).Should().Are(1)
 				                  """);
 		}
 
@@ -43,9 +43,9 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(subject).AtMost(3).Are(2);
+				=> await Expect.That(subject).Should().AtMost(3).Are(2);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -54,14 +54,14 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(subject).AtMost(3).Are(1);
+				=> await Expect.That(subject).Should().AtMost(3).Are(1);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has at most 3 items equal to 1,
 				                  but at least 4 items were equal
-				                  at Expect.That(subject).AtMost(3).Are(1)
+				                  at Expect.That(subject).AtMost(3).Should().Are(1)
 				                  """);
 		}
 	}

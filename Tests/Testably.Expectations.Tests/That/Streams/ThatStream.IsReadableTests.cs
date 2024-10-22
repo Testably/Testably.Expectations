@@ -12,14 +12,14 @@ public sealed partial class ThatStream
 			Stream? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsReadable();
+				=> await Expect.That(subject).Should().IsReadable();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is readable,
 				                  but found <null>
-				                  at Expect.That(subject).IsReadable()
+				                  at Expect.That(subject).Should().IsReadable()
 				                  """);
 		}
 
@@ -29,9 +29,9 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canRead: true);
 
 			async Task Act()
-				=> await Expect.That(subject).IsReadable();
+				=> await Expect.That(subject).Should().IsReadable();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -40,14 +40,14 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canRead: false);
 
 			async Task Act()
-				=> await Expect.That(subject).IsReadable();
+				=> await Expect.That(subject).Should().IsReadable();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is readable,
 				                  but it was not
-				                  at Expect.That(subject).IsReadable()
+				                  at Expect.That(subject).Should().IsReadable()
 				                  """);
 		}
 	}

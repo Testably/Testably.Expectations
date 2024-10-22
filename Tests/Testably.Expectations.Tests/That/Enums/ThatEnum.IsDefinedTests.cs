@@ -10,9 +10,9 @@ public sealed partial class ThatEnum
 		public async Task WhenSubjectIsDefined_ShouldSucceed(MyColors subject)
 		{
 			async Task Act()
-				=> await Expect.That(subject).IsDefined();
+				=> await Expect.That(subject).Should().IsDefined();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -21,14 +21,14 @@ public sealed partial class ThatEnum
 			MyColors subject = (MyColors)42;
 
 			async Task Act()
-				=> await Expect.That(subject).IsDefined();
+				=> await Expect.That(subject).Should().IsDefined();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is defined,
 				                   but found {subject}
-				                   at Expect.That(subject).IsDefined()
+				                   at Expect.That(subject).Should().IsDefined()
 				                   """);
 		}
 	}

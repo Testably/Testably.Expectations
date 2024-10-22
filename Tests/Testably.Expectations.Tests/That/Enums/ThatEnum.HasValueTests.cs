@@ -12,14 +12,14 @@ public sealed partial class ThatEnum
 			long expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).HasValue(expected);
+				=> await Expect.That(subject).Should().HasValue(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   has value {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).HasValue(expected)
+				                   at Expect.That(subject).Should().HasValue(expected)
 				                   """);
 		}
 
@@ -30,9 +30,9 @@ public sealed partial class ThatEnum
 		public async Task WhenSubjectHasExpectedValue_ShouldSucceed(MyNumbers subject, long expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).HasValue(expected);
+				=> await Expect.That(subject).Should().HasValue(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

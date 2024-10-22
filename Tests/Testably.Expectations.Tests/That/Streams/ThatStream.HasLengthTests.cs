@@ -14,14 +14,14 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(length: actualLength);
 
 			async Task Act()
-				=> await Expect.That(subject).HasLength(length);
+				=> await Expect.That(subject).Should().HasLength(length);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   has length {length},
 				                   but it had length {actualLength}
-				                   at Expect.That(subject).HasLength(length)
+				                   at Expect.That(subject).Should().HasLength(length)
 				                   """);
 		}
 
@@ -32,9 +32,9 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(length: length);
 
 			async Task Act()
-				=> await Expect.That(subject).HasLength(length);
+				=> await Expect.That(subject).Should().HasLength(length);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -43,14 +43,14 @@ public sealed partial class ThatStream
 			Stream? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).HasLength(0);
+				=> await Expect.That(subject).Should().HasLength(0);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has length 0,
 				                  but found <null>
-				                  at Expect.That(subject).HasLength(0)
+				                  at Expect.That(subject).Should().HasLength(0)
 				                  """);
 		}
 	}

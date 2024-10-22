@@ -10,14 +10,14 @@ public sealed partial class ThatNullableEnum
 		public async Task WhenSubjectIsDefined_ShouldFail(MyColors? subject)
 		{
 			async Task Act()
-				=> await Expect.That(subject).IsNotDefined();
+				=> await Expect.That(subject).Should().IsNotDefined();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is not defined,
 				                   but found {subject}
-				                   at Expect.That(subject).IsNotDefined()
+				                   at Expect.That(subject).Should().IsNotDefined()
 				                   """);
 		}
 
@@ -27,9 +27,9 @@ public sealed partial class ThatNullableEnum
 			MyColors? subject = (MyColors)42;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotDefined();
+				=> await Expect.That(subject).Should().IsNotDefined();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -38,14 +38,14 @@ public sealed partial class ThatNullableEnum
 			MyColors? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotDefined();
+				=> await Expect.That(subject).Should().IsNotDefined();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is not defined,
 				                  but found <null>
-				                  at Expect.That(subject).IsNotDefined()
+				                  at Expect.That(subject).Should().IsNotDefined()
 				                  """);
 		}
 	}

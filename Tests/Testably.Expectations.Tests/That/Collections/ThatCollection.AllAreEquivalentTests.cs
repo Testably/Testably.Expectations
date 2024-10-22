@@ -18,14 +18,14 @@ public sealed partial class ThatCollection
 			MyClass expected = new() { Value = "Foo" };
 
 			async Task Act()
-				=> await Expect.That(subject).All().AreEquivalentTo(expected);
+				=> await Expect.That(subject).Should().All().AreEquivalentTo(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has all items equivalent to expected,
 				                  but only 3 of 4 items were equivalent
-				                  at Expect.That(subject).All().AreEquivalentTo(expected)
+				                  at Expect.That(subject).All().Should().AreEquivalentTo(expected)
 				                  """);
 		}
 
@@ -42,9 +42,9 @@ public sealed partial class ThatCollection
 			MyClass expected = new() { Value = "Foo" };
 
 			async Task Act()
-				=> await Expect.That(subject).All().AreEquivalentTo(expected);
+				=> await Expect.That(subject).Should().All().AreEquivalentTo(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

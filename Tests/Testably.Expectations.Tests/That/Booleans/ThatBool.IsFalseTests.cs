@@ -10,9 +10,9 @@ public sealed partial class ThatBool
 			bool subject = false;
 
 			async Task Act()
-				=> await Expect.That(subject).IsFalse();
+				=> await Expect.That(subject).Should().IsFalse();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -21,14 +21,14 @@ public sealed partial class ThatBool
 			bool subject = true;
 
 			async Task Act()
-				=> await Expect.That(subject).IsFalse();
+				=> await Expect.That(subject).Should().IsFalse();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is False,
 				                  but found True
-				                  at Expect.That(subject).IsFalse()
+				                  at Expect.That(subject).Should().IsFalse()
 				                  """);
 		}
 	}

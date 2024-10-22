@@ -11,14 +11,14 @@ public sealed partial class ThatDateTimeOffset
 			DateTimeOffset unexpected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is not {unexpected:O},
 				                   but found {subject:O}
-				                   at Expect.That(subject).IsNot(unexpected)
+				                   at Expect.That(subject).Should().IsNot(unexpected)
 				                   """);
 		}
 
@@ -29,9 +29,9 @@ public sealed partial class ThatDateTimeOffset
 			DateTimeOffset unexpected = LaterTime();
 			
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

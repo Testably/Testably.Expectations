@@ -12,9 +12,9 @@ public sealed partial class ThatEnum
 			long unexpected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHaveValue(unexpected);
+				=> await Expect.That(subject).Should().DoesNotHaveValue(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -24,14 +24,14 @@ public sealed partial class ThatEnum
 		public async Task WhenSubjectHasUnexpectedValue_ShouldFail(MyNumbers subject, long unexpected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHaveValue(unexpected);
+				=> await Expect.That(subject).Should().DoesNotHaveValue(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   does not have value {unexpected},
 				                   but found {subject}
-				                   at Expect.That(subject).DoesNotHaveValue(unexpected)
+				                   at Expect.That(subject).Should().DoesNotHaveValue(unexpected)
 				                   """);
 		}
 	}

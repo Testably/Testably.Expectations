@@ -10,14 +10,14 @@ public sealed partial class ThatNullableGuid
 			Guid? subject = OtherGuid();
 
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is null,
 				                   but found {subject}
-				                   at Expect.That(subject).IsNull()
+				                   at Expect.That(subject).Should().IsNull()
 				                   """);
 		}
 
@@ -27,9 +27,9 @@ public sealed partial class ThatNullableGuid
 			Guid? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

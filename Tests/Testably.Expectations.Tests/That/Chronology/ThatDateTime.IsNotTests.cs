@@ -11,9 +11,9 @@ public sealed partial class ThatDateTime
 			DateTime unexpected = LaterTime();
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -23,14 +23,14 @@ public sealed partial class ThatDateTime
 			DateTime unexpected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is not {unexpected:O},
 				                   but found {subject:O}
-				                   at Expect.That(subject).IsNot(unexpected)
+				                   at Expect.That(subject).Should().IsNot(unexpected)
 				                   """);
 		}
 
@@ -41,9 +41,9 @@ public sealed partial class ThatDateTime
 			DateTime expected = LaterTime(4);
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).Should().IsNot(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -53,14 +53,14 @@ public sealed partial class ThatDateTime
 			DateTime expected = LaterTime(3);
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).Should().IsNot(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is not {expected:O} ± 0:03,
 				                   but found {subject:O}
-				                   at Expect.That(subject).IsNot(expected).Within(TimeSpan.FromSeconds(3))
+				                   at Expect.That(subject).IsNot(expected).Should().Within(TimeSpan.FromSeconds(3))
 				                   """);
 		}
 	}

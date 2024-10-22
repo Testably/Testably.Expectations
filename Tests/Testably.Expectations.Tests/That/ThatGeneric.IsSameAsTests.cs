@@ -11,9 +11,9 @@ public sealed partial class ThatGeneric
 			Other expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).IsSameAs(expected);
+				=> await Expect.That(subject).Should().IsSameAs(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -23,9 +23,9 @@ public sealed partial class ThatGeneric
 			Other expected = new() { Value = 1 };
 
 			async Task Act()
-				=> await Expect.That(subject).IsSameAs(expected);
+				=> await Expect.That(subject).Should().IsSameAs(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  refers to expected Other{
@@ -34,7 +34,7 @@ public sealed partial class ThatGeneric
 				                  but found Other{
 				                    Value = 1
 				                  }
-				                  at Expect.That(subject).IsSameAs(expected)
+				                  at Expect.That(subject).Should().IsSameAs(expected)
 				                  """);
 		}
 	}

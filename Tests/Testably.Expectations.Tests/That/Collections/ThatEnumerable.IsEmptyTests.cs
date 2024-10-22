@@ -14,14 +14,14 @@ public sealed partial class ThatEnumerable
 			var subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await Expect.That(subject).IsEmpty();
+				=> await Expect.That(subject).Should().IsEmpty();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is empty,
 				                  but found [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, …]
-				                  at Expect.That(subject).IsEmpty()
+				                  at Expect.That(subject).Should().IsEmpty()
 				                  """);
 		}
 
@@ -31,14 +31,14 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([1, 1, 2]);
 
 			async Task Act()
-				=> await Expect.That(subject).IsEmpty();
+				=> await Expect.That(subject).Should().IsEmpty();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is empty,
 				                  but found [1, 1, 2]
-				                  at Expect.That(subject).IsEmpty()
+				                  at Expect.That(subject).Should().IsEmpty()
 				                  """);
 		}
 
@@ -48,9 +48,9 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([]);
 
 			async Task Act()
-				=> await Expect.That(subject).IsEmpty();
+				=> await Expect.That(subject).Should().IsEmpty();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

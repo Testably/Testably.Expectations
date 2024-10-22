@@ -14,10 +14,10 @@ public sealed partial class ThatEnumerable
 			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await Expect.That(subject).None().Are(15)
+				=> await Expect.That(subject).Should().None().Are(15)
 					.And.None().Are(81);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -26,14 +26,14 @@ public sealed partial class ThatEnumerable
 			var subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await Expect.That(subject).None().Are(5);
+				=> await Expect.That(subject).None().Should().Are(5);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has no items equal to 5,
 				                  but at least one items were equal
-				                  at Expect.That(subject).None().Are(5)
+				                  at Expect.That(subject).None().Should().Are(5)
 				                  """);
 		}
 
@@ -43,14 +43,14 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(subject).None().Are(1);
+				=> await Expect.That(subject).None().Should().Are(1);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has no items equal to 1,
 				                  but at least one items were equal
-				                  at Expect.That(subject).None().Are(1)
+				                  at Expect.That(subject).None().Should().Are(1)
 				                  """);
 		}
 
@@ -60,9 +60,9 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(subject).None().Are(42);
+				=> await Expect.That(subject).None().Should().Are(42);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

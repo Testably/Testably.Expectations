@@ -10,9 +10,9 @@ public sealed partial class ThatCollection
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expect.That(subject).Between(3).And(4).Are(1);
+				=> await Expect.That(subject).Should().Between(3).And(4).Are(1);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -21,14 +21,14 @@ public sealed partial class ThatCollection
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expect.That(subject).Between(3).And(4).Are(2);
+				=> await Expect.That(subject).Should().Between(3).And(4).Are(2);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has between 3 and 4 items equal to 2,
 				                  but only 2 items were equal
-				                  at Expect.That(subject).Between(3).And(4).Are(2)
+				                  at Expect.That(subject).Between(3).And(4).Should().Are(2)
 				                  """);
 		}
 
@@ -38,14 +38,14 @@ public sealed partial class ThatCollection
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expect.That(subject).Between(1).And(3).Are(1);
+				=> await Expect.That(subject).Should().Between(1).And(3).Are(1);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has between 1 and 3 items equal to 1,
 				                  but 4 items were equal
-				                  at Expect.That(subject).Between(1).And(3).Are(1)
+				                  at Expect.That(subject).Between(1).And(3).Should().Are(1)
 				                  """);
 		}
 	}

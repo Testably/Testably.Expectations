@@ -15,9 +15,9 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canRead: canRead, canWrite: canWrite);
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotWriteOnly();
+				=> await Expect.That(subject).Should().IsNotWriteOnly();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -26,14 +26,14 @@ public sealed partial class ThatStream
 			Stream? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotWriteOnly();
+				=> await Expect.That(subject).Should().IsNotWriteOnly();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is not write-only,
 				                  but found <null>
-				                  at Expect.That(subject).IsNotWriteOnly()
+				                  at Expect.That(subject).Should().IsNotWriteOnly()
 				                  """);
 		}
 
@@ -43,14 +43,14 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canRead: false, canWrite: true);
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotWriteOnly();
+				=> await Expect.That(subject).Should().IsNotWriteOnly();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is not write-only,
 				                  but it was
-				                  at Expect.That(subject).IsNotWriteOnly()
+				                  at Expect.That(subject).Should().IsNotWriteOnly()
 				                  """);
 		}
 	}

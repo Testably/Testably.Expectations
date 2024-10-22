@@ -13,14 +13,14 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(position: position);
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHavePosition(position);
+				=> await Expect.That(subject).Should().DoesNotHavePosition(position);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   does not have position {position},
 				                   but it had
-				                   at Expect.That(subject).DoesNotHavePosition(position)
+				                   at Expect.That(subject).Should().DoesNotHavePosition(position)
 				                   """);
 		}
 
@@ -32,9 +32,9 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(position: actualPosition);
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHavePosition(position);
+				=> await Expect.That(subject).Should().DoesNotHavePosition(position);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -43,14 +43,14 @@ public sealed partial class ThatStream
 			Stream? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHavePosition(0);
+				=> await Expect.That(subject).Should().DoesNotHavePosition(0);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  does not have position 0,
 				                  but found <null>
-				                  at Expect.That(subject).DoesNotHavePosition(0)
+				                  at Expect.That(subject).Should().DoesNotHavePosition(0)
 				                  """);
 		}
 	}

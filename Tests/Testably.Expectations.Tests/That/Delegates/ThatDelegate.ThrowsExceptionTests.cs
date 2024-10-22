@@ -11,14 +11,14 @@ public sealed partial class ThatDelegate
 			                         Expected that action
 			                         throws an Exception,
 			                         but it did not
-			                         at Expect.That(action).ThrowsException()
+			                         at Expect.That(action).Should().ThrowsException()
 			                         """;
 			Action action = () => { };
 
 			async Task<Exception> Act()
-				=> await Expect.That(action).ThrowsException();
+				=> await Expect.That(action).Should().ThrowsException();
 
-			await Expect.That(Act).ThrowsException()
+			await Expect.That(Act).Should().ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -28,9 +28,9 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
-			Exception result = await Expect.That(action).ThrowsException();
+			Exception result = await Expect.That(action).Should().ThrowsException();
 
-			await Expect.That(result).IsSameAs(exception);
+			await Expect.That(result).Should().IsSameAs(exception);
 		}
 
 		[Fact]
@@ -40,9 +40,9 @@ public sealed partial class ThatDelegate
 			Action action = () => throw exception;
 
 			async Task<Exception> Act()
-				=> await Expect.That(action).ThrowsException();
+				=> await Expect.That(action).Should().ThrowsException();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

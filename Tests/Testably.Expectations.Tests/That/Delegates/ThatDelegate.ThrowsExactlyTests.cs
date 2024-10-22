@@ -12,15 +12,15 @@ public sealed partial class ThatDelegate
 			                          throws exactly a CustomException,
 			                          but it did throw an OtherException:
 			                            {nameof(Fails_For_Code_With_Other_Exceptions)}
-			                          at Expect.That(action).ThrowsExactly<CustomException>()
+			                          at Expect.That(action).Should().ThrowsExactly<CustomException>()
 			                          """;
 			Exception exception = CreateOtherException();
 			Action action = () => throw exception;
 
 			async Task<CustomException> Act()
-				=> await Expect.That(action).ThrowsExactly<CustomException>();
+				=> await Expect.That(action).Should().ThrowsExactly<CustomException>();
 
-			await Expect.That(Act).ThrowsException()
+			await Expect.That(Act).Should().ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -32,15 +32,15 @@ public sealed partial class ThatDelegate
 			                          throws exactly a CustomException,
 			                          but it did throw a SubCustomException:
 			                            {nameof(Fails_For_Code_With_Subtype_Exceptions)}
-			                          at Expect.That(action).ThrowsExactly<CustomException>()
+			                          at Expect.That(action).Should().ThrowsExactly<CustomException>()
 			                          """;
 			Exception exception = CreateSubCustomException();
 			Action action = () => throw exception;
 
 			async Task<CustomException> Act()
-				=> await Expect.That(action).ThrowsExactly<CustomException>();
+				=> await Expect.That(action).Should().ThrowsExactly<CustomException>();
 
-			await Expect.That(Act).ThrowsException()
+			await Expect.That(Act).Should().ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -51,14 +51,14 @@ public sealed partial class ThatDelegate
 			                         Expected that action
 			                         throws exactly a CustomException,
 			                         but it did not
-			                         at Expect.That(action).ThrowsExactly<CustomException>()
+			                         at Expect.That(action).Should().ThrowsExactly<CustomException>()
 			                         """;
 			Action action = () => { };
 
 			async Task<CustomException> Act()
-				=> await Expect.That(action).ThrowsExactly<CustomException>();
+				=> await Expect.That(action).Should().ThrowsExactly<CustomException>();
 
-			await Expect.That(Act).ThrowsException()
+			await Expect.That(Act).Should().ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -68,9 +68,9 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
-			CustomException result = await Expect.That(action).ThrowsExactly<CustomException>();
+			CustomException result = await Expect.That(action).Should().ThrowsExactly<CustomException>();
 
-			await Expect.That(result).IsSameAs(exception);
+			await Expect.That(result).Should().IsSameAs(exception);
 		}
 
 		[Fact]
@@ -80,9 +80,9 @@ public sealed partial class ThatDelegate
 			Action action = () => throw exception;
 
 			async Task<CustomException> Act()
-				=> await Expect.That(action).ThrowsExactly<CustomException>();
+				=> await Expect.That(action).Should().ThrowsExactly<CustomException>();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

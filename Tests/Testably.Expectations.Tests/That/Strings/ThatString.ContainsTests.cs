@@ -12,9 +12,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtLeast(3);
+				=> await Expect.That(subject).Should().Contains(expected).AtLeast(3);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -25,14 +25,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtLeast(5);
+				=> await Expect.That(subject).Should().Contains(expected).AtLeast(5);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" at least 5 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).AtLeast(5)
+				                  at Expect.That(subject).Should().Contains(expected).AtLeast(5)
 				                  """);
 		}
 
@@ -44,14 +44,14 @@ public sealed partial class ThatString
 			string expected = "text that does not occur";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtLeast(1);
+				=> await Expect.That(subject).Should().Contains(expected).AtLeast(1);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "text that does not occur" at least once,
 				                  but found it 0 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).AtLeast(1)
+				                  at Expect.That(subject).Should().Contains(expected).AtLeast(1)
 				                  """);
 		}
 
@@ -63,9 +63,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtLeast(-1);
+				=> await Expect.That(subject).Should().Contains(expected).AtLeast(-1);
 
-			await Expect.That(Act).ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'minimum'*").AsWildcard().And
 				.HasParamName("minimum");
 		}
@@ -78,14 +78,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtMost(2);
+				=> await Expect.That(subject).Should().Contains(expected).AtMost(2);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" at most 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).AtMost(2)
+				                  at Expect.That(subject).Should().Contains(expected).AtMost(2)
 				                  """);
 		}
 
@@ -97,9 +97,9 @@ public sealed partial class ThatString
 			string expected = "text that does not occur";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtMost(1);
+				=> await Expect.That(subject).Should().Contains(expected).AtMost(1);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -110,9 +110,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtMost(3);
+				=> await Expect.That(subject).Should().Contains(expected).AtMost(3);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -123,9 +123,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtMost(-1);
+				=> await Expect.That(subject).Should().Contains(expected).AtMost(-1);
 
-			await Expect.That(Act).ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'maximum'*").AsWildcard().And
 				.HasParamName("maximum");
 		}
@@ -138,14 +138,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Between(4).And(9);
+				=> await Expect.That(subject).Should().Contains(expected).Between(4).And(9);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" between 4 and 9 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Between(4).And(9)
+				                  at Expect.That(subject).Should().Contains(expected).Between(4).And(9)
 				                  """);
 		}
 
@@ -157,14 +157,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Between(1).And(2);
+				=> await Expect.That(subject).Should().Contains(expected).Between(1).And(2);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" between 1 and 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Between(1).And(2)
+				                  at Expect.That(subject).Should().Contains(expected).Between(1).And(2)
 				                  """);
 		}
 
@@ -176,9 +176,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Between(1).And(4);
+				=> await Expect.That(subject).Should().Contains(expected).Between(1).And(4);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -189,9 +189,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Between(1).And(-3);
+				=> await Expect.That(subject).Should().Contains(expected).Between(1).And(-3);
 
-			await Expect.That(Act).ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'maximum'*").AsWildcard().And
 				.HasParamName("maximum");
 		}
@@ -204,9 +204,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Between(3).And(3);
+				=> await Expect.That(subject).Should().Contains(expected).Between(3).And(3);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -217,9 +217,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Between(4).And(3);
+				=> await Expect.That(subject).Should().Contains(expected).Between(4).And(3);
 
-			await Expect.That(Act).ThrowsExactly<ArgumentException>().Which
+			await Expect.That(Act).Should().ThrowsExactly<ArgumentException>().Which
 				.HasMessage("*'maximum'*greater*'minimum'*").AsWildcard();
 		}
 
@@ -231,9 +231,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Between(-1).And(3);
+				=> await Expect.That(subject).Should().Contains(expected).Between(-1).And(3);
 
-			await Expect.That(Act).ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'minimum'*").AsWildcard().And
 				.HasParamName("minimum");
 		}
@@ -247,9 +247,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Exactly(-1);
+				=> await Expect.That(subject).Should().Contains(expected).Exactly(-1);
 
-			await Expect.That(Act).ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'expected'*").AsWildcard().And
 				.HasParamName("expected");
 		}
@@ -262,9 +262,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Exactly(3);
+				=> await Expect.That(subject).Should().Contains(expected).Exactly(3);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -275,14 +275,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Exactly(4);
+				=> await Expect.That(subject).Should().Contains(expected).Exactly(4);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" exactly 4 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Exactly(4)
+				                  at Expect.That(subject).Should().Contains(expected).Exactly(4)
 				                  """);
 		}
 
@@ -294,14 +294,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Exactly(2);
+				=> await Expect.That(subject).Should().Contains(expected).Exactly(2);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" exactly 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Exactly(2)
+				                  at Expect.That(subject).Should().Contains(expected).Exactly(2)
 				                  """);
 		}
 
@@ -313,14 +313,14 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtLeast(7).IgnoringCase();
+				=> await Expect.That(subject).Should().Contains(expected).AtLeast(7).IgnoringCase();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" at least 7 times ignoring case,
 				                  but found it 5 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).AtLeast(7).IgnoringCase()
+				                  at Expect.That(subject).Should().Contains(expected).AtLeast(7).IgnoringCase()
 				                  """);
 		}
 
@@ -333,9 +333,9 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).AtLeast(5).IgnoringCase();
+				=> await Expect.That(subject).Should().Contains(expected).AtLeast(5).IgnoringCase();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -346,9 +346,9 @@ public sealed partial class ThatString
 			string expected = "detective";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Never();
+				=> await Expect.That(subject).Should().Contains(expected).Never();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -359,14 +359,14 @@ public sealed partial class ThatString
 			string expected = "investigator";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Never();
+				=> await Expect.That(subject).Should().Contains(expected).Never();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  does not contain "investigator",
 				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Never()
+				                  at Expect.That(subject).Should().Contains(expected).Never()
 				                  """);
 		}
 
@@ -378,9 +378,9 @@ public sealed partial class ThatString
 			string expected = "investigator";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Once();
+				=> await Expect.That(subject).Should().Contains(expected).Once();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -391,14 +391,14 @@ public sealed partial class ThatString
 			string expected = "detective";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Once();
+				=> await Expect.That(subject).Should().Contains(expected).Once();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "detective" exactly once,
 				                  but found it 0 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Once()
+				                  at Expect.That(subject).Should().Contains(expected).Should().Once()
 				                  """);
 		}
 
@@ -410,14 +410,14 @@ public sealed partial class ThatString
 			string expected = "word";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Once();
+				=> await Expect.That(subject).Should().Contains(expected).Once();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "word" exactly once,
 				                  but found it 2 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Once()
+				                  at Expect.That(subject).Should().Contains(expected).Should().Once()
 				                  """);
 		}
 
@@ -430,10 +430,10 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Exactly(4)
+				=> await Expect.That(subject).Should().Contains(expected).Exactly(4)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -445,15 +445,15 @@ public sealed partial class ThatString
 			string expected = "in";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected).Exactly(5)
+				=> await Expect.That(subject).Should().Contains(expected).Exactly(5)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "in" exactly 5 times using IgnoreCaseForVocalsComparer,
 				                  but found it 4 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
-				                  at Expect.That(subject).Contains(expected).Exactly(5).Using(new IgnoreCaseForVocalsComparer())
+				                  at Expect.That(subject).Should().Contains(expected).Exactly(5).Should().Using(new IgnoreCaseForVocalsComparer())
 				                  """);
 		}
 
@@ -464,9 +464,9 @@ public sealed partial class ThatString
 			string expected = "me";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected);
+				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -476,14 +476,14 @@ public sealed partial class ThatString
 			string expected = "not";
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected);
+				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  contains "not" at least once,
 				                  but found it 0 times in "some text"
-				                  at Expect.That(subject).Contains(expected)
+				                  at Expect.That(subject).Should().Contains(expected)
 				                  """);
 		}
 	}

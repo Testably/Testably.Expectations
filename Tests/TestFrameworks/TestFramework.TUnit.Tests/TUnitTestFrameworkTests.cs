@@ -13,7 +13,7 @@ public sealed class TUnitTestFrameworkTests
 		void Act()
 			=> Testably.Expectations.Fail.Test("my message");
 
-		await Expect.That(Act).Throws<AssertionException>();
+		await Expect.That(Act).Should().Throws<AssertionException>();
 	}
 
 	[Test]
@@ -22,6 +22,6 @@ public sealed class TUnitTestFrameworkTests
 		void Act()
 			=> Testably.Expectations.Skip.Test("my message");
 
-		await Expect.That(Act).Throws<SkipTestException>();
+		await Expect.That(Act).Should().Throws<SkipTestException>();
 	}
 }

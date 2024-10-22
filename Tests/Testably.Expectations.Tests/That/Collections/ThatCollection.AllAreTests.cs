@@ -10,14 +10,14 @@ public sealed partial class ThatCollection
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expect.That(subject).All().Are(1);
+				=> await Expect.That(subject).All().Should().Are(1);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has all items equal to 1,
 				                  but only 4 of 7 items were equal
-				                  at Expect.That(subject).All().Are(1)
+				                  at Expect.That(subject).All().Should().Are(1)
 				                  """);
 		}
 
@@ -27,9 +27,9 @@ public sealed partial class ThatCollection
 			int[] subject = [1, 1, 1, 1];
 
 			async Task Act()
-				=> await Expect.That(subject).All().Are(1);
+				=> await Expect.That(subject).All().Should().Are(1);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

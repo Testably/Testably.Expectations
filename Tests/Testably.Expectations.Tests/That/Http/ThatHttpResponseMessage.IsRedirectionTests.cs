@@ -16,9 +16,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(subject).IsRedirection();
+				=> await Expect.That(subject).Should().IsRedirection();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -31,11 +31,11 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(subject).IsRedirection();
+				=> await Expect.That(subject).Should().IsRedirection();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage(
-					"*is redirection (status code 3xx)*Expect.That(subject).IsRedirection()")
+					"*is redirection (status code 3xx)*Expect.That(subject).Should().IsRedirection()")
 				.AsWildcard();
 		}
 	}

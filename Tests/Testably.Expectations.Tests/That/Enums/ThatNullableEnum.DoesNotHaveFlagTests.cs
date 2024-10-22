@@ -10,14 +10,14 @@ public sealed partial class ThatNullableEnum
 		public async Task WhenSubjectHasFlag_ShouldFail(MyColors? subject, MyColors unexpected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHaveFlag(unexpected);
+				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   does not have flag {unexpected},
 				                   but found {subject}
-				                   at Expect.That(subject).DoesNotHaveFlag(unexpected)
+				                   at Expect.That(subject).Should().DoesNotHaveFlag(unexpected)
 				                   """);
 		}
 
@@ -29,9 +29,9 @@ public sealed partial class ThatNullableEnum
 			MyColors? subject = MyColors.Yellow | MyColors.Red & ~unexpected;
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHaveFlag(unexpected);
+				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -42,14 +42,14 @@ public sealed partial class ThatNullableEnum
 			MyColors? subject = unexpected;
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHaveFlag(unexpected);
+				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   does not have flag {unexpected},
 				                   but found {subject}
-				                   at Expect.That(subject).DoesNotHaveFlag(unexpected)
+				                   at Expect.That(subject).Should().DoesNotHaveFlag(unexpected)
 				                   """);
 		}
 	}

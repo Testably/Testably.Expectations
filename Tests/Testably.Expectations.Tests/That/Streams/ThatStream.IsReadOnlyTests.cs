@@ -15,14 +15,14 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canRead: canRead, canWrite: canWrite);
 
 			async Task Act()
-				=> await Expect.That(subject).IsReadOnly();
+				=> await Expect.That(subject).Should().IsReadOnly();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is read-only,
 				                  but it was not
-				                  at Expect.That(subject).IsReadOnly()
+				                  at Expect.That(subject).Should().IsReadOnly()
 				                  """);
 		}
 
@@ -32,14 +32,14 @@ public sealed partial class ThatStream
 			Stream? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsReadOnly();
+				=> await Expect.That(subject).Should().IsReadOnly();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is read-only,
 				                  but found <null>
-				                  at Expect.That(subject).IsReadOnly()
+				                  at Expect.That(subject).Should().IsReadOnly()
 				                  """);
 		}
 
@@ -49,9 +49,9 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canRead: true, canWrite: false);
 
 			async Task Act()
-				=> await Expect.That(subject).IsReadOnly();
+				=> await Expect.That(subject).Should().IsReadOnly();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

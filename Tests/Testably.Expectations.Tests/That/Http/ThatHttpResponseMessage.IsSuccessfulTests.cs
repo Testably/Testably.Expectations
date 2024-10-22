@@ -16,9 +16,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(subject).IsSuccessful();
+				=> await Expect.That(subject).Should().IsSuccessful();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -31,11 +31,11 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(subject).IsSuccessful();
+				=> await Expect.That(subject).Should().IsSuccessful();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage(
-					"*is successful (status code 2xx)*Expect.That(subject).IsSuccessful()")
+					"*is successful (status code 2xx)*Expect.That(subject).Should().IsSuccessful()")
 				.AsWildcard();
 		}
 	}

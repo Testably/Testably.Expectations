@@ -12,15 +12,15 @@ public sealed partial class ThatDelegate
 			                          does not throw any exception,
 			                          but it did throw a CustomException:
 			                            {nameof(Fails_For_Code_With_Exceptions)}
-			                          at Expect.That(action).DoesNotThrow()
+			                          at Expect.That(action).Should().DoesNotThrow()
 			                          """;
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
 			async Task Act()
-				=> await Expect.That(action).DoesNotThrow();
+				=> await Expect.That(action).Should().DoesNotThrow();
 
-			await Expect.That(Act).ThrowsException()
+			await Expect.That(Act).Should().ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -30,8 +30,8 @@ public sealed partial class ThatDelegate
 			int value = 42;
 			Func<int> action = () => value;
 
-			int result = await Expect.That(action).DoesNotThrow();
-			await Expect.That(result).Is(value);
+			int result = await Expect.That(action).Should().DoesNotThrow();
+			await Expect.That(result).Should().Is(value);
 		}
 
 		[Fact]
@@ -40,9 +40,9 @@ public sealed partial class ThatDelegate
 			Action action = () => { };
 
 			async Task Act()
-				=> await Expect.That(action).DoesNotThrow();
+				=> await Expect.That(action).Should().DoesNotThrow();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

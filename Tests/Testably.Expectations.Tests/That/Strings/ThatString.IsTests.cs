@@ -15,9 +15,9 @@ public sealed partial class ThatString
 			string subject, string pattern, bool expectMatch)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Is(pattern).AsWildcard();
+				=> await Expect.That(subject).Should().Is(pattern).AsWildcard();
 
-			await Expect.That(Act).ThrowsException().OnlyIf(!expectMatch);
+			await Expect.That(Act).Should().ThrowsException().OnlyIf(!expectMatch);
 		}
 
 		[Theory]
@@ -27,7 +27,7 @@ public sealed partial class ThatString
 			string expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
 			await Act();
 		}
@@ -39,9 +39,9 @@ public sealed partial class ThatString
 			string expected = "expected other text";
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is equal to "expected other text",
@@ -50,7 +50,7 @@ public sealed partial class ThatString
 				                    "actual text"
 				                    "expected other text"
 				                     ↑ (expected)
-				                  at Expect.That(subject).Is(expected)
+				                  at Expect.That(subject).Should().Is(expected)
 				                  """);
 		}
 	}

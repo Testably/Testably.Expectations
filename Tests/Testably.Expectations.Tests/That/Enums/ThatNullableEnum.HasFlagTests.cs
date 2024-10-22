@@ -10,14 +10,14 @@ public sealed partial class ThatNullableEnum
 		public async Task WhenSubjectDoesNotHaveFlag_ShouldFail(MyColors? subject, MyColors expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).HasFlag(expected);
+				=> await Expect.That(subject).Should().HasFlag(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   has flag {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).HasFlag(expected)
+				                   at Expect.That(subject).Should().HasFlag(expected)
 				                   """);
 		}
 
@@ -29,9 +29,9 @@ public sealed partial class ThatNullableEnum
 			MyColors? subject = MyColors.Yellow | MyColors.Red | expected;
 
 			async Task Act()
-				=> await Expect.That(subject).HasFlag(expected);
+				=> await Expect.That(subject).Should().HasFlag(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -42,9 +42,9 @@ public sealed partial class ThatNullableEnum
 			MyColors? subject = expected;
 
 			async Task Act()
-				=> await Expect.That(subject).HasFlag(expected);
+				=> await Expect.That(subject).Should().HasFlag(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

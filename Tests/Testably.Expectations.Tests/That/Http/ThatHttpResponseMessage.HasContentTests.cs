@@ -15,9 +15,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithContent("some content");
 
 			async Task Act()
-				=> await Expect.That(subject).HasContent(expected);
+				=> await Expect.That(subject).Should().HasContent(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has a string content equal to "other content",
@@ -26,7 +26,7 @@ public sealed partial class ThatHttpResponseMessage
 				                    "some content"
 				                    "other content"
 				                     ↑ (expected)
-				                  at Expect.That(subject).HasContent(expected)
+				                  at Expect.That(subject).Should().HasContent(expected)
 				                  """);
 		}
 
@@ -38,9 +38,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithContent(expected);
 
 			async Task Act()
-				=> await Expect.That(subject).HasContent(expected);
+				=> await Expect.That(subject).Should().HasContent(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

@@ -10,14 +10,14 @@ public sealed partial class ThatNullableBool
 			bool? subject = false;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is <null>,
 				                  but found False
-				                  at Expect.That(subject).IsNull()
+				                  at Expect.That(subject).Should().IsNull()
 				                  """);
 		}
 
@@ -27,14 +27,14 @@ public sealed partial class ThatNullableBool
 			bool? subject = true;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is <null>,
 				                  but found True
-				                  at Expect.That(subject).IsNull()
+				                  at Expect.That(subject).Should().IsNull()
 				                  """);
 		}
 
@@ -44,9 +44,9 @@ public sealed partial class ThatNullableBool
 			bool? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

@@ -13,8 +13,8 @@ public sealed partial class ThatObject
 				Value = value
 			};
 
-			Other result = await Expect.That(subject).Is<Other>();
-			await Expect.That(result.Value).Is(value);
+			Other result = await Expect.That(subject).Should().Is<Other>();
+			await Expect.That(result.Value).Should().Is(value);
 		}
 	}
 }

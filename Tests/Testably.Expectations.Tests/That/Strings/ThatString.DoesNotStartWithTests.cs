@@ -11,14 +11,14 @@ public sealed partial class ThatString
 			string expected = "some";
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotStartWith(expected);
+				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  does not start with "some",
 				                  but found "some text"
-				                  at Expect.That(subject).DoesNotStartWith(expected)
+				                  at Expect.That(subject).Should().DoesNotStartWith(expected)
 				                  """);
 		}
 
@@ -29,9 +29,9 @@ public sealed partial class ThatString
 			string expected = "text";
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotStartWith(expected);
+				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -42,15 +42,15 @@ public sealed partial class ThatString
 			string expected = "sOmE";
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotStartWith(expected)
+				=> await Expect.That(subject).Should().DoesNotStartWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  does not start with "sOmE" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
-				                  at Expect.That(subject).DoesNotStartWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				                  at Expect.That(subject).DoesNotStartWith(expected).Should().Using(new IgnoreCaseForVocalsComparer())
 				                  """);
 		}
 
@@ -62,10 +62,10 @@ public sealed partial class ThatString
 			string expected = "SOME";
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotStartWith(expected)
+				=> await Expect.That(subject).Should().DoesNotStartWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -75,9 +75,9 @@ public sealed partial class ThatString
 			string expected = "text";
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotStartWith(expected);
+				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -87,14 +87,14 @@ public sealed partial class ThatString
 			string expected = "some";
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotStartWith(expected);
+				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  does not start with "some",
 				                  but found "some text"
-				                  at Expect.That(subject).DoesNotStartWith(expected)
+				                  at Expect.That(subject).Should().DoesNotStartWith(expected)
 				                  """);
 		}
 	}

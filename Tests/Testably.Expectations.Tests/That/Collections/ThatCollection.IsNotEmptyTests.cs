@@ -10,9 +10,9 @@ public sealed partial class ThatCollection
 			int[] subject = [1, 1, 2];
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotEmpty();
+				=> await Expect.That(subject).Should().IsNotEmpty();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -21,14 +21,14 @@ public sealed partial class ThatCollection
 			int[] subject = [];
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotEmpty();
+				=> await Expect.That(subject).Should().IsNotEmpty();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is not empty,
 				                  but it was
-				                  at Expect.That(subject).IsNotEmpty()
+				                  at Expect.That(subject).Should().IsNotEmpty()
 				                  """);
 		}
 	}

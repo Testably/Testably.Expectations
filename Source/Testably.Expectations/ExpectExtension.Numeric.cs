@@ -3,187 +3,180 @@ using Testably.Expectations.Core;
 
 namespace Testably.Expectations;
 
-public static partial class Expect
+public static partial class ExpectExtension
 {
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<int> That(int subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<int>(subject, doNotPopulateThisValue));
+	public static That<int> Should(this ExpectThat<int> subject)
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<int?> That(int? subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<int?>(subject, doNotPopulateThisValue));
+	public static That<int?> Should(this ExpectThat<int?> subject)
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<uint> That(uint subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<uint>(subject, doNotPopulateThisValue));
+	public static That<uint> Should(this ExpectThat<uint> subject)
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<uint?> That(uint? subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<uint?>(subject, doNotPopulateThisValue));
+	public static That<uint?> Should(this ExpectThat<uint?> subject)
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="nint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nint> That(nint subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<nint>(subject, doNotPopulateThisValue));
+	public static That<nint> Should(this ExpectThat<nint> subject)
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="nint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nint?> That(nint? subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<nint?>(subject, doNotPopulateThisValue));
+	public static That<nint?> Should(this ExpectThat<nint?> subject)
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="nuint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nuint> That(nuint subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<nuint>(subject, doNotPopulateThisValue));
+	public static That<nuint> Should(this ExpectThat<nuint> subject)
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="nuint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nuint?> That(nuint? subject,
+	public static That<nuint?> Should(this ExpectThat<nuint?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<nuint?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<byte> That(byte subject,
+	public static That<byte> Should(this ExpectThat<byte> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<byte>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<byte?> That(byte? subject,
+	public static That<byte?> Should(this ExpectThat<byte?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<byte?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<sbyte> That(sbyte subject,
+	public static That<sbyte> Should(this ExpectThat<sbyte> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<sbyte>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<sbyte?> That(sbyte? subject,
+	public static That<sbyte?> Should(this ExpectThat<sbyte?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<sbyte?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<short> That(short subject,
+	public static That<short> Should(this ExpectThat<short> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<short>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<short?> That(short? subject,
+	public static That<short?> Should(this ExpectThat<short?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<short?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ushort> That(ushort subject,
+	public static That<ushort> Should(this ExpectThat<ushort> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<ushort>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ushort?> That(ushort? subject,
+	public static That<ushort?> Should(this ExpectThat<ushort?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<ushort?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<long> That(long subject,
+	public static That<long> Should(this ExpectThat<long> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<long>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<long?> That(long? subject,
+	public static That<long?> Should(this ExpectThat<long?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<long?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ulong> That(ulong subject,
+	public static That<ulong> Should(this ExpectThat<ulong> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<ulong>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ulong?> That(ulong? subject,
+	public static That<ulong?> Should(this ExpectThat<ulong?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<ulong?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<float> That(float subject,
+	public static That<float> Should(this ExpectThat<float> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<float>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<float?> That(float? subject,
+	public static That<float?> Should(this ExpectThat<float?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<float?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<double> That(double subject,
+	public static That<double> Should(this ExpectThat<double> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<double>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<double?> That(double? subject,
+	public static That<double?> Should(this ExpectThat<double?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<double?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<decimal> That(decimal subject,
+	public static That<decimal> Should(this ExpectThat<decimal> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<decimal>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<decimal?> That(decimal? subject,
+	public static That<decimal?> Should(this ExpectThat<decimal?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<decimal?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 }

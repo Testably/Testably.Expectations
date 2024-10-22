@@ -5,13 +5,13 @@ using Testably.Expectations.Core;
 
 namespace Testably.Expectations;
 
-public static partial class Expect
+public static partial class ExpectExtension
 {
 	/// <summary>
 	///     Start expectations for the current <see cref="HttpResponseMessage" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<HttpResponseMessage?> That(HttpResponseMessage? subject,
+	public static That<HttpResponseMessage?> Should(this ExpectThat<HttpResponseMessage?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<HttpResponseMessage?>(subject, doNotPopulateThisValue));
+		=> new(subject.ExpectationBuilder);
 }
 #endif

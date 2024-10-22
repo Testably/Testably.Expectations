@@ -19,7 +19,7 @@ public sealed partial class ThatObject
 				Value = "Foo"
 			};
 
-			await Expect.That(subject).IsEquivalentTo(expected);
+			await Expect.That(subject).Should().IsEquivalentTo(expected);
 		}
 
 		[Fact]
@@ -31,14 +31,14 @@ public sealed partial class ThatObject
 				Value = "Foo"
 			};
 
-			await Expect.That(async () => await Expect.That(subject).IsEquivalentTo(expected))
+			await Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
 				                   Expected that subject
 				                   is equivalent to expected,
 				                   but Property Value did not match:
 				                     Expected: "Foo"
 				                     Received: <null>
-				                   at Expect.That(subject).IsEquivalentTo(expected)
+				                   at Expect.That(subject).Should().IsEquivalentTo(expected)
 				                   """);
 		}
 
@@ -67,14 +67,14 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(async () => await Expect.That(subject).IsEquivalentTo(expected))
+			await Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
 				                   Expected that subject
 				                   is equivalent to expected,
 				                   but Property Inner.Inner.Value did not match:
 				                     Expected: "Baz"
 				                     Received: <null>
-				                   at Expect.That(subject).IsEquivalentTo(expected)
+				                   at Expect.That(subject).Should().IsEquivalentTo(expected)
 				                   """).Exactly();
 		}
 
@@ -106,7 +106,7 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(subject).IsEquivalentTo(expected);
+			await Expect.That(subject).Should().IsEquivalentTo(expected);
 		}
 
 		[Fact]
@@ -140,14 +140,14 @@ public sealed partial class ThatObject
 				}
 			};
 
-			Expect.That(async () => await Expect.That(subject).IsEquivalentTo(expected))
+			Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
 				                   Expected that subject
 				                   is equivalent to expected,
 				                   but EnumerableItem Inner.Inner.Collection.[3] did not match
 				                     Expected: "4"
 				                     Received: null
-				                   at Expect.That(subject).IsEquivalentTo(expected)
+				                   at Expect.That(subject).Should().IsEquivalentTo(expected)
 				                   """);
 		}
 
@@ -182,7 +182,7 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(subject).IsEquivalentTo(expected).IgnoringMember("Inner.Inner.Collection.[3]");
+			await Expect.That(subject).Should().IsEquivalentTo(expected).IgnoringMember("Inner.Inner.Collection.[3]");
 		}
 
 		[Fact]
@@ -215,7 +215,7 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(subject).IsEquivalentTo(expected);
+			await Expect.That(subject).Should().IsEquivalentTo(expected);
 		}
 
 		public class MyClass

@@ -14,10 +14,10 @@ public sealed partial class ThatEnumerable
 			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(1)
+				=> await Expect.That(subject).Should().Contains(1)
 					.And.Contains(1);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -26,9 +26,9 @@ public sealed partial class ThatEnumerable
 			var subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(5);
+				=> await Expect.That(subject).Should().Contains(5);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -39,9 +39,9 @@ public sealed partial class ThatEnumerable
 			subject.Add(expected);
 
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected);
+				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -50,14 +50,14 @@ public sealed partial class ThatEnumerable
 			string expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Contains(expected);
+				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   contains "{expected}",
 				                   but found ["{string.Join("\", \"", subject)}"]
-				                   at Expect.That(subject).Contains(expected)
+				                   at Expect.That(subject).Should().Contains(expected)
 				                   """);
 		}
 	}

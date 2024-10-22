@@ -18,9 +18,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithRequestContent("request content");
 
 			async Task Act()
-				=> await Expect.That(subject).HasStatusCode(HttpStatusCode.OK);
+				=> await Expect.That(subject).Should().HasStatusCode(HttpStatusCode.OK);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has StatusCode 200 OK,
@@ -30,7 +30,7 @@ public sealed partial class ThatHttpResponseMessage
 				                    The originating request was:
 				                      GET https://example.com/ HTTP 1.1
 				                      request content
-				                  at Expect.That(subject).HasContent(HttpStatusCode.OK)
+				                  at Expect.That(subject).Should().HasContent(HttpStatusCode.OK)
 				                  """);
 		}
 
@@ -42,9 +42,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithContent("some content");
 
 			async Task Act()
-				=> await Expect.That(subject).HasStatusCode(HttpStatusCode.OK);
+				=> await Expect.That(subject).Should().HasStatusCode(HttpStatusCode.OK);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  has StatusCode 200 OK,
@@ -52,7 +52,7 @@ public sealed partial class ThatHttpResponseMessage
 				                    HTTP/1.1 400 BadRequest
 				                    some content
 				                    The originating request was <null>
-				                  at Expect.That(subject).HasContent(HttpStatusCode.OK)
+				                  at Expect.That(subject).Should().HasContent(HttpStatusCode.OK)
 				                  """);
 		}
 
@@ -63,9 +63,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(HttpStatusCode.BadRequest);
 
 			async Task Act()
-				=> await Expect.That(subject).HasStatusCode(HttpStatusCode.OK);
+				=> await Expect.That(subject).Should().HasStatusCode(HttpStatusCode.OK);
 
-			await Expect.That(Act).Throws<XunitException>();
+			await Expect.That(Act).Should().Throws<XunitException>();
 		}
 
 		[Theory]
@@ -80,9 +80,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(subject).HasStatusCode(expected);
+				=> await Expect.That(subject).Should().HasStatusCode(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

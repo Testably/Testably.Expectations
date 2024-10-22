@@ -11,14 +11,14 @@ public sealed partial class ThatNumber
 			int expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(expected);
+				=> await Expect.That(subject).Should().IsNot(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is not {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).IsNot(expected)
+				                   at Expect.That(subject).Should().IsNot(expected)
 				                   """);
 		}
 
@@ -28,9 +28,9 @@ public sealed partial class ThatNumber
 		public async Task WhenSubjectIsDifferent_ShouldSucceed(int subject, int expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).IsNot(expected);
+				=> await Expect.That(subject).Should().IsNot(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

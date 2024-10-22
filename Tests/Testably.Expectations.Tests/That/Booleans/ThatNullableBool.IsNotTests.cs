@@ -13,14 +13,14 @@ public sealed partial class ThatNullableBool
 			bool? unexpected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is not {unexpected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
-				                   at Expect.That(subject).IsNot(unexpected)
+				                   at Expect.That(subject).Should().IsNot(unexpected)
 				                   """);
 		}
 
@@ -34,9 +34,9 @@ public sealed partial class ThatNullableBool
 		public async Task WhenSubjectIsDifferent_ShouldSucceed(bool? subject, bool? unexpected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

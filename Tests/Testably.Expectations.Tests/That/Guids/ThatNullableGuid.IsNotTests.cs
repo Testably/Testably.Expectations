@@ -10,14 +10,14 @@ public sealed partial class ThatNullableGuid
 			Guid? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(null);
+				=> await Expect.That(subject).Should().IsNot(null);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is not <null>,
 				                  but found <null>
-				                  at Expect.That(subject).IsNot(null)
+				                  at Expect.That(subject).Should().IsNot(null)
 				                  """);
 		}
 
@@ -28,9 +28,9 @@ public sealed partial class ThatNullableGuid
 			Guid? unexpected = OtherGuid();
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -40,14 +40,14 @@ public sealed partial class ThatNullableGuid
 			Guid? unexpected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNot(unexpected);
+				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is not {unexpected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
-				                   at Expect.That(subject).IsNot(unexpected)
+				                   at Expect.That(subject).Should().IsNot(unexpected)
 				                   """);
 		}
 	}

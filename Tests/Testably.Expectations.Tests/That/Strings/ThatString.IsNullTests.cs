@@ -10,14 +10,14 @@ public sealed partial class ThatString
 			string subject = "";
 
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is null,
 				                  but found ""
-				                  at Expect.That(subject).IsNull()
+				                  at Expect.That(subject).Should().IsNull()
 				                  """);
 		}
 
@@ -26,14 +26,14 @@ public sealed partial class ThatString
 		public async Task WhenActualIsNotNull_ShouldFail(string? subject)
 		{
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is null,
 				                   but found "{subject}"
-				                   at Expect.That(subject).IsNull()
+				                   at Expect.That(subject).Should().IsNull()
 				                   """);
 		}
 
@@ -43,7 +43,7 @@ public sealed partial class ThatString
 			string? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNull();
+				=> await Expect.That(subject).Should().IsNull();
 
 			await Act();
 		}

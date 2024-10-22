@@ -11,14 +11,14 @@ public sealed partial class ThatNumber
 			float expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).Is(expected)
+				                   at Expect.That(subject).Should().Is(expected)
 				                   """);
 		}
 
@@ -29,14 +29,14 @@ public sealed partial class ThatNumber
 			int expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).Is(expected)
+				                   at Expect.That(subject).Should().Is(expected)
 				                   """);
 		}
 
@@ -47,14 +47,14 @@ public sealed partial class ThatNumber
 			float? expected = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is <null>,
 				                   but found {subject}
-				                   at Expect.That(subject).Is(expected)
+				                   at Expect.That(subject).Should().Is(expected)
 				                   """);
 		}
 
@@ -65,14 +65,14 @@ public sealed partial class ThatNumber
 			int? expected = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is <null>,
 				                   but found {subject}
-				                   at Expect.That(subject).Is(expected)
+				                   at Expect.That(subject).Should().Is(expected)
 				                   """);
 		}
 
@@ -83,9 +83,9 @@ public sealed partial class ThatNumber
 			double subject = expected;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -95,9 +95,9 @@ public sealed partial class ThatNumber
 			float? expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -107,9 +107,9 @@ public sealed partial class ThatNumber
 			float expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -119,9 +119,9 @@ public sealed partial class ThatNumber
 			int? expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -131,9 +131,9 @@ public sealed partial class ThatNumber
 			int expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -143,9 +143,9 @@ public sealed partial class ThatNumber
 			long subject = expected;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

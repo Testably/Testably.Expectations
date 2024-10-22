@@ -12,14 +12,14 @@ public sealed partial class ThatStream
 			Stream? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsSeekable();
+				=> await Expect.That(subject).Should().IsSeekable();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is seekable,
 				                  but found <null>
-				                  at Expect.That(subject).IsSeekable()
+				                  at Expect.That(subject).Should().IsSeekable()
 				                  """);
 		}
 
@@ -29,9 +29,9 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canSeek: true);
 
 			async Task Act()
-				=> await Expect.That(subject).IsSeekable();
+				=> await Expect.That(subject).Should().IsSeekable();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -40,14 +40,14 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canSeek: false);
 
 			async Task Act()
-				=> await Expect.That(subject).IsSeekable();
+				=> await Expect.That(subject).Should().IsSeekable();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is seekable,
 				                  but it was not
-				                  at Expect.That(subject).IsSeekable()
+				                  at Expect.That(subject).Should().IsSeekable()
 				                  """);
 		}
 	}

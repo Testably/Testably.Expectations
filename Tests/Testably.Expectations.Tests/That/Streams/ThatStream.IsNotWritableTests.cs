@@ -12,9 +12,9 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canWrite: false);
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotWritable();
+				=> await Expect.That(subject).Should().IsNotWritable();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -23,14 +23,14 @@ public sealed partial class ThatStream
 			Stream? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotWritable();
+				=> await Expect.That(subject).Should().IsNotWritable();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is not writable,
 				                  but found <null>
-				                  at Expect.That(subject).IsNotWritable()
+				                  at Expect.That(subject).Should().IsNotWritable()
 				                  """);
 		}
 
@@ -40,14 +40,14 @@ public sealed partial class ThatStream
 			Stream subject = new MyStream(canWrite: true);
 
 			async Task Act()
-				=> await Expect.That(subject).IsNotWritable();
+				=> await Expect.That(subject).Should().IsNotWritable();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected that subject
 				                  is not writable,
 				                  but it was
-				                  at Expect.That(subject).IsNotWritable()
+				                  at Expect.That(subject).Should().IsNotWritable()
 				                  """);
 		}
 	}

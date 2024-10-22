@@ -20,11 +20,11 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(statusCode);
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHaveStatusCode(unexpected);
+				=> await Expect.That(subject).Should().DoesNotHaveStatusCode(unexpected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage(
-					"*StatusCode different to*Expect.That(subject).DoesNotHaveStatusCode(unexpected)")
+					"*StatusCode different to*Expect.That(subject).Should().DoesNotHaveStatusCode(unexpected)")
 				.AsWildcard();
 		}
 
@@ -36,9 +36,9 @@ public sealed partial class ThatHttpResponseMessage
 				.WithStatusCode(HttpStatusCode.BadRequest);
 
 			async Task Act()
-				=> await Expect.That(subject).DoesNotHaveStatusCode(unexpected);
+				=> await Expect.That(subject).Should().DoesNotHaveStatusCode(unexpected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

@@ -10,10 +10,10 @@ public sealed partial class ThatNumber
 			double subject = double.NaN;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNaN()
+				=> await Expect.That(subject).Should().IsNaN()
 					.And.Is(subject);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -21,9 +21,9 @@ public sealed partial class ThatNumber
 		{
 			double subject = double.NaN;
 
-			async Task Act() => await Expect.That(subject).IsNaN();
+			async Task Act() => await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -38,14 +38,14 @@ public sealed partial class ThatNumber
 		public async Task ForDouble_WhenSubjectIsNormalValue_ShouldFail(double subject)
 		{
 			async Task Act()
-				=> await Expect.That(subject).IsNaN();
+				=> await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is NaN,
 				                   but found {subject}
-				                   at Expect.That(subject).IsNaN()
+				                   at Expect.That(subject).Should().IsNaN()
 				                   """);
 		}
 
@@ -54,10 +54,10 @@ public sealed partial class ThatNumber
 		{
 			float subject = float.NaN;
 
-			async Task Act() => await Expect.That(subject).IsNaN()
+			async Task Act() => await Expect.That(subject).Should().IsNaN()
 				.And.Is(subject);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -66,9 +66,9 @@ public sealed partial class ThatNumber
 			float subject = float.NaN;
 
 			async Task Act()
-				=> await Expect.That(subject).IsNaN();
+				=> await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Theory]
@@ -83,14 +83,14 @@ public sealed partial class ThatNumber
 		public async Task ForFloat_WhenSubjectIsNormalValue_ShouldFail(float subject)
 		{
 			async Task Act()
-				=> await Expect.That(subject).IsNaN();
+				=> await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is NaN,
 				                   but found {subject}
-				                   at Expect.That(subject).IsNaN()
+				                   at Expect.That(subject).Should().IsNaN()
 				                   """);
 		}
 	}

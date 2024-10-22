@@ -13,14 +13,14 @@ public sealed partial class ThatTimeSpan
 			TimeSpan expected = LaterTime();
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is {Formatter.Format(expected)},
 				                   but found {Formatter.Format(subject)}
-				                   at Expect.That(subject).Is(expected)
+				                   at Expect.That(subject).Should().Is(expected)
 				                   """);
 		}
 
@@ -31,9 +31,9 @@ public sealed partial class ThatTimeSpan
 			TimeSpan expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Is(expected);
+				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }

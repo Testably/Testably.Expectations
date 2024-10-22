@@ -11,14 +11,14 @@ public sealed partial class ThatDateTime
 			DateTime subject = EarlierTime();
 
 			async Task Act()
-				=> await Expect.That(subject).IsAfter(expected);
+				=> await Expect.That(subject).Should().IsAfter(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is after {expected:O},
 				                   but found {subject:O}
-				                   at Expect.That(subject).IsAfter(expected)
+				                   at Expect.That(subject).Should().IsAfter(expected)
 				                   """);
 		}
 
@@ -29,14 +29,14 @@ public sealed partial class ThatDateTime
 			DateTime subject = expected;
 
 			async Task Act()
-				=> await Expect.That(subject).IsAfter(expected);
+				=> await Expect.That(subject).Should().IsAfter(expected);
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is after {expected:O},
 				                   but found {subject:O}
-				                   at Expect.That(subject).IsAfter(expected)
+				                   at Expect.That(subject).Should().IsAfter(expected)
 				                   """);
 		}
 
@@ -47,9 +47,9 @@ public sealed partial class ThatDateTime
 			DateTime subject = LaterTime();
 
 			async Task Act()
-				=> await Expect.That(subject).IsAfter(expected);
+				=> await Expect.That(subject).Should().IsAfter(expected);
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 
 		[Fact]
@@ -59,14 +59,14 @@ public sealed partial class ThatDateTime
 			DateTime subject = EarlierTime(3);
 
 			async Task Act()
-				=> await Expect.That(subject).IsAfter(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).Should().IsAfter(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).Throws<XunitException>()
+			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected that subject
 				                   is after {expected:O} ± 0:03,
 				                   but found {subject:O}
-				                   at Expect.That(subject).IsAfter(expected).Within(TimeSpan.FromSeconds(3))
+				                   at Expect.That(subject).IsAfter(expected).Should().Within(TimeSpan.FromSeconds(3))
 				                   """);
 		}
 
@@ -77,9 +77,9 @@ public sealed partial class ThatDateTime
 			DateTime subject = EarlierTime(2);
 
 			async Task Act()
-				=> await Expect.That(subject).IsAfter(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).Should().IsAfter(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).DoesNotThrow();
+			await Expect.That(Act).Should().DoesNotThrow();
 		}
 	}
 }
