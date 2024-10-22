@@ -1,15 +1,15 @@
-﻿namespace Testably.Expectations.Tests.Primitives.Booleans;
+﻿namespace Testably.Expectations.Tests.Primitives.Enums;
 
-public sealed partial class ThatBool
+public sealed partial class ThatEnum
 {
 	public sealed class IsNotTests
 	{
 		[Theory]
-		[InlineData(true)]
-		[InlineData(false)]
-		public async Task WhenValuesAreTheSame_ShouldFail(bool value)
+		[InlineData(MyColors.Blue)]
+		[InlineData(MyColors.Green)]
+		public async Task WhenValuesAreTheSame_ShouldFail(MyColors value)
 		{
-			bool unexpected = value;
+			MyColors unexpected = value;
 
 			async Task Act()
 				=> await Expect.That(value).IsNot(unexpected);
@@ -24,12 +24,10 @@ public sealed partial class ThatBool
 		}
 
 		[Theory]
-		[InlineData(true)]
-		[InlineData(false)]
-		public async Task WhenValuesAreDifferent_ShouldSucceed(bool value)
+		[InlineData(MyColors.Blue, MyColors.Green)]
+		[InlineData(MyColors.Green, MyColors.Blue)]
+		public async Task WhenValuesAreDifferent_ShouldSucceed(MyColors value, MyColors unexpected)
 		{
-			bool unexpected = !value;
-
 			async Task Act()
 				=> await Expect.That(value).IsNot(unexpected);
 

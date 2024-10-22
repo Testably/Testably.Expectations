@@ -1,17 +1,17 @@
-﻿namespace Testably.Expectations.Tests.Primitives.Booleans;
+﻿namespace Testably.Expectations.Tests.Primitives.Enums;
 
-public sealed partial class ThatNullableBool
+public sealed partial class ThatNullableEnum
 {
 	public sealed class IsTests
 	{
 		[Theory]
-		[InlineData(true, false)]
-		[InlineData(true, null)]
-		[InlineData(false, true)]
-		[InlineData(false, null)]
-		[InlineData(null, true)]
-		[InlineData(null, false)]
-		public async Task WhenValuesAreDifferent_ShouldFail(bool? value, bool? expected)
+		[InlineData(MyColors.Blue, MyColors.Green)]
+		[InlineData(MyColors.Blue, null)]
+		[InlineData(MyColors.Green, MyColors.Blue)]
+		[InlineData(MyColors.Green, null)]
+		[InlineData(null, MyColors.Blue)]
+		[InlineData(null, MyColors.Green)]
+		public async Task WhenValuesAreDifferent_ShouldFail(MyColors? value, MyColors? expected)
 		{
 			async Task Act()
 				=> await Expect.That(value).Is(expected);
@@ -26,12 +26,12 @@ public sealed partial class ThatNullableBool
 		}
 
 		[Theory]
-		[InlineData(true)]
-		[InlineData(false)]
+		[InlineData(MyColors.Blue)]
+		[InlineData(MyColors.Green)]
 		[InlineData(null)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(bool? value)
+		public async Task WhenValuesAreTheSame_ShouldSucceed(MyColors? value)
 		{
-			bool? expected = value;
+			MyColors? expected = value;
 
 			async Task Act()
 				=> await Expect.That(value).Is(expected);

@@ -19,6 +19,7 @@ public class Formatter
 		new BooleanFormatter(),
 		new StringFormatter(),
 		new TypeFormatter(),
+		new EnumFormatter(),
 		new CollectionFormatter(),
 		new HttpStatusCodeFormatter(),
 		new DateTimeFormatter(),
