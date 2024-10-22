@@ -12,6 +12,42 @@ namespace Testably.Expectations;
 public static partial class ThatStreamExtensions
 {
 	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is not readable.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsNotReadable(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is not readable",
+					actual => actual?.CanRead == false,
+					actual => actual == null ? "found <null>" : "it was"),
+				b => b.AppendMethod(nameof(IsNotReadable))),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is not read-only.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsNotReadOnly(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is not read-only",
+					actual => actual != null && !(actual is { CanWrite: false, CanRead: true }),
+					actual => actual == null ? "found <null>" : "it was"),
+				b => b.AppendMethod(nameof(IsNotReadOnly))),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is not seekable.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsNotSeekable(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is not seekable",
+					actual => actual?.CanSeek == false,
+					actual => actual == null ? "found <null>" : "it was"),
+				b => b.AppendMethod(nameof(IsNotSeekable))),
+			source);
+
+	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is not writable.
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, That<Stream?>> IsNotWritable(
@@ -24,6 +60,54 @@ public static partial class ThatStreamExtensions
 			source);
 
 	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is not write-only.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsNotWriteOnly(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is not write-only",
+					actual => actual != null && !(actual is { CanWrite: true, CanRead: false }),
+					actual => actual == null ? "found <null>" : "it was"),
+				b => b.AppendMethod(nameof(IsNotWriteOnly))),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is readable.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsReadable(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is readable",
+					actual => actual?.CanRead == true,
+					actual => actual == null ? "found <null>" : "it was not"),
+				b => b.AppendMethod(nameof(IsReadable))),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is read-only.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsReadOnly(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is read-only",
+					actual => actual is { CanWrite: false, CanRead: true },
+					actual => actual == null ? "found <null>" : "it was not"),
+				b => b.AppendMethod(nameof(IsReadOnly))),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is seekable.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsSeekable(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is seekable",
+					actual => actual?.CanSeek == true,
+					actual => actual == null ? "found <null>" : "it was not"),
+				b => b.AppendMethod(nameof(IsSeekable))),
+			source);
+
+	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is writable.
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, That<Stream?>> IsWritable(
@@ -33,5 +117,17 @@ public static partial class ThatStreamExtensions
 					actual => actual?.CanWrite == true,
 					actual => actual == null ? "found <null>" : "it was not"),
 				b => b.AppendMethod(nameof(IsWritable))),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject <see cref="Stream" /> is write-only.
+	/// </summary>
+	public static AndOrExpectationResult<Stream?, That<Stream?>> IsWriteOnly(
+		this That<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new Constraint(
+					"is write-only",
+					actual => actual is { CanWrite: true, CanRead: false },
+					actual => actual == null ? "found <null>" : "it was not"),
+				b => b.AppendMethod(nameof(IsWriteOnly))),
 			source);
 }
