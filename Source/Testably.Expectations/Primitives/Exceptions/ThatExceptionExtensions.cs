@@ -86,8 +86,8 @@ public static partial class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public static AndOrExpectationResult<TException?, That<TException?>> HasParamName<TException>(
-		this That<TException?> source,
+	public static AndOrExpectationResult<TException, That<TException>> HasParamName<TException>(
+		this That<TException> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TException : ArgumentException?

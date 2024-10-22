@@ -422,6 +422,42 @@ public sealed partial class ThatString
 		}
 
 		[Fact]
+		public async Task
+			Using_WhenExpectedStringOccursEnoughTimesForTheComparer_ShouldSucceed()
+		{
+			string actual =
+				"In this text in between the word an investigator should find the word 'IN' multiple times.";
+			string expected = "in";
+
+			async Task Act()
+				=> await Expect.That(actual).Contains(expected).Exactly(4)
+					.Using(new IgnoreCaseForVocalsComparer());
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
+		public async Task
+			Using_WhenExpectedStringOccursIncorrectTimesForTheComparer_ShouldIncludeComparerInMessage()
+		{
+			string actual =
+				"In this text in between the word an investigator should find the word 'IN' multiple times.";
+			string expected = "in";
+
+			async Task Act()
+				=> await Expect.That(actual).Contains(expected).Exactly(5)
+					.Using(new IgnoreCaseForVocalsComparer());
+
+			await Expect.That(Act).Throws<XunitException>()
+				.Which.HasMessage("""
+				                  Expected that actual
+				                  contains "in" exactly 5 times using IgnoreCaseForVocalsComparer,
+				                  but found it 4 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
+				                  at Expect.That(actual).Contains(expected).Exactly(5).Using(new IgnoreCaseForVocalsComparer())
+				                  """);
+		}
+
+		[Fact]
 		public async Task WhenExpectedStringIsContained_ShouldSucceed()
 		{
 			string actual = "some text";
