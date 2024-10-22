@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Tests.Core.Formatting.Formatters;
 

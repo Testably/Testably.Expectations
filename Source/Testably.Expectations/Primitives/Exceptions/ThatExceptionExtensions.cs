@@ -3,7 +3,8 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Results;
+using Testably.Expectations.Options;
+using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
@@ -86,8 +87,8 @@ public static partial class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public static AndOrExpectationResult<TException, That<TException>> HasParamName<TException>(
-		this That<TException> source,
+	public static AndOrExpectationResult<TException?, That<TException?>> HasParamName<TException>(
+		this That<TException?> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TException : ArgumentException?

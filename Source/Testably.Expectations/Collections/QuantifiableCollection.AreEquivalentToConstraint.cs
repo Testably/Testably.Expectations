@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Equivalency;
-using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Options;
 
 namespace Testably.Expectations.Collections;
 
