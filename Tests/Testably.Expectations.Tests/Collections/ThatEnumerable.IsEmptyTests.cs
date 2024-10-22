@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Testably.Expectations.Tests.TestHelpers;
-using Xunit;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace Testably.Expectations.Tests.Collections;
 
