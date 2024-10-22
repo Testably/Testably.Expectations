@@ -7,27 +7,27 @@ public sealed partial class ThatCollection
 		[Fact]
 		public async Task WhenCollectionContainsValues_ShouldFail()
 		{
-			int[] collection = [1, 1, 2];
+			int[] subject = [1, 1, 2];
 
 			async Task Act()
-				=> await Expect.That(collection).IsEmpty();
+				=> await Expect.That(subject).IsEmpty();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that collection
+				                  Expected that subject
 				                  is empty,
 				                  but found [1, 1, 2]
-				                  at Expect.That(collection).IsEmpty()
+				                  at Expect.That(subject).IsEmpty()
 				                  """);
 		}
 
 		[Fact]
 		public async Task WhenCollectionIsEmpty_ShouldSucceed()
 		{
-			int[] collection = [];
+			int[] subject = [];
 
 			async Task Act()
-				=> await Expect.That(collection).IsEmpty();
+				=> await Expect.That(subject).IsEmpty();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

@@ -7,10 +7,10 @@ public sealed partial class ThatCollection
 		[Fact]
 		public async Task WhenCollectionContainsSufficientlyEqualItems_ShouldSucceed()
 		{
-			int[] collection = [1, 1, 1, 1, 2, 2, 3];
+			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expect.That(collection).Between(3).And(4).Are(1);
+				=> await Expect.That(subject).Between(3).And(4).Are(1);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -18,34 +18,34 @@ public sealed partial class ThatCollection
 		[Fact]
 		public async Task WhenCollectionContainsTooFewEqualItems_ShouldFail()
 		{
-			int[] collection = [1, 1, 1, 1, 2, 2, 3];
+			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expect.That(collection).Between(3).And(4).Are(2);
+				=> await Expect.That(subject).Between(3).And(4).Are(2);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that collection
+				                  Expected that subject
 				                  has between 3 and 4 items equal to 2,
 				                  but only 2 items were equal
-				                  at Expect.That(collection).Between(3).And(4).Are(2)
+				                  at Expect.That(subject).Between(3).And(4).Are(2)
 				                  """);
 		}
 
 		[Fact]
 		public async Task WhenCollectionContainsTooManyEqualItems_ShouldFail()
 		{
-			int[] collection = [1, 1, 1, 1, 2, 2, 3];
+			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expect.That(collection).Between(1).And(3).Are(1);
+				=> await Expect.That(subject).Between(1).And(3).Are(1);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that collection
+				                  Expected that subject
 				                  has between 1 and 3 items equal to 1,
 				                  but 4 items were equal
-				                  at Expect.That(collection).Between(1).And(3).Are(1)
+				                  at Expect.That(subject).Between(1).And(3).Are(1)
 				                  """);
 		}
 	}

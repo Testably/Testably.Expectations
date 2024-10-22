@@ -6,8 +6,8 @@ public sealed class SkipExceptionTests
 	[AutoData]
 	public async Task Message_ShouldBeSet(string message)
 	{
-		SkipException sut = new(message);
+		SkipException subject = new(message);
 
-		await Expect.That(sut.Message).Is(message);
+		await Expect.That(subject.Message).Is(message);
 	}
 }

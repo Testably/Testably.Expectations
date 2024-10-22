@@ -5,29 +5,40 @@ public sealed partial class ThatNullableBool
 	public sealed class IsNotNullTests
 	{
 		[Fact]
-		public async Task Fails_For_Null_Value()
+		public async Task WhenFalse_ShouldSucceed()
 		{
-			bool? value = null;
+			bool? subject = false;
 
 			async Task Act()
-				=> await Expect.That(value).IsNotNull();
+				=> await Expect.That(subject).IsNotNull();
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
+		public async Task WhenNull_ShouldFail()
+		{
+			bool? subject = null;
+
+			async Task Act()
+				=> await Expect.That(subject).IsNotNull();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that value
+				                  Expected that subject
 				                  is not <null>,
 				                  but found <null>
-				                  at Expect.That(value).IsNotNull()
+				                  at Expect.That(subject).IsNotNull()
 				                  """);
 		}
 
-		[Theory]
-		[InlineData(true)]
-		[InlineData(false)]
-		public async Task Succeeds_For_True_Or_False_Value(bool? value)
+		[Fact]
+		public async Task WhenTrue_ShouldSucceed()
 		{
+			bool? subject = true;
+
 			async Task Act()
-				=> await Expect.That(value).IsNotNull();
+				=> await Expect.That(subject).IsNotNull();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

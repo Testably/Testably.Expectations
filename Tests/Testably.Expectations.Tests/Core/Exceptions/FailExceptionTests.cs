@@ -6,8 +6,8 @@ public sealed class FailExceptionTests
 	[AutoData]
 	public async Task Message_ShouldBeSet(string message)
 	{
-		FailException sut = new(message);
+		FailException subject = new(message);
 
-		await Expect.That(sut.Message).Is(message);
+		await Expect.That(subject.Message).Is(message);
 	}
 }

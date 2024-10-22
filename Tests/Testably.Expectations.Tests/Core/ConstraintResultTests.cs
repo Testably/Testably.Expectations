@@ -9,10 +9,10 @@ public sealed class ConstraintResultTests
 	public async Task Failure_WithoutValue_ShouldStoreTexts(string expectationText,
 		string resultText)
 	{
-		ConstraintResult.Failure sut = new(expectationText, resultText);
+		ConstraintResult.Failure subject = new(expectationText, resultText);
 
-		await Expect.That(sut.ExpectationText).Is(expectationText);
-		await Expect.That(sut.ResultText).Is(resultText);
+		await Expect.That(subject.ExpectationText).Is(expectationText);
+		await Expect.That(subject.ResultText).Is(resultText);
 	}
 
 	[Theory]
@@ -25,11 +25,11 @@ public sealed class ConstraintResultTests
 			Value = 1
 		};
 
-		ConstraintResult.Failure<Dummy> sut = new(value, expectationText, resultText);
+		ConstraintResult.Failure<Dummy> subject = new(value, expectationText, resultText);
 
-		await Expect.That(sut.Value).IsEquivalentTo(value);
-		await Expect.That(sut.ExpectationText).Is(expectationText);
-		await Expect.That(sut.ResultText).Is(resultText);
+		await Expect.That(subject.Value).IsEquivalentTo(value);
+		await Expect.That(subject.ExpectationText).Is(expectationText);
+		await Expect.That(subject.ResultText).Is(resultText);
 	}
 
 	[Theory]
@@ -37,9 +37,9 @@ public sealed class ConstraintResultTests
 	public async Task Invert_FromFailure_ShouldKeepExpectationText(string expectationText,
 		string resultText)
 	{
-		ConstraintResult.Failure sut = new(expectationText, resultText);
+		ConstraintResult.Failure subject = new(expectationText, resultText);
 
-		ConstraintResult result = sut.Invert();
+		ConstraintResult result = subject.Invert();
 
 		await Expect.That(result).Is<ConstraintResult.Success>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
@@ -50,9 +50,9 @@ public sealed class ConstraintResultTests
 	public async Task Invert_FromFailure_ShouldUpdateExpectationText(string expectationText,
 		string resultText)
 	{
-		ConstraintResult.Failure sut = new("foo", "bar");
+		ConstraintResult.Failure subject = new("foo", "bar");
 
-		ConstraintResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
 		await Expect.That(result).Is<ConstraintResult.Success>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
@@ -67,9 +67,9 @@ public sealed class ConstraintResultTests
 		{
 			Value = 1
 		};
-		ConstraintResult.Failure<Dummy> sut = new(value, expectationText, resultText);
+		ConstraintResult.Failure<Dummy> subject = new(value, expectationText, resultText);
 
-		ConstraintResult result = sut.Invert();
+		ConstraintResult result = subject.Invert();
 
 		await Expect.That(result).Is<ConstraintResult.Success<Dummy>>()
 			.Which(s => s.Value, e => e.IsEquivalentTo(value));
@@ -84,9 +84,9 @@ public sealed class ConstraintResultTests
 		{
 			Value = 1
 		};
-		ConstraintResult.Failure<Dummy> sut = new(value, expectationText, resultText);
+		ConstraintResult.Failure<Dummy> subject = new(value, expectationText, resultText);
 
-		ConstraintResult result = sut.Invert();
+		ConstraintResult result = subject.Invert();
 
 		await Expect.That(result).Is<ConstraintResult.Success<Dummy>>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
@@ -102,9 +102,9 @@ public sealed class ConstraintResultTests
 		{
 			Value = 1
 		};
-		ConstraintResult.Failure<Dummy> sut = new(value, "foo", "bar");
+		ConstraintResult.Failure<Dummy> subject = new(value, "foo", "bar");
 
-		ConstraintResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
 		await Expect.That(result).Is<ConstraintResult.Success<Dummy>>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
@@ -115,9 +115,9 @@ public sealed class ConstraintResultTests
 	public async Task Invert_FromSuccess_ShouldKeepExpectationTextAndUseDefaultResultText(
 		string expectationText)
 	{
-		ConstraintResult.Success sut = new(expectationText);
+		ConstraintResult.Success subject = new(expectationText);
 
-		ConstraintResult result = sut.Invert();
+		ConstraintResult result = subject.Invert();
 
 		await Expect.That(result).Is<ConstraintResult.Failure>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText))
@@ -129,9 +129,9 @@ public sealed class ConstraintResultTests
 	public async Task Invert_FromSuccess_ShouldUpdateExpectationAndDefaultResultText(
 		string expectationText, string resultText)
 	{
-		ConstraintResult.Success sut = new("foo");
+		ConstraintResult.Success subject = new("foo");
 
-		ConstraintResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
 		await Expect.That(result).Is<ConstraintResult.Failure>()
 			.Which(p => p.ExpectationText, e => e.Is(expectationText))
@@ -146,9 +146,9 @@ public sealed class ConstraintResultTests
 		{
 			Value = 1
 		};
-		ConstraintResult.Success<Dummy> sut = new(value, expectationText);
+		ConstraintResult.Success<Dummy> subject = new(value, expectationText);
 
-		ConstraintResult result = sut.Invert();
+		ConstraintResult result = subject.Invert();
 
 		await Expect.That(result).Is<ConstraintResult.Failure<Dummy>>()
 			.Which(p => p.Value, e => e.IsEquivalentTo(value));
@@ -163,9 +163,9 @@ public sealed class ConstraintResultTests
 		{
 			Value = 1
 		};
-		ConstraintResult.Success<Dummy> sut = new(value, expectationText);
+		ConstraintResult.Success<Dummy> subject = new(value, expectationText);
 
-		ConstraintResult result = sut.Invert();
+		ConstraintResult result = subject.Invert();
 
 		await Expect.That(result).Is<ConstraintResult.Failure<Dummy>>()
 			.Which(p => p.ExpectationText, e => e.Is(expectationText))
@@ -181,9 +181,9 @@ public sealed class ConstraintResultTests
 		{
 			Value = 1
 		};
-		ConstraintResult.Success<Dummy> sut = new(value, "foo");
+		ConstraintResult.Success<Dummy> subject = new(value, "foo");
 
-		ConstraintResult result = sut.Invert(_ => expectationText, _ => resultText);
+		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
 		await Expect.That(result).Is<ConstraintResult.Failure<Dummy>>()
 			.Which(p => p.ExpectationText, e => e.Is(expectationText))
@@ -199,10 +199,10 @@ public sealed class ConstraintResultTests
 			Value = 1
 		};
 
-		ConstraintResult.Success<Dummy> sut = new(value, expectationText);
+		ConstraintResult.Success<Dummy> subject = new(value, expectationText);
 
-		await Expect.That(sut.Value).IsEquivalentTo(value);
-		await Expect.That(sut.ExpectationText).Is(expectationText);
+		await Expect.That(subject.Value).IsEquivalentTo(value);
+		await Expect.That(subject.ExpectationText).Is(expectationText);
 	}
 
 	[Theory]
@@ -210,9 +210,9 @@ public sealed class ConstraintResultTests
 	public async Task ToString_Failure_ShouldBeExpectationTextWithPrependedFailed(
 		string expectationText)
 	{
-		ConstraintResult.Failure sut = new(expectationText, "result text");
+		ConstraintResult.Failure subject = new(expectationText, "result text");
 
-		string result = sut.ToString();
+		string result = subject.ToString();
 
 		await Expect.That(result).Is($"FAILED {expectationText}");
 	}
@@ -222,9 +222,9 @@ public sealed class ConstraintResultTests
 	public async Task ToString_Success_ShouldBeExpectationTextWithPrependedSucceeded(
 		string expectationText)
 	{
-		ConstraintResult.Success sut = new(expectationText);
+		ConstraintResult.Success subject = new(expectationText);
 
-		string result = sut.ToString();
+		string result = subject.ToString();
 
 		await Expect.That(result).Is($"SUCCEEDED {expectationText}");
 	}

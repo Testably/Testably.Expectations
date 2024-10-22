@@ -5,7 +5,7 @@ public sealed partial class ThatBool
 	public sealed class ImpliesTests
 	{
 		[Fact]
-		public async Task Fails_For_Not_Implying_Values()
+		public async Task WhenAntecedentDoesNotImplyConsequent_ShouldFail()
 		{
 			bool antecedent = true;
 			bool consequent = false;
@@ -26,7 +26,8 @@ public sealed partial class ThatBool
 		[InlineData(false, false)]
 		[InlineData(false, true)]
 		[InlineData(true, true)]
-		public async Task Succeeds_For_Implying_Values(bool antecedent, bool consequent)
+		public async Task WhenAntecedentImpliesConsequent_ShouldSucceed(bool antecedent,
+			bool consequent)
 		{
 			async Task Act()
 				=> await Expect.That(antecedent).Implies(consequent);

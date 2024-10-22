@@ -5,147 +5,147 @@ public sealed partial class ThatNumber
 	public sealed class IsTests
 	{
 		[Theory]
-		[AutoData]
-		public async Task A_double_number_is_equal_to_the_same_floating_number(float expected)
-		{
-			double value = expected;
-
-			async Task Act()
-				=> await Expect.That(value).Is(expected);
-
-			await Expect.That(Act).DoesNotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task A_floating_number_is_equal_to_the_same_nullable_value(float value)
-		{
-			float? expected = value;
-
-			async Task Act()
-				=> await Expect.That(value).Is(expected);
-
-			await Expect.That(Act).DoesNotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task A_floating_number_is_equal_to_the_same_value(float value)
-		{
-			float expected = value;
-
-			async Task Act()
-				=> await Expect.That(value).Is(expected);
-
-			await Expect.That(Act).DoesNotThrow();
-		}
-
-		[Theory]
 		[InlineData(1.0, 2.1)]
 		[InlineData(5.8, -3.03)]
-		public async Task A_floating_number_is_not_equal_to_a_different_value(float value,
+		public async Task ShouldFailForDifferentFloatValues(float subject,
 			float expected)
 		{
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is {expected},
-				                   but found {value}
-				                   at Expect.That(value).Is(expected)
+				                   but found {subject}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task A_floating_number_is_not_equal_to_null(float value)
-		{
-			float? expected = null;
-
-			async Task Act()
-				=> await Expect.That(value).Is(expected);
-
-			await Expect.That(Act).Throws<XunitException>()
-				.Which.HasMessage($"""
-				                   Expected that value
-				                   is <null>,
-				                   but found {value}
-				                   at Expect.That(value).Is(expected)
-				                   """);
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task A_long_number_is_equal_to_the_same_integer_number(int expected)
-		{
-			long value = expected;
-
-			async Task Act()
-				=> await Expect.That(value).Is(expected);
-
-			await Expect.That(Act).DoesNotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task An_integer_number_is_equal_to_the_same_nullable_value(int value)
-		{
-			int? expected = value;
-
-			async Task Act()
-				=> await Expect.That(value).Is(expected);
-
-			await Expect.That(Act).DoesNotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task An_integer_number_is_equal_to_the_same_value(int value)
-		{
-			int expected = value;
-
-			async Task Act()
-				=> await Expect.That(value).Is(expected);
-
-			await Expect.That(Act).DoesNotThrow();
 		}
 
 		[Theory]
 		[InlineData(1, 2)]
 		[InlineData(5, -3)]
-		public async Task An_integer_number_is_not_equal_to_a_different_value(int value,
+		public async Task ShouldFailForDifferentIntegerValues(int subject,
 			int expected)
 		{
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is {expected},
-				                   but found {value}
-				                   at Expect.That(value).Is(expected)
+				                   but found {subject}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
 		}
 
 		[Theory]
 		[AutoData]
-		public async Task An_integer_number_is_not_equal_to_null(int value)
+		public async Task ShouldFailForFloatComparisonWithNull(float subject)
+		{
+			float? expected = null;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).Throws<XunitException>()
+				.Which.HasMessage($"""
+				                   Expected that subject
+				                   is <null>,
+				                   but found {subject}
+				                   at Expect.That(subject).Is(expected)
+				                   """);
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task ShouldFailForIntegerComparisonWithNull(int subject)
 		{
 			int? expected = null;
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is <null>,
-				                   but found {value}
-				                   at Expect.That(value).Is(expected)
+				                   but found {subject}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task ShouldSucceedForEqualDoubleAndFloatValues(float expected)
+		{
+			double subject = expected;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task ShouldSucceedForEqualFloatValueAndNullableValue(float subject)
+		{
+			float? expected = subject;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task ShouldSucceedForEqualFloatValues(float subject)
+		{
+			float expected = subject;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task ShouldSucceedForEqualIntegerValueAndNullableValue(int subject)
+		{
+			int? expected = subject;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task ShouldSucceedForEqualIntegerValues(int subject)
+		{
+			int expected = subject;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task ShouldSucceedForEqualLongAndIntegerValues(int expected)
+		{
+			long subject = expected;
+
+			async Task Act()
+				=> await Expect.That(subject).Is(expected);
+
+			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

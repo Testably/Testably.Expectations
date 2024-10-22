@@ -7,27 +7,27 @@ public sealed partial class ThatNullableEnum
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValueIsDefined_ShouldFail(MyColors? value)
+		public async Task WhenValueIsDefined_ShouldFail(MyColors? subject)
 		{
 			async Task Act()
-				=> await Expect.That(value).IsNotDefined();
+				=> await Expect.That(subject).IsNotDefined();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is not defined,
-				                   but found {value}
-				                   at Expect.That(value).IsNotDefined()
+				                   but found {subject}
+				                   at Expect.That(subject).IsNotDefined()
 				                   """);
 		}
 
 		[Fact]
 		public async Task WhenValueIsNotDefined_ShouldSucceed()
 		{
-			MyColors? value = (MyColors)42;
+			MyColors? subject = (MyColors)42;
 
 			async Task Act()
-				=> await Expect.That(value).IsNotDefined();
+				=> await Expect.That(subject).IsNotDefined();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

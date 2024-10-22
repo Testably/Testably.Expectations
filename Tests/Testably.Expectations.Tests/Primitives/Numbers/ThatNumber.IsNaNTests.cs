@@ -5,45 +5,23 @@ public sealed partial class ThatNumber
 	public sealed class IsNaNTests
 	{
 		[Fact]
-		public async Task NaN_is_equal_to_NaN_when_its_a_double()
+		public async Task ForDouble_ShouldSupportChaining()
 		{
-			double value = double.NaN;
-
-			async Task Act() => await Expect.That(value).IsNaN();
-
-			await Expect.That(Act).DoesNotThrow();
-		}
-
-		[Fact]
-		public async Task NaN_is_equal_to_NaN_when_its_a_float()
-		{
-			float value = float.NaN;
+			double subject = double.NaN;
 
 			async Task Act()
-				=> await Expect.That(value).IsNaN();
+				=> await Expect.That(subject).IsNaN()
+					.And.Is(subject);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
 
 		[Fact]
-		public async Task Should_chain_when_asserting_NaN_as_double()
+		public async Task ForDouble_WhenSubjectIsNaN_ShouldSucceed()
 		{
-			double value = double.NaN;
+			double subject = double.NaN;
 
-			async Task Act()
-				=> await Expect.That(value).IsNaN()
-					.And.Is(value);
-
-			await Expect.That(Act).DoesNotThrow();
-		}
-
-		[Fact]
-		public async Task Should_chain_when_asserting_NaN_as_float()
-		{
-			float value = float.NaN;
-
-			async Task Act() => await Expect.That(value).IsNaN()
-				.And.Is(value);
+			async Task Act() => await Expect.That(subject).IsNaN();
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -57,18 +35,40 @@ public sealed partial class ThatNumber
 		[InlineData(double.Epsilon)]
 		[InlineData(double.NegativeInfinity)]
 		[InlineData(double.PositiveInfinity)]
-		public async Task Should_fail_when_asserting_normal_double_value_to_be_NaN(double value)
+		public async Task ForDouble_WhenSubjectIsNormalValue_ShouldFail(double subject)
 		{
 			async Task Act()
-				=> await Expect.That(value).IsNaN();
+				=> await Expect.That(subject).IsNaN();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is NaN,
-				                   but found {value}
-				                   at Expect.That(value).IsNaN()
+				                   but found {subject}
+				                   at Expect.That(subject).IsNaN()
 				                   """);
+		}
+
+		[Fact]
+		public async Task ForFloat_ShouldSupportChaining()
+		{
+			float subject = float.NaN;
+
+			async Task Act() => await Expect.That(subject).IsNaN()
+				.And.Is(subject);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
+		public async Task ForFloat_WhenSubjectIsNaN_ShouldSucceed()
+		{
+			float subject = float.NaN;
+
+			async Task Act()
+				=> await Expect.That(subject).IsNaN();
+
+			await Expect.That(Act).DoesNotThrow();
 		}
 
 		[Theory]
@@ -80,17 +80,17 @@ public sealed partial class ThatNumber
 		[InlineData(float.Epsilon)]
 		[InlineData(float.NegativeInfinity)]
 		[InlineData(float.PositiveInfinity)]
-		public async Task Should_fail_when_asserting_normal_float_value_to_be_NaN(float value)
+		public async Task ForFloat_WhenSubjectIsNormalValue_ShouldFail(float subject)
 		{
 			async Task Act()
-				=> await Expect.That(value).IsNaN();
+				=> await Expect.That(subject).IsNaN();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is NaN,
-				                   but found {value}
-				                   at Expect.That(value).IsNaN()
+				                   but found {subject}
+				                   at Expect.That(subject).IsNaN()
 				                   """);
 		}
 	}

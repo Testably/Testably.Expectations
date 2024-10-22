@@ -17,10 +17,10 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateOtherException();
 			Action action = () => throw exception;
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).Throws<CustomException>();
 
-			await Expect.That(sut).ThrowsException()
+			await Expect.That(Act).ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -37,10 +37,10 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
-			Func<Task<SubCustomException>> sut = async ()
+			async Task<SubCustomException> Act()
 				=> await Expect.That(action).Throws<SubCustomException>();
 
-			await Expect.That(sut).ThrowsException()
+			await Expect.That(Act).ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -55,10 +55,10 @@ public sealed partial class ThatDelegate
 			                         """;
 			Action action = () => { };
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).Throws<CustomException>();
 
-			await Expect.That(sut).ThrowsException()
+			await Expect.That(Act).ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -79,10 +79,10 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).Throws<CustomException>();
 
-			await Expect.That(sut).DoesNotThrow();
+			await Expect.That(Act).DoesNotThrow();
 		}
 
 		[Fact]
@@ -91,10 +91,10 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateSubCustomException();
 			Action action = () => throw exception;
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).Throws<CustomException>();
 
-			await Expect.That(sut).DoesNotThrow();
+			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

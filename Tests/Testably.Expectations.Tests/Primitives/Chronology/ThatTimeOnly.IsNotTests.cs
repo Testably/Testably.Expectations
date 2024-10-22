@@ -8,29 +8,29 @@ public sealed partial class ThatTimeOnly
 		[Fact]
 		public async Task WhenValuesAreTheSame_ShouldFail()
 		{
-			TimeOnly value = CurrentTime();
-			TimeOnly unexpected = value;
+			TimeOnly subject = CurrentTime();
+			TimeOnly unexpected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).IsNot(unexpected);
+				=> await Expect.That(subject).IsNot(unexpected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is not {unexpected:O},
-				                   but found {value:O}
-				                   at Expect.That(value).IsNot(unexpected)
+				                   but found {subject:O}
+				                   at Expect.That(subject).IsNot(unexpected)
 				                   """);
 		}
 
 		[Fact]
 		public async Task WhenValuesAreDifferent_ShouldSucceed()
 		{
-			TimeOnly value = CurrentTime();
+			TimeOnly subject = CurrentTime();
 			TimeOnly unexpected = LaterTime();
 			
 			async Task Act()
-				=> await Expect.That(value).IsNot(unexpected);
+				=> await Expect.That(subject).IsNot(unexpected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

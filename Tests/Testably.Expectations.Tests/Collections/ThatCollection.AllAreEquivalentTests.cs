@@ -7,7 +7,7 @@ public sealed partial class ThatCollection
 		[Fact]
 		public async Task WhenCollectionContainsOtherValues_ShouldFail()
 		{
-			MyClass[] collection =
+			MyClass[] subject =
 			[
 				new() { Value = "Foo" },
 				new() { Value = "Foo" },
@@ -18,21 +18,21 @@ public sealed partial class ThatCollection
 			MyClass expected = new() { Value = "Foo" };
 
 			async Task Act()
-				=> await Expect.That(collection).All().AreEquivalentTo(expected);
+				=> await Expect.That(subject).All().AreEquivalentTo(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that collection
+				                  Expected that subject
 				                  has all items equivalent to expected,
 				                  but only 3 of 4 items were equivalent
-				                  at Expect.That(collection).All().AreEquivalentTo(expected)
+				                  at Expect.That(subject).All().AreEquivalentTo(expected)
 				                  """);
 		}
 
 		[Fact]
 		public async Task WhenCollectionOnlyContainsEqualValues_ShouldSucceed()
 		{
-			MyClass[] collection =
+			MyClass[] subject =
 			[
 				new() { Value = "Foo" },
 				new() { Value = "Foo" },
@@ -42,7 +42,7 @@ public sealed partial class ThatCollection
 			MyClass expected = new() { Value = "Foo" };
 
 			async Task Act()
-				=> await Expect.That(collection).All().AreEquivalentTo(expected);
+				=> await Expect.That(subject).All().AreEquivalentTo(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

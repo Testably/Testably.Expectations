@@ -11,10 +11,10 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task DoesNotEnumerateTwice()
 		{
-			ThrowWhenIteratingTwiceEnumerable enumerable = new();
+			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await Expect.That(enumerable).AtMost(3).Are(1)
+				=> await Expect.That(subject).AtMost(3).Are(1)
 					.And.AtMost(3).Are(1);
 
 			await Expect.That(Act).DoesNotThrow();
@@ -23,25 +23,27 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task DoesNotMaterializeEnumerable()
 		{
+			var subject = Factory.GetFibonacciNumbers();
+
 			async Task Act()
-				=> await Expect.That(Factory.GetFibonacciNumbers()).AtMost(1).Are(1);
+				=> await Expect.That(subject).AtMost(1).Are(1);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that Factory.GetFibonacciNumbers()
+				                  Expected that subject
 				                  has at most 1 item equal to 1,
 				                  but at least 2 items were equal
-				                  at Expect.That(Factory.GetFibonacciNumbers()).AtMost(1).Are(1)
+				                  at Expect.That(subject).AtMost(1).Are(1)
 				                  """);
 		}
 
 		[Fact]
 		public async Task WhenEnumerableContainsSufficientlyFewEqualItems_ShouldSucceed()
 		{
-			IEnumerable<int> enumerable = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
+			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(enumerable).AtMost(3).Are(2);
+				=> await Expect.That(subject).AtMost(3).Are(2);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -49,17 +51,17 @@ public sealed partial class ThatEnumerable
 		[Fact]
 		public async Task WhenEnumerableContainsTooManyEqualItems_ShouldFail()
 		{
-			IEnumerable<int> enumerable = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
+			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(enumerable).AtMost(3).Are(1);
+				=> await Expect.That(subject).AtMost(3).Are(1);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that enumerable
+				                  Expected that subject
 				                  has at most 3 items equal to 1,
 				                  but at least 4 items were equal
-				                  at Expect.That(enumerable).AtMost(3).Are(1)
+				                  at Expect.That(subject).AtMost(3).Are(1)
 				                  """);
 		}
 	}

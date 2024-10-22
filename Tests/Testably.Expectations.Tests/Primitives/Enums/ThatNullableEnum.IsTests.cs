@@ -11,29 +11,29 @@ public sealed partial class ThatNullableEnum
 		[InlineData(MyColors.Green, null)]
 		[InlineData(null, MyColors.Blue)]
 		[InlineData(null, MyColors.Green)]
-		public async Task WhenValuesAreDifferent_ShouldFail(MyColors? value, MyColors? expected)
+		public async Task WhenValuesAreDifferent_ShouldFail(MyColors? subject, MyColors? expected)
 		{
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is {expected?.ToString() ?? "<null>"},
-				                   but found {value?.ToString() ?? "<null>"}
-				                   at Expect.That(value).Is(expected)
+				                   but found {subject?.ToString() ?? "<null>"}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
 		}
 
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(MyColors? value)
+		public async Task WhenValuesAreTheSame_ShouldSucceed(MyColors? subject)
 		{
-			MyColors? expected = value;
+			MyColors? expected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

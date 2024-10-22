@@ -8,28 +8,28 @@ public sealed partial class ThatCollection
 	{
 		[Theory]
 		[AutoData]
-		public async Task Fails(string[] collection, string expected)
+		public async Task Fails(string[] subject, string expected)
 		{
 			async Task Act()
-				=> await Expect.That(collection).Contains(expected);
+				=> await Expect.That(subject).Contains(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that collection
+				                   Expected that subject
 				                   contains "{expected}",
-				                   but found ["{string.Join("\", \"", collection)}"]
-				                   at Expect.That(collection).Contains(expected)
+				                   but found ["{string.Join("\", \"", subject)}"]
+				                   at Expect.That(subject).Contains(expected)
 				                   """);
 		}
 
 		[Theory]
 		[AutoData]
-		public async Task Succeeds(List<string> collection, string expected)
+		public async Task Succeeds(List<string> subject, string expected)
 		{
-			collection.Add(expected);
+			subject.Add(expected);
 
 			async Task Act()
-				=> await Expect.That(collection).Contains(expected);
+				=> await Expect.That(subject).Contains(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

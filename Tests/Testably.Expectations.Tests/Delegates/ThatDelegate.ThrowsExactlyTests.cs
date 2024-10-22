@@ -17,10 +17,10 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateOtherException();
 			Action action = () => throw exception;
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).ThrowsExactly<CustomException>();
 
-			await Expect.That(sut).ThrowsException()
+			await Expect.That(Act).ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -37,10 +37,10 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateSubCustomException();
 			Action action = () => throw exception;
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).ThrowsExactly<CustomException>();
 
-			await Expect.That(sut).ThrowsException()
+			await Expect.That(Act).ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -55,10 +55,10 @@ public sealed partial class ThatDelegate
 			                         """;
 			Action action = () => { };
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).ThrowsExactly<CustomException>();
 
-			await Expect.That(sut).ThrowsException()
+			await Expect.That(Act).ThrowsException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -79,10 +79,10 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
-			Func<Task<CustomException>> sut = async ()
+			async Task<CustomException> Act()
 				=> await Expect.That(action).ThrowsExactly<CustomException>();
 
-			await Expect.That(sut).DoesNotThrow();
+			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

@@ -6,14 +6,14 @@ public sealed partial class ThatObject
 	{
 		[Theory]
 		[AutoData]
-		public async Task S(int value)
+		public async Task WhenTypeMatches_ShouldSucceed(int value)
 		{
-			object sut = new Other
+			object subject = new Other
 			{
 				Value = value
 			};
 
-			Other result = await Expect.That(sut).Is<Other>();
+			Other result = await Expect.That(subject).Is<Other>();
 			await Expect.That(result.Value).Is(value);
 		}
 	}

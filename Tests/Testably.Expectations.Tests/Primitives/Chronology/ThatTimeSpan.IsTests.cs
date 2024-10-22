@@ -9,29 +9,29 @@ public sealed partial class ThatTimeSpan
 		[Fact]
 		public async Task WhenValuesAreDifferent_ShouldFail()
 		{
-			TimeSpan value = CurrentTime();
+			TimeSpan subject = CurrentTime();
 			TimeSpan expected = LaterTime();
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is {Formatter.Format(expected)},
-				                   but found {Formatter.Format(value)}
-				                   at Expect.That(value).Is(expected)
+				                   but found {Formatter.Format(subject)}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
 		}
 
 		[Fact]
 		public async Task WhenValuesAreTheSame_ShouldSucceed()
 		{
-			TimeSpan value = CurrentTime();
-			TimeSpan expected = value;
+			TimeSpan subject = CurrentTime();
+			TimeSpan expected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

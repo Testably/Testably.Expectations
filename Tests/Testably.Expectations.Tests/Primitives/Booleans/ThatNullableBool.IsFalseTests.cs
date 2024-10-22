@@ -5,46 +5,46 @@ public sealed partial class ThatNullableBool
 	public sealed class IsFalseTests
 	{
 		[Fact]
-		public async Task Fails_For_Null_Value()
+		public async Task WhenNull_ShouldFail()
 		{
-			bool? value = null;
+			bool? subject = null;
 
 			async Task Act()
-				=> await Expect.That(value).IsFalse();
+				=> await Expect.That(subject).IsFalse();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that value
+				                  Expected that subject
 				                  is False,
 				                  but found <null>
-				                  at Expect.That(value).IsFalse()
+				                  at Expect.That(subject).IsFalse()
 				                  """);
 		}
 
 		[Fact]
-		public async Task Fails_For_True_Value()
+		public async Task WhenTrue_ShouldFail()
 		{
-			bool? value = true;
+			bool? subject = true;
 
 			async Task Act()
-				=> await Expect.That(value).IsFalse();
+				=> await Expect.That(subject).IsFalse();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that value
+				                  Expected that subject
 				                  is False,
 				                  but found True
-				                  at Expect.That(value).IsFalse()
+				                  at Expect.That(subject).IsFalse()
 				                  """);
 		}
 
 		[Fact]
-		public async Task Succeeds_For_False_Value()
+		public async Task WhenFalse_ShouldSucceed()
 		{
-			bool? value = false;
+			bool? subject = false;
 
 			async Task Act()
-				=> await Expect.That(value).IsFalse();
+				=> await Expect.That(subject).IsFalse();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

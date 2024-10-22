@@ -1,4 +1,4 @@
-﻿namespace Testably.Expectations.Tests.Primitives.Generics;
+﻿namespace Testably.Expectations.Tests.Primitives;
 
 public sealed partial class ThatGeneric
 {

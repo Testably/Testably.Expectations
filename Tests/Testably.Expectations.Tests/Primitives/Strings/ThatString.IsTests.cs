@@ -12,20 +12,22 @@ public sealed partial class ThatString
 		[InlineData("some message", "some me?age", false)]
 		[InlineData("some message", "some me??age", true)]
 		public async Task AsWildcard_ShouldDefaultToCaseSensitiveMatch(
-			string actual, string pattern, bool expectMatch)
+			string subject, string pattern, bool expectMatch)
 		{
 			async Task Act()
-				=> await Expect.That(actual).Is(pattern).AsWildcard();
+				=> await Expect.That(subject).Is(pattern).AsWildcard();
 
 			await Expect.That(Act).ThrowsException().OnlyIf(!expectMatch);
 		}
 
 		[Theory]
 		[AutoData]
-		public async Task WhenStringsAreTheSame_ShouldSucceed(string actual)
+		public async Task WhenStringsAreTheSame_ShouldSucceed(string subject)
 		{
+			string expected = subject;
+
 			async Task Act()
-				=> await Expect.That(actual).Is(actual);
+				=> await Expect.That(subject).Is(expected);
 
 			await Act();
 		}
@@ -33,22 +35,22 @@ public sealed partial class ThatString
 		[Fact]
 		public async Task WhenStringsDiffer_ShouldFail()
 		{
-			string actual = "actual text";
+			string subject = "actual text";
 			string expected = "expected other text";
 
 			async Task Act()
-				=> await Expect.That(actual).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that actual
+				                  Expected that subject
 				                  is equal to "expected other text",
 				                  but found "actual text" which differs at index 0:
 				                     ↓ (actual)
 				                    "actual text"
 				                    "expected other text"
 				                     ↑ (expected)
-				                  at Expect.That(actual).Is(expected)
+				                  at Expect.That(subject).Is(expected)
 				                  """);
 		}
 	}
