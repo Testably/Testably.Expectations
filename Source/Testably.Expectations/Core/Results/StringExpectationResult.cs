@@ -35,7 +35,7 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : StringExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder1 = expectationBuilder;
+	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
@@ -43,7 +43,7 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 	public StringExpectationResult<TResult, TValue, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
-		_expectationBuilder1.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase)));
+		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase)));
 		return this;
 	}
 
@@ -55,7 +55,7 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("ignoreCase")] string doNotPopulateThisValue = "")
 	{
 		options.IgnoringCase(ignoreCase);
-		_expectationBuilder1.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase), doNotPopulateThisValue));
+		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase), doNotPopulateThisValue));
 		return this;
 	}
 
@@ -67,7 +67,7 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{
 		options.UsingComparer(comparer);
-		_expectationBuilder1.AppendExpression(b
+		_expectationBuilder.AppendExpression(b
 			=> b.AppendMethod(nameof(Using), doNotPopulateThisValue));
 		return this;
 	}
