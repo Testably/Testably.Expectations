@@ -10,7 +10,8 @@ public abstract partial class ThatDelegate
 {
 	private static readonly string DoesNotThrowExpectation = "does not throw any exception";
 
-	private static ConstraintResult DoesNotThrowResult(Exception? exception)
+	private static ConstraintResult DoesNotThrowResult<TException>(Exception? exception)
+		where TException : Exception?
 	{
 		if (exception is not null)
 		{
@@ -18,7 +19,7 @@ public abstract partial class ThatDelegate
 				$"it did throw {exception.FormatForMessage()}", true);
 		}
 
-		return new ConstraintResult.Success<Exception?>(null, DoesNotThrowExpectation, true);
+		return new ConstraintResult.Success<TException?>(default, DoesNotThrowExpectation, true);
 	}
 
 	private readonly struct DoesNotThrowConstraint<TValue> : IDelegateConstraint<TValue>
