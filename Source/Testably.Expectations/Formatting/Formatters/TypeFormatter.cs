@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Formatting.Formatters;
 

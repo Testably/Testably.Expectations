@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Text;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Formatting.Formatters;
 
