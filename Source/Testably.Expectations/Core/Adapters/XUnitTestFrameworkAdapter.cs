@@ -38,6 +38,13 @@ internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 
 	[DoesNotReturn]
 	[StackTraceHidden]
+	public void Skip(string message)
+	{
+		throw new SkipException($"SKIPPED: {message} (xunit v2 does not support skipping test)");
+	}
+
+	[DoesNotReturn]
+	[StackTraceHidden]
 	public void Throw(string message)
 	{
 		Type exceptionType = _assembly?.GetType("Xunit.Sdk.XunitException")
@@ -46,14 +53,6 @@ internal class XUnitTestFrameworkAdapter : ITestFrameworkAdapter
 
 		throw (Exception)Activator.CreateInstance(exceptionType, message)!;
 	}
-
-	[DoesNotReturn]
-	[StackTraceHidden]
-	public void Skip(string message)
-	{
-		throw new SkipException($"SKIPPED: {message} (xunit v2 does not support skipping test)");
-	}
-
 
 	#endregion
 }
