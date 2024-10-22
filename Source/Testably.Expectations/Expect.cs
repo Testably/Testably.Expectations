@@ -70,12 +70,27 @@ public static partial class Expect
 		=> new(new ExpectationBuilder<DateTimeOffset?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start expectations for the current <typeparamref name="TException" /> <paramref name="subject" />.
+	///     Start expectations for the current <typeparamref name="TEnum" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<TException?> That<TException>(TException subject,
+	public static That<TEnum> That<TEnum>(TEnum subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		where TException : Exception
-		=> new(new ExpectationBuilder<TException>(subject, doNotPopulateThisValue));
+		where TEnum : struct, Enum
+		=> new(new ExpectationBuilder<TEnum>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start expectations for the current <typeparamref name="TEnum" />? <paramref name="subject" />.
+	/// </summary>
+	public static That<TEnum?> That<TEnum>(TEnum? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		where TEnum : struct, Enum
+		=> new(new ExpectationBuilder<TEnum?>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start expectations for the current <see cref="Exception" />s <paramref name="subject" />.
+	/// </summary>
+	public static That<Exception?> That(Exception subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<Exception>(subject, doNotPopulateThisValue));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="object" />? <paramref name="subject" />.

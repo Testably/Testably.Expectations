@@ -38,7 +38,8 @@ public class Formatter
 		new NumberFormatter<ulong>(),
 		new NumberFormatter<float>(),
 		new NumberFormatter<double>(),
-		new NumberFormatter<decimal>()
+		new NumberFormatter<decimal>(),
+		new EnumFormatter(),
 	];
 
 	/// <summary>

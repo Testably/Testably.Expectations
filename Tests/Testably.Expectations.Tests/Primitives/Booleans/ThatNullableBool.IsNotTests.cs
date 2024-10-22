@@ -8,7 +8,7 @@ public sealed partial class ThatNullableBool
 		[InlineData(true)]
 		[InlineData(false)]
 		[InlineData(null)]
-		public async Task Fails_For_Same_Value(bool? value)
+		public async Task WhenValuesAreTheSame_ShouldFail(bool? value)
 		{
 			bool? unexpected = value;
 
@@ -31,7 +31,7 @@ public sealed partial class ThatNullableBool
 		[InlineData(false, null)]
 		[InlineData(null, true)]
 		[InlineData(null, false)]
-		public async Task Succeeds_For_Different_Value(bool? value, bool? unexpected)
+		public async Task WhenValuesAreDifferent_ShouldSucceed(bool? value, bool? unexpected)
 		{
 			async Task Act()
 				=> await Expect.That(value).IsNot(unexpected);
