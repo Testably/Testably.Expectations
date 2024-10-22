@@ -7,7 +7,7 @@ public sealed partial class ThatTimeSpan
 	public sealed class IsNotTests
 	{
 		[Fact]
-		public async Task WhenValuesAreTheSame_ShouldFail()
+		public async Task WhenSubjectIsTheSame_ShouldFail()
 		{
 			TimeSpan subject = CurrentTime();
 			TimeSpan unexpected = subject;
@@ -25,7 +25,7 @@ public sealed partial class ThatTimeSpan
 		}
 
 		[Fact]
-		public async Task WhenValuesAreDifferent_ShouldSucceed()
+		public async Task WhenSubjectIsDifferent_ShouldSucceed()
 		{
 			TimeSpan subject = CurrentTime();
 			TimeSpan unexpected = LaterTime();

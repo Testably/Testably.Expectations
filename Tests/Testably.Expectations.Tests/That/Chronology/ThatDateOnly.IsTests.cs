@@ -6,7 +6,7 @@ public sealed partial class ThatDateOnly
 	public sealed class IsTests
 	{
 		[Fact]
-		public async Task WhenValuesAreDifferent_ShouldFail()
+		public async Task WhenSubjectIsDifferent_ShouldFail()
 		{
 			DateOnly subject = CurrentTime();
 			DateOnly expected = LaterTime();
@@ -24,7 +24,7 @@ public sealed partial class ThatDateOnly
 		}
 
 		[Fact]
-		public async Task WhenValuesAreTheSame_ShouldSucceed()
+		public async Task WhenSubjectIsTheSame_ShouldSucceed()
 		{
 			DateOnly subject = CurrentTime();
 			DateOnly expected = subject;

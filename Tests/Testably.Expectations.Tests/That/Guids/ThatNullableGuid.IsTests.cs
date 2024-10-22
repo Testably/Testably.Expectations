@@ -33,7 +33,7 @@ public sealed partial class ThatNullableGuid
 		}
 
 		[Fact]
-		public async Task WhenValuesAreDifferent_ShouldFail()
+		public async Task WhenSubjectIsDifferent_ShouldFail()
 		{
 			Guid? subject = FixedGuid();
 			Guid? expected = OtherGuid();
@@ -51,7 +51,7 @@ public sealed partial class ThatNullableGuid
 		}
 
 		[Fact]
-		public async Task WhenValuesAreTheSame_ShouldSucceed()
+		public async Task WhenSubjectIsTheSame_ShouldSucceed()
 		{
 			Guid? subject = FixedGuid();
 			Guid? expected = subject;

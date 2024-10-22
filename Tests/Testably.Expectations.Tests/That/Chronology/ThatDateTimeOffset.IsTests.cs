@@ -5,7 +5,7 @@ public sealed partial class ThatDateTimeOffset
 	public sealed class IsTests
 	{
 		[Fact]
-		public async Task WhenValuesAreDifferent_ShouldFail()
+		public async Task WhenSubjectIsDifferent_ShouldFail()
 		{
 			DateTimeOffset subject = CurrentTime();
 			DateTimeOffset expected = LaterTime();
@@ -23,7 +23,7 @@ public sealed partial class ThatDateTimeOffset
 		}
 
 		[Fact]
-		public async Task WhenValuesAreTheSame_ShouldSucceed()
+		public async Task WhenSubjectIsTheSame_ShouldSucceed()
 		{
 			DateTimeOffset subject = CurrentTime();
 			DateTimeOffset expected = subject;

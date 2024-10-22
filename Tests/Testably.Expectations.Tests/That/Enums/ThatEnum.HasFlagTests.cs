@@ -37,7 +37,7 @@ public sealed partial class ThatEnum
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(MyColors subject)
+		public async Task WhenSubjectIsTheSame_ShouldSucceed(MyColors subject)
 		{
 			MyColors expected = subject;
 

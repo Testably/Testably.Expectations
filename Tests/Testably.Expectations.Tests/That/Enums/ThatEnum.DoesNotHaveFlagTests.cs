@@ -37,7 +37,7 @@ public sealed partial class ThatEnum
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValuesAreTheSame_ShouldFail(MyColors subject)
+		public async Task WhenSubjectIsTheSame_ShouldFail(MyColors subject)
 		{
 			MyColors unexpected = subject;
 
