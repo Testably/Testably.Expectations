@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Testably.Expectations.Core.Adapters;
-using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Core.Ambient;
 

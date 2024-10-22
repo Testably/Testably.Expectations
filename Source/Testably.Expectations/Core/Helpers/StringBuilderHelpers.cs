@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Core.Helpers;
 

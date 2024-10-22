@@ -11,18 +11,6 @@ using System.Text;
 namespace Testably.Expectations.Core.Helpers;
 
 /// <summary>
-///     Determines which members are included in the equivalency constraint
-/// </summary>
-[Flags]
-internal enum MemberVisibility
-{
-	None = 0,
-	Internal = 1,
-	Public = 2,
-	ExplicitlyImplemented = 4
-}
-
-/// <summary>
 ///     Helper class to get all the public and internal fields and properties from a type.
 /// </summary>
 internal sealed class TypeMemberReflector

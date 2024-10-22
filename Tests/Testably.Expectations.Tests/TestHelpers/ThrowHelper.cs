@@ -1,5 +1,5 @@
 ﻿using Testably.Expectations.Core;
-using Testably.Expectations.Core.Results;
+using Testably.Expectations.Results;
 
 namespace Testably.Expectations.Tests.TestHelpers;
 
@@ -8,8 +8,8 @@ public static class ThrowHelper
 	/// <summary>
 	///     Verifies that the message of the thrown exception also matches the <paramref name="expected" /> pattern.
 	/// </summary>
-	public static StringMatcherExpectationResult<Exception, That<Exception?>> AndWithMessage(
-		this StringMatcherExpectationResult<Exception, That<Exception?>> source,
+	public static StringMatcherExpectationResult<Exception?, That<Exception?>> AndWithMessage(
+		this StringMatcherExpectationResult<Exception?, That<Exception?>> source,
 		string expected)
 	{
 		return source.And.HasMessage(expected).AsWildcard();
@@ -19,7 +19,7 @@ public static class ThrowHelper
 	///     Verifies that the delegate throws an exception which has a message matching the <paramref name="expected" />
 	///     pattern.
 	/// </summary>
-	public static StringMatcherExpectationResult<Exception, That<Exception?>> ThrowsWithMessage(
+	public static StringMatcherExpectationResult<Exception, That<Exception>> ThrowsWithMessage(
 		this ThatDelegate source,
 		string expected)
 	{

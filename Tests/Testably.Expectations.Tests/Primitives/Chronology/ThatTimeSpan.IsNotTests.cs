@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.Primitives.Chronology;
+﻿using Testably.Expectations.Formatting;
+
+namespace Testably.Expectations.Tests.Primitives.Chronology;
 
 public sealed partial class ThatTimeSpan
 {

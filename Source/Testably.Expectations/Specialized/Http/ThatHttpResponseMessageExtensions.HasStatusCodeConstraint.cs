@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Formatting;
+using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
