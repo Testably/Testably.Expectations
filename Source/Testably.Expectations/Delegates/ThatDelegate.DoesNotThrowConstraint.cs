@@ -15,10 +15,10 @@ public abstract partial class ThatDelegate
 		if (exception is not null)
 		{
 			return new ConstraintResult.Failure<Exception?>(exception, DoesNotThrowExpectation,
-				$"it did throw {exception.FormatForMessage()}");
+				$"it did throw {exception.FormatForMessage()}", true);
 		}
 
-		return new ConstraintResult.Success<Exception?>(null, DoesNotThrowExpectation);
+		return new ConstraintResult.Success<Exception?>(null, DoesNotThrowExpectation, true);
 	}
 
 	private readonly struct DoesNotThrowConstraint<TValue> : IDelegateConstraint<TValue>

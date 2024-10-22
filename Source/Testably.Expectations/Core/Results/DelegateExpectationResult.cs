@@ -7,17 +7,16 @@ namespace Testably.Expectations.Core.Results;
 /// <summary>
 ///     An <see cref="ExpectationResult" /> when an exception was thrown.
 /// </summary>
-/// <typeparam name="TException"></typeparam>
 public class
 	DelegateExpectationResult<TException> : ExpectationResult<TException,
 	DelegateExpectationResult<TException>>
-	where TException : Exception
+	where TException : Exception?
 {
 	/// <summary>
 	///     Additional expectations on the thrown <typeparamref name="TException" />.
 	/// </summary>
-	public That<TException?> Which
-		=> new(_expectationBuilder.Which<TException?, TException?>(
+	public That<TException> Which
+		=> new(_expectationBuilder.Which<TException, TException>(
 			PropertyAccessor<TException?, TException?>.FromFunc(p => p.Value, ""),
 			null,
 			b => b.Append(".").Append(nameof(Which)),
@@ -38,13 +37,13 @@ public class
 	///     Verifies, that the exception was thrown only if the <paramref name="predicate" /> is <see langword="true" />,
 	///     otherwise it verifies, that no exception was thrown.
 	/// </summary>
-	public DelegateExpectationResult<TException> OnlyIf(bool predicate,
+	public DelegateExpectationResult<TException?> OnlyIf(bool predicate,
 		[CallerArgumentExpression("predicate")]
 		string doNotPopulateThisValue = "")
 	{
 		_throwOptions.CheckThrow(predicate);
 		_expectationBuilder.AppendExpression(b
 			=> b.AppendMethod(nameof(OnlyIf), doNotPopulateThisValue));
-		return this;
+		return new DelegateExpectationResult<TException?>(_expectationBuilder, _throwOptions);
 	}
 }

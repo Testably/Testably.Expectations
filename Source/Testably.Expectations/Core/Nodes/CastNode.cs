@@ -19,7 +19,7 @@ internal class CastNode<T1, T2> : ManipulationNode
 		where TValue : default
 	{
 		ConstraintResult? result = await TryMeet(Constraint, value);
-		if (Inner != None && result is ConstraintResult.Success<T2> success)
+		if (!result.IgnoreFurtherProcessing && Inner != None && result is ConstraintResult.Success<T2> success)
 		{
 			return await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception));
 		}

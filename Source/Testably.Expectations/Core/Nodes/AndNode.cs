@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Nodes;
@@ -22,6 +21,11 @@ internal class AndNode : CombinationNode
 		where TValue : default
 	{
 		ConstraintResult leftResult = await Left.IsMetBy(value);
+		if (leftResult.IgnoreFurtherProcessing)
+		{
+			return leftResult;
+		}
+
 		ConstraintResult rightResult = await Right.IsMetBy(value);
 
 		string combinedExpectation =
