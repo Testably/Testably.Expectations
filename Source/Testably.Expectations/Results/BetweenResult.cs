@@ -11,7 +11,7 @@ namespace Testably.Expectations.Results;
 public class BetweenResult<TTarget>(Func<int, TTarget> callback, Action<Action<StringBuilder>> expressionBuilderCallback)
 {
 	/// <summary>
-	///     ... and <paramref name="maximum" /> items...
+	///     ... and <paramref name="maximum" />...
 	/// </summary>
 	/// <param name="maximum"></param>
 	/// <param name="doNotPopulateThisValue"></param>
