@@ -22,6 +22,25 @@ public sealed partial class ThatString
 				                  at Expect.That(actual).DoesNotContain(expected).IgnoringCase()
 				                  """);
 		}
+		[Fact]
+		public async Task Using_ShouldIncludeComparerInExpectationText()
+		{
+			string actual =
+				"In this text in between the word an investigator should find the word 'IN' multiple times.";
+			string expected = "InvEstIgAtOr";
+
+			async Task Act()
+				=> await Expect.That(actual).DoesNotContain(expected).Using(new IgnoreCaseForVocalsComparer());
+
+			await Expect.That(Act).Throws<XunitException>()
+				.Which.HasMessage("""
+				                  Expected that actual
+				                  does not contain "InvEstIgAtOr" using IgnoreCaseForVocalsComparer,
+				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
+				                  at Expect.That(actual).DoesNotContain(expected).Using(new IgnoreCaseForVocalsComparer())
+				                  """);
+		}
+
 
 		[Fact]
 		public async Task WhenExpectedStringIsContained_ShouldFail()
