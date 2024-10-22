@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -20,7 +21,9 @@ public static partial class ThatNullableEnumExtensions
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder.Add(
-				new IsConstraint<TEnum>(expected),
+				new Constraint<TEnum>(
+					$"is {Formatter.Format(expected)}",
+					actual => expected.Equals(actual)),
 				b => b.AppendMethod(nameof(Is), doNotPopulateThisValue)),
 			source);
 
@@ -33,7 +36,9 @@ public static partial class ThatNullableEnumExtensions
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder.Add(
-				new IsNotConstraint<TEnum>(unexpected),
+				new Constraint<TEnum>(
+					$"is not {Formatter.Format(unexpected)}",
+					actual => !unexpected.Equals(actual)),
 				b => b.AppendMethod(nameof(IsNot), doNotPopulateThisValue)),
 			source);
 }

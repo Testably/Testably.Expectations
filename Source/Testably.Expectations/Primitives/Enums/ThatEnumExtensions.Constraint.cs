@@ -7,20 +7,21 @@ namespace Testably.Expectations;
 
 public static partial class ThatEnumExtensions
 {
-	private readonly struct IsConstraint<TEnum>(TEnum expected) : IConstraint<TEnum>
+	private readonly struct Constraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
+		: IConstraint<TEnum>
 		where TEnum : struct, Enum
 	{
 		public ConstraintResult IsMetBy(TEnum actual)
 		{
-			if (expected.Equals(actual))
+			if (successIf(actual))
 			{
-				return new ConstraintResult.Success<TEnum>(actual, ToString());
+				return new ConstraintResult.Success<TEnum?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()
-			=> $"is {Formatter.Format(expected)}";
+			=> expectation;
 	}
 }
