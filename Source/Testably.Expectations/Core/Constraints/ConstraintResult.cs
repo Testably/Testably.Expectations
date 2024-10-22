@@ -11,14 +11,14 @@ public abstract class ConstraintResult
 	private const string InvertDefaultResultText = "it did";
 
 	/// <summary>
-	/// Specifies if further processing of chained constraints should be ignored.
-	/// </summary>
-	public bool IgnoreFurtherProcessing { get; }
-
-	/// <summary>
 	///     A human-readable representation of the expectation.
 	/// </summary>
 	public string ExpectationText { get; }
+
+	/// <summary>
+	///     Specifies if further processing of chained constraints should be ignored.
+	/// </summary>
+	public bool IgnoreFurtherProcessing { get; }
 
 	/// <summary>
 	///     Initializes a new instance of <see cref="ConstraintResult" />.
@@ -62,7 +62,7 @@ public abstract class ConstraintResult
 			bool ignoreFurtherProcessing = false)
 			: base(
 				expectationText,
-			ignoreFurtherProcessing)
+				ignoreFurtherProcessing)
 		{
 		}
 
