@@ -38,5 +38,22 @@ public sealed partial class ThatNullableEnum
 
 			await Expect.That(Act).DoesNotThrow();
 		}
+
+		[Fact]
+		public async Task WhenSubjectAndExpectedAreNull_ShouldFail()
+		{
+			MyColors? subject = null;
+
+			async Task Act()
+				=> await Expect.That(subject).IsNot(null);
+
+			await Expect.That(Act).Throws<XunitException>()
+				.Which.HasMessage("""
+				                  Expected that subject
+				                  is not <null>,
+				                  but found <null>
+				                  at Expect.That(subject).IsNot(null)
+				                  """);
+		}
 	}
 }
