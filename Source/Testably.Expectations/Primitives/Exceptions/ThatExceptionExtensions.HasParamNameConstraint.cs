@@ -11,7 +11,7 @@ public static partial class ThatExceptionExtensions
 {
 	private readonly struct HasParamNameConstraint<T>(string expected) : IConstraint<T>,
 		IDelegateConstraint<DelegateSource.NoValue>
-		where T : ArgumentException
+		where T : ArgumentException?
 	{
 		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 		{

@@ -10,7 +10,7 @@ public static partial class ThatExceptionExtensions
 {
 	private readonly struct HasMessageConstraint<T>(StringMatcher expected) : IConstraint<T>,
 		IDelegateConstraint<DelegateSource.NoValue>
-		where T : Exception
+		where T : Exception?
 	{
 		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 		{

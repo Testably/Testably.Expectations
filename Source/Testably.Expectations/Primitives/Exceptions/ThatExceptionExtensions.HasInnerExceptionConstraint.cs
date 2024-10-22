@@ -13,7 +13,7 @@ public static partial class ThatExceptionExtensions
 	private readonly struct HasInnerExceptionConstraint<TInnerException>
 		: IConstraint<Exception?>,
 			IDelegateConstraint<DelegateSource.NoValue>
-		where TInnerException : Exception
+		where TInnerException : Exception?
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(Exception? actual)

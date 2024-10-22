@@ -5,6 +5,16 @@ public sealed partial class ThatDelegate
 	public sealed class OnlyIfTests
 	{
 		[Fact]
+		public async Task ShouldSupportChainedConstraints()
+		{
+			Action action = () => { };
+
+			await Expect.That(action).ThrowsException()
+				.OnlyIf(false)
+				.Which.HasMessage("foo");
+		}
+
+		[Fact]
 		public async Task WhenTrue_ShouldSucceedWhenAnExceptionWasThrow()
 		{
 			Exception exception = new("");

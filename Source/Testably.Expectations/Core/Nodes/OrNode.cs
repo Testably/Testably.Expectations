@@ -21,6 +21,11 @@ internal class OrNode : CombinationNode
 		where TValue : default
 	{
 		ConstraintResult leftResult = await Left.IsMetBy(value);
+		if (leftResult.IgnoreFurtherProcessing)
+		{
+			return leftResult;
+		}
+
 		ConstraintResult rightResult = await Right.IsMetBy(value);
 
 		string combinedExpectation =

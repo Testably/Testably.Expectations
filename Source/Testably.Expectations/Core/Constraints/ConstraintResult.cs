@@ -16,11 +16,19 @@ public abstract class ConstraintResult
 	public string ExpectationText { get; }
 
 	/// <summary>
+	///     Specifies if further processing of chained constraints should be ignored.
+	/// </summary>
+	public bool IgnoreFurtherProcessing { get; }
+
+	/// <summary>
 	///     Initializes a new instance of <see cref="ConstraintResult" />.
 	/// </summary>
-	protected ConstraintResult(string expectationText)
+	protected ConstraintResult(
+		string expectationText,
+		bool ignoreFurtherProcessing)
 	{
 		ExpectationText = expectationText;
+		IgnoreFurtherProcessing = ignoreFurtherProcessing;
 	}
 
 	/// <summary>
@@ -47,9 +55,14 @@ public abstract class ConstraintResult
 	public class Success : ConstraintResult
 	{
 		/// <summary>
-		///     Initializes a new instance of <see cref="Success" />.
+		///     Initializes a new instance of <see cref="ConstraintResult.Success" />.
 		/// </summary>
-		public Success(string expectationText) : base(expectationText)
+		public Success(
+			string expectationText,
+			bool ignoreFurtherProcessing = false)
+			: base(
+				expectationText,
+				ignoreFurtherProcessing)
 		{
 		}
 
@@ -96,9 +109,15 @@ public abstract class ConstraintResult
 		public T Value { get; }
 
 		/// <summary>
-		///     Initializes a new instance of <see cref="Success{T}" />.
+		///     Initializes a new instance of <see cref="ConstraintResult.Success{T}" />.
 		/// </summary>
-		public Success(T value, string expectationText) : base(expectationText)
+		public Success(
+			T value,
+			string expectationText,
+			bool ignoreFurtherProcessing = false)
+			: base(
+				expectationText,
+				ignoreFurtherProcessing)
 		{
 			Value = value;
 		}
@@ -149,9 +168,15 @@ public abstract class ConstraintResult
 		public string ResultText { get; }
 
 		/// <summary>
-		///     Initializes a new instance of <see cref="Failure" />.
+		///     Initializes a new instance of <see cref="ConstraintResult.Failure" />.
 		/// </summary>
-		public Failure(string expectationText, string resultText) : base(expectationText)
+		public Failure(
+			string expectationText,
+			string resultText,
+			bool ignoreFurtherProcessing = false)
+			: base(
+				expectationText,
+				ignoreFurtherProcessing)
 		{
 			ResultText = resultText;
 		}
@@ -192,10 +217,17 @@ public abstract class ConstraintResult
 		public T Value { get; }
 
 		/// <summary>
-		///     Initializes a new instance of <see cref="Failure{T}" />.
+		///     Initializes a new instance of <see cref="ConstraintResult.Failure{T}" />.
 		/// </summary>
-		public Failure(T value, string expectationText, string resultText) : base(expectationText,
-			resultText)
+		public Failure(
+			T value,
+			string expectationText,
+			string resultText,
+			bool ignoreFurtherProcessing = false)
+			: base(
+				expectationText,
+				resultText,
+				ignoreFurtherProcessing)
 		{
 			Value = value;
 		}
