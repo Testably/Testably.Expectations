@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 
@@ -86,11 +87,11 @@ public static partial class Expect
 		=> new(new ExpectationBuilder<TEnum?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
-	///     Start expectations for the current <see cref="Exception" />s <paramref name="subject" />.
+	///     Start expectations for the current <see cref="Exception" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<Exception?> That(Exception subject,
+	public static That<Exception?> That(Exception? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(new ExpectationBuilder<Exception>(subject, doNotPopulateThisValue));
+		=> new(new ExpectationBuilder<Exception?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
 	///     Start expectations for current <see cref="Guid" /> <paramref name="subject" />.
@@ -112,6 +113,13 @@ public static partial class Expect
 	public static That<object?> That(object? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(new ExpectationBuilder<object?>(subject, doNotPopulateThisValue));
+
+	/// <summary>
+	///     Start expectations for the current <see cref="Stream" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<Stream?> That(Stream? subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		=> new(new ExpectationBuilder<Stream?>(subject, doNotPopulateThisValue));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="string" />? <paramref name="subject" />.
