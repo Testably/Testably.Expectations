@@ -15,7 +15,7 @@ namespace Testably.Expectations;
 public static partial class ThatCollectionExtensions
 {
 	/// <summary>
-	///     Verifies that all items in the collection...
+	///     Verifies that all...
 	/// </summary>
 	public static QuantifiableCollection<TItem, ICollection<TItem>> All<TItem>(this That<ICollection<TItem>> source)
 	{
@@ -24,7 +24,7 @@ public static partial class ThatCollectionExtensions
 	}
 
 	/// <summary>
-	///     Verifies that at least <paramref name="minimum" /> items in the collection...
+	///     Verifies that at least <paramref name="minimum" /> items...
 	/// </summary>
 	public static QuantifiableCollection<TItem, ICollection<TItem>> AtLeast<TItem>(this That<ICollection<TItem>> source,
 		int minimum, [CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
@@ -35,7 +35,7 @@ public static partial class ThatCollectionExtensions
 	}
 
 	/// <summary>
-	///     Verifies that at most <paramref name="maximum" /> items in the collection...
+	///     Verifies that at most <paramref name="maximum" /> items...
 	/// </summary>
 	public static QuantifiableCollection<TItem, ICollection<TItem>> AtMost<TItem>(this That<ICollection<TItem>> source,
 		int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
@@ -46,16 +46,17 @@ public static partial class ThatCollectionExtensions
 	}
 
 	/// <summary>
-	///     Verifies that between <paramref name="minimum" /> and <paramref name="maximum" /> items in the collection...
+	///     Verifies that between <paramref name="minimum" />...
 	/// </summary>
-	public static QuantifiableCollection<TItem, ICollection<TItem>> Between<TItem>(this That<ICollection<TItem>> source,
-		int minimum, int maximum,
-		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue1 = "",
-		[CallerArgumentExpression("maximum")] string doNotPopulateThisValue2 = "")
+	public static BetweenResult<QuantifiableCollection<TItem, ICollection<TItem>>> Between<TItem>(this That<ICollection<TItem>> source,
+		int minimum,
+		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
 		source.ExpectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(Between), doNotPopulateThisValue1, doNotPopulateThisValue2));
-		return new QuantifiableCollection<TItem, ICollection<TItem>>(source, CollectionQuantifier.Between(minimum, maximum));
+			=> b.AppendMethod(nameof(Between), doNotPopulateThisValue));
+		return new BetweenResult<QuantifiableCollection<TItem, ICollection<TItem>>>(
+			maximum => new QuantifiableCollection<TItem, ICollection<TItem>>(source, CollectionQuantifier.Between(minimum, maximum)),
+			callback => source.ExpectationBuilder.AppendExpression(callback));
 	}
 
 	/// <summary>
