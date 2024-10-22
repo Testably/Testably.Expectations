@@ -18,8 +18,8 @@ public static partial class ThatExceptionExtensions
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" /> which
 	///     satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public static AndOrExpectationResult<Exception, That<Exception>> HasInner<TException>(
-		this That<Exception> source,
+	public static AndOrExpectationResult<Exception, That<Exception?>> HasInner<TException>(
+		this That<Exception?> source,
 		Action<That<TException?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
@@ -36,8 +36,8 @@ public static partial class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public static AndOrExpectationResult<Exception, That<Exception>> HasInner<TException>(
-		this That<Exception> source)
+	public static AndOrExpectationResult<Exception, That<Exception?>> HasInner<TException>(
+		this That<Exception?> source)
 		where TException : Exception?
 		=> new(source.ExpectationBuilder.Add(
 				new HasInnerExceptionConstraint<TException>(),
@@ -47,8 +47,8 @@ public static partial class ThatExceptionExtensions
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception.
 	/// </summary>
-	public static AndOrExpectationResult<Exception, That<Exception>> HasInnerException(
-		this That<Exception> source)
+	public static AndOrExpectationResult<Exception, That<Exception?>> HasInnerException(
+		this That<Exception?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new HasInnerExceptionConstraint<Exception>(),
 				b => b.AppendMethod(nameof(HasInnerException))),
