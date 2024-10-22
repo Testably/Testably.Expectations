@@ -2,9 +2,12 @@
 
 public sealed partial class ThatEnum
 {
+	[Flags]
 	public enum MyColors
 	{
-		Blue,
-		Green
+		Blue = 1,
+		Green = 2,
+		Yellow = 4,
+		Red = 8
 	}
 }
