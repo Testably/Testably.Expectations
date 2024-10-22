@@ -5,31 +5,42 @@ public sealed partial class ThatNullableBool
 	public sealed class IsNotTrueTests
 	{
 		[Fact]
-		public async Task Fails_For_True_Value()
+		public async Task WhenFalse_ShouldFail()
 		{
-			bool? value = true;
+			bool? subject = false;
 
 			async Task Act()
-				=> await Expect.That(value).IsNotTrue();
+				=> await Expect.That(subject).IsNotTrue();
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
+		public async Task WhenNull_ShouldFail()
+		{
+			bool? subject = null;
+
+			async Task Act()
+				=> await Expect.That(subject).IsNotTrue();
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
+		public async Task WhenTrue_ShouldFail()
+		{
+			bool? subject = true;
+
+			async Task Act()
+				=> await Expect.That(subject).IsNotTrue();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that value
+				                  Expected that subject
 				                  is not True,
 				                  but found True
-				                  at Expect.That(value).IsNotTrue()
+				                  at Expect.That(subject).IsNotTrue()
 				                  """);
-		}
-
-		[Theory]
-		[InlineData(false)]
-		[InlineData(null)]
-		public async Task Succeeds_For_False_Or_Null_Value(bool? value)
-		{
-			async Task Act()
-				=> await Expect.That(value).IsNotTrue();
-
-			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

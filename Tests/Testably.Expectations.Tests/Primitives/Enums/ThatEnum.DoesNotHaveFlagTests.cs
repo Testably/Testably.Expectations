@@ -7,17 +7,17 @@ public sealed partial class ThatEnum
 		[Theory]
 		[InlineData(MyColors.Blue | MyColors.Green, MyColors.Green)]
 		[InlineData(MyColors.Blue | MyColors.Yellow, MyColors.Blue)]
-		public async Task WhenSubjectHasFlag_ShouldFail(MyColors value, MyColors unexpected)
+		public async Task WhenSubjectHasFlag_ShouldFail(MyColors subject, MyColors unexpected)
 		{
 			async Task Act()
-				=> await Expect.That(value).DoesNotHaveFlag(unexpected);
+				=> await Expect.That(subject).DoesNotHaveFlag(unexpected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   does not have flag {unexpected},
-				                   but found {value}
-				                   at Expect.That(value).DoesNotHaveFlag(unexpected)
+				                   but found {subject}
+				                   at Expect.That(subject).DoesNotHaveFlag(unexpected)
 				                   """);
 		}
 
@@ -26,10 +26,10 @@ public sealed partial class ThatEnum
 		[InlineData(MyColors.Green)]
 		public async Task WhenSubjectDoesNotHaveFlag_ShouldSucceed(MyColors unexpected)
 		{
-			MyColors value = MyColors.Yellow | MyColors.Red & ~unexpected;
+			MyColors subject = MyColors.Yellow | MyColors.Red & ~unexpected;
 
 			async Task Act()
-				=> await Expect.That(value).DoesNotHaveFlag(unexpected);
+				=> await Expect.That(subject).DoesNotHaveFlag(unexpected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -37,19 +37,19 @@ public sealed partial class ThatEnum
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValuesAreTheSame_ShouldFail(MyColors value)
+		public async Task WhenValuesAreTheSame_ShouldFail(MyColors subject)
 		{
-			MyColors unexpected = value;
+			MyColors unexpected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).DoesNotHaveFlag(unexpected);
+				=> await Expect.That(subject).DoesNotHaveFlag(unexpected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   does not have flag {unexpected},
-				                   but found {value}
-				                   at Expect.That(value).DoesNotHaveFlag(unexpected)
+				                   but found {subject}
+				                   at Expect.That(subject).DoesNotHaveFlag(unexpected)
 				                   """);
 		}
 	}

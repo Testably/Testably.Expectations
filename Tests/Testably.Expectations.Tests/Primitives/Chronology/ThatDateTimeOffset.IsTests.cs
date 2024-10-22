@@ -7,29 +7,29 @@ public sealed partial class ThatDateTimeOffset
 		[Fact]
 		public async Task WhenValuesAreDifferent_ShouldFail()
 		{
-			DateTimeOffset value = CurrentTime();
+			DateTimeOffset subject = CurrentTime();
 			DateTimeOffset expected = LaterTime();
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is {expected:O},
-				                   but found {value:O}
-				                   at Expect.That(value).Is(expected)
+				                   but found {subject:O}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
 		}
 
 		[Fact]
 		public async Task WhenValuesAreTheSame_ShouldSucceed()
 		{
-			DateTimeOffset value = CurrentTime();
-			DateTimeOffset expected = value;
+			DateTimeOffset subject = CurrentTime();
+			DateTimeOffset expected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

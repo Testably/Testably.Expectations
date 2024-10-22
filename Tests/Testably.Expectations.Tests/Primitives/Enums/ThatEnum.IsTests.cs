@@ -7,29 +7,29 @@ public sealed partial class ThatEnum
 		[Theory]
 		[InlineData(MyColors.Blue, MyColors.Green)]
 		[InlineData(MyColors.Green, MyColors.Blue)]
-		public async Task WhenValuesAreDifferent_ShouldFail(MyColors value, MyColors expected)
+		public async Task WhenValuesAreDifferent_ShouldFail(MyColors subject, MyColors expected)
 		{
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is {expected},
-				                   but found {value}
-				                   at Expect.That(value).Is(expected)
+				                   but found {subject}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
 		}
 
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(MyColors value)
+		public async Task WhenValuesAreTheSame_ShouldSucceed(MyColors subject)
 		{
-			MyColors expected = value;
+			MyColors expected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}

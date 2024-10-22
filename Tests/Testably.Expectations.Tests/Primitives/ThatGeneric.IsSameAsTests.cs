@@ -1,50 +1,41 @@
-﻿namespace Testably.Expectations.Tests.Primitives.Generics;
+﻿namespace Testably.Expectations.Tests.Primitives;
 
 public sealed partial class ThatGeneric
 {
 	public sealed class IsSameAsTests
 	{
 		[Fact]
-		public async Task Fails_For_True_Value()
+		public async Task WhenComparingTheSameObjectReference_ShouldSucceed()
 		{
-			Other value = new Other
-			{
-				Value = 1
-			};
-			Other other = new Other
-			{
-				Value = 1
-			};
+			Other subject = new() { Value = 1 };
+			Other expected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).IsSameAs(other);
+				=> await Expect.That(subject).IsSameAs(expected);
+
+			await Expect.That(Act).DoesNotThrow();
+		}
+
+		[Fact]
+		public async Task WhenComparingTwoIndividualObjectsWithSameValues_ShouldFail()
+		{
+			Other subject = new() { Value = 1 };
+			Other expected = new() { Value = 1 };
+
+			async Task Act()
+				=> await Expect.That(subject).IsSameAs(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that value
-				                  refers to other Other{
+				                  Expected that subject
+				                  refers to expected Other{
 				                    Value = 1
 				                  },
 				                  but found Other{
 				                    Value = 1
 				                  }
-				                  at Expect.That(value).IsSameAs(other)
+				                  at Expect.That(subject).IsSameAs(expected)
 				                  """);
-		}
-
-		[Fact]
-		public async Task Succeeds_For_Same_Object_References()
-		{
-			Other value = new Other
-			{
-				Value = 1
-			};
-			Other other = value;
-
-			async Task Act()
-				=> await Expect.That(value).IsSameAs(other);
-
-			await Expect.That(Act).DoesNotThrow();
 		}
 	}
 }

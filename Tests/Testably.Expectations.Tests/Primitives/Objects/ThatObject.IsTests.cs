@@ -8,12 +8,12 @@ public sealed partial class ThatObject
 		[AutoData]
 		public async Task S(int value)
 		{
-			object sut = new Other
+			object subject = new Other
 			{
 				Value = value
 			};
 
-			Other result = await Expect.That(sut).Is<Other>();
+			Other result = await Expect.That(subject).Is<Other>();
 			await Expect.That(result.Value).Is(value);
 		}
 	}

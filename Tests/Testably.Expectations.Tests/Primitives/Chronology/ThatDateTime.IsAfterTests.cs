@@ -8,17 +8,17 @@ public sealed partial class ThatDateTime
 		public async Task WhenValueIsEarlier_ShouldFail()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = EarlierTime();
+			DateTime subject = EarlierTime();
 
 			async Task Act()
-				=> await Expect.That(value).IsAfter(expected);
+				=> await Expect.That(subject).IsAfter(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is after {expected:O},
-				                   but found {value:O}
-				                   at Expect.That(value).IsAfter(expected)
+				                   but found {subject:O}
+				                   at Expect.That(subject).IsAfter(expected)
 				                   """);
 		}
 
@@ -26,17 +26,17 @@ public sealed partial class ThatDateTime
 		public async Task WhenValueIsSame_ShouldFail()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = expected;
+			DateTime subject = expected;
 
 			async Task Act()
-				=> await Expect.That(value).IsAfter(expected);
+				=> await Expect.That(subject).IsAfter(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is after {expected:O},
-				                   but found {value:O}
-				                   at Expect.That(value).IsAfter(expected)
+				                   but found {subject:O}
+				                   at Expect.That(subject).IsAfter(expected)
 				                   """);
 		}
 
@@ -44,10 +44,10 @@ public sealed partial class ThatDateTime
 		public async Task WhenValuesIsLater_ShouldSucceed()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = LaterTime();
+			DateTime subject = LaterTime();
 
 			async Task Act()
-				=> await Expect.That(value).IsAfter(expected);
+				=> await Expect.That(subject).IsAfter(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -56,17 +56,17 @@ public sealed partial class ThatDateTime
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldFail()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = EarlierTime(3);
+			DateTime subject = EarlierTime(3);
 
 			async Task Act()
-				=> await Expect.That(value).IsAfter(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).IsAfter(expected).Within(TimeSpan.FromSeconds(3));
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is after {expected:O} ± 0:03,
-				                   but found {value:O}
-				                   at Expect.That(value).IsAfter(expected).Within(TimeSpan.FromSeconds(3))
+				                   but found {subject:O}
+				                   at Expect.That(subject).IsAfter(expected).Within(TimeSpan.FromSeconds(3))
 				                   """);
 		}
 
@@ -74,10 +74,10 @@ public sealed partial class ThatDateTime
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldSucceed()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = EarlierTime(2);
+			DateTime subject = EarlierTime(2);
 
 			async Task Act()
-				=> await Expect.That(value).IsAfter(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).IsAfter(expected).Within(TimeSpan.FromSeconds(3));
 
 			await Expect.That(Act).DoesNotThrow();
 		}

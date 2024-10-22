@@ -5,29 +5,29 @@ public sealed partial class ThatBool
 	public sealed class IsTrueTests
 	{
 		[Fact]
-		public async Task Fails_For_False_Value()
+		public async Task WhenFalse_ShouldFail()
 		{
-			bool value = false;
+			bool subject = false;
 
 			async Task Act()
-				=> await Expect.That(value).IsTrue();
+				=> await Expect.That(subject).IsTrue();
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that value
+				                  Expected that subject
 				                  is True,
 				                  but found False
-				                  at Expect.That(value).IsTrue()
+				                  at Expect.That(subject).IsTrue()
 				                  """);
 		}
 
 		[Fact]
-		public async Task Succeeds_For_True_Value()
+		public async Task WhenTrue_ShouldSucceed()
 		{
-			bool value = true;
+			bool subject = true;
 
 			async Task Act()
-				=> await Expect.That(value).IsTrue();
+				=> await Expect.That(subject).IsTrue();
 
 			await Expect.That(Act).DoesNotThrow();
 		}

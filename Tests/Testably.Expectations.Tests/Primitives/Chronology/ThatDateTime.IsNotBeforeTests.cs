@@ -8,17 +8,17 @@ public sealed partial class ThatDateTime
 		public async Task WhenValueIsEarlier_ShouldFail()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = EarlierTime();
+			DateTime subject = EarlierTime();
 
 			async Task Act()
-				=> await Expect.That(value).IsNotBefore(expected);
+				=> await Expect.That(subject).IsNotBefore(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is not before {expected:O},
-				                   but found {value:O}
-				                   at Expect.That(value).IsNotBefore(expected)
+				                   but found {subject:O}
+				                   at Expect.That(subject).IsNotBefore(expected)
 				                   """);
 		}
 
@@ -26,10 +26,10 @@ public sealed partial class ThatDateTime
 		public async Task WhenValueIsSame_ShouldSucceed()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = expected;
+			DateTime subject = expected;
 
 			async Task Act()
-				=> await Expect.That(value).IsNotBefore(expected);
+				=> await Expect.That(subject).IsNotBefore(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -38,10 +38,10 @@ public sealed partial class ThatDateTime
 		public async Task WhenValuesIsLater_ShouldSucceed()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = LaterTime();
+			DateTime subject = LaterTime();
 
 			async Task Act()
-				=> await Expect.That(value).IsNotBefore(expected);
+				=> await Expect.That(subject).IsNotBefore(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
@@ -50,17 +50,17 @@ public sealed partial class ThatDateTime
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldFail()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = EarlierTime(4);
+			DateTime subject = EarlierTime(4);
 
 			async Task Act()
-				=> await Expect.That(value).IsNotBefore(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).IsNotBefore(expected).Within(TimeSpan.FromSeconds(3));
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is not before {expected:O} ± 0:03,
-				                   but found {value:O}
-				                   at Expect.That(value).IsNotBefore(expected).Within(TimeSpan.FromSeconds(3))
+				                   but found {subject:O}
+				                   at Expect.That(subject).IsNotBefore(expected).Within(TimeSpan.FromSeconds(3))
 				                   """);
 		}
 
@@ -68,10 +68,10 @@ public sealed partial class ThatDateTime
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldSucceed()
 		{
 			DateTime expected = CurrentTime();
-			DateTime value = EarlierTime(3);
+			DateTime subject = EarlierTime(3);
 
 			async Task Act()
-				=> await Expect.That(value).IsNotBefore(expected).Within(TimeSpan.FromSeconds(3));
+				=> await Expect.That(subject).IsNotBefore(expected).Within(TimeSpan.FromSeconds(3));
 
 			await Expect.That(Act).DoesNotThrow();
 		}

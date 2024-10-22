@@ -11,17 +11,17 @@ public sealed partial class ThatNullableBool
 		[InlineData(false, null)]
 		[InlineData(null, true)]
 		[InlineData(null, false)]
-		public async Task WhenValuesAreDifferent_ShouldFail(bool? value, bool? expected)
+		public async Task WhenValuesAreDifferent_ShouldFail(bool? subject, bool? expected)
 		{
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that value
+				                   Expected that subject
 				                   is {expected?.ToString() ?? "<null>"},
-				                   but found {value?.ToString() ?? "<null>"}
-				                   at Expect.That(value).Is(expected)
+				                   but found {subject?.ToString() ?? "<null>"}
+				                   at Expect.That(subject).Is(expected)
 				                   """);
 		}
 
@@ -29,12 +29,12 @@ public sealed partial class ThatNullableBool
 		[InlineData(true)]
 		[InlineData(false)]
 		[InlineData(null)]
-		public async Task WhenValuesAreTheSame_ShouldSucceed(bool? value)
+		public async Task WhenValuesAreTheSame_ShouldSucceed(bool? subject)
 		{
-			bool? expected = value;
+			bool? expected = subject;
 
 			async Task Act()
-				=> await Expect.That(value).Is(expected);
+				=> await Expect.That(subject).Is(expected);
 
 			await Expect.That(Act).DoesNotThrow();
 		}
