@@ -26,7 +26,7 @@ public sealed partial class ThatEnumerable
 			var subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await Expect.That(subject).None().Should().Are(5);
+				=> await Expect.That(subject).Should().None().Are(5);
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
@@ -43,7 +43,7 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(subject).None().Should().Are(1);
+				=> await Expect.That(subject).Should().None().Are(1);
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
@@ -60,7 +60,7 @@ public sealed partial class ThatEnumerable
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expect.That(subject).None().Should().Are(42);
+				=> await Expect.That(subject).Should().None().Are(42);
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}

@@ -10,7 +10,7 @@ public static partial class ExpectExtension
 	/// <summary>
 	///     Start expectations for the current <see cref="HttpResponseMessage" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<HttpResponseMessage?> Should(this ExpectThat<HttpResponseMessage?> subject,
+	public static That<HttpResponseMessage?> Should(this IExpectThat<HttpResponseMessage?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new(subject.ExpectationBuilder);
 }

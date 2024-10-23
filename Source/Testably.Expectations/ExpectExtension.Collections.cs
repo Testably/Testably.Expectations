@@ -10,12 +10,12 @@ public static partial class ExpectExtension
 	/// <summary>
 	///     Start delegate expectations on the current enumerable of <typeparamref name="TItem" /> values.
 	/// </summary>
-	public static That<IEnumerable<TItem>> Should<TItem>(this ExpectThat<IEnumerable<TItem>> subject)
+	public static That<IEnumerable<TItem>> Should<TItem>(this IExpectThat<IEnumerable<TItem>> subject)
 		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start delegate expectations on the current collection of <typeparamref name="TItem" /> values.
 	/// </summary>
-	public static That<ICollection<TItem>> Should<TItem>(this ExpectThat<ICollection<TItem>> subject)
+	public static That<ICollection<TItem>> Should<TItem>(this IExpectThat<ICollection<TItem>> subject)
 		=> new(subject.ExpectationBuilder);
 }

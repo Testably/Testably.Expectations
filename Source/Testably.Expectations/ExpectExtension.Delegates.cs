@@ -11,12 +11,12 @@ public static partial class ExpectExtension
 	/// <summary>
 	///     Start expectations for the current <see cref="Action" /> <paramref name="subject" />.
 	/// </summary>
-	public static ThatDelegate.WithoutValue Should(this ExpectThat<ThatDelegate.WithoutValue> subject)
+	public static ThatDelegate.WithoutValue Should(this IExpectThat<ThatDelegate.WithoutValue> subject)
 		=> new(subject.ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="Func{TValue}" /> <paramref name="subject" />.
 	/// </summary>
-	public static ThatDelegate.WithValue<TValue> Should<TValue>(this ExpectThat<ThatDelegate.WithValue<TValue>> subject)
+	public static ThatDelegate.WithValue<TValue> Should<TValue>(this IExpectThat<ThatDelegate.WithValue<TValue>> subject)
 		=> new(subject.ExpectationBuilder);
 }
