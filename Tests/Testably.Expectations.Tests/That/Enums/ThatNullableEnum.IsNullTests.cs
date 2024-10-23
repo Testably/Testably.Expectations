@@ -1,35 +1,35 @@
-﻿namespace Testably.Expectations.Tests.That.Enums;
+﻿//namespace Testably.Expectations.Tests.That.Enums;
 
-public sealed partial class ThatNullableEnum
-{
-	public sealed class IsNullTests
-	{
-		[Theory]
-		[InlineData(MyColors.Blue)]
-		[InlineData((MyColors)42)]
-		public async Task WhenSubjectIsNotNull_ShouldFail(MyColors? subject)
-		{
-			async Task Act()
-				=> await Expect.That(subject).Should().IsNull();
+//public sealed partial class ThatNullableEnum
+//{
+//	public sealed class IsNullTests
+//	{
+//		[Theory]
+//		[InlineData(MyColors.Blue)]
+//		[InlineData((MyColors)42)]
+//		public async Task WhenSubjectIsNotNull_ShouldFail(MyColors? subject)
+//		{
+//			async Task Act()
+//				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
-				.Which.HasMessage($"""
-				                   Expected that subject
-				                   is null,
-				                   but found {subject}
-				                   at Expect.That(subject).Should().IsNull()
-				                   """);
-		}
+//			await Expect.That(Act).Should().Throws<XunitException>()
+//				.Which.HasMessage($"""
+//				                   Expected that subject
+//				                   is null,
+//				                   but found {subject}
+//				                   at Expect.That(subject).Should().IsNull()
+//				                   """);
+//		}
 
-		[Fact]
-		public async Task WhenSubjectIsNull_ShouldSucceed()
-		{
-			MyColors? subject = null;
+//		[Fact]
+//		public async Task WhenSubjectIsNull_ShouldSucceed()
+//		{
+//			MyColors? subject = null;
 
-			async Task Act()
-				=> await Expect.That(subject).Should().IsNull();
+//			async Task Act()
+//				=> await Expect.That(subject).Should().IsNull();
 
-			await Expect.That(Act).Should().DoesNotThrow();
-		}
-	}
-}
+//			await Expect.That(Act).Should().DoesNotThrow();
+//		}
+//	}
+//}

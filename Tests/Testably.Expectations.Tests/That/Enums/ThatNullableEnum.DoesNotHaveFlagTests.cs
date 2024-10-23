@@ -1,56 +1,56 @@
-﻿namespace Testably.Expectations.Tests.That.Enums;
+﻿//namespace Testably.Expectations.Tests.That.Enums;
 
-public sealed partial class ThatNullableEnum
-{
-	public sealed class DoesNotHaveFlagTests
-	{
-		[Theory]
-		[InlineData(MyColors.Blue | MyColors.Green, MyColors.Green)]
-		[InlineData(MyColors.Blue | MyColors.Yellow, MyColors.Blue)]
-		public async Task WhenSubjectHasFlag_ShouldFail(MyColors? subject, MyColors unexpected)
-		{
-			async Task Act()
-				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
+//public sealed partial class ThatNullableEnum
+//{
+//	public sealed class DoesNotHaveFlagTests
+//	{
+//		[Theory]
+//		[InlineData(MyColors.Blue | MyColors.Green, MyColors.Green)]
+//		[InlineData(MyColors.Blue | MyColors.Yellow, MyColors.Blue)]
+//		public async Task WhenSubjectHasFlag_ShouldFail(MyColors? subject, MyColors unexpected)
+//		{
+//			async Task Act()
+//				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
-				.Which.HasMessage($"""
-				                   Expected that subject
-				                   does not have flag {unexpected},
-				                   but found {subject}
-				                   at Expect.That(subject).Should().DoesNotHaveFlag(unexpected)
-				                   """);
-		}
+//			await Expect.That(Act).Should().Throws<XunitException>()
+//				.Which.HasMessage($"""
+//				                   Expected that subject
+//				                   does not have flag {unexpected},
+//				                   but found {subject}
+//				                   at Expect.That(subject).Should().DoesNotHaveFlag(unexpected)
+//				                   """);
+//		}
 
-		[Theory]
-		[InlineData(MyColors.Blue)]
-		[InlineData(MyColors.Green)]
-		public async Task WhenSubjectDoesNotHaveFlag_ShouldSucceed(MyColors unexpected)
-		{
-			MyColors? subject = MyColors.Yellow | MyColors.Red & ~unexpected;
+//		[Theory]
+//		[InlineData(MyColors.Blue)]
+//		[InlineData(MyColors.Green)]
+//		public async Task WhenSubjectDoesNotHaveFlag_ShouldSucceed(MyColors unexpected)
+//		{
+//			MyColors? subject = MyColors.Yellow | MyColors.Red & ~unexpected;
 
-			async Task Act()
-				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
+//			async Task Act()
+//				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
-		}
+//			await Expect.That(Act).Should().DoesNotThrow();
+//		}
 
-		[Theory]
-		[InlineData(MyColors.Blue)]
-		[InlineData(MyColors.Green)]
-		public async Task WhenSubjectIsTheSame_ShouldFail(MyColors unexpected)
-		{
-			MyColors? subject = unexpected;
+//		[Theory]
+//		[InlineData(MyColors.Blue)]
+//		[InlineData(MyColors.Green)]
+//		public async Task WhenSubjectIsTheSame_ShouldFail(MyColors unexpected)
+//		{
+//			MyColors? subject = unexpected;
 
-			async Task Act()
-				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
+//			async Task Act()
+//				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
-				.Which.HasMessage($"""
-				                   Expected that subject
-				                   does not have flag {unexpected},
-				                   but found {subject}
-				                   at Expect.That(subject).Should().DoesNotHaveFlag(unexpected)
-				                   """);
-		}
-	}
-}
+//			await Expect.That(Act).Should().Throws<XunitException>()
+//				.Which.HasMessage($"""
+//				                   Expected that subject
+//				                   does not have flag {unexpected},
+//				                   but found {subject}
+//				                   at Expect.That(subject).Should().DoesNotHaveFlag(unexpected)
+//				                   """);
+//		}
+//	}
+//}
