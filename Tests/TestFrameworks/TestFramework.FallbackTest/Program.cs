@@ -8,7 +8,7 @@ internal class Program
 	{
 		try
 		{
-			await Expect.That(true).Should().IsFalse();
+			await Expect.That(true).Should().BeFalse();
 		}
 		catch (FailException)
 		{

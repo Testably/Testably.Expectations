@@ -18,7 +18,7 @@ public sealed partial class ThatEnumerable
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is empty,
 				                  but found [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, …]
 				                  at Expect.That(subject).Should().IsEmpty()
@@ -35,7 +35,7 @@ public sealed partial class ThatEnumerable
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is empty,
 				                  but found [1, 1, 2]
 				                  at Expect.That(subject).Should().IsEmpty()

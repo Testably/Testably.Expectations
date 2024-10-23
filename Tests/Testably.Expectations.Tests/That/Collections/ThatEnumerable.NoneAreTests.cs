@@ -30,7 +30,7 @@ public sealed partial class ThatEnumerable
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has no items equal to 5,
 				                  but at least one items were equal
 				                  at Expect.That(subject).None().Should().Are(5)
@@ -47,7 +47,7 @@ public sealed partial class ThatEnumerable
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has no items equal to 1,
 				                  but at least one items were equal
 				                  at Expect.That(subject).None().Should().Are(1)

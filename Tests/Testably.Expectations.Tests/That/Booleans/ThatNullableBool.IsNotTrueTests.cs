@@ -36,7 +36,7 @@ public sealed partial class ThatNullableBool
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is not True,
 				                  but found True
 				                  at Expect.That(subject).Should().IsNotTrue()

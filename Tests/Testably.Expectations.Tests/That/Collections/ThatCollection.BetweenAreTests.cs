@@ -25,7 +25,7 @@ public sealed partial class ThatCollection
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has between 3 and 4 items equal to 2,
 				                  but only 2 items were equal
 				                  at Expect.That(subject).Between(3).And(4).Should().Are(2)
@@ -42,7 +42,7 @@ public sealed partial class ThatCollection
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has between 1 and 3 items equal to 1,
 				                  but 4 items were equal
 				                  at Expect.That(subject).Between(1).And(3).Should().Are(1)

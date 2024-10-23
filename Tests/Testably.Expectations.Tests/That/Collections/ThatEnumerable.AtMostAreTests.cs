@@ -30,7 +30,7 @@ public sealed partial class ThatEnumerable
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has at most 1 item equal to 1,
 				                  but at least 2 items were equal
 				                  at Expect.That(subject).AtMost(1).Should().Are(1)
@@ -58,7 +58,7 @@ public sealed partial class ThatEnumerable
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has at most 3 items equal to 1,
 				                  but at least 4 items were equal
 				                  at Expect.That(subject).AtMost(3).Should().Are(1)

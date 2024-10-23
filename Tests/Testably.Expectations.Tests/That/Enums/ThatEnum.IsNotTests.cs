@@ -16,7 +16,7 @@ public sealed partial class ThatEnum
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is not {unexpected},
 				                   but found {subject}
 				                   at Expect.That(subject).Should().IsNot(unexpected)

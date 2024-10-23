@@ -22,7 +22,7 @@ public sealed partial class ThatCollection
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has all items equivalent to expected,
 				                  but only 3 of 4 items were equivalent
 				                  at Expect.That(subject).All().Should().AreEquivalentTo(expected)

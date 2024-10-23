@@ -28,7 +28,7 @@ public sealed partial class ThatNullableEnum
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   does not have value {unexpected},
 				                   but found {subject}
 				                   at Expect.That(subject).Should().DoesNotHaveValue(unexpected)

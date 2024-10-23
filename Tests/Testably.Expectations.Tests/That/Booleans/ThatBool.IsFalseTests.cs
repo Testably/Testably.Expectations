@@ -28,7 +28,7 @@ public sealed partial class ThatBool
 				                  Expected that subject
 				                  is False,
 				                  but found True
-				                  at Expect.That(subject).Should().IsFalse()
+				                  at Expect.That(subject).Should().BeFalse()
 				                  """);
 		}
 	}

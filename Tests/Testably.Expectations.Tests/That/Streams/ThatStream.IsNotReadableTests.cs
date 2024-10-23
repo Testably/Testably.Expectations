@@ -27,7 +27,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is not readable,
 				                  but found <null>
 				                  at Expect.That(subject).Should().IsNotReadable()
@@ -44,7 +44,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is not readable,
 				                  but it was
 				                  at Expect.That(subject).Should().IsNotReadable()

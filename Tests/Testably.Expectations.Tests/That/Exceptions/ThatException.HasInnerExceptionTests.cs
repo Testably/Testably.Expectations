@@ -15,7 +15,7 @@ public sealed partial class ThatException
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has an inner CustomException which has Message equal to "inner",
 				                  but found an Exception:
 				                    inner
@@ -35,7 +35,7 @@ public sealed partial class ThatException
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has an inner CustomException which has Message equal to "some other message",
 				                  but found "inner" which differs at index 0:
 				                     ↓ (actual)
@@ -58,7 +58,7 @@ public sealed partial class ThatException
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has an inner exception which has Message equal to "some other message",
 				                  but found "inner" which differs at index 0:
 				                     ↓ (actual)
@@ -80,7 +80,7 @@ public sealed partial class ThatException
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has an inner CustomException,
 				                  but found an Exception:
 				                    inner
@@ -98,7 +98,7 @@ public sealed partial class ThatException
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has an inner exception,
 				                  but it did not
 				                  at Expect.That(subject).Should().HasInnerException()

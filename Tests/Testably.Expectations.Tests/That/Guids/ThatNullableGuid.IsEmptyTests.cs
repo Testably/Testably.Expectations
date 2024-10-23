@@ -25,7 +25,7 @@ public sealed partial class ThatNullableGuid
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is empty,
 				                   but found {subject}
 				                   at Expect.That(subject).Should().IsEmpty()
@@ -42,7 +42,7 @@ public sealed partial class ThatNullableGuid
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is empty,
 				                  but found <null>
 				                  at Expect.That(subject).Should().IsEmpty()

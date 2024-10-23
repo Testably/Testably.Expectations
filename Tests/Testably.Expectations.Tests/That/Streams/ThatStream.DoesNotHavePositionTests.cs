@@ -17,7 +17,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   does not have position {position},
 				                   but it had
 				                   at Expect.That(subject).Should().DoesNotHavePosition(position)
@@ -47,7 +47,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not have position 0,
 				                  but found <null>
 				                  at Expect.That(subject).Should().DoesNotHavePosition(0)

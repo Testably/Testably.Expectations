@@ -8,7 +8,7 @@ public sealed partial class ThatDelegate
 		public async Task Fails_For_Code_Without_Exceptions()
 		{
 			string expectedMessage = """
-			                         Expected that action
+			                         Expected Act toion
 			                         throws an Exception,
 			                         but it did not
 			                         at Expect.That(action).Should().ThrowsException()

@@ -8,7 +8,7 @@ public sealed partial class ThatDelegate
 		public async Task Fails_For_Code_With_Exceptions()
 		{
 			string expectedMessage = $"""
-			                          Expected that action
+			                          Expected Act toion
 			                          does not throw any exception,
 			                          but it did throw a CustomException:
 			                            {nameof(Fails_For_Code_With_Exceptions)}

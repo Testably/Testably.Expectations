@@ -27,7 +27,7 @@ public sealed partial class ThatGeneric
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  refers to expected Other{
 				                    Value = 1
 				                  },

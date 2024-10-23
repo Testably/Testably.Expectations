@@ -16,7 +16,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is writable,
 				                  but found <null>
 				                  at Expect.That(subject).Should().IsWritable()
@@ -44,7 +44,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is writable,
 				                  but it was not
 				                  at Expect.That(subject).Should().IsWritable()

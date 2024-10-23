@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations;
 
@@ -12,6 +13,9 @@ public static partial class ExpectExtension
 	/// </summary>
 	public static That<HttpResponseMessage?> Should(this IExpectThat<HttpResponseMessage?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new(subject.ExpectationBuilder);
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<HttpResponseMessage?>(subject.ExpectationBuilder);
+	}
 }
 #endif

@@ -14,7 +14,7 @@ public sealed partial class ThatCollection
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has no items equal to 1,
 				                  but 4 items were equal
 				                  at Expect.That(subject).None().Should().Are(1)

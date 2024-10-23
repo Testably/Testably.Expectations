@@ -26,7 +26,7 @@ internal class FailureMessageBuilder : IFailureMessageBuilder
 	public string FromFailure(ConstraintResult.Failure failure)
 	{
 		return $"""
-		        Expected that {_subject}
+		        Expected {_subject} to
 		        {failure.ExpectationText},
 		        but {failure.ResultText}
 		        at {ExpressionBuilder}

@@ -15,7 +15,7 @@ public sealed partial class ThatDateTime
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is on or before {expected:O},
 				                   but found {subject:O}
 				                   at Expect.That(subject).Should().IsOnOrBefore(expected)
@@ -57,7 +57,7 @@ public sealed partial class ThatDateTime
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is on or before {expected:O} ± 0:03,
 				                   but found {subject:O}
 				                   at Expect.That(subject).IsOnOrBefore(expected).Should().Within(TimeSpan.FromSeconds(3))

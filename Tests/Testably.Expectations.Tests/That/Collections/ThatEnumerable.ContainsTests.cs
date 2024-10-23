@@ -54,7 +54,7 @@ public sealed partial class ThatEnumerable
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   contains "{expected}",
 				                   but found ["{string.Join("\", \"", subject)}"]
 				                   at Expect.That(subject).Should().Contains(expected)

@@ -16,7 +16,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not contain "INVESTIGATOR" ignoring case,
 				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
 				                  at Expect.That(subject).DoesNotContain(expected).Should().IgnoringCase()
@@ -34,7 +34,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not contain "InvEstIgAtOr" using IgnoreCaseForVocalsComparer,
 				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
 				                  at Expect.That(subject).DoesNotContain(expected).Should().Using(new IgnoreCaseForVocalsComparer())
@@ -53,7 +53,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not contain "me",
 				                  but found it 1 times in "some text"
 				                  at Expect.That(subject).Should().DoesNotContain(expected)

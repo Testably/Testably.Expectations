@@ -8,7 +8,7 @@ public sealed partial class ThatDelegate
 		public async Task Fails_For_Code_With_Other_Exceptions()
 		{
 			string expectedMessage = $"""
-			                          Expected that action
+			                          Expected Act toion
 			                          throws exactly a CustomException,
 			                          but it did throw an OtherException:
 			                            {nameof(Fails_For_Code_With_Other_Exceptions)}
@@ -28,7 +28,7 @@ public sealed partial class ThatDelegate
 		public async Task Fails_For_Code_With_Subtype_Exceptions()
 		{
 			string expectedMessage = $"""
-			                          Expected that action
+			                          Expected Act toion
 			                          throws exactly a CustomException,
 			                          but it did throw a SubCustomException:
 			                            {nameof(Fails_For_Code_With_Subtype_Exceptions)}
@@ -48,7 +48,7 @@ public sealed partial class ThatDelegate
 		public async Task Fails_For_Code_Without_Exceptions()
 		{
 			string expectedMessage = """
-			                         Expected that action
+			                         Expected Act toion
 			                         throws exactly a CustomException,
 			                         but it did not
 			                         at Expect.That(action).Should().ThrowsExactly<CustomException>()

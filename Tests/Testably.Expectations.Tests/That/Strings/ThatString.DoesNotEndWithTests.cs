@@ -15,7 +15,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not end with "text",
 				                  but found "some text"
 				                  at Expect.That(subject).Should().DoesNotEndWith(expected)
@@ -47,7 +47,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not end with "tExt" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
 				                  at Expect.That(subject).DoesNotEndWith(expected).Should().Using(new IgnoreCaseForVocalsComparer())
@@ -79,7 +79,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not end with "text",
 				                  but found "some text"
 				                  at Expect.That(subject).Should().DoesNotEndWith(expected)

@@ -43,7 +43,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is equal to "expected other text",
 				                  but found "actual text" which differs at index 0:
 				                     ↓ (actual)

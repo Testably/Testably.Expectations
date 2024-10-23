@@ -17,7 +17,7 @@ public sealed partial class ThatNullableBool
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is not {unexpected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
 				                   at Expect.That(subject).Should().IsNot(unexpected)

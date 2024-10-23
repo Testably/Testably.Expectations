@@ -19,7 +19,7 @@ public sealed partial class ThatHttpResponseMessage
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has a string content equal to "other content",
 				                  but found "some content" which differs at index 0:
 				                     ↓ (actual)

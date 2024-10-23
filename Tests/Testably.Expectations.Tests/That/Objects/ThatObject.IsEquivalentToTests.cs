@@ -33,7 +33,7 @@ public sealed partial class ThatObject
 
 			await Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
-				                   Expected that subject
+				                   Expected subject to
 				                   is equivalent to expected,
 				                   but Property Value did not match:
 				                     Expected: "Foo"
@@ -69,7 +69,7 @@ public sealed partial class ThatObject
 
 			await Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
-				                   Expected that subject
+				                   Expected subject to
 				                   is equivalent to expected,
 				                   but Property Inner.Inner.Value did not match:
 				                     Expected: "Baz"
@@ -142,7 +142,7 @@ public sealed partial class ThatObject
 
 			Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
-				                   Expected that subject
+				                   Expected subject to
 				                   is equivalent to expected,
 				                   but EnumerableItem Inner.Inner.Collection.[3] did not match
 				                     Expected: "4"

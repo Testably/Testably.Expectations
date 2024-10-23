@@ -25,7 +25,7 @@ public sealed partial class ThatNullableGuid
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is {FixedGuid()},
 				                   but found <null>
 				                   at Expect.That(subject).Should().Is(FixedGuid())
@@ -43,7 +43,7 @@ public sealed partial class ThatNullableGuid
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is {expected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
 				                   at Expect.That(subject).Should().Is(expected)

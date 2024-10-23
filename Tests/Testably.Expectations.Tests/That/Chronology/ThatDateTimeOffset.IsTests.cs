@@ -15,7 +15,7 @@ public sealed partial class ThatDateTimeOffset
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is {expected:O},
 				                   but found {subject:O}
 				                   at Expect.That(subject).Should().Is(expected)

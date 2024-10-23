@@ -30,7 +30,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is not read-only,
 				                  but found <null>
 				                  at Expect.That(subject).Should().IsNotReadOnly()
@@ -47,7 +47,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is not read-only,
 				                  but it was
 				                  at Expect.That(subject).Should().IsNotReadOnly()

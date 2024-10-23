@@ -18,7 +18,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   has length {length},
 				                   but it had length {actualLength}
 				                   at Expect.That(subject).Should().HasLength(length)
@@ -47,7 +47,7 @@ public sealed partial class ThatStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  has length 0,
 				                  but found <null>
 				                  at Expect.That(subject).Should().HasLength(0)

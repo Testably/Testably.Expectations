@@ -17,7 +17,7 @@ public sealed partial class ThatTimeSpan
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is {Formatter.Format(expected)},
 				                   but found {Formatter.Format(subject)}
 				                   at Expect.That(subject).Should().Is(expected)

@@ -20,7 +20,7 @@ public sealed partial class ThatString
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.OnlyIf(!ignoreCase)
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  starts with "SOME",
 				                  but found "some arbitrary text"
 				                  at Expect.That(subject).StartsWith(expected).Should().IgnoringCase(ignoreCase)
@@ -39,7 +39,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  starts with "TEXT" ignoring case,
 				                  but found "some arbitrary text"
 				                  at Expect.That(subject).StartsWith(expected).Should().IgnoringCase()
@@ -59,7 +59,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  starts with "SOME" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
 				                  at Expect.That(subject).StartsWith(expected).Should().Using(new IgnoreCaseForVocalsComparer())
@@ -91,7 +91,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  starts with "text",
 				                  but found "some arbitrary text"
 				                  at Expect.That(subject).Should().StartsWith(expected)

@@ -24,8 +24,8 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsTrue().Because(because1)
-				.And.IsFalse().Because(because2);
+			=> await Expect.That(subject).Should().BeTrue().Because(because1)
+				.And.BeFalse().Because(because2);
 
 		await Expect.That(Act).Should().ThrowsWithMessage($"*{because2}*");
 	}
@@ -38,8 +38,8 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsTrue().Because(because1)
-				.And.IsFalse().Because(because2);
+			=> await Expect.That(subject).Should().BeTrue().Because(because1)
+				.And.BeFalse().Because(because2);
 
 		await Expect.That(Act).Should().ThrowsWithMessage($"*{because1}*{because2}*");
 	}
@@ -48,7 +48,7 @@ public class BecauseTests
 	public async Task Apply_Because_Reasons_Only_On_Previous_Constraints()
 	{
 		string expectedMessage = """
-		                         Expected that subject
+		                         Expected subject to
 		                         is True, because we only apply it to previous constraints and is False,
 		                         but found True
 		                         at Expect.That(subject).Should().IsTrue().And.IsFalse()
@@ -57,8 +57,8 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsTrue().Because(because)
-				.And.IsFalse();
+			=> await Expect.That(subject).Should().BeTrue().Because(because)
+				.And.BeFalse();
 
 		await Expect.That(Act).Should().ThrowsException()
 			.Which.HasMessage(expectedMessage);
@@ -72,8 +72,8 @@ public class BecauseTests
 		bool subject = false;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsTrue().Because(because1)
-				.And.IsFalse().Because(because2);
+			=> await Expect.That(subject).Should().BeTrue().Because(because1)
+				.And.BeFalse().Because(because2);
 
 		await Expect.That(Act).Should().ThrowsWithMessage($"*{because1}*");
 	}
@@ -85,7 +85,7 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsFalse().Because(because);
+			=> await Expect.That(subject).Should().BeFalse().Because(because);
 
 		Exception exception = await Expect.That(Act).Should().ThrowsWithMessage("*because*");
 		await Expect.That(exception.Message).Should().DoesNotContain("because because");
@@ -98,7 +98,7 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsFalse().Because(because);
+			=> await Expect.That(subject).Should().BeFalse().Because(because);
 
 		await Expect.That(Act).Should().ThrowsWithMessage($"*{because}*");
 	}
@@ -112,7 +112,7 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsFalse().Because(because);
+			=> await Expect.That(subject).Should().BeFalse().Because(because);
 
 		await Expect.That(Act).Should().ThrowsWithMessage($"*{expectedWithPrefix}*");
 	}
@@ -121,7 +121,7 @@ public class BecauseTests
 	public async Task Without_Because_Use_Empty_String()
 	{
 		string expectedMessage = """
-		                         Expected that subject
+		                         Expected subject to
 		                         is False,
 		                         but found True
 		                         at Expect.That(subject).Should().IsFalse()
@@ -130,7 +130,7 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await Expect.That(subject).Should().IsFalse();
+			=> await Expect.That(subject).Should().BeFalse();
 
 		await Expect.That(Act).Should().ThrowsException()
 			.Which.HasMessage(expectedMessage);

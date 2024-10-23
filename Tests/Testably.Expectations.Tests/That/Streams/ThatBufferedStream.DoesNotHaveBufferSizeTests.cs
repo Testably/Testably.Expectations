@@ -31,7 +31,7 @@ public sealed partial class ThatBufferedStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   does not have buffer size {buffersize},
 				                   but it had
 				                   at Expect.That(subject).DoesNotHaveBufferSize(buffersize)
@@ -48,7 +48,7 @@ public sealed partial class ThatBufferedStream
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  does not have buffer size 0,
 				                  but found <null>
 				                  at Expect.That(subject).DoesNotHaveBufferSize(0)

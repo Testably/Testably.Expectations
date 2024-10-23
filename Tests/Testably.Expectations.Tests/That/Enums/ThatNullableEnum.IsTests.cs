@@ -18,7 +18,7 @@ public sealed partial class ThatNullableEnum
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is {expected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
 				                   at Expect.That(subject).Should().Is(expected)
@@ -48,7 +48,7 @@ public sealed partial class ThatNullableEnum
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is Red,
 				                  but found <null>
 				                  at Expect.That(subject).Should().Is(MyColors.Red)

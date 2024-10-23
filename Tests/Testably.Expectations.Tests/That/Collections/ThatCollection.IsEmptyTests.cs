@@ -14,7 +14,7 @@ public sealed partial class ThatCollection
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is empty,
 				                  but found [1, 1, 2]
 				                  at Expect.That(subject).Should().IsEmpty()

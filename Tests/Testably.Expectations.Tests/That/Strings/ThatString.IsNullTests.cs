@@ -14,7 +14,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
-				                  Expected that subject
+				                  Expected subject to
 				                  is null,
 				                  but found ""
 				                  at Expect.That(subject).Should().IsNull()
@@ -30,7 +30,7 @@ public sealed partial class ThatString
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
+				                   Expected subject to
 				                   is null,
 				                   but found "{subject}"
 				                   at Expect.That(subject).Should().IsNull()

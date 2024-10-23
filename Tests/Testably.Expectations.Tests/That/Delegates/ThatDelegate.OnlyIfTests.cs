@@ -35,10 +35,10 @@ public sealed partial class ThatDelegate
 
 			await Expect.That(Act).Should().ThrowsException()
 				.Which.HasMessage("""
-				                  Expected that action
+				                  Expected Act toion
 				                  does not throw any exception,
 				                  but it did throw an Exception
-				                  at Expect.That(action).ThrowsException().Should().OnlyIf(false)
+				                  at Expect.That(action).Should().ThrowsException().OnlyIf(false)
 				                  """);
 		}
 
@@ -63,10 +63,10 @@ public sealed partial class ThatDelegate
 
 			await Expect.That(Act).Should().ThrowsException()
 				.Which.HasMessage("""
-				                  Expected that action
+				                  Expected Act toion
 				                  throws an Exception,
 				                  but it did not
-				                  at Expect.That(action).ThrowsException().Should().OnlyIf(true)
+				                  at Expect.That(action).Should().ThrowsException().OnlyIf(true)
 				                  """);
 		}
 
