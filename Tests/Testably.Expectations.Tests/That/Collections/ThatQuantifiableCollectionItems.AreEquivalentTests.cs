@@ -18,7 +18,7 @@ public sealed partial class ThatQuantifiableCollectionItems
 			MyClass expected = new() { Value = "Foo" };
 
 			async Task Act()
-				=> await ThatQuantifiableCollectionShould.BeEquivalentTo(Expect.That(subject).Should().All(), expected);
+				=> await Expect.That(subject).Should().All().BeEquivalentTo(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
@@ -42,7 +42,7 @@ public sealed partial class ThatQuantifiableCollectionItems
 			MyClass expected = new() { Value = "Foo" };
 
 			async Task Act()
-				=> await ThatQuantifiableCollectionShould.BeEquivalentTo(Expect.That(subject).Should().All(), expected);
+				=> await Expect.That(subject).Should().All().BeEquivalentTo(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}

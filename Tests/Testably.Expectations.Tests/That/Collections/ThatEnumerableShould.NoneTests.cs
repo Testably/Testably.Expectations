@@ -14,8 +14,8 @@ public sealed partial class ThatEnumerableShould
 			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().None(), 15)
-						.And.None(), 81);
+				=> await Expect.That(subject).Should().None().Be(15)
+						.And.None().Be(81);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -26,7 +26,7 @@ public sealed partial class ThatEnumerableShould
 			var subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().None(), 5);
+				=> await Expect.That(subject).Should().None().Be(5);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
@@ -43,7 +43,7 @@ public sealed partial class ThatEnumerableShould
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().None(), 1);
+				=> await Expect.That(subject).Should().None().Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
@@ -60,7 +60,7 @@ public sealed partial class ThatEnumerableShould
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().None(), 42);
+				=> await Expect.That(subject).Should().None().Be(42);
 
 			await Expect.That(Act).Should().NotThrow();
 		}

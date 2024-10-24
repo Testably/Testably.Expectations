@@ -14,8 +14,8 @@ public sealed partial class ThatEnumerableShould
 			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(0).And(2), 1)
-						.And.Between(0).And(1), 1);
+				=> await Expect.That(subject).Should().Between(0).And(2).Be(1)
+						.And.Between(0).And(1).Be(1);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -26,7 +26,7 @@ public sealed partial class ThatEnumerableShould
 			var subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(0).And(1), 1);
+				=> await Expect.That(subject).Should().Between(0).And(1).Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
@@ -43,7 +43,7 @@ public sealed partial class ThatEnumerableShould
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(3).And(4), 1);
+				=> await Expect.That(subject).Should().Between(3).And(4).Be(1);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -54,7 +54,7 @@ public sealed partial class ThatEnumerableShould
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(3).And(4), 2);
+				=> await Expect.That(subject).Should().Between(3).And(4).Be(2);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
@@ -71,7 +71,7 @@ public sealed partial class ThatEnumerableShould
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(1).And(3), 1);
+				=> await Expect.That(subject).Should().Between(1).And(3).Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""

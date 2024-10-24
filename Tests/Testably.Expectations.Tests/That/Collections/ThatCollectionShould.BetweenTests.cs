@@ -10,7 +10,7 @@ public sealed partial class ThatCollectionShould
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(3).And(4), 1);
+				=> await Expect.That(subject).Should().Between(3).And(4).Be(1);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -21,7 +21,7 @@ public sealed partial class ThatCollectionShould
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(3).And(4), 2);
+				=> await Expect.That(subject).Should().Between(3).And(4).Be(2);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
@@ -38,7 +38,7 @@ public sealed partial class ThatCollectionShould
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().Between(1).And(3), 1);
+				=> await Expect.That(subject).Should().Between(1).And(3).Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""

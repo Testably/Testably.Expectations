@@ -10,7 +10,7 @@ public sealed partial class ThatCollectionShould
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().None(), 1);
+				=> await Expect.That(subject).Should().None().Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
@@ -27,7 +27,7 @@ public sealed partial class ThatCollectionShould
 			int[] subject = [1, 1, 1, 1, 2, 2, 3];
 
 			async Task Act()
-				=> await Expectations.ThatQuantifiableCollectionShould.Be(Expect.That(subject).Should().None(), 42);
+				=> await Expect.That(subject).Should().None().Be(42);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
