@@ -12,7 +12,7 @@ public sealed partial class ThatCollection
 			async Task Act()
 				=> await Expect.That(subject).Should().All().Are(1);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has all items equal to 1,
@@ -29,7 +29,7 @@ public sealed partial class ThatCollection
 			async Task Act()
 				=> await Expect.That(subject).Should().All().Are(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

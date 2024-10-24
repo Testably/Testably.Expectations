@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.That.Delegates;
 
 namespace Testably.Expectations.Results;
 
@@ -24,10 +25,10 @@ public class
 			whichTextSeparator: ""));
 
 	private readonly IExpectationBuilder _expectationBuilder;
-	private readonly ThatDelegate.ThrowsOption _throwOptions;
+	private readonly ThrowsOption _throwOptions;
 
 	internal DelegateExpectationResult(IExpectationBuilder expectationBuilder,
-		ThatDelegate.ThrowsOption throwOptions)
+		ThrowsOption throwOptions)
 		: base(expectationBuilder)
 	{
 		_expectationBuilder = expectationBuilder;

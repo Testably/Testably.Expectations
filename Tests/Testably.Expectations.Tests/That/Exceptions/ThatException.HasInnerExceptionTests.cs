@@ -13,7 +13,7 @@ public sealed partial class ThatException
 			async Task Act()
 				=> await Expect.That(subject).Should().HasInner<CustomException>(e => e.HasMessage("inner"));
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has an inner CustomException which has Message equal to "inner",
@@ -33,7 +33,7 @@ public sealed partial class ThatException
 				=> await Expect.That(subject).Should()
 					.HasInner<CustomException>(e => e.HasMessage("some other message"));
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has an inner CustomException which has Message equal to "some other message",
@@ -56,7 +56,7 @@ public sealed partial class ThatException
 				=> await Expect.That(subject).Should()
 					.HasInnerException(e => e.HasMessage("some other message"));
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has an inner exception which has Message equal to "some other message",
@@ -78,7 +78,7 @@ public sealed partial class ThatException
 			async Task Act()
 				=> await Expect.That(subject).Should().HasInner<CustomException>();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has an inner CustomException,
@@ -96,7 +96,7 @@ public sealed partial class ThatException
 			async Task Act()
 				=> await Expect.That(subject).Should().HasInnerException();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has an inner exception,
@@ -114,7 +114,7 @@ public sealed partial class ThatException
 			async Task Act()
 				=> await Expect.That(subject).Should().HasInnerException(e => e.HasMessage("inner"));
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -126,7 +126,7 @@ public sealed partial class ThatException
 			async Task Act()
 				=> await Expect.That(subject).Should().HasInner<CustomException>(e => e.HasMessage("inner"));
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -138,7 +138,7 @@ public sealed partial class ThatException
 			async Task Act()
 				=> await Expect.That(subject).Should().HasInnerException();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -150,7 +150,7 @@ public sealed partial class ThatException
 			async Task Act()
 				=> await Expect.That(subject).Should().HasInner<CustomException>();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		private class CustomException(string message, Exception? innerException = null)

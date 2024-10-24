@@ -13,7 +13,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not start with "some",
@@ -31,7 +31,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().DoesNotStartWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not start with "sOmE" using IgnoreCaseForVocalsComparer,
@@ -65,7 +65,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().DoesNotStartWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -77,7 +77,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -89,7 +89,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotStartWith(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not start with "some",

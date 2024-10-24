@@ -11,7 +11,7 @@ public class BecauseTests
 		Action subject = () => throw new Exception();
 
 		async Task Act()
-			=> await Expect.That(subject).Should().DoesNotThrow().Because(because);
+			=> await Expect.That(subject).Should().NotThrow().Because(because);
 
 		await Expect.That(Act).Should().ThrowsWithMessage($"*{because}*");
 	}
@@ -60,7 +60,7 @@ public class BecauseTests
 			=> await Expect.That(subject).Should().BeTrue().Because(because)
 				.And.BeFalse();
 
-		await Expect.That(Act).Should().ThrowsException()
+		await Expect.That(Act).Should().ThrowException()
 			.Which.HasMessage(expectedMessage);
 	}
 
@@ -132,7 +132,7 @@ public class BecauseTests
 		async Task Act()
 			=> await Expect.That(subject).Should().BeFalse();
 
-		await Expect.That(Act).Should().ThrowsException()
+		await Expect.That(Act).Should().ThrowException()
 			.Which.HasMessage(expectedMessage);
 	}
 }

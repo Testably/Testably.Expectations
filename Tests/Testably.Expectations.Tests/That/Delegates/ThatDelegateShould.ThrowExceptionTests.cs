@@ -1,24 +1,24 @@
 ﻿namespace Testably.Expectations.Tests.That.Delegates;
 
-public sealed partial class ThatDelegate
+public sealed partial class ThatDelegateShould
 {
-	public sealed class ThrowsExceptionTests
+	public sealed class ThrowExceptionTests
 	{
 		[Fact]
 		public async Task Fails_For_Code_Without_Exceptions()
 		{
 			string expectedMessage = """
-			                         Expected Act toion
-			                         throws an Exception,
+			                         Expected action to
+			                         throw an Exception,
 			                         but it did not
-			                         at Expect.That(action).Should().ThrowsException()
+			                         at Expect.That(action).Should().ThrowException()
 			                         """;
 			Action action = () => { };
 
 			async Task<Exception> Act()
-				=> await Expect.That(action).Should().ThrowsException();
+				=> await Expect.That(action).Should().ThrowException();
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage(expectedMessage);
 		}
 
@@ -28,7 +28,7 @@ public sealed partial class ThatDelegate
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
-			Exception result = await Expect.That(action).Should().ThrowsException();
+			Exception result = await Expect.That(action).Should().ThrowException();
 
 			await Expect.That(result).Should().IsSameAs(exception);
 		}
@@ -40,9 +40,9 @@ public sealed partial class ThatDelegate
 			Action action = () => throw exception;
 
 			async Task<Exception> Act()
-				=> await Expect.That(action).Should().ThrowsException();
+				=> await Expect.That(action).Should().ThrowException();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

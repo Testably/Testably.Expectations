@@ -12,7 +12,7 @@ public sealed partial class ThatGeneric
 			async Task Act()
 				=> await Expect.That(subject).Should().Satisfies<Other, int>(o => o.Value, v => v.Is(2));
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  satisfies Value is 2,

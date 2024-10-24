@@ -13,7 +13,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsBefore(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is before {expected:O},
@@ -31,7 +31,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsBefore(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is before {expected:O},
@@ -49,7 +49,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsBefore(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -61,7 +61,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsBefore(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is before {expected:O} ± 0:03,
@@ -79,7 +79,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsBefore(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

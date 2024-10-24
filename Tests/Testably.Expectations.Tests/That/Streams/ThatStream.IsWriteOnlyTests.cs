@@ -17,7 +17,7 @@ public sealed partial class ThatStream
 			async Task Act()
 				=> await Expect.That(subject).Should().IsWriteOnly();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  is write-only,
@@ -34,7 +34,7 @@ public sealed partial class ThatStream
 			async Task Act()
 				=> await Expect.That(subject).Should().IsWriteOnly();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  is write-only,
@@ -51,7 +51,7 @@ public sealed partial class ThatStream
 			async Task Act()
 				=> await Expect.That(subject).Should().IsWriteOnly();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

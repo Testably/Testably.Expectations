@@ -12,7 +12,7 @@ public sealed class NUnit4TestFrameworkTests
 		void Act()
 			=> Fail.Test("my message");
 
-		await Expect.That(Act).Should().Throws<AssertionException>();
+		await Expect.That(Act).Should().Throw<AssertionException>();
 	}
 
 	[Test]
@@ -21,6 +21,6 @@ public sealed class NUnit4TestFrameworkTests
 		void Act()
 			=> Skip.Test("my message");
 
-		await Expect.That(Act).Should().Throws<IgnoreException>();
+		await Expect.That(Act).Should().Throw<IgnoreException>();
 	}
 }

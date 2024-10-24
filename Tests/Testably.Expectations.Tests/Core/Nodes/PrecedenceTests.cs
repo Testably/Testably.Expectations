@@ -10,7 +10,7 @@ public sealed class PrecedenceTests
 			async Task Act()
 				=> await Expect.That(true).Should().BeFalse().And.BeTrue().Or.BeFalse();
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage("""
 				                  Expected that true
 				                  is False and is True or is False,
@@ -25,7 +25,7 @@ public sealed class PrecedenceTests
 			async Task Act()
 				=> await Expect.That(true).Should().BeFalse().And.BeTrue().Or.BeTrue();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -34,7 +34,7 @@ public sealed class PrecedenceTests
 			async Task Act()
 				=> await Expect.That(true).Should().BeFalse().Or.BeTrue().And.BeFalse();
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage("""
 				                  Expected that true
 				                  is False or is True and is False,
@@ -49,7 +49,7 @@ public sealed class PrecedenceTests
 			async Task Act()
 				=> await Expect.That(true).Should().BeTrue().And.BeFalse().Or.BeFalse();
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage("""
 				                  Expected that true
 				                  is True and is False or is False,
@@ -64,7 +64,7 @@ public sealed class PrecedenceTests
 			async Task Act()
 				=> await Expect.That(true).Should().BeTrue().And.BeFalse().Or.BeTrue();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -73,7 +73,7 @@ public sealed class PrecedenceTests
 			async Task Act()
 				=> await Expect.That(true).Should().BeTrue().Or.BeTrue().And.BeFalse();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

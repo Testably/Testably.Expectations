@@ -23,6 +23,6 @@ public static class ThrowHelper
 		this ThatDelegate source,
 		string expected)
 	{
-		return source.ThrowsException().Which.HasMessage(expected).AsWildcard();
+		return source.ThrowException().Which.HasMessage(expected).AsWildcard();
 	}
 }

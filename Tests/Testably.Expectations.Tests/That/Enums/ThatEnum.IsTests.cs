@@ -12,7 +12,7 @@ public sealed partial class ThatEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is {expected},
@@ -31,7 +31,7 @@ public sealed partial class ThatEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

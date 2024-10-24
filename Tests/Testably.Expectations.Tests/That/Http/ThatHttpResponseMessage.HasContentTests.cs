@@ -17,7 +17,7 @@ public sealed partial class ThatHttpResponseMessage
 			async Task Act()
 				=> await Expect.That(subject).Should().HasContent(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has a string content equal to "other content",
@@ -40,7 +40,7 @@ public sealed partial class ThatHttpResponseMessage
 			async Task Act()
 				=> await Expect.That(subject).Should().HasContent(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

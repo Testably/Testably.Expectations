@@ -13,7 +13,7 @@ public sealed partial class ThatBoolShould
 			async Task Act()
 				=> await Expect.That(antecedent).Should().Imply(consequent);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected antecedent to
 				                   imply {consequent},
@@ -32,7 +32,7 @@ public sealed partial class ThatBoolShould
 			async Task Act()
 				=> await Expect.That(antecedent).Should().Imply(consequent);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

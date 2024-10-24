@@ -13,7 +13,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -25,7 +25,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is not {unexpected:O},
@@ -43,7 +43,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNot(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -55,7 +55,7 @@ public sealed partial class ThatDateTime
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNot(expected).Within(TimeSpan.FromSeconds(3));
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is not {expected:O} ± 0:03,

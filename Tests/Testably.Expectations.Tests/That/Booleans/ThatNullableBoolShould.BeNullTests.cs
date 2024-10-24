@@ -12,7 +12,7 @@ public sealed partial class ThatNullableBoolShould
 			async Task Act()
 				=> await Expect.That(subject).Should().BeNull();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  be <null>,
@@ -29,7 +29,7 @@ public sealed partial class ThatNullableBoolShould
 			async Task Act()
 				=> await Expect.That(subject).Should().BeNull();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  be <null>,
@@ -46,7 +46,7 @@ public sealed partial class ThatNullableBoolShould
 			async Task Act()
 				=> await Expect.That(subject).Should().BeNull();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

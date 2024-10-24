@@ -3,13 +3,30 @@ using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
+using Testably.Expectations.Results;
+using Testably.Expectations.That.Delegates;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public abstract partial class ThatDelegate
+public static partial class ThatDelegateShould
 {
-	private readonly struct ThrowsConstraint<TException>(ThrowsOption throwOptions) :
+
+	/// <summary>
+	///     Verifies that the delegate throws exactly an exception of type <typeparamref name="TException" />.
+	/// </summary>
+	public static DelegateExpectationResult<TException> ThrowExactly<TException>(this ThatDelegate source)
+		where TException : Exception
+	{
+		ThrowsOption throwOptions = new();
+		return new(source.ExpectationBuilder.AddCast(
+				new ThrowsExactlyConstraint<TException>(throwOptions),
+				b => b.Append('.').Append(nameof(ThrowExactly)).Append('<')
+					.Append(typeof(TException).Name).Append(">()")),
+			throwOptions);
+	}
+	
+	private readonly struct ThrowsExactlyConstraint<TException>(ThrowsOption throwOptions) :
 		IConstraint<DelegateSource.NoValue, TException>,
 		IDelegateConstraint<DelegateSource.NoValue>
 		where TException : Exception
@@ -19,10 +36,10 @@ public abstract partial class ThatDelegate
 		{
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult<TException>(exception);
+				return DoesNotThrowResult<Exception>(exception);
 			}
 
-			if (exception is TException typedException)
+			if (exception is TException typedException && exception.GetType() == typeof(TException))
 			{
 				return new ConstraintResult.Success<TException?>(typedException, ToString());
 			}
@@ -40,6 +57,7 @@ public abstract partial class ThatDelegate
 		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
 			=> IsMetBy(value.Value, value.Exception);
 
+		/// <inheritdoc />
 		public override string ToString()
 		{
 			if (!throwOptions.DoCheckThrow)
@@ -47,7 +65,7 @@ public abstract partial class ThatDelegate
 				return DoesNotThrowExpectation;
 			}
 
-			return $"throws {typeof(TException).Name.PrependAOrAn()}";
+			return $"throw exactly {typeof(TException).Name.PrependAOrAn()}";
 		}
 	}
 }

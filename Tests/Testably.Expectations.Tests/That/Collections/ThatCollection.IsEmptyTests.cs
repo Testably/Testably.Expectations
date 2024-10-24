@@ -12,7 +12,7 @@ public sealed partial class ThatCollection
 			async Task Act()
 				=> await Expect.That(subject).Should().IsEmpty();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  is empty,
@@ -29,7 +29,7 @@ public sealed partial class ThatCollection
 			async Task Act()
 				=> await Expect.That(subject).Should().IsEmpty();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

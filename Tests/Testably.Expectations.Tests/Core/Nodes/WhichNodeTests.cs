@@ -18,7 +18,7 @@ public sealed class WhichNodeTests
 			=> await Expect.That(subject).Should().Is<Dummy>()
 				.Which(p => p.Value, e => e.Is("bar"));
 
-		await Expect.That(Act).Should().Throws<XunitException>()
+		await Expect.That(Act).Should().Throw<XunitException>()
 			.Which.HasMessage("""
 			                  Expected subject to
 			                  is type Dummy which Value is equal to "bar",

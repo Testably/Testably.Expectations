@@ -12,7 +12,7 @@ public sealed partial class ThatNullableGuid
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNotEmpty();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  is not empty,
@@ -29,7 +29,7 @@ public sealed partial class ThatNullableGuid
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNotEmpty();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is not empty,
@@ -46,7 +46,7 @@ public sealed partial class ThatNullableGuid
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNotEmpty();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

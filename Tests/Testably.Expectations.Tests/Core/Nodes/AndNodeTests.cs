@@ -8,7 +8,7 @@ public sealed class AndNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeFalse().And.BeTrue();
 
-		await Expect.That(Act).Should().ThrowsException()
+		await Expect.That(Act).Should().ThrowException()
 			.Which.HasMessage("""
 			                  Expected that true
 			                  is False and is True,
@@ -23,7 +23,7 @@ public sealed class AndNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeTrue().And.BeFalse();
 
-		await Expect.That(Act).Should().ThrowsException()
+		await Expect.That(Act).Should().ThrowException()
 			.Which.HasMessage("""
 			                  Expected that true
 			                  is True and is False,
@@ -38,7 +38,7 @@ public sealed class AndNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeFalse().And.Imply(false);
 
-		await Expect.That(Act).Should().ThrowsException()
+		await Expect.That(Act).Should().ThrowException()
 			.Which.HasMessage("""
 			                  Expected that true
 			                  is False and implies False,
@@ -53,7 +53,7 @@ public sealed class AndNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeTrue().And.NotBe(false);
 
-		await Expect.That(Act).Should().DoesNotThrow();
+		await Expect.That(Act).Should().NotThrow();
 	}
 }
 

@@ -13,7 +13,7 @@ public sealed partial class ThatNumber
 				=> await Expect.That(subject).Should().IsNaN()
 					.And.Is(subject);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -23,7 +23,7 @@ public sealed partial class ThatNumber
 
 			async Task Act() => await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Theory]
@@ -40,7 +40,7 @@ public sealed partial class ThatNumber
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is NaN,
@@ -57,7 +57,7 @@ public sealed partial class ThatNumber
 			async Task Act() => await Expect.That(subject).Should().IsNaN()
 				.And.Is(subject);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -68,7 +68,7 @@ public sealed partial class ThatNumber
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Theory]
@@ -85,7 +85,7 @@ public sealed partial class ThatNumber
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNaN();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is NaN,

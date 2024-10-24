@@ -1,6 +1,6 @@
 ﻿namespace Testably.Expectations.Tests.That.Delegates;
 
-public sealed partial class ThatDelegate
+public sealed partial class ThatDelegateShould
 {
 	public sealed class OnlyIfTests
 	{
@@ -9,7 +9,7 @@ public sealed partial class ThatDelegate
 		{
 			Action action = () => { };
 
-			await Expect.That(action).Should().ThrowsException()
+			await Expect.That(action).Should().ThrowException()
 				.OnlyIf(false)
 				.Which.HasMessage("foo");
 		}
@@ -19,7 +19,7 @@ public sealed partial class ThatDelegate
 		{
 			Action action = () => { };
 
-			await Expect.That(action).Should().Throws<ArgumentException>()
+			await Expect.That(action).Should().Throw<ArgumentException>()
 				.OnlyIf(false)
 				.Which.HasMessage("foo");
 		}
@@ -31,14 +31,14 @@ public sealed partial class ThatDelegate
 			Action action = () => throw exception;
 
 			async Task Act()
-				=> await Expect.That(action).Should().ThrowsException().OnlyIf(false);
+				=> await Expect.That(action).Should().ThrowException().OnlyIf(false);
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage("""
-				                  Expected Act toion
-				                  does not throw any exception,
+				                  Expected action to
+				                  not throw any exception,
 				                  but it did throw an Exception
-				                  at Expect.That(action).Should().ThrowsException().OnlyIf(false)
+				                  at Expect.That(action).Should().ThrowException().OnlyIf(false)
 				                  """);
 		}
 
@@ -48,9 +48,9 @@ public sealed partial class ThatDelegate
 			Action action = () => { };
 
 			async Task Act()
-				=> await Expect.That(action).Should().ThrowsException().OnlyIf(false);
+				=> await Expect.That(action).Should().ThrowException().OnlyIf(false);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -59,14 +59,14 @@ public sealed partial class ThatDelegate
 			Action action = () => { };
 
 			async Task Act()
-				=> await Expect.That(action).Should().ThrowsException().OnlyIf(true);
+				=> await Expect.That(action).Should().ThrowException().OnlyIf(true);
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage("""
-				                  Expected Act toion
-				                  throws an Exception,
+				                  Expected action to
+				                  throw an Exception,
 				                  but it did not
-				                  at Expect.That(action).Should().ThrowsException().OnlyIf(true)
+				                  at Expect.That(action).Should().ThrowException().OnlyIf(true)
 				                  """);
 		}
 
@@ -77,9 +77,9 @@ public sealed partial class ThatDelegate
 			Action action = () => throw exception;
 
 			async Task Act()
-				=> await Expect.That(action).Should().ThrowsException().OnlyIf(true);
+				=> await Expect.That(action).Should().ThrowException().OnlyIf(true);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

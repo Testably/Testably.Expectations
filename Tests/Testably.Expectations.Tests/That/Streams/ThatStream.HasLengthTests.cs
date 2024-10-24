@@ -16,7 +16,7 @@ public sealed partial class ThatStream
 			async Task Act()
 				=> await Expect.That(subject).Should().HasLength(length);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   has length {length},
@@ -34,7 +34,7 @@ public sealed partial class ThatStream
 			async Task Act()
 				=> await Expect.That(subject).Should().HasLength(length);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ public sealed partial class ThatStream
 			async Task Act()
 				=> await Expect.That(subject).Should().HasLength(0);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has length 0,

@@ -17,7 +17,7 @@ public sealed partial class ThatEnumerable
 				=> await Expect.That(subject).Should().AtLeast(0).Are(1)
 					.And.AtLeast(0).Are(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().AtLeast(2).Are(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -39,7 +39,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().AtLeast(3).Are(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -50,7 +50,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().AtLeast(5).Are(1);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has at least 5 items equal to 1,

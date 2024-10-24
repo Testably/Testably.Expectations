@@ -8,7 +8,7 @@ public sealed class OrNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeFalse().Or.BeTrue();
 
-		await Expect.That(Act).Should().DoesNotThrow();
+		await Expect.That(Act).Should().NotThrow();
 	}
 
 	[Fact]
@@ -17,7 +17,7 @@ public sealed class OrNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeTrue().Or.BeFalse();
 
-		await Expect.That(Act).Should().DoesNotThrow();
+		await Expect.That(Act).Should().NotThrow();
 	}
 
 	[Fact]
@@ -26,7 +26,7 @@ public sealed class OrNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeFalse().Or.Imply(false);
 
-		await Expect.That(Act).Should().ThrowsException()
+		await Expect.That(Act).Should().ThrowException()
 			.Which.HasMessage("""
 			                  Expected that true
 			                  is False or implies False,
@@ -41,7 +41,7 @@ public sealed class OrNodeTests
 		async Task Act()
 			=> await Expect.That(true).Should().BeTrue().Or.NotBe(false);
 
-		await Expect.That(Act).Should().DoesNotThrow();
+		await Expect.That(Act).Should().NotThrow();
 	}
 }
 

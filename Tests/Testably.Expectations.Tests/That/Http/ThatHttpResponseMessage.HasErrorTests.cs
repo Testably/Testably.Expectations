@@ -19,7 +19,7 @@ public sealed partial class ThatHttpResponseMessage
 			async Task Act()
 				=> await Expect.That(subject).Should().HasError();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Theory]
@@ -33,7 +33,7 @@ public sealed partial class ThatHttpResponseMessage
 			async Task Act()
 				=> await Expect.That(subject).Should().HasError();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage(
 					"*an error (status code 4xx or 5xx)*Expect.That(subject).Should().HasError()")
 				.AsWildcard();

@@ -11,7 +11,7 @@ public sealed class ExpectationTests
 		async Task Act()
 			=> await Expect.That(true).Should().Be(a).And.Be(b);
 
-		await Expect.That(Act).Should().ThrowsException();
+		await Expect.That(Act).Should().ThrowException();
 	}
 
 	[Theory]
@@ -21,7 +21,7 @@ public sealed class ExpectationTests
 		async Task Act()
 			=> await Expect.That(true).Should().Be(a).And.Be(b);
 
-		await Expect.That(Act).Should().DoesNotThrow();
+		await Expect.That(Act).Should().NotThrow();
 	}
 
 	[Theory]
@@ -31,7 +31,7 @@ public sealed class ExpectationTests
 		async Task Act()
 			=> await Expect.That(true).Should().Be(a).Or.Be(b);
 
-		await Expect.That(Act).Should().ThrowsException();
+		await Expect.That(Act).Should().ThrowException();
 	}
 
 	[Theory]
@@ -43,6 +43,6 @@ public sealed class ExpectationTests
 		async Task Act()
 			=> await Expect.That(true).Should().Be(a).Or.Be(b);
 
-		await Expect.That(Act).Should().DoesNotThrow();
+		await Expect.That(Act).Should().NotThrow();
 	}
 }

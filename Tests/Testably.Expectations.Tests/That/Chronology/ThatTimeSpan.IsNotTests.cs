@@ -15,7 +15,7 @@ public sealed partial class ThatTimeSpan
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is not {Formatter.Format(unexpected)},
@@ -33,7 +33,7 @@ public sealed partial class ThatTimeSpan
 			async Task Act()
 				=> await Expect.That(subject).Should().IsNot(unexpected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

@@ -72,7 +72,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is equal to "@startuml{nl}Alice -> Bob :…",
@@ -140,7 +140,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -152,7 +152,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -164,7 +164,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Is(expected);
 
-			await Expect.That(Act).Should().ThrowsException()
+			await Expect.That(Act).Should().ThrowException()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  is equal to "this is a long text which…",

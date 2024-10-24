@@ -14,7 +14,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotContain(expected).IgnoringCase();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not contain "INVESTIGATOR" ignoring case,
@@ -32,7 +32,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotContain(expected).Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not contain "InvEstIgAtOr" using IgnoreCaseForVocalsComparer,
@@ -51,7 +51,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotContain(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not contain "me",
@@ -69,7 +69,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotContain(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

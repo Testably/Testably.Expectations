@@ -17,7 +17,7 @@ public sealed partial class ThatEnumerable
 				=> await Expect.That(subject).Should().AtMost(3).Are(1)
 					.And.AtMost(3).Are(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().AtMost(1).Are(1);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has at most 1 item equal to 1,
@@ -45,7 +45,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().AtMost(3).Are(2);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -56,7 +56,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().AtMost(3).Are(1);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has at most 3 items equal to 1,

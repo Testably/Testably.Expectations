@@ -12,7 +12,7 @@ public sealed partial class ThatNullableEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().IsDefined();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -23,7 +23,7 @@ public sealed partial class ThatNullableEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().IsDefined();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   is defined,
@@ -40,7 +40,7 @@ public sealed partial class ThatNullableEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().IsDefined();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  is defined,

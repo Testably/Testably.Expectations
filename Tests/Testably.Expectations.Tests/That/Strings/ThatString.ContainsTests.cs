@@ -14,7 +14,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtLeast(3);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -27,7 +27,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtLeast(5);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" at least 5 times,
@@ -46,7 +46,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtLeast(1);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "text that does not occur" at least once,
@@ -65,7 +65,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtLeast(-1);
 
-			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'minimum'*").AsWildcard().And
 				.HasParamName("minimum");
 		}
@@ -80,7 +80,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtMost(2);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" at most 2 times,
@@ -99,7 +99,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtMost(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -112,7 +112,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtMost(3);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -125,7 +125,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtMost(-1);
 
-			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'maximum'*").AsWildcard().And
 				.HasParamName("maximum");
 		}
@@ -140,7 +140,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Between(4).And(9);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" between 4 and 9 times,
@@ -159,7 +159,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Between(1).And(2);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" between 1 and 2 times,
@@ -178,7 +178,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Between(1).And(4);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -191,7 +191,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Between(1).And(-3);
 
-			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'maximum'*").AsWildcard().And
 				.HasParamName("maximum");
 		}
@@ -206,7 +206,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Between(3).And(3);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -219,7 +219,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Between(4).And(3);
 
-			await Expect.That(Act).Should().ThrowsExactly<ArgumentException>().Which
+			await Expect.That(Act).Should().ThrowExactly<ArgumentException>().Which
 				.HasMessage("*'maximum'*greater*'minimum'*").AsWildcard();
 		}
 
@@ -233,7 +233,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Between(-1).And(3);
 
-			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'minimum'*").AsWildcard().And
 				.HasParamName("minimum");
 		}
@@ -249,7 +249,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Exactly(-1);
 
-			await Expect.That(Act).Should().ThrowsExactly<ArgumentOutOfRangeException>().Which
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
 				.HasMessage("*'expected'*").AsWildcard().And
 				.HasParamName("expected");
 		}
@@ -264,7 +264,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Exactly(3);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -277,7 +277,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Exactly(4);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" exactly 4 times,
@@ -296,7 +296,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Exactly(2);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" exactly 2 times,
@@ -315,7 +315,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtLeast(7).IgnoringCase();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" at least 7 times ignoring case,
@@ -335,7 +335,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).AtLeast(5).IgnoringCase();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -348,7 +348,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Never();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -361,7 +361,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Never();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not contain "investigator",
@@ -380,7 +380,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Once();
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -393,7 +393,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Once();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "detective" exactly once,
@@ -412,7 +412,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected).Once();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "word" exactly once,
@@ -433,7 +433,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().Contains(expected).Exactly(4)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -448,7 +448,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().Contains(expected).Exactly(5)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "in" exactly 5 times using IgnoreCaseForVocalsComparer,
@@ -466,7 +466,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -478,7 +478,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  contains "not" at least once,

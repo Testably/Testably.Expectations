@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Tests.That.Delegates;
 
-public sealed partial class ThatDelegate
+public sealed partial class ThatDelegateShould
 {
 	private static CustomException CreateCustomException(
 		[CallerMemberName] string message = "",

@@ -12,7 +12,7 @@ public sealed partial class ThatNullableEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   does not have flag {unexpected},
@@ -31,7 +31,7 @@ public sealed partial class ThatNullableEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Theory]
@@ -44,7 +44,7 @@ public sealed partial class ThatNullableEnum
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   does not have flag {unexpected},

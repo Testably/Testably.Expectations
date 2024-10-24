@@ -17,7 +17,7 @@ public sealed partial class ThatEnumerable
 				=> await Expect.That(subject).Should().None().Are(15)
 					.And.None().Are(81);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().None().Are(5);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has no items equal to 5,
@@ -45,7 +45,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().None().Are(1);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has no items equal to 1,
@@ -62,7 +62,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().None().Are(42);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

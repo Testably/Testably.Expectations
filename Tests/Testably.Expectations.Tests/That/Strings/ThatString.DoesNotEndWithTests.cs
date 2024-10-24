@@ -13,7 +13,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotEndWith(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not end with "text",
@@ -31,7 +31,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotEndWith(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -45,7 +45,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().DoesNotEndWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not end with "tExt" using IgnoreCaseForVocalsComparer,
@@ -65,7 +65,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().DoesNotEndWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -77,7 +77,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotEndWith(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  does not end with "text",
@@ -95,7 +95,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().DoesNotEndWith(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

@@ -12,7 +12,7 @@ public sealed partial class ThatCollection
 			async Task Act()
 				=> await Expect.That(subject).Should().Between(3).And(4).Are(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -23,7 +23,7 @@ public sealed partial class ThatCollection
 			async Task Act()
 				=> await Expect.That(subject).Should().Between(3).And(4).Are(2);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has between 3 and 4 items equal to 2,
@@ -40,7 +40,7 @@ public sealed partial class ThatCollection
 			async Task Act()
 				=> await Expect.That(subject).Should().Between(1).And(3).Are(1);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  has between 1 and 3 items equal to 1,

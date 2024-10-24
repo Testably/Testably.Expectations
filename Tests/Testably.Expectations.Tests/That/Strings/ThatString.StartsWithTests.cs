@@ -17,7 +17,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().StartsWith(expected).IgnoringCase(ignoreCase);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.OnlyIf(!ignoreCase)
 				.Which.HasMessage("""
 				                  Expected subject to
@@ -37,7 +37,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().StartsWith(expected).IgnoringCase();
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  starts with "TEXT" ignoring case,
@@ -57,7 +57,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().StartsWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  starts with "SOME" using IgnoreCaseForVocalsComparer,
@@ -77,7 +77,7 @@ public sealed partial class ThatString
 				=> await Expect.That(subject).Should().StartsWith(expected)
 					.Using(new IgnoreCaseForVocalsComparer());
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -89,7 +89,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().StartsWith(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
 				                  starts with "text",
@@ -107,7 +107,7 @@ public sealed partial class ThatString
 			async Task Act()
 				=> await Expect.That(subject).Should().StartsWith(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 	}
 }

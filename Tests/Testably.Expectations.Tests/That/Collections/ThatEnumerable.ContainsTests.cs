@@ -17,7 +17,7 @@ public sealed partial class ThatEnumerable
 				=> await Expect.That(subject).Should().Contains(1)
 					.And.Contains(1);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -28,7 +28,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(5);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Theory]
@@ -41,7 +41,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).Should().DoesNotThrow();
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Theory]
@@ -52,7 +52,7 @@ public sealed partial class ThatEnumerable
 			async Task Act()
 				=> await Expect.That(subject).Should().Contains(expected);
 
-			await Expect.That(Act).Should().Throws<XunitException>()
+			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
 				                   contains "{expected}",
