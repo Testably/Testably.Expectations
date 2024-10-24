@@ -2,16 +2,36 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Equivalency;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
+using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatObjectExtensions
+public static partial class ThatObjectShould
 {
+	/// <summary>
+	///     Verifies that the subject is equivalent to the <paramref name="expected" /> value.
+	/// </summary>
+	public static EquivalencyOptionsExpectationResult<T, That<T>> BeEquivalentTo<T>(
+		this That<T> source,
+		object expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+	{
+		EquivalencyOptions? options = new();
+		return new EquivalencyOptionsExpectationResult<T, That<T>>(source.ExpectationBuilder.Add(
+				new IsEquivalentToConstraint(expected, doNotPopulateThisValue, options),
+				b => b.AppendMethod(nameof(BeEquivalentTo), doNotPopulateThisValue)),
+			source,
+			options);
+	}
+
 	private readonly struct IsEquivalentToConstraint(
 		object? expected,
 		string expectedExpression,
@@ -84,6 +104,6 @@ public static partial class ThatObjectExtensions
 		}
 
 		public override string ToString()
-			=> $"is equivalent to {expectedExpression}";
+			=> $"be equivalent to {expectedExpression}";
 	}
 }

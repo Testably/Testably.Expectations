@@ -3,9 +3,9 @@ using Testably.Expectations.Tests.TestHelpers;
 
 namespace Testably.Expectations.Tests.That.Objects;
 
-public sealed partial class ThatObject
+public sealed partial class ThatObjectShould
 {
-	public sealed class IsEquivalentToTests
+	public sealed class BeEquivalentToTests
 	{
 		[Fact]
 		public async Task BasicObjects_ShouldBeEquivalent()
@@ -19,7 +19,7 @@ public sealed partial class ThatObject
 				Value = "Foo"
 			};
 
-			await Expect.That(subject).Should().IsEquivalentTo(expected);
+			await Expect.That(subject).Should().BeEquivalentTo(expected);
 		}
 
 		[Fact]
@@ -31,14 +31,14 @@ public sealed partial class ThatObject
 				Value = "Foo"
 			};
 
-			await Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
+			await Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
 				                   Expected subject to
-				                   is equivalent to expected,
+				                   be equivalent to expected,
 				                   but Property Value did not match:
 				                     Expected: "Foo"
 				                     Received: <null>
-				                   at Expect.That(subject).Should().IsEquivalentTo(expected)
+				                   at Expect.That(subject).Should().BeEquivalentTo(expected)
 				                   """);
 		}
 
@@ -67,14 +67,14 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
+			await Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
 				                   Expected subject to
-				                   is equivalent to expected,
+				                   be equivalent to expected,
 				                   but Property Inner.Inner.Value did not match:
 				                     Expected: "Baz"
 				                     Received: <null>
-				                   at Expect.That(subject).Should().IsEquivalentTo(expected)
+				                   at Expect.That(subject).Should().BeEquivalentTo(expected)
 				                   """).Exactly();
 		}
 
@@ -106,7 +106,7 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(subject).Should().IsEquivalentTo(expected);
+			await Expect.That(subject).Should().BeEquivalentTo(expected);
 		}
 
 		[Fact]
@@ -140,14 +140,14 @@ public sealed partial class ThatObject
 				}
 			};
 
-			Expect.That(async () => await Expect.That(subject).Should().IsEquivalentTo(expected)).Should()
+			Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
 				.ThrowsWithMessage("""
 				                   Expected subject to
-				                   is equivalent to expected,
+				                   be equivalent to expected,
 				                   but EnumerableItem Inner.Inner.Collection.[3] did not match
 				                     Expected: "4"
 				                     Received: null
-				                   at Expect.That(subject).Should().IsEquivalentTo(expected)
+				                   at Expect.That(subject).Should().BeEquivalentTo(expected)
 				                   """);
 		}
 
@@ -182,7 +182,7 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(subject).Should().IsEquivalentTo(expected).IgnoringMember("Inner.Inner.Collection.[3]");
+			await Expect.That(subject).Should().BeEquivalentTo(expected).IgnoringMember("Inner.Inner.Collection.[3]");
 		}
 
 		[Fact]
@@ -215,7 +215,7 @@ public sealed partial class ThatObject
 				}
 			};
 
-			await Expect.That(subject).Should().IsEquivalentTo(expected);
+			await Expect.That(subject).Should().BeEquivalentTo(expected);
 		}
 
 		public class MyClass

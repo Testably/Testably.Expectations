@@ -1,6 +1,6 @@
-﻿namespace Testably.Expectations.Tests.That;
+﻿namespace Testably.Expectations.Tests.That.Objects;
 
-public sealed partial class ThatGeneric
+public sealed partial class ThatObjectShould
 {
 	private class OtherBase
 	{

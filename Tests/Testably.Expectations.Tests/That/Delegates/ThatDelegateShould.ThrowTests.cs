@@ -70,7 +70,7 @@ public sealed partial class ThatDelegateShould
 
 			CustomException result = await Expect.That(action).Should().Throw<CustomException>();
 
-			await Expect.That(result).Should().IsSameAs(exception);
+			await Expect.That(result).Should().BeSameAs(exception);
 		}
 
 		[Fact]

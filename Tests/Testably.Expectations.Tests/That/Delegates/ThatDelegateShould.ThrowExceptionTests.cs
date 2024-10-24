@@ -30,7 +30,7 @@ public sealed partial class ThatDelegateShould
 
 			Exception result = await Expect.That(action).Should().ThrowException();
 
-			await Expect.That(result).Should().IsSameAs(exception);
+			await Expect.That(result).Should().BeSameAs(exception);
 		}
 
 		[Fact]

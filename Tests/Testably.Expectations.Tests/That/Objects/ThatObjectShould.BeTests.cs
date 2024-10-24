@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Objects;
 
-public sealed partial class ThatObject
+public sealed partial class ThatObjectShould
 {
-	public sealed class IsTests
+	public sealed class BeTests
 	{
 		[Theory]
 		[AutoData]
@@ -13,7 +13,7 @@ public sealed partial class ThatObject
 				Value = value
 			};
 
-			Other result = await Expect.That(subject).Should().Is<Other>();
+			Other result = await Expect.That(subject).Should().Be<Other>();
 			await Expect.That(result.Value).Should().Is(value);
 		}
 	}

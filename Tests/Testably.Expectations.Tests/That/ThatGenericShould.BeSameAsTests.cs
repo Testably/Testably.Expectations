@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That;
 
-public sealed partial class ThatGeneric
+public sealed partial class ThatGenericShould
 {
-	public sealed class IsSameAsTests
+	public sealed class BeSameAsTests
 	{
 		[Fact]
 		public async Task WhenComparingTheSameObjectReference_ShouldSucceed()
@@ -11,7 +11,7 @@ public sealed partial class ThatGeneric
 			Other expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsSameAs(expected);
+				=> await Expect.That(subject).Should().BeSameAs(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -23,18 +23,18 @@ public sealed partial class ThatGeneric
 			Other expected = new() { Value = 1 };
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsSameAs(expected);
+				=> await Expect.That(subject).Should().BeSameAs(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  refers to expected Other{
+				                  refer to expected Other{
 				                    Value = 1
 				                  },
 				                  but found Other{
 				                    Value = 1
 				                  }
-				                  at Expect.That(subject).Should().IsSameAs(expected)
+				                  at Expect.That(subject).Should().BeSameAs(expected)
 				                  """);
 		}
 	}

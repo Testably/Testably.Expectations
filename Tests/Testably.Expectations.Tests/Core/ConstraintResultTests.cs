@@ -27,7 +27,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult.Failure<Dummy> subject = new(value, expectationText, resultText);
 
-		await Expect.That(subject.Value).Should().IsEquivalentTo(value);
+		await Expect.That(subject.Value).Should().BeEquivalentTo(value);
 		await Expect.That(subject.ExpectationText).Should().Is(expectationText);
 		await Expect.That(subject.ResultText).Should().Is(resultText);
 	}
@@ -41,7 +41,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert();
 
-		await Expect.That(result).Should().Is<ConstraintResult.Success>()
+		await Expect.That(result).Should().Be<ConstraintResult.Success>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
@@ -54,7 +54,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
-		await Expect.That(result).Should().Is<ConstraintResult.Success>()
+		await Expect.That(result).Should().Be<ConstraintResult.Success>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
@@ -71,8 +71,8 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert();
 
-		await Expect.That(result).Should().Is<ConstraintResult.Success<Dummy>>()
-			.Which(s => s.Value, e => e.IsEquivalentTo(value));
+		await Expect.That(result).Should().Be<ConstraintResult.Success<Dummy>>()
+			.Which(s => s.Value, e => e.BeEquivalentTo(value));
 	}
 
 	[Theory]
@@ -88,7 +88,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert();
 
-		await Expect.That(result).Should().Is<ConstraintResult.Success<Dummy>>()
+		await Expect.That(result).Should().Be<ConstraintResult.Success<Dummy>>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
@@ -106,7 +106,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
-		await Expect.That(result).Should().Is<ConstraintResult.Success<Dummy>>()
+		await Expect.That(result).Should().Be<ConstraintResult.Success<Dummy>>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText));
 	}
 
@@ -119,7 +119,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert();
 
-		await Expect.That(result).Should().Is<ConstraintResult.Failure>()
+		await Expect.That(result).Should().Be<ConstraintResult.Failure>()
 			.Which(s => s.ExpectationText, e => e.Is(expectationText))
 			.Which(s => s.ResultText, e => e.Is("it did"));
 	}
@@ -133,7 +133,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
-		await Expect.That(result).Should().Is<ConstraintResult.Failure>()
+		await Expect.That(result).Should().Be<ConstraintResult.Failure>()
 			.Which(p => p.ExpectationText, e => e.Is(expectationText))
 			.Which(p => p.ResultText, e => e.Is(resultText));
 	}
@@ -150,8 +150,8 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert();
 
-		await Expect.That(result).Should().Is<ConstraintResult.Failure<Dummy>>()
-			.Which(p => p.Value, e => e.IsEquivalentTo(value));
+		await Expect.That(result).Should().Be<ConstraintResult.Failure<Dummy>>()
+			.Which(p => p.Value, e => e.BeEquivalentTo(value));
 	}
 
 	[Theory]
@@ -167,7 +167,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert();
 
-		await Expect.That(result).Should().Is<ConstraintResult.Failure<Dummy>>()
+		await Expect.That(result).Should().Be<ConstraintResult.Failure<Dummy>>()
 			.Which(p => p.ExpectationText, e => e.Is(expectationText))
 			.Which(p => p.ResultText, e => e.Is("it did"));
 	}
@@ -185,7 +185,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult result = subject.Invert(_ => expectationText, _ => resultText);
 
-		await Expect.That(result).Should().Is<ConstraintResult.Failure<Dummy>>()
+		await Expect.That(result).Should().Be<ConstraintResult.Failure<Dummy>>()
 			.Which(p => p.ExpectationText, e => e.Is(expectationText))
 			.Which(p => p.ResultText, e => e.Is(resultText));
 	}
@@ -201,7 +201,7 @@ public sealed class ConstraintResultTests
 
 		ConstraintResult.Success<Dummy> subject = new(value, expectationText);
 
-		await Expect.That(subject.Value).Should().IsEquivalentTo(value);
+		await Expect.That(subject.Value).Should().BeEquivalentTo(value);
 		await Expect.That(subject.ExpectationText).Should().Is(expectationText);
 	}
 
