@@ -15,4 +15,13 @@ public static partial class ThatNullableBoolShould
 				new IsConstraint(true),
 				b => b.AppendMethod(nameof(BeTrue))),
 			source);
+
+	/// <summary>
+	///     Verifies that the subject is not <see langword="true" />.
+	/// </summary>
+	public static AndOrExpectationResult<bool?, That<bool?>> NotBeTrue(this That<bool?> source)
+		=> new(source.ExpectationBuilder.Add(
+				new IsNotConstraint(true),
+				b => b.AppendMethod(nameof(NotBeTrue))),
+			source);
 }
