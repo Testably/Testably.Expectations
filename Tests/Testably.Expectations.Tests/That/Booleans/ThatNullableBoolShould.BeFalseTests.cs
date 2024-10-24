@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Booleans;
 
-public sealed partial class ThatNullableBool
+public sealed partial class ThatNullableBoolShould
 {
-	public sealed class IsFalseTests
+	public sealed class BeFalseTests
 	{
 		[Fact]
 		public async Task WhenNull_ShouldFail()
@@ -10,14 +10,14 @@ public sealed partial class ThatNullableBool
 			bool? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsFalse();
+				=> await Expect.That(subject).Should().BeFalse();
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  is False,
+				                  be False,
 				                  but found <null>
-				                  at Expect.That(subject).Should().IsFalse()
+				                  at Expect.That(subject).Should().BeFalse()
 				                  """);
 		}
 
@@ -27,14 +27,14 @@ public sealed partial class ThatNullableBool
 			bool? subject = true;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsFalse();
+				=> await Expect.That(subject).Should().BeFalse();
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  is False,
+				                  be False,
 				                  but found True
-				                  at Expect.That(subject).Should().IsFalse()
+				                  at Expect.That(subject).Should().BeFalse()
 				                  """);
 		}
 
@@ -44,7 +44,7 @@ public sealed partial class ThatNullableBool
 			bool? subject = false;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsFalse();
+				=> await Expect.That(subject).Should().BeFalse();
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}

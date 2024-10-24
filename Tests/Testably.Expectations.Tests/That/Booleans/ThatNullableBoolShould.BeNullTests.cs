@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Booleans;
 
-public sealed partial class ThatNullableBool
+public sealed partial class ThatNullableBoolShould
 {
-	public sealed class IsTrueTests
+	public sealed class BeNullTests
 	{
 		[Fact]
 		public async Task WhenFalse_ShouldFail()
@@ -10,41 +10,41 @@ public sealed partial class ThatNullableBool
 			bool? subject = false;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsTrue();
+				=> await Expect.That(subject).Should().BeNull();
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  is True,
+				                  be <null>,
 				                  but found False
-				                  at Expect.That(subject).Should().IsTrue()
+				                  at Expect.That(subject).Should().BeNull()
 				                  """);
 		}
 
 		[Fact]
-		public async Task WhenNull_ShouldFail()
-		{
-			bool? subject = null;
-
-			async Task Act()
-				=> await Expect.That(subject).Should().IsTrue();
-
-			await Expect.That(Act).Should().Throws<XunitException>()
-				.Which.HasMessage("""
-				                  Expected subject to
-				                  is True,
-				                  but found <null>
-				                  at Expect.That(subject).Should().IsTrue()
-				                  """);
-		}
-
-		[Fact]
-		public async Task WhenTrue_ShouldSucceed()
+		public async Task WhenTrue_ShouldFail()
 		{
 			bool? subject = true;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsTrue();
+				=> await Expect.That(subject).Should().BeNull();
+
+			await Expect.That(Act).Should().Throws<XunitException>()
+				.Which.HasMessage("""
+				                  Expected subject to
+				                  be <null>,
+				                  but found True
+				                  at Expect.That(subject).Should().BeNull()
+				                  """);
+		}
+
+		[Fact]
+		public async Task WhenNull_ShouldSucceed()
+		{
+			bool? subject = null;
+
+			async Task Act()
+				=> await Expect.That(subject).Should().BeNull();
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}

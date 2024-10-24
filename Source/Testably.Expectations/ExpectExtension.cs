@@ -11,16 +11,6 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ExpectExtension
 {
-	/// <summary>
-	///     Start expectations for the current <see cref="bool" />? <paramref name="subject" />.
-	/// </summary>
-	public static That<bool?> Should(this IExpectThat<bool?> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<bool?>(subject.ExpectationBuilder);
-	}
-
 #if !NETSTANDARD2_0
 	/// <summary>
 	///     Start expectations for current <see cref="DateOnly" /> <paramref name="subject" />.

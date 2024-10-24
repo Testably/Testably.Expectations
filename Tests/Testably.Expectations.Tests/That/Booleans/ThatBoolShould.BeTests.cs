@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Booleans;
 
-public sealed partial class ThatBool
+public sealed partial class ThatBoolShould
 {
-	public sealed class IsTests
+	public sealed class BeTests
 	{
 		[Theory]
 		[InlineData(true)]
@@ -12,14 +12,14 @@ public sealed partial class ThatBool
 			bool expected = !subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that subject
-				                   is {expected},
+				                   Expected subject to
+				                   be {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).Should().Is(expected)
+				                   at Expect.That(subject).Should().Be(expected)
 				                   """);
 		}
 
@@ -31,7 +31,7 @@ public sealed partial class ThatBool
 			bool expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}

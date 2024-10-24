@@ -1,5 +1,5 @@
 ﻿namespace Testably.Expectations.Tests.That.Booleans;
 
-public sealed partial class ThatBool
+public sealed partial class ThatBoolShould
 {
 }

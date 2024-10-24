@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Booleans;
 
-public sealed partial class ThatNullableBool
+public sealed partial class ThatNullableBoolShould
 {
-	public sealed class IsNotTrueTests
+	public sealed class NotBeTrueTests
 	{
 		[Fact]
 		public async Task WhenFalse_ShouldFail()
@@ -10,7 +10,7 @@ public sealed partial class ThatNullableBool
 			bool? subject = false;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNotTrue();
+				=> await Expect.That(subject).Should().NotBeTrue();
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}
@@ -21,7 +21,7 @@ public sealed partial class ThatNullableBool
 			bool? subject = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNotTrue();
+				=> await Expect.That(subject).Should().NotBeTrue();
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}
@@ -32,14 +32,14 @@ public sealed partial class ThatNullableBool
 			bool? subject = true;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNotTrue();
+				=> await Expect.That(subject).Should().NotBeTrue();
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  is not True,
+				                  not be True,
 				                  but found True
-				                  at Expect.That(subject).Should().IsNotTrue()
+				                  at Expect.That(subject).Should().NotBeTrue()
 				                  """);
 		}
 	}

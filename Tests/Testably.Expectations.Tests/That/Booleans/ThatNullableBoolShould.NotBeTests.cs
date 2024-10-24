@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Booleans;
 
-public sealed partial class ThatNullableBool
+public sealed partial class ThatNullableBoolShould
 {
-	public sealed class IsNotTests
+	public sealed class NotBeTests
 	{
 		[Theory]
 		[InlineData(true)]
@@ -13,14 +13,14 @@ public sealed partial class ThatNullableBool
 			bool? unexpected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNot(unexpected);
+				=> await Expect.That(subject).Should().NotBe(unexpected);
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
-				                   is not {unexpected?.ToString() ?? "<null>"},
+				                   not be {unexpected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
-				                   at Expect.That(subject).Should().IsNot(unexpected)
+				                   at Expect.That(subject).Should().NotBe(unexpected)
 				                   """);
 		}
 
@@ -34,7 +34,7 @@ public sealed partial class ThatNullableBool
 		public async Task WhenSubjectIsDifferent_ShouldSucceed(bool? subject, bool? unexpected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNot(unexpected);
+				=> await Expect.That(subject).Should().NotBe(unexpected);
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}

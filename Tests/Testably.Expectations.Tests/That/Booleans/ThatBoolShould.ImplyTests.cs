@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Booleans;
 
-public sealed partial class ThatBool
+public sealed partial class ThatBoolShould
 {
-	public sealed class ImpliesTests
+	public sealed class ImplyTests
 	{
 		[Fact]
 		public async Task WhenAntecedentDoesNotImplyConsequent_ShouldFail()
@@ -11,14 +11,14 @@ public sealed partial class ThatBool
 			bool consequent = false;
 
 			async Task Act()
-				=> await Expect.That(antecedent).Should().Implies(consequent);
+				=> await Expect.That(antecedent).Should().Imply(consequent);
 
 			await Expect.That(Act).Should().Throws<XunitException>()
 				.Which.HasMessage($"""
-				                   Expected that antecedent
-				                   implies {consequent},
+				                   Expected antecedent to
+				                   imply {consequent},
 				                   but it did not
-				                   at Expect.That(antecedent).Should().Implies(consequent)
+				                   at Expect.That(antecedent).Should().Imply(consequent)
 				                   """);
 		}
 
@@ -30,7 +30,7 @@ public sealed partial class ThatBool
 			bool consequent)
 		{
 			async Task Act()
-				=> await Expect.That(antecedent).Should().Implies(consequent);
+				=> await Expect.That(antecedent).Should().Imply(consequent);
 
 			await Expect.That(Act).Should().DoesNotThrow();
 		}

@@ -1,0 +1,39 @@
+﻿using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Formatting;
+using Testably.Expectations.Results;
+
+// ReSharper disable once CheckNamespace
+namespace Testably.Expectations;
+
+public static partial class ThatBoolShould
+{
+	/// <summary>
+	///     Verifies that the subject implies the <paramref name="consequent" /> value.
+	/// </summary>
+	public static AndOrExpectationResult<bool, That<bool>> Imply(this That<bool> source,
+		bool consequent,
+		[CallerArgumentExpression("consequent")]
+		string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(new ImpliesConstraint(consequent),
+				b => b.AppendMethod(nameof(Imply), doNotPopulateThisValue)),
+			source);
+
+	private readonly struct ImpliesConstraint(bool consequent) : IConstraint<bool>
+	{
+		public ConstraintResult IsMetBy(bool actual)
+		{
+			if (!actual || consequent)
+			{
+				return new ConstraintResult.Success<bool>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(), "it did not");
+		}
+
+		public override string ToString()
+			=> $"imply {Formatter.Format(consequent)}";
+	}
+}
