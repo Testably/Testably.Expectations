@@ -88,7 +88,7 @@ public class BecauseTests
 			=> await Expect.That(subject).Should().BeFalse().Because(because);
 
 		Exception exception = await Expect.That(Act).Should().ThrowsWithMessage("*because*");
-		await Expect.That(exception.Message).Should().DoesNotContain("because because");
+		await Expect.That(exception.Message).Should().NotContain("because because");
 	}
 
 	[Fact]

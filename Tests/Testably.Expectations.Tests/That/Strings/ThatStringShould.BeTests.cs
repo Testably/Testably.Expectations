@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Strings;
 
-public sealed partial class ThatString
+public sealed partial class ThatStringShould
 {
-	public class IsTests
+	public class BeTests
 	{
 		[Theory]
 		[InlineData("some message", "*me me*", true)]
@@ -15,7 +15,7 @@ public sealed partial class ThatString
 			string subject, string pattern, bool expectMatch)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(pattern).AsWildcard();
+				=> await Expect.That(subject).Should().Be(pattern).AsWildcard();
 
 			await Expect.That(Act).Should().ThrowException().OnlyIf(!expectMatch);
 		}
@@ -27,7 +27,7 @@ public sealed partial class ThatString
 			string expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Act();
 		}
@@ -39,18 +39,18 @@ public sealed partial class ThatString
 			string expected = "expected other text";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  is equal to "expected other text",
+				                  be equal to "expected other text",
 				                  but found "actual text" which differs at index 0:
 				                     ↓ (actual)
 				                    "actual text"
 				                    "expected other text"
 				                     ↑ (expected)
-				                  at Expect.That(subject).Should().Is(expected)
+				                  at Expect.That(subject).Should().Be(expected)
 				                  """);
 		}
 	}

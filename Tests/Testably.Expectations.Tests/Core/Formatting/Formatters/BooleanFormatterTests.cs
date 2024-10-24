@@ -11,6 +11,6 @@ public sealed class BooleanFormatterTests
 	{
 		string result = Formatter.Format(value);
 
-		await Expect.That(result).Should().Is(expectedResult);
+		await Expect.That(result).Should().Be(expectedResult);
 	}
 }

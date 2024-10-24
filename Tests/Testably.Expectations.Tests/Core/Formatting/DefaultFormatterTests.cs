@@ -18,7 +18,7 @@ public sealed class DefaultFormatterTests
 
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
-		await Expect.That(result).Should().Is("""
+		await Expect.That(result).Should().Be("""
 		                             Dummy{ Inner = InnerDummy{ InnerValue = "foo" }, Value = 2 }
 		                             """);
 	}

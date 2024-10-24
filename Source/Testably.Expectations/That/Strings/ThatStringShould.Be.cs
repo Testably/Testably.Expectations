@@ -1,12 +1,28 @@
-﻿using Testably.Expectations.Core;
+﻿using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
+using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatStringExtensions
+public static partial class ThatStringShould
 {
+	/// <summary>
+	///     Verifies that the subject is equal to <paramref name="expected" />.
+	/// </summary>
+	public static StringMatcherExpectationResult<string?, That<string?>> Be(
+		this That<string?> source,
+		StringMatcher expected,
+		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder.Add(
+				new IsConstraint(expected),
+				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+			source,
+			expected);
+
 	private readonly struct IsConstraint(StringMatcher expected) : IConstraint<string?>
 	{
 		/// <inheritdoc />

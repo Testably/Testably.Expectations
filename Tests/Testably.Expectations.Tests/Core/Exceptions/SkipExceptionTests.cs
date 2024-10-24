@@ -8,6 +8,6 @@ public sealed class SkipExceptionTests
 	{
 		SkipException subject = new(message);
 
-		await Expect.That(subject.Message).Should().Is(message);
+		await Expect.That(subject.Message).Should().Be(message);
 	}
 }

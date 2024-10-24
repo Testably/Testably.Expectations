@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Tests.That.Strings;
 
-public sealed partial class ThatString
+public sealed partial class ThatStringShould
 {
 	/// <summary>
 	///     A test <see cref="IEqualityComparer{T}" /> for <see langword="string" />s that
