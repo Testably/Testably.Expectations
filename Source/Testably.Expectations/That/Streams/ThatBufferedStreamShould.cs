@@ -6,7 +6,10 @@ using Testably.Expectations.Core.Constraints;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatBufferedStreamExtensions
+/// <summary>
+///     Expectations on <see cref="BufferedStream" /> values.
+/// </summary>
+public static partial class ThatBufferedStreamShould
 {
 	private readonly struct Constraint(
 		string expectation,

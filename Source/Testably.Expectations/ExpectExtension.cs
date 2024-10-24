@@ -136,17 +136,6 @@ public static partial class ExpectExtension
 	}
 
 	/// <summary>
-	///     Start expectations for the current <see cref="Stream" /> <paramref name="subject" />.
-	/// </summary>
-	public static That<TStream?> Should<TStream>(this IExpectThat<TStream?> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	where TStream : Stream
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TStream?>(subject.ExpectationBuilder);
-	}
-
-	/// <summary>
 	///     Start expectations for the current <see cref="string" />? <paramref name="subject" />.
 	/// </summary>
 	public static That<string?> Should(this IExpectThat<string?> subject,

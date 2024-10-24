@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Tests.That.Streams;
 
-public sealed partial class ThatStream
+public sealed partial class ThatStreamShould
 {
 	public class MyStream(
 		byte[]? buffer = null,

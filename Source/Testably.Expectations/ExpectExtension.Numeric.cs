@@ -43,7 +43,7 @@ public static partial class ExpectExtension
 	}
 
 	/// <summary>
-	///     Start expectations for the current <see cref="nint" /> <paramref name="subject" />.
+	///     Start expectations for the current <see langword="nint" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<nint> Should(this IExpectThat<nint> subject)
 	{
@@ -52,7 +52,7 @@ public static partial class ExpectExtension
 	}
 
 	/// <summary>
-	///     Start expectations for the current <see cref="nint" /> <paramref name="subject" />.
+	///     Start expectations for the current <see langword="nint" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<nint?> Should(this IExpectThat<nint?> subject)
 	{
@@ -61,7 +61,7 @@ public static partial class ExpectExtension
 	}
 
 	/// <summary>
-	///     Start expectations for the current <see cref="nuint" /> <paramref name="subject" />.
+	///     Start expectations for the current <see langword="nuint" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<nuint> Should(this IExpectThat<nuint> subject)
 	{
@@ -70,7 +70,7 @@ public static partial class ExpectExtension
 	}
 
 	/// <summary>
-	///     Start expectations for the current <see cref="nuint" /> <paramref name="subject" />.
+	///     Start expectations for the current <see langword="nuint" /> <paramref name="subject" />.
 	/// </summary>
 	public static That<nuint?> Should(this IExpectThat<nuint?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
