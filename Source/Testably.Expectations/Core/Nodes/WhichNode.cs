@@ -20,7 +20,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value, IEvaluationContext context)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
@@ -36,7 +36,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 				out TProperty? matchingValue))
 			{
 				return (await Inner.IsMetBy(
-						new SourceValue<TProperty>(matchingValue, value.Exception)))
+						new SourceValue<TProperty>(matchingValue, value.Exception), context))
 					.UpdateExpectationText(r
 						=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
 			}

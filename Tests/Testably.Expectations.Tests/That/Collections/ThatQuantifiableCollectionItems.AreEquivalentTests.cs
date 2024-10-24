@@ -23,9 +23,9 @@ public sealed partial class ThatQuantifiableCollectionItems
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  has all items equivalent to expected,
+				                  have all items equivalent to expected,
 				                  but only 3 of 4 items were equivalent
-				                  at Expect.That(subject).All().Should().AreEquivalentTo(expected)
+				                  at Expect.That(subject).Should().All().BeEquivalentTo(expected)
 				                  """);
 		}
 

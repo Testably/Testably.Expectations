@@ -31,9 +31,9 @@ public sealed partial class ThatEnumerableShould
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  has no items equal to 5,
+				                  have no items equal to 5,
 				                  but at least one items were equal
-				                  at Expect.That(subject).None().Should().Are(5)
+				                  at Expect.That(subject).Should().None().Be(5)
 				                  """);
 		}
 

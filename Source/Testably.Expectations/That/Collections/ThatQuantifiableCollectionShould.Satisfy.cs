@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -34,10 +35,11 @@ public static partial class ThatQuantifiableCollectionShould
 	private readonly struct SatisfyConstraint<TItem, TCollection>(
 		Func<TItem, bool> predicate,
 		string expression,
-		CollectionQuantifier quantifier) : IConstraint<TCollection>
+		CollectionQuantifier quantifier)
+		: IContextConstraint<TCollection>
 		where TCollection : IEnumerable<TItem>
 	{
-		public ConstraintResult IsMetBy(TCollection actual)
+		public ConstraintResult IsMetBy(TCollection actual, IEvaluationContext context)
 		{
 			List<TItem> list = actual.ToList();
 			int count = 0;

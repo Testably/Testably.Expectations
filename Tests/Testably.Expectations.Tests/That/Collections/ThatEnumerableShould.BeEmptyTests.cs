@@ -19,9 +19,9 @@ public sealed partial class ThatEnumerableShould
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  is empty,
+				                  be empty,
 				                  but found [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, …]
-				                  at Expect.That(subject).Should().IsEmpty()
+				                  at Expect.That(subject).Should().BeEmpty()
 				                  """);
 		}
 
@@ -31,7 +31,7 @@ public sealed partial class ThatEnumerableShould
 			IEnumerable<int> subject = ToEnumerable([1, 1, 2]);
 
 			async Task Act()
-				=> await Expect.That(subject).Should().BeEmpty<int>();
+				=> await Expect.That(subject).Should().BeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""

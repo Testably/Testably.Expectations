@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -25,20 +26,22 @@ public static partial class ThatEnumerableShould
 			source);
 
 	private readonly struct ContainsConstraint<TItem>(TItem expected)
-		: IConstraint<IEnumerable<TItem>>
+		: IContextConstraint<IEnumerable<TItem>>
 	{
-		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual, IEvaluationContext context)
 		{
-			foreach (TItem item in actual)
+			var materializedEnumerable =
+				context.UseMaterializedEnumerable<TItem, IEnumerable<TItem>>(actual);
+			foreach (TItem item in materializedEnumerable)
 			{
 				if (item?.Equals(expected) == true)
 				{
-					return new ConstraintResult.Success<IEnumerable<TItem>>(actual, ToString());
+					return new ConstraintResult.Success<IEnumerable<TItem>>(materializedEnumerable, ToString());
 				}
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"found {Formatter.Format(actual.Take(10).ToArray())}");
+				$"found {Formatter.Format(materializedEnumerable.Take(10).ToArray())}");
 		}
 
 		public override string ToString()

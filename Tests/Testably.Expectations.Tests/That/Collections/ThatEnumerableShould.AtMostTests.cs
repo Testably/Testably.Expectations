@@ -59,9 +59,9 @@ public sealed partial class ThatEnumerableShould
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  has at most 3 items equal to 1,
+				                  have at most 3 items equal to 1,
 				                  but at least 4 items were equal
-				                  at Expect.That(subject).AtMost(3).Should().Are(1)
+				                  at Expect.That(subject).Should().AtMost(3).Be(1)
 				                  """);
 		}
 	}

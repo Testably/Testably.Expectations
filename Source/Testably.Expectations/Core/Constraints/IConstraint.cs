@@ -1,4 +1,5 @@
 ﻿using System;
+using Testably.Expectations.Core.Nodes;
 
 namespace Testably.Expectations.Core.Constraints;
 
@@ -19,6 +20,17 @@ public interface IConstraint<in TValue> : IConstraint
 	///     Checks if the <paramref name="actual" /> value meets the expectation.
 	/// </summary>
 	public ConstraintResult IsMetBy(TValue actual);
+}
+
+/// <summary>
+///     A simple expectation on type <typeparamref name="TValue" />.
+/// </summary>
+public interface IContextConstraint<in TValue> : IConstraint
+{
+	/// <summary>
+	///     Checks if the <paramref name="actual" /> value meets the expectation.
+	/// </summary>
+	public ConstraintResult IsMetBy(TValue actual, IEvaluationContext context);
 }
 
 /// <summary>

@@ -3,6 +3,7 @@ using System.Linq;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -46,23 +47,25 @@ public static partial class ThatEnumerableShould
 		}
 
 		public override string ToString()
-			=> "is empty";
+			=> "be empty";
 	}
 
-	private readonly struct IsNotEmptyConstraint<TItem> : IConstraint<IEnumerable<TItem>>
+	private readonly struct IsNotEmptyConstraint<TItem> : IContextConstraint<IEnumerable<TItem>>
 	{
-		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
+		public ConstraintResult IsMetBy(IEnumerable<TItem> actual, IEvaluationContext context)
 		{
-			using IEnumerator<TItem> enumerator = actual.GetEnumerator();
+			var materializedEnumerable =
+				context.UseMaterializedEnumerable<TItem, IEnumerable<TItem>>(actual);
+			using IEnumerator<TItem> enumerator = materializedEnumerable.GetEnumerator();
 			if (enumerator.MoveNext())
 			{
-				return new ConstraintResult.Success<IEnumerable<TItem>>(actual, ToString());
+				return new ConstraintResult.Success<IEnumerable<TItem>>(materializedEnumerable, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(), "it was");
 		}
 
 		public override string ToString()
-			=> "is not empty";
+			=> "not be empty";
 	}
 }

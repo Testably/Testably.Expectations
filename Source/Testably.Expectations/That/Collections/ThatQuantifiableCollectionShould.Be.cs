@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -30,10 +31,10 @@ public static partial class ThatQuantifiableCollectionShould
 	private readonly struct AreEqualConstraint<TItem, TCollection>(
 		TItem expected,
 		CollectionQuantifier quantifier)
-		: IConstraint<TCollection>
+		: IContextConstraint<TCollection>
 		where TCollection : IEnumerable<TItem>
 	{
-		public ConstraintResult IsMetBy(TCollection actual)
+		public ConstraintResult IsMetBy(TCollection actual, IEvaluationContext context)
 		{
 			if (actual is ICollection<TItem> collection)
 			{
@@ -44,7 +45,10 @@ public static partial class ThatQuantifiableCollectionShould
 					return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
 				}
 			}
-			else if (!quantifier.CheckCondition(actual, expected, (a, e) => a?.Equals(e) == true,
+			else if (!quantifier.CheckCondition(
+				context.UseMaterializedEnumerable<TItem, TCollection>(actual),
+				expected,
+				(a, e) => a?.Equals(e) == true,
 				out string? error))
 			{
 				return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
