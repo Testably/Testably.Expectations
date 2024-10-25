@@ -18,13 +18,12 @@ public partial class ThatExceptionShould<TException>
 	/// </summary>
 	public AndOrExpectationResult<TException, ThatExceptionShould<TException?>> HaveInner<TInnerException>(
 		Action<ThatExceptionShould<TInnerException?>> expectations,
-		[CallerArgumentExpression("expectations")]
-		string doNotPopulateThisValue = "")
+		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder.WhichCast<Exception, Exception?, TInnerException?, ThatExceptionShould<TInnerException?>>(
 				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
 					$"have an inner {typeof(TInnerException).Name} which should "),
-				new CastException<Exception, TInnerException>(),
+				new ThatExceptionShould.CastException<Exception, TInnerException>(),
 				expectations,
 				e => new ThatExceptionShould<TInnerException?>(e),
 				b => b.AppendGenericMethod<TInnerException>(nameof(HaveInner), doNotPopulateThisValue),
@@ -37,7 +36,7 @@ public partial class ThatExceptionShould<TException>
 	public AndOrExpectationResult<TException, ThatExceptionShould<TException?>> HaveInner<TInnerException>()
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder.Add(
-				new HasInnerExceptionConstraint<TInnerException>(),
+				new ThatExceptionShould.HasInnerExceptionConstraint<TInnerException>(),
 				b => b.AppendGenericMethod<TInnerException>(nameof(HaveInner))),
 			this);
 }

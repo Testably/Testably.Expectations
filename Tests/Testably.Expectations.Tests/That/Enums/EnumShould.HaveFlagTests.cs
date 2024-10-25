@@ -13,7 +13,7 @@ public sealed partial class EnumShould
 				=> await Expect.That(subject).Should().HaveFlag(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    have flag {expected},
 				                    but found {subject}

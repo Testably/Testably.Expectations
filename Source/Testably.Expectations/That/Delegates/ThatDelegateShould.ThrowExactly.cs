@@ -15,7 +15,7 @@ public static partial class ThatDelegateShould
 	/// <summary>
 	///     Verifies that the delegate throws exactly an exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public static DelegateExpectationResult<TException> ThrowExactly<TException>(this ThatDelegate source)
+	public static ThatDelegateThrows<TException> ThrowExactly<TException>(this ThatDelegate source)
 		where TException : Exception
 	{
 		ThrowsOption throwOptions = new();

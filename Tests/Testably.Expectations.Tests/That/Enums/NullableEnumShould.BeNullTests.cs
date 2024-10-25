@@ -13,7 +13,7 @@ public sealed partial class NullableEnumShould
 				=> await Expect.That(subject).Should().BeNull();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    be null,
 				                    but found {subject}
@@ -55,7 +55,7 @@ public sealed partial class NullableEnumShould
 				=> await Expect.That(subject).Should().NotBeNull();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   not be null,
 				                   but found <null>

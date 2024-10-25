@@ -18,7 +18,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeWriteOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  be write-only,
 				                  but it was not
@@ -35,7 +35,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeWriteOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  be write-only,
 				                  but found <null>
@@ -80,7 +80,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeWriteOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not be write-only,
 				                  but found <null>
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeWriteOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not be write-only,
 				                  but it was

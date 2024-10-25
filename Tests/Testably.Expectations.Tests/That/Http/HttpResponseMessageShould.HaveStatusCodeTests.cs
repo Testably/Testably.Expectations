@@ -21,7 +21,7 @@ public sealed partial class HttpResponseMessageShould
 				=> await Expect.That(subject).Should().HaveStatusCode(HttpStatusCode.OK);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have StatusCode 200 OK,
 				                  but found 400 BadRequest:
@@ -45,7 +45,7 @@ public sealed partial class HttpResponseMessageShould
 				=> await Expect.That(subject).Should().HaveStatusCode(HttpStatusCode.OK);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have StatusCode 200 OK,
 				                  but found 400 BadRequest:
@@ -116,7 +116,7 @@ public sealed partial class HttpResponseMessageShould
 				=> await Expect.That(subject).Should().NotHaveStatusCode(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage(
+				.WithMessage(
 					"*StatusCode different to*Expect.That(subject).Should().NotHaveStatusCode(unexpected)")
 				.AsWildcard();
 		}

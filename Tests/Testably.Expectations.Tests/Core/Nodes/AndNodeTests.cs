@@ -9,7 +9,7 @@ public sealed class AndNodeTests
 			=> await Expect.That(true).Should().BeFalse().And.BeTrue();
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HaveMessage("""
+			.WithMessage("""
 			                  Expected true to
 			                  be False and be True,
 			                  but found True
@@ -24,7 +24,7 @@ public sealed class AndNodeTests
 			=> await Expect.That(true).Should().BeTrue().And.BeFalse();
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HaveMessage("""
+			.WithMessage("""
 			                  Expected true to
 			                  be True and be False,
 			                  but found True
@@ -39,7 +39,7 @@ public sealed class AndNodeTests
 			=> await Expect.That(true).Should().BeFalse().And.Imply(false);
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HaveMessage("""
+			.WithMessage("""
 			                  Expected true to
 			                  be False and imply False,
 			                  but found True and it did not

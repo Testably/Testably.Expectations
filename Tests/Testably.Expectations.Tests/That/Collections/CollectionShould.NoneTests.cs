@@ -13,7 +13,7 @@ public sealed partial class CollectionShould
 				=> await Expect.That(subject).Should().None().Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have no items equal to 1,
 				                  but 4 items were equal

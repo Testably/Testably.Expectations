@@ -15,7 +15,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeReadable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  be readable,
 				                  but it was not
@@ -32,7 +32,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeReadable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  be readable,
 				                  but found <null>
@@ -74,7 +74,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeReadable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not be readable,
 				                  but found <null>
@@ -91,7 +91,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeReadable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not be readable,
 				                  but it was

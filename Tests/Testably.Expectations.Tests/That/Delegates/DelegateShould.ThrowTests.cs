@@ -5,24 +5,6 @@ public sealed partial class DelegateShould
 	public sealed class ThrowTests
 	{
 		[Fact]
-		public async Task ShouldSupportNestedChecks()
-		{
-			Exception exception = new CustomException("outer",
-				new SubCustomException("inner1",
-					new ArgumentException("inner2", "param2")));
-			Action action = () => throw exception;
-
-			CustomException result = await Expect.That(action).Should().Throw<CustomException>()
-				.Which
-				.HaveInner<SubCustomException>(e1 => e1
-					.HaveMessage("inner1").And
-					.HaveInner<ArgumentException>(e2 => e2
-						.HaveParamName("param2").And.HaveMessage("inner2*").AsWildcard()));
-
-			await Expect.That(result).Should().BeSameAs(exception);
-		}
-
-		[Fact]
 		public async Task WhenAwaited_ShouldReturnException()
 		{
 			Exception exception = CreateCustomException();
@@ -60,7 +42,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().Throw<CustomException>();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage(expectedMessage);
+				.WithMessage(expectedMessage);
 		}
 
 		[Fact]
@@ -92,7 +74,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().Throw<CustomException>();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage(expectedMessage);
+				.WithMessage(expectedMessage);
 		}
 
 		[Fact]
@@ -112,7 +94,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().Throw<SubCustomException>();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage(expectedMessage);
+				.WithMessage(expectedMessage);
 		}
 	}
 }

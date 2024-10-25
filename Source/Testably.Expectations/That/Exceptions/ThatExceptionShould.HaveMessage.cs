@@ -22,32 +22,9 @@ public partial class ThatExceptionShould<TException>
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(ExpectationBuilder.Add(
-				new HasMessageConstraint<TException>(expected),
+				new ThatExceptionShould.HasMessageConstraint<TException>(expected),
 				b => b.AppendMethod(nameof(HaveMessage), doNotPopulateThisValue)),
 			this,
 			expected);
 
-	private readonly struct HasMessageConstraint<T>(StringMatcher expected) : IConstraint<T>,
-		IDelegateConstraint<DelegateSource.NoValue>
-		where T : Exception?
-	{
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
-		{
-			return IsMetBy(value.Exception as T);
-		}
-
-		public ConstraintResult IsMetBy(T? actual)
-		{
-			if (expected.Matches(actual?.Message))
-			{
-				return new ConstraintResult.Success<T?>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				expected.GetExtendedFailure(actual?.Message));
-		}
-
-		public override string ToString()
-			=> $"have Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
-	}
 }

@@ -11,7 +11,7 @@ public sealed class PrecedenceTests
 				=> await Expect.That(true).Should().BeFalse().And.BeTrue().Or.BeFalse();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected true to
 				                  be False and be True or be False,
 				                  but found True
@@ -35,7 +35,7 @@ public sealed class PrecedenceTests
 				=> await Expect.That(true).Should().BeFalse().Or.BeTrue().And.BeFalse();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected true to
 				                  be False or be True and be False,
 				                  but found True
@@ -50,7 +50,7 @@ public sealed class PrecedenceTests
 				=> await Expect.That(true).Should().BeTrue().And.BeFalse().Or.BeFalse();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected true to
 				                  be True and be False or be False,
 				                  but found True

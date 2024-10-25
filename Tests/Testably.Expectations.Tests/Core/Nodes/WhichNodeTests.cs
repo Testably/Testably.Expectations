@@ -19,7 +19,7 @@ public sealed class WhichNodeTests
 				.Which(p => p.Value).Should(e => e.Be("bar"));
 
 		await Expect.That(Act).Should().Throw<XunitException>()
-			.Which.HaveMessage("""
+			.WithMessage("""
 			                  Expected subject to
 			                  be type Dummy which Value should be equal to "bar",
 			                  but found "foo" which differs at index 0:

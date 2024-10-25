@@ -13,7 +13,7 @@ public class BecauseTests
 		async Task Act()
 			=> await Expect.That(subject).Should().NotThrow().Because(because);
 
-		await Expect.That(Act).Should().ThrowWithMessage($"*{because}*");
+		await Expect.That(Act).Should().ThrowException().WithMessage($"*{because}*").AsWildcard();
 	}
 
 	[Fact]
@@ -27,7 +27,7 @@ public class BecauseTests
 			=> await Expect.That(subject).Should().BeTrue().Because(because1)
 				.And.BeFalse().Because(because2);
 
-		await Expect.That(Act).Should().ThrowWithMessage($"*{because2}*");
+		await Expect.That(Act).Should().ThrowException().WithMessage($"*{because2}*").AsWildcard();
 	}
 
 	[Fact]
@@ -41,7 +41,7 @@ public class BecauseTests
 			=> await Expect.That(subject).Should().BeTrue().Because(because1)
 				.And.BeFalse().Because(because2);
 
-		await Expect.That(Act).Should().ThrowWithMessage($"*{because1}*{because2}*");
+		await Expect.That(Act).Should().ThrowException().WithMessage($"*{because1}*{because2}*").AsWildcard();
 	}
 
 	[Fact]
@@ -61,7 +61,7 @@ public class BecauseTests
 				.And.BeFalse();
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HaveMessage(expectedMessage);
+			.WithMessage(expectedMessage);
 	}
 
 	[Fact]
@@ -75,7 +75,7 @@ public class BecauseTests
 			=> await Expect.That(subject).Should().BeTrue().Because(because1)
 				.And.BeFalse().Because(because2);
 
-		await Expect.That(Act).Should().ThrowWithMessage($"*{because1}*");
+		await Expect.That(Act).Should().ThrowException().WithMessage($"*{because1}*").AsWildcard();
 	}
 
 	[Fact]
@@ -87,7 +87,7 @@ public class BecauseTests
 		async Task Act()
 			=> await Expect.That(subject).Should().BeFalse().Because(because);
 
-		Exception exception = await Expect.That(Act).Should().ThrowWithMessage("*because*");
+		Exception exception = await Expect.That(Act).Should().ThrowException().WithMessage("*because*").AsWildcard();
 		await Expect.That(exception.Message).Should().NotContain("because because");
 	}
 
@@ -100,7 +100,7 @@ public class BecauseTests
 		async Task Act()
 			=> await Expect.That(subject).Should().BeFalse().Because(because);
 
-		await Expect.That(Act).Should().ThrowWithMessage($"*{because}*");
+		await Expect.That(Act).Should().ThrowException().WithMessage($"*{because}*").AsWildcard();
 	}
 
 	[Theory]
@@ -114,7 +114,7 @@ public class BecauseTests
 		async Task Act()
 			=> await Expect.That(subject).Should().BeFalse().Because(because);
 
-		await Expect.That(Act).Should().ThrowWithMessage($"*{expectedWithPrefix}*");
+		await Expect.That(Act).Should().ThrowException().WithMessage($"*{expectedWithPrefix}*").AsWildcard();
 	}
 
 	[Fact]
@@ -133,6 +133,6 @@ public class BecauseTests
 			=> await Expect.That(subject).Should().BeFalse();
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HaveMessage(expectedMessage);
+			.WithMessage(expectedMessage);
 	}
 }

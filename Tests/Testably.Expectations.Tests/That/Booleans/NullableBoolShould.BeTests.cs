@@ -17,7 +17,7 @@ public sealed partial class NullableBoolShould
 				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   be {expected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
@@ -69,7 +69,7 @@ public sealed partial class NullableBoolShould
 				=> await Expect.That(subject).Should().NotBe(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   not be {unexpected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}

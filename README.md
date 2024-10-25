@@ -14,6 +14,6 @@ This library is used to assert unit tests in natural language by specifying expe
   public void SomeMethod_ShouldThrowArgumentNullException()
   {
     Expect.That(SomeMethod).Should().Throw<ArgumentNullException>()
-      .Which.HaveMessage("Value cannot be null");
+      .WithMessage("Value cannot be null");
   }
   ```

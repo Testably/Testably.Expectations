@@ -29,7 +29,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().None().Be(5);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have no items equal to 5,
 				                  but at least one items were equal
@@ -46,7 +46,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().None().Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have no items equal to 1,
 				                  but at least one items were equal

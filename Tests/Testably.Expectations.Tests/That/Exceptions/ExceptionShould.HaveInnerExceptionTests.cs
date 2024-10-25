@@ -15,7 +15,7 @@ public sealed partial class ExceptionShould
 					.HaveInner<CustomException>(e => e.HaveMessage("inner"));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   have an inner CustomException which should have Message equal to "inner",
 				                   but found an Exception:
@@ -35,7 +35,7 @@ public sealed partial class ExceptionShould
 					.HaveInner<CustomException>(e => e.HaveMessage("some other message"));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   have an inner CustomException which should have Message equal to "some other message",
 				                   but found "inner" which differs at index 0:
@@ -58,7 +58,7 @@ public sealed partial class ExceptionShould
 					.HaveInnerException(e => e.HaveMessage("some other message"));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   have an inner exception which should have Message equal to "some other message",
 				                   but found "inner" which differs at index 0:
@@ -80,7 +80,7 @@ public sealed partial class ExceptionShould
 				=> await Expect.That(subject).Should().HaveInner<CustomException>();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   have an inner CustomException,
 				                   but found an Exception:
@@ -98,7 +98,7 @@ public sealed partial class ExceptionShould
 				=> await Expect.That(subject).Should().HaveInnerException();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   have an inner exception,
 				                   but it did not
