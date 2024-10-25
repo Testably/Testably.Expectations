@@ -19,7 +19,7 @@ public class
 	/// </summary>
 	public ThatExceptionShould<TException> Which
 		=> new ThatExceptionShould<TException>(_expectationBuilder.Which<TException, TException, ThatExceptionShould<TException>>(
-			PropertyAccessor<TException?, TException?>.FromFunc(p => p.Value, ""),
+			PropertyAccessor<TException, TException?>.FromFunc(p => p.Value, ""),
 			null,
 			e => new ThatExceptionShould<TException>(e),
 			b => b.Append(".").Append(nameof(Which)),

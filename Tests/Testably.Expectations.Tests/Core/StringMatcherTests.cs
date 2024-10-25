@@ -21,7 +21,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage($"*{expectedMessagePart}*");
+			await Expect.That(Act).Should().ThrowWithMessage($"*{expectedMessagePart}*");
 		}
 
 		[Theory]
@@ -40,7 +40,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage($"*{expectedMessagePart}*");
+			await Expect.That(Act).Should().ThrowWithMessage($"*{expectedMessagePart}*");
 		}
 
 		[Fact]
@@ -99,7 +99,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*AtTheEndOfThe…\"*");
+			await Expect.That(Act).Should().ThrowWithMessage("*AtTheEndOfThe…\"*");
 		}
 
 		[Theory]
@@ -115,7 +115,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*\"…CheckADifferenceInThe*");
+			await Expect.That(Act).Should().ThrowWithMessage("*\"…CheckADifferenceInThe*");
 		}
 
 		[Fact]
@@ -127,7 +127,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*\"this is a long text that…\"*")
+			await Expect.That(Act).Should().ThrowWithMessage("*\"this is a long text that…\"*")
 				.AndWithMessage("*\"this was too short\"*");
 		}
 
@@ -187,7 +187,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage(@"*A\r\nB*A\r\nC*");
+			await Expect.That(Act).Should().ThrowWithMessage(@"*A\r\nB*A\r\nC*");
 		}
 
 		[Fact]
@@ -200,7 +200,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*misses some whitespace at the beginning*");
+			await Expect.That(Act).Should().ThrowWithMessage("*misses some whitespace at the beginning*");
 		}
 
 		[Fact]
@@ -213,7 +213,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*differs in whitespace*");
+			await Expect.That(Act).Should().ThrowWithMessage("*differs in whitespace*");
 		}
 
 		[Fact]
@@ -226,7 +226,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*misses some whitespace at the end*");
+			await Expect.That(Act).Should().ThrowWithMessage("*misses some whitespace at the end*");
 		}
 
 		[Fact]
@@ -239,7 +239,7 @@ public class StringMatcherTests
 				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should()
-				.ThrowsWithMessage("*length of 2 which is longer than the expected length of 0*");
+				.ThrowWithMessage("*length of 2 which is longer than the expected length of 0*");
 		}
 
 		[Fact]
@@ -253,7 +253,7 @@ public class StringMatcherTests
 				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should()
-				.ThrowsWithMessage("*length of 2 which is shorter than the expected length of 3*");
+				.ThrowWithMessage("*length of 2 which is shorter than the expected length of 3*");
 		}
 
 		[Fact]
@@ -265,7 +265,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*equal to <null>*");
+			await Expect.That(Act).Should().ThrowWithMessage("*equal to <null>*");
 		}
 
 		[Fact]
@@ -279,7 +279,7 @@ public class StringMatcherTests
 				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should()
-				.ThrowsWithMessage("*length of 3 which is longer than the expected length of 2*");
+				.ThrowWithMessage("*length of 3 which is longer than the expected length of 2*");
 		}
 
 		[Fact]
@@ -291,7 +291,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*differs at index 1*");
+			await Expect.That(Act).Should().ThrowWithMessage("*differs at index 1*");
 		}
 
 		[Fact]
@@ -303,7 +303,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*unexpected whitespace at the beginning*");
+			await Expect.That(Act).Should().ThrowWithMessage("*unexpected whitespace at the beginning*");
 		}
 
 		[Fact]
@@ -316,7 +316,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*differs in whitespace*");
+			await Expect.That(Act).Should().ThrowWithMessage("*differs in whitespace*");
 		}
 
 		[Fact]
@@ -328,7 +328,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*unexpected whitespace at the end*");
+			await Expect.That(Act).Should().ThrowWithMessage("*unexpected whitespace at the end*");
 		}
 
 		[Fact]
@@ -341,7 +341,7 @@ public class StringMatcherTests
 				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should()
-				.ThrowsWithMessage("*length of 0 which is shorter than the expected length of 2*");
+				.ThrowWithMessage("*length of 0 which is shorter than the expected length of 2*");
 		}
 
 		[Fact]
@@ -353,7 +353,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowsWithMessage("*but found <null>*");
+			await Expect.That(Act).Should().ThrowWithMessage("*but found <null>*");
 		}
 	}
 }

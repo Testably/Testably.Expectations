@@ -10,36 +10,34 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="Exception" /> values.
 /// </summary>
-public static partial class ThatExceptionShould
+public partial class ThatExceptionShould<TException>
 {
 	/// <summary>
-	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" /> which
+	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TInnerException" /> which
 	///     satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public static AndOrExpectationResult<Exception, ThatExceptionShould<Exception?>> HaveInner<TException>(
-		this ThatExceptionShould<Exception?> source,
-		Action<ThatExceptionShould<TException?>> expectations,
+	public AndOrExpectationResult<TException, ThatExceptionShould<TException?>> HaveInner<TInnerException>(
+		Action<ThatExceptionShould<TInnerException?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
-		where TException : Exception?
-		=> new(source.ExpectationBuilder.WhichCast<Exception, Exception?, TException?, ThatExceptionShould<TException?>>(
+		where TInnerException : Exception?
+		=> new(ExpectationBuilder.WhichCast<Exception, Exception?, TInnerException?, ThatExceptionShould<TInnerException?>>(
 				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
-					$"have an inner {typeof(TException).Name} which should "),
-				new CastException<Exception, TException>(),
+					$"have an inner {typeof(TInnerException).Name} which should "),
+				new CastException<Exception, TInnerException>(),
 				expectations,
-				e => new ThatExceptionShould<TException?>(e),
-				b => b.AppendGenericMethod<TException>(nameof(HaveInner), doNotPopulateThisValue),
+				e => new ThatExceptionShould<TInnerException?>(e),
+				b => b.AppendGenericMethod<TInnerException>(nameof(HaveInner), doNotPopulateThisValue),
 				""),
-			source);
+			this);
 
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public static AndOrExpectationResult<Exception, ThatExceptionShould<Exception?>> HaveInner<TException>(
-		this ThatExceptionShould<Exception?> source)
-		where TException : Exception?
-		=> new(source.ExpectationBuilder.Add(
-				new HasInnerExceptionConstraint<TException>(),
-				b => b.AppendGenericMethod<TException>(nameof(HaveInner))),
-			source);
+	public AndOrExpectationResult<TException, ThatExceptionShould<TException?>> HaveInner<TInnerException>()
+		where TInnerException : Exception?
+		=> new(ExpectationBuilder.Add(
+				new HasInnerExceptionConstraint<TInnerException>(),
+				b => b.AppendGenericMethod<TInnerException>(nameof(HaveInner))),
+			this);
 }

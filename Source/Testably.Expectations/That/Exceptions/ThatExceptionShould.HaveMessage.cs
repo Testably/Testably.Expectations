@@ -18,7 +18,7 @@ public partial class ThatExceptionShould<TException>
 	/// <summary>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public StringMatcherExpectationResult<TException, ThatExceptionShould<TException>> HaveMessage(
+	public StringMatcherExpectationResult<TException?, ThatExceptionShould<TException?>> HaveMessage(
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(ExpectationBuilder.Add(

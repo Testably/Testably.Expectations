@@ -19,7 +19,7 @@ public static class ThrowHelper
 	///     Verifies that the delegate throws an exception which has a message matching the <paramref name="expected" />
 	///     pattern.
 	/// </summary>
-	public static StringMatcherExpectationResult<Exception, ThatExceptionShould<Exception>> ThrowsWithMessage(
+	public static StringMatcherExpectationResult<Exception, ThatExceptionShould<Exception?>> ThrowWithMessage(
 		this ThatDelegate source,
 		string expected)
 	{
