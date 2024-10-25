@@ -63,13 +63,15 @@ public interface IExpectationBuilder
 	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
-	IExpectationBuilder Which<TSource, TProperty>(
+	IExpectationBuilder Which<TSource, TProperty, TThatProperty>(
 		PropertyAccessor propertyAccessor,
-		Action<That<TProperty>>? expectation,
+		Action<TThatProperty>? expectation,
+		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
 		string andTextSeparator = "",
 		string whichTextSeparator = " which ",
-		string whichPropertyTextSeparator = "");
+		string whichPropertyTextSeparator = "")
+		where TThatProperty : That<TProperty>;
 
 	/// <summary>
 	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" /> and casts from
@@ -77,12 +79,14 @@ public interface IExpectationBuilder
 	///     <typeparamref name="TProperty" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
-	IExpectationBuilder WhichCast<TSource, TBase, TProperty>(
+	IExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
 		PropertyAccessor propertyAccessor,
 		IConstraint<TBase, TProperty> cast,
-		Action<That<TProperty>> expectation,
+		Action<TThatProperty> expectation,
+		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ")
+		where TThatProperty : That<TProperty>
 		where TProperty : TBase;
 
 	/// <summary>

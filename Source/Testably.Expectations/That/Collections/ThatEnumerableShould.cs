@@ -17,6 +17,6 @@ public static partial class ThatEnumerableShould
 		this IExpectThat<IEnumerable<TItem>> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<IEnumerable<TItem>>(subject.ExpectationBuilder);
+		return new ThatImpl<IEnumerable<TItem>>(subject.ExpectationBuilder);
 	}
 }

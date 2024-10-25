@@ -66,8 +66,8 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).AtLeast(-1);
 
 			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
-				.HaveMessage("*'minimum'*").AsWildcard().And
-				.HaveParamName("minimum");
+				.HaveParamName("minimum").And
+				.HaveMessage("*'minimum'*").AsWildcard();
 		}
 
 		[Fact]

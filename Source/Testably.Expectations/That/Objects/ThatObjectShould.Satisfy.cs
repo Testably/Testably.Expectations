@@ -20,9 +20,10 @@ public static partial class ThatObjectShould
 		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "")
 		=> new((expectations, doNotPopulateThisValue2) =>
 			new AndOrExpectationResult<T, That<object?>>(
-				source.ExpectationBuilder.Which<T, TProperty?>(
+				source.ExpectationBuilder.Which<T, TProperty?, That<TProperty?>>(
 					PropertyAccessor<T, TProperty?>.FromExpression(selector),
 					expectations,
+					e => new ThatImpl<TProperty?>(e),
 					b => b.AppendGenericMethod<T, TProperty>(nameof(Satisfy),
 							doNotPopulateThisValue1)
 						.AppendMethod(nameof(SatisfyResult<TProperty, T>.To),

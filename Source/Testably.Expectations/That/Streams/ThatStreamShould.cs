@@ -21,7 +21,7 @@ public static partial class ThatStreamShould
 		where TStream : Stream
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TStream?>(subject.ExpectationBuilder);
+		return new ThatImpl<TStream?>(subject.ExpectationBuilder);
 	}
 
 	private readonly struct Constraint(

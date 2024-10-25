@@ -21,7 +21,7 @@ public static partial class ThatDateTimeShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<DateTime>(subject.ExpectationBuilder);
+		return new ThatImpl<DateTime>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -31,7 +31,7 @@ public static partial class ThatDateTimeShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<DateTime?>(subject.ExpectationBuilder);
+		return new ThatImpl<DateTime?>(subject.ExpectationBuilder);
 	}
 
 	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)

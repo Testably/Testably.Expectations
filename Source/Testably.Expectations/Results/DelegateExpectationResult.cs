@@ -17,10 +17,11 @@ public class
 	/// <summary>
 	///     Additional expectations on the thrown <typeparamref name="TException" />.
 	/// </summary>
-	public That<TException> Which
-		=> new(_expectationBuilder.Which<TException, TException>(
+	public ThatExceptionShould<TException> Which
+		=> new ThatExceptionShould<TException>(_expectationBuilder.Which<TException, TException, ThatExceptionShould<TException>>(
 			PropertyAccessor<TException?, TException?>.FromFunc(p => p.Value, ""),
 			null,
+			e => new ThatExceptionShould<TException>(e),
 			b => b.Append(".").Append(nameof(Which)),
 			whichTextSeparator: ""));
 

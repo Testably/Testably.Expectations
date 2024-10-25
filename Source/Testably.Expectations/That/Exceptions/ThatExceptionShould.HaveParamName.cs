@@ -18,14 +18,14 @@ public static partial class ThatExceptionShould
 	/// <summary>
 	///     Verifies that the actual <see cref="ArgumentException" /> has an <paramref name="expected" /> param name.
 	/// </summary>
-	public static AndOrExpectationResult<TException, That<TException>> HaveParamName<TException>(
-		this That<TException> source,
+	public static AndOrExpectationResult<TException, ThatExceptionShould<TException>> HaveParamName<TException>(
+		this ThatExceptionShould<TException> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TException : ArgumentException?
 		=> new(source.ExpectationBuilder.Add(
 				new HasParamNameConstraint<TException>(expected),
-				b => b.AppendMethod(nameof(HaveMessage), doNotPopulateThisValue)),
+				b => b.AppendMethod(nameof(HaveParamName), doNotPopulateThisValue)),
 			source);
 
 	private readonly struct HasParamNameConstraint<T>(string expected) : IConstraint<T>,

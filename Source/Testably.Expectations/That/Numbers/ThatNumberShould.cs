@@ -16,7 +16,7 @@ public static partial class ThatNumberShould
 	public static That<int> Should(this IExpectThat<int> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<int>(subject.ExpectationBuilder);
+		return new ThatImpl<int>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -25,7 +25,7 @@ public static partial class ThatNumberShould
 	public static That<int?> Should(this IExpectThat<int?> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<int?>(subject.ExpectationBuilder);
+		return new ThatImpl<int?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -34,7 +34,7 @@ public static partial class ThatNumberShould
 	public static That<uint> Should(this IExpectThat<uint> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<uint>(subject.ExpectationBuilder);
+		return new ThatImpl<uint>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -43,7 +43,7 @@ public static partial class ThatNumberShould
 	public static That<uint?> Should(this IExpectThat<uint?> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<uint?>(subject.ExpectationBuilder);
+		return new ThatImpl<uint?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -52,7 +52,7 @@ public static partial class ThatNumberShould
 	public static That<nint> Should(this IExpectThat<nint> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<nint>(subject.ExpectationBuilder);
+		return new ThatImpl<nint>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -61,7 +61,7 @@ public static partial class ThatNumberShould
 	public static That<nint?> Should(this IExpectThat<nint?> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<nint?>(subject.ExpectationBuilder);
+		return new ThatImpl<nint?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -70,7 +70,7 @@ public static partial class ThatNumberShould
 	public static That<nuint> Should(this IExpectThat<nuint> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<nuint>(subject.ExpectationBuilder);
+		return new ThatImpl<nuint>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -80,7 +80,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<nuint?>(subject.ExpectationBuilder);
+		return new ThatImpl<nuint?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -90,7 +90,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<byte>(subject.ExpectationBuilder);
+		return new ThatImpl<byte>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -100,7 +100,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<byte?>(subject.ExpectationBuilder);
+		return new ThatImpl<byte?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -110,7 +110,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<sbyte>(subject.ExpectationBuilder);
+		return new ThatImpl<sbyte>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -120,7 +120,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<sbyte?>(subject.ExpectationBuilder);
+		return new ThatImpl<sbyte?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -130,7 +130,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<short>(subject.ExpectationBuilder);
+		return new ThatImpl<short>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -140,7 +140,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<short?>(subject.ExpectationBuilder);
+		return new ThatImpl<short?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -150,7 +150,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<ushort>(subject.ExpectationBuilder);
+		return new ThatImpl<ushort>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -160,7 +160,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<ushort?>(subject.ExpectationBuilder);
+		return new ThatImpl<ushort?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -170,7 +170,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<long>(subject.ExpectationBuilder);
+		return new ThatImpl<long>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -180,7 +180,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<long?>(subject.ExpectationBuilder);
+		return new ThatImpl<long?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -190,7 +190,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<ulong>(subject.ExpectationBuilder);
+		return new ThatImpl<ulong>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -200,7 +200,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<ulong?>(subject.ExpectationBuilder);
+		return new ThatImpl<ulong?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -210,7 +210,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<float>(subject.ExpectationBuilder);
+		return new ThatImpl<float>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -220,7 +220,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<float?>(subject.ExpectationBuilder);
+		return new ThatImpl<float?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -230,7 +230,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<double>(subject.ExpectationBuilder);
+		return new ThatImpl<double>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -240,7 +240,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<double?>(subject.ExpectationBuilder);
+		return new ThatImpl<double?>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -250,7 +250,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<decimal>(subject.ExpectationBuilder);
+		return new ThatImpl<decimal>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -260,6 +260,6 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<decimal?>(subject.ExpectationBuilder);
+		return new ThatImpl<decimal?>(subject.ExpectationBuilder);
 	}
 }

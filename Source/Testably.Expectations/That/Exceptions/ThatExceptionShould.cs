@@ -17,11 +17,12 @@ public static partial class ThatExceptionShould
 	/// <summary>
 	///     Start expectations for the current <see cref="Exception" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<Exception?> Should(this IExpectThat<Exception?> subject,
+	public static ThatExceptionShould<TException> Should<TException>(this IExpectThat<TException> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		where TException : Exception?
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<Exception?>(subject.ExpectationBuilder);
+		return new ThatExceptionShould<TException>(subject.ExpectationBuilder);
 	}
 
 	private readonly struct HasInnerExceptionConstraint<TInnerException>
@@ -80,4 +81,13 @@ public static partial class ThatExceptionShould
 
 		#endregion
 	}
+}
+
+
+public partial class ThatExceptionShould<TException>(IExpectationBuilder expectationBuilder)
+	: That<TException>
+	where TException : Exception?
+{
+	/// <inheritdoc />
+	public IExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
 }

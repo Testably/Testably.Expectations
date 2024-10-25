@@ -5,13 +5,17 @@ using Testably.Expectations.Core.EvaluationContext;
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class DeferredNode<TProperty> : Node
+internal class DeferredNode<TProperty, TThatProperty> : Node
+where TThatProperty : That<TProperty>
 {
-	private readonly Action<That<TProperty>> _expectation;
+	private readonly Action<TThatProperty> _expectation;
+	private readonly Func<IExpectationBuilder, TThatProperty> _thatPropertyFactory;
 
-	public DeferredNode(Action<That<TProperty>> expectation)
+	public DeferredNode(Action<TThatProperty> expectation,
+	Func<IExpectationBuilder, TThatProperty> thatPropertyFactory)
 	{
 		_expectation = expectation;
+		_thatPropertyFactory = thatPropertyFactory;
 	}
 
 	/// <inheritdoc />
@@ -27,7 +31,7 @@ internal class DeferredNode<TProperty> : Node
 		}
 
 		ExpectationBuilder<TProperty?> expectationBuilder = new(matchingActualValue.Value, "");
-		_expectation.Invoke(new That<TProperty>(expectationBuilder));
+		_expectation.Invoke(_thatPropertyFactory(expectationBuilder));
 		return await expectationBuilder.IsMet();
 	}
 

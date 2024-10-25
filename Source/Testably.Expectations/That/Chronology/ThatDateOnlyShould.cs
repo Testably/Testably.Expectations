@@ -21,7 +21,7 @@ public static partial class ThatDateOnlyShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<DateOnly>(subject.ExpectationBuilder);
+		return new ThatImpl<DateOnly>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
@@ -31,7 +31,7 @@ public static partial class ThatDateOnlyShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<DateOnly?>(subject.ExpectationBuilder);
+		return new ThatImpl<DateOnly?>(subject.ExpectationBuilder);
 	}
 
 	private readonly struct ConditionConstraint(

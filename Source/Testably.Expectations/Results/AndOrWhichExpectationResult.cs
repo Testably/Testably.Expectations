@@ -47,9 +47,10 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 			(expectations, doNotPopulateThisValue2) =>
 			{
 				return new AndOrWhichExpectationResult<TResult, TValue, TSelf>(
-					_expectationBuilder.Which<TResult, TProperty?>(
+					_expectationBuilder.Which<TResult, TProperty?, That<TProperty?>>(
 						PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
 						expectations,
+						e => new ThatImpl<TProperty?>(e),
 						b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1)
 							.AppendMethod(nameof(WhichResult<TProperty, TResult>.Should),
 								doNotPopulateThisValue2),

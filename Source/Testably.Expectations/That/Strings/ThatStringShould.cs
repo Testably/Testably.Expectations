@@ -17,6 +17,6 @@ public static partial class ThatStringShould
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<string?>(subject.ExpectationBuilder);
+		return new ThatImpl<string?>(subject.ExpectationBuilder);
 	}
 }

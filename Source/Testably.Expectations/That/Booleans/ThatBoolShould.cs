@@ -17,7 +17,7 @@ public static partial class ThatBoolShould
 	public static That<bool> Should(this IExpectThat<bool> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<bool>(subject.ExpectationBuilder);
+		return new ThatImpl<bool>(subject.ExpectationBuilder);
 	}
 
 	private readonly struct IsConstraint(bool expected) : IConstraint<bool>

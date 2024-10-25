@@ -19,7 +19,7 @@ public static partial class ThatEnumShould
 		where TEnum : struct, Enum
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TEnum>(subject.ExpectationBuilder);
+		return new ThatImpl<TEnum>(subject.ExpectationBuilder);
 	}
 
 	private readonly struct Constraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
