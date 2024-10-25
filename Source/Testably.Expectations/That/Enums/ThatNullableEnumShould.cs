@@ -5,13 +5,16 @@ using Testably.Expectations.Formatting;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatEnumExtensions
+/// <summary>
+///     Expectations on <see langword="enum" />? values.
+/// </summary>
+public static partial class ThatNullableEnumShould
 {
-	private readonly struct Constraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
-		: IConstraint<TEnum>
+	private readonly struct Constraint<TEnum>(string expectation, Func<TEnum?, bool> successIf)
+		: IConstraint<TEnum?>
 		where TEnum : struct, Enum
 	{
-		public ConstraintResult IsMetBy(TEnum actual)
+		public ConstraintResult IsMetBy(TEnum? actual)
 		{
 			if (successIf(actual))
 			{

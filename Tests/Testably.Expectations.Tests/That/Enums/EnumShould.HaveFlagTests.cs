@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Enums;
 
-public sealed partial class ThatEnum
+public sealed partial class EnumShould
 {
-	public sealed class HasFlagTests
+	public sealed class HaveFlagTests
 	{
 		[Theory]
 		[InlineData(MyColors.Blue | MyColors.Red, MyColors.Green)]
@@ -10,15 +10,15 @@ public sealed partial class ThatEnum
 		public async Task WhenSubjectDoesNotHaveFlag_ShouldFail(MyColors subject, MyColors expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Should().HasFlag(expected);
+				=> await Expect.That(subject).Should().HaveFlag(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HaveMessage($"""
-				                   Expected subject to
-				                   has flag {expected},
-				                   but found {subject}
-				                   at Expect.That(subject).Should().HasFlag(expected)
-				                   """);
+				                    Expected subject to
+				                    have flag {expected},
+				                    but found {subject}
+				                    at Expect.That(subject).Should().HaveFlag(expected)
+				                    """);
 		}
 
 		[Theory]
@@ -29,7 +29,7 @@ public sealed partial class ThatEnum
 			MyColors subject = MyColors.Yellow | MyColors.Red | expected;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().HasFlag(expected);
+				=> await Expect.That(subject).Should().HaveFlag(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -42,7 +42,7 @@ public sealed partial class ThatEnum
 			MyColors expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().HasFlag(expected);
+				=> await Expect.That(subject).Should().HaveFlag(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}

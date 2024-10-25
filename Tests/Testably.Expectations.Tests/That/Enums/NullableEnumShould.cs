@@ -1,6 +1,6 @@
 ﻿namespace Testably.Expectations.Tests.That.Enums;
 
-public sealed partial class ThatEnum
+public sealed partial class NullableEnumShould
 {
 	[Flags]
 	public enum MyColors
