@@ -19,7 +19,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().ThrowException();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HasMessage(expectedMessage);
+				.Which.HaveMessage(expectedMessage);
 		}
 
 		[Fact]

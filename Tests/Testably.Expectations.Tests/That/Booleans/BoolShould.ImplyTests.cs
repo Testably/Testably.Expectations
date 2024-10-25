@@ -14,7 +14,7 @@ public sealed partial class BoolShould
 				=> await Expect.That(antecedent).Should().Imply(consequent);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected antecedent to
 				                   imply {consequent},
 				                   but it did not

@@ -27,7 +27,7 @@ public sealed class OrNodeTests
 			=> await Expect.That(true).Should().BeFalse().Or.Imply(false);
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HasMessage("""
+			.Which.HaveMessage("""
 			                  Expected that true
 			                  is False or implies False,
 			                  but found True and it did not

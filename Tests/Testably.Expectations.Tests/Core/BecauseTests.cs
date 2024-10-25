@@ -61,7 +61,7 @@ public class BecauseTests
 				.And.BeFalse();
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HasMessage(expectedMessage);
+			.Which.HaveMessage(expectedMessage);
 	}
 
 	[Fact]
@@ -133,6 +133,6 @@ public class BecauseTests
 			=> await Expect.That(subject).Should().BeFalse();
 
 		await Expect.That(Act).Should().ThrowException()
-			.Which.HasMessage(expectedMessage);
+			.Which.HaveMessage(expectedMessage);
 	}
 }

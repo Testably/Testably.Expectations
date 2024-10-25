@@ -34,7 +34,7 @@ public sealed partial class HttpResponseMessageShould
 				=> await Expect.That(subject).Should().BeSuccess();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage(
+				.Which.HaveMessage(
 					"*be success (status code 2xx)*Expect.That(subject).Should().BeSuccess()")
 				.AsWildcard();
 		}

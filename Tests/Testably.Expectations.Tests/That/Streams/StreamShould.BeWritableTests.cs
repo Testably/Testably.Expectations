@@ -15,7 +15,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeWritable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be writable,
 				                  but it was not
@@ -32,7 +32,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeWritable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be writable,
 				                  but found <null>
@@ -74,7 +74,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeWritable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be writable,
 				                  but found <null>
@@ -91,7 +91,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeWritable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be writable,
 				                  but it was

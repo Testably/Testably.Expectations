@@ -13,7 +13,7 @@ public sealed partial class ThatEnum
 				=> await Expect.That(subject).Should().IsNotDefined();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   is not defined,
 				                   but found {subject}

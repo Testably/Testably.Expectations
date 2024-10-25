@@ -14,7 +14,7 @@ public sealed partial class ThatDateTime
 				=> await Expect.That(subject).Should().Is(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   is {expected:O},
 				                   but found {subject:O}
@@ -44,7 +44,7 @@ public sealed partial class ThatDateTime
 				=> await Expect.That(subject).Should().Is(expected).Within(TimeSpan.FromSeconds(3));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   is {expected:O} ± 0:03,
 				                   but found {subject:O}

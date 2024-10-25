@@ -34,7 +34,7 @@ public sealed partial class HttpResponseMessageShould
 				=> await Expect.That(subject).Should().HaveClientError();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage(
+				.Which.HaveMessage(
 					"*have client error (status code 4xx)*Expect.That(subject).Should().HaveClientError()")
 				.AsWildcard();
 		}

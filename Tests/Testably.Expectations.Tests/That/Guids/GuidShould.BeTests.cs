@@ -14,7 +14,7 @@ public sealed partial class GuidShould
 				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   be {expected},
 				                   but found {subject}
@@ -59,7 +59,7 @@ public sealed partial class GuidShould
 				=> await Expect.That(subject).Should().NotBe(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   not be {unexpected},
 				                   but found {subject}

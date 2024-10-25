@@ -8,7 +8,10 @@ using Testably.Expectations.Formatting;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatExceptionExtensions
+/// <summary>
+///     Expectations on <see cref="Exception" /> values.
+/// </summary>
+public static partial class ThatExceptionShould
 {
 	private readonly struct HasInnerExceptionConstraint<TInnerException>
 		: IConstraint<Exception?>,
@@ -41,6 +44,29 @@ public static partial class ThatExceptionExtensions
 		}
 
 		public override string ToString()
-			=> $"has an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
+			=> $"have an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
+	}
+
+	private class CastException<TBase, TTarget> : IConstraint<TBase?, TTarget?>
+		where TBase : Exception
+		where TTarget : Exception?
+	{
+		#region IConstraint<TBase?,TTarget?> Members
+
+		/// <inheritdoc />
+		public ConstraintResult IsMetBy(TBase? actual, Exception? exception)
+		{
+			if (actual is TTarget casted)
+			{
+				return new ConstraintResult.Success<TTarget>(casted, "");
+			}
+
+			return new ConstraintResult.Failure<Exception?>(actual, "",
+				actual == null
+					? "found <null>"
+					: $"found {actual.FormatForMessage()}");
+		}
+
+		#endregion
 	}
 }

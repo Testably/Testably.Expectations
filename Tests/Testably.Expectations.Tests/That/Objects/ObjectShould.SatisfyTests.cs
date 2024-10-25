@@ -13,7 +13,7 @@ public sealed partial class ObjectShould
 				=> await Expect.That(subject).Should().Satisfy<Other, int>(o => o.Value, v => v.Be(2));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  satisfy Value to be 2,
 				                  but found 1

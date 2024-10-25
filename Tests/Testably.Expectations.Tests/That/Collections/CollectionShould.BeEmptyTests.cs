@@ -13,7 +13,7 @@ public sealed partial class CollectionShould
 				=> await Expectations.ThatCollectionShould.BeEmpty(Expect.That(subject).Should());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be empty,
 				                  but found [1, 1, 2]
@@ -57,7 +57,7 @@ public sealed partial class CollectionShould
 					.Should());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be empty,
 				                  but it was

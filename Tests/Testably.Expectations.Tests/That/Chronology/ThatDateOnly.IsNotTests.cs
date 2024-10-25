@@ -15,7 +15,7 @@ public sealed partial class ThatDateOnly
 				=> await Expect.That(subject).Should().IsNot(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   is not {unexpected:O},
 				                   but found {subject:O}

@@ -16,7 +16,7 @@ public sealed partial class ThatNullableEnum
 				=> await Expect.That(subject).Should().IsNot(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   is not {unexpected?.ToString() ?? "<null>"},
 				                   but found {subject?.ToString() ?? "<null>"}
@@ -48,7 +48,7 @@ public sealed partial class ThatNullableEnum
 				=> await Expect.That(subject).Should().IsNot(null);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  is not <null>,
 				                  but found <null>

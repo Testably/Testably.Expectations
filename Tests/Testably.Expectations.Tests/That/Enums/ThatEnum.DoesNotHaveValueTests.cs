@@ -27,7 +27,7 @@ public sealed partial class ThatEnum
 				=> await Expect.That(subject).Should().DoesNotHaveValue(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   does not have value {unexpected},
 				                   but found {subject}

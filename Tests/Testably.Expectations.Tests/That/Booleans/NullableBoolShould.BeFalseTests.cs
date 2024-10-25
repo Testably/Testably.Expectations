@@ -24,7 +24,7 @@ public sealed partial class NullableBoolShould
 				=> await Expect.That(subject).Should().BeFalse();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be False,
 				                  but found <null>
@@ -41,7 +41,7 @@ public sealed partial class NullableBoolShould
 				=> await Expect.That(subject).Should().BeFalse();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be False,
 				                  but found True
@@ -61,7 +61,7 @@ public sealed partial class NullableBoolShould
 				=> await Expect.That(subject).Should().NotBeFalse();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be False,
 				                  but found False

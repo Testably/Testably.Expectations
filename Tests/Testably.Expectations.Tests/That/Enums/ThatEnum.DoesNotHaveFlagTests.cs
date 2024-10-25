@@ -13,7 +13,7 @@ public sealed partial class ThatEnum
 				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   does not have flag {unexpected},
 				                   but found {subject}
@@ -45,7 +45,7 @@ public sealed partial class ThatEnum
 				=> await Expect.That(subject).Should().DoesNotHaveFlag(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   does not have flag {unexpected},
 				                   but found {subject}

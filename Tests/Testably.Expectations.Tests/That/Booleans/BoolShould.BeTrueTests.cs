@@ -13,7 +13,7 @@ public sealed partial class BoolShould
 				=> await Expect.That(subject).Should().BeTrue();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be True,
 				                  but found False

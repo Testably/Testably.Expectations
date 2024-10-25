@@ -13,7 +13,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().BeNull();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be null,
 				                  but found ""
@@ -29,7 +29,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().BeNull();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   be null,
 				                   but found "{subject}"
@@ -81,7 +81,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().NotBeNull();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be null,
 				                  but it was

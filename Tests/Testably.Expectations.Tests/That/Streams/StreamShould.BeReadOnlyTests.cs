@@ -18,7 +18,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeReadOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be read-only,
 				                  but it was not
@@ -35,7 +35,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeReadOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be read-only,
 				                  but found <null>
@@ -80,7 +80,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeReadOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be read-only,
 				                  but found <null>
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeReadOnly();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be read-only,
 				                  but it was

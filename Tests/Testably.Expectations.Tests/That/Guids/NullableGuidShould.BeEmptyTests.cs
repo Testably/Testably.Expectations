@@ -24,7 +24,7 @@ public sealed partial class NullableGuidShould
 				=> await Expect.That(subject).Should().BeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   be empty,
 				                   but found {subject}
@@ -41,7 +41,7 @@ public sealed partial class NullableGuidShould
 				=> await Expect.That(subject).Should().BeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be empty,
 				                  but found <null>
@@ -61,7 +61,7 @@ public sealed partial class NullableGuidShould
 				=> await Expect.That(subject).Should().NotBeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   not be empty,
 				                   but found {subject}
@@ -89,7 +89,7 @@ public sealed partial class NullableGuidShould
 				=> await Expect.That(subject).Should().NotBeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be empty,
 				                  but found <null>

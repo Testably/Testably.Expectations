@@ -24,7 +24,7 @@ public sealed partial class ThatNullableEnum
 				=> await Expect.That(subject).Should().IsNotNull();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  is not null,
 				                  but found <null>

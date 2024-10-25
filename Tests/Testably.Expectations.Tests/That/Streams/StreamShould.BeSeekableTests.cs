@@ -15,7 +15,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeSeekable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be seekable,
 				                  but it was not
@@ -32,7 +32,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().BeSeekable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  be seekable,
 				                  but found <null>
@@ -74,7 +74,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeSeekable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be seekable,
 				                  but found <null>
@@ -91,7 +91,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotBeSeekable();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  not be seekable,
 				                  but it was

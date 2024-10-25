@@ -13,7 +13,7 @@ public sealed partial class ThatNullableEnum
 				=> await Expect.That(subject).Should().HasFlag(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   has flag {expected},
 				                   but found {subject}

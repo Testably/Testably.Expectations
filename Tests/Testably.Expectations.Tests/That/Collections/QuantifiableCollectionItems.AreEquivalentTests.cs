@@ -21,7 +21,7 @@ public sealed partial class QuantifiableCollectionItems
 				=> await Expect.That(subject).Should().All().BeEquivalentTo(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  have all items equivalent to expected,
 				                  but only 3 of 4 items were equivalent

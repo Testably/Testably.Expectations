@@ -16,7 +16,7 @@ public sealed partial class ThatTimeSpan
 				=> await Expect.That(subject).Should().IsNot(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   is not {Formatter.Format(unexpected)},
 				                   but found {Formatter.Format(subject)}

@@ -13,7 +13,7 @@ public sealed partial class ThatNullableEnum
 				=> await Expect.That(subject).Should().IsNotDefined();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage($"""
+				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   is not defined,
 				                   but found {subject}
@@ -41,7 +41,7 @@ public sealed partial class ThatNullableEnum
 				=> await Expect.That(subject).Should().IsNotDefined();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HasMessage("""
+				.Which.HaveMessage("""
 				                  Expected subject to
 				                  is not defined,
 				                  but found <null>
