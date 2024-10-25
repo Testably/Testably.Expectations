@@ -22,7 +22,7 @@ public partial class ThatExceptionShould<TException>
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasMessageConstraint<TException>(expected),
+				new ThatExceptionShould.HasMessageConstraint<TException>(expected, "have"),
 				b => b.AppendMethod(nameof(HaveMessage), doNotPopulateThisValue)),
 			this,
 			expected);

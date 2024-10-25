@@ -26,7 +26,8 @@ internal class CastNode<T1, T2> : ManipulationNode
 		ConstraintResult? result = await TryMeet(Constraint, value, context, Reason);
 		if (!result.IgnoreFurtherProcessing && Inner != None && result is ConstraintResult.Success<T2> success)
 		{
-			return await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception), context);
+			return (await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception), context))
+				.UpdateExpectationText(e => $"{result.ExpectationText} {e.ExpectationText}");
 		}
 
 		return result;

@@ -25,7 +25,7 @@ public static partial class ThatExceptionShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TException : ArgumentException?
 		=> new(source.ExpectationBuilder.Add(
-				new HasParamNameConstraint<TException>(expected),
+				new HasParamNameConstraint<TException>(expected, "have"),
 				b => b.AppendMethod(nameof(HaveParamName), doNotPopulateThisValue)),
 			source);
 	
@@ -39,7 +39,7 @@ public static partial class ThatExceptionShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TException : ArgumentException?
 		=> new(source.ExpectationBuilder.Add(
-				new HasParamNameConstraint<TException>(expected),
+				new HasParamNameConstraint<TException>(expected, "with"),
 				b => b.AppendMethod(nameof(HaveParamName), doNotPopulateThisValue)),
 			source);
 

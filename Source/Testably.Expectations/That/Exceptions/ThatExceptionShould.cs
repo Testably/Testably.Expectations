@@ -27,7 +27,7 @@ public static partial class ThatExceptionShould
 		return new ThatExceptionShould<TException>(subject.ExpectationBuilder);
 	}
 
-	internal readonly struct HasMessageConstraint<T>(StringMatcher expected) : IConstraint<T>,
+	internal readonly struct HasMessageConstraint<T>(StringMatcher expected, string verb) : IConstraint<T>,
 		IDelegateConstraint<DelegateSource.NoValue>
 		where T : Exception?
 	{
@@ -48,10 +48,10 @@ public static partial class ThatExceptionShould
 		}
 
 		public override string ToString()
-			=> $"have Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
+			=> $"{verb} Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
 	}
 
-	internal readonly struct HasParamNameConstraint<T>(string expected) : IConstraint<T>,
+	internal readonly struct HasParamNameConstraint<T>(string expected, string verb) : IConstraint<T>,
 		IDelegateConstraint<DelegateSource.NoValue>
 		where T : ArgumentException?
 	{
@@ -78,10 +78,10 @@ public static partial class ThatExceptionShould
 		}
 
 		public override string ToString()
-			=> $"have ParamName {Formatter.Format(expected)}";
+			=> $"{verb} ParamName {Formatter.Format(expected)}";
 	}
 
-	internal readonly struct HasInnerExceptionConstraint<TInnerException>
+	internal readonly struct HasInnerExceptionConstraint<TInnerException>(string verb)
 		: IConstraint<Exception?>,
 			IDelegateConstraint<DelegateSource.NoValue>
 		where TInnerException : Exception?
@@ -112,11 +112,11 @@ public static partial class ThatExceptionShould
 		}
 
 		public override string ToString()
-			=> $"have an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
+			=> $"{verb} an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
 	internal class CastException<TBase, TTarget> : IConstraint<TBase?, TTarget?>
-		where TBase : Exception
+		where TBase : Exception?
 		where TTarget : Exception?
 	{
 		#region IConstraint<TBase?,TTarget?> Members
