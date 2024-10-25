@@ -14,13 +14,13 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime, That<DateTime>> Be(
-		this That<DateTime> source,
+	public static TimeToleranceExpectationResult<DateTime, IThat<DateTime>> Be(
+		this IThat<DateTime> source,
 		DateTime expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime, That<DateTime>>(
+		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder.Add(new ConditionConstraint(
 					expected,
 					(a, e, t) => IsWithinTolerance(t, a - e),
@@ -34,14 +34,14 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime, That<DateTime>> NotBe(
-		this That<DateTime> source,
+	public static TimeToleranceExpectationResult<DateTime, IThat<DateTime>> NotBe(
+		this IThat<DateTime> source,
 		DateTime unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime, That<DateTime>>(
+		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder.Add(new ConditionConstraint(
 					unexpected,
 					(a, e, t) => !IsWithinTolerance(t, a - e),

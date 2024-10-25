@@ -19,13 +19,13 @@ public static partial class ThatObjectShould
 	/// <summary>
 	///     Verifies that the subject is equivalent to the <paramref name="expected" /> value.
 	/// </summary>
-	public static EquivalencyOptionsExpectationResult<T, That<T>> BeEquivalentTo<T>(
-		this That<T> source,
+	public static EquivalencyOptionsExpectationResult<T, IThat<T>> BeEquivalentTo<T>(
+		this IThat<T> source,
 		object expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		EquivalencyOptions? options = new();
-		return new EquivalencyOptionsExpectationResult<T, That<T>>(source.ExpectationBuilder.Add(
+		return new EquivalencyOptionsExpectationResult<T, IThat<T>>(source.ExpectationBuilder.Add(
 				new IsEquivalentToConstraint(expected, doNotPopulateThisValue, options),
 				b => b.AppendMethod(nameof(BeEquivalentTo), doNotPopulateThisValue)),
 			source,

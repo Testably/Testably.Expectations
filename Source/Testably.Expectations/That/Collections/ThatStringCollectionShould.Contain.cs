@@ -15,8 +15,8 @@ public static partial class ThatStringCollectionShould
 	/// <summary>
 	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<string>, That<IEnumerable<string>>> Contains(
-		this That<IEnumerable<string>> source,
+	public static AndOrExpectationResult<IEnumerable<string>, IThat<IEnumerable<string>>> Contains(
+		this IThat<IEnumerable<string>> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new ContainsConstraint(expected),

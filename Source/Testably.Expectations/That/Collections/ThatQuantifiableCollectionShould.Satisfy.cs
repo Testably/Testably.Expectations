@@ -20,7 +20,7 @@ public static partial class ThatQuantifiableCollectionShould
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, That<TCollection>>
+	public static AndOrExpectationResult<TCollection, IThat<TCollection>>
 		Satisfy<TItem, TCollection>(
 			this QuantifiableCollection<TItem, TCollection> source,
 			Func<TItem, bool> predicate,

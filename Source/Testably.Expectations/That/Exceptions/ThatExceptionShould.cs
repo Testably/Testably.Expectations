@@ -88,7 +88,7 @@ public static partial class ThatExceptionShould
 ///     Base class for expectations on <typeparamref name="TException" />, containing an <see cref="ExpectationBuilder" />.
 /// </summary>
 public partial class ThatExceptionShould<TException>(IExpectationBuilder expectationBuilder)
-	: That<TException>
+	: IThat<TException>
 	where TException : Exception?
 {
 	#region That<TException> Members

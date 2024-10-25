@@ -19,7 +19,7 @@ public static partial class ThatQuantifiableCollectionShould
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, That<TCollection>> Be<TItem, TCollection>(
+	public static AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
 		this QuantifiableCollection<TItem, TCollection> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

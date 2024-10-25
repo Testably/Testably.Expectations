@@ -71,7 +71,7 @@ public interface IExpectationBuilder
 		string andTextSeparator = "",
 		string whichTextSeparator = " which ",
 		string whichPropertyTextSeparator = "")
-		where TThatProperty : That<TProperty>;
+		where TThatProperty : IThat<TProperty>;
 
 	/// <summary>
 	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" /> and casts from
@@ -86,7 +86,7 @@ public interface IExpectationBuilder
 		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ")
-		where TThatProperty : That<TProperty>
+		where TThatProperty : IThat<TProperty>
 		where TProperty : TBase;
 
 	/// <summary>

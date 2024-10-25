@@ -12,9 +12,9 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a server error status code (5xx)
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, That<HttpResponseMessage?>>
+	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveServerError(
-			this That<HttpResponseMessage?> source)
+			this IThat<HttpResponseMessage?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new HasStatusCodeRangeConstraint(
 					statusCode => statusCode >= 500 && statusCode < 600,

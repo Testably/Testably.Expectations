@@ -13,7 +13,7 @@ public static partial class ThatTimeSpanShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TimeSpan, That<TimeSpan>> Be(this That<TimeSpan> source,
+	public static AndOrExpectationResult<TimeSpan, IThat<TimeSpan>> Be(this IThat<TimeSpan> source,
 		TimeSpan expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
@@ -27,7 +27,7 @@ public static partial class ThatTimeSpanShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TimeSpan, That<TimeSpan>> NotBe(this That<TimeSpan> source,
+	public static AndOrExpectationResult<TimeSpan, IThat<TimeSpan>> NotBe(this IThat<TimeSpan> source,
 		TimeSpan unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")

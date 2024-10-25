@@ -14,13 +14,13 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Verifies that the subject is on or before the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime, That<DateTime>> BeOnOrBefore(
-		this That<DateTime> source,
+	public static TimeToleranceExpectationResult<DateTime, IThat<DateTime>> BeOnOrBefore(
+		this IThat<DateTime> source,
 		DateTime expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime, That<DateTime>>(
+		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder.Add(
 				new ConditionConstraint(
 					expected,
@@ -35,13 +35,13 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Verifies that the subject is not on or before the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime, That<DateTime>> NotBeOnOrBefore(
-		this That<DateTime> source,
+	public static TimeToleranceExpectationResult<DateTime, IThat<DateTime>> NotBeOnOrBefore(
+		this IThat<DateTime> source,
 		DateTime expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime, That<DateTime>>(
+		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder.Add(
 				new ConditionConstraint(
 					expected,

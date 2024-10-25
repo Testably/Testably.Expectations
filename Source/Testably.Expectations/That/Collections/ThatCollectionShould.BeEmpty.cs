@@ -14,9 +14,9 @@ public static partial class ThatCollectionShould
 	/// <summary>
 	///     Verifies that the actual collection is empty.
 	/// </summary>
-	public static AndOrExpectationResult<ICollection<TItem>, That<ICollection<TItem>>>
+	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		BeEmpty<TItem>(
-			this That<ICollection<TItem>> source)
+			this IThat<ICollection<TItem>> source)
 		=> new(source.ExpectationBuilder.Add(new IsEmptyConstraint<TItem>(),
 				b => b.AppendMethod(nameof(BeEmpty))),
 			source);
@@ -24,9 +24,9 @@ public static partial class ThatCollectionShould
 	/// <summary>
 	///     Verifies that the actual collection is not empty.
 	/// </summary>
-	public static AndOrExpectationResult<ICollection<TItem>, That<ICollection<TItem>>>
+	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		NotBeEmpty<TItem>(
-			this That<ICollection<TItem>> source)
+			this IThat<ICollection<TItem>> source)
 		=> new(source.ExpectationBuilder.Add(new IsNotEmptyConstraint<TItem>(),
 				b => b.AppendMethod(nameof(NotBeEmpty))),
 			source);

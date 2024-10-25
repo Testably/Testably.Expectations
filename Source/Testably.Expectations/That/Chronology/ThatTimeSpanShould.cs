@@ -16,21 +16,21 @@ public static partial class ThatTimeSpanShould
 	/// <summary>
 	///     Start expectations for current <see cref="TimeSpan" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<TimeSpan> Should(this IExpectThat<TimeSpan> subject,
+	public static IThat<TimeSpan> Should(this IExpectThat<TimeSpan> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new ThatImpl<TimeSpan>(subject.ExpectationBuilder);
+		return new That<TimeSpan>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeSpan" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<TimeSpan?> Should(this IExpectThat<TimeSpan?> subject,
+	public static IThat<TimeSpan?> Should(this IExpectThat<TimeSpan?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new ThatImpl<TimeSpan?>(subject.ExpectationBuilder);
+		return new That<TimeSpan?>(subject.ExpectationBuilder);
 	}
 
 	private readonly struct ConditionConstraint(

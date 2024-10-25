@@ -13,7 +13,7 @@ public static partial class ThatBoolShould
 	/// <summary>
 	///     Verifies that the subject implies the <paramref name="consequent" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<bool, That<bool>> Imply(this That<bool> source,
+	public static AndOrExpectationResult<bool, IThat<bool>> Imply(this IThat<bool> source,
 		bool consequent,
 		[CallerArgumentExpression("consequent")]
 		string doNotPopulateThisValue = "")

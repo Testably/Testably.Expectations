@@ -12,8 +12,8 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> length.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> HaveLength(
-		this That<Stream?> source,
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> HaveLength(
+		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new Constraint(
@@ -26,8 +26,8 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> length.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> NotHaveLength(
-		this That<Stream?> source,
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotHaveLength(
+		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new Constraint(

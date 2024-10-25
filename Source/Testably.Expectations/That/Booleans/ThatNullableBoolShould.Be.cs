@@ -11,7 +11,7 @@ public static partial class ThatNullableBoolShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<bool?, That<bool?>> Be(this That<bool?> source,
+	public static AndOrExpectationResult<bool?, IThat<bool?>> Be(this IThat<bool?> source,
 		bool? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
@@ -22,7 +22,7 @@ public static partial class ThatNullableBoolShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<bool?, That<bool?>> NotBe(this That<bool?> source,
+	public static AndOrExpectationResult<bool?, IThat<bool?>> NotBe(this IThat<bool?> source,
 		bool? unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")

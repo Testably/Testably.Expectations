@@ -17,21 +17,21 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateTime" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<DateTime> Should(this IExpectThat<DateTime> subject,
+	public static IThat<DateTime> Should(this IExpectThat<DateTime> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new ThatImpl<DateTime>(subject.ExpectationBuilder);
+		return new That<DateTime>(subject.ExpectationBuilder);
 	}
 
 	/// <summary>
 	///     Start expectations for the current <see cref="DateTime" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<DateTime?> Should(this IExpectThat<DateTime?> subject,
+	public static IThat<DateTime?> Should(this IExpectThat<DateTime?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new ThatImpl<DateTime?>(subject.ExpectationBuilder);
+		return new That<DateTime?>(subject.ExpectationBuilder);
 	}
 
 	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)

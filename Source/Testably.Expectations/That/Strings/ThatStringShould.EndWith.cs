@@ -14,13 +14,13 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject ends with the <paramref name="expected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, That<string?>> EndWith(
-		this That<string?> source,
+	public static StringExpectationResult<string?, IThat<string?>> EndWith(
+		this IThat<string?> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		StringOptions? options = new();
-		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
 				new EndsWithConstraint(expected, options),
 				b => b.AppendMethod(nameof(EndWith), doNotPopulateThisValue)),
 			source,
@@ -30,14 +30,14 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject does not end with the <paramref name="unexpected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, That<string?>> NotEndWith(
-		this That<string?> source,
+	public static StringExpectationResult<string?, IThat<string?>> NotEndWith(
+		this IThat<string?> source,
 		string unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 	{
 		StringOptions? options = new();
-		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
 				new DoesNotEndWithConstraint(unexpected, options),
 				b => b.AppendMethod(nameof(NotEndWith), doNotPopulateThisValue)),
 			source,

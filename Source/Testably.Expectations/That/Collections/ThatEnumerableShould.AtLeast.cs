@@ -14,7 +14,7 @@ public static partial class ThatEnumerableShould
 	///     Verifies that at least <paramref name="minimum" /> items...
 	/// </summary>
 	public static QuantifiableCollection<TItem, IEnumerable<TItem>> AtLeast<TItem>(
-		this That<IEnumerable<TItem>> source,
+		this IThat<IEnumerable<TItem>> source,
 		int minimum, [CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
 		source.ExpectationBuilder.AppendExpression(b

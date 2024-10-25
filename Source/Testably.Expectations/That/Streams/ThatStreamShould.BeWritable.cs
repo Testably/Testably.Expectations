@@ -11,8 +11,8 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is writable.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> BeWritable(
-		this That<Stream?> source)
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeWritable(
+		this IThat<Stream?> source)
 		=> new(source.ExpectationBuilder.Add(new Constraint(
 					"be writable",
 					actual => actual?.CanWrite == true,
@@ -23,8 +23,8 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is not writable.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> NotBeWritable(
-		this That<Stream?> source)
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotBeWritable(
+		this IThat<Stream?> source)
 		=> new(source.ExpectationBuilder.Add(new Constraint(
 					"not be writable",
 					actual => actual?.CanWrite == false,

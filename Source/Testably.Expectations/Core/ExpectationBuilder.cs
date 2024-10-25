@@ -100,7 +100,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		string andTextSeparator = "",
 		string whichTextSeparator = " which ",
 		string whichPropertyTextSeparator = "")
-		where TThatProperty : That<TProperty>
+		where TThatProperty : IThat<TProperty>
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
@@ -123,7 +123,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ")
-		where TThatProperty : That<TProperty>
+		where TThatProperty : IThat<TProperty>
 		where TProperty : TBase
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);

@@ -1,19 +1,9 @@
 ﻿namespace Testably.Expectations.Core;
 
 /// <summary>
-///     Base class for expectations, containing an <see cref="ExpectationBuilder" />.
-/// </summary>
-public interface That<out T>
-{
-	/// <summary>
-	///     The expectation builder.
-	/// </summary>
-	IExpectationBuilder ExpectationBuilder { get; }
-}
-/// <summary>
 ///     Base class for expectations, containing an <paramref name="expectationBuilder" />.
 /// </summary>
-public class ThatImpl<T>(IExpectationBuilder expectationBuilder) : That<T>
+internal class That<T>(IExpectationBuilder expectationBuilder) : IThat<T>
 {
 	/// <summary>
 	///     The expectation builder.

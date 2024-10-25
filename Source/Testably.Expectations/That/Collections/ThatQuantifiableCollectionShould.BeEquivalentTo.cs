@@ -19,7 +19,7 @@ public static partial class ThatQuantifiableCollectionShould
 	/// <summary>
 	///     ...are equivalent to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, That<TCollection>> BeEquivalentTo<TItem,
+	public static AndOrExpectationResult<TCollection, IThat<TCollection>> BeEquivalentTo<TItem,
 		TCollection>(
 		this QuantifiableCollection<TItem, TCollection> source,
 		TItem expected,
@@ -27,7 +27,7 @@ public static partial class ThatQuantifiableCollectionShould
 		where TCollection : IEnumerable<TItem>
 	{
 		EquivalencyOptions options = new();
-		return new AndOrExpectationResult<TCollection, That<TCollection>>(
+		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(
 			source.Collection.ExpectationBuilder.Add(
 				new AreEquivalentToConstraint<TItem, TCollection>(expected, doNotPopulateThisValue,
 					source.Quantity, options),

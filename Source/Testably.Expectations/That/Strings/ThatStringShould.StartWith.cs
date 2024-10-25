@@ -14,14 +14,14 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject does not start with the <paramref name="unexpected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, That<string?>> NotStartWith(
-		this That<string?> source,
+	public static StringExpectationResult<string?, IThat<string?>> NotStartWith(
+		this IThat<string?> source,
 		string unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 	{
 		StringOptions? options = new StringOptions();
-		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
 				new DoesNotStartWithConstraint(unexpected, options),
 				b => b.AppendMethod(nameof(NotStartWith), doNotPopulateThisValue)),
 			source,
@@ -31,13 +31,13 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject starts with the <paramref name="expected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, That<string?>> StartWith(
-		this That<string?> source,
+	public static StringExpectationResult<string?, IThat<string?>> StartWith(
+		this IThat<string?> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		StringOptions? options = new StringOptions();
-		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
+		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
 				new StartsWithConstraint(expected, options),
 				b => b.AppendMethod(nameof(StartWith), doNotPopulateThisValue)),
 			source,

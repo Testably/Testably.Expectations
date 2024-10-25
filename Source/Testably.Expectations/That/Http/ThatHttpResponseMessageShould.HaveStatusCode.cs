@@ -18,9 +18,9 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a status code equal to <paramref name="expected" />
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, That<HttpResponseMessage?>>
+	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveStatusCode(
-			this That<HttpResponseMessage?> source,
+			this IThat<HttpResponseMessage?> source,
 			HttpStatusCode expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
@@ -31,9 +31,9 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a status code different to <paramref name="unexpected" />
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, That<HttpResponseMessage?>>
+	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		NotHaveStatusCode(
-			this That<HttpResponseMessage?> source,
+			this IThat<HttpResponseMessage?> source,
 			HttpStatusCode unexpected,
 			[CallerArgumentExpression("unexpected")]
 			string doNotPopulateThisValue = "")

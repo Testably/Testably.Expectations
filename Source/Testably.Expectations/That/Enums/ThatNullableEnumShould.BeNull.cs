@@ -11,8 +11,8 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject is <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, That<TEnum?>> BeNull<TEnum>(
-		this That<TEnum?> source)
+	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> BeNull<TEnum>(
+		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
 					"be null",
@@ -23,8 +23,8 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject is not <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, That<TEnum?>> NotBeNull<TEnum>(
-		this That<TEnum?> source)
+	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> NotBeNull<TEnum>(
+		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
 					"not be null",

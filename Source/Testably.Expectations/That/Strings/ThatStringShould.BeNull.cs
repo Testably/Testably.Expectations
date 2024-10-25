@@ -12,8 +12,8 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject is <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<string?, That<string?>> BeNull(
-		this That<string?> source)
+	public static AndOrExpectationResult<string?, IThat<string?>> BeNull(
+		this IThat<string?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNullConstraint(),
 				b => b.AppendMethod(nameof(BeNull))),
@@ -22,8 +22,8 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject is not <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<string, That<string?>> NotBeNull(
-		this That<string?> source)
+	public static AndOrExpectationResult<string, IThat<string?>> NotBeNull(
+		this IThat<string?> source)
 		=> new(source.ExpectationBuilder.Add(
 				new IsNotNullConstraint(),
 				b => b.AppendMethod(nameof(NotBeNull))),

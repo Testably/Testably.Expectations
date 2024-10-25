@@ -13,8 +13,8 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject has the <paramref name="expectedFlag" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, That<TEnum>> HaveFlag<TEnum>(
-		this That<TEnum> source,
+	public static AndOrExpectationResult<TEnum, IThat<TEnum>> HaveFlag<TEnum>(
+		this IThat<TEnum> source,
 		TEnum expectedFlag,
 		[CallerArgumentExpression("expectedFlag")]
 		string doNotPopulateThisValue = "")
@@ -28,8 +28,8 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject does not have the <paramref name="unexpectedFlag" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, That<TEnum>> NotHaveFlag<TEnum>(
-		this That<TEnum> source,
+	public static AndOrExpectationResult<TEnum, IThat<TEnum>> NotHaveFlag<TEnum>(
+		this IThat<TEnum> source,
 		TEnum unexpectedFlag,
 		[CallerArgumentExpression("unexpectedFlag")]
 		string doNotPopulateThisValue = "")

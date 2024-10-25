@@ -14,8 +14,8 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber, That<TNumber>> Be<TNumber>(
-		this That<TNumber> source,
+	public static AndOrExpectationResult<TNumber, IThat<TNumber>> Be<TNumber>(
+		this IThat<TNumber> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
@@ -26,8 +26,8 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber?, That<TNumber?>> Be<TNumber>(
-		this That<TNumber?> source,
+	public static AndOrExpectationResult<TNumber?, IThat<TNumber?>> Be<TNumber>(
+		this IThat<TNumber?> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
@@ -38,8 +38,8 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber, That<TNumber>> NotBe<TNumber>(
-		this That<TNumber> source,
+	public static AndOrExpectationResult<TNumber, IThat<TNumber>> NotBe<TNumber>(
+		this IThat<TNumber> source,
 		TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>

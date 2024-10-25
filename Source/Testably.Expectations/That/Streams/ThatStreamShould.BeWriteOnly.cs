@@ -11,8 +11,8 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is write-only.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> BeWriteOnly(
-		this That<Stream?> source)
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeWriteOnly(
+		this IThat<Stream?> source)
 		=> new(source.ExpectationBuilder.Add(new Constraint(
 					"be write-only",
 					actual => actual is { CanWrite: true, CanRead: false },
@@ -23,8 +23,8 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is not write-only.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> NotBeWriteOnly(
-		this That<Stream?> source)
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotBeWriteOnly(
+		this IThat<Stream?> source)
 		=> new(source.ExpectationBuilder.Add(new Constraint(
 					"not be write-only",
 					actual => actual != null && !(actual is { CanWrite: true, CanRead: false }),

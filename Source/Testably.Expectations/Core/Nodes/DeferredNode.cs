@@ -6,7 +6,7 @@ using Testably.Expectations.Core.EvaluationContext;
 namespace Testably.Expectations.Core.Nodes;
 
 internal class DeferredNode<TProperty, TThatProperty> : Node
-where TThatProperty : That<TProperty>
+where TThatProperty : IThat<TProperty>
 {
 	private readonly Action<TThatProperty> _expectation;
 	private readonly Func<IExpectationBuilder, TThatProperty> _thatPropertyFactory;

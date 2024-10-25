@@ -15,11 +15,11 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Start expectations for the current <typeparamref name="TEnum" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<TEnum?> Should<TEnum>(this IExpectThat<TEnum?> subject)
+	public static IThat<TEnum?> Should<TEnum>(this IExpectThat<TEnum?> subject)
 		where TEnum : struct, Enum
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new ThatImpl<TEnum?>(subject.ExpectationBuilder);
+		return new That<TEnum?>(subject.ExpectationBuilder);
 	}
 
 	private readonly struct Constraint<TEnum>(string expectation, Func<TEnum?, bool> successIf)

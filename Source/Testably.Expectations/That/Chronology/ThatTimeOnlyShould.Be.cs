@@ -14,7 +14,7 @@ public static partial class ThatTimeOnlyShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TimeOnly, That<TimeOnly>> Be(this That<TimeOnly> source,
+	public static AndOrExpectationResult<TimeOnly, IThat<TimeOnly>> Be(this IThat<TimeOnly> source,
 		TimeOnly expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
@@ -28,7 +28,7 @@ public static partial class ThatTimeOnlyShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TimeOnly, That<TimeOnly>> NotBe(this That<TimeOnly> source,
+	public static AndOrExpectationResult<TimeOnly, IThat<TimeOnly>> NotBe(this IThat<TimeOnly> source,
 		TimeOnly unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
