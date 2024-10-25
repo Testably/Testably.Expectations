@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
@@ -34,22 +33,46 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 	where TSelf : AndOrWhichExpectationResult<TResult, TValue, TSelf>
 {
 	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
+	private readonly TValue _returnValue = returnValue;
 
 	/// <summary>
 	///     Allows specifying expectations on a property of the current value.
 	/// </summary>
-	public AndOrWhichExpectationResult<TResult, TValue, TSelf> Which<TProperty>(
-		Expression<Func<TResult, TProperty?>> selector,
-		Action<That<TProperty?>> expectations,
-		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "",
-		[CallerArgumentExpression("expectations")]
-		string doNotPopulateThisValue2 = "")
+	public WhichResult<TProperty, AndOrWhichExpectationResult<TResult, TValue, TSelf>>
+		Which<TProperty>(
+			Expression<Func<TResult, TProperty?>> selector,
+			[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "")
 	{
-		_expectationBuilder.Which<TResult, TProperty?>(
-			PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
-			expectations,
-			b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1, doNotPopulateThisValue2),
-			whichPropertyTextSeparator: "should ");
-		return this;
+		return new WhichResult<TProperty, AndOrWhichExpectationResult<TResult, TValue, TSelf>>(
+			(expectations, doNotPopulateThisValue2) =>
+			{
+				return new AndOrWhichExpectationResult<TResult, TValue, TSelf>(
+					_expectationBuilder.Which<TResult, TProperty?>(
+						PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
+						expectations,
+						b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1)
+							.AppendMethod(nameof(WhichResult<TProperty, TResult>.Should),
+								doNotPopulateThisValue2),
+						whichPropertyTextSeparator: "should "),
+					_returnValue);
+			});
+	}
+
+	/// <summary>
+	///     Intermediate result for chaining Which and Should methods.
+	/// </summary>
+	public class WhichResult<TProperty, TReturn>(
+		Func<Action<That<TProperty?>>, string, TReturn> resultCallback)
+	{
+		/// <summary>
+		///     Specifies the expectations on the selected property.
+		/// </summary>
+		public TReturn Should(
+			Action<That<TProperty?>> expectations,
+			[CallerArgumentExpression("expectations")]
+			string doNotPopulateThisValue = "")
+		{
+			return resultCallback(expectations, doNotPopulateThisValue);
+		}
 	}
 }
