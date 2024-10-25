@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
@@ -18,6 +20,16 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatHttpResponseMessageShould
 {
+	/// <summary>
+	///     Start expectations for the current <see cref="HttpResponseMessage" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<HttpResponseMessage?> Should(this IExpectThat<HttpResponseMessage?> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<HttpResponseMessage?>(subject.ExpectationBuilder);
+	}
+
 	private readonly struct HasStatusCodeRangeConstraint(
 		Func<int, bool> predicate,
 		string expectation)

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -10,6 +13,26 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatTimeSpanShould
 {
+	/// <summary>
+	///     Start expectations for current <see cref="TimeSpan" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<TimeSpan> Should(this IExpectThat<TimeSpan> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<TimeSpan>(subject.ExpectationBuilder);
+	}
+
+	/// <summary>
+	///     Start expectations for the current <see cref="TimeSpan" />? <paramref name="subject" />.
+	/// </summary>
+	public static That<TimeSpan?> Should(this IExpectThat<TimeSpan?> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<TimeSpan?>(subject.ExpectationBuilder);
+	}
+
 	private readonly struct ConditionConstraint(
 		TimeSpan expected,
 		Func<TimeSpan, TimeSpan, bool> condition,

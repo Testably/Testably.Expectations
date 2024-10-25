@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -10,6 +13,16 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatGuidShould
 {
+	/// <summary>
+	///     Start expectations for current <see cref="Guid" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<Guid> Should(this IExpectThat<Guid> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<Guid>(subject.ExpectationBuilder);
+	}
+
 	private readonly struct Constraint(string expectation, Func<Guid, bool> successIf)
 		: IConstraint<Guid>
 	{

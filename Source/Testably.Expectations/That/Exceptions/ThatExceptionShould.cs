@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
@@ -13,6 +14,16 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatExceptionShould
 {
+	/// <summary>
+	///     Start expectations for the current <see cref="Exception" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<Exception?> Should(this IExpectThat<Exception?> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<Exception?>(subject.ExpectationBuilder);
+	}
+
 	private readonly struct HasInnerExceptionConstraint<TInnerException>
 		: IConstraint<Exception?>,
 			IDelegateConstraint<DelegateSource.NoValue>

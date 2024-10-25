@@ -1,6 +1,9 @@
 ﻿#if !NETSTANDARD2_0
 using System;
+using System.Runtime.CompilerServices;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -11,6 +14,26 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatTimeOnlyShould
 {
+	/// <summary>
+	///     Start expectations for current <see cref="TimeOnly" /> <paramref name="subject" />.
+	/// </summary>
+	public static That<TimeOnly> Should(this IExpectThat<TimeOnly> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<TimeOnly>(subject.ExpectationBuilder);
+	}
+
+	/// <summary>
+	///     Start expectations for the current <see cref="TimeOnly" />? <paramref name="subject" />.
+	/// </summary>
+	public static That<TimeOnly?> Should(this IExpectThat<TimeOnly?> subject,
+		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	{
+		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
+		return new That<TimeOnly?>(subject.ExpectationBuilder);
+	}
+
 	private readonly struct ConditionConstraint(
 		TimeOnly expected,
 		Func<TimeOnly, TimeOnly, bool> condition,
