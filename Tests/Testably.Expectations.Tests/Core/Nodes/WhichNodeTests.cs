@@ -16,7 +16,7 @@ public sealed class WhichNodeTests
 
 		async Task Act()
 			=> await Expect.That(subject).Should().Be<Dummy>()
-				.Which(p => p.Value, e => e.Be("bar"));
+				.Which(p => p.Value).Should(e => e.Be("bar"));
 
 		await Expect.That(Act).Should().Throw<XunitException>()
 			.Which.HaveMessage("""
@@ -27,7 +27,7 @@ public sealed class WhichNodeTests
 			                    "foo"
 			                    "bar"
 			                     ↑ (expected)
-			                  at Expect.That(subject).Should().Be<Dummy>().Which(p => p.Value, e => e.Be("bar"))
+			                  at Expect.That(subject).Should().Be<Dummy>().Which(p => p.Value).Should(e => e.Be("bar"))
 			                  """);
 	}
 
