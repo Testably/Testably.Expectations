@@ -4,7 +4,7 @@ using System.Net.Http;
 
 namespace Testably.Expectations.Tests.That.Http;
 
-public sealed partial class ThatHttpResponseMessage
+public sealed partial class HttpResponseMessageShould
 {
 	private static HttpResponseBuilder ResponseBuilder => new();
 

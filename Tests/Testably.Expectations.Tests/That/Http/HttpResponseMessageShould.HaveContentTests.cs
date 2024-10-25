@@ -3,9 +3,9 @@ using System.Net.Http;
 
 namespace Testably.Expectations.Tests.That.Http;
 
-public sealed partial class ThatHttpResponseMessage
+public sealed partial class HttpResponseMessageShould
 {
-	public sealed class HasContentTests
+	public sealed class HaveContentTests
 	{
 		[Fact]
 		public async Task WhenContentDiffersFromExpected_ShouldFail()
@@ -15,18 +15,18 @@ public sealed partial class ThatHttpResponseMessage
 				.WithContent("some content");
 
 			async Task Act()
-				=> await Expect.That(subject).Should().HasContent(expected);
+				=> await Expect.That(subject).Should().HaveContent(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  has a string content equal to "other content",
+				                  have a string content equal to "other content",
 				                  but found "some content" which differs at index 0:
 				                     ↓ (actual)
 				                    "some content"
 				                    "other content"
 				                     ↑ (expected)
-				                  at Expect.That(subject).Should().HasContent(expected)
+				                  at Expect.That(subject).Should().HaveContent(expected)
 				                  """);
 		}
 
@@ -38,7 +38,7 @@ public sealed partial class ThatHttpResponseMessage
 				.WithContent(expected);
 
 			async Task Act()
-				=> await Expect.That(subject).Should().HasContent(expected);
+				=> await Expect.That(subject).Should().HaveContent(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
