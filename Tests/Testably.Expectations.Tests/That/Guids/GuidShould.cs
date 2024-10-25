@@ -1,6 +1,6 @@
 ﻿namespace Testably.Expectations.Tests.That.Guids;
 
-public sealed partial class ThatGuid
+public sealed partial class GuidShould
 {
 	/// <summary>
 	///     Use a fixed random <see cref="Guid"/> in each test run to ensure, that the tests don't rely on special times.

@@ -5,12 +5,15 @@ using Testably.Expectations.Formatting;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatGuidExtensions
+/// <summary>
+///     Expectations on <see cref="Guid" />? values.
+/// </summary>
+public static partial class ThatNullableGuidShould
 {
-	private readonly struct Constraint(string expectation, Func<Guid, bool> successIf)
-		: IConstraint<Guid>
+	private readonly struct Constraint(string expectation, Func<Guid?, bool> successIf)
+		: IConstraint<Guid?>
 	{
-		public ConstraintResult IsMetBy(Guid actual)
+		public ConstraintResult IsMetBy(Guid? actual)
 		{
 			if (successIf(actual))
 			{
