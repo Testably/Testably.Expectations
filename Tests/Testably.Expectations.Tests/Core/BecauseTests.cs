@@ -49,9 +49,9 @@ public class BecauseTests
 	{
 		string expectedMessage = """
 		                         Expected subject to
-		                         is True, because we only apply it to previous constraints and is False,
+		                         be True, because we only apply it to previous constraints and be False,
 		                         but found True
-		                         at Expect.That(subject).Should().IsTrue().And.IsFalse()
+		                         at Expect.That(subject).Should().BeTrue().And.BeFalse()
 		                         """;
 		string because = "we only apply it to previous constraints";
 		bool subject = true;
@@ -122,9 +122,9 @@ public class BecauseTests
 	{
 		string expectedMessage = """
 		                         Expected subject to
-		                         is False,
+		                         be False,
 		                         but found True
-		                         at Expect.That(subject).Should().IsFalse()
+		                         at Expect.That(subject).Should().BeFalse()
 		                         """;
 
 		bool subject = true;

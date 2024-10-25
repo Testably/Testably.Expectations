@@ -12,10 +12,10 @@ public sealed class PrecedenceTests
 
 			await Expect.That(Act).Should().ThrowException()
 				.Which.HaveMessage("""
-				                  Expected that true
-				                  is False and is True or is False,
+				                  Expected true to
+				                  be False and be True or be False,
 				                  but found True
-				                  at Expect.That(true).Should().IsFalse().And.IsTrue().Or.IsFalse()
+				                  at Expect.That(true).Should().BeFalse().And.BeTrue().Or.BeFalse()
 				                  """);
 		}
 
@@ -36,10 +36,10 @@ public sealed class PrecedenceTests
 
 			await Expect.That(Act).Should().ThrowException()
 				.Which.HaveMessage("""
-				                  Expected that true
-				                  is False or is True and is False,
+				                  Expected true to
+				                  be False or be True and be False,
 				                  but found True
-				                  at Expect.That(true).Should().IsFalse().Or.IsTrue().And.IsFalse()
+				                  at Expect.That(true).Should().BeFalse().Or.BeTrue().And.BeFalse()
 				                  """);
 		}
 
@@ -51,10 +51,10 @@ public sealed class PrecedenceTests
 
 			await Expect.That(Act).Should().ThrowException()
 				.Which.HaveMessage("""
-				                  Expected that true
-				                  is True and is False or is False,
+				                  Expected true to
+				                  be True and be False or be False,
 				                  but found True
-				                  at Expect.That(true).IsTrue().And.IsFalse().Should().Or.IsFalse()
+				                  at Expect.That(true).Should().BeTrue().And.BeFalse().Or.BeFalse()
 				                  """);
 		}
 

@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.That.Numbers;
+﻿using System.Globalization;
+
+namespace Testably.Expectations.Tests.That.Numbers;
 
 public sealed partial class NumberShould
 {
@@ -16,8 +18,8 @@ public sealed partial class NumberShould
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HaveMessage($"""
 				                   Expected subject to
-				                   be {expected},
-				                   but found {subject}
+				                   be {expected.ToString(CultureInfo.InvariantCulture)},
+				                   but found {subject.ToString(CultureInfo.InvariantCulture)}
 				                   at Expect.That(subject).Should().Be(expected)
 				                   """);
 		}

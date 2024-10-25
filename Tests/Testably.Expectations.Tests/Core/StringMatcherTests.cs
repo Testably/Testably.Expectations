@@ -75,13 +75,13 @@ public class StringMatcherTests
 			await Expect.That(Act).Should().ThrowException()
 				.Which.HaveMessage($"""
 				                   Expected subject to
-				                   is equal to "@startuml{nl}Alice -> Bob :…",
+				                   be equal to "@startuml{nl}Alice -> Bob :…",
 				                   but found "@startuml{nl}Alice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
 				                                ↓ (actual)
 				                     "…-> Bob : Another…"
 				                     "…-> Bob : Invalid…"
 				                                ↑ (expected)
-				                   at Expect.That(subject).Should().Is(expected)
+				                   at Expect.That(subject).Should().Be(expected)
 				                   """);
 		}
 
@@ -167,13 +167,13 @@ public class StringMatcherTests
 			await Expect.That(Act).Should().ThrowException()
 				.Which.HaveMessage("""
 				                  Expected subject to
-				                  is equal to "this is a long text which…",
+				                  be equal to "this is a long text which…",
 				                  but found "this is a long text that…" which differs at index 20:
 				                                     ↓ (actual)
 				                    "…is a long text that…"
 				                    "…is a long text which…"
 				                                     ↑ (expected)
-				                  at Expect.That(subject).Should().Is(expected)
+				                  at Expect.That(subject).Should().Be(expected)
 				                  """);
 		}
 

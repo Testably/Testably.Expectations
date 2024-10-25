@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.That.Numbers;
+﻿using System.Globalization;
+
+namespace Testably.Expectations.Tests.That.Numbers;
 
 public sealed partial class NumberShould
 {
@@ -44,7 +46,7 @@ public sealed partial class NumberShould
 				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   be NaN,
-				                   but found {subject}
+				                   but found {subject.ToString(CultureInfo.InvariantCulture)}
 				                   at Expect.That(subject).Should().BeNaN()
 				                   """);
 		}
@@ -89,7 +91,7 @@ public sealed partial class NumberShould
 				.Which.HaveMessage($"""
 				                   Expected subject to
 				                   be NaN,
-				                   but found {subject}
+				                   but found {subject.ToString(CultureInfo.InvariantCulture)}
 				                   at Expect.That(subject).Should().BeNaN()
 				                   """);
 		}

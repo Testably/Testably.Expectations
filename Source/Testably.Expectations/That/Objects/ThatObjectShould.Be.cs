@@ -33,6 +33,6 @@ public static partial class ThatObjectShould
 		}
 
 		public override string ToString()
-			=> $"is type {Formatter.Format(typeof(TType))}";
+			=> $"be type {Formatter.Format(typeof(TType))}";
 	}
 }

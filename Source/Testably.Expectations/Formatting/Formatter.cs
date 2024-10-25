@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Text;
 using Testably.Expectations.Core.Ambient;
 using Testably.Expectations.Formatting.Formatters;
@@ -29,17 +30,17 @@ public class Formatter
 		new TimeOnlyFormatter(),
 #endif
 		new GuidFormatter(),
-		new NumberFormatter<int>(),
-		new NumberFormatter<uint>(),
-		new NumberFormatter<byte>(),
-		new NumberFormatter<sbyte>(),
-		new NumberFormatter<short>(),
-		new NumberFormatter<ushort>(),
-		new NumberFormatter<long>(),
-		new NumberFormatter<ulong>(),
-		new NumberFormatter<float>(),
-		new NumberFormatter<double>(),
-		new NumberFormatter<decimal>(),
+		new NumberFormatter<int>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<uint>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<byte>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<sbyte>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<short>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<ushort>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<long>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<ulong>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<float>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<double>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<decimal>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new EnumFormatter(),
 	];
 

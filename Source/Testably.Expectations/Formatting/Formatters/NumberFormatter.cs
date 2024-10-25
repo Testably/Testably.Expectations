@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 
 namespace Testably.Expectations.Formatting.Formatters;
 
-internal class NumberFormatter<T> : FormatterBase<T>
+internal class NumberFormatter<T>(Func<T, string> formatter) : FormatterBase<T>
 	where T : struct, IComparable<T>
 {
 	/// <inheritdoc />
 	public override void Format(T value, StringBuilder stringBuilder,
 		FormattingOptions options)
 	{
-		stringBuilder.Append(value.ToString());
+		stringBuilder.Append(formatter(value));
 	}
 }

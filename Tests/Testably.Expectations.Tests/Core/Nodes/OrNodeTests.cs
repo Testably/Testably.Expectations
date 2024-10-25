@@ -28,10 +28,10 @@ public sealed class OrNodeTests
 
 		await Expect.That(Act).Should().ThrowException()
 			.Which.HaveMessage("""
-			                  Expected that true
-			                  is False or implies False,
+			                  Expected true to
+			                  be False or imply False,
 			                  but found True and it did not
-			                  at Expect.That(true).Should().IsFalse().Or.Implies(false)
+			                  at Expect.That(true).Should().BeFalse().Or.Imply(false)
 			                  """);
 	}
 
