@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.EvaluationContext;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -24,7 +25,9 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(
+		SourceValue<TValue> value,
+		IEvaluationContext context)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TBase> propertyAccessor)
@@ -44,13 +47,13 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 				    success.TryGetValue<TProperty>(out TProperty? matchingValue))
 				{
 					return (await Inner.IsMetBy(
-							new SourceValue<TProperty>(matchingValue, value.Exception)))
+							new SourceValue<TProperty>(matchingValue, value.Exception), context))
 						.UpdateExpectationText(r
 							=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
 				}
 
 				ConstraintResult? failure =
-					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception));
+					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception), context);
 				return castedResult.UpdateExpectationText(_
 					=> $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");
 			}

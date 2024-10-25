@@ -6,14 +6,14 @@ public sealed class AndNodeTests
 	public async Task WithFirstFailedTests_ShouldIncludeSingleFailureInMessage()
 	{
 		async Task Act()
-			=> await Expect.That(true).IsFalse().And.IsTrue();
+			=> await Expect.That(true).Should().BeFalse().And.BeTrue();
 
-		await Expect.That(Act).ThrowsException()
-			.Which.HasMessage("""
-			                  Expected that true
-			                  is False and is True,
+		await Expect.That(Act).Should().ThrowException()
+			.Which.HaveMessage("""
+			                  Expected true to
+			                  be False and be True,
 			                  but found True
-			                  at Expect.That(true).IsFalse().And.IsTrue()
+			                  at Expect.That(true).Should().BeFalse().And.BeTrue()
 			                  """);
 	}
 
@@ -21,14 +21,14 @@ public sealed class AndNodeTests
 	public async Task WithSecondFailedTests_ShouldIncludeSingleFailureInMessage()
 	{
 		async Task Act()
-			=> await Expect.That(true).IsTrue().And.IsFalse();
+			=> await Expect.That(true).Should().BeTrue().And.BeFalse();
 
-		await Expect.That(Act).ThrowsException()
-			.Which.HasMessage("""
-			                  Expected that true
-			                  is True and is False,
+		await Expect.That(Act).Should().ThrowException()
+			.Which.HaveMessage("""
+			                  Expected true to
+			                  be True and be False,
 			                  but found True
-			                  at Expect.That(true).IsTrue().And.IsFalse()
+			                  at Expect.That(true).Should().BeTrue().And.BeFalse()
 			                  """);
 	}
 
@@ -36,14 +36,14 @@ public sealed class AndNodeTests
 	public async Task WithTwoFailedTests_ShouldIncludeBothFailuresInMessage()
 	{
 		async Task Act()
-			=> await Expect.That(true).IsFalse().And.Implies(false);
+			=> await Expect.That(true).Should().BeFalse().And.Imply(false);
 
-		await Expect.That(Act).ThrowsException()
-			.Which.HasMessage("""
-			                  Expected that true
-			                  is False and implies False,
+		await Expect.That(Act).Should().ThrowException()
+			.Which.HaveMessage("""
+			                  Expected true to
+			                  be False and imply False,
 			                  but found True and it did not
-			                  at Expect.That(true).IsFalse().And.Implies(false)
+			                  at Expect.That(true).Should().BeFalse().And.Imply(false)
 			                  """);
 	}
 
@@ -51,9 +51,9 @@ public sealed class AndNodeTests
 	public async Task WithTwoSuccessfulTests_ShouldNotThrow()
 	{
 		async Task Act()
-			=> await Expect.That(true).IsTrue().And.IsNot(false);
+			=> await Expect.That(true).Should().BeTrue().And.NotBe(false);
 
-		await Expect.That(Act).DoesNotThrow();
+		await Expect.That(Act).Should().NotThrow();
 	}
 }
 

@@ -81,7 +81,7 @@ public class StringMatcher(string? pattern)
 		=> grammaticVoice switch
 		{
 			GrammaticVoice.ActiveVoice =>
-				$"{(_type is ExactMatchType ? "is equal to" : "matches")} {Formatter.Format(pattern.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}",
+				$"{(_type is ExactMatchType ? "be equal to" : "match")} {Formatter.Format(pattern.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}",
 			GrammaticVoice.PassiveVoice =>
 				$"{(_type is ExactMatchType ? "equal to" : "matching")} {Formatter.Format(pattern.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}",
 			_ => throw new NotSupportedException("Invalid Grammar type")

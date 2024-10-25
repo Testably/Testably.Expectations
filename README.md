@@ -13,7 +13,7 @@ This library is used to assert unit tests in natural language by specifying expe
   [Fact]
   public void SomeMethod_ShouldThrowArgumentNullException()
   {
-    Expect.That(SomeMethod).Throws<ArgumentNullException>()
-      .Which.HasMessage("Value cannot be null");
+    Expect.That(SomeMethod).Should().Throw<ArgumentNullException>()
+      .Which.HaveMessage("Value cannot be null");
   }
   ```

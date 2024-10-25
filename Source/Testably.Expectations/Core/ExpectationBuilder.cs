@@ -53,6 +53,13 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
+	public void AddReason(string reason)
+	{
+		BecauseReason becauseReason = new BecauseReason(reason);
+		_tree.GetCurrent().SetReason(becauseReason);
+	}
+
+	/// <inheritdoc />
 	public IExpectationBuilder And(Action<StringBuilder> expressionBuilder,
 		string textSeparator = " and ")
 	{
@@ -70,8 +77,9 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 
 	public async Task<ConstraintResult> IsMet()
 	{
+		EvaluationContext.EvaluationContext context = new();
 		SourceValue<TValue> data = await _subjectSource.GetValue();
-		return await _tree.GetRoot().IsMetBy(data);
+		return await _tree.GetRoot().IsMetBy(data, context);
 	}
 
 	/// <inheritdoc />
@@ -88,7 +96,8 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		Action<That<TProperty>>? expectation,
 		Action<StringBuilder> expressionBuilder,
 		string andTextSeparator = "",
-		string whichTextSeparator = " which ")
+		string whichTextSeparator = " which ",
+		string whichPropertyTextSeparator = "")
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
@@ -97,7 +106,8 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 			expectation == null
 				? Node.None
 				: new DeferredNode<TProperty>(expectation),
-			whichTextSeparator));
+			whichTextSeparator,
+			whichPropertyTextSeparator));
 
 		return this;
 	}
@@ -118,13 +128,6 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		return this;
 	}
 
-	/// <inheritdoc />
-	public void AddReason(string reason)
-	{
-		var becauseReason = new BecauseReason(reason);
-		_tree.GetCurrent().SetReason(becauseReason);
-	}
-
 	#endregion
 
 	/// <inheritdoc />
@@ -133,7 +136,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		return _tree.ToString();
 	}
 
-	internal class Tree
+	private class Tree
 	{
 		private TreeNode _current;
 		private Action<Node>? _setExpectationNode;

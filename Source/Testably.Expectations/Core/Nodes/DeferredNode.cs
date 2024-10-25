@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.EvaluationContext;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -14,7 +15,9 @@ internal class DeferredNode<TProperty> : Node
 	}
 
 	/// <inheritdoc />
-	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(
+		SourceValue<TValue> value,
+		IEvaluationContext context)
 		where TValue : default
 	{
 		if (value is not SourceValue<TProperty> matchingActualValue)

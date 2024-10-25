@@ -48,7 +48,8 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 		_expectationBuilder.Which<TResult, TProperty?>(
 			PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
 			expectations,
-			b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1, doNotPopulateThisValue2));
+			b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1, doNotPopulateThisValue2),
+			whichPropertyTextSeparator: "should ");
 		return this;
 	}
 }

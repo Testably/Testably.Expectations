@@ -12,7 +12,7 @@ public static class ThrowHelper
 		this StringMatcherExpectationResult<Exception?, That<Exception?>> source,
 		string expected)
 	{
-		return source.And.HasMessage(expected).AsWildcard();
+		return source.And.HaveMessage(expected).AsWildcard();
 	}
 
 	/// <summary>
@@ -23,6 +23,6 @@ public static class ThrowHelper
 		this ThatDelegate source,
 		string expected)
 	{
-		return source.ThrowsException().Which.HasMessage(expected).AsWildcard();
+		return source.ThrowException().Which.HaveMessage(expected).AsWildcard();
 	}
 }

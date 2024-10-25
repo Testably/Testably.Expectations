@@ -15,19 +15,19 @@ public sealed class WhichNodeTests
 		};
 
 		async Task Act()
-			=> await Expect.That(subject).Is<Dummy>()
-				.Which(p => p.Value, e => e.Is("bar"));
+			=> await Expect.That(subject).Should().Be<Dummy>()
+				.Which(p => p.Value, e => e.Be("bar"));
 
-		await Expect.That(Act).Throws<XunitException>()
-			.Which.HasMessage("""
-			                  Expected that subject
-			                  is type Dummy which Value is equal to "bar",
+		await Expect.That(Act).Should().Throw<XunitException>()
+			.Which.HaveMessage("""
+			                  Expected subject to
+			                  be type Dummy which Value should be equal to "bar",
 			                  but found "foo" which differs at index 0:
 			                     ↓ (actual)
 			                    "foo"
 			                    "bar"
 			                     ↑ (expected)
-			                  at Expect.That(subject).Is<Dummy>().Which(p => p.Value, e => e.Is("bar"))
+			                  at Expect.That(subject).Should().Be<Dummy>().Which(p => p.Value, e => e.Be("bar"))
 			                  """);
 	}
 

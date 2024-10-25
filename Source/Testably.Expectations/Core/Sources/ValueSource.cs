@@ -14,7 +14,9 @@ internal class ValueSource<TValue> : IValueSource<TValue>
 	#region IValueSource<TValue> Members
 
 	public Task<SourceValue<TValue>> GetValue()
-		=> Task.FromResult(new SourceValue<TValue>(_value, null));
+	{
+		return Task.FromResult(new SourceValue<TValue>(_value, null));
+	}
 
 	#endregion
 }
