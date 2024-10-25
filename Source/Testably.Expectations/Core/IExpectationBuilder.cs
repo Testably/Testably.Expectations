@@ -68,7 +68,8 @@ public interface IExpectationBuilder
 		Action<That<TProperty>>? expectation,
 		Action<StringBuilder> expressionBuilder,
 		string andTextSeparator = "",
-		string whichTextSeparator = " which ");
+		string whichTextSeparator = " which ",
+		string whichPropertyTextSeparator = "");
 
 	/// <summary>
 	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" /> and casts from

@@ -26,6 +26,7 @@ public static partial class ThatObjectShould
 				expectations,
 				b => b.AppendGenericMethod<T, TProperty>(nameof(Satisfy), doNotPopulateThisValue1,
 					doNotPopulateThisValue2),
-				whichTextSeparator: "satisfy "),
+				whichTextSeparator: "satisfy ",
+				whichPropertyTextSeparator: "to "),
 			source);
 }

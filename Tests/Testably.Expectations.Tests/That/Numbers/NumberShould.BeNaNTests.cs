@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Numbers;
 
-public sealed partial class ThatNumber
+public sealed partial class NumberShould
 {
-	public sealed class IsNaNTests
+	public sealed class BeNaNTests
 	{
 		[Fact]
 		public async Task ForDouble_ShouldSupportChaining()
@@ -10,8 +10,8 @@ public sealed partial class ThatNumber
 			double subject = double.NaN;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNaN()
-					.And.Is(subject);
+				=> await Expect.That(subject).Should().BeNaN()
+					.And.Be(subject);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -21,7 +21,7 @@ public sealed partial class ThatNumber
 		{
 			double subject = double.NaN;
 
-			async Task Act() => await Expect.That(subject).Should().IsNaN();
+			async Task Act() => await Expect.That(subject).Should().BeNaN();
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -38,14 +38,14 @@ public sealed partial class ThatNumber
 		public async Task ForDouble_WhenSubjectIsNormalValue_ShouldFail(double subject)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNaN();
+				=> await Expect.That(subject).Should().BeNaN();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
-				                   is NaN,
+				                   be NaN,
 				                   but found {subject}
-				                   at Expect.That(subject).Should().IsNaN()
+				                   at Expect.That(subject).Should().BeNaN()
 				                   """);
 		}
 
@@ -54,8 +54,8 @@ public sealed partial class ThatNumber
 		{
 			float subject = float.NaN;
 
-			async Task Act() => await Expect.That(subject).Should().IsNaN()
-				.And.Is(subject);
+			async Task Act() => await Expect.That(subject).Should().BeNaN()
+				.And.Be(subject);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -66,7 +66,7 @@ public sealed partial class ThatNumber
 			float subject = float.NaN;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNaN();
+				=> await Expect.That(subject).Should().BeNaN();
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -83,14 +83,14 @@ public sealed partial class ThatNumber
 		public async Task ForFloat_WhenSubjectIsNormalValue_ShouldFail(float subject)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Should().IsNaN();
+				=> await Expect.That(subject).Should().BeNaN();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
-				                   is NaN,
+				                   be NaN,
 				                   but found {subject}
-				                   at Expect.That(subject).Should().IsNaN()
+				                   at Expect.That(subject).Should().BeNaN()
 				                   """);
 		}
 	}

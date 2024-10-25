@@ -1,8 +1,8 @@
 ﻿namespace Testably.Expectations.Tests.That.Numbers;
 
-public sealed partial class ThatNumber
+public sealed partial class NumberShould
 {
-	public sealed class IsTests
+	public sealed class BeTests
 	{
 		[Theory]
 		[InlineData(1.0, 2.1)]
@@ -11,14 +11,14 @@ public sealed partial class ThatNumber
 			float expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
-				                   is {expected},
+				                   be {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).Should().Is(expected)
+				                   at Expect.That(subject).Should().Be(expected)
 				                   """);
 		}
 
@@ -29,14 +29,14 @@ public sealed partial class ThatNumber
 			int expected)
 		{
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
-				                   is {expected},
+				                   be {expected},
 				                   but found {subject}
-				                   at Expect.That(subject).Should().Is(expected)
+				                   at Expect.That(subject).Should().Be(expected)
 				                   """);
 		}
 
@@ -47,14 +47,14 @@ public sealed partial class ThatNumber
 			float? expected = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
-				                   is <null>,
+				                   be <null>,
 				                   but found {subject}
-				                   at Expect.That(subject).Should().Is(expected)
+				                   at Expect.That(subject).Should().Be(expected)
 				                   """);
 		}
 
@@ -65,14 +65,14 @@ public sealed partial class ThatNumber
 			int? expected = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage($"""
 				                   Expected subject to
-				                   is <null>,
+				                   be <null>,
 				                   but found {subject}
-				                   at Expect.That(subject).Should().Is(expected)
+				                   at Expect.That(subject).Should().Be(expected)
 				                   """);
 		}
 
@@ -83,7 +83,7 @@ public sealed partial class ThatNumber
 			double subject = expected;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -95,7 +95,7 @@ public sealed partial class ThatNumber
 			float? expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -107,7 +107,7 @@ public sealed partial class ThatNumber
 			float expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -119,7 +119,7 @@ public sealed partial class ThatNumber
 			int? expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -131,7 +131,7 @@ public sealed partial class ThatNumber
 			int expected = subject;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -143,9 +143,41 @@ public sealed partial class ThatNumber
 			long subject = expected;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Is(expected);
+				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().NotThrow();
+		}
+	}
+
+	public sealed class NotBeTests
+	{
+		[Theory]
+		[InlineData(1, 2)]
+		[InlineData(5, -3)]
+		public async Task WhenSubjectIsDifferent_ShouldSucceed(int subject, int expected)
+		{
+			async Task Act()
+				=> await Expect.That(subject).Should().NotBe(expected);
+
+			await Expect.That(Act).Should().NotThrow();
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task WhenSubjectIsTheSame_ShouldFail(int subject)
+		{
+			int expected = subject;
+
+			async Task Act()
+				=> await Expect.That(subject).Should().NotBe(expected);
+
+			await Expect.That(Act).Should().Throw<XunitException>()
+				.Which.HasMessage($"""
+				                   Expected subject to
+				                   not be {expected},
+				                   but found {subject}
+				                   at Expect.That(subject).Should().NotBe(expected)
+				                   """);
 		}
 	}
 }

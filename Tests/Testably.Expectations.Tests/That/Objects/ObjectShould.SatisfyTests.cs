@@ -10,14 +10,14 @@ public sealed partial class ObjectShould
 			Other subject = new() { Value = 1 };
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Satisfy<Other, int>(o => o.Value, v => v.Is(2));
+				=> await Expect.That(subject).Should().Satisfy<Other, int>(o => o.Value, v => v.Be(2));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.Which.HasMessage("""
 				                  Expected subject to
-				                  satisfy Value is 2,
+				                  satisfy Value to be 2,
 				                  but found 1
-				                  at Expect.That(subject).Should().Satisfy<Other, int>(o => o.Value, v => v.Is(2))
+				                  at Expect.That(subject).Should().Satisfy<Other, int>(o => o.Value, v => v.Be(2))
 				                  """);
 		}
 	}

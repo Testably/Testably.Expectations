@@ -14,7 +14,7 @@ public sealed partial class ObjectShould
 			};
 
 			Other result = await Expect.That(subject).Should().Be<Other>();
-			await Expect.That(result.Value).Should().Is(value);
+			await Expect.That(result.Value).Should().Be(value);
 		}
 	}
 }

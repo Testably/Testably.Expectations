@@ -89,7 +89,8 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		Action<That<TProperty>>? expectation,
 		Action<StringBuilder> expressionBuilder,
 		string andTextSeparator = "",
-		string whichTextSeparator = " which ")
+		string whichTextSeparator = " which ",
+		string whichPropertyTextSeparator = "")
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
@@ -98,7 +99,8 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 			expectation == null
 				? Node.None
 				: new DeferredNode<TProperty>(expectation),
-			whichTextSeparator));
+			whichTextSeparator,
+			whichPropertyTextSeparator));
 
 		return this;
 	}

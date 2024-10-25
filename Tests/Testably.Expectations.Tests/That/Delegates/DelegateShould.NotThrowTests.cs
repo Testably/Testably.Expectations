@@ -31,7 +31,7 @@ public sealed partial class DelegateShould
 			Func<int> action = () => value;
 
 			int result = await Expect.That(action).Should().NotThrow();
-			await Expect.That(result).Should().Is(value);
+			await Expect.That(result).Should().Be(value);
 		}
 
 		[Fact]
