@@ -53,6 +53,13 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
+	public void AddReason(string reason)
+	{
+		BecauseReason becauseReason = new BecauseReason(reason);
+		_tree.GetCurrent().SetReason(becauseReason);
+	}
+
+	/// <inheritdoc />
 	public IExpectationBuilder And(Action<StringBuilder> expressionBuilder,
 		string textSeparator = " and ")
 	{
@@ -70,7 +77,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 
 	public async Task<ConstraintResult> IsMet()
 	{
-		var context = new EvaluationContext();
+		EvaluationContext.EvaluationContext context = new();
 		SourceValue<TValue> data = await _subjectSource.GetValue();
 		return await _tree.GetRoot().IsMetBy(data, context);
 	}
@@ -121,13 +128,6 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		return this;
 	}
 
-	/// <inheritdoc />
-	public void AddReason(string reason)
-	{
-		var becauseReason = new BecauseReason(reason);
-		_tree.GetCurrent().SetReason(becauseReason);
-	}
-
 	#endregion
 
 	/// <inheritdoc />
@@ -136,7 +136,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 		return _tree.ToString();
 	}
 
-	internal class Tree
+	private class Tree
 	{
 		private TreeNode _current;
 		private Action<Node>? _setExpectationNode;

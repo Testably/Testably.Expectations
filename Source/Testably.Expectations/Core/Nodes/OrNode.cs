@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.EvaluationContext;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -17,7 +18,9 @@ internal class OrNode : CombinationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value, IEvaluationContext context)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(
+		SourceValue<TValue> value,
+		IEvaluationContext context)
 		where TValue : default
 	{
 		ConstraintResult leftResult = await Left.IsMetBy(value, context);

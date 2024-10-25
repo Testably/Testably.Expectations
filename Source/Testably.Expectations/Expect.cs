@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations;
@@ -20,22 +18,6 @@ public static class Expect
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		return new ExpectThat<T>(new ExpectationBuilder<T?>(subject, doNotPopulateThisValue));
-	}
-
-	/// <summary>
-	///     Start expectations for the current <typeparamref name="TCollection" /> <paramref name="subject" />.
-	/// </summary>
-	public static IExpectThat<TCollection> That<TItem, TCollection>(TCollection subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		where TCollection : IEnumerable<TItem>
-	{
-		if (typeof(TCollection) == typeof(IEnumerable<TItem>))
-		{
-			subject = (TCollection)MaterializingEnumerable<TItem>.Wrap(subject);
-		}
-
-		return new ExpectThat<TCollection>(
-			new ExpectationBuilder<TCollection>(subject, doNotPopulateThisValue));
 	}
 
 	/// <summary>

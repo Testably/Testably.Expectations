@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core.Nodes;
@@ -17,7 +18,9 @@ internal class CastNode<T1, T2> : ManipulationNode
 	}
 
 	/// <inheritdoc />
-	public override async Task<ConstraintResult> IsMetBy<TValue>(SourceValue<TValue> value, IEvaluationContext context)
+	public override async Task<ConstraintResult> IsMetBy<TValue>(
+		SourceValue<TValue> value,
+		IEvaluationContext context)
 		where TValue : default
 	{
 		ConstraintResult? result = await TryMeet(Constraint, value, context, Reason);

@@ -8,6 +8,9 @@ namespace Testably.Expectations;
 /// </summary>
 public abstract class ThatDelegate(IExpectationBuilder expectationBuilder)
 {
+	/// <summary>
+	///     The expectation builder.
+	/// </summary>
 	public IExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
 
 	/// <summary>
