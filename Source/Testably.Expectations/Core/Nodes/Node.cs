@@ -29,7 +29,7 @@ internal abstract class Node
 		IEvaluationContext context,
 		BecauseReason? reason)
 	{
-		if (constraint is IConstraint<TValue?> valueConstraint)
+		if (constraint is IValueConstraint<TValue?> valueConstraint)
 		{
 			ConstraintResult result = valueConstraint.IsMetBy(value.Value);
 			result = reason?.ApplyTo(result) ?? result;
@@ -50,7 +50,7 @@ internal abstract class Node
 			return result;
 		}
 
-		if (constraint is IDelegateConstraint<TValue> delegateValueConstraint)
+		if (constraint is IComplexConstraint<TValue> delegateValueConstraint)
 		{
 			ConstraintResult result = delegateValueConstraint.IsMetBy(
 				value.Value, value.Exception);
@@ -58,7 +58,7 @@ internal abstract class Node
 			return result;
 		}
 
-		if (constraint is IDelegateConstraint<DelegateSource.NoValue> delegateConstraint)
+		if (constraint is IComplexConstraint<DelegateSource.NoValue> delegateConstraint)
 		{
 			ConstraintResult result = delegateConstraint.IsMetBy(
 				DelegateSource.NoValue.Instance, value.Exception);

@@ -25,7 +25,7 @@ public static partial class ThatStringShould
 		StringOptions? options = new StringOptions();
 		return new StringCountExpectationResult<string?, IThat<string?>>(
 			source.ExpectationBuilder.Add(
-				new ContainsConstraint(expected, quantifier, options),
+				new ContainsValueConstraint(expected, quantifier, options),
 				b => b.AppendMethod(nameof(Contain), doNotPopulateThisValue)),
 			source,
 			quantifier,
@@ -45,17 +45,17 @@ public static partial class ThatStringShould
 		quantifier.Exactly(0);
 		StringOptions? options = new StringOptions();
 		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new ContainsConstraint(unexpected, quantifier, options),
+				new ContainsValueConstraint(unexpected, quantifier, options),
 				b => b.AppendMethod(nameof(NotContain), doNotPopulateThisValue)),
 			source,
 			options);
 	}
 
-	private readonly struct ContainsConstraint(
+	private readonly struct ContainsValueConstraint(
 		string expected,
 		Quantifier quantifier,
 		StringOptions options)
-		: IConstraint<string?>
+		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)

@@ -24,11 +24,11 @@ public static partial class ThatStreamShould
 		return new That<TStream?>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct Constraint(
+	private readonly struct ValueConstraint(
 		string expectation,
 		Func<Stream?, bool> successIf,
 		Func<Stream?, string> onFailure)
-		: IConstraint<Stream?>
+		: IValueConstraint<Stream?>
 	{
 		public ConstraintResult IsMetBy(Stream? actual)
 		{

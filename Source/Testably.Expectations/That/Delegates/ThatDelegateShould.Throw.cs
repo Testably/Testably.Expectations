@@ -17,7 +17,7 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<TException>(source.ExpectationBuilder.AddCast(
-				new ThrowsConstraint<TException>(throwOptions),
+				new ThrowsCastConstraint<TException>(throwOptions),
 				b => b.Append('.').Append(nameof(Throw)).Append('<')
 					.Append(typeof(TException).Name)
 					.Append(">()")),

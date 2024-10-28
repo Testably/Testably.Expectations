@@ -17,11 +17,11 @@ public static partial class ThatBoolShould
 		bool consequent,
 		[CallerArgumentExpression("consequent")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ImpliesConstraint(consequent),
+		=> new(source.ExpectationBuilder.Add(new ImpliesValueConstraint(consequent),
 				b => b.AppendMethod(nameof(Imply), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct ImpliesConstraint(bool consequent) : IConstraint<bool>
+	private readonly struct ImpliesValueConstraint(bool consequent) : IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{

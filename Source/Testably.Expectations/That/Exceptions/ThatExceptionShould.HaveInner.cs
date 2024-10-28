@@ -36,7 +36,7 @@ public partial class ThatExceptionShould<TException>
 	public AndOrExpectationResult<TException, ThatExceptionShould<TException?>> HaveInner<TInnerException>()
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasInnerExceptionConstraint<TInnerException>("have"),
+				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("have"),
 				b => b.AppendGenericMethod<TInnerException>(nameof(HaveInner))),
 			this);
 }

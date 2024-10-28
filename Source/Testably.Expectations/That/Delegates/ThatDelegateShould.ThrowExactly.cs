@@ -20,15 +20,15 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new(source.ExpectationBuilder.AddCast(
-				new ThrowsExactlyConstraint<TException>(throwOptions),
+				new ThrowsExactlyCastConstraint<TException>(throwOptions),
 				b => b.Append('.').Append(nameof(ThrowExactly)).Append('<')
 					.Append(typeof(TException).Name).Append(">()")),
 			throwOptions);
 	}
 	
-	private readonly struct ThrowsExactlyConstraint<TException>(ThrowsOption throwOptions) :
-		IConstraint<DelegateSource.NoValue, TException>,
-		IDelegateConstraint<DelegateSource.NoValue>
+	private readonly struct ThrowsExactlyCastConstraint<TException>(ThrowsOption throwOptions) :
+		ICastConstraint<DelegateSource.NoValue, TException>,
+		IComplexConstraint<DelegateSource.NoValue>
 		where TException : Exception
 	{
 		/// <inheritdoc />

@@ -23,8 +23,8 @@ public static partial class ThatGuidShould
 		return new That<Guid>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct Constraint(string expectation, Func<Guid, bool> successIf)
-		: IConstraint<Guid>
+	private readonly struct ValueConstraint(string expectation, Func<Guid, bool> successIf)
+		: IValueConstraint<Guid>
 	{
 		public ConstraintResult IsMetBy(Guid actual)
 		{

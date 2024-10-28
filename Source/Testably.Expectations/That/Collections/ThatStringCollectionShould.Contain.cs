@@ -19,11 +19,11 @@ public static partial class ThatStringCollectionShould
 		this IThat<IEnumerable<string>> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ContainsConstraint(expected),
+		=> new(source.ExpectationBuilder.Add(new ContainsValueConstraint(expected),
 				b => b.AppendMethod(nameof(Contains), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct ContainsConstraint(string expected) : IConstraint<IEnumerable<string>>
+	private readonly struct ContainsValueConstraint(string expected) : IValueConstraint<IEnumerable<string>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<string> actual)
 		{

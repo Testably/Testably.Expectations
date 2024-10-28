@@ -18,12 +18,12 @@ public static partial class ThatStringShould
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new IsConstraint(expected),
+				new IsValueConstraint(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source,
 			expected);
 
-	private readonly struct IsConstraint(StringMatcher expected) : IConstraint<string?>
+	private readonly struct IsValueConstraint(StringMatcher expected) : IValueConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)

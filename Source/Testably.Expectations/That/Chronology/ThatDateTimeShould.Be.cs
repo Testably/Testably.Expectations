@@ -21,7 +21,7 @@ public static partial class ThatDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
-			source.ExpectationBuilder.Add(new ConditionConstraint(
+			source.ExpectationBuilder.Add(new ConditionValueConstraint(
 					expected,
 					(a, e, t) => IsWithinTolerance(t, a - e),
 					$"be {Formatter.Format(expected)}{tolerance}",
@@ -42,7 +42,7 @@ public static partial class ThatDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
-			source.ExpectationBuilder.Add(new ConditionConstraint(
+			source.ExpectationBuilder.Add(new ConditionValueConstraint(
 					unexpected,
 					(a, e, t) => !IsWithinTolerance(t, a - e),
 					$"not be {Formatter.Format(unexpected)}{tolerance}",

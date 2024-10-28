@@ -44,11 +44,11 @@ public static partial class ThatDateTimeShould
 		return difference <= tolerance.Value && difference >= tolerance.Value.Negate();
 	}
 
-	private readonly struct ConditionConstraint(
+	private readonly struct ConditionValueConstraint(
 		DateTime expected,
 		Func<DateTime, DateTime, TimeSpan, bool> condition,
 		string expectation,
-		TimeTolerance tolerance) : IConstraint<DateTime>
+		TimeTolerance tolerance) : IValueConstraint<DateTime>
 	{
 		private readonly string _expectation = expectation;
 

@@ -34,10 +34,10 @@ public static partial class ThatTimeOnlyShould
 		return new That<TimeOnly?>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct ConditionConstraint(
+	private readonly struct ConditionValueConstraint(
 		TimeOnly expected,
 		Func<TimeOnly, TimeOnly, bool> condition,
-		string expectation) : IConstraint<TimeOnly>
+		string expectation) : IValueConstraint<TimeOnly>
 	{
 		public ConstraintResult IsMetBy(TimeOnly actual)
 		{

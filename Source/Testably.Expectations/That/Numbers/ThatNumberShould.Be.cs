@@ -19,7 +19,7 @@ public static partial class ThatNumberShould
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsConstraint<TNumber>(expected),
+		=> new(source.ExpectationBuilder.Add(new IsValueConstraint<TNumber>(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source);
 
@@ -31,7 +31,7 @@ public static partial class ThatNumberShould
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsConstraint<TNumber>(expected),
+		=> new(source.ExpectationBuilder.Add(new IsValueConstraint<TNumber>(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source);
 
@@ -43,11 +43,11 @@ public static partial class ThatNumberShould
 		TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsNotConstraint<TNumber>(expected),
+		=> new(source.ExpectationBuilder.Add(new IsNotValueConstraint<TNumber>(expected),
 				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct IsConstraint<TNumber>(TNumber? expected) : IConstraint<TNumber>
+	private readonly struct IsValueConstraint<TNumber>(TNumber? expected) : IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)
@@ -64,7 +64,7 @@ public static partial class ThatNumberShould
 			=> $"be {Formatter.Format(expected)}";
 	}
 
-	private readonly struct IsNotConstraint<TNumber>(TNumber expected) : IConstraint<TNumber>
+	private readonly struct IsNotValueConstraint<TNumber>(TNumber expected) : IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)

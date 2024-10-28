@@ -14,7 +14,7 @@ public static partial class ThatNullableEnumShould
 	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> BeDefined<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
 					"be defined",
 					actual => actual != null && Enum.IsDefined(typeof(TEnum), actual.Value)),
 				b => b.AppendMethod(nameof(BeDefined))),
@@ -26,7 +26,7 @@ public static partial class ThatNullableEnumShould
 	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> NotBeDefined<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
 					"not be defined",
 					actual => actual != null && !Enum.IsDefined(typeof(TEnum), actual.Value)),
 				b => b.AppendMethod(nameof(NotBeDefined))),

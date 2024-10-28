@@ -19,7 +19,7 @@ public static partial class ThatDateOnlyShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		return new AndOrExpectationResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+				new ConditionValueConstraint(
 					expected,
 					(a, e) => a.Equals(e),
 					$"be {Formatter.Format(expected)}"),
@@ -35,7 +35,7 @@ public static partial class ThatDateOnlyShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+				new ConditionValueConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
 					$"not be {Formatter.Format(unexpected)}"),

@@ -18,7 +18,7 @@ public static partial class ThatTimeOnlyShould
 		TimeOnly expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+				new ConditionValueConstraint(
 					expected,
 					(a, e) => a.Equals(e),
 					$"be {Formatter.Format(expected)}"),
@@ -33,7 +33,7 @@ public static partial class ThatTimeOnlyShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+				new ConditionValueConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
 					$"not be {Formatter.Format(unexpected)}"),

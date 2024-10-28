@@ -22,7 +22,7 @@ public static partial class ThatStringShould
 	{
 		StringOptions? options = new StringOptions();
 		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new DoesNotStartWithConstraint(unexpected, options),
+				new DoesNotStartWithValueConstraint(unexpected, options),
 				b => b.AppendMethod(nameof(NotStartWith), doNotPopulateThisValue)),
 			source,
 			options);
@@ -38,16 +38,16 @@ public static partial class ThatStringShould
 	{
 		StringOptions? options = new StringOptions();
 		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new StartsWithConstraint(expected, options),
+				new StartsWithValueConstraint(expected, options),
 				b => b.AppendMethod(nameof(StartWith), doNotPopulateThisValue)),
 			source,
 			options);
 	}
 
-	private readonly struct StartsWithConstraint(
+	private readonly struct StartsWithValueConstraint(
 		string expected,
 		StringOptions options)
-		: IConstraint<string?>
+		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)
@@ -80,10 +80,10 @@ public static partial class ThatStringShould
 		}
 	}
 
-	private readonly struct DoesNotStartWithConstraint(
+	private readonly struct DoesNotStartWithValueConstraint(
 		string expected,
 		StringOptions options)
-		: IConstraint<string?>
+		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)

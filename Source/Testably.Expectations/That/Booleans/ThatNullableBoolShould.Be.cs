@@ -15,7 +15,7 @@ public static partial class ThatNullableBoolShould
 		bool? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new IsConstraint(expected),
+				new IsValueConstraint(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source);
 
@@ -27,7 +27,7 @@ public static partial class ThatNullableBoolShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new IsNotConstraint(unexpected),
+				new IsNotValueConstraint(unexpected),
 				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
 			source);
 }

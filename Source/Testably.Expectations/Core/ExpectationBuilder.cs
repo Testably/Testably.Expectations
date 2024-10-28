@@ -44,11 +44,11 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder AddCast<T1, T2>(IConstraint<T1, T2> constraint,
+	public IExpectationBuilder AddCast<T1, T2>(ICastConstraint<T1, T2> castConstraint,
 		Action<StringBuilder> expressionBuilder)
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddManipulation(n => new CastNode<T1, T2>(constraint, n));
+		_tree.AddManipulation(n => new CastNode<T1, T2>(castConstraint, n));
 		return this;
 	}
 
@@ -118,7 +118,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	/// <inheritdoc />
 	public IExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
 		PropertyAccessor propertyAccessor,
-		IConstraint<TBase, TProperty> cast,
+		ICastConstraint<TBase, TProperty> cast,
 		Action<TThatProperty> expectation,
 		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,

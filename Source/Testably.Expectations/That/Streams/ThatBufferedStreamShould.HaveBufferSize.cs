@@ -17,7 +17,7 @@ public static partial class ThatBufferedStreamShould
 		NotHaveBufferSize(this IThat<BufferedStream?> source,
 			long expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					$"not have buffer size {expected}",
 					actual => actual != null && actual.BufferSize != expected,
 					actual => actual == null ? "found <null>" : "it had"),
@@ -31,7 +31,7 @@ public static partial class ThatBufferedStreamShould
 		this IThat<BufferedStream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					$"have buffer size {expected}",
 					actual => actual?.BufferSize == expected,
 					actual => actual == null

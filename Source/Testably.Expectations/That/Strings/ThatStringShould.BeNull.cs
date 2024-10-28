@@ -15,7 +15,7 @@ public static partial class ThatStringShould
 	public static AndOrExpectationResult<string?, IThat<string?>> BeNull(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new IsNullConstraint(),
+				new IsNullValueConstraint(),
 				b => b.AppendMethod(nameof(BeNull))),
 			source);
 
@@ -25,11 +25,11 @@ public static partial class ThatStringShould
 	public static AndOrExpectationResult<string, IThat<string?>> NotBeNull(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new IsNotNullConstraint(),
+				new IsNotNullValueConstraint(),
 				b => b.AppendMethod(nameof(NotBeNull))),
 			source);
 
-	private readonly struct IsNullConstraint : IConstraint<string?>
+	private readonly struct IsNullValueConstraint : IValueConstraint<string?>
 	{
 		#region IExpectation<string> Members
 
@@ -52,7 +52,7 @@ public static partial class ThatStringShould
 			=> "be null";
 	}
 
-	private readonly struct IsNotNullConstraint : IConstraint<string>
+	private readonly struct IsNotNullValueConstraint : IValueConstraint<string>
 	{
 		#region IExpectation<string> Members
 

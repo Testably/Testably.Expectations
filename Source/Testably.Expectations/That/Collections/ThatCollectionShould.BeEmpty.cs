@@ -17,7 +17,7 @@ public static partial class ThatCollectionShould
 	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		BeEmpty<TItem>(
 			this IThat<ICollection<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsEmptyConstraint<TItem>(),
+		=> new(source.ExpectationBuilder.Add(new IsEmptyValueConstraint<TItem>(),
 				b => b.AppendMethod(nameof(BeEmpty))),
 			source);
 
@@ -27,11 +27,11 @@ public static partial class ThatCollectionShould
 	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		NotBeEmpty<TItem>(
 			this IThat<ICollection<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsNotEmptyConstraint<TItem>(),
+		=> new(source.ExpectationBuilder.Add(new IsNotEmptyValueConstraint<TItem>(),
 				b => b.AppendMethod(nameof(NotBeEmpty))),
 			source);
 
-	private readonly struct IsEmptyConstraint<TItem> : IConstraint<ICollection<TItem>>
+	private readonly struct IsEmptyValueConstraint<TItem> : IValueConstraint<ICollection<TItem>>
 	{
 		public ConstraintResult IsMetBy(ICollection<TItem> actual)
 		{
@@ -48,7 +48,7 @@ public static partial class ThatCollectionShould
 			=> "be empty";
 	}
 
-	private readonly struct IsNotEmptyConstraint<TItem> : IConstraint<ICollection<TItem>>
+	private readonly struct IsNotEmptyValueConstraint<TItem> : IValueConstraint<ICollection<TItem>>
 	{
 		public ConstraintResult IsMetBy(ICollection<TItem> actual)
 		{

@@ -31,7 +31,7 @@ public partial class ThatDelegateThrows<TException>
 	/// </summary>
 	public AndOrExpectationResult<TException, ThatDelegateThrows<TException>> WithInnerException()
 		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasInnerExceptionConstraint<Exception>("with"),
+				new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with"),
 				b => b.AppendMethod(nameof(WithInnerException))),
 			this);
 }

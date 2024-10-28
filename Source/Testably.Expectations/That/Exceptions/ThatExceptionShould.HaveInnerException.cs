@@ -17,7 +17,7 @@ public partial class ThatExceptionShould<TException>
 	/// </summary>
 	public AndOrExpectationResult<TException, ThatExceptionShould<TException?>> HaveInnerException()
 		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasInnerExceptionConstraint<TException>("have"),
+				new ThatExceptionShould.HasInnerExceptionValueConstraint<TException>("have"),
 				b => b.AppendMethod(nameof(HaveInnerException))),
 			this);
 

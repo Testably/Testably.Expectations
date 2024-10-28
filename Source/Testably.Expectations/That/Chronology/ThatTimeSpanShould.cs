@@ -33,10 +33,10 @@ public static partial class ThatTimeSpanShould
 		return new That<TimeSpan?>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct ConditionConstraint(
+	private readonly struct ConditionValueConstraint(
 		TimeSpan expected,
 		Func<TimeSpan, TimeSpan, bool> condition,
-		string expectation) : IConstraint<TimeSpan>
+		string expectation) : IValueConstraint<TimeSpan>
 	{
 		public ConstraintResult IsMetBy(TimeSpan actual)
 		{

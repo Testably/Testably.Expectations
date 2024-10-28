@@ -16,7 +16,7 @@ public static partial class ThatBoolShould
 	public static AndOrExpectationResult<bool, IThat<bool>> Be(this IThat<bool> source,
 		bool expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new IsConstraint(expected),
+		=> new(source.ExpectationBuilder.Add(new IsValueConstraint(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source);
 	
@@ -27,11 +27,11 @@ public static partial class ThatBoolShould
 		bool unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new IsNotConstraint(unexpected),
+		=> new(source.ExpectationBuilder.Add(new IsNotValueConstraint(unexpected),
 				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct IsNotConstraint(bool unexpected) : IConstraint<bool>
+	private readonly struct IsNotValueConstraint(bool unexpected) : IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{

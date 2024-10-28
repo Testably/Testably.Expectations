@@ -27,8 +27,8 @@ public static partial class ThatExceptionShould
 		return new ThatExceptionShould<TException>(subject.ExpectationBuilder);
 	}
 
-	internal readonly struct HasMessageConstraint<T>(StringMatcher expected, string verb)
-		: IConstraint<T>, IDelegateConstraint<DelegateSource.NoValue>
+	internal readonly struct HasMessageValueConstraint<T>(StringMatcher expected, string verb)
+		: IValueConstraint<T>, IComplexConstraint<DelegateSource.NoValue>
 		where T : Exception?
 	{
 		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
@@ -51,9 +51,9 @@ public static partial class ThatExceptionShould
 			=> $"{verb} Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
 	}
 
-	internal readonly struct HasParamNameConstraint<T>(string expected, string verb)
-		: IConstraint<T>,
-			IDelegateConstraint<DelegateSource.NoValue>
+	internal readonly struct HasParamNameValueConstraint<T>(string expected, string verb)
+		: IValueConstraint<T>,
+			IComplexConstraint<DelegateSource.NoValue>
 		where T : ArgumentException?
 	{
 		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
@@ -82,9 +82,9 @@ public static partial class ThatExceptionShould
 			=> $"{verb} ParamName {Formatter.Format(expected)}";
 	}
 
-	internal readonly struct HasInnerExceptionConstraint<TInnerException>(string verb)
-		: IConstraint<Exception?>,
-			IDelegateConstraint<DelegateSource.NoValue>
+	internal readonly struct HasInnerExceptionValueConstraint<TInnerException>(string verb)
+		: IValueConstraint<Exception?>,
+			IComplexConstraint<DelegateSource.NoValue>
 		where TInnerException : Exception?
 	{
 		/// <inheritdoc />
@@ -116,7 +116,7 @@ public static partial class ThatExceptionShould
 			=> $"{verb} an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
-	internal class CastException<TBase, TTarget> : IConstraint<TBase?, TTarget?>
+	internal class CastException<TBase, TTarget> : ICastConstraint<TBase?, TTarget?>
 		where TBase : Exception?
 		where TTarget : Exception?
 	{

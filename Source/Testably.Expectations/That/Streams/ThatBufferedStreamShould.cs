@@ -11,11 +11,11 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatBufferedStreamShould
 {
-	private readonly struct Constraint(
+	private readonly struct ValueConstraint(
 		string expectation,
 		Func<BufferedStream?, bool> successIf,
 		Func<BufferedStream?, string> onFailure)
-		: IConstraint<BufferedStream?>
+		: IValueConstraint<BufferedStream?>
 	{
 		public ConstraintResult IsMetBy(BufferedStream? actual)
 		{

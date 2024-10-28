@@ -20,12 +20,12 @@ public static partial class ThatCollectionShould
 			this IThat<ICollection<TItem>> source,
 			TItem expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ContainsConstraint<TItem>(expected),
+		=> new(source.ExpectationBuilder.Add(new ContainsValueConstraint<TItem>(expected),
 				b => b.AppendMethod(nameof(Contain), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct ContainsConstraint<TItem>(TItem expected)
-		: IConstraint<ICollection<TItem>>
+	private readonly struct ContainsValueConstraint<TItem>(TItem expected)
+		: IValueConstraint<ICollection<TItem>>
 	{
 		public ConstraintResult IsMetBy(ICollection<TItem> actual)
 		{

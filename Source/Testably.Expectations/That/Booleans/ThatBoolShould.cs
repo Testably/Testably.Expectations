@@ -20,7 +20,7 @@ public static partial class ThatBoolShould
 		return new That<bool>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct IsConstraint(bool expected) : IConstraint<bool>
+	private readonly struct IsValueConstraint(bool expected) : IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{

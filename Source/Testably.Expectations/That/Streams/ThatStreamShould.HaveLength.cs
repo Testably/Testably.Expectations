@@ -16,7 +16,7 @@ public static partial class ThatStreamShould
 		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					$"have length {expected}",
 					actual => actual?.Length == expected,
 					actual => actual == null ? "found <null>" : $"it had length {actual.Length}"),
@@ -30,7 +30,7 @@ public static partial class ThatStreamShould
 		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					$"not have length {expected}",
 					actual => actual != null && actual.Length != expected,
 					actual => actual == null ? "found <null>" : "it had"),

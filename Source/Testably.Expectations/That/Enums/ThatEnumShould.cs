@@ -22,8 +22,8 @@ public static partial class ThatEnumShould
 		return new That<TEnum>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct Constraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
-		: IConstraint<TEnum>
+	private readonly struct ValueConstraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
+		: IValueConstraint<TEnum>
 		where TEnum : struct, Enum
 	{
 		public ConstraintResult IsMetBy(TEnum actual)

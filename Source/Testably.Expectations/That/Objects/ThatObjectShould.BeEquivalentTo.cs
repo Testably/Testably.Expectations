@@ -26,16 +26,16 @@ public static partial class ThatObjectShould
 	{
 		EquivalencyOptions? options = new();
 		return new EquivalencyOptionsExpectationResult<T, IThat<T>>(source.ExpectationBuilder.Add(
-				new IsEquivalentToConstraint(expected, doNotPopulateThisValue, options),
+				new IsEquivalentToValueConstraint(expected, doNotPopulateThisValue, options),
 				b => b.AppendMethod(nameof(BeEquivalentTo), doNotPopulateThisValue)),
 			source,
 			options);
 	}
 
-	private readonly struct IsEquivalentToConstraint(
+	private readonly struct IsEquivalentToValueConstraint(
 		object? expected,
 		string expectedExpression,
-		EquivalencyOptions options) : IConstraint<object?>
+		EquivalencyOptions options) : IValueConstraint<object?>
 	{
 		public ConstraintResult IsMetBy(object? actual)
 		{

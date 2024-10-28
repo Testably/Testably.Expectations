@@ -16,7 +16,7 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new(source.ExpectationBuilder.AddCast(
-			new ThrowsConstraint<Exception>(throwOptions),
+			new ThrowsCastConstraint<Exception>(throwOptions),
 			b => b.AppendMethod(nameof(ThrowException))),
 			throwOptions);
 	}

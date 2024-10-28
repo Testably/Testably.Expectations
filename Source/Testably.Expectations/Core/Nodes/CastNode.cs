@@ -8,12 +8,12 @@ namespace Testably.Expectations.Core.Nodes;
 
 internal class CastNode<T1, T2> : ManipulationNode
 {
-	public IConstraint<T1, T2> Constraint { get; }
+	public ICastConstraint<T1, T2> CastConstraint { get; }
 	public override Node Inner { get; set; }
 
-	public CastNode(IConstraint<T1, T2> constraint, Node inner)
+	public CastNode(ICastConstraint<T1, T2> castConstraint, Node inner)
 	{
-		Constraint = constraint;
+		CastConstraint = castConstraint;
 		Inner = inner;
 	}
 
@@ -23,7 +23,7 @@ internal class CastNode<T1, T2> : ManipulationNode
 		IEvaluationContext context)
 		where TValue : default
 	{
-		ConstraintResult? result = await TryMeet(Constraint, value, context, Reason);
+		ConstraintResult? result = await TryMeet(CastConstraint, value, context, Reason);
 		if (!result.IgnoreFurtherProcessing && Inner != None && result is ConstraintResult.Success<T2> success)
 		{
 			return (await Inner.IsMetBy(new SourceValue<T2>(success.Value, value.Exception), context))
@@ -36,5 +36,5 @@ internal class CastNode<T1, T2> : ManipulationNode
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> Constraint.ToString() ?? "<EMPTY EXPECTATION>";
+		=> CastConstraint.ToString() ?? "<EMPTY EXPECTATION>";
 }

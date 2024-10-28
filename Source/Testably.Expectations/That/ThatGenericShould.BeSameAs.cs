@@ -17,12 +17,12 @@ public static partial class ThatGenericShould
 		object? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new IsSameAsConstraint<T>(expected, doNotPopulateThisValue),
+				new IsSameAsValueConstraint<T>(expected, doNotPopulateThisValue),
 				b => b.AppendMethod(nameof(BeSameAs), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct IsSameAsConstraint<T>(object? expected, string expectedExpression)
-		: IConstraint<T?>
+	private readonly struct IsSameAsValueConstraint<T>(object? expected, string expectedExpression)
+		: IValueConstraint<T?>
 	{
 		public ConstraintResult IsMetBy(T? actual)
 		{

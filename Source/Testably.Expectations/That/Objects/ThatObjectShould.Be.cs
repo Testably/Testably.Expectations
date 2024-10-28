@@ -14,12 +14,12 @@ public static partial class ThatObjectShould
 	public static AndOrWhichExpectationResult<TType, IThat<object?>> Be<TType>(
 		this IThat<object?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new IsConstraint<TType>(),
+				new IsValueConstraint<TType>(),
 				b => b.Append('.').Append(nameof(Be)).Append('<').Append(typeof(TType).Name)
 					.Append(">()")),
 			source);
 
-	private readonly struct IsConstraint<TType> : IConstraint<object?>
+	private readonly struct IsValueConstraint<TType> : IValueConstraint<object?>
 	{
 		public ConstraintResult IsMetBy(object? actual)
 		{

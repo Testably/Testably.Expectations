@@ -24,12 +24,12 @@ public interface IExpectationBuilder
 		Action<StringBuilder> expressionBuilder);
 
 	/// <summary>
-	///     Add a new <paramref name="constraint" /> that casts from <typeparamref name="TSource" /> to
+	///     Add a new <paramref name="castConstraint" /> that casts from <typeparamref name="TSource" /> to
 	///     <typeparamref name="TTarget" />.
 	///     Also update the <paramref name="expressionBuilder" />.
 	/// </summary>
 	IExpectationBuilder AddCast<TSource, TTarget>(
-		IConstraint<TSource, TTarget> constraint,
+		ICastConstraint<TSource, TTarget> castConstraint,
 		Action<StringBuilder> expressionBuilder);
 
 	/// <summary>
@@ -81,7 +81,7 @@ public interface IExpectationBuilder
 	/// </summary>
 	IExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
 		PropertyAccessor propertyAccessor,
-		IConstraint<TBase, TProperty> cast,
+		ICastConstraint<TBase, TProperty> cast,
 		Action<TThatProperty> expectation,
 		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
