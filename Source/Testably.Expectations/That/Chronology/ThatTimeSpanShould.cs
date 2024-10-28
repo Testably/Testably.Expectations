@@ -33,7 +33,7 @@ public static partial class ThatTimeSpanShould
 		return new That<TimeSpan?>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct ConditionValueConstraint(
+	private readonly struct ConditionConstraint(
 		TimeSpan expected,
 		Func<TimeSpan, TimeSpan, bool> condition,
 		string expectation) : IValueConstraint<TimeSpan>

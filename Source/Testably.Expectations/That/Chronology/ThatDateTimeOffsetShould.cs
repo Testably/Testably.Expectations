@@ -33,7 +33,7 @@ public static partial class ThatDateTimeOffsetShould
 		return new That<DateTimeOffset?>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct ConditionValueConstraint(
+	private readonly struct ConditionConstraint(
 		DateTimeOffset expected,
 		Func<DateTimeOffset, DateTimeOffset, bool> condition,
 		string expectation) : IValueConstraint<DateTimeOffset>

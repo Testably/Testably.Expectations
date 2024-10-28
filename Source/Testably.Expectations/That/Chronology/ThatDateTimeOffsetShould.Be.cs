@@ -18,7 +18,7 @@ public static partial class ThatDateTimeOffsetShould
 		DateTimeOffset expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new ConditionValueConstraint(
+				new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
 					$"be {Formatter.Format(expected)}"),
@@ -34,7 +34,7 @@ public static partial class ThatDateTimeOffsetShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new ConditionValueConstraint(
+				new ConditionConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
 					$"not be {Formatter.Format(unexpected)}"),

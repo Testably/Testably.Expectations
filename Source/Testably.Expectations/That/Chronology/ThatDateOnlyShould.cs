@@ -34,7 +34,7 @@ public static partial class ThatDateOnlyShould
 		return new That<DateOnly?>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct ConditionValueConstraint(
+	private readonly struct ConditionConstraint(
 		DateOnly expected,
 		Func<DateOnly, DateOnly, bool> condition,
 		string expectation) : IValueConstraint<DateOnly>
