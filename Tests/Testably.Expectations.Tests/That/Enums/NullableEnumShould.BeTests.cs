@@ -28,7 +28,7 @@ public sealed partial class NullableEnumShould
 				=> await Expect.That(subject).Should().Be(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    be {expected?.ToString() ?? "<null>"},
 				                    but found {subject?.ToString() ?? "<null>"}
@@ -45,7 +45,7 @@ public sealed partial class NullableEnumShould
 				=> await Expect.That(subject).Should().Be(MyColors.Red);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   be Red,
 				                   but found <null>
@@ -78,7 +78,7 @@ public sealed partial class NullableEnumShould
 				=> await Expect.That(subject).Should().NotBe(null);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                   Expected subject to
 				                   not be <null>,
 				                   but found <null>
@@ -114,7 +114,7 @@ public sealed partial class NullableEnumShould
 				=> await Expect.That(subject).Should().NotBe(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    not be {unexpected?.ToString() ?? "<null>"},
 				                    but found {subject?.ToString() ?? "<null>"}

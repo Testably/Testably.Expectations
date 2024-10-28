@@ -13,12 +13,12 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject has the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, That<TEnum?>> HaveValue<TEnum>(
-		this That<TEnum?> source,
+	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> HaveValue<TEnum>(
+		this IThat<TEnum?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
 					$"have value {expected}",
 					actual => actual != null &&
 					          Convert.ToInt64(actual.Value, CultureInfo.InvariantCulture) ==
@@ -29,13 +29,13 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject does not have the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, That<TEnum?>> NotHaveValue<TEnum>(
-		this That<TEnum?> source,
+	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> NotHaveValue<TEnum>(
+		this IThat<TEnum?> source,
 		long unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
 					$"not have value {unexpected}",
 					actual => actual != null &&
 					          Convert.ToInt64(actual.Value, CultureInfo.InvariantCulture) !=

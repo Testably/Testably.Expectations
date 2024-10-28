@@ -43,7 +43,7 @@ public sealed partial class NumberShould
 				=> await Expect.That(subject).Should().BeNaN();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   be NaN,
 				                   but found {subject.ToString(CultureInfo.InvariantCulture)}
@@ -88,7 +88,7 @@ public sealed partial class NumberShould
 				=> await Expect.That(subject).Should().BeNaN();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   be NaN,
 				                   but found {subject.ToString(CultureInfo.InvariantCulture)}

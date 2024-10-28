@@ -3,7 +3,7 @@
 /// <summary>
 ///     Base class for expectations, containing an <paramref name="expectationBuilder" />.
 /// </summary>
-public class That<T>(IExpectationBuilder expectationBuilder)
+internal class That<T>(IExpectationBuilder expectationBuilder) : IThat<T>
 {
 	/// <summary>
 	///     The expectation builder.

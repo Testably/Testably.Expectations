@@ -21,7 +21,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().ThrowExactly<CustomException>();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage(expectedMessage);
+				.WithMessage(expectedMessage);
 		}
 
 		[Fact]
@@ -41,7 +41,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().ThrowExactly<CustomException>();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage(expectedMessage);
+				.WithMessage(expectedMessage);
 		}
 
 		[Fact]
@@ -59,7 +59,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().ThrowExactly<CustomException>();
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage(expectedMessage);
+				.WithMessage(expectedMessage);
 		}
 
 		[Fact]

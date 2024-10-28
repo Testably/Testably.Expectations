@@ -50,9 +50,9 @@ public static partial class ThatDelegateShould
 	}
 	
 	
-	private readonly struct ThrowsConstraint<TException>(ThrowsOption throwOptions) :
-		IConstraint<DelegateSource.NoValue, TException>,
-		IDelegateConstraint<DelegateSource.NoValue>
+	private readonly struct ThrowsCastConstraint<TException>(ThrowsOption throwOptions) :
+		ICastConstraint<DelegateSource.NoValue, TException>,
+		IComplexConstraint<DelegateSource.NoValue>
 		where TException : Exception
 	{
 		/// <inheritdoc />

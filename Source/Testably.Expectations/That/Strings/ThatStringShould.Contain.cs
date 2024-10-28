@@ -16,16 +16,16 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject contains the <paramref name="expected" /> <see langword="string" />.
 	/// </summary>
-	public static StringCountExpectationResult<string?, That<string?>> Contain(
-		this That<string?> source,
+	public static StringCountExpectationResult<string?, IThat<string?>> Contain(
+		this IThat<string?> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		Quantifier? quantifier = new Quantifier();
 		StringOptions? options = new StringOptions();
-		return new StringCountExpectationResult<string?, That<string?>>(
+		return new StringCountExpectationResult<string?, IThat<string?>>(
 			source.ExpectationBuilder.Add(
-				new ContainsConstraint(expected, quantifier, options),
+				new ContainsValueConstraint(expected, quantifier, options),
 				b => b.AppendMethod(nameof(Contain), doNotPopulateThisValue)),
 			source,
 			quantifier,
@@ -35,8 +35,8 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject contains the <paramref name="unexpected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, That<string?>> NotContain(
-		this That<string?> source,
+	public static StringExpectationResult<string?, IThat<string?>> NotContain(
+		this IThat<string?> source,
 		string unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
@@ -44,18 +44,18 @@ public static partial class ThatStringShould
 		Quantifier? quantifier = new Quantifier();
 		quantifier.Exactly(0);
 		StringOptions? options = new StringOptions();
-		return new StringExpectationResult<string?, That<string?>>(source.ExpectationBuilder.Add(
-				new ContainsConstraint(unexpected, quantifier, options),
+		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
+				new ContainsValueConstraint(unexpected, quantifier, options),
 				b => b.AppendMethod(nameof(NotContain), doNotPopulateThisValue)),
 			source,
 			options);
 	}
 
-	private readonly struct ContainsConstraint(
+	private readonly struct ContainsValueConstraint(
 		string expected,
 		Quantifier quantifier,
 		StringOptions options)
-		: IConstraint<string?>
+		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)

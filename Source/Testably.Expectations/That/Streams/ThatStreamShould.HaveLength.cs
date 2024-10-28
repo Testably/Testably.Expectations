@@ -12,11 +12,11 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> length.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> HaveLength(
-		this That<Stream?> source,
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> HaveLength(
+		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					$"have length {expected}",
 					actual => actual?.Length == expected,
 					actual => actual == null ? "found <null>" : $"it had length {actual.Length}"),
@@ -26,11 +26,11 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> length.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> NotHaveLength(
-		this That<Stream?> source,
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotHaveLength(
+		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					$"not have length {expected}",
 					actual => actual != null && actual.Length != expected,
 					actual => actual == null ? "found <null>" : "it had"),

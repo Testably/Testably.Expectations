@@ -15,15 +15,15 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Start expectations for the current <typeparamref name="TEnum" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<TEnum> Should<TEnum>(this IExpectThat<TEnum> subject)
+	public static IThat<TEnum> Should<TEnum>(this IExpectThat<TEnum> subject)
 		where TEnum : struct, Enum
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<TEnum>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct Constraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
-		: IConstraint<TEnum>
+	private readonly struct ValueConstraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
+		: IValueConstraint<TEnum>
 		where TEnum : struct, Enum
 	{
 		public ConstraintResult IsMetBy(TEnum actual)

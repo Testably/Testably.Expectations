@@ -20,7 +20,7 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.OnlyIf(!ignoreCase)
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  start with "SOME",
 				                  but found "some arbitrary text"
@@ -39,7 +39,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().StartWith(expected).IgnoringCase();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  start with "TEXT" ignoring case,
 				                  but found "some arbitrary text"
@@ -59,7 +59,7 @@ public sealed partial class StringShould
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  start with "SOME" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
@@ -91,7 +91,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().StartWith(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  start with "text",
 				                  but found "some arbitrary text"
@@ -136,7 +136,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().NotStartWith(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not start with "some",
 				                  but found "some text"
@@ -170,7 +170,7 @@ public sealed partial class StringShould
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not start with "sOmE" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
@@ -200,7 +200,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().NotStartWith(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not start with "some",
 				                  but found "some text"

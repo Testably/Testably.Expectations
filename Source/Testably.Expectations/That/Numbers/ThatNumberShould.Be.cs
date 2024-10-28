@@ -14,40 +14,40 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber, That<TNumber>> Be<TNumber>(
-		this That<TNumber> source,
+	public static AndOrExpectationResult<TNumber, IThat<TNumber>> Be<TNumber>(
+		this IThat<TNumber> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsConstraint<TNumber>(expected),
+		=> new(source.ExpectationBuilder.Add(new IsValueConstraint<TNumber>(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber?, That<TNumber?>> Be<TNumber>(
-		this That<TNumber?> source,
+	public static AndOrExpectationResult<TNumber?, IThat<TNumber?>> Be<TNumber>(
+		this IThat<TNumber?> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsConstraint<TNumber>(expected),
+		=> new(source.ExpectationBuilder.Add(new IsValueConstraint<TNumber>(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber, That<TNumber>> NotBe<TNumber>(
-		this That<TNumber> source,
+	public static AndOrExpectationResult<TNumber, IThat<TNumber>> NotBe<TNumber>(
+		this IThat<TNumber> source,
 		TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsNotConstraint<TNumber>(expected),
+		=> new(source.ExpectationBuilder.Add(new IsNotValueConstraint<TNumber>(expected),
 				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct IsConstraint<TNumber>(TNumber? expected) : IConstraint<TNumber>
+	private readonly struct IsValueConstraint<TNumber>(TNumber? expected) : IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)
@@ -64,7 +64,7 @@ public static partial class ThatNumberShould
 			=> $"be {Formatter.Format(expected)}";
 	}
 
-	private readonly struct IsNotConstraint<TNumber>(TNumber expected) : IConstraint<TNumber>
+	private readonly struct IsNotValueConstraint<TNumber>(TNumber expected) : IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)

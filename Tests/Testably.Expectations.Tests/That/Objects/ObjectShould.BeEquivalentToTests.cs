@@ -32,7 +32,7 @@ public sealed partial class ObjectShould
 			};
 
 			await Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
-				.ThrowsWithMessage("""
+				.ThrowException().WithMessage("""
 				                   Expected subject to
 				                   be equivalent to expected,
 				                   but Property Value did not match:
@@ -68,7 +68,7 @@ public sealed partial class ObjectShould
 			};
 
 			await Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
-				.ThrowsWithMessage("""
+				.ThrowException().WithMessage("""
 				                   Expected subject to
 				                   be equivalent to expected,
 				                   but Property Inner.Inner.Value did not match:
@@ -141,7 +141,7 @@ public sealed partial class ObjectShould
 			};
 
 			Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
-				.ThrowsWithMessage("""
+				.ThrowException().WithMessage("""
 				                   Expected subject to
 				                   be equivalent to expected,
 				                   but EnumerableItem Inner.Inner.Collection.[3] did not match

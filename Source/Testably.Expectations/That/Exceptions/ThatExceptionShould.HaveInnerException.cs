@@ -10,31 +10,30 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="Exception" /> values.
 /// </summary>
-public static partial class ThatExceptionShould
+public partial class ThatExceptionShould<TException>
 {
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception.
 	/// </summary>
-	public static AndOrExpectationResult<Exception, That<Exception?>> HaveInnerException(
-		this That<Exception?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new HasInnerExceptionConstraint<Exception>(),
+	public AndOrExpectationResult<TException, ThatExceptionShould<TException?>> HaveInnerException()
+		=> new(ExpectationBuilder.Add(
+				new ThatExceptionShould.HasInnerExceptionValueConstraint<TException>("have"),
 				b => b.AppendMethod(nameof(HaveInnerException))),
-			source);
+			this);
 
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception which satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public static AndOrExpectationResult<Exception?, That<Exception?>> HaveInnerException(
-		this That<Exception?> source,
-		Action<That<Exception?>> expectations,
+	public AndOrExpectationResult<TException?, ThatExceptionShould<TException?>> HaveInnerException(
+		Action<ThatExceptionShould<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Which<Exception, Exception?>(
+		=> new(ExpectationBuilder.Which<Exception, Exception?, ThatExceptionShould<Exception?>>(
 				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
 					"have an inner exception which should "),
 				expectations,
+				e => new ThatExceptionShould<Exception?>(e),
 				b => b.AppendMethod(nameof(HaveInnerException), doNotPopulateThisValue),
 				whichTextSeparator: ""),
-			source);
+			this);
 }

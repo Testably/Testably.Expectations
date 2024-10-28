@@ -14,11 +14,11 @@ public static partial class ThatDateOnlyShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<DateOnly, That<DateOnly>> Be(this That<DateOnly> source,
+	public static AndOrExpectationResult<DateOnly, IThat<DateOnly>> Be(this IThat<DateOnly> source,
 		DateOnly expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
-		return new AndOrExpectationResult<DateOnly, That<DateOnly>>(source.ExpectationBuilder.Add(
+		return new AndOrExpectationResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder.Add(
 				new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
@@ -30,7 +30,7 @@ public static partial class ThatDateOnlyShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<DateOnly, That<DateOnly>> NotBe(this That<DateOnly> source,
+	public static AndOrExpectationResult<DateOnly, IThat<DateOnly>> NotBe(this IThat<DateOnly> source,
 		DateOnly unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")

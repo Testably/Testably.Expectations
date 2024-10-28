@@ -28,7 +28,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).AtLeast(5);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" at least 5 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -47,7 +47,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).AtLeast(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "text that does not occur" at least once,
 				                  but found it 0 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -65,9 +65,9 @@ public sealed partial class StringShould
 			async Task Act()
 				=> await Expect.That(subject).Should().Contain(expected).AtLeast(-1);
 
-			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
-				.HaveMessage("*'minimum'*").AsWildcard().And
-				.HaveParamName("minimum");
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>()
+				.WithParamName("minimum").And
+				.WithMessage("*'minimum'*").AsWildcard();
 		}
 
 		[Fact]
@@ -81,7 +81,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).AtMost(2);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" at most 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -125,9 +125,9 @@ public sealed partial class StringShould
 			async Task Act()
 				=> await Expect.That(subject).Should().Contain(expected).AtMost(-1);
 
-			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
-				.HaveMessage("*'maximum'*").AsWildcard().And
-				.HaveParamName("maximum");
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>()
+				.WithMessage("*'maximum'*").AsWildcard().And
+				.WithParamName("maximum");
 		}
 
 		[Fact]
@@ -141,7 +141,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).Between(4).And(9);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" between 4 and 9 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -160,7 +160,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).Between(1).And(2);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" between 1 and 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -191,9 +191,9 @@ public sealed partial class StringShould
 			async Task Act()
 				=> await Expect.That(subject).Should().Contain(expected).Between(1).And(-3);
 
-			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
-				.HaveMessage("*'maximum'*").AsWildcard().And
-				.HaveParamName("maximum");
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>()
+				.WithMessage("*'maximum'*").AsWildcard().And
+				.WithParamName("maximum");
 		}
 
 		[Fact]
@@ -219,8 +219,8 @@ public sealed partial class StringShould
 			async Task Act()
 				=> await Expect.That(subject).Should().Contain(expected).Between(4).And(3);
 
-			await Expect.That(Act).Should().ThrowExactly<ArgumentException>().Which
-				.HaveMessage("*'maximum'*greater*'minimum'*").AsWildcard();
+			await Expect.That(Act).Should().ThrowExactly<ArgumentException>()
+				.WithMessage("*'maximum'*greater*'minimum'*").AsWildcard();
 		}
 
 		[Fact]
@@ -233,9 +233,9 @@ public sealed partial class StringShould
 			async Task Act()
 				=> await Expect.That(subject).Should().Contain(expected).Between(-1).And(3);
 
-			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
-				.HaveMessage("*'minimum'*").AsWildcard().And
-				.HaveParamName("minimum");
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>()
+				.WithMessage("*'minimum'*").AsWildcard().And
+				.WithParamName("minimum");
 		}
 
 		[Fact]
@@ -249,9 +249,9 @@ public sealed partial class StringShould
 			async Task Act()
 				=> await Expect.That(subject).Should().Contain(expected).Exactly(-1);
 
-			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>().Which
-				.HaveMessage("*'expected'*").AsWildcard().And
-				.HaveParamName("expected");
+			await Expect.That(Act).Should().ThrowExactly<ArgumentOutOfRangeException>()
+				.WithMessage("*'expected'*").AsWildcard().And
+				.WithParamName("expected");
 		}
 
 		[Fact]
@@ -278,7 +278,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).Exactly(4);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" exactly 4 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -297,7 +297,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).Exactly(2);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" exactly 2 times,
 				                  but found it 3 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -316,7 +316,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).AtLeast(7).IgnoringCase();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" at least 7 times ignoring case,
 				                  but found it 5 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -362,7 +362,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).Never();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not contain "investigator",
 				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -394,7 +394,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).Once();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "detective" exactly once,
 				                  but found it 0 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -413,7 +413,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected).Once();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "word" exactly once,
 				                  but found it 2 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -449,7 +449,7 @@ public sealed partial class StringShould
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "in" exactly 5 times using IgnoreCaseForVocalsComparer,
 				                  but found it 4 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -479,7 +479,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().Contain(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  contain "not" at least once,
 				                  but found it 0 times in "some text"
@@ -501,7 +501,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().NotContain(expected).IgnoringCase();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not contain "INVESTIGATOR" ignoring case,
 				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -521,7 +521,7 @@ public sealed partial class StringShould
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not contain "InvEstIgAtOr" using IgnoreCaseForVocalsComparer,
 				                  but found it 1 times in "In this text in between the word an investigator should find the word 'IN' multiple times."
@@ -539,7 +539,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().NotContain(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not contain "me",
 				                  but found it 1 times in "some text"

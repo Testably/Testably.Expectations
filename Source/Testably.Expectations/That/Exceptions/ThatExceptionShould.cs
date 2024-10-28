@@ -5,6 +5,7 @@ using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
 using Testably.Expectations.Formatting;
+using Testably.Expectations.Options;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
@@ -17,16 +18,73 @@ public static partial class ThatExceptionShould
 	/// <summary>
 	///     Start expectations for the current <see cref="Exception" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<Exception?> Should(this IExpectThat<Exception?> subject,
+	public static ThatExceptionShould<TException> Should<TException>(
+		this IExpectThat<TException> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		where TException : Exception?
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<Exception?>(subject.ExpectationBuilder);
+		return new ThatExceptionShould<TException>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct HasInnerExceptionConstraint<TInnerException>
-		: IConstraint<Exception?>,
-			IDelegateConstraint<DelegateSource.NoValue>
+	internal readonly struct HasMessageValueConstraint<T>(StringMatcher expected, string verb)
+		: IValueConstraint<T>, IComplexConstraint<DelegateSource.NoValue>
+		where T : Exception?
+	{
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
+		{
+			return IsMetBy(exception as T);
+		}
+
+		public ConstraintResult IsMetBy(T? actual)
+		{
+			if (expected.Matches(actual?.Message))
+			{
+				return new ConstraintResult.Success<T?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				expected.GetExtendedFailure(actual?.Message));
+		}
+
+		public override string ToString()
+			=> $"{verb} Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
+	}
+
+	internal readonly struct HasParamNameValueConstraint<T>(string expected, string verb)
+		: IValueConstraint<T>,
+			IComplexConstraint<DelegateSource.NoValue>
+		where T : ArgumentException?
+	{
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
+		{
+			return IsMetBy(exception as T);
+		}
+
+		public ConstraintResult IsMetBy(T? actual)
+		{
+			if (actual == null)
+			{
+				return new ConstraintResult.Failure(ToString(),
+					"found <null>");
+			}
+
+			if (actual.ParamName == expected)
+			{
+				return new ConstraintResult.Success<T?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				$"found ParamName {Formatter.Format(actual.ParamName)}");
+		}
+
+		public override string ToString()
+			=> $"{verb} ParamName {Formatter.Format(expected)}";
+	}
+
+	internal readonly struct HasInnerExceptionValueConstraint<TInnerException>(string verb)
+		: IValueConstraint<Exception?>,
+			IComplexConstraint<DelegateSource.NoValue>
 		where TInnerException : Exception?
 	{
 		/// <inheritdoc />
@@ -45,24 +103,24 @@ public static partial class ThatExceptionShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				"it did not");
+				"found <null>");
 		}
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
-			return IsMetBy(value.Exception);
+			return IsMetBy(exception);
 		}
 
 		public override string ToString()
-			=> $"have an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
+			=> $"{verb} an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
-	private class CastException<TBase, TTarget> : IConstraint<TBase?, TTarget?>
-		where TBase : Exception
+	internal class CastException<TBase, TTarget> : ICastConstraint<TBase?, TTarget?>
+		where TBase : Exception?
 		where TTarget : Exception?
 	{
-		#region IConstraint<TBase?,TTarget?> Members
+		#region IDelegateConstraint<TBase?> Members
 
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(TBase? actual, Exception? exception)
@@ -80,4 +138,19 @@ public static partial class ThatExceptionShould
 
 		#endregion
 	}
+}
+
+/// <summary>
+///     Base class for expectations on <typeparamref name="TException" />, containing an <see cref="ExpectationBuilder" />.
+/// </summary>
+public partial class ThatExceptionShould<TException>(IExpectationBuilder expectationBuilder)
+	: IThat<TException>
+	where TException : Exception?
+{
+	#region IThat<TException> Members
+
+	/// <inheritdoc />
+	public IExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
+
+	#endregion
 }

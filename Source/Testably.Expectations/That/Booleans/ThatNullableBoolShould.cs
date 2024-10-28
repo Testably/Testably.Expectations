@@ -15,14 +15,14 @@ public static partial class ThatNullableBoolShould
 	/// <summary>
 	///     Start expectations for the current <see cref="bool" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<bool?> Should(this IExpectThat<bool?> subject,
+	public static IThat<bool?> Should(this IExpectThat<bool?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<bool?>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct IsConstraint(bool? expected) : IConstraint<bool?>
+	private readonly struct IsValueConstraint(bool? expected) : IValueConstraint<bool?>
 	{
 		public ConstraintResult IsMetBy(bool? actual)
 		{
@@ -38,7 +38,7 @@ public static partial class ThatNullableBoolShould
 			=> $"be {Formatter.Format(expected)}";
 	}
 
-	private readonly struct IsNotConstraint(bool? unexpected) : IConstraint<bool?>
+	private readonly struct IsNotValueConstraint(bool? unexpected) : IValueConstraint<bool?>
 	{
 		public ConstraintResult IsMetBy(bool? actual)
 		{

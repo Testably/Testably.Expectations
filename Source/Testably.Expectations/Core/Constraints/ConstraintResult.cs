@@ -49,6 +49,8 @@ public abstract class ConstraintResult
 	internal abstract ConstraintResult UpdateExpectationText(
 		Func<ConstraintResult, string> expectationText);
 
+	internal abstract ConstraintResult UseValue<T>(T value);
+
 	/// <summary>
 	///     The actual value met the expectation.
 	/// </summary>
@@ -96,6 +98,12 @@ public abstract class ConstraintResult
 		internal override ConstraintResult UpdateExpectationText(
 			Func<ConstraintResult, string> expectationText)
 			=> new Success(expectationText.Invoke(this));
+
+		/// <inheritdoc />
+		internal override ConstraintResult UseValue<T>(T value)
+		{
+			return new Success<T>(value, ExpectationText, IgnoreFurtherProcessing);
+		}
 	}
 
 	/// <summary>
@@ -204,6 +212,12 @@ public abstract class ConstraintResult
 		internal override ConstraintResult UpdateExpectationText(
 			Func<ConstraintResult, string> expectationText)
 			=> new Failure(expectationText.Invoke(this), ResultText);
+
+		/// <inheritdoc />
+		internal override ConstraintResult UseValue<T>(T value)
+		{
+			return new Failure<T>(value, ExpectationText, ResultText, IgnoreFurtherProcessing);
+		}
 	}
 
 	/// <summary>

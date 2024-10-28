@@ -14,24 +14,24 @@ public static partial class ThatCollectionShould
 	/// <summary>
 	///     Verifies that the actual collection is empty.
 	/// </summary>
-	public static AndOrExpectationResult<ICollection<TItem>, That<ICollection<TItem>>>
+	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		BeEmpty<TItem>(
-			this That<ICollection<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsEmptyConstraint<TItem>(),
+			this IThat<ICollection<TItem>> source)
+		=> new(source.ExpectationBuilder.Add(new IsEmptyValueConstraint<TItem>(),
 				b => b.AppendMethod(nameof(BeEmpty))),
 			source);
 
 	/// <summary>
 	///     Verifies that the actual collection is not empty.
 	/// </summary>
-	public static AndOrExpectationResult<ICollection<TItem>, That<ICollection<TItem>>>
+	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		NotBeEmpty<TItem>(
-			this That<ICollection<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsNotEmptyConstraint<TItem>(),
+			this IThat<ICollection<TItem>> source)
+		=> new(source.ExpectationBuilder.Add(new IsNotEmptyValueConstraint<TItem>(),
 				b => b.AppendMethod(nameof(NotBeEmpty))),
 			source);
 
-	private readonly struct IsEmptyConstraint<TItem> : IConstraint<ICollection<TItem>>
+	private readonly struct IsEmptyValueConstraint<TItem> : IValueConstraint<ICollection<TItem>>
 	{
 		public ConstraintResult IsMetBy(ICollection<TItem> actual)
 		{
@@ -48,7 +48,7 @@ public static partial class ThatCollectionShould
 			=> "be empty";
 	}
 
-	private readonly struct IsNotEmptyConstraint<TItem> : IConstraint<ICollection<TItem>>
+	private readonly struct IsNotEmptyValueConstraint<TItem> : IValueConstraint<ICollection<TItem>>
 	{
 		public ConstraintResult IsMetBy(ICollection<TItem> actual)
 		{

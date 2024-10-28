@@ -12,24 +12,24 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject is <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<string?, That<string?>> BeNull(
-		this That<string?> source)
+	public static AndOrExpectationResult<string?, IThat<string?>> BeNull(
+		this IThat<string?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new IsNullConstraint(),
+				new IsNullValueConstraint(),
 				b => b.AppendMethod(nameof(BeNull))),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is not <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<string, That<string?>> NotBeNull(
-		this That<string?> source)
+	public static AndOrExpectationResult<string, IThat<string?>> NotBeNull(
+		this IThat<string?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new IsNotNullConstraint(),
+				new IsNotNullValueConstraint(),
 				b => b.AppendMethod(nameof(NotBeNull))),
 			source);
 
-	private readonly struct IsNullConstraint : IConstraint<string?>
+	private readonly struct IsNullValueConstraint : IValueConstraint<string?>
 	{
 		#region IExpectation<string> Members
 
@@ -52,7 +52,7 @@ public static partial class ThatStringShould
 			=> "be null";
 	}
 
-	private readonly struct IsNotNullConstraint : IConstraint<string>
+	private readonly struct IsNotNullValueConstraint : IValueConstraint<string>
 	{
 		#region IExpectation<string> Members
 

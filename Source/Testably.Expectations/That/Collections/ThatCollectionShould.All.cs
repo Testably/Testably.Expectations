@@ -13,7 +13,7 @@ public static partial class ThatCollectionShould
 	///     Verifies that all...
 	/// </summary>
 	public static QuantifiableCollection<TItem, ICollection<TItem>> All<TItem>(
-		this That<ICollection<TItem>> source)
+		this IThat<ICollection<TItem>> source)
 	{
 		source.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(All)));
 		return new QuantifiableCollection<TItem, ICollection<TItem>>(source,

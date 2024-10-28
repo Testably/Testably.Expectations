@@ -11,9 +11,9 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is readable.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> BeReadable(
-		this That<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeReadable(
+		this IThat<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					"be readable",
 					actual => actual?.CanRead == true,
 					actual => actual == null ? "found <null>" : "it was not"),
@@ -23,9 +23,9 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is not readable.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, That<Stream?>> NotBeReadable(
-		this That<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotBeReadable(
+		this IThat<Stream?> source)
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					"not be readable",
 					actual => actual?.CanRead == false,
 					actual => actual == null ? "found <null>" : "it was"),

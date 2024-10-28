@@ -13,7 +13,7 @@ public static partial class ThatCollectionShould
 	///     Verifies that no items in the collection...
 	/// </summary>
 	public static QuantifiableCollection<TItem, ICollection<TItem>> None<TItem>(
-		this That<ICollection<TItem>> source)
+		this IThat<ICollection<TItem>> source)
 	{
 		source.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(None)));
 		return new QuantifiableCollection<TItem, ICollection<TItem>>(source,

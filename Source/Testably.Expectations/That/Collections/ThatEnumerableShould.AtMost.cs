@@ -14,7 +14,7 @@ public static partial class ThatEnumerableShould
 	///     Verifies that at most <paramref name="maximum" /> items...
 	/// </summary>
 	public static QuantifiableCollection<TItem, IEnumerable<TItem>> AtMost<TItem>(
-		this That<IEnumerable<TItem>> source,
+		this IThat<IEnumerable<TItem>> source,
 		int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
 	{
 		source.ExpectationBuilder.AppendExpression(b

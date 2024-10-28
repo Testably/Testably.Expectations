@@ -19,7 +19,7 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.OnlyIf(!ignoreCase)
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  end with "TEXT",
 				                  but found "some arbitrary text"
@@ -38,7 +38,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().EndWith(expected).IgnoringCase();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  end with "SOME" ignoring case,
 				                  but found "some arbitrary text"
@@ -58,7 +58,7 @@ public sealed partial class StringShould
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  end with "TEXT" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
@@ -90,7 +90,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().EndWith(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  end with "some",
 				                  but found "some arbitrary text"
@@ -123,7 +123,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().NotEndWith(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not end with "text",
 				                  but found "some text"
@@ -155,7 +155,7 @@ public sealed partial class StringShould
 					.Using(new IgnoreCaseForVocalsComparer());
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not end with "tExt" using IgnoreCaseForVocalsComparer,
 				                  but found "some arbitrary text"
@@ -187,7 +187,7 @@ public sealed partial class StringShould
 				=> await Expect.That(subject).Should().NotEndWith(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not end with "text",
 				                  but found "some text"

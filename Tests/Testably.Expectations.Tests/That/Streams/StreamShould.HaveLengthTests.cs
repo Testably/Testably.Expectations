@@ -17,7 +17,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().HaveLength(length);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   have length {length},
 				                   but it had length {actualLength}
@@ -46,7 +46,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().HaveLength(0);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have length 0,
 				                  but found <null>
@@ -80,7 +80,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotHaveLength(length);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   not have length {length},
 				                   but it had
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotHaveLength(0);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not have length 0,
 				                  but found <null>

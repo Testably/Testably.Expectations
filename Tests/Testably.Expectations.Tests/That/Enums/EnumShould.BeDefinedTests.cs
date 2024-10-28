@@ -24,7 +24,7 @@ public sealed partial class EnumShould
 				=> await Expect.That(subject).Should().BeDefined();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    be defined,
 				                    but found {subject}
@@ -44,7 +44,7 @@ public sealed partial class EnumShould
 				=> await Expect.That(subject).Should().NotBeDefined();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    not be defined,
 				                    but found {subject}

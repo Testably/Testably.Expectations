@@ -13,44 +13,18 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="Exception" /> values.
 /// </summary>
-public static partial class ThatExceptionShould
+public partial class ThatExceptionShould<TException>
 {
 	/// <summary>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public static StringMatcherExpectationResult<TException, That<TException>> HaveMessage<
-		TException>(
-		this That<TException> source,
+	public StringMatcherExpectationResult<TException?, ThatExceptionShould<TException?>> HaveMessage(
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		where TException : Exception?
-		=> new(source.ExpectationBuilder.Add(
-				new HasMessageConstraint<TException>(expected),
+		=> new(ExpectationBuilder.Add(
+				new ThatExceptionShould.HasMessageValueConstraint<TException>(expected, "have"),
 				b => b.AppendMethod(nameof(HaveMessage), doNotPopulateThisValue)),
-			source,
+			this,
 			expected);
 
-	private readonly struct HasMessageConstraint<T>(StringMatcher expected) : IConstraint<T>,
-		IDelegateConstraint<DelegateSource.NoValue>
-		where T : Exception?
-	{
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
-		{
-			return IsMetBy(value.Exception as T);
-		}
-
-		public ConstraintResult IsMetBy(T? actual)
-		{
-			if (expected.Matches(actual?.Message))
-			{
-				return new ConstraintResult.Success<T?>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				expected.GetExtendedFailure(actual?.Message));
-		}
-
-		public override string ToString()
-			=> $"have Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
-	}
 }

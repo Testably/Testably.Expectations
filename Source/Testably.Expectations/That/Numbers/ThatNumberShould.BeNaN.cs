@@ -13,21 +13,21 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is seen as not a number (<see cref="float.NaN" />).
 	/// </summary>
-	public static AndOrExpectationResult<float, That<float>> BeNaN(this That<float> source)
-		=> new(source.ExpectationBuilder.Add(new IsNaNConstraint<float>(float.IsNaN),
+	public static AndOrExpectationResult<float, IThat<float>> BeNaN(this IThat<float> source)
+		=> new(source.ExpectationBuilder.Add(new IsNaNValueConstraint<float>(float.IsNaN),
 				b => b.AppendMethod(nameof(BeNaN))),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is seen as not a number (<see cref="double.NaN" />).
 	/// </summary>
-	public static AndOrExpectationResult<double, That<double>> BeNaN(this That<double> source)
-		=> new(source.ExpectationBuilder.Add(new IsNaNConstraint<double>(double.IsNaN),
+	public static AndOrExpectationResult<double, IThat<double>> BeNaN(this IThat<double> source)
+		=> new(source.ExpectationBuilder.Add(new IsNaNValueConstraint<double>(double.IsNaN),
 				b => b.AppendMethod(nameof(BeNaN))),
 			source);
 
-	private readonly struct IsNaNConstraint<TNumber>(Func<TNumber, bool> isNaN)
-		: IConstraint<TNumber>
+	private readonly struct IsNaNValueConstraint<TNumber>(Func<TNumber, bool> isNaN)
+		: IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)

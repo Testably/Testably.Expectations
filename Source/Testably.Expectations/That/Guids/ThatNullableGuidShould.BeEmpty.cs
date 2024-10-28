@@ -11,8 +11,8 @@ public static partial class ThatNullableGuidShould
 	/// <summary>
 	///     Verifies that the subject is empty.
 	/// </summary>
-	public static AndOrExpectationResult<Guid?, That<Guid?>> BeEmpty(this That<Guid?> source)
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+	public static AndOrExpectationResult<Guid?, IThat<Guid?>> BeEmpty(this IThat<Guid?> source)
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					"be empty",
 					actual => actual != null && actual == Guid.Empty),
 				b => b.AppendMethod(nameof(BeEmpty))),
@@ -21,8 +21,8 @@ public static partial class ThatNullableGuidShould
 	/// <summary>
 	///     Verifies that the subject is not empty.
 	/// </summary>
-	public static AndOrExpectationResult<Guid?, That<Guid?>> NotBeEmpty(this That<Guid?> source)
-		=> new(source.ExpectationBuilder.Add(new Constraint(
+	public static AndOrExpectationResult<Guid?, IThat<Guid?>> NotBeEmpty(this IThat<Guid?> source)
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
 					"not be empty",
 					actual => actual != null && actual != Guid.Empty),
 				b => b.AppendMethod(nameof(NotBeEmpty))),

@@ -16,7 +16,7 @@ public static partial class ThatTimeSpanShould
 	/// <summary>
 	///     Start expectations for current <see cref="TimeSpan" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<TimeSpan> Should(this IExpectThat<TimeSpan> subject,
+	public static IThat<TimeSpan> Should(this IExpectThat<TimeSpan> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -26,7 +26,7 @@ public static partial class ThatTimeSpanShould
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeSpan" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<TimeSpan?> Should(this IExpectThat<TimeSpan?> subject,
+	public static IThat<TimeSpan?> Should(this IExpectThat<TimeSpan?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -36,7 +36,7 @@ public static partial class ThatTimeSpanShould
 	private readonly struct ConditionConstraint(
 		TimeSpan expected,
 		Func<TimeSpan, TimeSpan, bool> condition,
-		string expectation) : IConstraint<TimeSpan>
+		string expectation) : IValueConstraint<TimeSpan>
 	{
 		public ConstraintResult IsMetBy(TimeSpan actual)
 		{

@@ -17,9 +17,9 @@ public static partial class ThatEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>>
+	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		Contain<TItem>(
-			this That<IEnumerable<TItem>> source,
+			this IThat<IEnumerable<TItem>> source,
 			TItem expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(new ContainsConstraint<TItem>(expected),

@@ -17,7 +17,7 @@ public static partial class ThatDateOnlyShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateOnly" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<DateOnly> Should(this IExpectThat<DateOnly> subject,
+	public static IThat<DateOnly> Should(this IExpectThat<DateOnly> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -27,7 +27,7 @@ public static partial class ThatDateOnlyShould
 	/// <summary>
 	///     Start expectations for the current <see cref="DateOnly" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<DateOnly?> Should(this IExpectThat<DateOnly?> subject,
+	public static IThat<DateOnly?> Should(this IExpectThat<DateOnly?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -37,7 +37,7 @@ public static partial class ThatDateOnlyShould
 	private readonly struct ConditionConstraint(
 		DateOnly expected,
 		Func<DateOnly, DateOnly, bool> condition,
-		string expectation) : IConstraint<DateOnly>
+		string expectation) : IValueConstraint<DateOnly>
 	{
 		public ConstraintResult IsMetBy(DateOnly actual)
 		{

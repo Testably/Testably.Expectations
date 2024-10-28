@@ -11,7 +11,7 @@ public sealed partial class DelegateShould
 
 			await Expect.That(action).Should().ThrowException()
 				.OnlyIf(false)
-				.Which.HaveMessage("foo");
+				.WithMessage("foo");
 		}
 
 		[Fact]
@@ -21,7 +21,7 @@ public sealed partial class DelegateShould
 
 			await Expect.That(action).Should().Throw<ArgumentException>()
 				.OnlyIf(false)
-				.Which.HaveMessage("foo");
+				.WithMessage("foo");
 		}
 
 		[Fact]
@@ -34,7 +34,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().ThrowException().OnlyIf(false);
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected action to
 				                  not throw any exception,
 				                  but it did throw an Exception
@@ -62,7 +62,7 @@ public sealed partial class DelegateShould
 				=> await Expect.That(action).Should().ThrowException().OnlyIf(true);
 
 			await Expect.That(Act).Should().ThrowException()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected action to
 				                  throw an Exception,
 				                  but it did not

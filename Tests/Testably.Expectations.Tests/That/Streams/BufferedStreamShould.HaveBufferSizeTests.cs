@@ -18,7 +18,7 @@ public sealed partial class BufferedStreamShould
 				=> await Expect.That(subject).Should().HaveBufferSize(buffersize);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   have buffer size {buffersize},
 				                   but it had buffer size {actualBufferSize}
@@ -47,7 +47,7 @@ public sealed partial class BufferedStreamShould
 				=> await Expect.That(subject).Should().HaveBufferSize(0);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have buffer size 0,
 				                  but found <null>
@@ -81,7 +81,7 @@ public sealed partial class BufferedStreamShould
 				=> await Expect.That(subject).Should().NotHaveBufferSize(buffersize);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   not have buffer size {buffersize},
 				                   but it had
@@ -98,7 +98,7 @@ public sealed partial class BufferedStreamShould
 				=> await Expect.That(subject).Should().NotHaveBufferSize(0);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not have buffer size 0,
 				                  but found <null>

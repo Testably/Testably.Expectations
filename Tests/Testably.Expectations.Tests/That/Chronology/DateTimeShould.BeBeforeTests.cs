@@ -14,7 +14,7 @@ public sealed partial class DateTimeShould
 				=> await Expect.That(subject).Should().BeBefore(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    be before {expected:O},
 				                    but found {subject:O}
@@ -32,7 +32,7 @@ public sealed partial class DateTimeShould
 				=> await Expect.That(subject).Should().BeBefore(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    be before {expected:O},
 				                    but found {subject:O}
@@ -63,7 +63,7 @@ public sealed partial class DateTimeShould
 					.Within(TimeSpan.FromSeconds(3));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    be before {expected:O} ± 0:03,
 				                    but found {subject:O}
@@ -97,7 +97,7 @@ public sealed partial class DateTimeShould
 				=> await Expect.That(subject).Should().NotBeBefore(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    not be before {expected:O},
 				                    but found {subject:O}
@@ -140,7 +140,7 @@ public sealed partial class DateTimeShould
 					.Within(TimeSpan.FromSeconds(3));
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    not be before {expected:O} ± 0:03,
 				                    but found {subject:O}

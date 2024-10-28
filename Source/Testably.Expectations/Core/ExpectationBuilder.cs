@@ -44,11 +44,11 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder AddCast<T1, T2>(IConstraint<T1, T2> constraint,
+	public IExpectationBuilder AddCast<T1, T2>(ICastConstraint<T1, T2> castConstraint,
 		Action<StringBuilder> expressionBuilder)
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddManipulation(n => new CastNode<T1, T2>(constraint, n));
+		_tree.AddManipulation(n => new CastNode<T1, T2>(castConstraint, n));
 		return this;
 	}
 
@@ -92,12 +92,15 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder Which<TSource, TProperty>(PropertyAccessor propertyAccessor,
-		Action<That<TProperty>>? expectation,
+	public IExpectationBuilder Which<TSource, TProperty, TThatProperty>(
+		PropertyAccessor propertyAccessor,
+		Action<TThatProperty>? expectation,
+		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
 		string andTextSeparator = "",
 		string whichTextSeparator = " which ",
 		string whichPropertyTextSeparator = "")
+		where TThatProperty : IThat<TProperty>
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
@@ -105,7 +108,7 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 			propertyAccessor,
 			expectation == null
 				? Node.None
-				: new DeferredNode<TProperty>(expectation),
+				: new DeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory),
 			whichTextSeparator,
 			whichPropertyTextSeparator));
 
@@ -113,17 +116,20 @@ internal class ExpectationBuilder<TValue> : IExpectationBuilder
 	}
 
 	/// <inheritdoc />
-	public IExpectationBuilder WhichCast<TSource, TBase, TProperty>(
+	public IExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
 		PropertyAccessor propertyAccessor,
-		IConstraint<TBase, TProperty> cast,
-		Action<That<TProperty>> expectation,
+		ICastConstraint<TBase, TProperty> cast,
+		Action<TThatProperty> expectation,
+		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
-		string textSeparator = " which ") where TProperty : TBase
+		string textSeparator = " which ")
+		where TThatProperty : IThat<TProperty>
+		where TProperty : TBase
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
 		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor,
-			cast, new DeferredNode<TProperty>(expectation), textSeparator));
+			cast, new DeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory), textSeparator));
 
 		return this;
 	}

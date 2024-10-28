@@ -13,7 +13,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<int> Should(this IExpectThat<int> subject)
+	public static IThat<int> Should(this IExpectThat<int> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<int>(subject.ExpectationBuilder);
@@ -22,7 +22,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<int?> Should(this IExpectThat<int?> subject)
+	public static IThat<int?> Should(this IExpectThat<int?> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<int?>(subject.ExpectationBuilder);
@@ -31,7 +31,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<uint> Should(this IExpectThat<uint> subject)
+	public static IThat<uint> Should(this IExpectThat<uint> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<uint>(subject.ExpectationBuilder);
@@ -40,7 +40,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<uint?> Should(this IExpectThat<uint?> subject)
+	public static IThat<uint?> Should(this IExpectThat<uint?> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<uint?>(subject.ExpectationBuilder);
@@ -49,7 +49,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see langword="nint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nint> Should(this IExpectThat<nint> subject)
+	public static IThat<nint> Should(this IExpectThat<nint> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<nint>(subject.ExpectationBuilder);
@@ -58,7 +58,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see langword="nint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nint?> Should(this IExpectThat<nint?> subject)
+	public static IThat<nint?> Should(this IExpectThat<nint?> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<nint?>(subject.ExpectationBuilder);
@@ -67,7 +67,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see langword="nuint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nuint> Should(this IExpectThat<nuint> subject)
+	public static IThat<nuint> Should(this IExpectThat<nuint> subject)
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<nuint>(subject.ExpectationBuilder);
@@ -76,7 +76,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see langword="nuint" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<nuint?> Should(this IExpectThat<nuint?> subject,
+	public static IThat<nuint?> Should(this IExpectThat<nuint?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -86,7 +86,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<byte> Should(this IExpectThat<byte> subject,
+	public static IThat<byte> Should(this IExpectThat<byte> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -96,7 +96,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<byte?> Should(this IExpectThat<byte?> subject,
+	public static IThat<byte?> Should(this IExpectThat<byte?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -106,7 +106,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<sbyte> Should(this IExpectThat<sbyte> subject,
+	public static IThat<sbyte> Should(this IExpectThat<sbyte> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -116,7 +116,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<sbyte?> Should(this IExpectThat<sbyte?> subject,
+	public static IThat<sbyte?> Should(this IExpectThat<sbyte?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -126,7 +126,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<short> Should(this IExpectThat<short> subject,
+	public static IThat<short> Should(this IExpectThat<short> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -136,7 +136,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<short?> Should(this IExpectThat<short?> subject,
+	public static IThat<short?> Should(this IExpectThat<short?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -146,7 +146,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ushort> Should(this IExpectThat<ushort> subject,
+	public static IThat<ushort> Should(this IExpectThat<ushort> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -156,7 +156,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ushort?> Should(this IExpectThat<ushort?> subject,
+	public static IThat<ushort?> Should(this IExpectThat<ushort?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -166,7 +166,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<long> Should(this IExpectThat<long> subject,
+	public static IThat<long> Should(this IExpectThat<long> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -176,7 +176,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<long?> Should(this IExpectThat<long?> subject,
+	public static IThat<long?> Should(this IExpectThat<long?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -186,7 +186,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ulong> Should(this IExpectThat<ulong> subject,
+	public static IThat<ulong> Should(this IExpectThat<ulong> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -196,7 +196,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<ulong?> Should(this IExpectThat<ulong?> subject,
+	public static IThat<ulong?> Should(this IExpectThat<ulong?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -206,7 +206,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<float> Should(this IExpectThat<float> subject,
+	public static IThat<float> Should(this IExpectThat<float> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -216,7 +216,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<float?> Should(this IExpectThat<float?> subject,
+	public static IThat<float?> Should(this IExpectThat<float?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -226,7 +226,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<double> Should(this IExpectThat<double> subject,
+	public static IThat<double> Should(this IExpectThat<double> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -236,7 +236,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<double?> Should(this IExpectThat<double?> subject,
+	public static IThat<double?> Should(this IExpectThat<double?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -246,7 +246,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<decimal> Should(this IExpectThat<decimal> subject,
+	public static IThat<decimal> Should(this IExpectThat<decimal> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -256,7 +256,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<decimal?> Should(this IExpectThat<decimal?> subject,
+	public static IThat<decimal?> Should(this IExpectThat<decimal?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));

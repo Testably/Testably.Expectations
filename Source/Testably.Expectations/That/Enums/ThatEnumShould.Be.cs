@@ -13,11 +13,11 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, That<TEnum>> Be<TEnum>(this That<TEnum> source,
+	public static AndOrExpectationResult<TEnum, IThat<TEnum>> Be<TEnum>(this IThat<TEnum> source,
 		TEnum expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
 					$"be {Formatter.Format(expected)}",
 					actual => actual.Equals(expected)),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
@@ -26,12 +26,12 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, That<TEnum>> NotBe<TEnum>(this That<TEnum> source,
+	public static AndOrExpectationResult<TEnum, IThat<TEnum>> NotBe<TEnum>(this IThat<TEnum> source,
 		TEnum unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new Constraint<TEnum>(
+		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
 					$"not be {Formatter.Format(unexpected)}",
 					actual => !actual.Equals(unexpected)),
 				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),

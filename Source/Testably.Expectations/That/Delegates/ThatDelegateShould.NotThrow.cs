@@ -1,4 +1,5 @@
-﻿using Testably.Expectations.Core;
+﻿using System;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
@@ -26,17 +27,17 @@ public static partial class ThatDelegateShould
 			new DoesNotThrowConstraint<DelegateSource.NoValue>(),
 			b => b.AppendMethod(nameof(NotThrow))));
 
-	private readonly struct DoesNotThrowConstraint<TValue> : IDelegateConstraint<TValue>
+	private readonly struct DoesNotThrowConstraint<TValue> : IComplexConstraint<TValue>
 	{
-		public ConstraintResult IsMetBy(SourceValue<TValue> value)
+		public ConstraintResult IsMetBy(TValue? actual, Exception? exception)
 		{
-			if (value.Exception is not null)
+			if (exception is not null)
 			{
-				return new ConstraintResult.Failure<TValue?>(value.Value, ToString(),
-					$"it did throw {value.Exception.FormatForMessage()}");
+				return new ConstraintResult.Failure<TValue?>(actual, ToString(),
+					$"it did throw {exception.FormatForMessage()}");
 			}
 
-			return new ConstraintResult.Success<TValue?>(value.Value, ToString());
+			return new ConstraintResult.Success<TValue?>(actual, ToString());
 		}
 
 		public override string ToString()

@@ -16,24 +16,24 @@ public static partial class ThatEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable is empty.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>>
+	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		BeEmpty<TItem>(
-			this That<IEnumerable<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsEmptyConstraint<TItem>(),
+			this IThat<IEnumerable<TItem>> source)
+		=> new(source.ExpectationBuilder.Add(new IsEmptyValueConstraint<TItem>(),
 				b => b.AppendMethod(nameof(BeEmpty))),
 			source);
 
 	/// <summary>
 	///     Verifies that the actual enumerable is not empty.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, That<IEnumerable<TItem>>>
+	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		NotBeEmpty<TItem>(
-			this That<IEnumerable<TItem>> source)
+			this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder.Add(new IsNotEmptyConstraint<TItem>(),
 				b => b.AppendMethod(nameof(NotBeEmpty))),
 			source);
 
-	private readonly struct IsEmptyConstraint<TItem> : IConstraint<IEnumerable<TItem>>
+	private readonly struct IsEmptyValueConstraint<TItem> : IValueConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{

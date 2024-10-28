@@ -47,9 +47,10 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 			(expectations, doNotPopulateThisValue2) =>
 			{
 				return new AndOrWhichExpectationResult<TResult, TValue, TSelf>(
-					_expectationBuilder.Which<TResult, TProperty?>(
+					_expectationBuilder.Which<TResult, TProperty?, IThat<TProperty?>>(
 						PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
 						expectations,
+						e => new That<TProperty?>(e),
 						b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1)
 							.AppendMethod(nameof(WhichResult<TProperty, TResult>.Should),
 								doNotPopulateThisValue2),
@@ -62,13 +63,13 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 	///     Intermediate result for chaining Which and Should methods.
 	/// </summary>
 	public class WhichResult<TProperty, TReturn>(
-		Func<Action<That<TProperty?>>, string, TReturn> resultCallback)
+		Func<Action<IThat<TProperty?>>, string, TReturn> resultCallback)
 	{
 		/// <summary>
 		///     Specifies the expectations on the selected property.
 		/// </summary>
 		public TReturn Should(
-			Action<That<TProperty?>> expectations,
+			Action<IThat<TProperty?>> expectations,
 			[CallerArgumentExpression("expectations")]
 			string doNotPopulateThisValue = "")
 		{

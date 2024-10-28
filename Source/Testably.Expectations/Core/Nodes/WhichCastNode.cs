@@ -9,12 +9,12 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 	where TProperty : TBase
 {
 	public override Node Inner { get; set; }
-	private readonly IConstraint<TBase, TProperty> _cast;
+	private readonly ICastConstraint<TBase, TProperty> _cast;
 	private readonly PropertyAccessor _propertyAccessor;
 	private readonly string _textSeparator;
 
 	public WhichCastNode(PropertyAccessor propertyAccessor,
-		IConstraint<TBase, TProperty> cast,
+		ICastConstraint<TBase, TProperty> cast,
 		Node inner,
 		string textSeparator = " which ")
 	{
@@ -44,16 +44,18 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 			{
 				ConstraintResult? castedResult = _cast.IsMetBy(baseValue, value.Exception);
 				if (castedResult is ConstraintResult.Success success &&
-				    success.TryGetValue<TProperty>(out TProperty? matchingValue))
+				    success.TryGetValue(out TProperty? matchingValue))
 				{
-					return (await Inner.IsMetBy(
+					ConstraintResult? result = (await Inner.IsMetBy(
 							new SourceValue<TProperty>(matchingValue, value.Exception), context))
 						.UpdateExpectationText(r
 							=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
+					return result.UseValue(value.Value);
 				}
 
 				ConstraintResult? failure =
-					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception), context);
+					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception),
+						context);
 				return castedResult.UpdateExpectationText(_
 					=> $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");
 			}

@@ -16,9 +16,9 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the string content is equal to <paramref name="expected" />
 	/// </summary>
-	public static StringMatcherExpectationResult<HttpResponseMessage, That<HttpResponseMessage?>>
+	public static StringMatcherExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveContent(
-			this That<HttpResponseMessage?> source,
+			this IThat<HttpResponseMessage?> source,
 			StringMatcher expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(

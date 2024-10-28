@@ -10,8 +10,8 @@ public static partial class ThatBoolShould
 	/// <summary>
 	///     Verifies that the subject is <see langword="false" />.
 	/// </summary>
-	public static AndOrExpectationResult<bool, That<bool>> BeFalse(this That<bool> source)
-		=> new(source.ExpectationBuilder.Add(new IsConstraint(false),
+	public static AndOrExpectationResult<bool, IThat<bool>> BeFalse(this IThat<bool> source)
+		=> new(source.ExpectationBuilder.Add(new IsValueConstraint(false),
 				b => b.AppendMethod(nameof(BeFalse))),
 			source);
 }

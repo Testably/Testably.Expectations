@@ -13,17 +13,17 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject is equal to <paramref name="expected" />.
 	/// </summary>
-	public static StringMatcherExpectationResult<string?, That<string?>> Be(
-		this That<string?> source,
+	public static StringMatcherExpectationResult<string?, IThat<string?>> Be(
+		this IThat<string?> source,
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder.Add(
-				new IsConstraint(expected),
+				new IsValueConstraint(expected),
 				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
 			source,
 			expected);
 
-	private readonly struct IsConstraint(StringMatcher expected) : IConstraint<string?>
+	private readonly struct IsValueConstraint(StringMatcher expected) : IValueConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)

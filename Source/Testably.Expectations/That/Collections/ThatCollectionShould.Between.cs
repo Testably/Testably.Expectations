@@ -15,7 +15,7 @@ public static partial class ThatCollectionShould
 	///     Verifies that between <paramref name="minimum" />...
 	/// </summary>
 	public static BetweenResult<QuantifiableCollection<TItem, ICollection<TItem>>> Between<TItem>(
-		this That<ICollection<TItem>> source,
+		this IThat<ICollection<TItem>> source,
 		int minimum,
 		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{

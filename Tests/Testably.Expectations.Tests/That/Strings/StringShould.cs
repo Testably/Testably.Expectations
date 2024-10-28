@@ -12,12 +12,12 @@ public sealed partial class StringShould
 	{
 		#region IEqualityComparer<string> Members
 
-		public bool Equals(string x, string y)
+		public bool Equals(string? x, string? y)
 		{
-			string adjustedX = LowercaseVocals(x);
-			string adjustedY = LowercaseVocals(y);
+			string? adjustedX = LowercaseVocals(x);
+			string? adjustedY = LowercaseVocals(y);
 
-			return adjustedX.Equals(adjustedY, StringComparison.Ordinal);
+			return adjustedX?.Equals(adjustedY, StringComparison.Ordinal) == true;
 		}
 
 		public int GetHashCode(string obj)
@@ -27,8 +27,8 @@ public sealed partial class StringShould
 
 		#endregion
 
-		private static string LowercaseVocals(string input)
-			=> input.Replace('A', 'a')
+		private static string? LowercaseVocals(string? input)
+			=> input?.Replace('A', 'a')
 				.Replace('E', 'e')
 				.Replace('I', 'i')
 				.Replace('O', 'o')

@@ -29,7 +29,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().Between(0).And(1).Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have between 0 and 1 items equal to 1,
 				                  but at least 2 items were equal
@@ -57,7 +57,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().Between(3).And(4).Be(2);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have between 3 and 4 items equal to 2,
 				                  but only 2 items were equal
@@ -74,7 +74,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().Between(1).And(3).Be(1);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have between 1 and 3 items equal to 1,
 				                  but 4 items were equal

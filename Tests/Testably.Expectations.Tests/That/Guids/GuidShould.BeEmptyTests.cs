@@ -24,7 +24,7 @@ public sealed partial class GuidShould
 				=> await Expect.That(subject).Should().BeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   be empty,
 				                   but found {subject}
@@ -44,7 +44,7 @@ public sealed partial class GuidShould
 				=> await Expect.That(subject).Should().NotBeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   not be empty,
 				                   but found {subject}

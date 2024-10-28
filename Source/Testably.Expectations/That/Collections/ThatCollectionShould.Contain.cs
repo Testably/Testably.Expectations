@@ -15,17 +15,17 @@ public static partial class ThatCollectionShould
 	/// <summary>
 	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<ICollection<TItem>, That<ICollection<TItem>>>
+	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		Contain<TItem>(
-			this That<ICollection<TItem>> source,
+			this IThat<ICollection<TItem>> source,
 			TItem expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ContainsConstraint<TItem>(expected),
+		=> new(source.ExpectationBuilder.Add(new ContainsValueConstraint<TItem>(expected),
 				b => b.AppendMethod(nameof(Contain), doNotPopulateThisValue)),
 			source);
 
-	private readonly struct ContainsConstraint<TItem>(TItem expected)
-		: IConstraint<ICollection<TItem>>
+	private readonly struct ContainsValueConstraint<TItem>(TItem expected)
+		: IValueConstraint<ICollection<TItem>>
 	{
 		public ConstraintResult IsMetBy(ICollection<TItem> actual)
 		{

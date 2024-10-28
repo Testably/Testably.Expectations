@@ -17,7 +17,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().BeEmpty<int>();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  be empty,
 				                  but found [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, …]
@@ -34,7 +34,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().BeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  be empty,
 				                  but found [1, 1, 2]
@@ -100,7 +100,7 @@ public sealed partial class EnumerableShould
 				=> await Expect.That(subject).Should().NotBeEmpty<int>();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not be empty,
 				                  but it was

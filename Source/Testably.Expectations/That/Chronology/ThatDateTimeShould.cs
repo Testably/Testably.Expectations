@@ -17,7 +17,7 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateTime" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<DateTime> Should(this IExpectThat<DateTime> subject,
+	public static IThat<DateTime> Should(this IExpectThat<DateTime> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -27,7 +27,7 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Start expectations for the current <see cref="DateTime" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<DateTime?> Should(this IExpectThat<DateTime?> subject,
+	public static IThat<DateTime?> Should(this IExpectThat<DateTime?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -48,7 +48,7 @@ public static partial class ThatDateTimeShould
 		DateTime expected,
 		Func<DateTime, DateTime, TimeSpan, bool> condition,
 		string expectation,
-		TimeTolerance tolerance) : IConstraint<DateTime>
+		TimeTolerance tolerance) : IValueConstraint<DateTime>
 	{
 		private readonly string _expectation = expectation;
 

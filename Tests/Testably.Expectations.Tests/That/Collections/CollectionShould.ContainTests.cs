@@ -14,7 +14,7 @@ public sealed partial class CollectionShould
 				=> await Expectations.ThatCollectionShould.Contain(Expect.That(subject).Should(), expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   contain "{expected}",
 				                   but found ["{string.Join("\", \"", subject)}"]

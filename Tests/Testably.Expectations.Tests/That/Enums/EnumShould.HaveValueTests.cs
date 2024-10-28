@@ -15,7 +15,7 @@ public sealed partial class EnumShould
 				=> await Expect.That(subject).Should().HaveValue(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    have value {expected},
 				                    but found {subject}
@@ -61,7 +61,7 @@ public sealed partial class EnumShould
 				=> await Expect.That(subject).Should().NotHaveFlag(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    not have flag {unexpected},
 				                    but found {subject}
@@ -80,7 +80,7 @@ public sealed partial class EnumShould
 				=> await Expect.That(subject).Should().NotHaveFlag(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    not have flag {unexpected},
 				                    but found {subject}
@@ -115,7 +115,7 @@ public sealed partial class EnumShould
 				=> await Expect.That(subject).Should().NotHaveValue(unexpected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                    Expected subject to
 				                    not have value {unexpected},
 				                    but found {subject}

@@ -16,15 +16,15 @@ public static partial class ThatGuidShould
 	/// <summary>
 	///     Start expectations for current <see cref="Guid" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<Guid> Should(this IExpectThat<Guid> subject,
+	public static IThat<Guid> Should(this IExpectThat<Guid> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
 		return new That<Guid>(subject.ExpectationBuilder);
 	}
 
-	private readonly struct Constraint(string expectation, Func<Guid, bool> successIf)
-		: IConstraint<Guid>
+	private readonly struct ValueConstraint(string expectation, Func<Guid, bool> successIf)
+		: IValueConstraint<Guid>
 	{
 		public ConstraintResult IsMetBy(Guid actual)
 		{

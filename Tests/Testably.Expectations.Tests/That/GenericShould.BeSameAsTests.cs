@@ -26,7 +26,7 @@ public sealed partial class GenericShould
 				=> await Expect.That(subject).Should().BeSameAs(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  refer to expected Other{
 				                    Value = 1

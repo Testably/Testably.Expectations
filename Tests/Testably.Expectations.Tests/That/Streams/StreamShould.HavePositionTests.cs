@@ -17,7 +17,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().HavePosition(position);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   have position {position},
 				                   but it had position {actualPosition}
@@ -46,7 +46,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().HavePosition(0);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  have position 0,
 				                  but found <null>
@@ -80,7 +80,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotHavePosition(position);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage($"""
+				.WithMessage($"""
 				                   Expected subject to
 				                   not have position {position},
 				                   but it had
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				=> await Expect.That(subject).Should().NotHavePosition(0);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
-				.Which.HaveMessage("""
+				.WithMessage("""
 				                  Expected subject to
 				                  not have position 0,
 				                  but found <null>

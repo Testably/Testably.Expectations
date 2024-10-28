@@ -11,15 +11,15 @@ public static partial class ThatObjectShould
 	/// <summary>
 	///     Verifies that the subject is of type <typeparamref name="TType" />.
 	/// </summary>
-	public static AndOrWhichExpectationResult<TType, That<object?>> Be<TType>(
-		this That<object?> source)
+	public static AndOrWhichExpectationResult<TType, IThat<object?>> Be<TType>(
+		this IThat<object?> source)
 		=> new(source.ExpectationBuilder.Add(
-				new IsConstraint<TType>(),
+				new IsValueConstraint<TType>(),
 				b => b.Append('.').Append(nameof(Be)).Append('<').Append(typeof(TType).Name)
 					.Append(">()")),
 			source);
 
-	private readonly struct IsConstraint<TType> : IConstraint<object?>
+	private readonly struct IsValueConstraint<TType> : IValueConstraint<object?>
 	{
 		public ConstraintResult IsMetBy(object? actual)
 		{

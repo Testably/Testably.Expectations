@@ -16,7 +16,7 @@ public static partial class ThatDateTimeOffsetShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateTimeOffset" /> <paramref name="subject" />.
 	/// </summary>
-	public static That<DateTimeOffset> Should(this IExpectThat<DateTimeOffset> subject,
+	public static IThat<DateTimeOffset> Should(this IExpectThat<DateTimeOffset> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -26,7 +26,7 @@ public static partial class ThatDateTimeOffsetShould
 	/// <summary>
 	///     Start expectations for the current <see cref="DateTimeOffset" />? <paramref name="subject" />.
 	/// </summary>
-	public static That<DateTimeOffset?> Should(this IExpectThat<DateTimeOffset?> subject,
+	public static IThat<DateTimeOffset?> Should(this IExpectThat<DateTimeOffset?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
 		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
@@ -36,7 +36,7 @@ public static partial class ThatDateTimeOffsetShould
 	private readonly struct ConditionConstraint(
 		DateTimeOffset expected,
 		Func<DateTimeOffset, DateTimeOffset, bool> condition,
-		string expectation) : IConstraint<DateTimeOffset>
+		string expectation) : IValueConstraint<DateTimeOffset>
 	{
 		public ConstraintResult IsMetBy(DateTimeOffset actual)
 		{
