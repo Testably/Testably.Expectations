@@ -27,13 +27,13 @@ public static partial class ThatExceptionShould
 		return new ThatExceptionShould<TException>(subject.ExpectationBuilder);
 	}
 
-	internal readonly struct HasMessageConstraint<T>(StringMatcher expected, string verb) : IConstraint<T>,
-		IDelegateConstraint<DelegateSource.NoValue>
+	internal readonly struct HasMessageConstraint<T>(StringMatcher expected, string verb)
+		: IConstraint<T>, IDelegateConstraint<DelegateSource.NoValue>
 		where T : Exception?
 	{
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
-			return IsMetBy(value.Exception as T);
+			return IsMetBy(exception as T);
 		}
 
 		public ConstraintResult IsMetBy(T? actual)
@@ -51,13 +51,14 @@ public static partial class ThatExceptionShould
 			=> $"{verb} Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
 	}
 
-	internal readonly struct HasParamNameConstraint<T>(string expected, string verb) : IConstraint<T>,
-		IDelegateConstraint<DelegateSource.NoValue>
+	internal readonly struct HasParamNameConstraint<T>(string expected, string verb)
+		: IConstraint<T>,
+			IDelegateConstraint<DelegateSource.NoValue>
 		where T : ArgumentException?
 	{
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
-			return IsMetBy(value.Exception as T);
+			return IsMetBy(exception as T);
 		}
 
 		public ConstraintResult IsMetBy(T? actual)
@@ -102,13 +103,13 @@ public static partial class ThatExceptionShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				"it did not");
+				"found <null>");
 		}
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
+		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
 		{
-			return IsMetBy(value.Exception);
+			return IsMetBy(exception);
 		}
 
 		public override string ToString()
@@ -119,7 +120,7 @@ public static partial class ThatExceptionShould
 		where TBase : Exception?
 		where TTarget : Exception?
 	{
-		#region IConstraint<TBase?,TTarget?> Members
+		#region IDelegateConstraint<TBase?> Members
 
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(TBase? actual, Exception? exception)

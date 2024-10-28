@@ -16,17 +16,14 @@ public partial class ThatDelegateThrows<TException>
 		Action<ThatExceptionShould<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
-		=> new(ExpectationBuilder
-				.WhichCast<TException, Exception?, Exception?,
-					ThatExceptionShould<Exception?>>(
-					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
-						"with an inner exception which should "),
-					new ThatExceptionShould.CastException<Exception, Exception>(),
-					expectations,
-					e => new ThatExceptionShould<Exception?>(e),
-					b => b.AppendMethod(nameof(WithInnerException),
-						doNotPopulateThisValue),
-					""),
+		=> new(
+			ExpectationBuilder.Which<Exception, Exception?, ThatExceptionShould<Exception?>>(
+				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
+					"with an inner exception which should "),
+				expectations,
+				e => new ThatExceptionShould<Exception?>(e),
+				b => b.AppendMethod(nameof(WithInnerException), doNotPopulateThisValue),
+				whichTextSeparator: ""),
 			this);
 
 	/// <summary>
@@ -34,7 +31,7 @@ public partial class ThatDelegateThrows<TException>
 	/// </summary>
 	public AndOrExpectationResult<TException, ThatDelegateThrows<TException>> WithInnerException()
 		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.CastException<TException, Exception>(),
+				new ThatExceptionShould.HasInnerExceptionConstraint<Exception>("with"),
 				b => b.AppendMethod(nameof(WithInnerException))),
 			this);
 }

@@ -101,7 +101,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				                   Expected subject to
 				                   have an inner exception,
-				                   but it did not
+				                   but found <null>
 				                   at Expect.That(subject).Should().HaveInnerException()
 				                   """);
 		}

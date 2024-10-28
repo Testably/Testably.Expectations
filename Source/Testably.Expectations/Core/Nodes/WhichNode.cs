@@ -41,10 +41,11 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 				new SourceValue<TSource>(typedValue, value.Exception),
 				out TProperty? matchingValue))
 			{
-				return (await Inner.IsMetBy(
+				var result = (await Inner.IsMetBy(
 						new SourceValue<TProperty>(matchingValue, value.Exception), context))
 					.UpdateExpectationText(r
 						=> $"{_textSeparator}{_propertyAccessor}{_propertyTextSeparator}{r.ExpectationText}");
+				return result.UseValue(value.Value);
 			}
 
 			throw new InvalidOperationException(

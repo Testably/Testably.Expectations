@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Testably.Expectations.Core.Constraints;
+﻿namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
 ///     An expectation.
@@ -24,10 +22,5 @@ public interface IConstraint<in TValue> : IConstraint
 /// <summary>
 ///     A complex expectation from type <typeparamref name="TValue" /> to type <typeparamref name="TProperty" />.
 /// </summary>
-public interface IConstraint<in TValue, TProperty> : IConstraint
-{
-	/// <summary>
-	///     Checks if the <paramref name="actual" /> value and the <paramref name="exception" /> meets the expectation.
-	/// </summary>
-	public ConstraintResult IsMetBy(TValue? actual, Exception? exception);
-}
+// TODO VAB: Remove or move to DelegateConstraint
+public interface IConstraint<in TValue, TProperty> : IDelegateConstraint<TValue>;

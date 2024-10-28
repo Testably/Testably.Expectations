@@ -52,7 +52,8 @@ internal abstract class Node
 
 		if (constraint is IDelegateConstraint<TValue> delegateValueConstraint)
 		{
-			ConstraintResult result = delegateValueConstraint.IsMetBy(value);
+			ConstraintResult result = delegateValueConstraint.IsMetBy(
+				value.Value, value.Exception);
 			result = reason?.ApplyTo(result) ?? result;
 			return result;
 		}
@@ -60,8 +61,7 @@ internal abstract class Node
 		if (constraint is IDelegateConstraint<DelegateSource.NoValue> delegateConstraint)
 		{
 			ConstraintResult result = delegateConstraint.IsMetBy(
-				new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance,
-					value.Exception));
+				DelegateSource.NoValue.Instance, value.Exception);
 			result = reason?.ApplyTo(result) ?? result;
 			return result;
 		}

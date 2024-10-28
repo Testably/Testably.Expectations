@@ -36,7 +36,7 @@ public sealed partial class DelegateThrows
 			void Act() => throw exception;
 
 			CustomException result = await Expect.That(Act).Should().Throw<CustomException>()
-				.WithInner<SubCustomException>(e1 => e1
+				.WithInnerException(e1 => e1
 					.HaveMessage("inner1").And
 					.HaveInner<ArgumentException>(e2 => e2
 						.HaveParamName("param2").And.HaveMessage("inner2*").AsWildcard()));

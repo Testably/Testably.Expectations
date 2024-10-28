@@ -29,7 +29,7 @@ public sealed partial class DelegateThrows
 				             Expected action to
 				             throw an Exception with an inner CustomException,
 				             but found <null>
-				             at Expect.That(action).Should().ThrowException().WithMessage(expected)
+				             at Expect.That(action).Should().ThrowException().WithInner<CustomException>()
 				             """);
 		}
 	}

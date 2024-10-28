@@ -5,12 +5,12 @@ namespace Testably.Expectations.Core.Constraints;
 /// <summary>
 ///     A delegate expectation on type <typeparamref name="TValue" />.
 /// </summary>
-public interface IDelegateConstraint<TValue> : IConstraint
+public interface IDelegateConstraint<in TValue> : IConstraint
 {
 	/// <summary>
-	///     Checks if the <paramref name="value" /> value meets the expectation.
+	///     Checks if the <paramref name="actual" /> value or the <paramref name="exception"/> meet the expectation.
 	/// </summary>
-	public ConstraintResult IsMetBy(SourceValue<TValue> value);
+	public ConstraintResult IsMetBy(TValue? actual, Exception? exception);
 }
 
 /// <summary>
