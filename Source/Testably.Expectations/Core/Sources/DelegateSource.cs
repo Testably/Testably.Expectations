@@ -3,36 +3,24 @@ using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Sources;
 
-internal class DelegateSource : IValueSource<DelegateValue<DelegateSource.NoValue>>
+internal class DelegateSource(Action action) : IValueSource<DelegateValue>
 {
-	private readonly Action _action;
-
-	public DelegateSource(Action action)
-	{
-		_action = action;
-	}
-
 	#region IValueSource<NoValue> Members
 
-	public Task<DelegateValue<NoValue>?> GetValue()
+	public Task<DelegateValue?> GetValue()
 	{
 		try
 		{
-			_action();
-			return Task.FromResult<DelegateValue<NoValue>?>(
-				new DelegateValue<NoValue>(NoValue.Instance, null));
+			action();
+			return Task.FromResult<DelegateValue?>(
+				new DelegateValue(null));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<DelegateValue<NoValue>?>(
-				new DelegateValue<NoValue>(NoValue.Instance, ex));
+			return Task.FromResult<DelegateValue?>(
+				new DelegateValue(ex));
 		}
 	}
 
 	#endregion
-
-	internal struct NoValue
-	{
-		internal static NoValue Instance { get; } = new();
-	}
 }

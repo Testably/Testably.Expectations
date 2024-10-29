@@ -27,7 +27,7 @@ public static class Expect
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 	{
 		return new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue>(
 				new DelegateSource(@delegate), doNotPopulateThisValue));
 	}
 
@@ -37,7 +37,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithoutValue> That(Func<Task> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue>(
 				new DelegateAsyncSource(@delegate), doNotPopulateThisValue));
 
 	/// <summary>
@@ -46,7 +46,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithoutValue> That(Task @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue>(
 				new DelegateAsyncSource(() => @delegate), doNotPopulateThisValue));
 
 #if NET6_0_OR_GREATER
@@ -56,7 +56,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithoutValue> That(ValueTask @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue>(
 				new DelegateAsyncSource(async () => await @delegate), doNotPopulateThisValue));
 #endif
 
