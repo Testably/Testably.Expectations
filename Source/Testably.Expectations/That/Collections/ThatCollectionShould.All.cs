@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
 using Testably.Expectations.That.Collections;
 

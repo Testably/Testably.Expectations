@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Results;
 

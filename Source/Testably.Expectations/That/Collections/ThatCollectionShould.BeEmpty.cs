@@ -2,7 +2,6 @@
 using System.Linq;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 

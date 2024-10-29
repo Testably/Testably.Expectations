@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Tests.TestHelpers;
-
-namespace Testably.Expectations.Tests.Core;
+﻿namespace Testably.Expectations.Tests.Core;
 
 public class BecauseTests
 {

@@ -1,5 +1,4 @@
 ﻿using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Core.Nodes;
 
 namespace Testably.Expectations.Core.Constraints;
 

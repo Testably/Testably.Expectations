@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations.Results;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Testably.Expectations.Core.Constraints;
+﻿namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
 ///     A complex constraint accessing <typeparamref name="TProperty"/> from type <typeparamref name="TValue" />.
