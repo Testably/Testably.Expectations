@@ -17,7 +17,7 @@ public static partial class ThatNullableGuidShould
 	/// <summary>
 	///     Start expectations for the current <see cref="Guid" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<Guid?> Should(this IExpectThat<Guid?> subject,
+	public static IThat<Guid?> Should(this IExpectSubject<Guid?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new That<Guid?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 

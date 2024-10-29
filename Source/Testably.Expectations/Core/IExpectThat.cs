@@ -3,7 +3,7 @@
 /// <summary>
 ///     Starting point for an expectation.
 /// </summary>
-public interface IExpectThat<out T>
+public interface IExpectSubject<out T>
 {
 	/// <summary>
 	///     The expectation builder.

@@ -15,7 +15,7 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Start expectations for the current <typeparamref name="TEnum" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TEnum?> Should<TEnum>(this IExpectThat<TEnum?> subject)
+	public static IThat<TEnum?> Should<TEnum>(this IExpectSubject<TEnum?> subject)
 		where TEnum : struct, Enum
 		=> new That<TEnum?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 

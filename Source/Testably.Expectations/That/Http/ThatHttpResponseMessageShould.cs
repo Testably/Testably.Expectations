@@ -23,7 +23,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Start expectations for the current <see cref="HttpResponseMessage" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<HttpResponseMessage?> Should(this IExpectThat<HttpResponseMessage?> subject,
+	public static IThat<HttpResponseMessage?> Should(this IExpectSubject<HttpResponseMessage?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new That<HttpResponseMessage?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 

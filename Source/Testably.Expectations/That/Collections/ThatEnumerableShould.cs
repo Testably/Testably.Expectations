@@ -14,6 +14,6 @@ public static partial class ThatEnumerableShould
 	///     Start delegate expectations on the current enumerable of <typeparamref name="TItem" /> values.
 	/// </summary>
 	public static IThat<IEnumerable<TItem>> Should<TItem>(
-		this IExpectThat<IEnumerable<TItem>> subject)
+		this IExpectSubject<IEnumerable<TItem>> subject)
 		=> new That<IEnumerable<TItem>>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 }

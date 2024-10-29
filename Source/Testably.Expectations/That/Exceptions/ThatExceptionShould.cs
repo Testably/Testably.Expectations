@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Sources;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 
@@ -19,7 +18,7 @@ public static partial class ThatExceptionShould
 	///     Start expectations for the current <see cref="Exception" /> <paramref name="subject" />.
 	/// </summary>
 	public static ThatExceptionShould<TException> Should<TException>(
-		this IExpectThat<TException> subject,
+		this IExpectSubject<TException> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		where TException : Exception?
 		=> new(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));

@@ -13,7 +13,7 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Start expectations for the current <see cref="string" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<string?> Should(this IExpectThat<string?> subject,
+	public static IThat<string?> Should(this IExpectSubject<string?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		=> new That<string?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 }

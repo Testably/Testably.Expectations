@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -26,9 +27,9 @@ internal class DeferredNode<TTarget> : Node
 				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TTarget).Name},{Environment.NewLine}but found {value?.GetType().Name}");
 		}
 
-		ExpectationBuilder<TTarget?> expectationBuilder2 = new(matchingActualValue, "");
-		_expectation.Invoke(expectationBuilder2);
-		return await expectationBuilder2.IsMet();
+		ExpectationBuilder<TTarget?> expectationBuilder = new(new ValueSource<TTarget?>(matchingActualValue), "");
+		_expectation.Invoke(expectationBuilder);
+		return await expectationBuilder.IsMet();
 	}
 
 	/// <inheritdoc />

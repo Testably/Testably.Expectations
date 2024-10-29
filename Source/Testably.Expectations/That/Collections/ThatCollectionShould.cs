@@ -14,6 +14,6 @@ public static partial class ThatCollectionShould
 	///     Start delegate expectations on the current collection of <typeparamref name="TItem" /> values.
 	/// </summary>
 	public static IThat<ICollection<TItem>> Should<TItem>(
-		this IExpectThat<ICollection<TItem>> subject)
+		this IExpectSubject<ICollection<TItem>> subject)
 		=> new That<ICollection<TItem>>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 }
