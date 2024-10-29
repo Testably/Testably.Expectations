@@ -15,5 +15,6 @@ public static partial class ThatCollectionShould
 	/// </summary>
 	public static IThat<ICollection<TItem>> Should<TItem>(
 		this IExpectSubject<ICollection<TItem>> subject)
-		=> new That<ICollection<TItem>>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 }

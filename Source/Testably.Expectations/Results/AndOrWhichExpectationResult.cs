@@ -50,7 +50,7 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 					_expectationBuilder
 						.ForProperty(PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
 							(property, expectation) => $" which {property}should {expectation}")
-						.AddExpectations(e => expectations(new That<TProperty?>(e)))
+						.AddExpectations(e => expectations(new Expect.ThatSubject<TProperty?>(e)))
 						.AppendMethodStatement(nameof(Which), doNotPopulateThisValue1)
 						.AppendMethodStatement(nameof(WhichResult<TProperty, TResult>.Should),
 							doNotPopulateThisValue2),

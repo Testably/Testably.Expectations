@@ -20,14 +20,16 @@ public static partial class ThatDelegateShould
 	/// </summary>
 	public static ThatDelegate.WithoutValue Should(
 		this IExpectSubject<ThatDelegate.WithoutValue> subject)
-		=> new(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> new(subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="Func{TValue}" /> <paramref name="subject" />.
 	/// </summary>
 	public static ThatDelegate.WithValue<TValue> Should<TValue>(
 		this IExpectSubject<ThatDelegate.WithValue<TValue>> subject)
-		=> new(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> new(subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
 
 	private static ConstraintResult DoesNotThrowResult<TException>(Exception? exception)
 		where TException : Exception?
@@ -46,8 +48,9 @@ public static partial class ThatDelegateShould
 		where TException : Exception
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(Exception? exception)
+		public ConstraintResult IsMetBy(DelegateValue? value)
 		{
+			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
 				return DoesNotThrowResult<TException>(exception);
@@ -66,10 +69,6 @@ public static partial class ThatDelegateShould
 			return new ConstraintResult.Failure<TException?>(null, ToString(),
 				$"it did throw {exception.FormatForMessage()}");
 		}
-
-		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateValue? value)
-			=> IsMetBy(value?.Exception);
 
 		public override string ToString()
 		{

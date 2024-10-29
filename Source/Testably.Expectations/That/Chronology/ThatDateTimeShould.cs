@@ -19,14 +19,16 @@ public static partial class ThatDateTimeShould
 	/// </summary>
 	public static IThat<DateTime> Should(this IExpectSubject<DateTime> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new That<DateTime>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="DateTime" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<DateTime?> Should(this IExpectSubject<DateTime?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new That<DateTime?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)
 	{

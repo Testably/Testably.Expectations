@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 // ReSharper disable once CheckNamespace
 
 namespace Testably.Expectations;
@@ -15,5 +14,6 @@ public static partial class ThatObjectShould
 	/// </summary>
 	public static IThat<object?> Should(this IExpectSubject<object?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> new That<object?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 }

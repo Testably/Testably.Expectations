@@ -21,7 +21,8 @@ public static partial class ThatExceptionShould
 		this IExpectSubject<TException> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		where TException : Exception?
-		=> new(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> new(subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
 
 	internal readonly struct HasMessageValueConstraint<TException>(StringMatcher expected, string verb)
 		: IValueConstraint<Exception?>

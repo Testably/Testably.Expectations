@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Core;
+﻿using System;
+
+namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     Starting point for an expectation.
@@ -6,7 +8,7 @@
 public interface IExpectSubject<out T>
 {
 	/// <summary>
-	///     The expectation builder.
+	///     Applies the <paramref name="builderOptions" /> to the <see cref="ExpectationBuilder" />.
 	/// </summary>
-	ExpectationBuilder ExpectationBuilder { get; }
+	IThat<T> Should(Action<ExpectationBuilder> builderOptions);
 }

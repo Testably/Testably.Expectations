@@ -17,7 +17,7 @@ public static class Expect
 	public static IExpectSubject<T> That<T>(T? subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 	{
-		return new ExpectSubject<T>(new ExpectationBuilder<T?>(new ValueSource<T?>(subject), doNotPopulateThisValue));
+		return new ThatSubject<T>(new ExpectationBuilder<T?>(new ValueSource<T?>(subject), doNotPopulateThisValue));
 	}
 
 	/// <summary>
@@ -26,7 +26,7 @@ public static class Expect
 	public static IExpectSubject<ThatDelegate.WithoutValue> That(Action @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 	{
-		return new ExpectSubject<ThatDelegate.WithoutValue>(
+		return new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
 				new DelegateSource(@delegate), doNotPopulateThisValue));
 	}
@@ -36,7 +36,7 @@ public static class Expect
 	/// </summary>
 	public static IExpectSubject<ThatDelegate.WithoutValue> That(Func<Task> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new ExpectSubject<ThatDelegate.WithoutValue>(
+		=> new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
 				new DelegateAsyncSource(@delegate), doNotPopulateThisValue));
 
@@ -45,7 +45,7 @@ public static class Expect
 	/// </summary>
 	public static IExpectSubject<ThatDelegate.WithoutValue> That(Task @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new ExpectSubject<ThatDelegate.WithoutValue>(
+		=> new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
 				new DelegateAsyncSource(() => @delegate), doNotPopulateThisValue));
 
@@ -55,7 +55,7 @@ public static class Expect
 	/// </summary>
 	public static IExpectSubject<ThatDelegate.WithoutValue> That(ValueTask @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new ExpectSubject<ThatDelegate.WithoutValue>(
+		=> new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
 				new DelegateAsyncSource(async () => await @delegate), doNotPopulateThisValue));
 #endif
@@ -65,7 +65,7 @@ public static class Expect
 	/// </summary>
 	public static IExpectSubject<ThatDelegate.WithValue<TValue>> That<TValue>(Func<TValue> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new ExpectSubject<ThatDelegate.WithValue<TValue>>(
+		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateValueSource<TValue>(@delegate), doNotPopulateThisValue));
 
@@ -76,7 +76,7 @@ public static class Expect
 	public static IExpectSubject<ThatDelegate.WithValue<TValue>> That<TValue>(
 		Func<Task<TValue>> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new ExpectSubject<ThatDelegate.WithValue<TValue>>(
+		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(@delegate),
 				doNotPopulateThisValue));
@@ -86,7 +86,7 @@ public static class Expect
 	/// </summary>
 	public static IExpectSubject<ThatDelegate.WithValue<TValue>> That<TValue>(Task<TValue> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new ExpectSubject<ThatDelegate.WithValue<TValue>>(
+		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(() => @delegate), doNotPopulateThisValue));
 
@@ -97,20 +97,23 @@ public static class Expect
 	public static IExpectSubject<ThatDelegate.WithValue<TValue>> That<TValue>(
 		ValueTask<TValue> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
-		=> new ExpectSubject<ThatDelegate.WithValue<TValue>>(
+		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(
 					async () => await @delegate),
 				doNotPopulateThisValue));
 #endif
 
-	private readonly struct ExpectSubject<T>(ExpectationBuilder expectationBuilder)
-		: IExpectSubject<T>
+	internal readonly struct ThatSubject<T>(ExpectationBuilder expectationBuilder)
+		: IExpectSubject<T>, IThat<T>
 	{
-		#region IExpectSubject<T> Members
-
 		public ExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
 
-		#endregion
+		/// <inheritdoc />
+		public IThat<T> Should(Action<ExpectationBuilder> builderOptions)
+		{
+			builderOptions.Invoke(ExpectationBuilder);
+			return this;
+		}
 	}
 }

@@ -15,5 +15,6 @@ public static partial class ThatEnumerableShould
 	/// </summary>
 	public static IThat<IEnumerable<TItem>> Should<TItem>(
 		this IExpectSubject<IEnumerable<TItem>> subject)
-		=> new That<IEnumerable<TItem>>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 }
