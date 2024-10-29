@@ -27,9 +27,9 @@ public static partial class ThatDelegateShould
 			.AddConstraint(new DoesNotThrowConstraint<DelegateSource.NoValue>())
 			.AppendMethodStatement(nameof(NotThrow)));
 
-	private readonly struct DoesNotThrowConstraint<TValue> : IValueConstraint<SourceValue<TValue>>
+	private readonly struct DoesNotThrowConstraint<TValue> : IValueConstraint<DelegateValue<TValue>>
 	{
-		public ConstraintResult IsMetBy(SourceValue<TValue>? actual)
+		public ConstraintResult IsMetBy(DelegateValue<TValue>? actual)
 		{
 			if (actual?.Exception is { } exception)
 			{

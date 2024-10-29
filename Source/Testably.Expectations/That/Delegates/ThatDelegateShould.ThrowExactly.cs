@@ -23,7 +23,7 @@ public static partial class ThatDelegateShould
 	}
 
 	private readonly struct ThrowsExactlyCastConstraint<TException>(ThrowsOption throwOptions)
-		: ICastConstraint<SourceValue, Exception?>
+		: ICastConstraint<DelegateValue, Exception?>
 		where TException : Exception
 	{
 		/// <inheritdoc />
@@ -49,7 +49,7 @@ public static partial class ThatDelegateShould
 		}
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(SourceValue? value)
+		public ConstraintResult IsMetBy(DelegateValue? value)
 			=> IsMetBy(value?.Exception);
 
 		/// <inheritdoc />

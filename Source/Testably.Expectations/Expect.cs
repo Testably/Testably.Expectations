@@ -27,7 +27,7 @@ public static class Expect
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 	{
 		return new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<SourceValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
 				new DelegateSource(@delegate), doNotPopulateThisValue));
 	}
 
@@ -37,7 +37,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithoutValue> That(Func<Task> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<SourceValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
 				new DelegateAsyncSource(@delegate), doNotPopulateThisValue));
 
 	/// <summary>
@@ -46,7 +46,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithoutValue> That(Task @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<SourceValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
 				new DelegateAsyncSource(() => @delegate), doNotPopulateThisValue));
 
 #if NET6_0_OR_GREATER
@@ -56,7 +56,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithoutValue> That(ValueTask @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithoutValue>(
-			new ExpectationBuilder<SourceValue<DelegateSource.NoValue>>(
+			new ExpectationBuilder<DelegateValue<DelegateSource.NoValue>>(
 				new DelegateAsyncSource(async () => await @delegate), doNotPopulateThisValue));
 #endif
 
@@ -66,7 +66,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithValue<TValue>> That<TValue>(Func<TValue> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithValue<TValue>>(
-			new ExpectationBuilder<SourceValue<TValue>>(
+			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateValueSource<TValue>(@delegate), doNotPopulateThisValue));
 
 	/// <summary>
@@ -77,7 +77,7 @@ public static class Expect
 		Func<Task<TValue>> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithValue<TValue>>(
-			new ExpectationBuilder<SourceValue<TValue>>(
+			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(@delegate),
 				doNotPopulateThisValue));
 
@@ -87,7 +87,7 @@ public static class Expect
 	public static IExpectThat<ThatDelegate.WithValue<TValue>> That<TValue>(Task<TValue> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithValue<TValue>>(
-			new ExpectationBuilder<SourceValue<TValue>>(
+			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(() => @delegate), doNotPopulateThisValue));
 
 #if NET6_0_OR_GREATER
@@ -98,7 +98,7 @@ public static class Expect
 		ValueTask<TValue> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ExpectThat<ThatDelegate.WithValue<TValue>>(
-			new ExpectationBuilder<SourceValue<TValue>>(
+			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(
 					async () => await @delegate),
 				doNotPopulateThisValue));

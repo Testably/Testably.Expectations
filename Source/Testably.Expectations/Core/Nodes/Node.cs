@@ -50,7 +50,7 @@ internal abstract class Node
 			return result;
 		}
 
-		if (value is SourceValue delegateValue)
+		if (value is DelegateValue delegateValue)
 		{
 			return await TryMeet(constraint, delegateValue.Exception, context, reason);
 		}

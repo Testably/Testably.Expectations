@@ -41,7 +41,7 @@ public static partial class ThatDelegateShould
 	}
 
 	private readonly struct ThrowsCastConstraint<TException>(ThrowsOption throwOptions)
-		: ICastConstraint<SourceValue, TException?>
+		: ICastConstraint<DelegateValue, TException?>
 		where TException : Exception
 	{
 		/// <inheritdoc />
@@ -67,7 +67,7 @@ public static partial class ThatDelegateShould
 		}
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(SourceValue? value)
+		public ConstraintResult IsMetBy(DelegateValue? value)
 			=> IsMetBy(value?.Exception);
 
 		public override string ToString()
