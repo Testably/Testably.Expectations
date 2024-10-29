@@ -33,7 +33,9 @@ public partial class ThatDelegateThrows<TException>
 		TInnerException>()
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder
-				.AddConstraint(new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("with"))
+				.AddConstraint(
+					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
+						"with"))
 				.AppendGenericMethodStatement<TInnerException>(nameof(WithInner)),
 			this);
 }

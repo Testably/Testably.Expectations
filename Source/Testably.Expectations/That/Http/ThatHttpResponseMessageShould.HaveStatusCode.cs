@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 

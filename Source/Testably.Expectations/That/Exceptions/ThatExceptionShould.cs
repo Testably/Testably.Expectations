@@ -24,7 +24,9 @@ public static partial class ThatExceptionShould
 		=> new(subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
 
-	internal readonly struct HasMessageValueConstraint<TException>(StringMatcher expected, string verb)
+	internal readonly struct HasMessageValueConstraint<TException>(
+		StringMatcher expected,
+		string verb)
 		: IValueConstraint<Exception?>
 		where TException : Exception?
 	{
@@ -43,7 +45,9 @@ public static partial class ThatExceptionShould
 			=> $"{verb} Message {expected.GetExpectation(StringMatcher.GrammaticVoice.PassiveVoice)}";
 	}
 
-	internal readonly struct HasParamNameValueConstraint<TArgumentException>(string expected, string verb)
+	internal readonly struct HasParamNameValueConstraint<TArgumentException>(
+		string expected,
+		string verb)
 		: IValueConstraint<Exception?>
 		where TArgumentException : ArgumentException?
 	{
@@ -59,7 +63,8 @@ public static partial class ThatExceptionShould
 			{
 				if (argumentException.ParamName == expected)
 				{
-					return new ConstraintResult.Success<TArgumentException?>(argumentException, ToString());
+					return new ConstraintResult.Success<TArgumentException?>(argumentException,
+						ToString());
 				}
 
 				return new ConstraintResult.Failure(ToString(),
@@ -104,7 +109,7 @@ public static partial class ThatExceptionShould
 	internal class CastException<TTarget> : ICastConstraint<Exception?, TTarget>
 		where TTarget : Exception?
 	{
-		#region IDelegateConstraint<TBase?> Members
+		#region ICastConstraint<Exception?,TTarget> Members
 
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(Exception? actual)

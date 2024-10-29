@@ -13,7 +13,7 @@ namespace Testably.Expectations;
 public static partial class ThatStreamShould
 {
 	/// <summary>
-	///     Start expectations for the current <typeparamref name="TStream"/> <paramref name="subject" />.
+	///     Start expectations for the current <typeparamref name="TStream" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<TStream?> Should<TStream>(this IExpectSubject<TStream?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")

@@ -25,11 +25,11 @@ public sealed partial class BoolShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be False,
-				                  but found True
-				                  at Expect.That(subject).Should().BeFalse()
-				                  """);
+				             Expected subject to
+				             be False,
+				             but found True
+				             at Expect.That(subject).Should().BeFalse()
+				             """);
 		}
 	}
 }

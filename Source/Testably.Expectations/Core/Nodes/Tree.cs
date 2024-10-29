@@ -36,18 +36,6 @@ internal class Tree
 		_setExpectationNode = null;
 	}
 
-	public void AddNode(Node node)
-	{
-		if (_setExpectationNode == null)
-		{
-			throw new InvalidOperationException(
-				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-		}
-
-		_setExpectationNode.Invoke(node);
-		_setExpectationNode = null;
-	}
-
 	public void AddManipulation(Func<Node, ManipulationNode> nodeGenerator)
 	{
 		if (_setExpectationNode == null)
@@ -79,6 +67,18 @@ internal class Tree
 			Parent = _current.Parent
 		};
 		_setExpectationNode = n => manipulationNode.Inner = n;
+	}
+
+	public void AddNode(Node node)
+	{
+		if (_setExpectationNode == null)
+		{
+			throw new InvalidOperationException(
+				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+		}
+
+		_setExpectationNode.Invoke(node);
+		_setExpectationNode = null;
 	}
 
 	public Node GetCurrent()

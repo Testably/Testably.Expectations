@@ -25,11 +25,11 @@ public sealed partial class NullableGuidShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be empty,
-				                   but found {subject}
-				                   at Expect.That(subject).Should().BeEmpty()
-				                   """);
+				              Expected subject to
+				              be empty,
+				              but found {subject}
+				              at Expect.That(subject).Should().BeEmpty()
+				              """);
 		}
 
 		[Fact]
@@ -42,11 +42,11 @@ public sealed partial class NullableGuidShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be empty,
-				                  but found <null>
-				                  at Expect.That(subject).Should().BeEmpty()
-				                  """);
+				             Expected subject to
+				             be empty,
+				             but found <null>
+				             at Expect.That(subject).Should().BeEmpty()
+				             """);
 		}
 	}
 
@@ -62,11 +62,11 @@ public sealed partial class NullableGuidShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   not be empty,
-				                   but found {subject}
-				                   at Expect.That(subject).Should().NotBeEmpty()
-				                   """);
+				              Expected subject to
+				              not be empty,
+				              but found {subject}
+				              at Expect.That(subject).Should().NotBeEmpty()
+				              """);
 		}
 
 		[Fact]
@@ -90,11 +90,11 @@ public sealed partial class NullableGuidShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be empty,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotBeEmpty()
-				                  """);
+				             Expected subject to
+				             not be empty,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBeEmpty()
+				             """);
 		}
 	}
 }

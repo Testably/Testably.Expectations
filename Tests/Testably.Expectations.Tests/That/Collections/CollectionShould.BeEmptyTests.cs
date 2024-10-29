@@ -10,15 +10,15 @@ public sealed partial class CollectionShould
 			int[] subject = [1, 1, 2];
 
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.BeEmpty(Expect.That(subject).Should());
+				=> await Expect.That(subject).Should().BeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be empty,
-				                  but found [1, 1, 2]
-				                  at Expect.That(subject).Should().BeEmpty()
-				                  """);
+				             Expected subject to
+				             be empty,
+				             but found [1, 1, 2]
+				             at Expect.That(subject).Should().BeEmpty()
+				             """);
 		}
 
 		[Fact]
@@ -27,7 +27,7 @@ public sealed partial class CollectionShould
 			int[] subject = [];
 
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.BeEmpty(Expect.That(subject).Should());
+				=> await Expect.That(subject).Should().BeEmpty();
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -41,8 +41,8 @@ public sealed partial class CollectionShould
 			int[] subject = [1, 1, 2];
 
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.NotBeEmpty(Expect.That(subject)
-					.Should());
+				=> await Expect.That(subject)
+					.Should().NotBeEmpty();
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -53,16 +53,16 @@ public sealed partial class CollectionShould
 			int[] subject = [];
 
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.NotBeEmpty(Expect.That(subject)
-					.Should());
+				=> await Expect.That(subject)
+					.Should().NotBeEmpty();
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be empty,
-				                  but it was
-				                  at Expect.That(subject).Should().NotBeEmpty()
-				                  """);
+				             Expected subject to
+				             not be empty,
+				             but it was
+				             at Expect.That(subject).Should().NotBeEmpty()
+				             """);
 		}
 	}
 }

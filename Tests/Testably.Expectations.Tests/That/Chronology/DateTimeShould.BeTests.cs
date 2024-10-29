@@ -15,11 +15,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    be {expected:O},
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().Be(expected)
-				                    """);
+				              Expected subject to
+				              be {expected:O},
+				              but found {subject:O}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
 		}
 
 		[Fact]
@@ -45,11 +45,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    be {expected:O} ± 0:03,
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(3))
-				                    """);
+				              Expected subject to
+				              be {expected:O} ± 0:03,
+				              but found {subject:O}
+				              at Expect.That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(3))
+				              """);
 		}
 
 		[Fact]
@@ -90,11 +90,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not be {unexpected:O},
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().NotBe(unexpected)
-				                    """);
+				              Expected subject to
+				              not be {unexpected:O},
+				              but found {subject:O}
+				              at Expect.That(subject).Should().NotBe(unexpected)
+				              """);
 		}
 
 		[Fact]
@@ -122,11 +122,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not be {expected:O} ± 0:03,
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().NotBe(expected).Within(TimeSpan.FromSeconds(3))
-				                    """);
+				              Expected subject to
+				              not be {expected:O} ± 0:03,
+				              but found {subject:O}
+				              at Expect.That(subject).Should().NotBe(expected).Within(TimeSpan.FromSeconds(3))
+				              """);
 		}
 	}
 }

@@ -57,11 +57,11 @@ internal static class Initialization
 
 		[DoesNotReturn]
 		[StackTraceHidden]
-		public void Throw(string message) => _testFramework.Throw(message);
+		public void Skip(string message) => _testFramework.Skip(message);
 
 		[DoesNotReturn]
 		[StackTraceHidden]
-		public void Skip(string message) => _testFramework.Skip(message);
+		public void Throw(string message) => _testFramework.Throw(message);
 	}
 
 	private sealed class FallbackTestFramework : ITestFrameworkAdapter

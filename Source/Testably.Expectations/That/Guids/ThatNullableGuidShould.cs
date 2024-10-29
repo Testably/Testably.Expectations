@@ -12,7 +12,6 @@ namespace Testably.Expectations;
 /// </summary>
 public static partial class ThatNullableGuidShould
 {
-
 	/// <summary>
 	///     Start expectations for the current <see cref="Guid" />? <paramref name="subject" />.
 	/// </summary>

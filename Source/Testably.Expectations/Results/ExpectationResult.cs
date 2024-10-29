@@ -100,7 +100,7 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 			return matchingSuccess.Value;
 		}
 		else if (result is ConstraintResult.Success success &&
-				 success.TryGetValue(out TResult? value))
+		         success.TryGetValue(out TResult? value))
 		{
 			return value;
 		}

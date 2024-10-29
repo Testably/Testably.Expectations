@@ -68,7 +68,8 @@ public sealed partial class DelegateShould
 			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
-			CustomException result = await Expect.That(action).Should().ThrowExactly<CustomException>();
+			CustomException result =
+				await Expect.That(action).Should().ThrowExactly<CustomException>();
 
 			await Expect.That(result).Should().BeSameAs(exception);
 		}

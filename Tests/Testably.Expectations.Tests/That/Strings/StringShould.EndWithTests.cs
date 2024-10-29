@@ -20,11 +20,11 @@ public sealed partial class StringShould
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.OnlyIf(!ignoreCase)
 				.WithMessage("""
-				                  Expected subject to
-				                  end with "TEXT",
-				                  but found "some arbitrary text"
-				                  at Expect.That(subject).Should().EndWith(expected).IgnoringCase(ignoreCase)
-				                  """);
+				             Expected subject to
+				             end with "TEXT",
+				             but found "some arbitrary text"
+				             at Expect.That(subject).Should().EndWith(expected).IgnoringCase(ignoreCase)
+				             """);
 		}
 
 		[Fact]
@@ -39,11 +39,11 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  end with "SOME" ignoring case,
-				                  but found "some arbitrary text"
-				                  at Expect.That(subject).Should().EndWith(expected).IgnoringCase()
-				                  """);
+				             Expected subject to
+				             end with "SOME" ignoring case,
+				             but found "some arbitrary text"
+				             at Expect.That(subject).Should().EndWith(expected).IgnoringCase()
+				             """);
 		}
 
 		[Fact]
@@ -59,11 +59,11 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  end with "TEXT" using IgnoreCaseForVocalsComparer,
-				                  but found "some arbitrary text"
-				                  at Expect.That(subject).Should().EndWith(expected).Using(new IgnoreCaseForVocalsComparer())
-				                  """);
+				             Expected subject to
+				             end with "TEXT" using IgnoreCaseForVocalsComparer,
+				             but found "some arbitrary text"
+				             at Expect.That(subject).Should().EndWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				             """);
 		}
 
 		[Fact]
@@ -91,11 +91,11 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  end with "some",
-				                  but found "some arbitrary text"
-				                  at Expect.That(subject).Should().EndWith(expected)
-				                  """);
+				             Expected subject to
+				             end with "some",
+				             but found "some arbitrary text"
+				             at Expect.That(subject).Should().EndWith(expected)
+				             """);
 		}
 
 		[Fact]
@@ -124,11 +124,11 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not end with "text",
-				                  but found "some text"
-				                  at Expect.That(subject).Should().NotEndWith(expected)
-				                  """);
+				             Expected subject to
+				             not end with "text",
+				             but found "some text"
+				             at Expect.That(subject).Should().NotEndWith(expected)
+				             """);
 		}
 
 		[Fact]
@@ -156,11 +156,11 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not end with "tExt" using IgnoreCaseForVocalsComparer,
-				                  but found "some arbitrary text"
-				                  at Expect.That(subject).Should().NotEndWith(expected).Using(new IgnoreCaseForVocalsComparer())
-				                  """);
+				             Expected subject to
+				             not end with "tExt" using IgnoreCaseForVocalsComparer,
+				             but found "some arbitrary text"
+				             at Expect.That(subject).Should().NotEndWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				             """);
 		}
 
 		[Fact]
@@ -188,11 +188,11 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not end with "text",
-				                  but found "some text"
-				                  at Expect.That(subject).Should().NotEndWith(expected)
-				                  """);
+				             Expected subject to
+				             not end with "text",
+				             but found "some text"
+				             at Expect.That(subject).Should().NotEndWith(expected)
+				             """);
 		}
 
 		[Fact]

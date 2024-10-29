@@ -12,7 +12,7 @@ internal class DelegateValueSource<TValue> : IValueSource<DelegateValue<TValue>>
 		_action = action;
 	}
 
-	#region IValueSource<TValue> Members
+	#region IValueSource<DelegateValue<TValue>> Members
 
 	public Task<DelegateValue<TValue>?> GetValue()
 	{

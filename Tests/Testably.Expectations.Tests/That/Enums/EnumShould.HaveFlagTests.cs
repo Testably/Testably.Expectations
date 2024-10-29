@@ -14,11 +14,11 @@ public sealed partial class EnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    have flag {expected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().HaveFlag(expected)
-				                    """);
+				              Expected subject to
+				              have flag {expected},
+				              but found {subject}
+				              at Expect.That(subject).Should().HaveFlag(expected)
+				              """);
 		}
 
 		[Theory]

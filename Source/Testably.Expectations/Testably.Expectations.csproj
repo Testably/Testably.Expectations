@@ -13,7 +13,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="/Docs/" Link="Docs\README.md" />
+		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="/Docs/" Link="Docs\README.md"/>
 	</ItemGroup>
 
 </Project>

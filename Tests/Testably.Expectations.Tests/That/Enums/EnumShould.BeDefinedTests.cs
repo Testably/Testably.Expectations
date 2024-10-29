@@ -25,11 +25,11 @@ public sealed partial class EnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    be defined,
-				                    but found {subject}
-				                    at Expect.That(subject).Should().BeDefined()
-				                    """);
+				              Expected subject to
+				              be defined,
+				              but found {subject}
+				              at Expect.That(subject).Should().BeDefined()
+				              """);
 		}
 	}
 
@@ -45,11 +45,11 @@ public sealed partial class EnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not be defined,
-				                    but found {subject}
-				                    at Expect.That(subject).Should().NotBeDefined()
-				                    """);
+				              Expected subject to
+				              not be defined,
+				              but found {subject}
+				              at Expect.That(subject).Should().NotBeDefined()
+				              """);
 		}
 
 		[Fact]

@@ -27,15 +27,15 @@ public sealed partial class GenericShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  refer to expected Other{
-				                    Value = 1
-				                  },
-				                  but found Other{
-				                    Value = 1
-				                  }
-				                  at Expect.That(subject).Should().BeSameAs(expected)
-				                  """);
+				             Expected subject to
+				             refer to expected Other{
+				               Value = 1
+				             },
+				             but found Other{
+				               Value = 1
+				             }
+				             at Expect.That(subject).Should().BeSameAs(expected)
+				             """);
 		}
 	}
 }

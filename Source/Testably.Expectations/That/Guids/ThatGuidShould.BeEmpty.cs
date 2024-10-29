@@ -12,7 +12,7 @@ public static partial class ThatGuidShould
 	/// </summary>
 	public static AndOrExpectationResult<Guid, IThat<Guid>> BeEmpty(this IThat<Guid> source)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ValueConstraint(
+				.AddConstraint(new ValueConstraint(
 					"be empty",
 					actual => actual == Guid.Empty))
 				.AppendMethodStatement(nameof(BeEmpty)),
@@ -23,7 +23,7 @@ public static partial class ThatGuidShould
 	/// </summary>
 	public static AndOrExpectationResult<Guid, IThat<Guid>> NotBeEmpty(this IThat<Guid> source)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ValueConstraint(
+				.AddConstraint(new ValueConstraint(
 					"not be empty",
 					actual => actual != Guid.Empty))
 				.AppendMethodStatement(nameof(NotBeEmpty)),

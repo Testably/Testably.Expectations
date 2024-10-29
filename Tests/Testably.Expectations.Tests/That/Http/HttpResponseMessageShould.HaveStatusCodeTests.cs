@@ -22,16 +22,16 @@ public sealed partial class HttpResponseMessageShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  have StatusCode 200 OK,
-				                  but found 400 BadRequest:
-				                    HTTP/1.1 400 BadRequest
-				                    some content
-				                    The originating request was:
-				                      GET https://example.com/ HTTP 1.1
-				                      request content
-				                  at Expect.That(subject).Should().HaveContent(HttpStatusCode.OK)
-				                  """);
+				             Expected subject to
+				             have StatusCode 200 OK,
+				             but found 400 BadRequest:
+				               HTTP/1.1 400 BadRequest
+				               some content
+				               The originating request was:
+				                 GET https://example.com/ HTTP 1.1
+				                 request content
+				             at Expect.That(subject).Should().HaveContent(HttpStatusCode.OK)
+				             """);
 		}
 
 		[Fact]
@@ -46,14 +46,14 @@ public sealed partial class HttpResponseMessageShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  have StatusCode 200 OK,
-				                  but found 400 BadRequest:
-				                    HTTP/1.1 400 BadRequest
-				                    some content
-				                    The originating request was <null>
-				                  at Expect.That(subject).Should().HaveContent(HttpStatusCode.OK)
-				                  """);
+				             Expected subject to
+				             have StatusCode 200 OK,
+				             but found 400 BadRequest:
+				               HTTP/1.1 400 BadRequest
+				               some content
+				               The originating request was <null>
+				             at Expect.That(subject).Should().HaveContent(HttpStatusCode.OK)
+				             """);
 		}
 
 		[Fact]

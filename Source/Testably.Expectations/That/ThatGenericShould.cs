@@ -1,6 +1,5 @@
-﻿
+﻿// ReSharper disable once CheckNamespace
 
-// ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 /// <summary>

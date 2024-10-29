@@ -28,11 +28,11 @@ public sealed class OrNodeTests
 
 		await Expect.That(Act).Should().ThrowException()
 			.WithMessage("""
-			                  Expected true to
-			                  be False or imply False,
-			                  but found True and it did not
-			                  at Expect.That(true).Should().BeFalse().Or.Imply(false)
-			                  """);
+			             Expected true to
+			             be False or imply False,
+			             but found True and it did not
+			             at Expect.That(true).Should().BeFalse().Or.Imply(false)
+			             """);
 	}
 
 	[Fact]
@@ -44,5 +44,3 @@ public sealed class OrNodeTests
 		await Expect.That(Act).Should().NotThrow();
 	}
 }
-
-

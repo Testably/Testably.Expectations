@@ -42,7 +42,8 @@ public class EquivalencyOptionsExpectationResult<TResult, TValue, TSelf>(
 	/// </summary>
 	public EquivalencyOptionsExpectationResult<TResult, TValue, TSelf> IgnoringMember(
 		string memberToIgnore,
-		[CallerArgumentExpression("memberToIgnore")] string doNotPopulateThisValue = "")
+		[CallerArgumentExpression("memberToIgnore")]
+		string doNotPopulateThisValue = "")
 	{
 		options.IgnoringMember(memberToIgnore);
 		_expectationBuilder1.AppendMethodStatement(nameof(IgnoringMember), doNotPopulateThisValue);

@@ -16,11 +16,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be seekable,
-				                  but it was not
-				                  at Expect.That(subject).Should().BeSeekable()
-				                  """);
+				             Expected subject to
+				             be seekable,
+				             but it was not
+				             at Expect.That(subject).Should().BeSeekable()
+				             """);
 		}
 
 		[Fact]
@@ -33,11 +33,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be seekable,
-				                  but found <null>
-				                  at Expect.That(subject).Should().BeSeekable()
-				                  """);
+				             Expected subject to
+				             be seekable,
+				             but found <null>
+				             at Expect.That(subject).Should().BeSeekable()
+				             """);
 		}
 
 		[Fact]
@@ -75,11 +75,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be seekable,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotBeSeekable()
-				                  """);
+				             Expected subject to
+				             not be seekable,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBeSeekable()
+				             """);
 		}
 
 		[Fact]
@@ -92,11 +92,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be seekable,
-				                  but it was
-				                  at Expect.That(subject).Should().NotBeSeekable()
-				                  """);
+				             Expected subject to
+				             not be seekable,
+				             but it was
+				             at Expect.That(subject).Should().NotBeSeekable()
+				             """);
 		}
 	}
 }

@@ -5,7 +5,7 @@ namespace Testably.Expectations.Core.Sources;
 
 internal class DelegateSource(Action action) : IValueSource<DelegateValue>
 {
-	#region IValueSource<NoValue> Members
+	#region IValueSource<DelegateValue> Members
 
 	public Task<DelegateValue?> GetValue()
 	{

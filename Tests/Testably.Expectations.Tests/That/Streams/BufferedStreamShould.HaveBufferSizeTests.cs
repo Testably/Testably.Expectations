@@ -48,11 +48,11 @@ public sealed partial class BufferedStreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  have buffer size 0,
-				                  but found <null>
-				                  at Expect.That(subject).Should().HaveBufferSize(0)
-				                  """);
+				             Expected subject to
+				             have buffer size 0,
+				             but found <null>
+				             at Expect.That(subject).Should().HaveBufferSize(0)
+				             """);
 		}
 	}
 
@@ -99,11 +99,11 @@ public sealed partial class BufferedStreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not have buffer size 0,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotHaveBufferSize(0)
-				                  """);
+				             Expected subject to
+				             not have buffer size 0,
+				             but found <null>
+				             at Expect.That(subject).Should().NotHaveBufferSize(0)
+				             """);
 		}
 	}
 }

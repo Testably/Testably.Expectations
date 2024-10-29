@@ -14,7 +14,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrExpectationResult<float, IThat<float>> BeNaN(this IThat<float> source)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new IsNaNValueConstraint<float>(float.IsNaN))
+				.AddConstraint(new IsNaNValueConstraint<float>(float.IsNaN))
 				.AppendMethodStatement(nameof(BeNaN)),
 			source);
 
@@ -23,7 +23,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrExpectationResult<double, IThat<double>> BeNaN(this IThat<double> source)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new IsNaNValueConstraint<double>(double.IsNaN))
+				.AddConstraint(new IsNaNValueConstraint<double>(double.IsNaN))
 				.AppendMethodStatement(nameof(BeNaN)),
 			source);
 

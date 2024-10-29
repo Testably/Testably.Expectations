@@ -11,15 +11,15 @@ public sealed partial class CollectionShould
 		public async Task Fails(string[] subject, string expected)
 		{
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.Contain(Expect.That(subject).Should(), expected);
+				=> await Expect.That(subject).Should().Contain(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   contain "{expected}",
-				                   but found ["{string.Join("\", \"", subject)}"]
-				                   at Expect.That(subject).Should().Contain(expected)
-				                   """);
+				              Expected subject to
+				              contain "{expected}",
+				              but found ["{string.Join("\", \"", subject)}"]
+				              at Expect.That(subject).Should().Contain(expected)
+				              """);
 		}
 
 		[Theory]
@@ -29,7 +29,7 @@ public sealed partial class CollectionShould
 			subject.Add(expected);
 
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.Contain(Expect.That(subject).Should(), expected);
+				=> await Expect.That(subject).Should().Contain(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}

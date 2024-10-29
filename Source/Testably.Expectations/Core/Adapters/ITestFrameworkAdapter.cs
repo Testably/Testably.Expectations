@@ -13,14 +13,14 @@ internal interface ITestFrameworkAdapter
 	bool IsAvailable { get; }
 
 	/// <summary>
-	///     Throws a framework-specific exception to indicate a failing unit test.
-	/// </summary>
-	[DoesNotReturn]
-	void Throw(string message);
-
-	/// <summary>
 	///     Throws a framework-specific exception to indicate a skipped unit test.
 	/// </summary>
 	[DoesNotReturn]
 	void Skip(string message);
+
+	/// <summary>
+	///     Throws a framework-specific exception to indicate a failing unit test.
+	/// </summary>
+	[DoesNotReturn]
+	void Throw(string message);
 }

@@ -2,6 +2,8 @@
 using Testably.Expectations;
 using TUnit.Assertions.Exceptions;
 using TUnit.Core.Exceptions;
+using Fail = Testably.Expectations.Fail;
+using Skip = Testably.Expectations.Skip;
 
 namespace TestFramework.TUnit.Tests;
 
@@ -11,7 +13,7 @@ public sealed class TUnitTestFrameworkTests
 	public async Task OnFail_WhenUsingXunit2AsTestFramework_ShouldThrowXunitException()
 	{
 		void Act()
-			=> Testably.Expectations.Fail.Test("my message");
+			=> Fail.Test("my message");
 
 		await Expect.That(Act).Should().Throw<AssertionException>();
 	}
@@ -20,7 +22,7 @@ public sealed class TUnitTestFrameworkTests
 	public async Task OnSkip_WhenUsingXunit2AsTestFramework_ShouldThrowSkipException()
 	{
 		void Act()
-			=> Testably.Expectations.Skip.Test("my message");
+			=> Skip.Test("my message");
 
 		await Expect.That(Act).Should().Throw<SkipTestException>();
 	}

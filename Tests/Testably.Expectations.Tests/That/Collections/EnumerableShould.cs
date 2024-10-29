@@ -15,12 +15,16 @@ public partial class EnumerableShould
 
 	public sealed class ThrowWhenIteratingTwiceEnumerable : IEnumerable<int>
 	{
-		private bool _isEnumerated = false;
+		private bool _isEnumerated;
+
+		#region IEnumerable<int> Members
+
+		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 		public IEnumerator<int> GetEnumerator()
 		{
 			if (_isEnumerated)
-			{ 
+			{
 				Fail.Test("The enumerable was enumerated twice!");
 			}
 
@@ -28,7 +32,7 @@ public partial class EnumerableShould
 			yield return 1;
 		}
 
-		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+		#endregion
 	}
 
 	public class MyClass

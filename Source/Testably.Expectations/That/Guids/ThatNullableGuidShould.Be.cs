@@ -16,10 +16,10 @@ public static partial class ThatNullableGuidShould
 		Guid? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
-			.AddConstraint(
-				new ValueConstraint(
-					$"be {Formatter.Format(expected)}",
-					actual => actual?.Equals(expected) ?? expected == null))
+				.AddConstraint(
+					new ValueConstraint(
+						$"be {Formatter.Format(expected)}",
+						actual => actual?.Equals(expected) ?? expected == null))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
@@ -31,10 +31,10 @@ public static partial class ThatNullableGuidShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
-			.AddConstraint(
-				new ValueConstraint(
-					$"not be {Formatter.Format(unexpected)}",
-					actual => !actual?.Equals(unexpected) ?? unexpected != null))
+				.AddConstraint(
+					new ValueConstraint(
+						$"not be {Formatter.Format(unexpected)}",
+						actual => !actual?.Equals(unexpected) ?? unexpected != null))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }

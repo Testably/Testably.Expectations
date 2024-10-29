@@ -5,8 +5,8 @@ namespace Testably.Expectations.Core.Equivalency;
 
 internal enum MemberType
 {
-    Property,
-    Field,
-    Value,
-    EnumerableItem
+	Property,
+	Field,
+	Value,
+	EnumerableItem
 }

@@ -5,7 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Source\Testably.Expectations\Testably.Expectations.csproj" />
+		<ProjectReference Include="..\..\Source\Testably.Expectations\Testably.Expectations.csproj"/>
 	</ItemGroup>
 
 </Project>

@@ -15,7 +15,7 @@ public sealed partial class EnumerableShould
 
 			async Task Act()
 				=> await Expect.That(subject).Should().None().Be(15)
-						.And.None().Be(81);
+					.And.None().Be(81);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -23,18 +23,18 @@ public sealed partial class EnumerableShould
 		[Fact]
 		public async Task DoesNotMaterializeEnumerable()
 		{
-			var subject = Factory.GetFibonacciNumbers();
+			IEnumerable<int> subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
 				=> await Expect.That(subject).Should().None().Be(5);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  have no items equal to 5,
-				                  but at least one items were equal
-				                  at Expect.That(subject).Should().None().Be(5)
-				                  """);
+				             Expected subject to
+				             have no items equal to 5,
+				             but at least one items were equal
+				             at Expect.That(subject).Should().None().Be(5)
+				             """);
 		}
 
 		[Fact]
@@ -47,11 +47,11 @@ public sealed partial class EnumerableShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  have no items equal to 1,
-				                  but at least one items were equal
-				                  at Expect.That(subject).Should().None().Be(1)
-				                  """);
+				             Expected subject to
+				             have no items equal to 1,
+				             but at least one items were equal
+				             at Expect.That(subject).Should().None().Be(1)
+				             """);
 		}
 
 		[Fact]

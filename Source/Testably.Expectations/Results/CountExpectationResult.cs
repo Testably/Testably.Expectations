@@ -69,7 +69,7 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 	public BetweenResult<TSelf> Between(
 		int minimum,
 		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
-		=> new(_expectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue), 
+		=> new(_expectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue),
 			maximum =>
 			{
 				quantifier.Between(minimum, maximum);

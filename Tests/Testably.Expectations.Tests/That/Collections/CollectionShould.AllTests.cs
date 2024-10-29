@@ -14,11 +14,11 @@ public sealed partial class CollectionShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  have all items equal to 1,
-				                  but only 4 of 7 items were equal
-				                  at Expect.That(subject).Should().All().Be(1)
-				                  """);
+				             Expected subject to
+				             have all items equal to 1,
+				             but only 4 of 7 items were equal
+				             at Expect.That(subject).Should().All().Be(1)
+				             """);
 		}
 
 		[Fact]

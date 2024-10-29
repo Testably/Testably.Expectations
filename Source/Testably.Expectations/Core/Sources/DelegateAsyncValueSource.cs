@@ -12,7 +12,7 @@ internal class DelegateAsyncValueSource<TValue> : IValueSource<DelegateValue<TVa
 		_action = action;
 	}
 
-	#region IValueSource<TValue> Members
+	#region IValueSource<DelegateValue<TValue>> Members
 
 	public async Task<DelegateValue<TValue>?> GetValue()
 	{

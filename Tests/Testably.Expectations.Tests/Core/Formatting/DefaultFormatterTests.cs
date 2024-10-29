@@ -9,18 +9,15 @@ public sealed class DefaultFormatterTests
 	{
 		Dummy value = new()
 		{
-			Inner = new InnerDummy
-			{
-				InnerValue = "foo"
-			},
+			Inner = new InnerDummy { InnerValue = "foo" },
 			Value = 2
 		};
 
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
 		await Expect.That(result).Should().Be("""
-		                             Dummy{ Inner = InnerDummy{ InnerValue = "foo" }, Value = 2 }
-		                             """);
+		                                      Dummy{ Inner = InnerDummy{ InnerValue = "foo" }, Value = 2 }
+		                                      """);
 	}
 
 	private class Dummy

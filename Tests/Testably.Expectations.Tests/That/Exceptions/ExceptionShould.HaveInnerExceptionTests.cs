@@ -16,12 +16,12 @@ public sealed partial class ExceptionShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   have an inner CustomException which should have Message equal to "inner",
-				                   but found an Exception:
-				                     inner
-				                   at Expect.That(subject).Should().HaveInner<CustomException>(e => e.HaveMessage("inner"))
-				                   """);
+				             Expected subject to
+				             have an inner CustomException which should have Message equal to "inner",
+				             but found an Exception:
+				               inner
+				             at Expect.That(subject).Should().HaveInner<CustomException>(e => e.HaveMessage("inner"))
+				             """);
 		}
 
 		[Fact]
@@ -36,15 +36,15 @@ public sealed partial class ExceptionShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   have an inner CustomException which should have Message equal to "some other message",
-				                   but found "inner" which differs at index 0:
-				                      ↓ (actual)
-				                     "inner"
-				                     "some other message"
-				                      ↑ (expected)
-				                   at Expect.That(subject).Should().HaveInner<CustomException>(e => e.HaveMessage("some other message"))
-				                   """);
+				             Expected subject to
+				             have an inner CustomException which should have Message equal to "some other message",
+				             but found "inner" which differs at index 0:
+				                ↓ (actual)
+				               "inner"
+				               "some other message"
+				                ↑ (expected)
+				             at Expect.That(subject).Should().HaveInner<CustomException>(e => e.HaveMessage("some other message"))
+				             """);
 		}
 
 		[Fact]
@@ -59,15 +59,15 @@ public sealed partial class ExceptionShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   have an inner exception which should have Message equal to "some other message",
-				                   but found "inner" which differs at index 0:
-				                      ↓ (actual)
-				                     "inner"
-				                     "some other message"
-				                      ↑ (expected)
-				                   at Expect.That(subject).Should().HaveInnerException(e => e.HaveMessage("some other message"))
-				                   """);
+				             Expected subject to
+				             have an inner exception which should have Message equal to "some other message",
+				             but found "inner" which differs at index 0:
+				                ↓ (actual)
+				               "inner"
+				               "some other message"
+				                ↑ (expected)
+				             at Expect.That(subject).Should().HaveInnerException(e => e.HaveMessage("some other message"))
+				             """);
 		}
 
 		[Fact]
@@ -81,12 +81,12 @@ public sealed partial class ExceptionShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   have an inner CustomException,
-				                   but found an Exception:
-				                     inner
-				                   at Expect.That(subject).Should().HaveInner<CustomException>()
-				                   """);
+				             Expected subject to
+				             have an inner CustomException,
+				             but found an Exception:
+				               inner
+				             at Expect.That(subject).Should().HaveInner<CustomException>()
+				             """);
 		}
 
 		[Fact]
@@ -99,11 +99,11 @@ public sealed partial class ExceptionShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   have an inner exception,
-				                   but found <null>
-				                   at Expect.That(subject).Should().HaveInnerException()
-				                   """);
+				             Expected subject to
+				             have an inner exception,
+				             but found <null>
+				             at Expect.That(subject).Should().HaveInnerException()
+				             """);
 		}
 
 		[Fact]

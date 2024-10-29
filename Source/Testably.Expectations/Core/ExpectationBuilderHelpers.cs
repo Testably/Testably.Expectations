@@ -13,7 +13,7 @@ public static class ExpectationBuilderHelpers
 	/// </summary>
 	/// <remarks>
 	///     Format: <br />
-	///     .<paramref name="methodName" />&lt;<typeparamref name="T1"/>&gt;()
+	///     .<paramref name="methodName" />&lt;<typeparamref name="T1" />&gt;()
 	/// </remarks>
 	public static ExpectationBuilder AppendGenericMethodStatement<T1>(
 		this ExpectationBuilder builder,
@@ -29,7 +29,7 @@ public static class ExpectationBuilderHelpers
 	/// </summary>
 	/// <remarks>
 	///     Format: <br />
-	///     .<paramref name="methodName" />&lt;<typeparamref name="T1"/>&gt;(<paramref name="param1" />)
+	///     .<paramref name="methodName" />&lt;<typeparamref name="T1" />&gt;(<paramref name="param1" />)
 	/// </remarks>
 	public static ExpectationBuilder AppendGenericMethodStatement<T1>(
 		this ExpectationBuilder builder,
@@ -45,7 +45,8 @@ public static class ExpectationBuilderHelpers
 	/// </summary>
 	/// <remarks>
 	///     Format: <br />
-	///     .<paramref name="methodName" />&lt;<typeparamref name="T1"/>, <typeparamref name="T2"/>&gt;(<paramref name="param1" />)
+	///     .<paramref name="methodName" />&lt;<typeparamref name="T1" />, <typeparamref name="T2" />&gt;(
+	///     <paramref name="param1" />)
 	/// </remarks>
 	public static ExpectationBuilder AppendGenericMethodStatement<T1, T2>(
 		this ExpectationBuilder builder,
@@ -63,7 +64,8 @@ public static class ExpectationBuilderHelpers
 	/// </summary>
 	/// <remarks>
 	///     Format: <br />
-	///     .<paramref name="methodName" />&lt;<typeparamref name="T1"/>, <typeparamref name="T2"/>&gt;(<paramref name="param1" />, <paramref name="param2" />)
+	///     .<paramref name="methodName" />&lt;<typeparamref name="T1" />, <typeparamref name="T2" />&gt;(
+	///     <paramref name="param1" />, <paramref name="param2" />)
 	/// </remarks>
 	public static ExpectationBuilder AppendGenericMethodStatement<T1, T2>(
 		this ExpectationBuilder builder,

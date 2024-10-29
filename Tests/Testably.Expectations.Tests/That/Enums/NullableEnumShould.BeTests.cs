@@ -29,11 +29,11 @@ public sealed partial class NullableEnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    be {expected?.ToString() ?? "<null>"},
-				                    but found {subject?.ToString() ?? "<null>"}
-				                    at Expect.That(subject).Should().Be(expected)
-				                    """);
+				              Expected subject to
+				              be {expected?.ToString() ?? "<null>"},
+				              but found {subject?.ToString() ?? "<null>"}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
 		}
 
 		[Fact]
@@ -46,11 +46,11 @@ public sealed partial class NullableEnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   be Red,
-				                   but found <null>
-				                   at Expect.That(subject).Should().Be(MyColors.Red)
-				                   """);
+				             Expected subject to
+				             be Red,
+				             but found <null>
+				             at Expect.That(subject).Should().Be(MyColors.Red)
+				             """);
 		}
 
 		[Theory]
@@ -79,11 +79,11 @@ public sealed partial class NullableEnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   not be <null>,
-				                   but found <null>
-				                   at Expect.That(subject).Should().NotBe(null)
-				                   """);
+				             Expected subject to
+				             not be <null>,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBe(null)
+				             """);
 		}
 
 		[Theory]
@@ -115,11 +115,11 @@ public sealed partial class NullableEnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not be {unexpected?.ToString() ?? "<null>"},
-				                    but found {subject?.ToString() ?? "<null>"}
-				                    at Expect.That(subject).Should().NotBe(unexpected)
-				                    """);
+				              Expected subject to
+				              not be {unexpected?.ToString() ?? "<null>"},
+				              but found {subject?.ToString() ?? "<null>"}
+				              at Expect.That(subject).Should().NotBe(unexpected)
+				              """);
 		}
 	}
 }

@@ -34,7 +34,7 @@ public static partial class ThatEnumShould
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ValueConstraint<TEnum>(
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have value {unexpected}",
 					actual => Convert.ToInt64(actual, CultureInfo.InvariantCulture) != unexpected))
 				.AppendMethodStatement(nameof(NotHaveValue), doNotPopulateThisValue),

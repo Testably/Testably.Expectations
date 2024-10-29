@@ -22,7 +22,8 @@ internal class CastNode<T1, T2> : ManipulationNode
 		where TValue : default
 	{
 		ConstraintResult? result = await TryMeet(CastConstraint, value, context, Reason);
-		if (!result.IgnoreFurtherProcessing && Inner != None && result is ConstraintResult.Success<T2> success)
+		if (!result.IgnoreFurtherProcessing && Inner != None &&
+		    result is ConstraintResult.Success<T2> success)
 		{
 			return (await Inner.IsMetBy(success.Value, context))
 				.UpdateExpectationText(e => $"{result.ExpectationText} {e.ExpectationText}");
@@ -30,7 +31,6 @@ internal class CastNode<T1, T2> : ManipulationNode
 
 		return result;
 	}
-
 
 	/// <inheritdoc />
 	public override string ToString()

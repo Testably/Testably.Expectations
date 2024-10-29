@@ -28,8 +28,9 @@ public static partial class ThatQuantifiableCollectionShould
 		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(
 			source.Collection.ExpectationBuilder
 				.AddConstraint(
-				new AreEquivalentToConstraint<TItem, TCollection>(expected, doNotPopulateThisValue,
-					source.Quantity, options))
+					new AreEquivalentToConstraint<TItem, TCollection>(expected,
+						doNotPopulateThisValue,
+						source.Quantity, options))
 				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source.Collection);
 	}

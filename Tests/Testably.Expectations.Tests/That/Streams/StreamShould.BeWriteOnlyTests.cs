@@ -19,11 +19,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be write-only,
-				                  but it was not
-				                  at Expect.That(subject).Should().BeWriteOnly()
-				                  """);
+				             Expected subject to
+				             be write-only,
+				             but it was not
+				             at Expect.That(subject).Should().BeWriteOnly()
+				             """);
 		}
 
 		[Fact]
@@ -36,11 +36,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be write-only,
-				                  but found <null>
-				                  at Expect.That(subject).Should().BeWriteOnly()
-				                  """);
+				             Expected subject to
+				             be write-only,
+				             but found <null>
+				             at Expect.That(subject).Should().BeWriteOnly()
+				             """);
 		}
 
 		[Fact]
@@ -81,11 +81,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be write-only,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotBeWriteOnly()
-				                  """);
+				             Expected subject to
+				             not be write-only,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBeWriteOnly()
+				             """);
 		}
 
 		[Fact]
@@ -98,11 +98,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be write-only,
-				                  but it was
-				                  at Expect.That(subject).Should().NotBeWriteOnly()
-				                  """);
+				             Expected subject to
+				             not be write-only,
+				             but it was
+				             at Expect.That(subject).Should().NotBeWriteOnly()
+				             """);
 		}
 	}
 }

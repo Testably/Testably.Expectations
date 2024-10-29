@@ -26,9 +26,9 @@ public static partial class ThatQuantifiableCollectionShould
 			string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
 		=> new(source.Collection.ExpectationBuilder
-			.AddConstraint(
-				new SatisfyConstraint<TItem, TCollection>(predicate, doNotPopulateThisValue,
-					source.Quantity))
+				.AddConstraint(
+					new SatisfyConstraint<TItem, TCollection>(predicate, doNotPopulateThisValue,
+						source.Quantity))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source.Collection);
 

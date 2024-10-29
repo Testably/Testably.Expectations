@@ -13,7 +13,7 @@ public static partial class ThatStreamShould
 	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeReadOnly(
 		this IThat<Stream?> source)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ValueConstraint(
+				.AddConstraint(new ValueConstraint(
 					"be read-only",
 					actual => actual is { CanWrite: false, CanRead: true },
 					actual => actual == null ? "found <null>" : "it was not"))

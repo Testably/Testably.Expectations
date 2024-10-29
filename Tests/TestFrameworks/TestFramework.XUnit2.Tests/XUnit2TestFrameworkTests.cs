@@ -2,6 +2,7 @@
 using Testably.Expectations;
 using Xunit;
 using Xunit.Sdk;
+using SkipException = Testably.Expectations.SkipException;
 
 namespace TestFramework.XUnit2.Tests;
 
@@ -22,7 +23,7 @@ public sealed class XUnit2TestFrameworkTests
 		void Act()
 			=> Skip.Test("my message");
 
-		await Expect.That(Act).Should().Throw<Testably.Expectations.SkipException>()
+		await Expect.That(Act).Should().Throw<SkipException>()
 			.WithMessage("SKIPPED: my message (xunit v2 does not support skipping test)");
 	}
 }

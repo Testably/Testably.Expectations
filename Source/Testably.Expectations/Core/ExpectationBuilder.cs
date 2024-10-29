@@ -124,13 +124,13 @@ public abstract class ExpectationBuilder
 
 	internal Task<ConstraintResult> IsMet()
 	{
-		Core.EvaluationContext.EvaluationContext context = new();
+		EvaluationContext.EvaluationContext context = new();
 		Node rootNode = _tree.GetRoot();
 		return IsMet(context, rootNode);
 	}
 
 	internal abstract Task<ConstraintResult> IsMet(
-		Core.EvaluationContext.EvaluationContext context, Node rootNode);
+		EvaluationContext.EvaluationContext context, Node rootNode);
 
 	internal void Or(Action<StringBuilder> expressionBuilder,
 		string textSeparator = " or ")
@@ -185,15 +185,16 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 	/// </summary>
 	private readonly IValueSource<TValue> _subjectSource;
 
-	internal ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression) : base(
-		subjectExpression)
+	internal ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression) :
+		base(
+			subjectExpression)
 	{
 		_subjectSource = subjectSource;
 	}
 
 	/// <inheritdoc />
 	internal override async Task<ConstraintResult> IsMet(
-		Core.EvaluationContext.EvaluationContext context, Node rootNode)
+		EvaluationContext.EvaluationContext context, Node rootNode)
 	{
 		TValue? data = await _subjectSource.GetValue();
 		return await rootNode.IsMetBy(data, context);

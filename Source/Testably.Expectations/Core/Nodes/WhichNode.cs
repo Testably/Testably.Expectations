@@ -8,8 +8,8 @@ namespace Testably.Expectations.Core.Nodes;
 internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
 	public override Node Inner { get; set; }
-	private readonly PropertyAccessor _propertyAccessor;
 	private readonly Func<PropertyAccessor, string, string> _expectationTextGenerator;
+	private readonly PropertyAccessor _propertyAccessor;
 
 	public WhichNode(PropertyAccessor propertyAccessor, Node inner,
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
@@ -17,11 +17,6 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 		_propertyAccessor = propertyAccessor;
 		_expectationTextGenerator = expectationTextGenerator ?? DefaultExpectationTextGenerator;
 		Inner = inner;
-	}
-
-	private string DefaultExpectationTextGenerator(PropertyAccessor propertyAccessor, string expectationText)
-	{
-		return propertyAccessor + expectationText;
 	}
 
 	/// <inheritdoc />
@@ -42,7 +37,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 				typedValue,
 				out TProperty? matchingValue))
 			{
-				var result = (await Inner.IsMetBy(matchingValue, context))
+				ConstraintResult result = (await Inner.IsMetBy(matchingValue, context))
 					.UpdateExpectationText(r
 						=> _expectationTextGenerator(_propertyAccessor, r.ExpectationText));
 				return result.UseValue(value);
@@ -59,4 +54,10 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	/// <inheritdoc />
 	public override string ToString()
 		=> $".{_propertyAccessor} {Inner}";
+
+	private string DefaultExpectationTextGenerator(PropertyAccessor propertyAccessor,
+		string expectationText)
+	{
+		return propertyAccessor + expectationText;
+	}
 }

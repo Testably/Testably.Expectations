@@ -13,6 +13,21 @@ public sealed partial class StreamShould
 		long length = 0)
 		: Stream
 	{
+		/// <inheritdoc />
+		public override bool CanRead { get; } = canRead;
+
+		/// <inheritdoc />
+		public override bool CanSeek { get; } = canSeek;
+
+		/// <inheritdoc />
+		public override bool CanWrite { get; } = canWrite;
+
+		/// <inheritdoc />
+		public override long Length { get; } = length;
+
+		/// <inheritdoc />
+		public override long Position { get; set; } = position;
+
 		private readonly byte[] _buffer = buffer ?? Array.Empty<byte>();
 
 		/// <inheritdoc />
@@ -34,20 +49,5 @@ public sealed partial class StreamShould
 		/// <inheritdoc />
 		public override void Write(byte[] buffer, int offset, int count)
 			=> throw new NotSupportedException();
-
-		/// <inheritdoc />
-		public override bool CanRead { get; } = canRead;
-
-		/// <inheritdoc />
-		public override bool CanSeek { get; } = canSeek;
-
-		/// <inheritdoc />
-		public override bool CanWrite { get; } = canWrite;
-
-		/// <inheritdoc />
-		public override long Length { get; } = length;
-
-		/// <inheritdoc />
-		public override long Position { get; set; } = position;
 	}
 }

@@ -8,7 +8,8 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a tolerance.
+///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a
+///     tolerance.
 /// </summary>
 public class TimeToleranceExpectationResult<TResult, TValue>(
 	ExpectationBuilder expectationBuilder,
@@ -23,7 +24,8 @@ public class TimeToleranceExpectationResult<TResult, TValue>(
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a tolerance.
+///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a
+///     tolerance.
 /// </summary>
 public class TimeToleranceExpectationResult<TResult, TValue, TSelf>(
 	ExpectationBuilder expectationBuilder,
@@ -38,7 +40,8 @@ public class TimeToleranceExpectationResult<TResult, TValue, TSelf>(
 	///     Specifies a tolerance to apply on the time comparison.
 	/// </summary>
 	public TimeToleranceExpectationResult<TResult, TValue, TSelf> Within(TimeSpan tolerance,
-		[CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "")
+		[CallerArgumentExpression("tolerance")]
+		string doNotPopulateThisValue = "")
 	{
 		options.SetTolerance(tolerance);
 		_expectationBuilder1.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
