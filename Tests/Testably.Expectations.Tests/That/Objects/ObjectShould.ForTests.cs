@@ -15,7 +15,7 @@ public sealed partial class ObjectShould
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             satisfy Value to be 2,
+				             for .Value be 2,
 				             but found 1
 				             at Expect.That(subject).Should().For<Other, int>(o => o.Value, v => v.Be(2))
 				             """);

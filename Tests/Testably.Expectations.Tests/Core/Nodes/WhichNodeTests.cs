@@ -18,7 +18,7 @@ public sealed class WhichNodeTests
 		await Expect.That(Act).Should().Throw<XunitException>()
 			.WithMessage("""
 			             Expected subject to
-			             be type Dummy which Value should be equal to "bar",
+			             be type Dummy which .Value should be equal to "bar",
 			             but found "foo" which differs at index 0:
 			                ↓ (actual)
 			               "foo"

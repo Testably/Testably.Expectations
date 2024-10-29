@@ -21,7 +21,7 @@ public static partial class ThatObjectShould
 		string doNotPopulateThisValue2 = "")
 		=> new(source.ExpectationBuilder
 				.ForProperty(PropertyAccessor<T, TProperty?>.FromExpression(selector),
-					(property, expectation) => $"satisfy {property}to {expectation}")
+					(property, expectation) => $"for {property}{expectation}")
 				.AddExpectations(e => expectations(new Expect.ThatSubject<TProperty?>(e)))
 				.AppendGenericMethodStatement<T, TProperty>(nameof(For),
 					doNotPopulateThisValue1, doNotPopulateThisValue2),
