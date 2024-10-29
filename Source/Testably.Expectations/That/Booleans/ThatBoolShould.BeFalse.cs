@@ -1,5 +1,4 @@
 ﻿using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -11,7 +10,8 @@ public static partial class ThatBoolShould
 	///     Verifies that the subject is <see langword="false" />.
 	/// </summary>
 	public static AndOrExpectationResult<bool, IThat<bool>> BeFalse(this IThat<bool> source)
-		=> new(source.ExpectationBuilder.Add(new IsValueConstraint(false),
-				b => b.AppendMethod(nameof(BeFalse))),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint(false))
+				.AppendMethodStatement(nameof(BeFalse)),
 			source);
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations.That.Delegates;
@@ -17,18 +16,14 @@ public partial class ThatDelegateThrows<TException>
 			Action<ThatExceptionShould<TInnerException?>> expectations,
 			[CallerArgumentExpression("expectations")]
 			string doNotPopulateThisValue = "")
-		where TInnerException : Exception?
+		where TInnerException : Exception
 		=> new(ExpectationBuilder
-				.WhichCast<TException, Exception?, TInnerException?,
-					ThatExceptionShould<TInnerException?>>(
-					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
-						$"with an inner {typeof(TInnerException).Name} which should "),
-					new ThatExceptionShould.CastException<Exception, TInnerException>(),
-					expectations,
-					e => new ThatExceptionShould<TInnerException?>(e),
-					b => b.AppendGenericMethod<TInnerException>(nameof(WithInner),
-						doNotPopulateThisValue),
-					""),
+				.ForProperty<Exception, Exception?>(e => e.InnerException,
+					$"with an inner {typeof(TInnerException).Name} which should ")
+				.Validate(new ThatExceptionShould.CastException<TInnerException>())
+				.AddExpectations(e => expectations(new ThatExceptionShould<TInnerException?>(e)))
+				.AppendGenericMethodStatement<TInnerException>(nameof(WithInner),
+					doNotPopulateThisValue),
 			this);
 
 	/// <summary>
@@ -37,8 +32,10 @@ public partial class ThatDelegateThrows<TException>
 	public AndOrExpectationResult<TException, ThatDelegateThrows<TException>> WithInner<
 		TInnerException>()
 		where TInnerException : Exception?
-		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("with"),
-				b => b.AppendGenericMethod<TInnerException>(nameof(WithInner))),
+		=> new(ExpectationBuilder
+				.AddConstraint(
+					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
+						"with"))
+				.AppendGenericMethodStatement<TInnerException>(nameof(WithInner)),
 			this);
 }

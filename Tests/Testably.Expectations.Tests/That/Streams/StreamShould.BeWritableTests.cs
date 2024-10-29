@@ -16,11 +16,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be writable,
-				                  but it was not
-				                  at Expect.That(subject).Should().BeWritable()
-				                  """);
+				             Expected subject to
+				             be writable,
+				             but it was not
+				             at Expect.That(subject).Should().BeWritable()
+				             """);
 		}
 
 		[Fact]
@@ -33,11 +33,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be writable,
-				                  but found <null>
-				                  at Expect.That(subject).Should().BeWritable()
-				                  """);
+				             Expected subject to
+				             be writable,
+				             but found <null>
+				             at Expect.That(subject).Should().BeWritable()
+				             """);
 		}
 
 		[Fact]
@@ -75,11 +75,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be writable,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotBeWritable()
-				                  """);
+				             Expected subject to
+				             not be writable,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBeWritable()
+				             """);
 		}
 
 		[Fact]
@@ -92,11 +92,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be writable,
-				                  but it was
-				                  at Expect.That(subject).Should().NotBeWritable()
-				                  """);
+				             Expected subject to
+				             not be writable,
+				             but it was
+				             at Expect.That(subject).Should().NotBeWritable()
+				             """);
 		}
 	}
 }

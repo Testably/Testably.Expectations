@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -21,9 +20,9 @@ public static partial class ThatHttpResponseMessageShould
 			this IThat<HttpResponseMessage?> source,
 			StringMatcher expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new HasContentConstraint(expected),
-				b => b.AppendMethod(nameof(HaveContent), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new HasContentConstraint(expected))
+				.AppendMethodStatement(nameof(HaveContent), doNotPopulateThisValue),
 			source,
 			expected);
 
@@ -49,7 +48,7 @@ public static partial class ThatHttpResponseMessageShould
 		}
 
 		public override string ToString()
-			=> $"have a string content {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
+			=> $"have a string content {expected.GetExpectation(StringMatcher.GrammaticVoice.PassiveVoice)}";
 	}
 }
 #endif

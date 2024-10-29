@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Testably.Expectations.Tests.TestHelpers;
 
 namespace Testably.Expectations.Tests.That.Objects;
 
@@ -10,14 +9,8 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task BasicObjects_ShouldBeEquivalent()
 		{
-			var subject = new MyClass
-			{
-				Value = "Foo"
-			};
-			var expected = new MyClass
-			{
-				Value = "Foo"
-			};
+			MyClass subject = new MyClass { Value = "Foo" };
+			MyClass expected = new MyClass { Value = "Foo" };
 
 			await Expect.That(subject).Should().BeEquivalentTo(expected);
 		}
@@ -25,36 +18,26 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task MismatchedObjects_ShouldNotBeEquivalent()
 		{
-			var subject = new MyClass();
-			var expected = new MyClass
-			{
-				Value = "Foo"
-			};
+			MyClass subject = new MyClass();
+			MyClass expected = new MyClass { Value = "Foo" };
 
-			await Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
+			await Expect
+				.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected))
+				.Should()
 				.ThrowException().WithMessage("""
-				                   Expected subject to
-				                   be equivalent to expected,
-				                   but Property Value did not match:
-				                     Expected: "Foo"
-				                     Received: <null>
-				                   at Expect.That(subject).Should().BeEquivalentTo(expected)
-				                   """);
+				                              Expected subject to
+				                              be equivalent to expected,
+				                              but Property Value did not match:
+				                                Expected: "Foo"
+				                                Received: <null>
+				                              at Expect.That(subject).Should().BeEquivalentTo(expected)
+				                              """);
 		}
 
 		[Fact]
-		public async Task ObjectsWithNestedMismatch_ShouldNotBeEquivalent()
+		public async Task ObjectsWithNestedEnumerableMatches_ShouldBeEquivalent()
 		{
-			var subject = new MyClass
-			{
-				Value = "Foo",
-				Inner = new InnerClass
-				{
-					Value = "Bar",
-					Inner = new InnerClass()
-				}
-			};
-			var expected = new MyClass
+			MyClass subject = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -62,26 +45,12 @@ public sealed partial class ObjectShould
 					Value = "Bar",
 					Inner = new InnerClass
 					{
-						Value = "Baz"
+						Value = "Baz",
+						Collection = ["1", "2", "3"]
 					}
 				}
 			};
-
-			await Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
-				.ThrowException().WithMessage("""
-				                   Expected subject to
-				                   be equivalent to expected,
-				                   but Property Inner.Inner.Value did not match:
-				                     Expected: "Baz"
-				                     Received: <null>
-				                   at Expect.That(subject).Should().BeEquivalentTo(expected)
-				                   """).Exactly();
-		}
-
-		[Fact]
-		public async Task ObjectsWithNestedMatches_ShouldBeEquivalent()
-		{
-			var subject = new MyClass
+			MyClass expected = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -89,19 +58,8 @@ public sealed partial class ObjectShould
 					Value = "Bar",
 					Inner = new InnerClass
 					{
-						Value = "Baz"
-					}
-				}
-			};
-			var expected = new MyClass
-			{
-				Value = "Foo",
-				Inner = new InnerClass
-				{
-					Value = "Bar",
-					Inner = new InnerClass
-					{
-						Value = "Baz"
+						Value = "Baz",
+						Collection = ["1", "2", "3"]
 					}
 				}
 			};
@@ -112,7 +70,7 @@ public sealed partial class ObjectShould
 		[Fact]
 		public void ObjectsWithNestedEnumerableMismatch_ShouldNotBeEquivalent()
 		{
-			var subject = new MyClass
+			MyClass subject = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -126,7 +84,7 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			var expected = new MyClass
+			MyClass expected = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -140,21 +98,22 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected)).Should()
+			Expect.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected))
+				.Should()
 				.ThrowException().WithMessage("""
-				                   Expected subject to
-				                   be equivalent to expected,
-				                   but EnumerableItem Inner.Inner.Collection.[3] did not match
-				                     Expected: "4"
-				                     Received: null
-				                   at Expect.That(subject).Should().BeEquivalentTo(expected)
-				                   """);
+				                              Expected subject to
+				                              be equivalent to expected,
+				                              but EnumerableItem Inner.Inner.Collection.[3] did not match
+				                                Expected: "4"
+				                                Received: null
+				                              at Expect.That(subject).Should().BeEquivalentTo(expected)
+				                              """);
 		}
 
 		[Fact]
 		public async Task ObjectsWithNestedEnumerableMismatch_WithIgnoreRule_ShouldBeEquivalent()
 		{
-			var subject = new MyClass
+			MyClass subject = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -168,7 +127,7 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			var expected = new MyClass
+			MyClass expected = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -182,55 +141,82 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			await Expect.That(subject).Should().BeEquivalentTo(expected).IgnoringMember("Inner.Inner.Collection.[3]");
+			await Expect.That(subject).Should().BeEquivalentTo(expected)
+				.IgnoringMember("Inner.Inner.Collection.[3]");
 		}
 
 		[Fact]
-		public async Task ObjectsWithNestedEnumerableMatches_ShouldBeEquivalent()
+		public async Task ObjectsWithNestedMatches_ShouldBeEquivalent()
 		{
-			var subject = new MyClass
+			MyClass subject = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
 				{
 					Value = "Bar",
-					Inner = new InnerClass
-					{
-						Value = "Baz",
-						Collection = ["1", "2", "3"]
-					}
+					Inner = new InnerClass { Value = "Baz" }
 				}
 			};
-			var expected = new MyClass
+			MyClass expected = new MyClass
 			{
 				Value = "Foo",
 				Inner = new InnerClass
 				{
 					Value = "Bar",
-					Inner = new InnerClass
-					{
-						Value = "Baz",
-						Collection = ["1", "2", "3"]
-					}
+					Inner = new InnerClass { Value = "Baz" }
 				}
 			};
 
 			await Expect.That(subject).Should().BeEquivalentTo(expected);
 		}
 
-		public class MyClass
+		[Fact]
+		public async Task ObjectsWithNestedMismatch_ShouldNotBeEquivalent()
 		{
-			public string? Value { get; set; }
-			public InnerClass? Inner { get; set; }
+			MyClass subject = new MyClass
+			{
+				Value = "Foo",
+				Inner = new InnerClass
+				{
+					Value = "Bar",
+					Inner = new InnerClass()
+				}
+			};
+			MyClass expected = new MyClass
+			{
+				Value = "Foo",
+				Inner = new InnerClass
+				{
+					Value = "Bar",
+					Inner = new InnerClass { Value = "Baz" }
+				}
+			};
+
+			await Expect
+				.That(async () => await Expect.That(subject).Should().BeEquivalentTo(expected))
+				.Should()
+				.ThrowException().WithMessage("""
+				                              Expected subject to
+				                              be equivalent to expected,
+				                              but Property Inner.Inner.Value did not match:
+				                                Expected: "Baz"
+				                                Received: <null>
+				                              at Expect.That(subject).Should().BeEquivalentTo(expected)
+				                              """).Exactly();
 		}
 
 		public class InnerClass
 		{
-			public string? Value { get; set; }
+			public IEnumerable<string>? Collection { get; set; }
 
 			public InnerClass? Inner { get; set; }
+			public string? Value { get; set; }
+		}
 
-			public IEnumerable<string>? Collection { get; set; }
+		public class MyClass
+		{
+			public InnerClass? Inner { get; set; }
+			public string? Value { get; set; }
 		}
 	}
 }

@@ -15,11 +15,11 @@ public sealed partial class BoolShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected antecedent to
-				                   imply {consequent},
-				                   but it did not
-				                   at Expect.That(antecedent).Should().Imply(consequent)
-				                   """);
+				              Expected antecedent to
+				              imply {consequent},
+				              but it did not
+				              at Expect.That(antecedent).Should().Imply(consequent)
+				              """);
 		}
 
 		[Theory]

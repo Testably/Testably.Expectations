@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations.Results;
@@ -13,7 +12,7 @@ namespace Testably.Expectations.Results;
 ///     options on the <see cref="StringOptions" />.
 /// </summary>
 public class StringExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	StringOptions options)
 	: StringExpectationResult<TResult, TValue,
@@ -31,13 +30,13 @@ public class StringExpectationResult<TResult, TValue>(
 ///     the <see cref="StringMatcher" />.
 /// </summary>
 public class StringExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	StringOptions options)
 	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : StringExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
@@ -45,19 +44,21 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 	public StringExpectationResult<TResult, TValue, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase)));
+		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
 		return this;
 	}
 
 	/// <summary>
-	///     Ignores casing when comparing the <see langword="string" />s, according to the <paramref name="ignoreCase" /> parameter.
+	///     Ignores casing when comparing the <see langword="string" />s, according to the <paramref name="ignoreCase" />
+	///     parameter.
 	/// </summary>
 	public StringExpectationResult<TResult, TValue, TSelf> IgnoringCase(
 		bool ignoreCase,
-		[CallerArgumentExpression("ignoreCase")] string doNotPopulateThisValue = "")
+		[CallerArgumentExpression("ignoreCase")]
+		string doNotPopulateThisValue = "")
 	{
 		options.IgnoringCase(ignoreCase);
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase), doNotPopulateThisValue));
+		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase), doNotPopulateThisValue);
 		return this;
 	}
 
@@ -69,8 +70,7 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{
 		options.UsingComparer(comparer);
-		_expectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(Using), doNotPopulateThisValue));
+		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -15,12 +14,10 @@ public static partial class ThatNullableBoolShould
 	/// <summary>
 	///     Start expectations for the current <see cref="bool" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<bool?> Should(this IExpectThat<bool?> subject,
+	public static IThat<bool?> Should(this IExpectSubject<bool?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<bool?>(subject.ExpectationBuilder);
-	}
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct IsValueConstraint(bool? expected) : IValueConstraint<bool?>
 	{

@@ -5,8 +5,6 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -27,10 +25,11 @@ public static partial class ThatQuantifiableCollectionShould
 			[CallerArgumentExpression("predicate")]
 			string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
-		=> new(source.Collection.ExpectationBuilder.Add(
-				new SatisfyConstraint<TItem, TCollection>(predicate, doNotPopulateThisValue,
-					source.Quantity),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.Collection.ExpectationBuilder
+				.AddConstraint(
+					new SatisfyConstraint<TItem, TCollection>(predicate, doNotPopulateThisValue,
+						source.Quantity))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source.Collection);
 
 	private readonly struct SatisfyConstraint<TItem, TCollection>(

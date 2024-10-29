@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -16,10 +15,11 @@ public static partial class ThatBoolShould
 	public static AndOrExpectationResult<bool, IThat<bool>> Be(this IThat<bool> source,
 		bool expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new IsValueConstraint(expected),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint(expected))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
-	
+
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
@@ -27,8 +27,9 @@ public static partial class ThatBoolShould
 		bool unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new IsNotValueConstraint(unexpected),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsNotValueConstraint(unexpected))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 
 	private readonly struct IsNotValueConstraint(bool unexpected) : IValueConstraint<bool>

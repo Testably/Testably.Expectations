@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -17,9 +16,9 @@ public static partial class ThatStringShould
 		this IThat<string?> source,
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new IsValueConstraint(expected),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint(expected))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			expected);
 
@@ -39,6 +38,6 @@ public static partial class ThatStringShould
 
 		/// <inheritdoc />
 		public override string ToString()
-			=> expected.GetExpectation(GrammaticVoice.ActiveVoice);
+			=> expected.GetExpectation(StringMatcher.GrammaticVoice.ActiveVoice);
 	}
 }

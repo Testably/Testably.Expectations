@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -18,10 +17,11 @@ public static partial class ThatEnumShould
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"have value {expected}",
-					actual => Convert.ToInt64(actual, CultureInfo.InvariantCulture) == expected),
-				b => b.AppendMethod(nameof(HaveValue), doNotPopulateThisValue)),
+					actual => Convert.ToInt64(actual, CultureInfo.InvariantCulture) == expected))
+				.AppendMethodStatement(nameof(HaveValue), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -33,9 +33,10 @@ public static partial class ThatEnumShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have value {unexpected}",
-					actual => Convert.ToInt64(actual, CultureInfo.InvariantCulture) != unexpected),
-				b => b.AppendMethod(nameof(NotHaveValue), doNotPopulateThisValue)),
+					actual => Convert.ToInt64(actual, CultureInfo.InvariantCulture) != unexpected))
+				.AppendMethodStatement(nameof(NotHaveValue), doNotPopulateThisValue),
 			source);
 }

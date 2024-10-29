@@ -17,11 +17,11 @@ public sealed partial class NumberShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be {expected.ToString(CultureInfo.InvariantCulture)},
-				                   but found {subject.ToString(CultureInfo.InvariantCulture)}
-				                   at Expect.That(subject).Should().Be(expected)
-				                   """);
+				              Expected subject to
+				              be {expected.ToString(CultureInfo.InvariantCulture)},
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
 		}
 
 		[Theory]
@@ -35,11 +35,11 @@ public sealed partial class NumberShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be {expected},
-				                   but found {subject}
-				                   at Expect.That(subject).Should().Be(expected)
-				                   """);
+				              Expected subject to
+				              be {expected},
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
 		}
 
 		[Theory]
@@ -53,11 +53,11 @@ public sealed partial class NumberShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be <null>,
-				                   but found {subject}
-				                   at Expect.That(subject).Should().Be(expected)
-				                   """);
+				              Expected subject to
+				              be <null>,
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
 		}
 
 		[Theory]
@@ -71,11 +71,11 @@ public sealed partial class NumberShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be <null>,
-				                   but found {subject}
-				                   at Expect.That(subject).Should().Be(expected)
-				                   """);
+				              Expected subject to
+				              be <null>,
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
 		}
 
 		[Theory]
@@ -175,11 +175,11 @@ public sealed partial class NumberShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   not be {expected},
-				                   but found {subject}
-				                   at Expect.That(subject).Should().NotBe(expected)
-				                   """);
+				              Expected subject to
+				              not be {expected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotBe(expected)
+				              """);
 		}
 	}
 }

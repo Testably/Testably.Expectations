@@ -15,11 +15,11 @@ public sealed partial class NullableEnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    have flag {expected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().HaveFlag(expected)
-				                    """);
+				              Expected subject to
+				              have flag {expected},
+				              but found {subject}
+				              at Expect.That(subject).Should().HaveFlag(expected)
+				              """);
 		}
 
 		[Theory]
@@ -74,11 +74,11 @@ public sealed partial class NullableEnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not have flag {unexpected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().NotHaveFlag(unexpected)
-				                    """);
+				              Expected subject to
+				              not have flag {unexpected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotHaveFlag(unexpected)
+				              """);
 		}
 
 		[Theory]
@@ -93,11 +93,11 @@ public sealed partial class NullableEnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not have flag {unexpected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().NotHaveFlag(unexpected)
-				                    """);
+				              Expected subject to
+				              not have flag {unexpected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotHaveFlag(unexpected)
+				              """);
 		}
 	}
 }

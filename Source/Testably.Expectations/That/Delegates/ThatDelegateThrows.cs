@@ -14,11 +14,11 @@ public partial class ThatDelegateThrows<TException>
 	/// <summary>
 	///     The expectation builder.
 	/// </summary>
-	public IExpectationBuilder ExpectationBuilder { get; }
+	public ExpectationBuilder ExpectationBuilder { get; }
 
 	private readonly ThrowsOption _throwOptions;
 
-	internal ThatDelegateThrows(IExpectationBuilder expectationBuilder,
+	internal ThatDelegateThrows(ExpectationBuilder expectationBuilder,
 		ThrowsOption throwOptions)
 		: base(expectationBuilder)
 	{

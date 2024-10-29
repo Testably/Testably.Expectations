@@ -16,15 +16,15 @@ public sealed partial class ExceptionShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                   Expected subject to
-				                   have Message equal to "expected other text",
-				                   but found "actual text" which differs at index 0:
-				                      ↓ (actual)
-				                     "actual text"
-				                     "expected other text"
-				                      ↑ (expected)
-				                   at Expect.That(subject).Should().HaveMessage(expected)
-				                   """);
+				             Expected subject to
+				             have Message equal to "expected other text",
+				             but found "actual text" which differs at index 0:
+				                ↓ (actual)
+				               "actual text"
+				               "expected other text"
+				                ↑ (expected)
+				             at Expect.That(subject).Should().HaveMessage(expected)
+				             """);
 		}
 
 		[Theory]

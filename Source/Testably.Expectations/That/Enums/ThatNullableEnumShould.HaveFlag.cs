@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -19,10 +18,11 @@ public static partial class ThatNullableEnumShould
 		[CallerArgumentExpression("expectedFlag")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"have flag {Formatter.Format(expectedFlag)}",
-					actual => actual != null && actual.Value.HasFlag(expectedFlag)),
-				b => b.AppendMethod(nameof(HaveFlag), doNotPopulateThisValue)),
+					actual => actual != null && actual.Value.HasFlag(expectedFlag)))
+				.AppendMethodStatement(nameof(HaveFlag), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -34,9 +34,10 @@ public static partial class ThatNullableEnumShould
 		[CallerArgumentExpression("unexpectedFlag")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have flag {Formatter.Format(unexpectedFlag)}",
-					actual => actual != null && !actual.Value.HasFlag(unexpectedFlag)),
-				b => b.AppendMethod(nameof(NotHaveFlag), doNotPopulateThisValue)),
+					actual => actual != null && !actual.Value.HasFlag(unexpectedFlag)))
+				.AppendMethodStatement(nameof(NotHaveFlag), doNotPopulateThisValue),
 			source);
 }

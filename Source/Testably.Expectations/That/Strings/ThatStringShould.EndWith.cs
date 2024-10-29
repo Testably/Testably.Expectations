@@ -1,7 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -20,9 +19,10 @@ public static partial class ThatStringShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		StringOptions? options = new();
-		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new EndsWithValueConstraint(expected, options),
-				b => b.AppendMethod(nameof(EndWith), doNotPopulateThisValue)),
+		return new StringExpectationResult<string?, IThat<string?>>(
+			source.ExpectationBuilder
+				.AddConstraint(new EndsWithValueConstraint(expected, options))
+				.AppendMethodStatement(nameof(EndWith), doNotPopulateThisValue),
 			source,
 			options);
 	}
@@ -37,9 +37,10 @@ public static partial class ThatStringShould
 		string doNotPopulateThisValue = "")
 	{
 		StringOptions? options = new();
-		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new DoesNotEndWithValueConstraint(unexpected, options),
-				b => b.AppendMethod(nameof(NotEndWith), doNotPopulateThisValue)),
+		return new StringExpectationResult<string?, IThat<string?>>(
+			source.ExpectationBuilder
+				.AddConstraint(new DoesNotEndWithValueConstraint(unexpected, options))
+				.AppendMethodStatement(nameof(NotEndWith), doNotPopulateThisValue),
 			source,
 			options);
 	}

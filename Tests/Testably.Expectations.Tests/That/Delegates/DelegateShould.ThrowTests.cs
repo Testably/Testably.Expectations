@@ -16,18 +16,6 @@ public sealed partial class DelegateShould
 		}
 
 		[Fact]
-		public async Task WithThrownExactException_ShouldSucceed()
-		{
-			Exception exception = CreateCustomException();
-			Action action = () => throw exception;
-
-			async Task<CustomException> Act()
-				=> await Expect.That(action).Should().Throw<CustomException>();
-
-			await Expect.That(Act).Should().NotThrow();
-		}
-
-		[Fact]
 		public async Task WithoutThrownException_ShouldFail()
 		{
 			string expectedMessage = """
@@ -46,9 +34,9 @@ public sealed partial class DelegateShould
 		}
 
 		[Fact]
-		public async Task WithThrownSubtypeException_ShouldSucceed()
+		public async Task WithThrownExactException_ShouldSucceed()
 		{
-			Exception exception = CreateSubCustomException();
+			Exception exception = CreateCustomException();
 			Action action = () => throw exception;
 
 			async Task<CustomException> Act()
@@ -75,6 +63,18 @@ public sealed partial class DelegateShould
 
 			await Expect.That(Act).Should().ThrowException()
 				.WithMessage(expectedMessage);
+		}
+
+		[Fact]
+		public async Task WithThrownSubtypeException_ShouldSucceed()
+		{
+			Exception exception = CreateSubCustomException();
+			Action action = () => throw exception;
+
+			async Task<CustomException> Act()
+				=> await Expect.That(action).Should().Throw<CustomException>();
+
+			await Expect.That(Act).Should().NotThrow();
 		}
 
 		[Fact]

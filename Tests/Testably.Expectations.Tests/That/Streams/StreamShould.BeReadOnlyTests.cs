@@ -19,11 +19,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be read-only,
-				                  but it was not
-				                  at Expect.That(subject).Should().BeReadOnly()
-				                  """);
+				             Expected subject to
+				             be read-only,
+				             but it was not
+				             at Expect.That(subject).Should().BeReadOnly()
+				             """);
 		}
 
 		[Fact]
@@ -36,11 +36,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be read-only,
-				                  but found <null>
-				                  at Expect.That(subject).Should().BeReadOnly()
-				                  """);
+				             Expected subject to
+				             be read-only,
+				             but found <null>
+				             at Expect.That(subject).Should().BeReadOnly()
+				             """);
 		}
 
 		[Fact]
@@ -81,11 +81,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be read-only,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotBeReadOnly()
-				                  """);
+				             Expected subject to
+				             not be read-only,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBeReadOnly()
+				             """);
 		}
 
 		[Fact]
@@ -98,11 +98,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be read-only,
-				                  but it was
-				                  at Expect.That(subject).Should().NotBeReadOnly()
-				                  """);
+				             Expected subject to
+				             not be read-only,
+				             but it was
+				             at Expect.That(subject).Should().NotBeReadOnly()
+				             """);
 		}
 	}
 }

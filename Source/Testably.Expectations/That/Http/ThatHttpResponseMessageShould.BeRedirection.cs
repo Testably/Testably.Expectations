@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Net.Http;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -15,11 +14,11 @@ public static partial class ThatHttpResponseMessageShould
 	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		BeRedirection(
 			this IThat<HttpResponseMessage?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new HasStatusCodeRangeConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new HasStatusCodeRangeConstraint(
 					statusCode => statusCode >= 300 && statusCode < 400,
-					"be redirection (status code 3xx)"),
-				b => b.AppendMethod(nameof(BeRedirection))),
+					"be redirection (status code 3xx)"))
+				.AppendMethodStatement(nameof(BeRedirection)),
 			source);
 }
 #endif

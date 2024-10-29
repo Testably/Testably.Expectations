@@ -16,11 +16,11 @@ public sealed partial class EnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    have value {expected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().HaveValue(expected)
-				                    """);
+				              Expected subject to
+				              have value {expected},
+				              but found {subject}
+				              at Expect.That(subject).Should().HaveValue(expected)
+				              """);
 		}
 
 		[Theory]
@@ -62,11 +62,11 @@ public sealed partial class EnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not have flag {unexpected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().NotHaveFlag(unexpected)
-				                    """);
+				              Expected subject to
+				              not have flag {unexpected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotHaveFlag(unexpected)
+				              """);
 		}
 
 		[Theory]
@@ -81,11 +81,11 @@ public sealed partial class EnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not have flag {unexpected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().NotHaveFlag(unexpected)
-				                    """);
+				              Expected subject to
+				              not have flag {unexpected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotHaveFlag(unexpected)
+				              """);
 		}
 	}
 
@@ -116,11 +116,11 @@ public sealed partial class EnumShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not have value {unexpected},
-				                    but found {subject}
-				                    at Expect.That(subject).Should().NotHaveValue(unexpected)
-				                    """);
+				              Expected subject to
+				              not have value {unexpected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotHaveValue(unexpected)
+				              """);
 		}
 	}
 }

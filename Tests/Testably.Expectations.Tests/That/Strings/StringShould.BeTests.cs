@@ -43,15 +43,15 @@ public sealed partial class StringShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be equal to "expected other text",
-				                  but found "actual text" which differs at index 0:
-				                     ↓ (actual)
-				                    "actual text"
-				                    "expected other text"
-				                     ↑ (expected)
-				                  at Expect.That(subject).Should().Be(expected)
-				                  """);
+				             Expected subject to
+				             be equal to "expected other text",
+				             but found "actual text" which differs at index 0:
+				                ↓ (actual)
+				               "actual text"
+				               "expected other text"
+				                ↑ (expected)
+				             at Expect.That(subject).Should().Be(expected)
+				             """);
 		}
 	}
 }

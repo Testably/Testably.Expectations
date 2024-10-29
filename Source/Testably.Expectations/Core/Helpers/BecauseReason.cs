@@ -1,7 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core.Constraints;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Helpers;
 
 internal struct BecauseReason(string reason)
 {
@@ -25,7 +25,7 @@ internal struct BecauseReason(string reason)
 
 	public ConstraintResult ApplyTo(ConstraintResult result)
 	{
-		var message = CreateMessage();
+		string message = CreateMessage();
 		return result.UpdateExpectationText(e => e.ExpectationText + message);
 	}
 }

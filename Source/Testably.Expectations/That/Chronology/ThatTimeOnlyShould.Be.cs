@@ -2,7 +2,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -17,27 +16,28 @@ public static partial class ThatTimeOnlyShould
 	public static AndOrExpectationResult<TimeOnly, IThat<TimeOnly>> Be(this IThat<TimeOnly> source,
 		TimeOnly expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
-					$"be {Formatter.Format(expected)}"),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+					$"be {Formatter.Format(expected)}"))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TimeOnly, IThat<TimeOnly>> NotBe(this IThat<TimeOnly> source,
+	public static AndOrExpectationResult<TimeOnly, IThat<TimeOnly>> NotBe(
+		this IThat<TimeOnly> source,
 		TimeOnly unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
-					$"not be {Formatter.Format(unexpected)}"),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+					$"not be {Formatter.Format(unexpected)}"))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }
 #endif

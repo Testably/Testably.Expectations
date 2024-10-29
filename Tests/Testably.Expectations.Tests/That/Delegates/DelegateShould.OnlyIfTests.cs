@@ -35,11 +35,11 @@ public sealed partial class DelegateShould
 
 			await Expect.That(Act).Should().ThrowException()
 				.WithMessage("""
-				                  Expected action to
-				                  not throw any exception,
-				                  but it did throw an Exception
-				                  at Expect.That(action).Should().ThrowException().OnlyIf(false)
-				                  """);
+				             Expected action to
+				             not throw any exception,
+				             but it did throw an Exception
+				             at Expect.That(action).Should().ThrowException().OnlyIf(false)
+				             """);
 		}
 
 		[Fact]
@@ -63,11 +63,11 @@ public sealed partial class DelegateShould
 
 			await Expect.That(Act).Should().ThrowException()
 				.WithMessage("""
-				                  Expected action to
-				                  throw an Exception,
-				                  but it did not
-				                  at Expect.That(action).Should().ThrowException().OnlyIf(true)
-				                  """);
+				             Expected action to
+				             throw an Exception,
+				             but it did not
+				             at Expect.That(action).Should().ThrowException().OnlyIf(true)
+				             """);
 		}
 
 		[Fact]

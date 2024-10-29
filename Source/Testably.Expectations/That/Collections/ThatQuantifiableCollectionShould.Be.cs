@@ -4,8 +4,6 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -24,9 +22,10 @@ public static partial class ThatQuantifiableCollectionShould
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
-		=> new(source.Collection.ExpectationBuilder.Add(
-				new AreEqualConstraint<TItem, TCollection>(expected, source.Quantity),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.Collection.ExpectationBuilder
+				.AddConstraint(
+					new AreEqualConstraint<TItem, TCollection>(expected, source.Quantity))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source.Collection);
 
 	private readonly struct AreEqualConstraint<TItem, TCollection>(

@@ -1,7 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Results;
 using Testably.Expectations.That.Delegates;
 
 // ReSharper disable once CheckNamespace
@@ -16,11 +14,9 @@ public static partial class ThatDelegateShould
 		where TException : Exception
 	{
 		ThrowsOption throwOptions = new();
-		return new ThatDelegateThrows<TException>(source.ExpectationBuilder.AddCast(
-				new ThrowsCastConstraint<TException>(throwOptions),
-				b => b.Append('.').Append(nameof(Throw)).Append('<')
-					.Append(typeof(TException).Name)
-					.Append(">()")),
+		return new ThatDelegateThrows<TException>(source.ExpectationBuilder
+				.AddConstraint(new ThrowsCastConstraint<TException>(throwOptions))
+				.AppendGenericMethodStatement<TException>(nameof(Throw)),
 			throwOptions);
 	}
 }

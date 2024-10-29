@@ -15,29 +15,56 @@ public static partial class ThatDelegateShould
 	/// </summary>
 	public static ExpectationResult<TValue> NotThrow<TValue>(
 		this ThatDelegate.WithValue<TValue> source)
-		=> new(source.ExpectationBuilder.Add(
-			new DoesNotThrowConstraint<TValue>(),
-			b => b.AppendMethod(nameof(NotThrow))));
+		=> new(source.ExpectationBuilder
+			.AddConstraint(new DoesNotThrowConstraint<TValue>())
+			.AppendMethodStatement(nameof(NotThrow)));
 
 	/// <summary>
 	///     Verifies that the delegate does not throw any exception.
 	/// </summary>
 	public static ExpectationResult NotThrow(this ThatDelegate.WithoutValue source)
-		=> new(source.ExpectationBuilder.Add(
-			new DoesNotThrowConstraint<DelegateSource.NoValue>(),
-			b => b.AppendMethod(nameof(NotThrow))));
+		=> new(source.ExpectationBuilder
+			.AddConstraint(new DoesNotThrowConstraint())
+			.AppendMethodStatement(nameof(NotThrow)));
 
-	private readonly struct DoesNotThrowConstraint<TValue> : IComplexConstraint<TValue>
+	private readonly struct DoesNotThrowConstraint : IValueConstraint<DelegateValue>
 	{
-		public ConstraintResult IsMetBy(TValue? actual, Exception? exception)
+		public ConstraintResult IsMetBy(DelegateValue? actual)
 		{
-			if (exception is not null)
+			if (actual?.Exception is { } exception)
 			{
-				return new ConstraintResult.Failure<TValue?>(actual, ToString(),
+				return new ConstraintResult.Failure(ToString(),
 					$"it did throw {exception.FormatForMessage()}");
 			}
 
-			return new ConstraintResult.Success<TValue?>(actual, ToString());
+			if (actual is not null)
+			{
+				return new ConstraintResult.Success(ToString());
+			}
+
+			throw new InvalidOperationException("Received <null> in DoesNotThrowConstraint.");
+		}
+
+		public override string ToString()
+			=> DoesNotThrowExpectation;
+	}
+
+	private readonly struct DoesNotThrowConstraint<TValue> : IValueConstraint<DelegateValue<TValue>>
+	{
+		public ConstraintResult IsMetBy(DelegateValue<TValue>? actual)
+		{
+			if (actual?.Exception is { } exception)
+			{
+				return new ConstraintResult.Failure<TValue?>(actual.Value, ToString(),
+					$"it did throw {exception.FormatForMessage()}");
+			}
+
+			if (actual is not null)
+			{
+				return new ConstraintResult.Success<TValue?>(actual.Value, ToString());
+			}
+
+			throw new InvalidOperationException("Received <null> in DoesNotThrowConstraint.");
 		}
 
 		public override string ToString()

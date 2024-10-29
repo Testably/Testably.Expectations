@@ -23,7 +23,7 @@ public sealed partial class EnumerableShould
 		[Fact]
 		public async Task DoesNotMaterializeEnumerable()
 		{
-			var subject = Factory.GetFibonacciNumbers();
+			IEnumerable<int> subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
 				=> await Expect.That(subject).Should().Contain(5);
@@ -39,7 +39,7 @@ public sealed partial class EnumerableShould
 			subject.Add(expected);
 
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.Contain(Expect.That(subject).Should(), expected);
+				=> await Expect.That(subject).Should().Contain(expected);
 
 			await Expect.That(Act).Should().NotThrow();
 		}
@@ -50,15 +50,15 @@ public sealed partial class EnumerableShould
 			string expected)
 		{
 			async Task Act()
-				=> await Expectations.ThatCollectionShould.Contain(Expect.That(subject).Should(), expected);
+				=> await Expect.That(subject).Should().Contain(expected);
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   contain "{expected}",
-				                   but found ["{string.Join("\", \"", subject)}"]
-				                   at Expect.That(subject).Should().Contain(expected)
-				                   """);
+				              Expected subject to
+				              contain "{expected}",
+				              but found ["{string.Join("\", \"", subject)}"]
+				              at Expect.That(subject).Should().Contain(expected)
+				              """);
 		}
 	}
 }

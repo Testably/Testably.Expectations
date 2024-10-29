@@ -3,27 +3,20 @@ using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Sources;
 
-internal class DelegateAsyncSource : IValueSource<DelegateSource.NoValue>
+internal class DelegateAsyncSource(Func<Task> action) : IValueSource<DelegateValue>
 {
-	private readonly Func<Task> _action;
+	#region IValueSource<DelegateValue> Members
 
-	public DelegateAsyncSource(Func<Task> action)
-	{
-		_action = action;
-	}
-
-	#region IValueSource<NoValue> Members
-
-	public async Task<SourceValue<DelegateSource.NoValue>> GetValue()
+	public async Task<DelegateValue?> GetValue()
 	{
 		try
 		{
-			await _action();
-			return new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance, null);
+			await action();
+			return new DelegateValue(null);
 		}
 		catch (Exception ex)
 		{
-			return new SourceValue<DelegateSource.NoValue>(DelegateSource.NoValue.Instance, ex);
+			return new DelegateValue(ex);
 		}
 	}
 

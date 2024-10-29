@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations.That.Delegates;
@@ -16,22 +15,22 @@ public partial class ThatDelegateThrows<TException>
 		Action<ThatExceptionShould<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
-		=> new(
-			ExpectationBuilder.Which<Exception, Exception?, ThatExceptionShould<Exception?>>(
-				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
-					"with an inner exception which should "),
-				expectations,
-				e => new ThatExceptionShould<Exception?>(e),
-				b => b.AppendMethod(nameof(WithInnerException), doNotPopulateThisValue),
-				whichTextSeparator: ""),
+		=> new(ExpectationBuilder
+				.ForProperty<Exception, Exception?>(e => e.InnerException,
+					"with an inner exception which should ")
+				.Validate(new ThatExceptionShould.CastException<Exception>())
+				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e)))
+				.AppendMethodStatement(nameof(WithInnerException),
+					doNotPopulateThisValue),
 			this);
 
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
 	public AndOrExpectationResult<TException, ThatDelegateThrows<TException>> WithInnerException()
-		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with"),
-				b => b.AppendMethod(nameof(WithInnerException))),
+		=> new(ExpectationBuilder
+				.AddConstraint(
+					new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with"))
+				.AppendMethodStatement(nameof(WithInnerException)),
 			this);
 }

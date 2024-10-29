@@ -6,19 +6,19 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on delegate values.
 /// </summary>
-public abstract class ThatDelegate(IExpectationBuilder expectationBuilder)
+public abstract class ThatDelegate(ExpectationBuilder expectationBuilder)
 {
 	/// <summary>
 	///     The expectation builder.
 	/// </summary>
-	public IExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
+	public ExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
 
 	/// <summary>
 	///     A delegate without value.
 	/// </summary>
 	public sealed class WithoutValue : ThatDelegate
 	{
-		internal WithoutValue(IExpectationBuilder expectationBuilder)
+		internal WithoutValue(ExpectationBuilder expectationBuilder)
 			: base(expectationBuilder)
 		{
 		}
@@ -29,7 +29,7 @@ public abstract class ThatDelegate(IExpectationBuilder expectationBuilder)
 	/// </summary>
 	public sealed class WithValue<TValue> : ThatDelegate
 	{
-		internal WithValue(IExpectationBuilder expectationBuilder)
+		internal WithValue(ExpectationBuilder expectationBuilder)
 			: base(expectationBuilder)
 		{
 		}

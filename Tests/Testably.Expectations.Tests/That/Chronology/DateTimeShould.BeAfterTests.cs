@@ -15,11 +15,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    be after {expected:O},
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().BeAfter(expected)
-				                    """);
+				              Expected subject to
+				              be after {expected:O},
+				              but found {subject:O}
+				              at Expect.That(subject).Should().BeAfter(expected)
+				              """);
 		}
 
 		[Fact]
@@ -33,11 +33,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    be after {expected:O},
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().BeAfter(expected)
-				                    """);
+				              Expected subject to
+				              be after {expected:O},
+				              but found {subject:O}
+				              at Expect.That(subject).Should().BeAfter(expected)
+				              """);
 		}
 
 		[Fact]
@@ -64,11 +64,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    be after {expected:O} ± 0:03,
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().BeAfter(expected).Within(TimeSpan.FromSeconds(3))
-				                    """);
+				              Expected subject to
+				              be after {expected:O} ± 0:03,
+				              but found {subject:O}
+				              at Expect.That(subject).Should().BeAfter(expected).Within(TimeSpan.FromSeconds(3))
+				              """);
 		}
 
 		[Fact]
@@ -98,11 +98,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not be after {expected:O},
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().NotBeAfter(expected)
-				                    """);
+				              Expected subject to
+				              not be after {expected:O},
+				              but found {subject:O}
+				              at Expect.That(subject).Should().NotBeAfter(expected)
+				              """);
 		}
 
 		[Fact]
@@ -141,11 +141,11 @@ public sealed partial class DateTimeShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                    Expected subject to
-				                    not be after {expected:O} ± 0:03,
-				                    but found {subject:O}
-				                    at Expect.That(subject).Should().NotBeAfter(expected).Within(TimeSpan.FromSeconds(3))
-				                    """);
+				              Expected subject to
+				              not be after {expected:O} ± 0:03,
+				              but found {subject:O}
+				              at Expect.That(subject).Should().NotBeAfter(expected).Within(TimeSpan.FromSeconds(3))
+				              """);
 		}
 
 		[Fact]

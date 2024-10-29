@@ -1,6 +1,5 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -14,9 +13,10 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static AndOrExpectationResult<string?, IThat<string?>> BeNull(
 		this IThat<string?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new IsNullValueConstraint(),
-				b => b.AppendMethod(nameof(BeNull))),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(
+					new IsNullValueConstraint())
+				.AppendMethodStatement(nameof(BeNull)),
 			source);
 
 	/// <summary>
@@ -24,9 +24,10 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static AndOrExpectationResult<string, IThat<string?>> NotBeNull(
 		this IThat<string?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new IsNotNullValueConstraint(),
-				b => b.AppendMethod(nameof(NotBeNull))),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(
+					new IsNotNullValueConstraint())
+				.AppendMethodStatement(nameof(NotBeNull)),
 			source);
 
 	private readonly struct IsNullValueConstraint : IValueConstraint<string?>

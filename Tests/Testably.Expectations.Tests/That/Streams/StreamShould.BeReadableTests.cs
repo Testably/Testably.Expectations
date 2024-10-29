@@ -16,11 +16,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be readable,
-				                  but it was not
-				                  at Expect.That(subject).Should().BeReadable()
-				                  """);
+				             Expected subject to
+				             be readable,
+				             but it was not
+				             at Expect.That(subject).Should().BeReadable()
+				             """);
 		}
 
 		[Fact]
@@ -33,11 +33,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be readable,
-				                  but found <null>
-				                  at Expect.That(subject).Should().BeReadable()
-				                  """);
+				             Expected subject to
+				             be readable,
+				             but found <null>
+				             at Expect.That(subject).Should().BeReadable()
+				             """);
 		}
 
 		[Fact]
@@ -75,11 +75,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be readable,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotBeReadable()
-				                  """);
+				             Expected subject to
+				             not be readable,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBeReadable()
+				             """);
 		}
 
 		[Fact]
@@ -92,11 +92,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be readable,
-				                  but it was
-				                  at Expect.That(subject).Should().NotBeReadable()
-				                  """);
+				             Expected subject to
+				             not be readable,
+				             but it was
+				             at Expect.That(subject).Should().NotBeReadable()
+				             """);
 		}
 	}
 }

@@ -2,7 +2,6 @@
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -16,22 +15,18 @@ public static partial class ThatDateTimeOffsetShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateTimeOffset" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<DateTimeOffset> Should(this IExpectThat<DateTimeOffset> subject,
+	public static IThat<DateTimeOffset> Should(this IExpectSubject<DateTimeOffset> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<DateTimeOffset>(subject.ExpectationBuilder);
-	}
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="DateTimeOffset" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<DateTimeOffset?> Should(this IExpectThat<DateTimeOffset?> subject,
+	public static IThat<DateTimeOffset?> Should(this IExpectSubject<DateTimeOffset?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<DateTimeOffset?>(subject.ExpectationBuilder);
-	}
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct ConditionConstraint(
 		DateTimeOffset expected,

@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Testably.Expectations.Tests.That.Delegates;
+﻿namespace Testably.Expectations.Tests.That.Delegates;
 
 public sealed partial class DelegateThrows
 {

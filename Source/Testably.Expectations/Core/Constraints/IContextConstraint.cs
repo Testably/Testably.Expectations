@@ -1,10 +1,9 @@
 ﻿using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Core.Nodes;
 
 namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
-///     A simple expectation on type <typeparamref name="TValue" /> that uses the <see cref="IEvaluationContext"/>.
+///     A simple expectation on type <typeparamref name="TValue" /> that uses the <see cref="IEvaluationContext" />.
 /// </summary>
 public interface IContextConstraint<in TValue> : IConstraint
 {

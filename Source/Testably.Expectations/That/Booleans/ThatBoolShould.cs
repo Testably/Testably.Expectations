@@ -1,6 +1,5 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -14,11 +13,9 @@ public static partial class ThatBoolShould
 	/// <summary>
 	///     Start expectations for current <see cref="bool" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<bool> Should(this IExpectThat<bool> subject)
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<bool>(subject.ExpectationBuilder);
-	}
+	public static IThat<bool> Should(this IExpectSubject<bool> subject)
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct IsValueConstraint(bool expected) : IValueConstraint<bool>
 	{

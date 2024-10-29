@@ -5,11 +5,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="TUnit" Version="0.1.1099" />
+		<PackageReference Include="TUnit" Version="0.1.1099"/>
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Source\Testably.Expectations\Testably.Expectations.csproj" />
+		<ProjectReference Include="..\..\..\Source\Testably.Expectations\Testably.Expectations.csproj"/>
 	</ItemGroup>
 
 </Project>

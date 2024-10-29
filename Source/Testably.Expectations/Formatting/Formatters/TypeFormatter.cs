@@ -54,7 +54,7 @@ internal class TypeFormatter : FormatterBase<Type>
 		Type? underlyingType = Nullable.GetUnderlyingType(value);
 
 		if (underlyingType != null &&
-			Aliases.TryGetValue(underlyingType, out string? underlyingAlias))
+		    Aliases.TryGetValue(underlyingType, out string? underlyingAlias))
 		{
 			alias = $"{underlyingAlias}?";
 			return true;

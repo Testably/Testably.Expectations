@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -16,11 +15,12 @@ public static partial class ThatNullableGuidShould
 	public static AndOrExpectationResult<Guid?, IThat<Guid?>> Be(this IThat<Guid?> source,
 		Guid? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ValueConstraint(
-					$"be {Formatter.Format(expected)}",
-					actual => actual?.Equals(expected) ?? expected == null),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(
+					new ValueConstraint(
+						$"be {Formatter.Format(expected)}",
+						actual => actual?.Equals(expected) ?? expected == null))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -30,10 +30,11 @@ public static partial class ThatNullableGuidShould
 		Guid? unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ValueConstraint(
-					$"not be {Formatter.Format(unexpected)}",
-					actual => !actual?.Equals(unexpected) ?? unexpected != null),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(
+					new ValueConstraint(
+						$"not be {Formatter.Format(unexpected)}",
+						actual => !actual?.Equals(unexpected) ?? unexpected != null))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }

@@ -7,10 +7,7 @@ public sealed class WhichNodeTests
 	{
 		Dummy subject = new()
 		{
-			Inner = new Dummy.Nested
-			{
-				Id = 1
-			},
+			Inner = new Dummy.Nested { Id = 1 },
 			Value = "foo"
 		};
 
@@ -20,15 +17,15 @@ public sealed class WhichNodeTests
 
 		await Expect.That(Act).Should().Throw<XunitException>()
 			.WithMessage("""
-			                  Expected subject to
-			                  be type Dummy which Value should be equal to "bar",
-			                  but found "foo" which differs at index 0:
-			                     ↓ (actual)
-			                    "foo"
-			                    "bar"
-			                     ↑ (expected)
-			                  at Expect.That(subject).Should().Be<Dummy>().Which(p => p.Value).Should(e => e.Be("bar"))
-			                  """);
+			             Expected subject to
+			             be type Dummy which Value should be equal to "bar",
+			             but found "foo" which differs at index 0:
+			                ↓ (actual)
+			               "foo"
+			               "bar"
+			                ↑ (expected)
+			             at Expect.That(subject).Should().Be<Dummy>().Which(p => p.Value).Should(e => e.Be("bar"))
+			             """);
 	}
 
 	private class Dummy

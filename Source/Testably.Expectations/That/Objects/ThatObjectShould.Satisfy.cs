@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -20,16 +19,14 @@ public static partial class ThatObjectShould
 		[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "")
 		=> new((expectations, doNotPopulateThisValue2) =>
 			new AndOrExpectationResult<T, IThat<object?>>(
-				source.ExpectationBuilder.Which<T, TProperty?, IThat<TProperty?>>(
-					PropertyAccessor<T, TProperty?>.FromExpression(selector),
-					expectations,
-					e => new That<TProperty?>(e),
-					b => b.AppendGenericMethod<T, TProperty>(nameof(Satisfy),
-							doNotPopulateThisValue1)
-						.AppendMethod(nameof(SatisfyResult<TProperty, T>.To),
-							doNotPopulateThisValue2),
-					whichTextSeparator: "satisfy ",
-					whichPropertyTextSeparator: "to "),
+				source.ExpectationBuilder
+					.ForProperty(PropertyAccessor<T, TProperty?>.FromExpression(selector),
+						(property, expectation) => $"satisfy {property}to {expectation}")
+					.AddExpectations(e => expectations(new Expect.ThatSubject<TProperty?>(e)))
+					.AppendGenericMethodStatement<T, TProperty>(nameof(Satisfy),
+						doNotPopulateThisValue1)
+					.AppendMethodStatement(nameof(SatisfyResult<TProperty, T>.To),
+						doNotPopulateThisValue2),
 				source));
 
 	/// <summary>

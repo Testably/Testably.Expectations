@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
@@ -14,15 +13,13 @@ namespace Testably.Expectations;
 public static partial class ThatStreamShould
 {
 	/// <summary>
-	///     Start expectations for the current <typeparamref name="TStream"/> <paramref name="subject" />.
+	///     Start expectations for the current <typeparamref name="TStream" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TStream?> Should<TStream>(this IExpectThat<TStream?> subject,
+	public static IThat<TStream?> Should<TStream>(this IExpectSubject<TStream?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		where TStream : Stream
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TStream?>(subject.ExpectationBuilder);
-	}
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct ValueConstraint(
 		string expectation,

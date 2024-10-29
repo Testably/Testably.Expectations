@@ -14,11 +14,11 @@ public sealed partial class NullableGuidShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be null,
-				                   but found {subject}
-				                   at Expect.That(subject).Should().BeNull()
-				                   """);
+				              Expected subject to
+				              be null,
+				              but found {subject}
+				              at Expect.That(subject).Should().BeNull()
+				              """);
 		}
 
 		[Fact]
@@ -56,11 +56,11 @@ public sealed partial class NullableGuidShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be null,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotBeNull()
-				                  """);
+				             Expected subject to
+				             not be null,
+				             but found <null>
+				             at Expect.That(subject).Should().NotBeNull()
+				             """);
 		}
 	}
 }

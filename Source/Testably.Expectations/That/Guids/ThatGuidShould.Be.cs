@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -16,10 +15,11 @@ public static partial class ThatGuidShould
 	public static AndOrExpectationResult<Guid, IThat<Guid>> Be(this IThat<Guid> source,
 		Guid expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					$"be {Formatter.Format(expected)}",
-					actual => actual.Equals(expected)),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+					actual => actual.Equals(expected)))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -29,9 +29,10 @@ public static partial class ThatGuidShould
 		Guid unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					$"not be {Formatter.Format(unexpected)}",
-					actual => !actual.Equals(unexpected)),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+					actual => !actual.Equals(unexpected)))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }

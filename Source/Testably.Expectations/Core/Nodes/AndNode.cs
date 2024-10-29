@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
+using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core.Nodes;
 
@@ -19,7 +20,7 @@ internal class AndNode : CombinationNode
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 	{

@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -16,11 +15,12 @@ public static partial class ThatStreamShould
 		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					$"have length {expected}",
 					actual => actual?.Length == expected,
-					actual => actual == null ? "found <null>" : $"it had length {actual.Length}"),
-				b => b.AppendMethod(nameof(HaveLength), doNotPopulateThisValue)),
+					actual => actual == null ? "found <null>" : $"it had length {actual.Length}"))
+				.AppendMethodStatement(nameof(HaveLength), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -30,10 +30,11 @@ public static partial class ThatStreamShould
 		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					$"not have length {expected}",
 					actual => actual != null && actual.Length != expected,
-					actual => actual == null ? "found <null>" : "it had"),
-				b => b.AppendMethod(nameof(NotHaveLength), doNotPopulateThisValue)),
+					actual => actual == null ? "found <null>" : "it had"))
+				.AppendMethodStatement(nameof(NotHaveLength), doNotPopulateThisValue),
 			source);
 }

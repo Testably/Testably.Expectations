@@ -1,5 +1,4 @@
 ﻿using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -11,17 +10,17 @@ public static partial class ThatNullableBoolShould
 	///     Verifies that the subject is <see langword="null" />.
 	/// </summary>
 	public static AndOrExpectationResult<bool?, IThat<bool?>> BeNull(this IThat<bool?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new IsValueConstraint(null),
-				b => b.AppendMethod(nameof(BeNull))),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint(null))
+				.AppendMethodStatement(nameof(BeNull)),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is not <see langword="null" />.
 	/// </summary>
 	public static AndOrExpectationResult<bool?, IThat<bool?>> NotBeNull(this IThat<bool?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new IsNotValueConstraint(null),
-				b => b.AppendMethod(nameof(NotBeNull))),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsNotValueConstraint(null))
+				.AppendMethodStatement(nameof(NotBeNull)),
 			source);
 }

@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Equivalency;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -24,10 +23,12 @@ public static partial class ThatObjectShould
 		object expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
-		EquivalencyOptions? options = new();
-		return new EquivalencyOptionsExpectationResult<T, IThat<T>>(source.ExpectationBuilder.Add(
-				new IsEquivalentToValueConstraint(expected, doNotPopulateThisValue, options),
-				b => b.AppendMethod(nameof(BeEquivalentTo), doNotPopulateThisValue)),
+		EquivalencyOptions options = new();
+		return new EquivalencyOptionsExpectationResult<T, IThat<T>>(
+			source.ExpectationBuilder
+				.AddConstraint(new IsEquivalentToValueConstraint(
+					expected, doNotPopulateThisValue, options))
+				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source,
 			options);
 	}

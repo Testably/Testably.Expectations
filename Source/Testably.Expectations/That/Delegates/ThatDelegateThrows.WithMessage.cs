@@ -1,5 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -14,9 +14,10 @@ public partial class ThatDelegateThrows<TException>
 		WithMessage(
 			StringMatcher expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasMessageValueConstraint<TException>(expected, "with"),
-				b => b.AppendMethod(nameof(WithMessage), doNotPopulateThisValue)),
+		=> new(ExpectationBuilder
+				.AddConstraint(new ThatExceptionShould.HasMessageValueConstraint<TException>(
+					expected, "with"))
+				.AppendMethodStatement(nameof(WithMessage), doNotPopulateThisValue),
 			this,
 			expected);
 }

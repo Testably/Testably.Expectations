@@ -1,9 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Options;
-using Testably.Expectations.Results;
 
 namespace Testably.Expectations.That.Delegates;
 
@@ -18,8 +14,7 @@ public partial class ThatDelegateThrows<TException>
 		string doNotPopulateThisValue = "")
 	{
 		_throwOptions.CheckThrow(predicate);
-		ExpectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(OnlyIf), doNotPopulateThisValue));
+		ExpectationBuilder.AppendMethodStatement(nameof(OnlyIf), doNotPopulateThisValue);
 		return new ThatDelegateThrows<TException?>(ExpectationBuilder, _throwOptions);
 	}
 }

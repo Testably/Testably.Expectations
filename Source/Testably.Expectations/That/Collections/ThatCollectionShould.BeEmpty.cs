@@ -2,7 +2,6 @@
 using System.Linq;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -17,8 +16,9 @@ public static partial class ThatCollectionShould
 	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		BeEmpty<TItem>(
 			this IThat<ICollection<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsEmptyValueConstraint<TItem>(),
-				b => b.AppendMethod(nameof(BeEmpty))),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsEmptyValueConstraint<TItem>())
+				.AppendMethodStatement(nameof(BeEmpty)),
 			source);
 
 	/// <summary>
@@ -27,8 +27,9 @@ public static partial class ThatCollectionShould
 	public static AndOrExpectationResult<ICollection<TItem>, IThat<ICollection<TItem>>>
 		NotBeEmpty<TItem>(
 			this IThat<ICollection<TItem>> source)
-		=> new(source.ExpectationBuilder.Add(new IsNotEmptyValueConstraint<TItem>(),
-				b => b.AppendMethod(nameof(NotBeEmpty))),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsNotEmptyValueConstraint<TItem>())
+				.AppendMethodStatement(nameof(NotBeEmpty)),
 			source);
 
 	private readonly struct IsEmptyValueConstraint<TItem> : IValueConstraint<ICollection<TItem>>

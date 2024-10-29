@@ -3,7 +3,6 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -20,8 +19,9 @@ public static partial class ThatCollectionShould
 			this IThat<ICollection<TItem>> source,
 			TItem expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ContainsValueConstraint<TItem>(expected),
-				b => b.AppendMethod(nameof(Contain), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ContainsValueConstraint<TItem>(expected))
+				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
 			source);
 
 	private readonly struct ContainsValueConstraint<TItem>(TItem expected)

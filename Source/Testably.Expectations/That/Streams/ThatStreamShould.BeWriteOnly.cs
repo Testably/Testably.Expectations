@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -13,11 +12,12 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeWriteOnly(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					"be write-only",
 					actual => actual is { CanWrite: true, CanRead: false },
-					actual => actual == null ? "found <null>" : "it was not"),
-				b => b.AppendMethod(nameof(BeWriteOnly))),
+					actual => actual == null ? "found <null>" : "it was not"))
+				.AppendMethodStatement(nameof(BeWriteOnly)),
 			source);
 
 	/// <summary>
@@ -25,10 +25,11 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotBeWriteOnly(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					"not be write-only",
 					actual => actual != null && !(actual is { CanWrite: true, CanRead: false }),
-					actual => actual == null ? "found <null>" : "it was"),
-				b => b.AppendMethod(nameof(NotBeWriteOnly))),
+					actual => actual == null ? "found <null>" : "it was"))
+				.AppendMethodStatement(nameof(NotBeWriteOnly)),
 			source);
 }

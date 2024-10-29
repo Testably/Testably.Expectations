@@ -3,7 +3,6 @@ using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
 // ReSharper disable once CheckNamespace
@@ -17,22 +16,18 @@ public static partial class ThatTimeOnlyShould
 	/// <summary>
 	///     Start expectations for current <see cref="TimeOnly" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TimeOnly> Should(this IExpectThat<TimeOnly> subject,
+	public static IThat<TimeOnly> Should(this IExpectSubject<TimeOnly> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TimeOnly>(subject.ExpectationBuilder);
-	}
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeOnly" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TimeOnly?> Should(this IExpectThat<TimeOnly?> subject,
+	public static IThat<TimeOnly?> Should(this IExpectSubject<TimeOnly?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TimeOnly?>(subject.ExpectationBuilder);
-	}
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct ConditionConstraint(
 		TimeOnly expected,

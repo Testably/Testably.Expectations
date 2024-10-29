@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -14,10 +13,11 @@ public static partial class ThatNullableEnumShould
 	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> BeNull<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					"be null",
-					actual => actual == null),
-				b => b.AppendMethod(nameof(BeNull))),
+					actual => actual == null))
+				.AppendMethodStatement(nameof(BeNull)),
 			source);
 
 	/// <summary>
@@ -26,9 +26,10 @@ public static partial class ThatNullableEnumShould
 	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> NotBeNull<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					"not be null",
-					actual => actual != null),
-				b => b.AppendMethod(nameof(NotBeNull))),
+					actual => actual != null))
+				.AppendMethodStatement(nameof(NotBeNull)),
 			source);
 }

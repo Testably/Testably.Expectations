@@ -4,5 +4,5 @@ namespace Testably.Expectations.Core.Sources;
 
 internal interface IValueSource<TValue>
 {
-	Task<SourceValue<TValue>> GetValue();
+	Task<TValue?> GetValue();
 }

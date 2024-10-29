@@ -44,11 +44,11 @@ public sealed partial class NumberShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be NaN,
-				                   but found {subject.ToString(CultureInfo.InvariantCulture)}
-				                   at Expect.That(subject).Should().BeNaN()
-				                   """);
+				              Expected subject to
+				              be NaN,
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}
+				              at Expect.That(subject).Should().BeNaN()
+				              """);
 		}
 
 		[Fact]
@@ -89,11 +89,11 @@ public sealed partial class NumberShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   be NaN,
-				                   but found {subject.ToString(CultureInfo.InvariantCulture)}
-				                   at Expect.That(subject).Should().BeNaN()
-				                   """);
+				              Expected subject to
+				              be NaN,
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}
+				              at Expect.That(subject).Should().BeNaN()
+				              """);
 		}
 	}
 }

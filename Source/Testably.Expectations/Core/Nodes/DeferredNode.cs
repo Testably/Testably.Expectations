@@ -2,40 +2,38 @@
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
+using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class DeferredNode<TProperty, TThatProperty> : Node
-where TThatProperty : IThat<TProperty>
+internal class DeferredNode<TTarget> : Node
 {
-	private readonly Action<TThatProperty> _expectation;
-	private readonly Func<IExpectationBuilder, TThatProperty> _thatPropertyFactory;
+	private readonly Action<ExpectationBuilder> _expectation;
 
-	public DeferredNode(Action<TThatProperty> expectation,
-	Func<IExpectationBuilder, TThatProperty> thatPropertyFactory)
+	public DeferredNode(Action<ExpectationBuilder> expectation)
 	{
 		_expectation = expectation;
-		_thatPropertyFactory = thatPropertyFactory;
 	}
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 	{
-		if (value is not SourceValue<TProperty> matchingActualValue)
+		if (value is not TTarget matchingActualValue)
 		{
 			throw new InvalidOperationException(
-				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TProperty).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
+				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TTarget).Name},{Environment.NewLine}but found {value?.GetType().Name}");
 		}
 
-		ExpectationBuilder<TProperty?> expectationBuilder = new(matchingActualValue.Value, "");
-		_expectation.Invoke(_thatPropertyFactory(expectationBuilder));
+		ExpectationBuilder<TTarget?> expectationBuilder =
+			new(new ValueSource<TTarget?>(matchingActualValue), "");
+		_expectation.Invoke(expectationBuilder);
 		return await expectationBuilder.IsMet();
 	}
 
 	/// <inheritdoc />
 	public override string ToString()
-		=> $"Deferred node of {typeof(TProperty).Name}";
+		=> $"Deferred node of {typeof(TTarget).Name}";
 }

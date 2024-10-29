@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations.Results;
@@ -13,7 +11,7 @@ namespace Testably.Expectations.Results;
 ///     options on the <see cref="StringOptions" />.
 /// </summary>
 public class EquivalencyOptionsExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	EquivalencyOptions options)
 	: EquivalencyOptionsExpectationResult<TResult, TValue,
@@ -31,23 +29,24 @@ public class EquivalencyOptionsExpectationResult<TResult, TValue>(
 ///     the <see cref="StringMatcher" />.
 /// </summary>
 public class EquivalencyOptionsExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	EquivalencyOptions options)
 	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : EquivalencyOptionsExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder1 = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder1 = expectationBuilder;
 
 	/// <summary>
 	///     Ignores the <paramref name="memberToIgnore" /> when checking for equivalency.
 	/// </summary>
 	public EquivalencyOptionsExpectationResult<TResult, TValue, TSelf> IgnoringMember(
 		string memberToIgnore,
-		[CallerArgumentExpression("memberToIgnore")] string doNotPopulateThisValue = "")
+		[CallerArgumentExpression("memberToIgnore")]
+		string doNotPopulateThisValue = "")
 	{
 		options.IgnoringMember(memberToIgnore);
-		_expectationBuilder1.AppendExpression(b => b.AppendMethod(nameof(IgnoringMember), doNotPopulateThisValue));
+		_expectationBuilder1.AppendMethodStatement(nameof(IgnoringMember), doNotPopulateThisValue);
 		return this;
 	}
 }

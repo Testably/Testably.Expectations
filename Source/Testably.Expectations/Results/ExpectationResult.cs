@@ -10,7 +10,7 @@ namespace Testably.Expectations.Results;
 ///     The result of an expectation without an underlying value.
 /// </summary>
 [StackTraceHidden]
-public class ExpectationResult(IExpectationBuilder expectationBuilder)
+public class ExpectationResult(ExpectationBuilder expectationBuilder)
 {
 	/// <summary>
 	///     Provide a <paramref name="reason" /> explaining why the constraint is needed.<br />
@@ -53,14 +53,14 @@ public class ExpectationResult(IExpectationBuilder expectationBuilder)
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 /// </summary>
-public class ExpectationResult<TResult>(IExpectationBuilder expectationBuilder)
+public class ExpectationResult<TResult>(ExpectationBuilder expectationBuilder)
 	: ExpectationResult<TResult, ExpectationResult<TResult>>(expectationBuilder);
 
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 /// </summary>
 [StackTraceHidden]
-public class ExpectationResult<TResult, TSelf>(IExpectationBuilder expectationBuilder)
+public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBuilder)
 	where TSelf : ExpectationResult<TResult, TSelf>
 {
 	/// <summary>
@@ -100,7 +100,7 @@ public class ExpectationResult<TResult, TSelf>(IExpectationBuilder expectationBu
 			return matchingSuccess.Value;
 		}
 		else if (result is ConstraintResult.Success success &&
-				 success.TryGetValue(out TResult? value))
+		         success.TryGetValue(out TResult? value))
 		{
 			return value;
 		}

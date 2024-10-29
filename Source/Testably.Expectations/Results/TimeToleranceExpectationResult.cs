@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations.Results;
@@ -10,10 +8,11 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a tolerance.
+///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a
+///     tolerance.
 /// </summary>
 public class TimeToleranceExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	TimeTolerance options)
 	: TimeToleranceExpectationResult<TResult, TValue,
@@ -25,25 +24,27 @@ public class TimeToleranceExpectationResult<TResult, TValue>(
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a tolerance.
+///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a
+///     tolerance.
 /// </summary>
 public class TimeToleranceExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	TimeTolerance options)
 	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : TimeToleranceExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder1 = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder1 = expectationBuilder;
 
 	/// <summary>
 	///     Specifies a tolerance to apply on the time comparison.
 	/// </summary>
 	public TimeToleranceExpectationResult<TResult, TValue, TSelf> Within(TimeSpan tolerance,
-		[CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "")
+		[CallerArgumentExpression("tolerance")]
+		string doNotPopulateThisValue = "")
 	{
 		options.SetTolerance(tolerance);
-		_expectationBuilder1.AppendExpression(b => b.AppendMethod(nameof(Within), doNotPopulateThisValue));
+		_expectationBuilder1.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
 		return this;
 	}
 }

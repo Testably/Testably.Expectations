@@ -10,11 +10,11 @@ public sealed class AndNodeTests
 
 		await Expect.That(Act).Should().ThrowException()
 			.WithMessage("""
-			                  Expected true to
-			                  be False and be True,
-			                  but found True
-			                  at Expect.That(true).Should().BeFalse().And.BeTrue()
-			                  """);
+			             Expected true to
+			             be False and be True,
+			             but found True
+			             at Expect.That(true).Should().BeFalse().And.BeTrue()
+			             """);
 	}
 
 	[Fact]
@@ -25,11 +25,11 @@ public sealed class AndNodeTests
 
 		await Expect.That(Act).Should().ThrowException()
 			.WithMessage("""
-			                  Expected true to
-			                  be True and be False,
-			                  but found True
-			                  at Expect.That(true).Should().BeTrue().And.BeFalse()
-			                  """);
+			             Expected true to
+			             be True and be False,
+			             but found True
+			             at Expect.That(true).Should().BeTrue().And.BeFalse()
+			             """);
 	}
 
 	[Fact]
@@ -40,11 +40,11 @@ public sealed class AndNodeTests
 
 		await Expect.That(Act).Should().ThrowException()
 			.WithMessage("""
-			                  Expected true to
-			                  be False and imply False,
-			                  but found True and it did not
-			                  at Expect.That(true).Should().BeFalse().And.Imply(false)
-			                  """);
+			             Expected true to
+			             be False and imply False,
+			             but found True and it did not
+			             at Expect.That(true).Should().BeFalse().And.Imply(false)
+			             """);
 	}
 
 	[Fact]
@@ -56,5 +56,3 @@ public sealed class AndNodeTests
 		await Expect.That(Act).Should().NotThrow();
 	}
 }
-
-

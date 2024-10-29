@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 // ReSharper disable once CheckNamespace
 
 namespace Testably.Expectations;
@@ -14,9 +13,7 @@ public static partial class ThatCollectionShould
 	///     Start delegate expectations on the current collection of <typeparamref name="TItem" /> values.
 	/// </summary>
 	public static IThat<ICollection<TItem>> Should<TItem>(
-		this IExpectThat<ICollection<TItem>> subject)
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<ICollection<TItem>>(subject.ExpectationBuilder);
-	}
+		this IExpectSubject<ICollection<TItem>> subject)
+		=> subject.Should(expectationBuilder => expectationBuilder
+			.AppendMethodStatement(nameof(Should)));
 }

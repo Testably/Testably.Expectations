@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Net.Http;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -15,11 +14,11 @@ public static partial class ThatHttpResponseMessageShould
 	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveError(
 			this IThat<HttpResponseMessage?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new HasStatusCodeRangeConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new HasStatusCodeRangeConstraint(
 					statusCode => statusCode >= 400 && statusCode < 600,
-					"have an error (status code 4xx or 5xx)"),
-				b => b.AppendMethod(nameof(HaveError))),
+					"have an error (status code 4xx or 5xx)"))
+				.AppendMethodStatement(nameof(HaveError)),
 			source);
 }
 #endif

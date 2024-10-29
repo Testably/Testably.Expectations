@@ -18,11 +18,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   have position {position},
-				                   but it had position {actualPosition}
-				                   at Expect.That(subject).Should().HavePosition(position)
-				                   """);
+				              Expected subject to
+				              have position {position},
+				              but it had position {actualPosition}
+				              at Expect.That(subject).Should().HavePosition(position)
+				              """);
 		}
 
 		[Theory]
@@ -47,11 +47,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  have position 0,
-				                  but found <null>
-				                  at Expect.That(subject).Should().HavePosition(0)
-				                  """);
+				             Expected subject to
+				             have position 0,
+				             but found <null>
+				             at Expect.That(subject).Should().HavePosition(0)
+				             """);
 		}
 	}
 
@@ -81,11 +81,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
-				                   Expected subject to
-				                   not have position {position},
-				                   but it had
-				                   at Expect.That(subject).Should().NotHavePosition(position)
-				                   """);
+				              Expected subject to
+				              not have position {position},
+				              but it had
+				              at Expect.That(subject).Should().NotHavePosition(position)
+				              """);
 		}
 
 		[Fact]
@@ -98,11 +98,11 @@ public sealed partial class StreamShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not have position 0,
-				                  but found <null>
-				                  at Expect.That(subject).Should().NotHavePosition(0)
-				                  """);
+				             Expected subject to
+				             not have position 0,
+				             but found <null>
+				             at Expect.That(subject).Should().NotHavePosition(0)
+				             """);
 		}
 	}
 }

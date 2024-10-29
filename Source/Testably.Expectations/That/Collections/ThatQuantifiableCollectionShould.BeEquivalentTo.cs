@@ -5,8 +5,6 @@ using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Equivalency;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 using Testably.Expectations.That.Collections;
@@ -28,10 +26,12 @@ public static partial class ThatQuantifiableCollectionShould
 	{
 		EquivalencyOptions options = new();
 		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(
-			source.Collection.ExpectationBuilder.Add(
-				new AreEquivalentToConstraint<TItem, TCollection>(expected, doNotPopulateThisValue,
-					source.Quantity, options),
-				b => b.AppendMethod(nameof(BeEquivalentTo), doNotPopulateThisValue)),
+			source.Collection.ExpectationBuilder
+				.AddConstraint(
+					new AreEquivalentToConstraint<TItem, TCollection>(expected,
+						doNotPopulateThisValue,
+						source.Quantity, options))
+				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source.Collection);
 	}
 

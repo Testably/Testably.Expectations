@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
@@ -9,43 +8,39 @@ namespace Testably.Expectations.Core.Nodes;
 internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
 	public override Node Inner { get; set; }
+	private readonly Func<PropertyAccessor, string, string> _expectationTextGenerator;
 	private readonly PropertyAccessor _propertyAccessor;
-	private readonly string _textSeparator;
-	private readonly string _propertyTextSeparator;
 
 	public WhichNode(PropertyAccessor propertyAccessor, Node inner,
-		string textSeparator = " which ",
-		string propertyTextSeparator = "")
+		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
 	{
 		_propertyAccessor = propertyAccessor;
-		_textSeparator = textSeparator;
-		_propertyTextSeparator = propertyTextSeparator;
+		_expectationTextGenerator = expectationTextGenerator ?? DefaultExpectationTextGenerator;
 		Inner = inner;
 	}
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
-			if (value.Value is not TSource typedValue)
+			if (value is not TSource typedValue)
 			{
 				throw new InvalidOperationException(
-					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
+					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value?.GetType().Name}");
 			}
 
 			if (propertyAccessor.TryAccessProperty(
-				new SourceValue<TSource>(typedValue, value.Exception),
+				typedValue,
 				out TProperty? matchingValue))
 			{
-				var result = (await Inner.IsMetBy(
-						new SourceValue<TProperty>(matchingValue, value.Exception), context))
+				ConstraintResult result = (await Inner.IsMetBy(matchingValue, context))
 					.UpdateExpectationText(r
-						=> $"{_textSeparator}{_propertyAccessor}{_propertyTextSeparator}{r.ExpectationText}");
-				return result.UseValue(value.Value);
+						=> _expectationTextGenerator(_propertyAccessor, r.ExpectationText));
+				return result.UseValue(value);
 			}
 
 			throw new InvalidOperationException(
@@ -59,4 +54,10 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	/// <inheritdoc />
 	public override string ToString()
 		=> $".{_propertyAccessor} {Inner}";
+
+	private string DefaultExpectationTextGenerator(PropertyAccessor propertyAccessor,
+		string expectationText)
+	{
+		return propertyAccessor + expectationText;
+	}
 }

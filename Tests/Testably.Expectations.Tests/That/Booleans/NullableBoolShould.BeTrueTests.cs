@@ -14,11 +14,11 @@ public sealed partial class NullableBoolShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be True,
-				                  but found False
-				                  at Expect.That(subject).Should().BeTrue()
-				                  """);
+				             Expected subject to
+				             be True,
+				             but found False
+				             at Expect.That(subject).Should().BeTrue()
+				             """);
 		}
 
 		[Fact]
@@ -31,11 +31,11 @@ public sealed partial class NullableBoolShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  be True,
-				                  but found <null>
-				                  at Expect.That(subject).Should().BeTrue()
-				                  """);
+				             Expected subject to
+				             be True,
+				             but found <null>
+				             at Expect.That(subject).Should().BeTrue()
+				             """);
 		}
 
 		[Fact]
@@ -84,11 +84,11 @@ public sealed partial class NullableBoolShould
 
 			await Expect.That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
-				                  Expected subject to
-				                  not be True,
-				                  but found True
-				                  at Expect.That(subject).Should().NotBeTrue()
-				                  """);
+				             Expected subject to
+				             not be True,
+				             but found True
+				             at Expect.That(subject).Should().NotBeTrue()
+				             """);
 		}
 	}
 }
