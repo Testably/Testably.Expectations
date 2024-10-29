@@ -22,25 +22,17 @@ public static partial class ThatExceptionShould
 		this IExpectThat<TException> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
 		where TException : Exception?
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new ThatExceptionShould<TException>(subject.ExpectationBuilder);
-	}
+		=> new(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
-	internal readonly struct HasMessageValueConstraint<T>(StringMatcher expected, string verb)
-		: IValueConstraint<T>, IComplexConstraint<DelegateSource.NoValue>
-		where T : Exception?
+	internal readonly struct HasMessageValueConstraint<TException>(StringMatcher expected, string verb)
+		: IValueConstraint<TException>
+		where TException : Exception?
 	{
-		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
-		{
-			return IsMetBy(exception as T);
-		}
-
-		public ConstraintResult IsMetBy(T? actual)
+		public ConstraintResult IsMetBy(TException? actual)
 		{
 			if (expected.Matches(actual?.Message))
 			{
-				return new ConstraintResult.Success<T?>(actual, ToString());
+				return new ConstraintResult.Success<TException?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),
@@ -51,17 +43,11 @@ public static partial class ThatExceptionShould
 			=> $"{verb} Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
 	}
 
-	internal readonly struct HasParamNameValueConstraint<T>(string expected, string verb)
-		: IValueConstraint<T>,
-			IComplexConstraint<DelegateSource.NoValue>
-		where T : ArgumentException?
+	internal readonly struct HasParamNameValueConstraint<TArgumentException>(string expected, string verb)
+		: IValueConstraint<TArgumentException>
+		where TArgumentException : ArgumentException?
 	{
-		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
-		{
-			return IsMetBy(exception as T);
-		}
-
-		public ConstraintResult IsMetBy(T? actual)
+		public ConstraintResult IsMetBy(TArgumentException? actual)
 		{
 			if (actual == null)
 			{
@@ -71,7 +57,7 @@ public static partial class ThatExceptionShould
 
 			if (actual.ParamName == expected)
 			{
-				return new ConstraintResult.Success<T?>(actual, ToString());
+				return new ConstraintResult.Success<TArgumentException?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),
@@ -83,8 +69,7 @@ public static partial class ThatExceptionShould
 	}
 
 	internal readonly struct HasInnerExceptionValueConstraint<TInnerException>(string verb)
-		: IValueConstraint<Exception?>,
-			IComplexConstraint<DelegateSource.NoValue>
+		: IValueConstraint<Exception?>
 		where TInnerException : Exception?
 	{
 		/// <inheritdoc />
@@ -104,12 +89,6 @@ public static partial class ThatExceptionShould
 
 			return new ConstraintResult.Failure(ToString(),
 				"found <null>");
-		}
-
-		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
-		{
-			return IsMetBy(exception);
 		}
 
 		public override string ToString()
@@ -143,14 +122,14 @@ public static partial class ThatExceptionShould
 /// <summary>
 ///     Base class for expectations on <typeparamref name="TException" />, containing an <see cref="ExpectationBuilder" />.
 /// </summary>
-public partial class ThatExceptionShould<TException>(IExpectationBuilder expectationBuilder)
+public partial class ThatExceptionShould<TException>(ExpectationBuilder expectationBuilder)
 	: IThat<TException>
 	where TException : Exception?
 {
 	#region IThat<TException> Members
 
 	/// <inheritdoc />
-	public IExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
+	public ExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
 
 	#endregion
 }

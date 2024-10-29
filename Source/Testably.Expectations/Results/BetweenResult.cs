@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using System.Text;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Results;
@@ -8,7 +8,9 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     An intermediate type to collect the maximum of the range.
 /// </summary>
-public class BetweenResult<TTarget>(Func<int, TTarget> callback, Action<Action<StringBuilder>> expressionBuilderCallback)
+public class BetweenResult<TTarget>(
+	ExpectationBuilder expectationBuilder,
+	Func<int, TTarget> callback)
 {
 	/// <summary>
 	///     ... and <paramref name="maximum" />...
@@ -19,7 +21,7 @@ public class BetweenResult<TTarget>(Func<int, TTarget> callback, Action<Action<S
 	public TTarget And(int maximum,
 		[CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
 	{
-		expressionBuilderCallback.Invoke(b => b.AppendMethod(nameof(And), doNotPopulateThisValue));
+		expectationBuilder.AppendMethodStatement(nameof(And), doNotPopulateThisValue);
 		return callback(maximum);
 	}
 }

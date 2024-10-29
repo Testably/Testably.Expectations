@@ -25,10 +25,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// </summary>
 	public static IThat<HttpResponseMessage?> Should(this IExpectThat<HttpResponseMessage?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<HttpResponseMessage?>(subject.ExpectationBuilder);
-	}
+		=> new That<HttpResponseMessage?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct HasStatusCodeRangeConstraint(
 		Func<int, bool> predicate,

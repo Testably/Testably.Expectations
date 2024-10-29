@@ -15,10 +15,7 @@ public static partial class ThatBoolShould
 	///     Start expectations for current <see cref="bool" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<bool> Should(this IExpectThat<bool> subject)
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<bool>(subject.ExpectationBuilder);
-	}
+		=> new That<bool>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct IsValueConstraint(bool expected) : IValueConstraint<bool>
 	{

@@ -14,12 +14,12 @@ namespace Testably.Expectations.Results;
 ///     options on the <see cref="StringMatcher" />.
 /// </summary>
 public class StringMatcherExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	StringMatcher expected)
 	: AndOrExpectationResult<TResult, TValue>(expectationBuilder, returnValue)
 {
-	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Interprets the expected <see langword="string" /> as <see cref="Regex" /> pattern.
@@ -27,7 +27,7 @@ public class StringMatcherExpectationResult<TResult, TValue>(
 	public StringMatcherExpectationResult<TResult, TValue> AsRegex()
 	{
 		expected.AsRegex();
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(AsRegex)));
+		_expectationBuilder.AppendMethodStatement(nameof(AsRegex));
 		return this;
 	}
 
@@ -38,7 +38,7 @@ public class StringMatcherExpectationResult<TResult, TValue>(
 	public StringMatcherExpectationResult<TResult, TValue> AsWildcard()
 	{
 		expected.AsWildcard();
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(AsWildcard)));
+		_expectationBuilder.AppendMethodStatement(nameof(AsWildcard));
 		return this;
 	}
 
@@ -48,7 +48,7 @@ public class StringMatcherExpectationResult<TResult, TValue>(
 	public StringMatcherExpectationResult<TResult, TValue> Exactly()
 	{
 		expected.Exactly();
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Exactly)));
+		_expectationBuilder.AppendMethodStatement(nameof(Exactly));
 		return this;
 	}
 
@@ -58,7 +58,7 @@ public class StringMatcherExpectationResult<TResult, TValue>(
 	public StringMatcherExpectationResult<TResult, TValue> IgnoringCase()
 	{
 		expected.IgnoringCase();
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase)));
+		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
 		return this;
 	}
 
@@ -70,8 +70,7 @@ public class StringMatcherExpectationResult<TResult, TValue>(
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{
 		expected.UsingComparer(comparer);
-		_expectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(Using), doNotPopulateThisValue));
+		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
 }

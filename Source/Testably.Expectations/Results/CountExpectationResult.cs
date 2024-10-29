@@ -14,7 +14,7 @@ namespace Testably.Expectations.Results;
 ///     the <see cref="StringMatcher" />.
 /// </summary>
 public class CountExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier)
 	: CountExpectationResult<TResult, TValue,
@@ -32,13 +32,13 @@ public class CountExpectationResult<TResult, TValue>(
 ///     the <see cref="StringMatcher" />.
 /// </summary>
 public class CountExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier)
 	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : CountExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Verifies, that it occurs at least <paramref name="minimum" /> times.
@@ -48,8 +48,7 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
 		quantifier.AtLeast(minimum);
-		_expectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(AtLeast), doNotPopulateThisValue));
+		_expectationBuilder.AppendMethodStatement(nameof(AtLeast), doNotPopulateThisValue);
 		return (TSelf)this;
 	}
 
@@ -61,8 +60,7 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
 	{
 		quantifier.AtMost(maximum);
-		_expectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(AtMost), doNotPopulateThisValue));
+		_expectationBuilder.AppendMethodStatement(nameof(AtMost), doNotPopulateThisValue);
 		return (TSelf)this;
 	}
 
@@ -72,17 +70,12 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 	public BetweenResult<TSelf> Between(
 		int minimum,
 		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
-	{
-		_expectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(Between), doNotPopulateThisValue));
-		return new BetweenResult<TSelf>(
+		=> new(_expectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue), 
 			maximum =>
 			{
 				quantifier.Between(minimum, maximum);
 				return (TSelf)this;
-			},
-			callback => _expectationBuilder.AppendExpression(callback));
-	}
+			});
 
 	/// <summary>
 	///     Verifies, that it occurs exactly <paramref name="expected" /> times.
@@ -92,8 +85,7 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		quantifier.Exactly(expected);
-		_expectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(Exactly), doNotPopulateThisValue));
+		_expectationBuilder.AppendMethodStatement(nameof(Exactly), doNotPopulateThisValue);
 		return (TSelf)this;
 	}
 
@@ -103,7 +95,7 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 	public TSelf Never()
 	{
 		quantifier.Exactly(0);
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Never)));
+		_expectationBuilder.AppendMethodStatement(nameof(Never));
 		return (TSelf)this;
 	}
 
@@ -113,7 +105,7 @@ public class CountExpectationResult<TResult, TValue, TSelf>(
 	public TSelf Once()
 	{
 		quantifier.Exactly(1);
-		_expectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Once)));
+		_expectationBuilder.AppendMethodStatement(nameof(Once));
 		return (TSelf)this;
 	}
 }

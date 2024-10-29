@@ -1,5 +1,6 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -13,10 +14,9 @@ public static partial class ThatObjectShould
 	/// </summary>
 	public static AndOrWhichExpectationResult<TType, IThat<object?>> Be<TType>(
 		this IThat<object?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new IsValueConstraint<TType>(),
-				b => b.Append('.').Append(nameof(Be)).Append('<').Append(typeof(TType).Name)
-					.Append(">()")),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint<TType>())
+				.AppendGenericMethodStatement<TType>(nameof(Be)),
 			source);
 
 	private readonly struct IsValueConstraint<TType> : IValueConstraint<object?>

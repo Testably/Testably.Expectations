@@ -21,12 +21,13 @@ public static partial class ThatDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
-			source.ExpectationBuilder.Add(new ConditionConstraint(
+			source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e, t) => IsWithinTolerance(t, a - e),
 					$"be {Formatter.Format(expected)}{tolerance}",
-					tolerance),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+					tolerance))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			tolerance);
 	}
@@ -42,12 +43,13 @@ public static partial class ThatDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
-			source.ExpectationBuilder.Add(new ConditionConstraint(
+			source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					unexpected,
 					(a, e, t) => !IsWithinTolerance(t, a - e),
 					$"not be {Formatter.Format(unexpected)}{tolerance}",
-					tolerance),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+					tolerance))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			tolerance);
 	}

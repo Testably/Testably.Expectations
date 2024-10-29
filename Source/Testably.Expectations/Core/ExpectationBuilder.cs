@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Nodes;
@@ -7,282 +6,30 @@ using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core;
 
-internal class ExpectationBuilder<TValue> : IExpectationBuilder
+internal class ExpectationBuilder<TValue> : ExpectationBuilder
 {
-	private readonly FailureMessageBuilder _failureMessageBuilder;
-
 	/// <summary>
 	///     The subject.
 	/// </summary>
 	private readonly IValueSource<TValue> _subjectSource;
 
-	private readonly Tree _tree = new();
 
-	public ExpectationBuilder(TValue subject, string subjectExpression)
+	public ExpectationBuilder(TValue subject, string subjectExpression) : base(subjectExpression)
 	{
-		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
 		_subjectSource = new ValueSource<TValue>(subject);
 	}
 
-	public ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression)
+	public ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression) : base(subjectExpression)
 	{
-		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
+		//_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
 		_subjectSource = subjectSource;
 	}
 
-	#region IExpectationBuilder Members
-
-	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
-
 	/// <inheritdoc />
-	public IExpectationBuilder Add(IConstraint constraint,
-		Action<StringBuilder> expressionBuilder)
+	internal override async Task<ConstraintResult> IsMet(
+		EvaluationContext.EvaluationContext context, Node rootNode)
 	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddExpectation(constraint);
-		return this;
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder AddCast<T1, T2>(ICastConstraint<T1, T2> castConstraint,
-		Action<StringBuilder> expressionBuilder)
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddManipulation(n => new CastNode<T1, T2>(castConstraint, n));
-		return this;
-	}
-
-	/// <inheritdoc />
-	public void AddReason(string reason)
-	{
-		BecauseReason becauseReason = new BecauseReason(reason);
-		_tree.GetCurrent().SetReason(becauseReason);
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder And(Action<StringBuilder> expressionBuilder,
-		string textSeparator = " and ")
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
-		return this;
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder AppendExpression(Action<StringBuilder> expressionBuilder)
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		return this;
-	}
-
-	public async Task<ConstraintResult> IsMet()
-	{
-		EvaluationContext.EvaluationContext context = new();
 		SourceValue<TValue> data = await _subjectSource.GetValue();
-		return await _tree.GetRoot().IsMetBy(data, context);
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder Or(Action<StringBuilder> expressionBuilder,
-		string textSeparator = " and ")
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
-		return this;
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder Which<TSource, TProperty, TThatProperty>(
-		PropertyAccessor propertyAccessor,
-		Action<TThatProperty>? expectation,
-		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
-		Action<StringBuilder> expressionBuilder,
-		string andTextSeparator = "",
-		string whichTextSeparator = " which ",
-		string whichPropertyTextSeparator = "")
-		where TThatProperty : IThat<TProperty>
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
-		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(
-			propertyAccessor,
-			expectation == null
-				? Node.None
-				: new DeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory),
-			whichTextSeparator,
-			whichPropertyTextSeparator));
-
-		return this;
-	}
-
-	/// <inheritdoc />
-	public IExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
-		PropertyAccessor propertyAccessor,
-		ICastConstraint<TBase, TProperty> cast,
-		Action<TThatProperty> expectation,
-		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
-		Action<StringBuilder> expressionBuilder,
-		string textSeparator = " which ")
-		where TThatProperty : IThat<TProperty>
-		where TProperty : TBase
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
-		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor,
-			cast, new DeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory), textSeparator));
-
-		return this;
-	}
-
-	#endregion
-
-	/// <inheritdoc />
-	public override string ToString()
-	{
-		return _tree.ToString();
-	}
-
-	private class Tree
-	{
-		private TreeNode _current;
-		private Action<Node>? _setExpectationNode;
-
-		public Tree()
-		{
-			_current = new TreeNode();
-			_setExpectationNode = n => _current.Node = n;
-		}
-
-		public void AddCombination(Func<Node, CombinationNode> nodeGenerator, int precedence)
-		{
-			if (!TryAddCombination(nodeGenerator, precedence))
-			{
-				throw new InvalidOperationException(
-					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-			}
-		}
-
-		public void AddExpectation(IConstraint constraint)
-		{
-			if (_setExpectationNode == null)
-			{
-				throw new InvalidOperationException(
-					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-			}
-
-			ExpectationNode node = new(constraint);
-			_setExpectationNode.Invoke(node);
-			_setExpectationNode = null;
-		}
-
-		public void AddManipulation(Func<Node, ManipulationNode> nodeGenerator)
-		{
-			if (_setExpectationNode == null)
-			{
-				throw new InvalidOperationException(
-					"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-			}
-
-			if (_current.Node is CombinationNode combinationNode)
-			{
-				ManipulationNode manipulationNode2 = nodeGenerator(combinationNode.Right);
-				combinationNode.Right = manipulationNode2;
-				_setExpectationNode = n => manipulationNode2.Inner = n;
-				return;
-			}
-
-			if (_current.Node is ManipulationNode manipulationNode4)
-			{
-				ManipulationNode manipulationNode3 = nodeGenerator(manipulationNode4.Inner);
-				manipulationNode4.Inner = manipulationNode3;
-				_setExpectationNode = n => manipulationNode3.Inner = n;
-				return;
-			}
-
-			ManipulationNode manipulationNode = nodeGenerator(_current.Node);
-			_current = new TreeNode
-			{
-				Node = manipulationNode,
-				Parent = _current.Parent
-			};
-			_setExpectationNode = n => manipulationNode.Inner = n;
-		}
-
-		public Node GetCurrent()
-			=> _current.Node;
-
-		public Node GetRoot()
-		{
-			TreeNode? current = _current;
-			while (current.Parent != null)
-			{
-				current = current.Parent;
-			}
-
-			return current.Node;
-		}
-
-		/// <inheritdoc />
-		public override string ToString()
-		{
-			string s = GetRoot().ToString();
-			if (s.StartsWith('(') && s.EndsWith(')'))
-			{
-				return s.Substring(1, s.Length - 2);
-			}
-
-			return s;
-		}
-
-		public bool TryAddCombination(Func<Node, CombinationNode> nodeGenerator, int precedence)
-		{
-			if (_setExpectationNode != null)
-			{
-				return false;
-			}
-
-			TreeNode? current = _current;
-			do
-			{
-				if (current.Node is CombinationNode parentCombinationNode &&
-				    current.Precedence < precedence)
-				{
-					CombinationNode newCombinationNode =
-						nodeGenerator(parentCombinationNode.Right);
-					parentCombinationNode.Right = newCombinationNode;
-					_current = new TreeNode
-					{
-						Node = newCombinationNode,
-						Parent = current,
-						Precedence = precedence
-					};
-					_setExpectationNode = n => newCombinationNode.Right = n;
-					return true;
-				}
-
-				current = current.Parent;
-			} while (current != null);
-
-			CombinationNode combinationNode = nodeGenerator(_current.Node);
-			_current = new TreeNode
-			{
-				Node = combinationNode,
-				Parent = _current.Parent,
-				Precedence = precedence
-			};
-			_setExpectationNode = n => combinationNode.Right = n;
-			return true;
-		}
-
-		private class TreeNode
-		{
-			public Node Node { get; set; } = Node.None;
-			public TreeNode? Parent { get; set; }
-			public int Precedence { get; set; }
-
-			/// <inheritdoc />
-			public override string ToString()
-				=> $"{Parent} -> {Node}";
-		}
+		return await rootNode.IsMetBy(data, context);
 	}
 }

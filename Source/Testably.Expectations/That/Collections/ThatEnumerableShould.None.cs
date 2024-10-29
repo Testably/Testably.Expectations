@@ -15,7 +15,7 @@ public static partial class ThatEnumerableShould
 	public static QuantifiableCollection<TItem, IEnumerable<TItem>> None<TItem>(
 		this IThat<IEnumerable<TItem>> source)
 	{
-		source.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(None)));
+		source.ExpectationBuilder.AppendMethodStatement(nameof(None));
 		return new QuantifiableCollection<TItem, IEnumerable<TItem>>(source,
 			CollectionQuantifier.None);
 	}

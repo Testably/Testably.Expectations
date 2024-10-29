@@ -18,20 +18,14 @@ public static partial class ThatTimeSpanShould
 	/// </summary>
 	public static IThat<TimeSpan> Should(this IExpectThat<TimeSpan> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TimeSpan>(subject.ExpectationBuilder);
-	}
+		=> new That<TimeSpan>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeSpan" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<TimeSpan?> Should(this IExpectThat<TimeSpan?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TimeSpan?>(subject.ExpectationBuilder);
-	}
+		=> new That<TimeSpan?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct ConditionConstraint(
 		TimeSpan expected,

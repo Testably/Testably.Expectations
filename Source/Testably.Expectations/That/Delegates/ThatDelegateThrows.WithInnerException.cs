@@ -30,8 +30,8 @@ public partial class ThatDelegateThrows<TException>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
 	public AndOrExpectationResult<TException, ThatDelegateThrows<TException>> WithInnerException()
-		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with"),
-				b => b.AppendMethod(nameof(WithInnerException))),
+		=> new(ExpectationBuilder
+			.AddConstraint(new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with"))
+				.AppendMethodStatement(nameof(WithInnerException)),
 			this);
 }

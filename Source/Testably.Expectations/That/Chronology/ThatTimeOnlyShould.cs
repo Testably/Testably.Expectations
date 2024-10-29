@@ -19,20 +19,14 @@ public static partial class ThatTimeOnlyShould
 	/// </summary>
 	public static IThat<TimeOnly> Should(this IExpectThat<TimeOnly> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TimeOnly>(subject.ExpectationBuilder);
-	}
+		=> new That<TimeOnly>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeOnly" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<TimeOnly?> Should(this IExpectThat<TimeOnly?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<TimeOnly?>(subject.ExpectationBuilder);
-	}
+		=> new That<TimeOnly?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct ConditionConstraint(
 		TimeOnly expected,

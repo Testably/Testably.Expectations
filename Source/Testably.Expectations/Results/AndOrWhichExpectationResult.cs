@@ -14,7 +14,7 @@ namespace Testably.Expectations.Results;
 ///     properties with <see cref="AndOrWhichExpectationResult{TResult,TValue,TSelf}.Which{TProperty}" />.
 /// </summary>
 public class AndOrWhichExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
 	: AndOrWhichExpectationResult<TResult, TValue, AndOrWhichExpectationResult<TResult, TValue>>(
 		expectationBuilder, returnValue);
@@ -27,12 +27,12 @@ public class AndOrWhichExpectationResult<TResult, TValue>(
 ///     properties with <see cref="Which{TProperty}" />.
 /// </summary>
 public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
 	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : AndOrWhichExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 	private readonly TValue _returnValue = returnValue;
 
 	/// <summary>

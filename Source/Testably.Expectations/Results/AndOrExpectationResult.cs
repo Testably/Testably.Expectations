@@ -10,7 +10,7 @@ namespace Testably.Expectations.Results;
 ///     <see cref="AndOrExpectationResult{TResult,TValue,TSelf}.Or" />.
 /// </summary>
 public class AndOrExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
 	: AndOrExpectationResult<TResult, TValue, AndOrExpectationResult<TResult, TValue>>(
 		expectationBuilder,
@@ -22,7 +22,7 @@ public class AndOrExpectationResult<TResult, TValue>(
 ///     Allows combining multiple expectations with <see cref="And" /> and <see cref="Or" />.
 /// </summary>
 public class AndOrExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
 	: ExpectationResult<TResult, TSelf>(expectationBuilder)
 	where TSelf : AndOrExpectationResult<TResult, TValue, TSelf>
@@ -51,5 +51,5 @@ public class AndOrExpectationResult<TResult, TValue, TSelf>(
 		}
 	}
 
-	private readonly IExpectationBuilder _expectationBuilder = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 }

@@ -19,8 +19,9 @@ public static partial class ThatNumberShould
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsValueConstraint<TNumber>(expected),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint<TNumber>(expected))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -31,8 +32,9 @@ public static partial class ThatNumberShould
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsValueConstraint<TNumber>(expected),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint<TNumber>(expected))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -43,11 +45,13 @@ public static partial class ThatNumberShould
 		TNumber expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
-		=> new(source.ExpectationBuilder.Add(new IsNotValueConstraint<TNumber>(expected),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsNotValueConstraint<TNumber>(expected))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 
-	private readonly struct IsValueConstraint<TNumber>(TNumber? expected) : IValueConstraint<TNumber>
+	private readonly struct IsValueConstraint<TNumber>(TNumber? expected)
+		: IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)
@@ -64,7 +68,8 @@ public static partial class ThatNumberShould
 			=> $"be {Formatter.Format(expected)}";
 	}
 
-	private readonly struct IsNotValueConstraint<TNumber>(TNumber expected) : IValueConstraint<TNumber>
+	private readonly struct IsNotValueConstraint<TNumber>(TNumber expected)
+		: IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)

@@ -18,10 +18,7 @@ public static partial class ThatGuidShould
 	/// </summary>
 	public static IThat<Guid> Should(this IExpectThat<Guid> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<Guid>(subject.ExpectationBuilder);
-	}
+		=> new That<Guid>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct ValueConstraint(string expectation, Func<Guid, bool> successIf)
 		: IValueConstraint<Guid>

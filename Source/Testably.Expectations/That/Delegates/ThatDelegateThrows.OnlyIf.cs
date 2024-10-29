@@ -18,8 +18,7 @@ public partial class ThatDelegateThrows<TException>
 		string doNotPopulateThisValue = "")
 	{
 		_throwOptions.CheckThrow(predicate);
-		ExpectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(OnlyIf), doNotPopulateThisValue));
+		ExpectationBuilder.AppendMethodStatement(nameof(OnlyIf), doNotPopulateThisValue);
 		return new ThatDelegateThrows<TException?>(ExpectationBuilder, _throwOptions);
 	}
 }

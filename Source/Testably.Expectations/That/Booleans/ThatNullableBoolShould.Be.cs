@@ -14,9 +14,9 @@ public static partial class ThatNullableBoolShould
 	public static AndOrExpectationResult<bool?, IThat<bool?>> Be(this IThat<bool?> source,
 		bool? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new IsValueConstraint(expected),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint(expected))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -26,8 +26,8 @@ public static partial class ThatNullableBoolShould
 		bool? unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new IsNotValueConstraint(unexpected),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsNotValueConstraint(unexpected))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }

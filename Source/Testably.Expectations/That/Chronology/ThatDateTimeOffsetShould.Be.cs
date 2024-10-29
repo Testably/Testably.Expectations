@@ -17,12 +17,12 @@ public static partial class ThatDateTimeOffsetShould
 		this IThat<DateTimeOffset> source,
 		DateTimeOffset expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
-					$"be {Formatter.Format(expected)}"),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+					$"be {Formatter.Format(expected)}"))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -33,11 +33,11 @@ public static partial class ThatDateTimeOffsetShould
 		DateTimeOffset unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
-					$"not be {Formatter.Format(unexpected)}"),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+					$"not be {Formatter.Format(unexpected)}"))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }

@@ -27,10 +27,11 @@ public static partial class ThatQuantifiableCollectionShould
 			[CallerArgumentExpression("predicate")]
 			string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
-		=> new(source.Collection.ExpectationBuilder.Add(
+		=> new(source.Collection.ExpectationBuilder
+			.AddConstraint(
 				new SatisfyConstraint<TItem, TCollection>(predicate, doNotPopulateThisValue,
-					source.Quantity),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+					source.Quantity))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source.Collection);
 
 	private readonly struct SatisfyConstraint<TItem, TCollection>(

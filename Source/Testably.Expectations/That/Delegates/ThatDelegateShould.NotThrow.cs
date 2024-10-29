@@ -1,5 +1,4 @@
 ﻿using System;
-using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
@@ -15,17 +14,17 @@ public static partial class ThatDelegateShould
 	/// </summary>
 	public static ExpectationResult<TValue> NotThrow<TValue>(
 		this ThatDelegate.WithValue<TValue> source)
-		=> new(source.ExpectationBuilder.Add(
-			new DoesNotThrowConstraint<TValue>(),
-			b => b.AppendMethod(nameof(NotThrow))));
+		=> new(source.ExpectationBuilder
+			.AddConstraint(new DoesNotThrowConstraint<TValue>())
+			.AppendMethodStatement(nameof(NotThrow)));
 
 	/// <summary>
 	///     Verifies that the delegate does not throw any exception.
 	/// </summary>
 	public static ExpectationResult NotThrow(this ThatDelegate.WithoutValue source)
-		=> new(source.ExpectationBuilder.Add(
-			new DoesNotThrowConstraint<DelegateSource.NoValue>(),
-			b => b.AppendMethod(nameof(NotThrow))));
+		=> new(source.ExpectationBuilder
+			.AddConstraint(new DoesNotThrowConstraint<DelegateSource.NoValue>())
+			.AppendMethodStatement(nameof(NotThrow)));
 
 	private readonly struct DoesNotThrowConstraint<TValue> : IComplexConstraint<TValue>
 	{

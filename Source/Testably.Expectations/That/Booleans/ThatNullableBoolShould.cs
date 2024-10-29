@@ -17,10 +17,7 @@ public static partial class ThatNullableBoolShould
 	/// </summary>
 	public static IThat<bool?> Should(this IExpectThat<bool?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<bool?>(subject.ExpectationBuilder);
-	}
+		=> new That<bool?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct IsValueConstraint(bool? expected) : IValueConstraint<bool?>
 	{

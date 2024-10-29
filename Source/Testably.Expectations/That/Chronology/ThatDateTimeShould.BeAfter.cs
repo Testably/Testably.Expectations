@@ -21,16 +21,13 @@ public static partial class ThatDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
-			source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+			source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					expected,
-					(a, e, t) =>
-					{
-						return a + t > e;
-					},
+					(a, e, t) => a + t > e,
 					$"be after {Formatter.Format(expected)}",
-					tolerance),
-				b => b.AppendMethod(nameof(BeAfter), doNotPopulateThisValue)),
+					tolerance))
+				.AppendMethodStatement(nameof(BeAfter), doNotPopulateThisValue),
 			source,
 			tolerance);
 	}
@@ -45,13 +42,13 @@ public static partial class ThatDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
-			source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+			source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e, t) => a - t <= e,
 					$"not be after {Formatter.Format(expected)}",
-					tolerance),
-				b => b.AppendMethod(nameof(NotBeAfter), doNotPopulateThisValue)),
+					tolerance))
+				.AppendMethodStatement(nameof(NotBeAfter), doNotPopulateThisValue),
 			source,
 			tolerance);
 	}

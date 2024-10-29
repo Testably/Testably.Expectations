@@ -15,8 +15,5 @@ public static partial class ThatObjectShould
 	/// </summary>
 	public static IThat<object?> Should(this IExpectThat<object?> subject,
 		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-	{
-		subject.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(Should)));
-		return new That<object?>(subject.ExpectationBuilder);
-	}
+		=> new That<object?>(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 }

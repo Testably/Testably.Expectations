@@ -58,12 +58,9 @@ internal abstract class Node
 			return result;
 		}
 
-		if (constraint is IComplexConstraint<DelegateSource.NoValue> delegateConstraint)
+		if (value is SourceValue<DelegateSource.NoValue> delegateWithoutValue)
 		{
-			ConstraintResult result = delegateConstraint.IsMetBy(
-				DelegateSource.NoValue.Instance, value.Exception);
-			result = reason?.ApplyTo(result) ?? result;
-			return result;
+			return await TryMeet(constraint, new SourceValue<Exception?>(delegateWithoutValue.Exception, null), context, reason);
 		}
 
 		throw new InvalidOperationException(

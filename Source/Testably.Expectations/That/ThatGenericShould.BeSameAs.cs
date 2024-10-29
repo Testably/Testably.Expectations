@@ -16,9 +16,9 @@ public static partial class ThatGenericShould
 	public static AndOrExpectationResult<T, IThat<T>> BeSameAs<T>(this IThat<T> source,
 		object? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new IsSameAsValueConstraint<T>(expected, doNotPopulateThisValue),
-				b => b.AppendMethod(nameof(BeSameAs), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsSameAsValueConstraint<T>(expected, doNotPopulateThisValue))
+				.AppendMethodStatement(nameof(BeSameAs), doNotPopulateThisValue),
 			source);
 
 	private readonly struct IsSameAsValueConstraint<T>(object? expected, string expectedExpression)

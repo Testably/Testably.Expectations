@@ -17,8 +17,7 @@ public static partial class ThatCollectionShould
 		this IThat<ICollection<TItem>> source,
 		int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
 	{
-		source.ExpectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(AtMost), doNotPopulateThisValue));
+		source.ExpectationBuilder.AppendMethodStatement(nameof(AtMost), doNotPopulateThisValue);
 		return new QuantifiableCollection<TItem, ICollection<TItem>>(source,
 			CollectionQuantifier.AtMost(maximum));
 	}

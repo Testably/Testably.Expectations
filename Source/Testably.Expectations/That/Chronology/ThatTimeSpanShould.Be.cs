@@ -16,26 +16,27 @@ public static partial class ThatTimeSpanShould
 	public static AndOrExpectationResult<TimeSpan, IThat<TimeSpan>> Be(this IThat<TimeSpan> source,
 		TimeSpan expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
-					$"be {Formatter.Format(expected)}"),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+					$"be {Formatter.Format(expected)}"))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TimeSpan, IThat<TimeSpan>> NotBe(this IThat<TimeSpan> source,
+	public static AndOrExpectationResult<TimeSpan, IThat<TimeSpan>> NotBe(
+		this IThat<TimeSpan> source,
 		TimeSpan unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new ConditionConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
-					$"not be {Formatter.Format(unexpected)}"),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+					$"not be {Formatter.Format(unexpected)}"))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }

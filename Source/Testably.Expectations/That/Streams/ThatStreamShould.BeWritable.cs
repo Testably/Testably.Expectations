@@ -13,11 +13,12 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeWritable(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					"be writable",
 					actual => actual?.CanWrite == true,
-					actual => actual == null ? "found <null>" : "it was not"),
-				b => b.AppendMethod(nameof(BeWritable))),
+					actual => actual == null ? "found <null>" : "it was not"))
+				.AppendMethodStatement(nameof(BeWritable)),
 			source);
 
 	/// <summary>
@@ -25,10 +26,11 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotBeWritable(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					"not be writable",
 					actual => actual?.CanWrite == false,
-					actual => actual == null ? "found <null>" : "it was"),
-				b => b.AppendMethod(nameof(NotBeWritable))),
+					actual => actual == null ? "found <null>" : "it was"))
+				.AppendMethodStatement(nameof(NotBeWritable)),
 			source);
 }

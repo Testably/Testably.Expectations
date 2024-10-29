@@ -15,11 +15,11 @@ public static partial class ThatHttpResponseMessageShould
 	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		BeSuccess(
 			this IThat<HttpResponseMessage?> source)
-		=> new(source.ExpectationBuilder.Add(
-				new HasStatusCodeRangeConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new HasStatusCodeRangeConstraint(
 					statusCode => statusCode >= 200 && statusCode < 300,
-					"be success (status code 2xx)"),
-				b => b.AppendMethod(nameof(BeSuccess))),
+					"be success (status code 2xx)"))
+				.AppendMethodStatement(nameof(BeSuccess)),
 			source);
 }
 #endif

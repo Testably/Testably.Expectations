@@ -9,10 +9,10 @@ internal class DeferredNode<TProperty, TThatProperty> : Node
 where TThatProperty : IThat<TProperty>
 {
 	private readonly Action<TThatProperty> _expectation;
-	private readonly Func<IExpectationBuilder, TThatProperty> _thatPropertyFactory;
+	private readonly Func<ExpectationBuilder, TThatProperty> _thatPropertyFactory;
 
 	public DeferredNode(Action<TThatProperty> expectation,
-	Func<IExpectationBuilder, TThatProperty> thatPropertyFactory)
+	Func<ExpectationBuilder, TThatProperty> thatPropertyFactory)
 	{
 		_expectation = expectation;
 		_thatPropertyFactory = thatPropertyFactory;

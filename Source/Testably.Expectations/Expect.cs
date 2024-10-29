@@ -101,11 +101,12 @@ public static class Expect
 			doNotPopulateThisValue));
 #endif
 
-	private class ExpectThat<T>(IExpectationBuilder expectationBuilder) : IExpectThat<T>
+	private readonly struct ExpectThat<T>(ExpectationBuilder expectationBuilder)
+		: IExpectThat<T>
 	{
 		#region IExpectThat<T> Members
 
-		public IExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
+		public ExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
 
 		#endregion
 	}

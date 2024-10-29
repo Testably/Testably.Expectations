@@ -17,8 +17,7 @@ public static partial class ThatEnumerableShould
 		this IThat<IEnumerable<TItem>> source,
 		int minimum, [CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
-		source.ExpectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(AtLeast), doNotPopulateThisValue));
+		source.ExpectationBuilder.AppendMethodStatement(nameof(AtLeast), doNotPopulateThisValue);
 		return new QuantifiableCollection<TItem, IEnumerable<TItem>>(source,
 			CollectionQuantifier.AtLeast(minimum));
 	}

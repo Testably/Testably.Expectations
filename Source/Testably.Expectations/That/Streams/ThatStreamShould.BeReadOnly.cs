@@ -13,11 +13,12 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeReadOnly(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+			.AddConstraint(new ValueConstraint(
 					"be read-only",
 					actual => actual is { CanWrite: false, CanRead: true },
-					actual => actual == null ? "found <null>" : "it was not"),
-				b => b.AppendMethod(nameof(BeReadOnly))),
+					actual => actual == null ? "found <null>" : "it was not"))
+				.AppendMethodStatement(nameof(BeReadOnly)),
 			source);
 
 	/// <summary>
@@ -25,10 +26,11 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotBeReadOnly(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint(
 					"not be read-only",
 					actual => actual != null && !(actual is { CanWrite: false, CanRead: true }),
-					actual => actual == null ? "found <null>" : "it was"),
-				b => b.AppendMethod(nameof(NotBeReadOnly))),
+					actual => actual == null ? "found <null>" : "it was"))
+				.AppendMethodStatement(nameof(NotBeReadOnly)),
 			source);
 }

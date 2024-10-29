@@ -8,5 +8,5 @@ public interface IThat<out T>
 	/// <summary>
 	///     The expectation builder.
 	/// </summary>
-	IExpectationBuilder ExpectationBuilder { get; }
+	ExpectationBuilder ExpectationBuilder { get; }
 }

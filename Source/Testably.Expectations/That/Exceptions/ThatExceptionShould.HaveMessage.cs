@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
-using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Sources;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -18,13 +15,14 @@ public partial class ThatExceptionShould<TException>
 	/// <summary>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public StringMatcherExpectationResult<TException?, ThatExceptionShould<TException?>> HaveMessage(
-		StringMatcher expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(ExpectationBuilder.Add(
-				new ThatExceptionShould.HasMessageValueConstraint<TException>(expected, "have"),
-				b => b.AppendMethod(nameof(HaveMessage), doNotPopulateThisValue)),
+	public StringMatcherExpectationResult<TException?, ThatExceptionShould<TException>>
+		HaveMessage(
+			StringMatcher expected,
+			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		=> new(ExpectationBuilder
+				.AddConstraint(
+					new ThatExceptionShould.HasMessageValueConstraint<TException>(expected, "have"))
+				.AppendMethodStatement(nameof(HaveMessage), doNotPopulateThisValue),
 			this,
 			expected);
-
 }

@@ -17,11 +17,11 @@ public static partial class ThatNullableEnumShould
 		TEnum? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(
-				new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"be {Formatter.Format(expected)}",
-					actual => actual?.Equals(expected) ?? expected == null),
-				b => b.AppendMethod(nameof(Be), doNotPopulateThisValue)),
+					actual => actual?.Equals(expected) ?? expected == null))
+				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -33,10 +33,11 @@ public static partial class ThatNullableEnumShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(
-				new ValueConstraint<TEnum>(
-					$"not be {Formatter.Format(unexpected)}",
-					actual => !actual?.Equals(unexpected) ?? unexpected != null),
-				b => b.AppendMethod(nameof(NotBe), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(
+					new ValueConstraint<TEnum>(
+						$"not be {Formatter.Format(unexpected)}",
+						actual => !actual?.Equals(unexpected) ?? unexpected != null))
+				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source);
 }

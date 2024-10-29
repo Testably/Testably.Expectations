@@ -19,11 +19,10 @@ public static partial class ThatCollectionShould
 		int minimum,
 		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
-		source.ExpectationBuilder.AppendExpression(b
-			=> b.AppendMethod(nameof(Between), doNotPopulateThisValue));
+		source.ExpectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue);
 		return new BetweenResult<QuantifiableCollection<TItem, ICollection<TItem>>>(
+			source.ExpectationBuilder,
 			maximum => new QuantifiableCollection<TItem, ICollection<TItem>>(source,
-				CollectionQuantifier.Between(minimum, maximum)),
-			callback => source.ExpectationBuilder.AppendExpression(callback));
+				CollectionQuantifier.Between(minimum, maximum)));
 	}
 }

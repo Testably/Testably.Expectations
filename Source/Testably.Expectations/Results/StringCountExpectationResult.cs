@@ -13,7 +13,7 @@ namespace Testably.Expectations.Results;
 ///     options on the <see cref="StringOptions" />.
 /// </summary>
 public class StringCountExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier,
 	StringOptions options)
@@ -31,14 +31,14 @@ public class StringCountExpectationResult<TResult, TValue>(
 ///     options on the <see cref="StringOptions" />.
 /// </summary>
 public class StringCountExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier,
 	StringOptions options)
 	: CountExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue, quantifier)
 	where TSelf : StringCountExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder1 = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
@@ -46,7 +46,7 @@ public class StringCountExpectationResult<TResult, TValue, TSelf>(
 	public StringCountExpectationResult<TResult, TValue, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
-		_expectationBuilder1.AppendExpression(b => b.AppendMethod(nameof(IgnoringCase)));
+		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
 		return this;
 	}
 
@@ -58,8 +58,7 @@ public class StringCountExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{
 		options.UsingComparer(comparer);
-		_expectationBuilder1.AppendExpression(b
-			=> b.AppendMethod(nameof(Using), doNotPopulateThisValue));
+		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
 }

@@ -15,7 +15,7 @@ public static partial class ThatCollectionShould
 	public static QuantifiableCollection<TItem, ICollection<TItem>> None<TItem>(
 		this IThat<ICollection<TItem>> source)
 	{
-		source.ExpectationBuilder.AppendExpression(b => b.AppendMethod(nameof(None)));
+		source.ExpectationBuilder.AppendMethodStatement(nameof(None));
 		return new QuantifiableCollection<TItem, ICollection<TItem>>(source,
 			CollectionQuantifier.None);
 	}

@@ -28,10 +28,11 @@ public static partial class ThatQuantifiableCollectionShould
 	{
 		EquivalencyOptions options = new();
 		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(
-			source.Collection.ExpectationBuilder.Add(
+			source.Collection.ExpectationBuilder
+				.AddConstraint(
 				new AreEquivalentToConstraint<TItem, TCollection>(expected, doNotPopulateThisValue,
-					source.Quantity, options),
-				b => b.AppendMethod(nameof(BeEquivalentTo), doNotPopulateThisValue)),
+					source.Quantity, options))
+				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source.Collection);
 	}
 

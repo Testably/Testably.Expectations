@@ -2,95 +2,140 @@
 using System.Text;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Nodes;
 
 namespace Testably.Expectations.Core;
 
 /// <summary>
 ///     The builder for collecting all expectations.
 /// </summary>
-public interface IExpectationBuilder
+public abstract class ExpectationBuilder
 {
+	private readonly FailureMessageBuilder _failureMessageBuilder;
+	private readonly Tree _tree = new();
+
+	protected ExpectationBuilder(string subjectExpression)
+	{
+		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
+	}
+
 	/// <summary>
 	///     The builder for the failure message.
 	/// </summary>
-	IFailureMessageBuilder FailureMessageBuilder { get; }
+	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
 
-	/// <summary>
-	///     Add a new <paramref name="constraint" />.
-	///     Also update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder Add(
-		IConstraint constraint,
-		Action<StringBuilder> expressionBuilder);
+	public ExpectationBuilder AddConstraint<TValue>(IValueConstraint<TValue> constraint)
+	{
+		_tree.AddExpectation(constraint);
+		return this;
+	}
+	
+	public ExpectationBuilder AddConstraint<TValue>(IContextConstraint<TValue> constraint)
+	{
+		_tree.AddExpectation(constraint);
+		return this;
+	}
 
-	/// <summary>
-	///     Add a new <paramref name="castConstraint" /> that casts from <typeparamref name="TSource" /> to
-	///     <typeparamref name="TTarget" />.
-	///     Also update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder AddCast<TSource, TTarget>(
-		ICastConstraint<TSource, TTarget> castConstraint,
-		Action<StringBuilder> expressionBuilder);
+	public ExpectationBuilder AddConstraint<TValue>(IAsyncConstraint<TValue> constraint)
+	{
+		_tree.AddExpectation(constraint);
+		return this;
+	}
+	public ExpectationBuilder AddConstraint<TValue>(IComplexConstraint<TValue> constraint)
+	{
+		_tree.AddExpectation(constraint);
+		return this;
+	}
+	public ExpectationBuilder AddCast<T1, T2>(ICastConstraint<T1, T2> castConstraint,
+		Action<StringBuilder> expressionBuilder)
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddManipulation(n => new CastNode<T1, T2>(castConstraint, n));
+		return this;
+	}
 
-	/// <summary>
-	///     Add an AND node, using the <paramref name="textSeparator" />.
-	///     Also update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder And(
-		Action<StringBuilder> expressionBuilder,
-		string textSeparator = " and ");
+	public void AddReason(string reason)
+	{
+		BecauseReason becauseReason = new BecauseReason(reason);
+		_tree.GetCurrent().SetReason(becauseReason);
+	}
 
-	/// <summary>
-	///     Update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder AppendExpression(
-		Action<StringBuilder> expressionBuilder);
+	internal ExpectationBuilder And(Action<StringBuilder> expressionBuilder,
+		string textSeparator = " and ")
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
+		return this;
+	}
 
-	/// <summary>
-	///     Verifies, if the expectations are met.
-	/// </summary>
-	Task<ConstraintResult> IsMet();
+	public ExpectationBuilder AppendStatement(string value)
+	{
+		_failureMessageBuilder.ExpressionBuilder.Append(value);
+		return this;
+	}
 
-	/// <summary>
-	///     Add an OR node, using the <paramref name="textSeparator" />.
-	///     Also update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder Or(
-		Action<StringBuilder> expressionBuilder,
-		string textSeparator = " or ");
+	internal Task<ConstraintResult> IsMet()
+	{
+		EvaluationContext.EvaluationContext context = new();
+		var rootNode = _tree.GetRoot();
+		return IsMet(context, rootNode);
+	}
 
-	/// <summary>
-	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" />.
-	///     Also update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder Which<TSource, TProperty, TThatProperty>(
+	internal abstract Task<ConstraintResult> IsMet(
+		EvaluationContext.EvaluationContext context, Node rootNode);
+
+	internal ExpectationBuilder Or(Action<StringBuilder> expressionBuilder,
+		string textSeparator = " or ")
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
+		return this;
+	}
+
+	public ExpectationBuilder Which<TSource, TProperty, TThatProperty>(
 		PropertyAccessor propertyAccessor,
 		Action<TThatProperty>? expectation,
-		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
+		Func<ExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
 		string andTextSeparator = "",
 		string whichTextSeparator = " which ",
 		string whichPropertyTextSeparator = "")
-		where TThatProperty : IThat<TProperty>;
+		where TThatProperty : IThat<TProperty>
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
+		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(
+			propertyAccessor,
+			expectation == null
+				? Node.None
+				: new DeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory),
+			whichTextSeparator,
+			whichPropertyTextSeparator));
 
-	/// <summary>
-	///     Add a new <paramref name="expectation" /> that accesses the <paramref name="propertyAccessor" /> and casts from
-	///     <typeparamref name="TBase" /> to
-	///     <typeparamref name="TProperty" />.
-	///     Also update the <paramref name="expressionBuilder" />.
-	/// </summary>
-	IExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
+		return this;
+	}
+
+	public ExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
 		PropertyAccessor propertyAccessor,
 		ICastConstraint<TBase, TProperty> cast,
 		Action<TThatProperty> expectation,
-		Func<IExpectationBuilder, TThatProperty> thatPropertyFactory,
+		Func<ExpectationBuilder, TThatProperty> thatPropertyFactory,
 		Action<StringBuilder> expressionBuilder,
 		string textSeparator = " which ")
 		where TThatProperty : IThat<TProperty>
-		where TProperty : TBase;
+		where TProperty : TBase
+	{
+		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
+		_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
+		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor,
+			cast, new DeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory), textSeparator));
 
-	/// <summary>
-	///     Amends the latest expectation with a <paramref name="reason" /> explaining it is needed.
-	/// </summary>
-	void AddReason(string reason);
+		return this;
+	}
+
+	/// <inheritdoc />
+	public override string ToString()
+	{
+		return _tree.ToString();
+	}
 }

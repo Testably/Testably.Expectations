@@ -20,10 +20,11 @@ public static partial class ThatStringShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 	{
-		StringOptions? options = new StringOptions();
-		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new DoesNotStartWithValueConstraint(unexpected, options),
-				b => b.AppendMethod(nameof(NotStartWith), doNotPopulateThisValue)),
+		StringOptions? options = new();
+		return new StringExpectationResult<string?, IThat<string?>>(
+			source.ExpectationBuilder
+				.AddConstraint(new DoesNotStartWithValueConstraint(unexpected, options))
+				.AppendMethodStatement(nameof(NotStartWith), doNotPopulateThisValue),
 			source,
 			options);
 	}
@@ -36,10 +37,11 @@ public static partial class ThatStringShould
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
-		StringOptions? options = new StringOptions();
-		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new StartsWithValueConstraint(expected, options),
-				b => b.AppendMethod(nameof(StartWith), doNotPopulateThisValue)),
+		StringOptions? options = new();
+		return new StringExpectationResult<string?, IThat<string?>>(
+			source.ExpectationBuilder
+				.AddConstraint(new StartsWithValueConstraint(expected, options))
+				.AppendMethodStatement(nameof(StartWith), doNotPopulateThisValue),
 			source,
 			options);
 	}

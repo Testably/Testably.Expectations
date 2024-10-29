@@ -13,7 +13,7 @@ namespace Testably.Expectations.Results;
 ///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a tolerance.
 /// </summary>
 public class TimeToleranceExpectationResult<TResult, TValue>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	TimeTolerance options)
 	: TimeToleranceExpectationResult<TResult, TValue,
@@ -28,13 +28,13 @@ public class TimeToleranceExpectationResult<TResult, TValue>(
 ///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying a tolerance.
 /// </summary>
 public class TimeToleranceExpectationResult<TResult, TValue, TSelf>(
-	IExpectationBuilder expectationBuilder,
+	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	TimeTolerance options)
 	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : TimeToleranceExpectationResult<TResult, TValue, TSelf>
 {
-	private readonly IExpectationBuilder _expectationBuilder1 = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder1 = expectationBuilder;
 
 	/// <summary>
 	///     Specifies a tolerance to apply on the time comparison.
@@ -43,7 +43,7 @@ public class TimeToleranceExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "")
 	{
 		options.SetTolerance(tolerance);
-		_expectationBuilder1.AppendExpression(b => b.AppendMethod(nameof(Within), doNotPopulateThisValue));
+		_expectationBuilder1.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
 		return this;
 	}
 }

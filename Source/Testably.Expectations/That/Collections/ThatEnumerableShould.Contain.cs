@@ -5,7 +5,6 @@ using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -22,8 +21,9 @@ public static partial class ThatEnumerableShould
 			this IThat<IEnumerable<TItem>> source,
 			TItem expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ContainsConstraint<TItem>(expected),
-				b => b.AppendMethod(nameof(Contain), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ContainsConstraint<TItem>(expected))
+				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
 			source);
 
 	private readonly struct ContainsConstraint<TItem>(TItem expected)
@@ -31,13 +31,14 @@ public static partial class ThatEnumerableShould
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual, IEvaluationContext context)
 		{
-			var materializedEnumerable =
+			IEnumerable<TItem>? materializedEnumerable =
 				context.UseMaterializedEnumerable<TItem, IEnumerable<TItem>>(actual);
 			foreach (TItem item in materializedEnumerable)
 			{
 				if (item?.Equals(expected) == true)
 				{
-					return new ConstraintResult.Success<IEnumerable<TItem>>(materializedEnumerable, ToString());
+					return new ConstraintResult.Success<IEnumerable<TItem>>(materializedEnumerable,
+						ToString());
 				}
 			}
 

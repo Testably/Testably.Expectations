@@ -21,12 +21,12 @@ public static partial class ThatStringShould
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
-		Quantifier? quantifier = new Quantifier();
-		StringOptions? options = new StringOptions();
+		Quantifier? quantifier = new();
+		StringOptions? options = new();
 		return new StringCountExpectationResult<string?, IThat<string?>>(
-			source.ExpectationBuilder.Add(
-				new ContainsValueConstraint(expected, quantifier, options),
-				b => b.AppendMethod(nameof(Contain), doNotPopulateThisValue)),
+			source.ExpectationBuilder
+				.AddConstraint(new ContainsValueConstraint(expected, quantifier, options))
+				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
 			source,
 			quantifier,
 			options);
@@ -41,12 +41,13 @@ public static partial class ThatStringShould
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 	{
-		Quantifier? quantifier = new Quantifier();
+		Quantifier? quantifier = new();
 		quantifier.Exactly(0);
-		StringOptions? options = new StringOptions();
-		return new StringExpectationResult<string?, IThat<string?>>(source.ExpectationBuilder.Add(
-				new ContainsValueConstraint(unexpected, quantifier, options),
-				b => b.AppendMethod(nameof(NotContain), doNotPopulateThisValue)),
+		StringOptions? options = new();
+		return new StringExpectationResult<string?, IThat<string?>>(
+			source.ExpectationBuilder
+				.AddConstraint(new ContainsValueConstraint(unexpected, quantifier, options))
+				.AppendMethodStatement(nameof(NotContain), doNotPopulateThisValue),
 			source,
 			options);
 	}

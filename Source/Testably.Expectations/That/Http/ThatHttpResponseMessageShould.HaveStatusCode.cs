@@ -23,9 +23,9 @@ public static partial class ThatHttpResponseMessageShould
 			this IThat<HttpResponseMessage?> source,
 			HttpStatusCode expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new HasStatusCodeConstraint(expected),
-				b => b.AppendMethod(nameof(HaveContent), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new HasStatusCodeConstraint(expected))
+				.AppendMethodStatement(nameof(HaveContent), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -37,10 +37,11 @@ public static partial class ThatHttpResponseMessageShould
 			HttpStatusCode unexpected,
 			[CallerArgumentExpression("unexpected")]
 			string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(
-				new HasStatusCodeRangeConstraint(statusCode => statusCode != (int)unexpected,
-					$"has StatusCode different to {Formatter.Format(unexpected)}"),
-				b => b.AppendMethod(nameof(NotHaveStatusCode), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new HasStatusCodeRangeConstraint(
+					statusCode => statusCode != (int)unexpected,
+					$"has StatusCode different to {Formatter.Format(unexpected)}"))
+				.AppendMethodStatement(nameof(NotHaveStatusCode), doNotPopulateThisValue),
 			source);
 
 	private readonly struct HasStatusCodeConstraint(HttpStatusCode expected)

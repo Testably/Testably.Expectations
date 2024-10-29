@@ -17,8 +17,9 @@ public static partial class ThatBoolShould
 		bool consequent,
 		[CallerArgumentExpression("consequent")]
 		string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder.Add(new ImpliesValueConstraint(consequent),
-				b => b.AppendMethod(nameof(Imply), doNotPopulateThisValue)),
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ImpliesValueConstraint(consequent))
+				.AppendMethodStatement(nameof(Imply), doNotPopulateThisValue),
 			source);
 
 	private readonly struct ImpliesValueConstraint(bool consequent) : IValueConstraint<bool>

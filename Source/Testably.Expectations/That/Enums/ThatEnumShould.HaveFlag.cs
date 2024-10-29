@@ -19,10 +19,11 @@ public static partial class ThatEnumShould
 		[CallerArgumentExpression("expectedFlag")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"have flag {Formatter.Format(expectedFlag)}",
-					actual => actual.HasFlag(expectedFlag)),
-				b => b.AppendMethod(nameof(HaveFlag), doNotPopulateThisValue)),
+					actual => actual.HasFlag(expectedFlag)))
+				.AppendMethodStatement(nameof(HaveFlag), doNotPopulateThisValue),
 			source);
 
 	/// <summary>
@@ -34,9 +35,10 @@ public static partial class ThatEnumShould
 		[CallerArgumentExpression("unexpectedFlag")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder.Add(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have flag {Formatter.Format(unexpectedFlag)}",
-					actual => !actual.HasFlag(unexpectedFlag)),
-				b => b.AppendMethod(nameof(NotHaveFlag), doNotPopulateThisValue)),
+					actual => !actual.HasFlag(unexpectedFlag)))
+				.AppendMethodStatement(nameof(NotHaveFlag), doNotPopulateThisValue),
 			source);
 }
