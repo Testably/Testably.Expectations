@@ -23,7 +23,7 @@ public static partial class ThatObjectShould
 				source.ExpectationBuilder
 					.ForProperty(PropertyAccessor<T, TProperty?>.FromExpression(selector),
 						(property, expectation) => $"satisfy {property}to {expectation}")
-					.Add(e => expectations(new That<TProperty?>(e)))
+					.AddExpectations(e => expectations(new That<TProperty?>(e)))
 					.AppendGenericMethodStatement<T, TProperty>(nameof(Satisfy),
 						doNotPopulateThisValue1)
 					.AppendMethodStatement(nameof(SatisfyResult<TProperty, T>.To),

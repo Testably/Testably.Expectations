@@ -7,7 +7,6 @@ using Testably.Expectations.Core.Nodes;
 
 namespace Testably.Expectations.Core;
 
-
 /// <summary>
 ///     The builder for collecting all expectations.
 /// </summary>
@@ -16,7 +15,7 @@ public abstract class ExpectationBuilder
 	/// <summary>
 	///     The builder for the failure message.
 	/// </summary>
-	public IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
+	internal IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
 
 	private readonly FailureMessageBuilder _failureMessageBuilder;
 	private readonly Tree _tree = new();
@@ -69,6 +68,9 @@ public abstract class ExpectationBuilder
 		return this;
 	}
 
+	/// <summary>
+	///     Adds a <paramref name="reason" /> to the current expectation constraint.
+	/// </summary>
 	public void AddReason(string reason)
 	{
 		BecauseReason becauseReason = new(reason);
@@ -84,35 +86,10 @@ public abstract class ExpectationBuilder
 		return this;
 	}
 
-	/// <inheritdoc />
-	public override string ToString()
-	{
-		return _tree.ToString();
-	}
-
-
-	public ExpectationBuilder Which<TSource, TProperty, TThatProperty>(
-		PropertyAccessor propertyAccessor,
-		Action<TThatProperty>? expectation,
-		Func<ExpectationBuilder, TThatProperty> thatPropertyFactory,
-		Action<StringBuilder> expressionBuilder,
-		string andTextSeparator = "",
-		string whichTextSeparator = " which ",
-		string whichPropertyTextSeparator = "")
-		where TThatProperty : IThat<TProperty>
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.TryAddCombination(n => new AndNode(n, Node.None, andTextSeparator), 5);
-		_tree.AddManipulation(_ => new WhichNode<TSource, TProperty>(
-			propertyAccessor,
-			expectation == null
-				? Node.None
-				: new LegacyDeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory),
-			null));
-
-		return this;
-	}
-
+	/// <summary>
+	///     Specifies a constraint that applies to the property selected
+	///     by the <paramref name="propertyAccessor" />.
+	/// </summary>
 	public PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(
 		PropertyAccessor<TSource, TTarget?> propertyAccessor,
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
@@ -122,51 +99,18 @@ public abstract class ExpectationBuilder
 			_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
 			_tree.AddManipulation(_ => new WhichNode<TSource, TTarget>(
 				propertyAccessor,
-				c == null ? new DeferredNode<TTarget>(a) : new AndNode(new ExpectationNode(c), new DeferredNode<TTarget>(a), ""),
+				c == null
+					? new DeferredNode<TTarget>(a)
+					: new AndNode(new ExpectationNode(c), new DeferredNode<TTarget>(a), ""),
 				expectationTextGenerator));
 			return this;
 		});
 	}
 
-	public class PropertyExpectationBuilder<TSource, TProperty>
+	/// <inheritdoc />
+	public override string ToString()
 	{
-		private readonly Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder> _callback;
-		private IValueConstraint<TProperty>? _constraint;
-
-		internal PropertyExpectationBuilder(Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder> callback)
-		{
-			_callback = callback;
-		}
-
-		public PropertyExpectationBuilder<TSource, TProperty> Cast<TTarget>(ICastConstraint<TProperty, TTarget> constraint)
-		{
-			_constraint = constraint;
-			return this;
-		}
-
-		public ExpectationBuilder Add(Action<ExpectationBuilder> expectation)
-		{
-			return _callback(expectation, _constraint);
-		}
-	}
-	
-	public ExpectationBuilder WhichCast<TSource, TBase, TProperty, TThatProperty>(
-		PropertyAccessor propertyAccessor,
-		ICastConstraint<TBase, TProperty> cast,
-		Action<TThatProperty> expectation,
-		Func<ExpectationBuilder, TThatProperty> thatPropertyFactory,
-		Action<StringBuilder> expressionBuilder,
-		string textSeparator = " which ")
-		where TThatProperty : IThat<TProperty>
-		where TProperty : TBase
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
-		_tree.AddManipulation(_ => new WhichCastNode<TSource, TBase, TProperty>(propertyAccessor,
-			cast, new LegacyDeferredNode<TProperty, TThatProperty>(expectation, thatPropertyFactory),
-			textSeparator));
-
-		return this;
+		return _tree.ToString();
 	}
 
 	internal ExpectationBuilder And(Action<StringBuilder> expressionBuilder,
@@ -193,5 +137,45 @@ public abstract class ExpectationBuilder
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
 		return this;
+	}
+
+	/// <summary>
+	///     Helper class to specify constraints on the selected <typeparamref name="TProperty" />.
+	/// </summary>
+	public class PropertyExpectationBuilder<TSource, TProperty>
+	{
+		private readonly
+			Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder>
+			_callback;
+
+		private IValueConstraint<TProperty>? _constraint;
+
+		internal PropertyExpectationBuilder(
+			Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder>
+				callback)
+		{
+			_callback = callback;
+		}
+
+		/// <summary>
+		///     Add expectations for the current <typeparamref name="TProperty" />.
+		/// </summary>
+		public ExpectationBuilder AddExpectations(Action<ExpectationBuilder> expectation)
+		{
+			return _callback(expectation, _constraint);
+		}
+
+		/// <summary>
+		///     Add a validation constraint for the current <typeparamref name="TProperty" />,
+		///     that it is of type <typeparamref name="TTarget" />.
+		/// </summary>
+		public PropertyExpectationBuilder<TSource, TProperty> Validate<TTarget>(
+			ICastConstraint<TProperty, TTarget> constraint)
+		{
+			_constraint = constraint;
+			return this;
+		}
+		
+		
 	}
 }
