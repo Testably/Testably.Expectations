@@ -1,26 +1,27 @@
 ﻿using System;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Sources;
 
 /// <summary>
-///     A source for the expectations can be either a <see cref="Value" /> or an <see cref="Exception" />.
+///     An expectation source from a delegate can contain a <see cref="Value" /> or a thrown <see cref="Exception" />.
 /// </summary>
-public class DelegateValue<TValue> : DelegateValue
+internal class DelegateValue<TValue>(in TValue? value, Exception? exception)
+	: DelegateValue(exception)
 {
-	public TValue? Value { get; }
-
-	public DelegateValue(in TValue? value, Exception? exception) : base(exception)
-	{
-		Value = value;
-	}
+	/// <summary>
+	///     The value of the delegate, if no exception was thrown.
+	/// </summary>
+	public TValue? Value { get; } = value;
 }
 
-public class DelegateValue
+/// <summary>
+///     An expectation source from a delegate without value can represent <see langword="void" /> or a thrown
+///     <see cref="Exception" />.
+/// </summary>
+internal class DelegateValue(Exception? exception)
 {
-	public Exception? Exception { get; }
-
-	public DelegateValue(Exception? exception)
-	{
-		Exception = exception;
-	}
+	/// <summary>
+	///     The thrown exception of the delegate.
+	/// </summary>
+	public Exception? Exception { get; } = exception;
 }

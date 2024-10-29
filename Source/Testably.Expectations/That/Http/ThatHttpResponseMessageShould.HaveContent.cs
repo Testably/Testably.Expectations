@@ -49,7 +49,7 @@ public static partial class ThatHttpResponseMessageShould
 		}
 
 		public override string ToString()
-			=> $"have a string content {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
+			=> $"have a string content {expected.GetExpectation(StringMatcher.GrammaticVoice.PassiveVoice)}";
 	}
 }
 #endif

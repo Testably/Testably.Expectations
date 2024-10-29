@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 
@@ -256,5 +255,21 @@ public class StringMatcher(string? pattern)
 		}
 
 		#endregion
+	}
+
+	/// <summary>
+	///     Mode for English Grammar
+	/// </summary>
+	internal enum GrammaticVoice
+	{
+		/// <summary>
+		///     The text should be in active voice.
+		/// </summary>
+		ActiveVoice,
+
+		/// <summary>
+		///     The text should be in passive voice.
+		/// </summary>
+		PassiveVoice
 	}
 }

@@ -39,6 +39,6 @@ public static partial class ThatStringShould
 
 		/// <inheritdoc />
 		public override string ToString()
-			=> expected.GetExpectation(GrammaticVoice.ActiveVoice);
+			=> expected.GetExpectation(StringMatcher.GrammaticVoice.ActiveVoice);
 	}
 }

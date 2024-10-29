@@ -1,6 +1,4 @@
-﻿#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,173 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Testably.Expectations.Core.Helpers;
-
-/// <summary>
-///     Helper class to get all the public and internal fields and properties from a type.
-/// </summary>
-internal sealed class TypeMemberReflector
-{
-	private const BindingFlags AllInstanceMembersFlag =
-		BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-
-	public FieldInfo[] Fields { get; }
-
-	public MemberInfo[] Members { get; }
-
-	public PropertyInfo[] Properties { get; }
-
-	public TypeMemberReflector(Type typeToReflect, MemberVisibility visibility)
-	{
-		Properties = LoadProperties(typeToReflect, visibility);
-		Fields = LoadFields(typeToReflect, visibility);
-		Members = [.. Properties, .. Fields];
-	}
-
-	private static List<TMemberInfo> GetClassMembers<TMemberInfo>(Type typeToReflect,
-		Func<Type, IEnumerable<TMemberInfo>> getMembers)
-		where TMemberInfo : MemberInfo
-	{
-		List<TMemberInfo> members = [];
-
-		while (typeToReflect != null)
-		{
-			foreach (TMemberInfo memberInfo in getMembers(typeToReflect))
-			{
-				if (members.TrueForAll(mi => mi.Name != memberInfo.Name))
-				{
-					members.Add(memberInfo);
-				}
-			}
-
-			typeToReflect = typeToReflect.BaseType;
-		}
-
-		return members;
-	}
-
-	private static List<FieldInfo> GetFieldsFromHierarchy(Type typeToReflect,
-		MemberVisibility memberVisibility)
-	{
-		bool includeInternal = memberVisibility.HasFlag(MemberVisibility.Internal);
-
-		return GetMembersFromHierarchy(typeToReflect, type =>
-		{
-			return type
-				.GetFields(AllInstanceMembersFlag)
-				.Where(field => IsPublic(field))
-				.Where(field => includeInternal || !IsInternal(field));
-		});
-	}
-
-	private static List<TMemberInfo> GetInterfaceMembers<TMemberInfo>(Type typeToReflect,
-		Func<Type, IEnumerable<TMemberInfo>> getMembers)
-		where TMemberInfo : MemberInfo
-	{
-		List<TMemberInfo> members = [];
-
-		List<Type> considered = new List<Type>();
-		Queue<Type> queue = new Queue<Type>();
-		considered.Add(typeToReflect);
-		queue.Enqueue(typeToReflect);
-
-		while (queue.Count > 0)
-		{
-			Type subType = queue.Dequeue();
-
-			foreach (Type subInterface in subType.GetInterfaces())
-			{
-				if (considered.Contains(subInterface))
-				{
-					continue;
-				}
-
-				considered.Add(subInterface);
-				queue.Enqueue(subInterface);
-			}
-
-			IEnumerable<TMemberInfo> typeMembers = getMembers(subType);
-
-			IEnumerable<TMemberInfo> newPropertyInfos =
-				typeMembers.Where(x => !members.Contains(x));
-
-			members.InsertRange(0, newPropertyInfos);
-		}
-
-		return members;
-	}
-
-	private static List<TMemberInfo> GetMembersFromHierarchy<TMemberInfo>(
-		Type typeToReflect,
-		Func<Type, IEnumerable<TMemberInfo>> getMembers)
-		where TMemberInfo : MemberInfo
-	{
-		if (typeToReflect.IsInterface)
-		{
-			return GetInterfaceMembers(typeToReflect, getMembers);
-		}
-
-		return GetClassMembers(typeToReflect, getMembers);
-	}
-
-	private static List<PropertyInfo> GetPropertiesFromHierarchy(Type typeToReflect,
-		MemberVisibility memberVisibility)
-	{
-		bool includeInternal = memberVisibility.HasFlag(MemberVisibility.Internal);
-		bool includeExplicitlyImplemented =
-			memberVisibility.HasFlag(MemberVisibility.ExplicitlyImplemented);
-
-		return GetMembersFromHierarchy(typeToReflect, type =>
-		{
-			return
-				from p in type.GetProperties(AllInstanceMembersFlag | BindingFlags.DeclaredOnly)
-				where p.GetMethod is { } getMethod
-				      && (IsPublic(getMethod) || (includeExplicitlyImplemented &&
-				                                  IsExplicitlyImplemented(getMethod)))
-				      && (includeInternal || !IsInternal(getMethod))
-				      && !p.IsIndexer()
-				orderby IsExplicitImplementation(p)
-				select p;
-		});
-	}
-
-	private static bool IsExplicitImplementation(PropertyInfo property)
-	{
-		return property.GetMethod!.IsPrivate &&
-		       property.SetMethod?.IsPrivate != false &&
-		       property.Name.Contains('.', StringComparison.Ordinal);
-	}
-
-	private static bool IsExplicitlyImplemented(MethodBase getMethod) =>
-		getMethod.IsPrivate && getMethod.IsFinal;
-
-	private static bool IsInternal(MethodBase getMethod) =>
-		getMethod.IsAssembly || getMethod.IsFamilyOrAssembly;
-
-	private static bool IsInternal(FieldInfo field)
-	{
-		return field.IsAssembly || field.IsFamilyOrAssembly;
-	}
-
-	private static bool IsPublic(MethodBase getMethod) =>
-		!getMethod.IsPrivate && !getMethod.IsFamily && !getMethod.IsFamilyAndAssembly;
-
-	private static bool IsPublic(FieldInfo field) =>
-		!field.IsPrivate && !field.IsFamily && !field.IsFamilyAndAssembly;
-
-	private static FieldInfo[] LoadFields(Type typeToReflect, MemberVisibility visibility)
-	{
-		List<FieldInfo> query = GetFieldsFromHierarchy(typeToReflect, visibility);
-
-		return query.ToArray();
-	}
-
-	private static PropertyInfo[] LoadProperties(Type typeToReflect, MemberVisibility visibility)
-	{
-		List<PropertyInfo> query = GetPropertiesFromHierarchy(typeToReflect, visibility);
-
-		return query.ToArray();
-	}
-}
 
 internal static class TypeExtensions
 {
@@ -208,7 +39,7 @@ internal static class TypeExtensions
 		return GetTypeReflectorFor(typeToReflect, visibility).Members;
 	}
 
-	public static MethodInfo GetMethod(this Type type, string methodName,
+	public static MethodInfo? GetMethod(this Type type, string methodName,
 		IEnumerable<Type> parameterTypes)
 	{
 		return type.GetMethods(AllStaticAndInstanceMembersFlag)
@@ -217,7 +48,7 @@ internal static class TypeExtensions
 					.SequenceEqual(parameterTypes));
 	}
 
-	public static MethodInfo GetParameterlessMethod(this Type type, string methodName)
+	public static MethodInfo? GetParameterlessMethod(this Type type, string methodName)
 	{
 		return type.GetMethod(methodName, Enumerable.Empty<Type>());
 	}
@@ -275,7 +106,7 @@ internal static class TypeExtensions
 	private static bool IsAnonymous(this Type type)
 	{
 		bool nameContainsAnonymousType =
-			type?.FullName?.Contains("AnonymousType", StringComparison.Ordinal) == true;
+			type.FullName?.Contains("AnonymousType", StringComparison.Ordinal) == true;
 
 		if (!nameContainsAnonymousType)
 		{
@@ -321,7 +152,7 @@ internal static class TypeExtensions
 		}
 
 #if !(NET47 || NETSTANDARD2_0)
-        return typeof(ITuple).IsAssignableFrom(type);
+		return typeof(ITuple).IsAssignableFrom(type);
 #else
 		Type openType = type.GetGenericTypeDefinition();
 

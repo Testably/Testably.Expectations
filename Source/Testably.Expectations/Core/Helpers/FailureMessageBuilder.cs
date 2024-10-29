@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Testably.Expectations.Core.Constraints;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Helpers;
 
 internal class FailureMessageBuilder : IFailureMessageBuilder
 {

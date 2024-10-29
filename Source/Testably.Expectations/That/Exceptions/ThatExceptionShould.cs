@@ -39,7 +39,7 @@ public static partial class ThatExceptionShould
 		}
 
 		public override string ToString()
-			=> $"{verb} Message {expected.GetExpectation(GrammaticVoice.PassiveVoice)}";
+			=> $"{verb} Message {expected.GetExpectation(StringMatcher.GrammaticVoice.PassiveVoice)}";
 	}
 
 	internal readonly struct HasParamNameValueConstraint<TArgumentException>(string expected, string verb)
