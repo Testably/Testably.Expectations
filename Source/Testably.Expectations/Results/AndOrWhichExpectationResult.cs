@@ -47,14 +47,13 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 			(expectations, doNotPopulateThisValue2) =>
 			{
 				return new AndOrWhichExpectationResult<TResult, TValue, TSelf>(
-					_expectationBuilder.Which<TResult, TProperty?, IThat<TProperty?>>(
-						PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
-						expectations,
-						e => new That<TProperty?>(e),
-						b => b.AppendMethod(nameof(Which), doNotPopulateThisValue1)
-							.AppendMethod(nameof(WhichResult<TProperty, TResult>.Should),
-								doNotPopulateThisValue2),
-						whichPropertyTextSeparator: "should "),
+					_expectationBuilder
+						.ForProperty(PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
+							(property, expectation) => $" which {property}should {expectation}")
+						.Add(e => expectations(new That<TProperty?>(e)))
+						.AppendMethodStatement(nameof(Which), doNotPopulateThisValue1)
+						.AppendMethodStatement(nameof(WhichResult<TProperty, TResult>.Should),
+							doNotPopulateThisValue2),
 					_returnValue);
 			});
 	}

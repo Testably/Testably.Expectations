@@ -19,16 +19,12 @@ public partial class ThatDelegateThrows<TException>
 			string doNotPopulateThisValue = "")
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder
-				.WhichCast<TException, Exception?, TInnerException?,
-					ThatExceptionShould<TInnerException?>>(
-					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
-						$"with an inner {typeof(TInnerException).Name} which should "),
-					new ThatExceptionShould.CastException<Exception, TInnerException>(),
-					expectations,
-					e => new ThatExceptionShould<TInnerException?>(e),
-					b => b.AppendGenericMethod<TInnerException>(nameof(WithInner),
-						doNotPopulateThisValue),
-					""),
+				.ForProperty<Exception, Exception?>(e => e.InnerException,
+					$"with an inner {typeof(TInnerException).Name} which should ")
+				.Cast(new ThatExceptionShould.CastException<TInnerException>())
+				.Add(e => expectations(new ThatExceptionShould<TInnerException?>(e)))
+				.AppendGenericMethodStatement<TInnerException>(nameof(WithInner),
+					doNotPopulateThisValue),
 			this);
 
 	/// <summary>

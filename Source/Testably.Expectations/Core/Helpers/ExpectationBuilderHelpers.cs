@@ -1,9 +1,19 @@
-﻿using Testably.Expectations.Formatting;
+﻿using System;
+using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Core.Helpers;
 
 internal static class ExpectationBuilderHelpers
 {
+	public static ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<
+		TSource, TTarget>(
+		this ExpectationBuilder expectationBuilder,
+		Func<TSource, TTarget> func, string name)
+	{
+		return expectationBuilder.ForProperty(
+			PropertyAccessor<TSource, TTarget>.FromFunc(func, name));
+	}
+	
 	public static ExpectationBuilder AppendGenericMethodStatement<T1>(this ExpectationBuilder builder,
 		string methodName)
 	{

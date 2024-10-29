@@ -10,17 +10,19 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 {
 	public override Node Inner { get; set; }
 	private readonly PropertyAccessor _propertyAccessor;
-	private readonly string _textSeparator;
-	private readonly string _propertyTextSeparator;
+	private readonly Func<PropertyAccessor, string, string> _expectationTextGenerator;
 
 	public WhichNode(PropertyAccessor propertyAccessor, Node inner,
-		string textSeparator = " which ",
-		string propertyTextSeparator = "")
+		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
 	{
 		_propertyAccessor = propertyAccessor;
-		_textSeparator = textSeparator;
-		_propertyTextSeparator = propertyTextSeparator;
+		_expectationTextGenerator = expectationTextGenerator ?? DefaultExpectationTextGenerator;
 		Inner = inner;
+	}
+
+	private string DefaultExpectationTextGenerator(PropertyAccessor propertyAccessor, string expectationText)
+	{
+		return propertyAccessor + expectationText;
 	}
 
 	/// <inheritdoc />
@@ -43,7 +45,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 			{
 				var result = (await Inner.IsMetBy(matchingValue, context))
 					.UpdateExpectationText(r
-						=> $"{_textSeparator}{_propertyAccessor}{_propertyTextSeparator}{r.ExpectationText}");
+						=> _expectationTextGenerator(_propertyAccessor, r.ExpectationText));
 				return result.UseValue(value);
 			}
 

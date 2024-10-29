@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
 
@@ -18,26 +17,28 @@ public partial class ThatExceptionShould<TException>
 	/// </summary>
 	public AndOrExpectationResult<TException, ThatExceptionShould<TException>> HaveInner<TInnerException>(
 		Action<ThatExceptionShould<TInnerException?>> expectations,
-		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
+		[CallerArgumentExpression("expectations")]
+		string doNotPopulateThisValue = "")
 		where TInnerException : Exception?
-		=> new(ExpectationBuilder.WhichCast<Exception, Exception?, TInnerException?, ThatExceptionShould<TInnerException?>>(
-				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
-					$"have an inner {typeof(TInnerException).Name} which should "),
-				new ThatExceptionShould.CastException<Exception, TInnerException>(),
-				expectations,
-				e => new ThatExceptionShould<TInnerException?>(e),
-				b => b.AppendGenericMethod<TInnerException>(nameof(HaveInner), doNotPopulateThisValue),
-				""),
+		=> new(ExpectationBuilder
+				.ForProperty<Exception, Exception?>(e => e.InnerException,
+					$"have an inner {typeof(TInnerException).Name} which should ")
+				.Cast(new ThatExceptionShould.CastException<TInnerException>())
+				.Add(e => expectations(new ThatExceptionShould<TInnerException?>(e)))
+				.AppendGenericMethodStatement<TInnerException>(nameof(HaveInner),
+					doNotPopulateThisValue),
 			this);
 
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public AndOrExpectationResult<TException, ThatExceptionShould<TException>> HaveInner<TInnerException>()
+	public AndOrExpectationResult<TException, ThatExceptionShould<TException>> HaveInner<
+		TInnerException>()
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder
 				.AddConstraint(
-				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("have"))
+					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
+						"have"))
 				.AppendGenericMethodStatement<TInnerException>(nameof(HaveInner)),
 			this);
 }

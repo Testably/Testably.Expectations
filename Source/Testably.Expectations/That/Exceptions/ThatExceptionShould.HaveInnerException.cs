@@ -29,12 +29,12 @@ public partial class ThatExceptionShould<TException>
 		Action<ThatExceptionShould<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
-		=> new(ExpectationBuilder.Which<Exception, Exception?, ThatExceptionShould<Exception?>>(
-					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
-						"have an inner exception which should "),
-					expectations,
-					e => new ThatExceptionShould<Exception?>(e),
-					b => b.AppendMethod(nameof(HaveInnerException), doNotPopulateThisValue),
-			whichTextSeparator: ""),
-	this);
+		=> new(ExpectationBuilder
+				.ForProperty<Exception, Exception?>(e => e.InnerException,
+					"have an inner exception which should ")
+				.Cast(new ThatExceptionShould.CastException<Exception>())
+				.Add(e => expectations(new ThatExceptionShould<Exception?>(e)))
+				.AppendMethodStatement(nameof(HaveInnerException),
+					doNotPopulateThisValue),
+			this);
 }

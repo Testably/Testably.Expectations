@@ -16,14 +16,13 @@ public partial class ThatDelegateThrows<TException>
 		Action<ThatExceptionShould<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
-		=> new(
-			ExpectationBuilder.Which<Exception, Exception?, ThatExceptionShould<Exception?>>(
-				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
-					"with an inner exception which should "),
-				expectations,
-				e => new ThatExceptionShould<Exception?>(e),
-				b => b.AppendMethod(nameof(WithInnerException), doNotPopulateThisValue),
-				whichTextSeparator: ""),
+		=> new(ExpectationBuilder
+				.ForProperty<Exception, Exception?>(e => e.InnerException,
+					"with an inner exception which should ")
+				.Cast(new ThatExceptionShould.CastException<Exception>())
+				.Add(e => expectations(new ThatExceptionShould<Exception?>(e)))
+				.AppendMethodStatement(nameof(WithInnerException),
+					doNotPopulateThisValue),
 			this);
 
 	/// <summary>

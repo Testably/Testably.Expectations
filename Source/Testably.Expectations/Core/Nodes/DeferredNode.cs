@@ -5,13 +5,14 @@ using Testably.Expectations.Core.EvaluationContext;
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class DeferredNode<TProperty, TThatProperty> : Node
+//TODO VAB: Remove
+internal class LegacyDeferredNode<TProperty, TThatProperty> : Node
 where TThatProperty : IThat<TProperty>
 {
 	private readonly Action<TThatProperty> _expectation;
 	private readonly Func<ExpectationBuilder, TThatProperty> _thatPropertyFactory;
 
-	public DeferredNode(Action<TThatProperty> expectation,
+	public LegacyDeferredNode(Action<TThatProperty> expectation,
 	Func<ExpectationBuilder, TThatProperty> thatPropertyFactory)
 	{
 		_expectation = expectation;
@@ -38,4 +39,36 @@ where TThatProperty : IThat<TProperty>
 	/// <inheritdoc />
 	public override string ToString()
 		=> $"Deferred node of {typeof(TProperty).Name}";
+}
+
+
+internal class DeferredNode<TTarget> : Node
+{
+	private readonly Action<ExpectationBuilder> _expectation;
+
+	public DeferredNode(Action<ExpectationBuilder> expectation)
+	{
+		_expectation = expectation;
+	}
+
+	/// <inheritdoc />
+	public override async Task<ConstraintResult> IsMetBy<TValue>(
+		TValue? value,
+		IEvaluationContext context)
+		where TValue : default
+	{
+		if (value is not TTarget matchingActualValue)
+		{
+			throw new InvalidOperationException(
+				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TTarget).Name},{Environment.NewLine}but found {value?.GetType().Name}");
+		}
+
+		ExpectationBuilder<TTarget?> expectationBuilder2 = new(matchingActualValue, "");
+		_expectation.Invoke(expectationBuilder2);
+		return await expectationBuilder2.IsMet();
+	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> $"Deferred node of {typeof(TTarget).Name}";
 }

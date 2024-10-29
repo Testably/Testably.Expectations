@@ -30,9 +30,9 @@ public static partial class ThatExceptionShould
 	{
 		public ConstraintResult IsMetBy(Exception? actual)
 		{
-			if (actual is TException exception && expected.Matches(exception?.Message))
+			if (expected.Matches(actual?.Message))
 			{
-				return new ConstraintResult.Success<TException?>(exception, ToString());
+				return new ConstraintResult.Success<TException?>(actual as TException, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),
@@ -101,14 +101,13 @@ public static partial class ThatExceptionShould
 			=> $"{verb} an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
-	internal class CastException<TBase, TTarget> : ICastConstraint<TBase?, TTarget?>
-		where TBase : Exception?
+	internal class CastException<TTarget> : ICastConstraint<Exception?, TTarget>
 		where TTarget : Exception?
 	{
 		#region IDelegateConstraint<TBase?> Members
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(TBase? actual)
+		public ConstraintResult IsMetBy(Exception? actual)
 		{
 			if (actual is TTarget casted)
 			{
