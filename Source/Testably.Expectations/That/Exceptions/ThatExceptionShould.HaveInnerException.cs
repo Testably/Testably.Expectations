@@ -30,7 +30,7 @@ public partial class ThatExceptionShould<TException>
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
 		=> new(ExpectationBuilder.Which<Exception, Exception?, ThatExceptionShould<Exception?>>(
-					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
+					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
 						"have an inner exception which should "),
 					expectations,
 					e => new ThatExceptionShould<Exception?>(e),

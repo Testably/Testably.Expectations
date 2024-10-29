@@ -21,7 +21,6 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 
 	public ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression) : base(subjectExpression)
 	{
-		//_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
 		_subjectSource = subjectSource;
 	}
 
@@ -29,7 +28,7 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 	internal override async Task<ConstraintResult> IsMet(
 		EvaluationContext.EvaluationContext context, Node rootNode)
 	{
-		SourceValue<TValue> data = await _subjectSource.GetValue();
+		var data = await _subjectSource.GetValue();
 		return await rootNode.IsMetBy(data, context);
 	}
 }

@@ -2,7 +2,6 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Sources;
 using Testably.Expectations.That.Delegates;
 
 // ReSharper disable once CheckNamespace
@@ -41,13 +40,12 @@ public static partial class ThatDelegateShould
 		return new ConstraintResult.Success<TException?>(default, DoesNotThrowExpectation, true);
 	}
 
-	private readonly struct ThrowsCastConstraint<TException>(ThrowsOption throwOptions) :
-		ICastConstraint<DelegateSource.NoValue, TException>,
-		IComplexConstraint<DelegateSource.NoValue>
+	private readonly struct ThrowsCastConstraint<TException>(ThrowsOption throwOptions)
+		: ICastConstraint<SourceValue, TException?>
 		where TException : Exception
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
+		public ConstraintResult IsMetBy(Exception? exception)
 		{
 			if (!throwOptions.DoCheckThrow)
 			{
@@ -69,8 +67,8 @@ public static partial class ThatDelegateShould
 		}
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
-			=> IsMetBy(value.Value, value.Exception);
+		public ConstraintResult IsMetBy(SourceValue? value)
+			=> IsMetBy(value?.Exception);
 
 		public override string ToString()
 		{

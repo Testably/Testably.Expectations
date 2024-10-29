@@ -18,7 +18,7 @@ public partial class ThatDelegateThrows<TException>
 		string doNotPopulateThisValue = "")
 		=> new(
 			ExpectationBuilder.Which<Exception, Exception?, ThatExceptionShould<Exception?>>(
-				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
+				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
 					"with an inner exception which should "),
 				expectations,
 				e => new ThatExceptionShould<Exception?>(e),

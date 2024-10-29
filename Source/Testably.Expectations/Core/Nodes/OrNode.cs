@@ -19,7 +19,7 @@ internal class OrNode : CombinationNode
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 	{

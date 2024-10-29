@@ -2,8 +2,6 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Sources;
-using Testably.Expectations.Results;
 using Testably.Expectations.That.Delegates;
 
 // ReSharper disable once CheckNamespace
@@ -11,7 +9,6 @@ namespace Testably.Expectations;
 
 public static partial class ThatDelegateShould
 {
-
 	/// <summary>
 	///     Verifies that the delegate throws exactly an exception of type <typeparamref name="TException" />.
 	/// </summary>
@@ -19,20 +16,18 @@ public static partial class ThatDelegateShould
 		where TException : Exception
 	{
 		ThrowsOption throwOptions = new();
-		return new(source.ExpectationBuilder.AddCast(
-				new ThrowsExactlyCastConstraint<TException>(throwOptions),
-				b => b.Append('.').Append(nameof(ThrowExactly)).Append('<')
-					.Append(typeof(TException).Name).Append(">()")),
+		return new ThatDelegateThrows<TException>(source.ExpectationBuilder
+				.AddConstraint(new ThrowsExactlyCastConstraint<TException>(throwOptions))
+				.AppendGenericMethodStatement<TException>(nameof(ThrowExactly)),
 			throwOptions);
 	}
-	
-	private readonly struct ThrowsExactlyCastConstraint<TException>(ThrowsOption throwOptions) :
-		ICastConstraint<DelegateSource.NoValue, TException>,
-		IComplexConstraint<DelegateSource.NoValue>
+
+	private readonly struct ThrowsExactlyCastConstraint<TException>(ThrowsOption throwOptions)
+		: ICastConstraint<SourceValue, Exception?>
 		where TException : Exception
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateSource.NoValue actual, Exception? exception)
+		public ConstraintResult IsMetBy(Exception? exception)
 		{
 			if (!throwOptions.DoCheckThrow)
 			{
@@ -54,8 +49,8 @@ public static partial class ThatDelegateShould
 		}
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(SourceValue<DelegateSource.NoValue> value)
-			=> IsMetBy(value.Value, value.Exception);
+		public ConstraintResult IsMetBy(SourceValue? value)
+			=> IsMetBy(value?.Exception);
 
 		/// <inheritdoc />
 		public override string ToString()

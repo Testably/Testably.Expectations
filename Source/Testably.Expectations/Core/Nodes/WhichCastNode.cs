@@ -26,42 +26,42 @@ internal class WhichCastNode<TSource, TBase, TProperty> : ManipulationNode
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TBase> propertyAccessor)
 		{
-			if (value.Value is not TSource typedValue)
+			if (value is not TSource typedValue)
 			{
 				throw new InvalidOperationException(
-					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
+					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value?.GetType().Name}");
 			}
 
-			if (propertyAccessor.TryAccessProperty(
-				new SourceValue<TSource>(typedValue, value.Exception),
-				out TBase? baseValue))
-			{
-				ConstraintResult? castedResult = _cast.IsMetBy(baseValue, value.Exception);
-				if (castedResult is ConstraintResult.Success success &&
-				    success.TryGetValue(out TProperty? matchingValue))
-				{
-					ConstraintResult? result = (await Inner.IsMetBy(
-							new SourceValue<TProperty>(matchingValue, value.Exception), context))
-						.UpdateExpectationText(r
-							=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
-					return result.UseValue(value.Value);
-				}
-
-				ConstraintResult? failure =
-					await Inner.IsMetBy(new SourceValue<TProperty>(default, value.Exception),
-						context);
-				return castedResult.UpdateExpectationText(_
-					=> $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");
-			}
+			await Task.Yield();
+			//TODO VAB
+			//if (propertyAccessor.TryAccessProperty(typedValue,
+			//	out TBase? baseValue))
+			//{
+			//	ConstraintResult? castedResult = _cast.IsMetBy(baseValue);
+			//	if (castedResult is ConstraintResult.Success success &&
+			//	    success.TryGetValue(out TProperty? matchingValue))
+			//	{
+			//		ConstraintResult? result = (await Inner.IsMetBy(matchingValue, context))
+			//			.UpdateExpectationText(r
+			//				=> $"{_textSeparator}{_propertyAccessor}{r.ExpectationText}");
+			//		return result.UseValue(value);
+			//	}
+//
+			//	ConstraintResult? failure =
+			//		await Inner.IsMetBy(value.Exception,
+			//			context);
+			//	return castedResult.UpdateExpectationText(_
+			//		=> $"{_textSeparator}{_propertyAccessor}{failure.ExpectationText}");
+			//}
 
 			throw new InvalidOperationException(
-				$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TBase).Name},{Environment.NewLine}but found {baseValue?.GetType().Name}");
+				$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TBase).Name},{Environment.NewLine}but found {value?.GetType().Name}");
 		}
 
 		throw new InvalidOperationException(

@@ -25,14 +25,14 @@ public static partial class ThatExceptionShould
 		=> new(subject.ExpectationBuilder.AppendMethodStatement(nameof(Should)));
 
 	internal readonly struct HasMessageValueConstraint<TException>(StringMatcher expected, string verb)
-		: IValueConstraint<TException>
+		: IValueConstraint<Exception?>
 		where TException : Exception?
 	{
-		public ConstraintResult IsMetBy(TException? actual)
+		public ConstraintResult IsMetBy(Exception? actual)
 		{
-			if (expected.Matches(actual?.Message))
+			if (actual is TException exception && expected.Matches(exception?.Message))
 			{
-				return new ConstraintResult.Success<TException?>(actual, ToString());
+				return new ConstraintResult.Success<TException?>(exception, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),
@@ -44,10 +44,10 @@ public static partial class ThatExceptionShould
 	}
 
 	internal readonly struct HasParamNameValueConstraint<TArgumentException>(string expected, string verb)
-		: IValueConstraint<TArgumentException>
+		: IValueConstraint<Exception?>
 		where TArgumentException : ArgumentException?
 	{
-		public ConstraintResult IsMetBy(TArgumentException? actual)
+		public ConstraintResult IsMetBy(Exception? actual)
 		{
 			if (actual == null)
 			{
@@ -55,13 +55,19 @@ public static partial class ThatExceptionShould
 					"found <null>");
 			}
 
-			if (actual.ParamName == expected)
+			if (actual is TArgumentException argumentException)
 			{
-				return new ConstraintResult.Success<TArgumentException?>(actual, ToString());
+				if (argumentException.ParamName == expected)
+				{
+					return new ConstraintResult.Success<TArgumentException?>(argumentException, ToString());
+				}
+
+				return new ConstraintResult.Failure(ToString(),
+					$"found ParamName {Formatter.Format(argumentException.ParamName)}");
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"found ParamName {Formatter.Format(actual.ParamName)}");
+				$"found {actual.GetType().Name.PrependAOrAn()}");
 		}
 
 		public override string ToString()
@@ -102,7 +108,7 @@ public static partial class ThatExceptionShould
 		#region IDelegateConstraint<TBase?> Members
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(TBase? actual, Exception? exception)
+		public ConstraintResult IsMetBy(TBase? actual)
 		{
 			if (actual is TTarget casted)
 			{

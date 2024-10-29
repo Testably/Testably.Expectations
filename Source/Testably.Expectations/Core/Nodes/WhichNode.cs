@@ -25,27 +25,26 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
 		{
-			if (value.Value is not TSource typedValue)
+			if (value is not TSource typedValue)
 			{
 				throw new InvalidOperationException(
-					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
+					$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value?.GetType().Name}");
 			}
 
 			if (propertyAccessor.TryAccessProperty(
-				new SourceValue<TSource>(typedValue, value.Exception),
+				typedValue,
 				out TProperty? matchingValue))
 			{
-				var result = (await Inner.IsMetBy(
-						new SourceValue<TProperty>(matchingValue, value.Exception), context))
+				var result = (await Inner.IsMetBy(matchingValue, context))
 					.UpdateExpectationText(r
 						=> $"{_textSeparator}{_propertyAccessor}{_propertyTextSeparator}{r.ExpectationText}");
-				return result.UseValue(value.Value);
+				return result.UseValue(value);
 			}
 
 			throw new InvalidOperationException(

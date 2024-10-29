@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Sources;
 
-internal class DelegateAsyncValueSource<TValue> : IValueSource<TValue>
+internal class DelegateAsyncValueSource<TValue> : IValueSource<SourceValue<TValue>>
 {
 	private readonly Func<Task<TValue>> _action;
 
@@ -14,7 +14,7 @@ internal class DelegateAsyncValueSource<TValue> : IValueSource<TValue>
 
 	#region IValueSource<TValue> Members
 
-	public async Task<SourceValue<TValue>> GetValue()
+	public async Task<SourceValue<TValue>?> GetValue()
 	{
 		try
 		{

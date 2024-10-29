@@ -15,9 +15,9 @@ public static partial class ThatDelegateShould
 	public static ThatDelegateThrows<Exception> ThrowException(this ThatDelegate source)
 	{
 		ThrowsOption throwOptions = new();
-		return new(source.ExpectationBuilder.AddCast(
-			new ThrowsCastConstraint<Exception>(throwOptions),
-			b => b.AppendMethod(nameof(ThrowException))),
+		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
+				.AddConstraint(new ThrowsCastConstraint<Exception>(throwOptions))
+				.AppendMethodStatement(nameof(ThrowException)),
 			throwOptions);
 	}
 }

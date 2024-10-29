@@ -21,7 +21,7 @@ public partial class ThatDelegateThrows<TException>
 		=> new(ExpectationBuilder
 				.WhichCast<TException, Exception?, TInnerException?,
 					ThatExceptionShould<TInnerException?>>(
-					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
+					PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
 						$"with an inner {typeof(TInnerException).Name} which should "),
 					new ThatExceptionShould.CastException<Exception, TInnerException>(),
 					expectations,

@@ -15,7 +15,7 @@ internal class ExpectationNode : Node
 
 	/// <inheritdoc />
 	public override Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 		=> TryMeet(Constraint, value, context, Reason);

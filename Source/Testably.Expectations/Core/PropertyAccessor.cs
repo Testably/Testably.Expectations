@@ -31,9 +31,9 @@ public abstract class PropertyAccessor
 /// </summary>
 public class PropertyAccessor<TSource, TTarget> : PropertyAccessor
 {
-	private readonly Func<SourceValue<TSource>, TTarget> _accessor;
+	private readonly Func<TSource, TTarget> _accessor;
 
-	private PropertyAccessor(Func<SourceValue<TSource>, TTarget> accessor, string name) :
+	private PropertyAccessor(Func<TSource, TTarget> accessor, string name) :
 		base(name)
 	{
 		_accessor = accessor;
@@ -47,7 +47,7 @@ public class PropertyAccessor<TSource, TTarget> : PropertyAccessor
 	{
 		Func<TSource, TTarget?> compiled = expression.Compile();
 		return new PropertyAccessor<TSource, TTarget?>(
-			v => v.Value == null ? default : compiled(v.Value),
+			v => compiled(v),
 			$"{ExpressionHelpers.GetPropertyPath(expression)} ");
 	}
 
@@ -55,10 +55,10 @@ public class PropertyAccessor<TSource, TTarget> : PropertyAccessor
 	///     Creates a property accessor from the given <paramref name="func" />.
 	/// </summary>
 	internal static PropertyAccessor<TSource, TTarget?> FromFunc(
-		Func<SourceValue<TSource>, TTarget> func, string name)
+		Func<TSource, TTarget> func, string name)
 		=> new(func, name);
 
-	internal bool TryAccessProperty(SourceValue<TSource> value,
+	internal bool TryAccessProperty(TSource value,
 		[NotNullWhen(true)] out TTarget? property)
 	{
 		property = _accessor.Invoke(value);

@@ -20,14 +20,14 @@ where TThatProperty : IThat<TProperty>
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		SourceValue<TValue> value,
+		TValue? value,
 		IEvaluationContext context)
 		where TValue : default
 	{
 		if (value is not SourceValue<TProperty> matchingActualValue)
 		{
 			throw new InvalidOperationException(
-				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TProperty).Name},{Environment.NewLine}but found {value.Value?.GetType().Name}");
+				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TProperty).Name},{Environment.NewLine}but found {value?.GetType().Name}");
 		}
 
 		ExpectationBuilder<TProperty?> expectationBuilder = new(matchingActualValue.Value, "");

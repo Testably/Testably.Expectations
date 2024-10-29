@@ -21,7 +21,7 @@ public partial class ThatExceptionShould<TException>
 		[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder.WhichCast<Exception, Exception?, TInnerException?, ThatExceptionShould<TInnerException?>>(
-				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.Value?.InnerException,
+				PropertyAccessor<Exception, Exception?>.FromFunc(e => e.InnerException,
 					$"have an inner {typeof(TInnerException).Name} which should "),
 				new ThatExceptionShould.CastException<Exception, TInnerException>(),
 				expectations,
