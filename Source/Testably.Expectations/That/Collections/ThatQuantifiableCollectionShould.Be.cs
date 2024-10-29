@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Formatting;
-using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
 // ReSharper disable once CheckNamespace
@@ -30,30 +29,22 @@ public static partial class ThatQuantifiableCollectionShould
 	private readonly struct AreEqualConstraint<TItem, TCollection>(
 		TItem expected,
 		CollectionQuantifier quantifier)
-		: IContextConstraint<TCollection>
+		: IAsyncContextConstraint<TCollection>
 		where TCollection : IEnumerable<TItem>
 	{
-		public ConstraintResult IsMetBy(TCollection actual, IEvaluationContext context)
+		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
 		{
-			if (actual is ICollection<TItem> collection)
+			CollectionAccessor<TItem>? accessor = new(actual, context);
+			(bool, string) result = await accessor
+				.CheckCondition(quantifier, expected, (a, e) => a?.Equals(e) == true)
+				.ConfigureAwait(false);
+
+			if (result.Item1)
 			{
-				TItem e = expected;
-				if (!quantifier.CheckCondition(collection.Count,
-					collection.Count(a => a?.Equals(e) == true), out string? error))
-				{
-					return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
-				}
-			}
-			else if (!quantifier.CheckCondition(
-				context.UseMaterializedEnumerable<TItem, TCollection>(actual),
-				expected,
-				(a, e) => a?.Equals(e) == true,
-				out string? error))
-			{
-				return new ConstraintResult.Failure(ToString(), $"{error} items were equal");
+				return new ConstraintResult.Success<IEnumerable<TItem>>(actual, ToString());
 			}
 
-			return new ConstraintResult.Success<IEnumerable<TItem>>(actual, ToString());
+			return new ConstraintResult.Failure(ToString(), $"{result.Item2} items were equal");
 		}
 
 		public override string ToString()

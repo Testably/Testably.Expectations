@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Testably.Expectations.Options;
+namespace Testably.Expectations.That.Collections;
 
 /// <summary>
 ///     Quantifier for collections.
@@ -55,6 +55,10 @@ public abstract class CollectionQuantifier
 		Func<T, T, bool> predicate,
 		[NotNullWhen(false)] out string? error);
 
+	public abstract bool ContinueEvaluation(int matchingCount, int notMatchingCount,
+		int? totalCount,
+		[NotNullWhen(false)] out (bool, string)? result);
+
 	private class NoneQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
@@ -86,6 +90,28 @@ public abstract class CollectionQuantifier
 			}
 
 			error = null;
+			return true;
+		}
+
+		/// <inheritdoc />
+		public override bool ContinueEvaluation(
+			int matchingCount, int notMatchingCount,
+			int? totalCount,
+			[NotNullWhen(false)] out (bool, string)? result)
+		{
+			if (matchingCount > 0)
+			{
+				result = (false, "at least one");
+				return false;
+			}
+
+			if (notMatchingCount == totalCount)
+			{
+				result = (true, "");
+				return false;
+			}
+
+			result = null;
 			return true;
 		}
 
@@ -132,6 +158,30 @@ public abstract class CollectionQuantifier
 		}
 
 		/// <inheritdoc />
+		public override bool ContinueEvaluation(
+			int matchingCount, int notMatchingCount,
+			int? totalCount,
+			[NotNullWhen(false)] out (bool, string)? result)
+		{
+			if (notMatchingCount > 0)
+			{
+				result = (false, totalCount.HasValue
+					? $"not all of {totalCount}"
+					: "not all");
+				return false;
+			}
+
+			if (matchingCount == totalCount)
+			{
+				result = (true, "");
+				return false;
+			}
+
+			result = null;
+			return true;
+		}
+
+		/// <inheritdoc />
 		public override string ToString() => "all items";
 	}
 
@@ -174,6 +224,28 @@ public abstract class CollectionQuantifier
 
 			error = $"only {matchingCount} of {totalCount}";
 			return false;
+		}
+
+		/// <inheritdoc />
+		public override bool ContinueEvaluation(
+			int matchingCount, int notMatchingCount,
+			int? totalCount,
+			[NotNullWhen(false)] out (bool, string)? result)
+		{
+			if (matchingCount < minimum && matchingCount + notMatchingCount == totalCount)
+			{
+				result = (false, $"only {matchingCount} of {totalCount}");
+				return false;
+			}
+
+			if (matchingCount >= minimum)
+			{
+				result = (true, "");
+				return false;
+			}
+
+			result = null;
+			return true;
 		}
 
 		/// <inheritdoc />
@@ -233,6 +305,36 @@ public abstract class CollectionQuantifier
 		}
 
 		/// <inheritdoc />
+		public override bool ContinueEvaluation(
+			int matchingCount, int notMatchingCount,
+			int? totalCount,
+			[NotNullWhen(false)] out (bool, string)? result)
+		{
+			if (matchingCount > maximum)
+			{
+				result = (false, totalCount.HasValue
+					? $"at least {matchingCount} of {totalCount}"
+					: $"at least {matchingCount}");
+				return false;
+			}
+
+			if (totalCount != null && matchingCount + notMatchingCount == totalCount)
+			{
+				if (matchingCount >= minimum)
+				{
+					result = (true, "");
+					return false;
+				}
+				
+				result = (false, $"only {matchingCount}");
+				return false;
+			}
+
+			result = null;
+			return true;
+		}
+
+		/// <inheritdoc />
 		public override string ToString() => $"between {minimum} and {maximum} items";
 	}
 
@@ -272,6 +374,30 @@ public abstract class CollectionQuantifier
 			}
 
 			error = null;
+			return true;
+		}
+
+		/// <inheritdoc />
+		public override bool ContinueEvaluation(
+			int matchingCount, int notMatchingCount,
+			int? totalCount,
+			[NotNullWhen(false)] out (bool, string)? result)
+		{
+			if (matchingCount > maximum)
+			{
+				result = (false, totalCount.HasValue
+					? $"at least {matchingCount} of {totalCount}"
+					: $"at least {matchingCount}");
+				return false;
+			}
+
+			if (matchingCount <= maximum && matchingCount + notMatchingCount == totalCount)
+			{
+				result = (true, "");
+				return false;
+			}
+
+			result = null;
 			return true;
 		}
 

@@ -41,6 +41,16 @@ public abstract class ExpectationBuilder
 	}
 
 	/// <summary>
+	///     Adds the <paramref name="constraint" /> which verifies the underlying value asynchronously
+	///     using the <see cref="IEvaluationContext" />.
+	/// </summary>
+	public ExpectationBuilder AddConstraint<TValue>(IAsyncContextConstraint<TValue> constraint)
+	{
+		_tree.AddExpectation(constraint);
+		return this;
+	}
+
+	/// <summary>
 	///     Adds the <paramref name="constraint" /> which verifies the underlying value
 	///     using the <see cref="IEvaluationContext" />.
 	/// </summary>

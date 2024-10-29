@@ -18,7 +18,7 @@ internal static class EvaluationContextExtensions
 		this IEvaluationContext evaluationContext, TCollection collection)
 		where TCollection : IEnumerable<TItem>
 	{
-		if (evaluationContext.TryReceive<IEnumerable<TItem>>(MaterializedEnumerableKey,
+		if (evaluationContext.TryReceive(MaterializedEnumerableKey,
 			out IEnumerable<TItem>? existingValue))
 		{
 			return existingValue;

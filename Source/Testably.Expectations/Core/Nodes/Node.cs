@@ -51,6 +51,13 @@ internal abstract class Node
 			return result;
 		}
 
+		if (constraint is IAsyncContextConstraint<TValue?> asyncContextConstraint)
+		{
+			ConstraintResult result = await asyncContextConstraint.IsMetBy(value, context);
+			result = reason?.ApplyTo(result) ?? result;
+			return result;
+		}
+
 		if (value is DelegateValue delegateValue)
 		{
 			return await TryMeet(constraint, delegateValue.Exception, context, reason);

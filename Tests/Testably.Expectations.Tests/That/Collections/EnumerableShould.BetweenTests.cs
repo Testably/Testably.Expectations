@@ -68,7 +68,7 @@ public sealed partial class EnumerableShould
 		[Fact]
 		public async Task WhenEnumerableContainsTooManyEqualItems_ShouldFail()
 		{
-			int[] subject = [1, 1, 1, 1, 2, 2, 3];
+			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
 				=> await Expect.That(subject).Should().Between(1).And(3).Be(1);
@@ -77,7 +77,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have between 1 and 3 items equal to 1,
-				             but 4 items were equal
+				             but at least 4 items were equal
 				             at Expect.That(subject).Should().Between(1).And(3).Be(1)
 				             """);
 		}

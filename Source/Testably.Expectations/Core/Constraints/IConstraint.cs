@@ -1,7 +1,7 @@
 ﻿namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
-///     An expectation.
+///     Marker interface for a constraint.
 /// </summary>
 /// <remarks>This is a marker interface.</remarks>
 public interface IConstraint
