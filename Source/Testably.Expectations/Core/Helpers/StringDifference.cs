@@ -158,9 +158,9 @@ internal class StringDifference(
 	/// </remarks>
 	private static int GetLengthOfPhraseToShowOrDefaultLength(string value)
 	{
-		const int defaultLength = 20;
-		const int minLength = 15;
-		const int maxLength = 25;
+		const int defaultLength = 50;
+		const int minLength = 45;
+		const int maxLength = 60;
 		const int lengthOfWhitespace = 1;
 
 		int indexOfWordBoundary = value
