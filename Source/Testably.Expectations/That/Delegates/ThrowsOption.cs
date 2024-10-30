@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.That.Delegates;
+﻿// ReSharper disable once CheckNamespace
+
+namespace Testably.Expectations;
 
 internal class ThrowsOption
 {

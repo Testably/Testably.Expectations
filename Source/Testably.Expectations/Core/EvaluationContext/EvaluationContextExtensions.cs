@@ -6,7 +6,7 @@ namespace Testably.Expectations.Core.EvaluationContext;
 /// <summary>
 ///     Extension methods for the <see cref="IEvaluationContext" />.
 /// </summary>
-public static class EvaluationContextExtensions
+internal static class EvaluationContextExtensions
 {
 	private const string MaterializedEnumerableKey = nameof(MaterializedEnumerableKey);
 

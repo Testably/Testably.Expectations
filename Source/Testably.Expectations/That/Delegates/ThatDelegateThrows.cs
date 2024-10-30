@@ -1,8 +1,9 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Results;
+// ReSharper disable once CheckNamespace
 
-namespace Testably.Expectations.That.Delegates;
+namespace Testably.Expectations;
 
 /// <summary>
 ///     An <see cref="ExpectationResult" /> when an exception was thrown.
