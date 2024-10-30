@@ -2,7 +2,9 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
-namespace Testably.Expectations.That.Collections;
+// ReSharper disable once CheckNamespace
+
+namespace Testably.Expectations;
 
 /// <summary>
 ///     A quantifiable collection matching items against the expected <paramref name="quantity" />.

@@ -1,4 +1,4 @@
-﻿namespace Testably.Expectations.That.Delegates;
+﻿namespace Testably.Expectations;
 
 internal class ThrowsOption
 {

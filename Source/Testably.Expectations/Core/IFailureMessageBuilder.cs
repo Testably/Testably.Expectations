@@ -5,7 +5,7 @@ namespace Testably.Expectations.Core;
 /// <summary>
 ///     The failure message builder.
 /// </summary>
-public interface IFailureMessageBuilder
+internal interface IFailureMessageBuilder
 {
 	/// <summary>
 	///     Creates the exception message from the <paramref name="failure" />.
