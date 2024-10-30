@@ -78,8 +78,8 @@ public class StringMatcherTests
 				              be equal to "@startuml{nl}Alice -> Bob :…",
 				              but found "@startuml{nl}Alice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
 				                           ↓ (actual)
-				                "…-> Bob : Another authentication Request\r\nAlice <-- Bob :…"
-				                "…-> Bob : Invalid authentication Request\r\nAlice <-- Bob :…"
+				                "…-> Bob : Another authentication Request{nl}Alice <-- Bob :…"
+				                "…-> Bob : Invalid authentication Request{nl}Alice <-- Bob :…"
 				                           ↑ (expected)
 				              at Expect.That(subject).Should().Be(expected)
 				              """);
