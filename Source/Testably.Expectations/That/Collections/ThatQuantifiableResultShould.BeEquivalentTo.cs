@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.Equivalency;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Formatting;
+using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 using Testably.Expectations.That.Collections;
 
@@ -17,18 +19,25 @@ public static partial class ThatQuantifiableResultShouldSync
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
+	public static AndOrExpectationResult<TCollection, IThat<TCollection>> BeEquivalentTo<TItem,
+		TCollection>(
 		this QuantifiableResult<IThat<TCollection>> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
-		=> new(source.ExpectationBuilder
+	{
+		EquivalencyOptions options = new();
+		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiableResultShould.BeEqualConstraint<TItem, TCollection>(expected,
+					new ThatQuantifiableResultShould.BeEquivalentToConstraint<TItem, TCollection>(
+						expected,
+						doNotPopulateThisValue,
 						source.Quantity,
+						options,
 						(a, c) => new CollectionAccessor<TItem>(a, c)))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source.Result);
+	}
 }
 
 #if NET6_0_OR_GREATER
@@ -37,34 +46,48 @@ public static partial class ThatQuantifiableResultShouldAsync
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
+	public static AndOrExpectationResult<TCollection, IThat<TCollection>> BeEquivalentTo<TItem,
+		TCollection>(
 		this QuantifiableResult<IThat<TCollection>> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TCollection : IAsyncEnumerable<TItem>
-		=> new(source.ExpectationBuilder
+	{
+		EquivalencyOptions options = new();
+		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiableResultShould.BeEqualConstraint<TItem, TCollection>(expected,
+					new ThatQuantifiableResultShould.BeEquivalentToConstraint<TItem, TCollection>(
+						expected,
+						doNotPopulateThisValue,
 						source.Quantity,
+						options,
 						(a, c) => new CollectionAccessor<TItem>(a, c)))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source.Result);
+	}
 }
 #endif
 
 public static partial class ThatQuantifiableResultShould
 {
-	internal readonly struct BeEqualConstraint<TItem, TCollection>(
+	internal readonly struct BeEquivalentToConstraint<TItem, TCollection>(
 		TItem expected,
+		string expectedExpression,
 		CollectionQuantifier quantifier,
+		EquivalencyOptions options,
 		Func<TCollection, IEvaluationContext, CollectionAccessor<TItem>> factory)
 		: IAsyncContextConstraint<TCollection>
 	{
 		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
 		{
+			string[] memberToIgnore = [.. options.MembersToIgnore];
 			CollectionAccessor<TItem> accessor = factory(actual, context);
 			(bool, string) result = await accessor
-				.CheckCondition(quantifier, expected, (a, e) => a?.Equals(e) == true)
+				.CheckCondition(quantifier, expected, (a, e) => !Compare.CheckEquivalent(a, e,
+					new CompareOptions
+					{
+						MembersToIgnore = memberToIgnore,
+					}).Any())
 				.ConfigureAwait(false);
 
 			if (result.Item1)
@@ -72,10 +95,11 @@ public static partial class ThatQuantifiableResultShould
 				return new ConstraintResult.Success<TCollection>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"{result.Item2} items were equal");
+			return new ConstraintResult.Failure(ToString(),
+				$"{result.Item2} items were equivalent");
 		}
 
 		public override string ToString()
-			=> $"have {quantifier} equal to {Formatter.Format(expected)}";
+			=> $"have {quantifier} equivalent to {expectedExpression}";
 	}
 }

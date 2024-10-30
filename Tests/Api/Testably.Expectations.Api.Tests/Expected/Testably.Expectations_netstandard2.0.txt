@@ -1,117 +1,19 @@
 [assembly: System.Reflection.AssemblyMetadata("RepositoryUrl", "https://github.com/Testably/Testably.Expectations.git")]
 [assembly: System.Runtime.Versioning.TargetFramework(".NETStandard,Version=v2.0", FrameworkDisplayName=".NET Standard 2.0")]
-namespace Testably.Expectations.Core.Constraints
-{
-    public abstract class ConstraintResult
-    {
-        protected ConstraintResult(string expectationText, bool ignoreFurtherProcessing) { }
-        public string ExpectationText { get; }
-        public bool IgnoreFurtherProcessing { get; }
-        public abstract Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText);
-        public abstract Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null);
-        public class Failure : Testably.Expectations.Core.Constraints.ConstraintResult
-        {
-            public Failure(string expectationText, string resultText, bool ignoreFurtherProcessing = false) { }
-            public string ResultText { get; }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
-            public override string ToString() { }
-        }
-        public class Failure<T> : Testably.Expectations.Core.Constraints.ConstraintResult.Failure
-        {
-            public Failure(T value, string expectationText, string resultText, bool ignoreFurtherProcessing = false) { }
-            public T Value { get; }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
-        }
-        public class Success : Testably.Expectations.Core.Constraints.ConstraintResult
-        {
-            public Success(string expectationText, bool ignoreFurtherProcessing = false) { }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
-            public override string ToString() { }
-        }
-        public class Success<T> : Testably.Expectations.Core.Constraints.ConstraintResult.Success
-        {
-            public Success(T value, string expectationText, bool ignoreFurtherProcessing = false) { }
-            public T Value { get; }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
-            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
-        }
-    }
-    public interface IAsyncConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
-    {
-        System.Threading.Tasks.Task<Testably.Expectations.Core.Constraints.ConstraintResult> IsMetBy(TValue actual);
-    }
-    public interface ICastConstraint<in TValue, TProperty> : Testably.Expectations.Core.Constraints.IConstraint, Testably.Expectations.Core.Constraints.IValueConstraint<TValue> { }
-    public interface IConstraint { }
-    public interface IContextConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
-    {
-        Testably.Expectations.Core.Constraints.ConstraintResult IsMetBy(TValue actual, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context);
-    }
-    public interface IValueConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
-    {
-        Testably.Expectations.Core.Constraints.ConstraintResult IsMetBy(TValue actual);
-    }
-}
-namespace Testably.Expectations.Core.EvaluationContext
-{
-    public interface IEvaluationContext
-    {
-        void Store<T>(string key, T value);
-        bool TryReceive<T>(string key, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value);
-    }
-}
-namespace Testably.Expectations.Core
-{
-    public abstract class ExpectationBuilder
-    {
-        protected ExpectationBuilder(string subjectExpression) { }
-        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IAsyncConstraint<TValue> constraint) { }
-        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IContextConstraint<TValue> constraint) { }
-        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IValueConstraint<TValue> constraint) { }
-        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TSource, TTarget>(Testably.Expectations.Core.Constraints.ICastConstraint<TSource, TTarget> constraint) { }
-        public void AddReason(string reason) { }
-        public Testably.Expectations.Core.ExpectationBuilder AppendStatement(string value) { }
-        public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(Testably.Expectations.Core.PropertyAccessor<TSource, TTarget?> propertyAccessor, System.Func<Testably.Expectations.Core.PropertyAccessor, string, string>? expectationTextGenerator = null) { }
-        public override string ToString() { }
-        public class PropertyExpectationBuilder<TSource, TProperty>
-        {
-            public Testably.Expectations.Core.ExpectationBuilder AddExpectations(System.Action<Testably.Expectations.Core.ExpectationBuilder> expectation) { }
-            public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TProperty> Validate<TTarget>(Testably.Expectations.Core.Constraints.ICastConstraint<TProperty, TTarget> constraint) { }
-        }
-    }
-    public static class ExpectationBuilderHelpers
-    {
-        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName) { }
-        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
-        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
-        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2) { }
-        public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName) { }
-        public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
-        public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2) { }
-        public static Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(this Testably.Expectations.Core.ExpectationBuilder expectationBuilder, System.Func<TSource, TTarget> propertySelector, string displayName) { }
-    }
-    public interface IExpectSubject<out T>
-    {
-        Testably.Expectations.Core.IThat<T> Should(System.Action<Testably.Expectations.Core.ExpectationBuilder> builderOptions);
-    }
-    public interface IThat<out T>
-    {
-        Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
-    }
-    public abstract class PropertyAccessor
-    {
-        protected PropertyAccessor(string name) { }
-        public override string ToString() { }
-    }
-    public class PropertyAccessor<TSource, TTarget> : Testably.Expectations.Core.PropertyAccessor
-    {
-        public static Testably.Expectations.Core.PropertyAccessor<TSource, TTarget?> FromExpression(System.Linq.Expressions.Expression<System.Func<TSource, TTarget?>> expression) { }
-    }
-}
 namespace Testably.Expectations
 {
+    public abstract class CollectionQuantifier
+    {
+        protected CollectionQuantifier() { }
+        public static Testably.Expectations.CollectionQuantifier All { get; }
+        public static Testably.Expectations.CollectionQuantifier None { get; }
+        public abstract bool CheckCondition(int total, int actual, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out string? error);
+        public abstract bool CheckCondition<T>(System.Collections.Generic.IEnumerable<T> items, T expected, System.Func<T, T, bool> predicate, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out string? error);
+        public abstract bool ContinueEvaluation(int matchingCount, int notMatchingCount, int? totalCount, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out System.ValueTuple<bool, string>? result);
+        public static Testably.Expectations.CollectionQuantifier AtLeast(int minimum) { }
+        public static Testably.Expectations.CollectionQuantifier AtMost(int maximum) { }
+        public static Testably.Expectations.CollectionQuantifier Between(int minimum, int maximum) { }
+    }
     public static class Expect
     {
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> That(System.Action @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
@@ -137,9 +39,9 @@ namespace Testably.Expectations
     public class QuantifiableCollection<TItem, TCollection>
         where TCollection : System.Collections.Generic.IEnumerable<TItem>
     {
-        public QuantifiableCollection(Testably.Expectations.Core.IThat<TCollection> collection, Testably.Expectations.Options.CollectionQuantifier quantity) { }
+        public QuantifiableCollection(Testably.Expectations.Core.IThat<TCollection> collection, Testably.Expectations.CollectionQuantifier quantity) { }
         public Testably.Expectations.Core.IThat<TCollection> Collection { get; }
-        public Testably.Expectations.Options.CollectionQuantifier Quantity { get; }
+        public Testably.Expectations.CollectionQuantifier Quantity { get; }
     }
     [System.Diagnostics.StackTraceHidden]
     public static class Skip
@@ -394,6 +296,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrExpectationResult<TCollection, Testably.Expectations.Core.IThat<TCollection>> Satisfy<TItem, TCollection>(this Testably.Expectations.QuantifiableCollection<TItem, TCollection> source, System.Func<TItem, bool> predicate, [System.Runtime.CompilerServices.CallerArgumentExpression("predicate")] string doNotPopulateThisValue = "")
             where TCollection : System.Collections.Generic.IEnumerable<TItem> { }
     }
+    public static class ThatQuantifiableResultShould { }
     public static class ThatStreamShould
     {
         public static Testably.Expectations.Results.AndOrExpectationResult<System.IO.Stream?, Testably.Expectations.Core.IThat<System.IO.Stream?>> BeReadOnly(this Testably.Expectations.Core.IThat<System.IO.Stream?> source) { }
@@ -438,6 +341,121 @@ namespace Testably.Expectations
         public static Testably.Expectations.Core.IThat<System.TimeSpan?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
     }
 }
+namespace Testably.Expectations.Core.Constraints
+{
+    public abstract class ConstraintResult
+    {
+        protected ConstraintResult(string expectationText, bool ignoreFurtherProcessing) { }
+        public string ExpectationText { get; }
+        public bool IgnoreFurtherProcessing { get; }
+        public abstract Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText);
+        public abstract Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null);
+        public class Failure : Testably.Expectations.Core.Constraints.ConstraintResult
+        {
+            public Failure(string expectationText, string resultText, bool ignoreFurtherProcessing = false) { }
+            public string ResultText { get; }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
+            public override string ToString() { }
+        }
+        public class Failure<T> : Testably.Expectations.Core.Constraints.ConstraintResult.Failure
+        {
+            public Failure(T value, string expectationText, string resultText, bool ignoreFurtherProcessing = false) { }
+            public T Value { get; }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
+        }
+        public class Success : Testably.Expectations.Core.Constraints.ConstraintResult
+        {
+            public Success(string expectationText, bool ignoreFurtherProcessing = false) { }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
+            public override string ToString() { }
+        }
+        public class Success<T> : Testably.Expectations.Core.Constraints.ConstraintResult.Success
+        {
+            public Success(T value, string expectationText, bool ignoreFurtherProcessing = false) { }
+            public T Value { get; }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
+            public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
+        }
+    }
+    public interface IAsyncConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
+    {
+        System.Threading.Tasks.Task<Testably.Expectations.Core.Constraints.ConstraintResult> IsMetBy(TValue actual);
+    }
+    public interface IAsyncContextConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
+    {
+        System.Threading.Tasks.Task<Testably.Expectations.Core.Constraints.ConstraintResult> IsMetBy(TValue actual, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context);
+    }
+    public interface ICastConstraint<in TValue, TProperty> : Testably.Expectations.Core.Constraints.IConstraint, Testably.Expectations.Core.Constraints.IValueConstraint<TValue> { }
+    public interface IConstraint { }
+    public interface IContextConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
+    {
+        Testably.Expectations.Core.Constraints.ConstraintResult IsMetBy(TValue actual, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context);
+    }
+    public interface IValueConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
+    {
+        Testably.Expectations.Core.Constraints.ConstraintResult IsMetBy(TValue actual);
+    }
+}
+namespace Testably.Expectations.Core.EvaluationContext
+{
+    public interface IEvaluationContext
+    {
+        void Store<T>(string key, T value);
+        bool TryReceive<T>(string key, [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? value);
+    }
+}
+namespace Testably.Expectations.Core
+{
+    public abstract class ExpectationBuilder
+    {
+        protected ExpectationBuilder(string subjectExpression) { }
+        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IAsyncConstraint<TValue> constraint) { }
+        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IAsyncContextConstraint<TValue> constraint) { }
+        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IContextConstraint<TValue> constraint) { }
+        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IValueConstraint<TValue> constraint) { }
+        public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TSource, TTarget>(Testably.Expectations.Core.Constraints.ICastConstraint<TSource, TTarget> constraint) { }
+        public void AddReason(string reason) { }
+        public Testably.Expectations.Core.ExpectationBuilder AppendStatement(string value) { }
+        public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(Testably.Expectations.Core.PropertyAccessor<TSource, TTarget?> propertyAccessor, System.Func<Testably.Expectations.Core.PropertyAccessor, string, string>? expectationTextGenerator = null) { }
+        public override string ToString() { }
+        public class PropertyExpectationBuilder<TSource, TProperty>
+        {
+            public Testably.Expectations.Core.ExpectationBuilder AddExpectations(System.Action<Testably.Expectations.Core.ExpectationBuilder> expectation) { }
+            public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TProperty> Validate<TTarget>(Testably.Expectations.Core.Constraints.ICastConstraint<TProperty, TTarget> constraint) { }
+        }
+    }
+    public static class ExpectationBuilderHelpers
+    {
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2) { }
+        public static Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(this Testably.Expectations.Core.ExpectationBuilder expectationBuilder, System.Func<TSource, TTarget> propertySelector, string displayName) { }
+    }
+    public interface IExpectSubject<out T>
+    {
+        Testably.Expectations.Core.IThat<T> Should(System.Action<Testably.Expectations.Core.ExpectationBuilder> builderOptions);
+    }
+    public interface IThat<out T>
+    {
+        Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
+    }
+    public abstract class PropertyAccessor
+    {
+        protected PropertyAccessor(string name) { }
+        public override string ToString() { }
+    }
+    public class PropertyAccessor<TSource, TTarget> : Testably.Expectations.Core.PropertyAccessor
+    {
+        public static Testably.Expectations.Core.PropertyAccessor<TSource, TTarget?> FromExpression(System.Linq.Expressions.Expression<System.Func<TSource, TTarget?>> expression) { }
+    }
+}
 namespace Testably.Expectations.Extensions
 {
     public static class ChronologyExtensions
@@ -479,17 +497,6 @@ namespace Testably.Expectations.Formatting
 }
 namespace Testably.Expectations.Options
 {
-    public abstract class CollectionQuantifier
-    {
-        protected CollectionQuantifier() { }
-        public static Testably.Expectations.Options.CollectionQuantifier All { get; }
-        public static Testably.Expectations.Options.CollectionQuantifier None { get; }
-        public abstract bool CheckCondition(int total, int actual, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out string? error);
-        public abstract bool CheckCondition<T>(System.Collections.Generic.IEnumerable<T> items, T expected, System.Func<T, T, bool> predicate, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out string? error);
-        public static Testably.Expectations.Options.CollectionQuantifier AtLeast(int minimum) { }
-        public static Testably.Expectations.Options.CollectionQuantifier AtMost(int maximum) { }
-        public static Testably.Expectations.Options.CollectionQuantifier Between(int minimum, int maximum) { }
-    }
     public class EquivalencyOptions
     {
         public EquivalencyOptions() { }
@@ -652,5 +659,15 @@ namespace Testably.Expectations.Results
     {
         public TimeToleranceExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.TimeTolerance options) { }
         public Testably.Expectations.Results.TimeToleranceExpectationResult<TResult, TValue, TSelf> Within(System.TimeSpan tolerance, [System.Runtime.CompilerServices.CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "") { }
+    }
+}
+namespace Testably.Expectations.That.Collections
+{
+    public class QuantifiableResult<TResult>
+    {
+        public QuantifiableResult(TResult result, Testably.Expectations.Core.ExpectationBuilder expectationBuilder, Testably.Expectations.CollectionQuantifier quantity) { }
+        public Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
+        public Testably.Expectations.CollectionQuantifier Quantity { get; }
+        public TResult Result { get; }
     }
 }

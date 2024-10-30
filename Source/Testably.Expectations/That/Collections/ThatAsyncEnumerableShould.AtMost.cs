@@ -10,13 +10,13 @@ namespace Testably.Expectations;
 public static partial class ThatAsyncEnumerableShould
 {
 	/// <summary>
-	///     Verifies that at least <paramref name="minimum" /> items...
+	///     Verifies that at most <paramref name="maximum" /> items...
 	/// </summary>
-	public static QuantifiableResult<IThat<IAsyncEnumerable<TItem>>> AtLeast<TItem>(
+	public static QuantifiableResult<IThat<IAsyncEnumerable<TItem>>> AtMost<TItem>(
 		this IThat<IAsyncEnumerable<TItem>> source,
-		int minimum, [CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
+		int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
 		=> new(source,
-			source.ExpectationBuilder.AppendMethodStatement(nameof(AtLeast), doNotPopulateThisValue),
-			CollectionQuantifier.AtLeast(minimum));
+			source.ExpectationBuilder.AppendMethodStatement(nameof(AtMost), doNotPopulateThisValue),
+			CollectionQuantifier.AtMost(maximum));
 }
 #endif
