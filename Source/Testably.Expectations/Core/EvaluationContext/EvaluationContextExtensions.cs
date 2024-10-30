@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Testably.Expectations.Core.EvaluationContext;
 
@@ -75,4 +76,73 @@ internal static class EvaluationContextExtensions
 			return new MaterializingEnumerable<T>(enumerable);
 		}
 	}
+#if NET6_0_OR_GREATER
+	private const string MaterializedAsyncEnumerableKey = nameof(MaterializedEnumerableKey);
+
+	/// <summary>
+	///     Avoids enumerating an <see cref="IEnumerable{TItem}" /> multiple times,
+	///     by caching already materialized items in the <paramref name="evaluationContext" />.
+	/// </summary>
+	public static IAsyncEnumerable<TItem> UseMaterializedAsyncEnumerable<TItem, TCollection>(
+		this IEvaluationContext evaluationContext, TCollection collection)
+		where TCollection : IAsyncEnumerable<TItem>
+	{
+		if (evaluationContext.TryReceive(MaterializedEnumerableKey,
+			out IAsyncEnumerable<TItem>? existingValue))
+		{
+			return existingValue;
+		}
+
+		IAsyncEnumerable<TItem> materializedEnumerable = MaterializingAsyncEnumerable<TItem>.Wrap(collection);
+		// ReSharper disable once PossibleMultipleEnumeration
+		evaluationContext.Store(MaterializedEnumerableKey, materializedEnumerable);
+		// ReSharper disable once PossibleMultipleEnumeration
+		return materializedEnumerable;
+	}
+
+	private class MaterializingAsyncEnumerable<T> : IAsyncEnumerable<T>
+	{
+		private readonly IAsyncEnumerator<T> _enumerator;
+		private readonly List<T> _materializedItems = new();
+
+		private MaterializingAsyncEnumerable(IAsyncEnumerable<T> enumerable)
+		{
+			_enumerator = enumerable.GetAsyncEnumerator();
+		}
+
+		#region IEnumerable<T> Members
+
+		/// <inheritdoc />
+		public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
+			=> GetAsyncEnumerator();
+
+		/// <inheritdoc />
+		public async IAsyncEnumerator<T> GetAsyncEnumerator()
+		{
+			foreach (T materializedItem in _materializedItems)
+			{
+				yield return materializedItem;
+			}
+
+			while (await _enumerator.MoveNextAsync())
+			{
+				T item = _enumerator.Current;
+				_materializedItems.Add(item);
+				yield return item;
+			}
+		}
+
+		#endregion
+
+		public static IAsyncEnumerable<T> Wrap(IAsyncEnumerable<T> enumerable)
+		{
+			if (enumerable is ICollection<T>)
+			{
+				return enumerable;
+			}
+
+			return new MaterializingAsyncEnumerable<T>(enumerable);
+		}
+	}
+#endif
 }

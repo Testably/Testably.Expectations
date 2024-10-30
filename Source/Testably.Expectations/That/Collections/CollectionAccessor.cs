@@ -18,7 +18,7 @@ internal class CollectionAccessor<TItem>
 	private readonly IAsyncEnumerable<TItem>? _asyncEnumerable;
 	public CollectionAccessor(IAsyncEnumerable<TItem> asyncEnumerable, IEvaluationContext context)
 	{
-		_asyncEnumerable = asyncEnumerable;
+		_asyncEnumerable = context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(asyncEnumerable);;
 	}
 #endif
 
