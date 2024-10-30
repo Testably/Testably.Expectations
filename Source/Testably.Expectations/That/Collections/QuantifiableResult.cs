@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations.That.Collections;
@@ -8,8 +9,11 @@ namespace Testably.Expectations.That.Collections;
 /// </summary>
 public class QuantifiableResult<TResult>(
 	TResult result,
+	ExpectationBuilder expectationBuilder,
 	CollectionQuantifier quantity)
 {
+	public ExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
+
 	/// <summary>
 	///     The quantifier.
 	/// </summary>
