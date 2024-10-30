@@ -8,6 +8,7 @@ using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
+using Testably.Expectations.That.Collections;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;

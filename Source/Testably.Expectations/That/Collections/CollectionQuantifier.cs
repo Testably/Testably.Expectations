@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+// ReSharper disable once CheckNamespace
 
-namespace Testably.Expectations.That.Collections;
+namespace Testably.Expectations;
 
 /// <summary>
 ///     Quantifier for collections.
