@@ -25,10 +25,10 @@ public class StringMatcherTests
 
 		[Theory]
 		[InlineData("ThisLongTextIsUsedToCheckADifferenceAtTheEndO after 10 + 4 characters",
-			"eAtTheEndOfThe WordB…\"")]
+			"\"…eAtTheEndOfThe WordB")]
 		// ReSharper disable once StringLiteralTypo
 		[InlineData("ThisLongTextIsUsedToCheckADiffere after 10 + 16 characters",
-			"ckADifferenceAtTheEn…\"")]
+			"\"…ckADifferenceAtTheEnd")]
 		public async Task
 			ShouldFallbackTo20CharactersIfNoWordBoundaryCanBeFoundAfterTheMismatchingIndex(
 				string expected, string expectedMessagePart)
@@ -78,19 +78,19 @@ public class StringMatcherTests
 				              be equal to "@startuml{nl}Alice -> Bob :…",
 				              but found "@startuml{nl}Alice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
 				                           ↓ (actual)
-				                "…-> Bob : Another…"
-				                "…-> Bob : Invalid…"
+				                "…-> Bob : Another authentication Request{nl}Alice <-- Bob :…"
+				                "…-> Bob : Invalid authentication Request{nl}Alice <-- Bob :…"
 				                           ↑ (expected)
 				              at Expect.That(subject).Should().Be(expected)
 				              """);
 		}
 
 		[Theory]
-		[InlineData("ThisLongTextIsUsedToCheckADifferenceAtTheEnd after 10 + 5 characters")]
+		[InlineData("SomeVeryLongDummyTextWithMore_ThisLongTextIsUsedToCheckADifferenceAtTheEnd after 40 + 5 characters")]
 		// ReSharper disable once StringLiteralTypo
-		[InlineData("ThisLongTextIsUsedToCheckADifferen after 10 + 15 characters")]
+		[InlineData("SomeVeryLongDummyTextWithMore_ThisLongTextIsUsedToCheckADifferen after 40 + 15 characters")]
 		public async Task
-			ShouldLookForAWordBoundaryBetween15And25CharactersAfterTheMismatchingIndexToHighlightTheMismatch(
+			ShouldLookForAWordBoundaryBetween45And60CharactersAfterTheMismatchingIndexToHighlightTheMismatch(
 				string expected)
 		{
 			string subject =
@@ -161,8 +161,8 @@ public class StringMatcherTests
 		[Fact]
 		public async Task WhenStringsAreLong_ShouldHighlightTheDifferences()
 		{
-			string subject = "this is a long text that differs in between two words";
-			string expected = "this is a long text which differs in between two words";
+			string subject = "this is a long text that differs in between two words and has lot of text afterwards";
+			string expected = "this is a long text which differs in between two words and has lot of text afterwards";
 
 			async Task Act()
 				=> await Expect.That(subject).Should().Be(expected);
@@ -173,8 +173,8 @@ public class StringMatcherTests
 				             be equal to "this is a long text which…",
 				             but found "this is a long text that…" which differs at index 20:
 				                                ↓ (actual)
-				               "…is a long text that…"
-				               "…is a long text which…"
+				               "…is a long text that differs in between two words and has lot…"
+				               "…is a long text which differs in between two words and has…"
 				                                ↑ (expected)
 				             at Expect.That(subject).Should().Be(expected)
 				             """);
