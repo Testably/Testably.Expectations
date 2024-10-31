@@ -17,9 +17,9 @@ public class StringMatcherTests
 			string subject = "ThisIsUsedTo CheckADifferenceInThe WordBoundaryAlgorithm";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage($"*{expectedMessagePart}*")
+			await That(Act).Should().ThrowException().WithMessage($"*{expectedMessagePart}*")
 				.AsWildcard();
 		}
 
@@ -37,9 +37,9 @@ public class StringMatcherTests
 				"ThisLongTextIsUsedToCheckADifferenceAtTheEndOfThe WordBoundaryAlgorithm";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage($"*{expectedMessagePart}*")
+			await That(Act).Should().ThrowException().WithMessage($"*{expectedMessagePart}*")
 				.AsWildcard();
 		}
 
@@ -70,9 +70,9 @@ public class StringMatcherTests
 			                  """;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage($"""
 				              Expected subject to
 				              be equal to "@startuml{nl}Alice -> Bob :…",
@@ -97,9 +97,9 @@ public class StringMatcherTests
 				"ThisLongTextIsUsedToCheckADifferenceAtTheEndOfThe WordBoundaryAlgorithm";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage("*AtTheEndOfThe…\"*")
+			await That(Act).Should().ThrowException().WithMessage("*AtTheEndOfThe…\"*")
 				.AsWildcard();
 		}
 
@@ -114,9 +114,9 @@ public class StringMatcherTests
 			string subject = "ThisIsUsedTo CheckADifferenceInThe WordBoundaryAlgorithm";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage("*\"…CheckADifferenceInThe*").AsWildcard();
 		}
 
@@ -127,9 +127,9 @@ public class StringMatcherTests
 			string expected = "this was too short";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage("*\"this is a long text that…\"*").AsWildcard()
 				.And.WithMessage("*\"this was too short\"*").AsWildcard();
 		}
@@ -141,9 +141,9 @@ public class StringMatcherTests
 			string? expected = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().NotThrow();
+			await That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -153,9 +153,9 @@ public class StringMatcherTests
 			string expected = "ABC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().NotThrow();
+			await That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -165,9 +165,9 @@ public class StringMatcherTests
 			string expected = "this is a long text which differs in between two words and has lot of text afterwards";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage("""
 				             Expected subject to
 				             be equal to "this is a long text which…",
@@ -188,9 +188,9 @@ public class StringMatcherTests
 			string expected = "A\r\nC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage(@"*A\r\nB*A\r\nC*")
+			await That(Act).Should().ThrowException().WithMessage(@"*A\r\nB*A\r\nC*")
 				.AsWildcard();
 		}
 
@@ -202,9 +202,9 @@ public class StringMatcherTests
 			string expected = " ABC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage("*misses some whitespace at the beginning*").AsWildcard();
 		}
 
@@ -216,9 +216,9 @@ public class StringMatcherTests
 			string expected = "	ABC ";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage("*differs in whitespace*")
+			await That(Act).Should().ThrowException().WithMessage("*differs in whitespace*")
 				.AsWildcard();
 		}
 
@@ -230,9 +230,9 @@ public class StringMatcherTests
 			string expected = "ABC  ";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage("*misses some whitespace at the end*").AsWildcard();
 		}
 
@@ -243,9 +243,9 @@ public class StringMatcherTests
 			string expected = "";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should()
+			await That(Act).Should()
 				.ThrowException()
 				.WithMessage("*length of 2 which is longer than the expected length of 0*")
 				.AsWildcard();
@@ -259,9 +259,9 @@ public class StringMatcherTests
 			string expected = "ABC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should()
+			await That(Act).Should()
 				.ThrowException()
 				.WithMessage("*length of 2 which is shorter than the expected length of 3*")
 				.AsWildcard();
@@ -274,9 +274,9 @@ public class StringMatcherTests
 			string? expected = null;
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage("*equal to <null>*")
+			await That(Act).Should().ThrowException().WithMessage("*equal to <null>*")
 				.AsWildcard();
 		}
 
@@ -288,9 +288,9 @@ public class StringMatcherTests
 			string expected = "AB";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should()
+			await That(Act).Should()
 				.ThrowException()
 				.WithMessage("*length of 3 which is longer than the expected length of 2*")
 				.AsWildcard();
@@ -303,9 +303,9 @@ public class StringMatcherTests
 			string expected = "AXC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage("*differs at index 1*")
+			await That(Act).Should().ThrowException().WithMessage("*differs at index 1*")
 				.AsWildcard();
 		}
 
@@ -316,9 +316,9 @@ public class StringMatcherTests
 			string expected = "ABC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage("*unexpected whitespace at the beginning*").AsWildcard();
 		}
 
@@ -330,9 +330,9 @@ public class StringMatcherTests
 			string expected = "ABC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage("*differs in whitespace*")
+			await That(Act).Should().ThrowException().WithMessage("*differs in whitespace*")
 				.AsWildcard();
 		}
 
@@ -343,9 +343,9 @@ public class StringMatcherTests
 			string expected = "ABC";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException()
+			await That(Act).Should().ThrowException()
 				.WithMessage("*unexpected whitespace at the end*").AsWildcard();
 		}
 
@@ -356,9 +356,9 @@ public class StringMatcherTests
 			string expected = "AB";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should()
+			await That(Act).Should()
 				.ThrowException()
 				.WithMessage("*length of 0 which is shorter than the expected length of 2*")
 				.AsWildcard();
@@ -371,9 +371,9 @@ public class StringMatcherTests
 			string expected = "AB";
 
 			async Task Act()
-				=> await Expect.That(subject).Should().Be(expected);
+				=> await That(subject).Should().Be(expected);
 
-			await Expect.That(Act).Should().ThrowException().WithMessage("*but found <null>*")
+			await That(Act).Should().ThrowException().WithMessage("*but found <null>*")
 				.AsWildcard();
 		}
 	}

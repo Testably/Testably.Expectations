@@ -14,7 +14,7 @@ public sealed class CollectionFormatterTests
 
 		string result = Formatter.Format(value);
 
-		await Expect.That(result).Should().Be(expectedResult);
+		await That(result).Should().Be(expectedResult);
 	}
 
 	[Fact]
@@ -25,6 +25,6 @@ public sealed class CollectionFormatterTests
 
 		string result = Formatter.Format(value);
 
-		await Expect.That(result).Should().Be(expectedResult);
+		await That(result).Should().Be(expectedResult);
 	}
 }

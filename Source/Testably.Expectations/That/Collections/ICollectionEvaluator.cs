@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+// ReSharper disable once CheckNamespace
 
-namespace Testably.Expectations.That.Collections;
+namespace Testably.Expectations;
 
 /// <summary>
 ///     The evaluator of a <see cref="CollectionQuantifier" />.

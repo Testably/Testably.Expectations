@@ -1,6 +1,7 @@
 ﻿using Testably.Expectations.Core;
+// ReSharper disable once CheckNamespace
 
-namespace Testably.Expectations.That.Collections;
+namespace Testably.Expectations;
 
 /// <summary>
 ///     A quantifiable result matching items against the expected <see cref="Quantity" />.

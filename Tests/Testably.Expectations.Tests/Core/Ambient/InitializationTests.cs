@@ -23,7 +23,7 @@ public sealed class InitializationTests
 		fallbackTestProcess.Start();
 		fallbackTestProcess.WaitForExit(30000);
 
-		await Expect.That(fallbackTestProcess.ExitCode).Should().Be(1);
+		await That(fallbackTestProcess.ExitCode).Should().Be(1);
 	}
 }
 #endif

@@ -2,13 +2,19 @@
 [assembly: System.Runtime.Versioning.TargetFramework(".NETStandard,Version=v2.0", FrameworkDisplayName=".NET Standard 2.0")]
 namespace Testably.Expectations
 {
+    public struct CollectionEvaluatorResult : System.IEquatable<Testably.Expectations.CollectionEvaluatorResult>
+    {
+        public CollectionEvaluatorResult(bool IsSuccess, string Error) { }
+        public string Error { get; set; }
+        public bool IsSuccess { get; set; }
+    }
     public abstract class CollectionQuantifier
     {
         protected CollectionQuantifier() { }
         public static Testably.Expectations.CollectionQuantifier All { get; }
         public static Testably.Expectations.CollectionQuantifier None { get; }
-        protected abstract bool ContinueEvaluation(int matchingCount, int notMatchingCount, int? totalCount, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out Testably.Expectations.That.Collections.CollectionEvaluatorResult? result);
-        public Testably.Expectations.That.Collections.ICollectionEvaluator<TItem> GetEvaluator<TItem, TCollection>(TCollection enumerable, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context)
+        protected abstract bool ContinueEvaluation(int matchingCount, int notMatchingCount, int? totalCount, [System.Diagnostics.CodeAnalysis.NotNullWhen(false)] out Testably.Expectations.CollectionEvaluatorResult? result);
+        public Testably.Expectations.ICollectionEvaluator<TItem> GetEvaluator<TItem, TCollection>(TCollection enumerable, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context)
             where TCollection : System.Collections.Generic.IEnumerable<TItem> { }
         public static Testably.Expectations.CollectionQuantifier AtLeast(int minimum) { }
         public static Testably.Expectations.CollectionQuantifier AtMost(int maximum) { }
@@ -35,6 +41,17 @@ namespace Testably.Expectations
     public class FailException : System.Exception
     {
         public FailException(string message) { }
+    }
+    public interface ICollectionEvaluator<out TItem>
+    {
+        System.Threading.Tasks.Task<Testably.Expectations.CollectionEvaluatorResult> CheckCondition<TExpected>(TExpected expected, System.Func<TItem, TExpected, bool> predicate);
+    }
+    public class QuantifiedCollectionResult<TResult>
+    {
+        public QuantifiedCollectionResult(TResult result, Testably.Expectations.Core.ExpectationBuilder expectationBuilder, Testably.Expectations.CollectionQuantifier quantity) { }
+        public Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
+        public Testably.Expectations.CollectionQuantifier Quantity { get; }
+        public TResult Result { get; }
     }
     [System.Diagnostics.StackTraceHidden]
     public static class Skip
@@ -134,13 +151,13 @@ namespace Testably.Expectations
     }
     public static class ThatEnumerableShould
     {
-        public static Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> All<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source) { }
-        public static Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> AtLeast<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source, int minimum, [System.Runtime.CompilerServices.CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> AtMost<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source, int maximum, [System.Runtime.CompilerServices.CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> All<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source) { }
+        public static Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> AtLeast<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source, int minimum, [System.Runtime.CompilerServices.CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> AtMost<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source, int maximum, [System.Runtime.CompilerServices.CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrExpectationResult<System.Collections.Generic.IEnumerable<TItem>, Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> BeEmpty<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source) { }
-        public static Testably.Expectations.Results.BetweenResult<Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>>> Between<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source, int minimum, [System.Runtime.CompilerServices.CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.BetweenResult<Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>>> Between<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source, int minimum, [System.Runtime.CompilerServices.CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrExpectationResult<System.Collections.Generic.IEnumerable<TItem>, Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> Contain<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source, TItem expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> None<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source) { }
+        public static Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> None<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source) { }
         public static Testably.Expectations.Results.AndOrExpectationResult<System.Collections.Generic.IEnumerable<TItem>, Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>>> NotBeEmpty<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> source) { }
         public static Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<TItem>> Should<TItem>(this Testably.Expectations.Core.IExpectSubject<System.Collections.Generic.IEnumerable<TItem>> subject) { }
     }
@@ -286,11 +303,11 @@ namespace Testably.Expectations
     public static class ThatQuantifiedCollectionResultShouldAsync { }
     public static class ThatQuantifiedCollectionResultShouldSync
     {
-        public static Testably.Expectations.Results.AndOrExpectationResult<TCollection, Testably.Expectations.Core.IThat<TCollection>> Be<TItem, TCollection>(this Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<TCollection>> source, TItem expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TCollection, Testably.Expectations.Core.IThat<TCollection>> Be<TItem, TCollection>(this Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<TCollection>> source, TItem expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
             where TCollection : System.Collections.Generic.IEnumerable<TItem> { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TCollection, Testably.Expectations.Core.IThat<TCollection>> BeEquivalentTo<TItem, TCollection>(this Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<TCollection>> source, TItem expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TCollection, Testably.Expectations.Core.IThat<TCollection>> BeEquivalentTo<TItem, TCollection>(this Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<TCollection>> source, TItem expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
             where TCollection : System.Collections.Generic.IEnumerable<TItem> { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TCollection, Testably.Expectations.Core.IThat<TCollection>> Satisfy<TItem, TCollection>(this Testably.Expectations.That.Collections.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<TCollection>> source, System.Func<TItem, bool> predicate, [System.Runtime.CompilerServices.CallerArgumentExpression("predicate")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TCollection, Testably.Expectations.Core.IThat<TCollection>> Satisfy<TItem, TCollection>(this Testably.Expectations.QuantifiedCollectionResult<Testably.Expectations.Core.IThat<TCollection>> source, System.Func<TItem, bool> predicate, [System.Runtime.CompilerServices.CallerArgumentExpression("predicate")] string doNotPopulateThisValue = "")
             where TCollection : System.Collections.Generic.IEnumerable<TItem> { }
     }
     public static class ThatStreamShould
@@ -655,25 +672,5 @@ namespace Testably.Expectations.Results
     {
         public TimeToleranceExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.TimeTolerance options) { }
         public Testably.Expectations.Results.TimeToleranceExpectationResult<TResult, TValue, TSelf> Within(System.TimeSpan tolerance, [System.Runtime.CompilerServices.CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "") { }
-    }
-}
-namespace Testably.Expectations.That.Collections
-{
-    public struct CollectionEvaluatorResult : System.IEquatable<Testably.Expectations.That.Collections.CollectionEvaluatorResult>
-    {
-        public CollectionEvaluatorResult(bool IsSuccess, string Error) { }
-        public string Error { get; set; }
-        public bool IsSuccess { get; set; }
-    }
-    public interface ICollectionEvaluator<out TItem>
-    {
-        System.Threading.Tasks.Task<Testably.Expectations.That.Collections.CollectionEvaluatorResult> CheckCondition<TExpected>(TExpected expected, System.Func<TItem, TExpected, bool> predicate);
-    }
-    public class QuantifiedCollectionResult<TResult>
-    {
-        public QuantifiedCollectionResult(TResult result, Testably.Expectations.Core.ExpectationBuilder expectationBuilder, Testably.Expectations.CollectionQuantifier quantity) { }
-        public Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
-        public Testably.Expectations.CollectionQuantifier Quantity { get; }
-        public TResult Result { get; }
     }
 }
