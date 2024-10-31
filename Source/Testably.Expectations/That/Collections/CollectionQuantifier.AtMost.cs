@@ -14,6 +14,10 @@ public abstract partial class CollectionQuantifier
 	private class AtMostQuantifier(int maximum) : CollectionQuantifier
 	{
 		/// <inheritdoc />
+		public override string ToString()
+			=> $"at most {maximum} {(maximum == 1 ? "item" : "items")}";
+
+		/// <inheritdoc />
 		protected override bool ContinueEvaluation(
 			int matchingCount, int notMatchingCount,
 			int? totalCount,
@@ -21,7 +25,7 @@ public abstract partial class CollectionQuantifier
 		{
 			if (matchingCount > maximum)
 			{
-				result = new(false, totalCount.HasValue
+				result = new CollectionEvaluatorResult(false, totalCount.HasValue
 					? $"at least {matchingCount} of {totalCount}"
 					: $"at least {matchingCount}");
 				return false;
@@ -29,16 +33,12 @@ public abstract partial class CollectionQuantifier
 
 			if (matchingCount <= maximum && matchingCount + notMatchingCount == totalCount)
 			{
-				result = new(true, "");
+				result = new CollectionEvaluatorResult(true, "");
 				return false;
 			}
 
 			result = null;
 			return true;
 		}
-
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"at most {maximum} {(maximum == 1 ? "item" : "items")}";
 	}
 }

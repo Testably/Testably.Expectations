@@ -5,7 +5,7 @@ using Testably.Expectations.Core;
 namespace Testably.Expectations;
 
 /// <summary>
-///     Expectations on <see cref="IEnumerable{T}"/>..
+///     Expectations on <see cref="IEnumerable{T}" />..
 /// </summary>
 public static partial class ThatEnumerableShould
 {

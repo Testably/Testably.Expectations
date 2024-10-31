@@ -16,7 +16,8 @@ public static partial class ThatAsyncEnumerableShould
 		this IThat<IAsyncEnumerable<TItem>> source,
 		int minimum, [CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 		=> new(source,
-			source.ExpectationBuilder.AppendMethodStatement(nameof(AtLeast), doNotPopulateThisValue),
+			source.ExpectationBuilder.AppendMethodStatement(nameof(AtLeast),
+				doNotPopulateThisValue),
 			CollectionQuantifier.AtLeast(minimum));
 }
 #endif

@@ -13,10 +13,11 @@ public static partial class ThatAsyncEnumerableShould
 	/// <summary>
 	///     Verifies that between <paramref name="minimum" />...
 	/// </summary>
-	public static BetweenResult<QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>>> Between<TItem>(
-		this IThat<IAsyncEnumerable<TItem>> source,
-		int minimum,
-		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
+	public static BetweenResult<QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>>>
+		Between<TItem>(
+			this IThat<IAsyncEnumerable<TItem>> source,
+			int minimum,
+			[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
 		source.ExpectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue);
 		return new BetweenResult<QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>>>(

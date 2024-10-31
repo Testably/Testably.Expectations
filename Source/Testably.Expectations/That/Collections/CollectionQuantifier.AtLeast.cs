@@ -14,6 +14,10 @@ public abstract partial class CollectionQuantifier
 	private class AtLeastQuantifier(int minimum) : CollectionQuantifier
 	{
 		/// <inheritdoc />
+		public override string ToString()
+			=> $"at least {minimum} {(minimum == 1 ? "item" : "items")}";
+
+		/// <inheritdoc />
 		protected override bool ContinueEvaluation(
 			int matchingCount, int notMatchingCount,
 			int? totalCount,
@@ -21,22 +25,19 @@ public abstract partial class CollectionQuantifier
 		{
 			if (matchingCount < minimum && matchingCount + notMatchingCount == totalCount)
 			{
-				result = new(false, $"only {matchingCount} of {totalCount}");
+				result = new CollectionEvaluatorResult(false,
+					$"only {matchingCount} of {totalCount}");
 				return false;
 			}
 
 			if (matchingCount >= minimum)
 			{
-				result = new(true, "");
+				result = new CollectionEvaluatorResult(true, "");
 				return false;
 			}
 
 			result = null;
 			return true;
 		}
-
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"at least {minimum} {(minimum == 1 ? "item" : "items")}";
 	}
 }

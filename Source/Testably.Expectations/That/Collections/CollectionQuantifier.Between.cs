@@ -15,6 +15,9 @@ public abstract partial class CollectionQuantifier
 	private class BetweenQuantifier(int minimum, int maximum) : CollectionQuantifier
 	{
 		/// <inheritdoc />
+		public override string ToString() => $"between {minimum} and {maximum} items";
+
+		/// <inheritdoc />
 		protected override bool ContinueEvaluation(
 			int matchingCount, int notMatchingCount,
 			int? totalCount,
@@ -22,7 +25,7 @@ public abstract partial class CollectionQuantifier
 		{
 			if (matchingCount > maximum)
 			{
-				result = new(false, totalCount.HasValue
+				result = new CollectionEvaluatorResult(false, totalCount.HasValue
 					? $"at least {matchingCount} of {totalCount}"
 					: $"at least {matchingCount}");
 				return false;
@@ -32,19 +35,16 @@ public abstract partial class CollectionQuantifier
 			{
 				if (matchingCount >= minimum)
 				{
-					result = new(true, "");
+					result = new CollectionEvaluatorResult(true, "");
 					return false;
 				}
 
-				result = new(false, $"only {matchingCount}");
+				result = new CollectionEvaluatorResult(false, $"only {matchingCount}");
 				return false;
 			}
 
 			result = null;
 			return true;
 		}
-
-		/// <inheritdoc />
-		public override string ToString() => $"between {minimum} and {maximum} items";
 	}
 }

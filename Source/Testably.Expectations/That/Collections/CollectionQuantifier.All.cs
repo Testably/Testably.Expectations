@@ -14,6 +14,9 @@ public abstract partial class CollectionQuantifier
 	private class AllQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
+		public override string ToString() => "all items";
+
+		/// <inheritdoc />
 		protected override bool ContinueEvaluation(
 			int matchingCount, int notMatchingCount,
 			int? totalCount,
@@ -21,7 +24,7 @@ public abstract partial class CollectionQuantifier
 		{
 			if (notMatchingCount > 0)
 			{
-				result = new(false, totalCount.HasValue
+				result = new CollectionEvaluatorResult(false, totalCount.HasValue
 					? $"not all of {totalCount}"
 					: "not all");
 				return false;
@@ -29,15 +32,12 @@ public abstract partial class CollectionQuantifier
 
 			if (matchingCount == totalCount)
 			{
-				result = new(true, "");
+				result = new CollectionEvaluatorResult(true, "");
 				return false;
 			}
 
 			result = null;
 			return true;
 		}
-
-		/// <inheritdoc />
-		public override string ToString() => "all items";
 	}
 }

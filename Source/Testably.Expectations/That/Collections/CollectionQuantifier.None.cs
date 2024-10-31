@@ -14,6 +14,9 @@ public abstract partial class CollectionQuantifier
 	private class NoneQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
+		public override string ToString() => "no items";
+
+		/// <inheritdoc />
 		protected override bool ContinueEvaluation(
 			int matchingCount, int notMatchingCount,
 			int? totalCount,
@@ -21,21 +24,18 @@ public abstract partial class CollectionQuantifier
 		{
 			if (matchingCount > 0)
 			{
-				result = new(false, "at least one");
+				result = new CollectionEvaluatorResult(false, "at least one");
 				return false;
 			}
 
 			if (notMatchingCount == totalCount)
 			{
-				result = new(true, "");
+				result = new CollectionEvaluatorResult(true, "");
 				return false;
 			}
 
 			result = null;
 			return true;
 		}
-
-		/// <inheritdoc />
-		public override string ToString() => "no items";
 	}
 }
