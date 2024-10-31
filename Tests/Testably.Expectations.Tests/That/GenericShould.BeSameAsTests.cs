@@ -38,4 +38,39 @@ public sealed partial class GenericShould
 				             """);
 		}
 	}
+
+	public sealed class NotBeSameAsTests
+	{
+		[Fact]
+		public async Task WhenComparingTheSameObjectReference_ShouldFail()
+		{
+			Other subject = new() { Value = 1 };
+			Other expected = subject;
+
+			async Task Act()
+				=> await Expect.That(subject).Should().NotBeSameAs(expected);
+
+			await Expect.That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             not refer to expected Other{
+				               Value = 1
+				             },
+				             but it did
+				             at Expect.That(subject).Should().NotBeSameAs(expected)
+				             """);
+		}
+
+		[Fact]
+		public async Task WhenComparingTwoIndividualObjectsWithSameValues_ShouldSucceed()
+		{
+			Other subject = new() { Value = 1 };
+			Other expected = new() { Value = 1 };
+
+			async Task Act()
+				=> await Expect.That(subject).Should().NotBeSameAs(expected);
+
+			await Expect.That(Act).Should().NotThrow();
+		}
+	}
 }
