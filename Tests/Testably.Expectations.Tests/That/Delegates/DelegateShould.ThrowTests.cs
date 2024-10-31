@@ -16,6 +16,18 @@ public sealed partial class DelegateShould
 		}
 
 		[Fact]
+		public async Task WhenAwaited_ShouldReturnThrownException()
+		{
+			Exception exception = CreateCustomException();
+			Action action = () => throw exception;
+
+			CustomException result =
+				await Expect.That(action).Should().Throw<CustomException>();
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
+
+		[Fact]
 		public async Task WithoutThrownException_ShouldFail()
 		{
 			string expectedMessage = """
