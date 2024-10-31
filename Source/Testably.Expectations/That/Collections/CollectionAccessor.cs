@@ -14,18 +14,10 @@ internal class CollectionAccessor<TItem>
 		_enumerable = context.UseMaterializedEnumerable<TItem, IEnumerable<TItem>>(enumerable);
 	}
 
-#if NET6_0_OR_GREATER
-	private readonly IAsyncEnumerable<TItem>? _asyncEnumerable;
-	public CollectionAccessor(IAsyncEnumerable<TItem> asyncEnumerable, IEvaluationContext context)
-	{
-		_asyncEnumerable = context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(asyncEnumerable);;
-	}
-#endif
-
-	public async Task<(bool, string)> CheckCondition(
+	public async Task<(bool, string)> CheckCondition<TExpected>(
 		CollectionQuantifier quantifier,
-		TItem expected,
-		Func<TItem, TItem, bool> predicate)
+		TExpected expected,
+		Func<TItem, TExpected, bool> predicate)
 	{
 		int matchingCount = 0;
 		int notMatchingCount = 0;
@@ -83,4 +75,14 @@ internal class CollectionAccessor<TItem>
 			? finalResult.Value
 			: (false, "could not decide");
 	}
+
+#if NET6_0_OR_GREATER
+	private readonly IAsyncEnumerable<TItem>? _asyncEnumerable;
+	public CollectionAccessor(IAsyncEnumerable<TItem> asyncEnumerable, IEvaluationContext context)
+	{
+		_asyncEnumerable =
+			context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(asyncEnumerable);
+		;
+	}
+#endif
 }

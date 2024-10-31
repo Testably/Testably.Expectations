@@ -12,7 +12,7 @@ public static partial class ThatAsyncEnumerableShould
 	/// <summary>
 	///     Verifies that at least <paramref name="minimum" /> items...
 	/// </summary>
-	public static QuantifiableResult<IThat<IAsyncEnumerable<TItem>>> AtLeast<TItem>(
+	public static QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>> AtLeast<TItem>(
 		this IThat<IAsyncEnumerable<TItem>> source,
 		int minimum, [CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 		=> new(source,

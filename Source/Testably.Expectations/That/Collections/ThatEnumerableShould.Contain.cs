@@ -46,6 +46,6 @@ public static partial class ThatEnumerableShould
 		}
 
 		public override string ToString()
-			=> $"contains {Formatter.Format(expected)}";
+			=> $"contain {Formatter.Format(expected)}";
 	}
 }

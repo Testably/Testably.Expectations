@@ -1,17 +1,18 @@
-﻿using System.Linq;
-using Testably.Expectations.Core;
-using Testably.Expectations.Options;
+﻿using Testably.Expectations.Core;
 
 namespace Testably.Expectations.That.Collections;
 
 /// <summary>
 ///     A quantifiable result matching items against the expected <see cref="Quantity" />.
 /// </summary>
-public class QuantifiableResult<TResult>(
+public class QuantifiedCollectionResult<TResult>(
 	TResult result,
 	ExpectationBuilder expectationBuilder,
 	CollectionQuantifier quantity)
 {
+	/// <summary>
+	///     The expectation builder.
+	/// </summary>
 	public ExpectationBuilder ExpectationBuilder { get; } = expectationBuilder;
 
 	/// <summary>
@@ -20,8 +21,7 @@ public class QuantifiableResult<TResult>(
 	public CollectionQuantifier Quantity => quantity;
 
 	/// <summary>
-	///     The collection.
+	///     The return value of the expectation.
 	/// </summary>
 	public TResult Result => result;
-
 }

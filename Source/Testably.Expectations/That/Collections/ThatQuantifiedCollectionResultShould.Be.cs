@@ -12,19 +12,19 @@ using Testably.Expectations.That.Collections;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatQuantifiableResultShouldSync
+public static partial class ThatQuantifiedCollectionResultShouldSync
 {
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
 	public static AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
-		this QuantifiableResult<IThat<TCollection>> source,
+		this QuantifiedCollectionResult<IThat<TCollection>> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiableResultShould.BeEqualConstraint<TItem, TCollection>(expected,
+					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(expected,
 						source.Quantity,
 						(a, c) => new CollectionAccessor<TItem>(a, c)))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
@@ -32,19 +32,19 @@ public static partial class ThatQuantifiableResultShouldSync
 }
 
 #if NET6_0_OR_GREATER
-public static partial class ThatQuantifiableResultShouldAsync
+public static partial class ThatQuantifiedCollectionResultShouldAsync
 {
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
 	public static AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
-		this QuantifiableResult<IThat<TCollection>> source,
+		this QuantifiedCollectionResult<IThat<TCollection>> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TCollection : IAsyncEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiableResultShould.BeEqualConstraint<TItem, TCollection>(expected,
+					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(expected,
 						source.Quantity,
 						(a, c) => new CollectionAccessor<TItem>(a, c)))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
@@ -52,7 +52,7 @@ public static partial class ThatQuantifiableResultShouldAsync
 }
 #endif
 
-public static partial class ThatQuantifiableResultShould
+public static partial class ThatQuantifiedCollectionResultShould
 {
 	internal readonly struct BeEqualConstraint<TItem, TCollection>(
 		TItem expected,

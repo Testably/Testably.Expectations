@@ -9,12 +9,12 @@ namespace Testably.Expectations;
 public static partial class ThatAsyncEnumerableShould
 {
 	/// <summary>
-	///     Verifies that no items in the enumerable...
+	///     Verifies that all items in the enumerable...
 	/// </summary>
-	public static QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>> None<TItem>(
+	public static QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>> All<TItem>(
 		this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source,
-			source.ExpectationBuilder.AppendMethodStatement(nameof(None)),
-			CollectionQuantifier.None);
+			source.ExpectationBuilder.AppendMethodStatement(nameof(All)),
+			CollectionQuantifier.All);
 }
 #endif

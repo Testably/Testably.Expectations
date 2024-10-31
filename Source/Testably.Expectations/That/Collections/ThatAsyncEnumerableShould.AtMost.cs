@@ -12,7 +12,7 @@ public static partial class ThatAsyncEnumerableShould
 	/// <summary>
 	///     Verifies that at most <paramref name="maximum" /> items...
 	/// </summary>
-	public static QuantifiableResult<IThat<IAsyncEnumerable<TItem>>> AtMost<TItem>(
+	public static QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>> AtMost<TItem>(
 		this IThat<IAsyncEnumerable<TItem>> source,
 		int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
 		=> new(source,
