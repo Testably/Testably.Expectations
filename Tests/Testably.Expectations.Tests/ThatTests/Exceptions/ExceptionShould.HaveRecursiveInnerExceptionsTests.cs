@@ -44,7 +44,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have recursive inner exceptions which have all items satisfying "e => e.Message != "inner3A"",
-				             but found not all items
+				             but not all items did
 				             at Expect.That(subject).Should().HaveRecursiveInnerExceptions(c => c.All().Satisfy(e => e.Message != "inner3A"))
 				             """);
 		}
