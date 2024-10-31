@@ -44,7 +44,7 @@ public sealed partial class CollectionShould
 				.WithMessage("""
 				             Expected subject to
 				             have between 1 and 3 items equal to 1,
-				             but 4 items were equal
+				             but at least 4 of 7 items were equal
 				             at Expect.That(subject).Should().Between(1).And(3).Be(1)
 				             """);
 		}

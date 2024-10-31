@@ -8,15 +8,15 @@ namespace Testably.Expectations;
 public static partial class ThatEnumerableShould
 {
 	/// <summary>
-	///     Verifies that no items in the enumerable...
+	///     Verifies that all items in the enumerable...
 	/// </summary>
-	public static QuantifiedCollectionResult<IThat<IEnumerable<TItem>>> None<TItem>(
+	public static QuantifiedCollectionResult<IThat<IEnumerable<TItem>>> All<TItem>(
 		this IThat<IEnumerable<TItem>> source)
 	{
-		source.ExpectationBuilder.AppendMethodStatement(nameof(None));
+		source.ExpectationBuilder.AppendMethodStatement(nameof(All));
 		return new QuantifiedCollectionResult<IThat<IEnumerable<TItem>>>(
 			source,
 			source.ExpectationBuilder,
-			CollectionQuantifier.None);
+			CollectionQuantifier.All);
 	}
 }

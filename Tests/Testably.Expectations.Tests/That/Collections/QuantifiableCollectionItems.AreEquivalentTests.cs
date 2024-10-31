@@ -24,7 +24,7 @@ public sealed partial class QuantifiableCollectionItems
 				.WithMessage("""
 				             Expected subject to
 				             have all items equivalent to expected,
-				             but only 3 of 4 items were equivalent
+				             but not all of 4 items were equivalent
 				             at Expect.That(subject).Should().All().BeEquivalentTo(expected)
 				             """);
 		}

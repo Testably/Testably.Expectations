@@ -3,7 +3,7 @@
 namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
-///     A simple expectation on type <typeparamref name="TValue" />.
+///     An async constraint on type <typeparamref name="TValue" />.
 /// </summary>
 public interface IAsyncConstraint<in TValue> : IConstraint
 {

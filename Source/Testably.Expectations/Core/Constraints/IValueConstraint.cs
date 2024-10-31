@@ -1,7 +1,7 @@
 ﻿namespace Testably.Expectations.Core.Constraints;
 
 /// <summary>
-///     A simple expectation on type <typeparamref name="TValue" />.
+///     A simple constraint on type <typeparamref name="TValue" />.
 /// </summary>
 public interface IValueConstraint<in TValue> : IConstraint
 {

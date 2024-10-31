@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#if NET6_0_OR_GREATER
+using System.Collections.Generic;
 using Testably.Expectations.Tests.TestHelpers;
 // ReSharper disable PossibleMultipleEnumeration
 
 namespace Testably.Expectations.Tests.That.Collections;
 
-public sealed partial class EnumerableShould
+public sealed partial class AsyncEnumerableShould
 {
 	public sealed class BetweenTests
 	{
@@ -40,7 +41,7 @@ public sealed partial class EnumerableShould
 		[Fact]
 		public async Task WhenEnumerableContainsSufficientlyEqualItems_ShouldSucceed()
 		{
-			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
+			IAsyncEnumerable<int> subject = ToAsyncEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
 				=> await Expect.That(subject).Should().Between(3).And(4).Be(1);
@@ -51,7 +52,7 @@ public sealed partial class EnumerableShould
 		[Fact]
 		public async Task WhenEnumerableContainsTooFewEqualItems_ShouldFail()
 		{
-			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
+			IAsyncEnumerable<int> subject = ToAsyncEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
 				=> await Expect.That(subject).Should().Between(3).And(4).Be(2);
@@ -68,7 +69,7 @@ public sealed partial class EnumerableShould
 		[Fact]
 		public async Task WhenEnumerableContainsTooManyEqualItems_ShouldFail()
 		{
-			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
+			IAsyncEnumerable<int> subject = ToAsyncEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
 				=> await Expect.That(subject).Should().Between(1).And(3).Be(1);
@@ -83,3 +84,4 @@ public sealed partial class EnumerableShould
 		}
 	}
 }
+#endif

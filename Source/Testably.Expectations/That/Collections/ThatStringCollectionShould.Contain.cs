@@ -14,13 +14,13 @@ public static partial class ThatStringCollectionShould
 	/// <summary>
 	///     Verifies that the actual collection contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<string>, IThat<IEnumerable<string>>> Contains(
+	public static AndOrExpectationResult<IEnumerable<string>, IThat<IEnumerable<string>>> Contain(
 		this IThat<IEnumerable<string>> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ContainsValueConstraint(expected))
-				.AppendMethodStatement(nameof(Contains), doNotPopulateThisValue),
+				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
 			source);
 
 	private readonly struct ContainsValueConstraint(string expected)

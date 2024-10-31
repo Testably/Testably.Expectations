@@ -27,7 +27,7 @@ public sealed partial class CollectionShould
 				.WithMessage("""
 				             Expected subject to
 				             have at most 3 items equal to 1,
-				             but 4 of 7 items were equal
+				             but at least 4 of 7 items were equal
 				             at Expect.That(subject).Should().AtMost(3).Be(1)
 				             """);
 		}
