@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.That.Collections;
 // ReSharper disable once CheckNamespace
 
 namespace Testably.Expectations;

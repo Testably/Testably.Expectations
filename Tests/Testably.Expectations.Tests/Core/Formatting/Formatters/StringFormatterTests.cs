@@ -11,6 +11,6 @@ public sealed class StringFormatterTests
 
 		string result = Formatter.Format(value);
 
-		await Expect.That(result).Should().Be("\"foo\"");
+		await That(result).Should().Be("\"foo\"");
 	}
 }

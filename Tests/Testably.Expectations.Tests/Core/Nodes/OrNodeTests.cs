@@ -6,27 +6,27 @@ public sealed class OrNodeTests
 	public async Task WithFirstFailedTests_ShouldNotThrow()
 	{
 		async Task Act()
-			=> await Expect.That(true).Should().BeFalse().Or.BeTrue();
+			=> await That(true).Should().BeFalse().Or.BeTrue();
 
-		await Expect.That(Act).Should().NotThrow();
+		await That(Act).Should().NotThrow();
 	}
 
 	[Fact]
 	public async Task WithSecondFailedTests_ShouldNotThrow()
 	{
 		async Task Act()
-			=> await Expect.That(true).Should().BeTrue().Or.BeFalse();
+			=> await That(true).Should().BeTrue().Or.BeFalse();
 
-		await Expect.That(Act).Should().NotThrow();
+		await That(Act).Should().NotThrow();
 	}
 
 	[Fact]
 	public async Task WithTwoFailedTests_ShouldIncludeBothFailuresInMessage()
 	{
 		async Task Act()
-			=> await Expect.That(true).Should().BeFalse().Or.Imply(false);
+			=> await That(true).Should().BeFalse().Or.Imply(false);
 
-		await Expect.That(Act).Should().ThrowException()
+		await That(Act).Should().ThrowException()
 			.WithMessage("""
 			             Expected true to
 			             be False or imply False,
@@ -39,8 +39,8 @@ public sealed class OrNodeTests
 	public async Task WithTwoSuccessfulTests_ShouldNotThrow()
 	{
 		async Task Act()
-			=> await Expect.That(true).Should().BeTrue().Or.NotBe(false);
+			=> await That(true).Should().BeTrue().Or.NotBe(false);
 
-		await Expect.That(Act).Should().NotThrow();
+		await That(Act).Should().NotThrow();
 	}
 }

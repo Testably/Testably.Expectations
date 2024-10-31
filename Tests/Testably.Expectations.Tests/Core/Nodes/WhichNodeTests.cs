@@ -12,10 +12,10 @@ public sealed class WhichNodeTests
 		};
 
 		async Task Act()
-			=> await Expect.That(subject).Should().Be<Dummy>()
+			=> await That(subject).Should().Be<Dummy>()
 				.Which(p => p.Value).Should(e => e.Be("bar"));
 
-		await Expect.That(Act).Should().Throw<XunitException>()
+		await That(Act).Should().Throw<XunitException>()
 			.WithMessage("""
 			             Expected subject to
 			             be type Dummy which .Value should be equal to "bar",

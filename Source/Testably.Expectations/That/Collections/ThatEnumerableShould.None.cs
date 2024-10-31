@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Testably.Expectations.Core;
-using Testably.Expectations.That.Collections;
 
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;

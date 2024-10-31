@@ -12,7 +12,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = days.Days();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -24,7 +24,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = days.Days(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -35,7 +35,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = hours.Hours();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -47,7 +47,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = hours.Hours(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -58,7 +58,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = milliseconds.Milliseconds();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -70,7 +70,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = milliseconds.Milliseconds(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -81,7 +81,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = minutes.Minutes();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -93,7 +93,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = minutes.Minutes(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -104,7 +104,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = seconds.Seconds();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -116,7 +116,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = seconds.Seconds(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -127,7 +127,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = days.Days();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -138,7 +138,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = days.Days(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -149,7 +149,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = hours.Hours();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -160,7 +160,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = hours.Hours(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -171,7 +171,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = milliseconds.Milliseconds();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -183,7 +183,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = milliseconds.Milliseconds(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -194,7 +194,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = minutes.Minutes();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -206,7 +206,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = minutes.Minutes(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -217,7 +217,7 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = seconds.Seconds();
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 
 	[Theory]
@@ -229,6 +229,6 @@ public class ChronologyExtensionsTests
 
 		TimeSpan result = seconds.Seconds(offset);
 
-		await Expect.That(result).Should().Be(expected);
+		await That(result).Should().Be(expected);
 	}
 }

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Testably.Expectations.That.Collections;
 // ReSharper disable once CheckNamespace
 
 namespace Testably.Expectations;

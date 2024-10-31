@@ -52,7 +52,7 @@ public sealed class TypeFormatterTests
 	{
 		string result = Formatter.Format(value);
 
-		await Expect.That(result).Should().Be(expectedResult);
+		await That(result).Should().Be(expectedResult);
 	}
 
 	[Fact]
@@ -61,6 +61,6 @@ public sealed class TypeFormatterTests
 		Type value = typeof(BooleanFormatterTests);
 		string result = Formatter.Format(value);
 
-		await Expect.That(result).Should().Be(nameof(BooleanFormatterTests));
+		await That(result).Should().Be(nameof(BooleanFormatterTests));
 	}
 }
