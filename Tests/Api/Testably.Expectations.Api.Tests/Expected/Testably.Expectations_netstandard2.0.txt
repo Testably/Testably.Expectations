@@ -277,7 +277,9 @@ namespace Testably.Expectations
     {
         public static Testably.Expectations.Results.AndOrWhichExpectationResult<TType, Testably.Expectations.Core.IThat<object?>> Be<TType>(this Testably.Expectations.Core.IThat<object?> source) { }
         public static Testably.Expectations.Results.EquivalencyOptionsExpectationResult<T, Testably.Expectations.Core.IThat<T>> BeEquivalentTo<T>(this Testably.Expectations.Core.IThat<T> source, object expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.AndOrExpectationResult<object?, Testably.Expectations.Core.IThat<object?>> BeNull(this Testably.Expectations.Core.IThat<object?> source) { }
         public static Testably.Expectations.Results.AndOrExpectationResult<T, Testably.Expectations.Core.IThat<object?>> For<T, TProperty>(this Testably.Expectations.Core.IThat<object?> source, System.Linq.Expressions.Expression<System.Func<T, TProperty?>> selector, System.Action<Testably.Expectations.Core.IThat<TProperty?>> expectations, [System.Runtime.CompilerServices.CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "", [System.Runtime.CompilerServices.CallerArgumentExpression("expectations")] string doNotPopulateThisValue2 = "") { }
+        public static Testably.Expectations.Results.AndOrExpectationResult<object, Testably.Expectations.Core.IThat<object?>> NotBeNull(this Testably.Expectations.Core.IThat<object?> source) { }
         public static Testably.Expectations.Core.IThat<object?> Should(this Testably.Expectations.Core.IExpectSubject<object?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatQuantifiedCollectionResultShould { }
