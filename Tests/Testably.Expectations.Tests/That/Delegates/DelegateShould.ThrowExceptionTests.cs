@@ -44,5 +44,16 @@ public sealed partial class DelegateShould
 
 			await Expect.That(Act).Should().NotThrow();
 		}
+
+		[Fact]
+		public async Task WhenAwaited_ShouldReturnException()
+		{
+			Exception exception = CreateCustomException();
+			Action action = () => throw exception;
+
+			Exception result = await Expect.That(action).Should().ThrowException();
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
 	}
 }
