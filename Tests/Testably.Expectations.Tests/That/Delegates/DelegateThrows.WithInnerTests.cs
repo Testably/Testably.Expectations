@@ -32,5 +32,28 @@ public sealed partial class DelegateThrows
 				             at Expect.That(action).Should().ThrowException().WithInner<CustomException>()
 				             """);
 		}
+
+		[Fact]
+		public async Task WithExpectations_ShouldReturnThrownException()
+		{
+			Exception exception = new CustomException("outer", new CustomException("inner"));
+
+			Exception result = await Expect.That(() => throw exception)
+				.Should().ThrowException().WithInner<CustomException>(
+					e => e.HaveMessage("inner"));
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
+
+		[Fact]
+		public async Task WithoutExpectations_ShouldReturnThrownException()
+		{
+			Exception exception = new CustomException("outer", new CustomException("inner"));
+
+			Exception result = await Expect.That(() => throw exception)
+				.Should().ThrowException().WithInner<CustomException>();
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
 	}
 }

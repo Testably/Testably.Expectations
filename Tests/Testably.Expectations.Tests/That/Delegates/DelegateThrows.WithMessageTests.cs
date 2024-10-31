@@ -28,6 +28,17 @@ public sealed partial class DelegateThrows
 		}
 
 		[Fact]
+		public async Task ShouldReturnThrownException()
+		{
+			Exception exception = new("outer", new Exception("inner"));
+
+			Exception result = await Expect.That(() => throw exception)
+				.Should().ThrowException().WithMessage("outer").AsWildcard();
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
+
+		[Fact]
 		public async Task ShouldSupportNestedChecks()
 		{
 			Exception exception = new CustomException("outer",
