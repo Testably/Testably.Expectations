@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Threading.Tasks;
+using Testably.Expectations.Core.EvaluationContext;
+using Testably.Expectations.That.Collections;
 // ReSharper disable once CheckNamespace
 
 namespace Testably.Expectations;
@@ -9,401 +11,130 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Quantifier for collections.
 /// </summary>
-public abstract class CollectionQuantifier
+public abstract partial class CollectionQuantifier
 {
+#if NET6_0_OR_GREATER
 	/// <summary>
-	///     Matches all items in the collection.
+	///     Get an asynchronous <see cref="ICollectionEvaluator{TItem}" /> that evaluates the
+	///     <paramref name="enumerable" /> asynchronously.
 	/// </summary>
-	public static CollectionQuantifier All => new AllQuantifier();
+	public ICollectionEvaluator<TItem> GetAsyncEvaluator<TItem, TCollection>(
+		TCollection enumerable,
+		IEvaluationContext context)
+		where TCollection : IAsyncEnumerable<TItem>
+		=> new AsynchronousCollectionEvaluator<TItem>(this,
+			context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(enumerable));
+#endif
 
 	/// <summary>
-	///     Matches no items in the collection.
+	///     Get a synchronous <see cref="ICollectionEvaluator{TItem}" /> that evaluates the
+	///     <paramref name="enumerable" />.
 	/// </summary>
-	public static CollectionQuantifier None => new NoneQuantifier();
+	public ICollectionEvaluator<TItem> GetEvaluator<TItem, TCollection>(
+		TCollection enumerable,
+		IEvaluationContext context)
+		where TCollection : IEnumerable<TItem>
+		=> new SynchronousCollectionEvaluator<TItem>(this,
+			context.UseMaterializedEnumerable<TItem, IEnumerable<TItem>>(enumerable));
 
 	/// <summary>
-	///     Matches at least <paramref name="minimum" /> items.
+	///     Checks for each iteration, if the evaluation should continue.
 	/// </summary>
-	public static CollectionQuantifier AtLeast(int minimum) => new AtLeastQuantifier(minimum);
-
-	/// <summary>
-	///     Matches at most <paramref name="maximum" /> items.
-	/// </summary>
-	public static CollectionQuantifier AtMost(int maximum) => new AtMostQuantifier(maximum);
-
-	/// <summary>
-	///     Matches between <paramref name="minimum" /> and <paramref name="maximum" /> items.
-	/// </summary>
-	public static CollectionQuantifier Between(int minimum, int maximum)
-		=> new BetweenQuantifier(minimum, maximum);
-
-	/// <summary>
-	///     Checks if the number of <paramref name="actual" /> items of the <paramref name="total" /> items match the
-	///     condition.
-	///     <para />
-	///     If not, the <paramref name="error" /> contains the error message.
-	/// </summary>
-	public abstract bool CheckCondition(int total, int actual,
-		[NotNullWhen(false)] out string? error);
-
-	/// <summary>
-	///     Checks if the number of <paramref name="items" /> that match the <paramref name="predicate" /> satisfy the
-	///     quantifier.
-	///     <para />
-	///     If not, the <paramref name="error" /> contains the error message.
-	/// </summary>
-	public abstract bool CheckCondition<T>(IEnumerable<T> items, T expected,
-		Func<T, T, bool> predicate,
-		[NotNullWhen(false)] out string? error);
-
-	public abstract bool ContinueEvaluation(int matchingCount, int notMatchingCount,
+	protected abstract bool ContinueEvaluation(
+		int matchingCount,
+		int notMatchingCount,
 		int? totalCount,
-		[NotNullWhen(false)] out (bool, string)? result);
+		[NotNullWhen(false)] out CollectionEvaluatorResult? result);
 
-	private class NoneQuantifier : CollectionQuantifier
+	private class SynchronousCollectionEvaluator<TItem>(
+		CollectionQuantifier quantifier,
+		IEnumerable<TItem> enumerable)
+		: ICollectionEvaluator<TItem>
 	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
-		{
-			if (actual == 0)
-			{
-				error = null;
-				return true;
-			}
+		#region ICollectionEvaluator<TItem> Members
 
-			error = $"{actual}";
-			return false;
-		}
-
-		/// <inheritdoc />
-		public override bool CheckCondition<T>(IEnumerable<T> items, T expected,
-			Func<T, T, bool> predicate,
-			[NotNullWhen(false)] out string? error)
-		{
-			foreach (T item in items)
-			{
-				if (predicate(item, expected))
-				{
-					error = "at least one";
-					return false;
-				}
-			}
-
-			error = null;
-			return true;
-		}
-
-		/// <inheritdoc />
-		public override bool ContinueEvaluation(
-			int matchingCount, int notMatchingCount,
-			int? totalCount,
-			[NotNullWhen(false)] out (bool, string)? result)
-		{
-			if (matchingCount > 0)
-			{
-				result = (false, "at least one");
-				return false;
-			}
-
-			if (notMatchingCount == totalCount)
-			{
-				result = (true, "");
-				return false;
-			}
-
-			result = null;
-			return true;
-		}
-
-		/// <inheritdoc />
-		public override string ToString() => "no items";
-	}
-
-	private class AllQuantifier : CollectionQuantifier
-	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
-		{
-			if (actual == total)
-			{
-				error = null;
-				return true;
-			}
-
-			error = $"only {actual} of {total}";
-			return false;
-		}
-
-		/// <inheritdoc />
-		public override bool CheckCondition<T>(IEnumerable<T> items, T expected,
-			Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
-		{
-			if (items is ICollection<T> collection)
-			{
-				int totalCount = collection.Count;
-				int matchingCount = collection.Count(a => predicate(a, expected));
-				if (matchingCount == collection.Count)
-				{
-					error = null;
-					return true;
-				}
-
-				error = $"only {matchingCount} of {totalCount}";
-				return false;
-			}
-
-			throw new NotSupportedException(
-				"All quantifier is only supported for Collections and not Enumerables");
-		}
-
-		/// <inheritdoc />
-		public override bool ContinueEvaluation(
-			int matchingCount, int notMatchingCount,
-			int? totalCount,
-			[NotNullWhen(false)] out (bool, string)? result)
-		{
-			if (notMatchingCount > 0)
-			{
-				result = (false, totalCount.HasValue
-					? $"not all of {totalCount}"
-					: "not all");
-				return false;
-			}
-
-			if (matchingCount == totalCount)
-			{
-				result = (true, "");
-				return false;
-			}
-
-			result = null;
-			return true;
-		}
-
-		/// <inheritdoc />
-		public override string ToString() => "all items";
-	}
-
-	private class AtLeastQuantifier(int minimum) : CollectionQuantifier
-	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
-		{
-			if (actual >= minimum)
-			{
-				error = null;
-				return true;
-			}
-
-			error = $"only {actual} of {total}";
-			return false;
-		}
-
-		/// <inheritdoc />
-		public override bool CheckCondition<T>(IEnumerable<T> items, T expected,
-			Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
+		/// <inheritdoc cref="ICollectionEvaluator{TItem}.CheckCondition{TExpected}" />
+		public Task<CollectionEvaluatorResult> CheckCondition<TExpected>(
+			TExpected expected,
+			Func<TItem, TExpected, bool> predicate)
 		{
 			int matchingCount = 0;
-			int totalCount = 0;
+			int notMatchingCount = 0;
+			int? totalCount = (enumerable as ICollection<TItem>)?.Count;
 
-			foreach (T item in items)
+			foreach (TItem item in enumerable)
 			{
-				totalCount++;
-				if (predicate(item, expected))
+				bool isMatch = predicate(item, expected);
+				if (isMatch)
 				{
 					matchingCount++;
-					if (matchingCount >= minimum)
-					{
-						error = null;
-						return true;
-					}
+				}
+				else
+				{
+					notMatchingCount++;
+				}
+
+				if (!quantifier.ContinueEvaluation(matchingCount, notMatchingCount, totalCount,
+					out CollectionEvaluatorResult? result))
+				{
+					return Task.FromResult(result.Value);
 				}
 			}
 
-			error = $"only {matchingCount} of {totalCount}";
-			return false;
+			return Task.FromResult(!quantifier.ContinueEvaluation(
+				matchingCount, notMatchingCount, matchingCount + notMatchingCount,
+				out CollectionEvaluatorResult? finalResult)
+				? finalResult.Value
+				: new CollectionEvaluatorResult(false, "could not decide"));
 		}
 
-		/// <inheritdoc />
-		public override bool ContinueEvaluation(
-			int matchingCount, int notMatchingCount,
-			int? totalCount,
-			[NotNullWhen(false)] out (bool, string)? result)
-		{
-			if (matchingCount < minimum && matchingCount + notMatchingCount == totalCount)
-			{
-				result = (false, $"only {matchingCount} of {totalCount}");
-				return false;
-			}
-
-			if (matchingCount >= minimum)
-			{
-				result = (true, "");
-				return false;
-			}
-
-			result = null;
-			return true;
-		}
-
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"at least {minimum} {(minimum == 1 ? "item" : "items")}";
+		#endregion
 	}
 
-	private class BetweenQuantifier(int minimum, int maximum) : CollectionQuantifier
+#if NET6_0_OR_GREATER
+	private class AsynchronousCollectionEvaluator<TItem>(
+		CollectionQuantifier quantifier,
+		IAsyncEnumerable<TItem> asyncEnumerable)
+		: ICollectionEvaluator<TItem>
 	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
-		{
-			if (actual >= minimum && actual <= maximum)
-			{
-				error = null;
-				return true;
-			}
+		#region ICollectionEvaluator<TItem> Members
 
-			if (actual >= minimum)
-			{
-				error = $"{actual}";
-				return false;
-			}
-
-			error = $"only {actual}";
-			return false;
-		}
-
-		/// <inheritdoc />
-		public override bool CheckCondition<T>(IEnumerable<T> items, T expected,
-			Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
+		/// <inheritdoc cref="ICollectionEvaluator{TItem}.CheckCondition{TExpected}" />
+		public async Task<CollectionEvaluatorResult> CheckCondition<TExpected>(
+			TExpected expected,
+			Func<TItem, TExpected, bool> predicate)
 		{
 			int matchingCount = 0;
+			int notMatchingCount = 0;
+			int? totalCount = null;
 
-			foreach (T item in items)
+			await foreach (TItem item in asyncEnumerable)
 			{
-				if (predicate(item, expected))
+				bool isMatch = predicate(item, expected);
+				if (isMatch)
 				{
 					matchingCount++;
-					if (matchingCount > maximum)
-					{
-						error = $"at least {matchingCount}";
-						return false;
-					}
 				}
-			}
-
-			if (matchingCount < minimum)
-			{
-				error = $"only {matchingCount}";
-				return false;
-			}
-
-			error = null;
-			return true;
-		}
-
-		/// <inheritdoc />
-		public override bool ContinueEvaluation(
-			int matchingCount, int notMatchingCount,
-			int? totalCount,
-			[NotNullWhen(false)] out (bool, string)? result)
-		{
-			if (matchingCount > maximum)
-			{
-				result = (false, totalCount.HasValue
-					? $"at least {matchingCount} of {totalCount}"
-					: $"at least {matchingCount}");
-				return false;
-			}
-
-			if (totalCount != null && matchingCount + notMatchingCount == totalCount)
-			{
-				if (matchingCount >= minimum)
+				else
 				{
-					result = (true, "");
-					return false;
+					notMatchingCount++;
 				}
-				
-				result = (false, $"only {matchingCount}");
-				return false;
-			}
 
-			result = null;
-			return true;
-		}
-
-		/// <inheritdoc />
-		public override string ToString() => $"between {minimum} and {maximum} items";
-	}
-
-	private class AtMostQuantifier(int maximum) : CollectionQuantifier
-	{
-		/// <inheritdoc />
-		public override bool CheckCondition(int total, int actual,
-			[NotNullWhen(false)] out string? error)
-		{
-			if (actual <= maximum)
-			{
-				error = null;
-				return true;
-			}
-
-			error = $"{actual} of {total}";
-			return false;
-		}
-
-		/// <inheritdoc />
-		public override bool CheckCondition<T>(IEnumerable<T> items, T expected,
-			Func<T, T, bool> predicate, [NotNullWhen(false)] out string? error)
-		{
-			int matchingCount = 0;
-
-			foreach (T item in items)
-			{
-				if (predicate(item, expected))
+				if (!quantifier.ContinueEvaluation(matchingCount, notMatchingCount, totalCount,
+					out CollectionEvaluatorResult? result))
 				{
-					matchingCount++;
-					if (matchingCount > maximum)
-					{
-						error = $"at least {matchingCount}";
-						return false;
-					}
+					return result.Value;
 				}
 			}
 
-			error = null;
-			return true;
+			return !quantifier.ContinueEvaluation(
+				matchingCount, notMatchingCount, matchingCount + notMatchingCount,
+				out CollectionEvaluatorResult? finalResult)
+				? finalResult.Value
+				: new CollectionEvaluatorResult(false, "could not decide");
 		}
 
-		/// <inheritdoc />
-		public override bool ContinueEvaluation(
-			int matchingCount, int notMatchingCount,
-			int? totalCount,
-			[NotNullWhen(false)] out (bool, string)? result)
-		{
-			if (matchingCount > maximum)
-			{
-				result = (false, totalCount.HasValue
-					? $"at least {matchingCount} of {totalCount}"
-					: $"at least {matchingCount}");
-				return false;
-			}
-
-			if (matchingCount <= maximum && matchingCount + notMatchingCount == totalCount)
-			{
-				result = (true, "");
-				return false;
-			}
-
-			result = null;
-			return true;
-		}
-
-		/// <inheritdoc />
-		public override string ToString()
-			=> $"at most {maximum} {(maximum == 1 ? "item" : "items")}";
+		#endregion
 	}
+#endif
 }

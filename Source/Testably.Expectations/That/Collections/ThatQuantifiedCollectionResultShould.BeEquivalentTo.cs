@@ -29,12 +29,13 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 		EquivalencyOptions options = new();
 		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem, TCollection>(
+					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem,
+						TCollection>(
 						expected,
 						doNotPopulateThisValue,
 						source.Quantity,
 						options,
-						(a, c) => new CollectionAccessor<TItem>(a, c)))
+						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c)))
 				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source.Result);
 	}
@@ -56,12 +57,13 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 		EquivalencyOptions options = new();
 		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem, TCollection>(
+					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem,
+						TCollection>(
 						expected,
 						doNotPopulateThisValue,
 						source.Quantity,
 						options,
-						(a, c) => new CollectionAccessor<TItem>(a, c)))
+						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c)))
 				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
 			source.Result);
 	}
@@ -75,28 +77,28 @@ public static partial class ThatQuantifiedCollectionResultShould
 		string expectedExpression,
 		CollectionQuantifier quantifier,
 		EquivalencyOptions options,
-		Func<TCollection, IEvaluationContext, CollectionAccessor<TItem>> factory)
+		Func<TCollection, IEvaluationContext, ICollectionEvaluator<TItem>> evaluatorFactory)
 		: IAsyncContextConstraint<TCollection>
 	{
 		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
 		{
 			string[] memberToIgnore = [.. options.MembersToIgnore];
-			CollectionAccessor<TItem> accessor = factory(actual, context);
-			(bool, string) result = await accessor
-				.CheckCondition(quantifier, expected, (a, e) => !Compare.CheckEquivalent(a, e,
+			ICollectionEvaluator<TItem> evaluator = evaluatorFactory(actual, context);
+			CollectionEvaluatorResult result = await evaluator
+				.CheckCondition(expected, (a, e) => !Compare.CheckEquivalent(a, e,
 					new CompareOptions
 					{
 						MembersToIgnore = memberToIgnore,
 					}).Any())
 				.ConfigureAwait(false);
 
-			if (result.Item1)
+			if (result.IsSuccess)
 			{
 				return new ConstraintResult.Success<TCollection>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"{result.Item2} items were equivalent");
+				$"{result.Error} items were equivalent");
 		}
 
 		public override string ToString()

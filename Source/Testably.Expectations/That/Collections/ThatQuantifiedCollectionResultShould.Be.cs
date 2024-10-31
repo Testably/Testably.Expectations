@@ -24,9 +24,10 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 		where TCollection : IEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(expected,
+					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(
+						expected,
 						source.Quantity,
-						(a, c) => new CollectionAccessor<TItem>(a, c)))
+						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c)))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source.Result);
 }
@@ -44,9 +45,10 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 		where TCollection : IAsyncEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
-					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(expected,
+					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(
+						expected,
 						source.Quantity,
-						(a, c) => new CollectionAccessor<TItem>(a, c)))
+						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c)))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source.Result);
 }
@@ -57,22 +59,22 @@ public static partial class ThatQuantifiedCollectionResultShould
 	internal readonly struct BeEqualConstraint<TItem, TCollection>(
 		TItem expected,
 		CollectionQuantifier quantifier,
-		Func<TCollection, IEvaluationContext, CollectionAccessor<TItem>> factory)
+		Func<TCollection, IEvaluationContext, ICollectionEvaluator<TItem>> evaluatorFactory)
 		: IAsyncContextConstraint<TCollection>
 	{
 		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
 		{
-			CollectionAccessor<TItem> accessor = factory(actual, context);
-			(bool, string) result = await accessor
-				.CheckCondition(quantifier, expected, (a, e) => a?.Equals(e) == true)
+			ICollectionEvaluator<TItem> evaluator = evaluatorFactory(actual, context);
+			CollectionEvaluatorResult result = await evaluator
+				.CheckCondition(expected, (a, e) => a?.Equals(e) == true)
 				.ConfigureAwait(false);
 
-			if (result.Item1)
+			if (result.IsSuccess)
 			{
 				return new ConstraintResult.Success<TCollection>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"{result.Item2} items were equal");
+			return new ConstraintResult.Failure(ToString(), $"{result.Error} items were equal");
 		}
 
 		public override string ToString()

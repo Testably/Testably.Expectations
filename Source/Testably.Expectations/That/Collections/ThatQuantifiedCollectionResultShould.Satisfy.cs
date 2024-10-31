@@ -30,7 +30,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 						predicate,
 						doNotPopulateThisValue,
 						source.Quantity,
-						(a, c) => new CollectionAccessor<TItem>(a, c)))
+						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c)))
 				.AppendMethodStatement(nameof(Satisfy), doNotPopulateThisValue),
 			source.Result);
 }
@@ -54,7 +54,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 						predicate,
 						doNotPopulateThisValue,
 						source.Quantity,
-						(a, c) => new CollectionAccessor<TItem>(a, c)))
+						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c)))
 				.AppendMethodStatement(nameof(Satisfy), doNotPopulateThisValue),
 			source.Result);
 }
@@ -66,22 +66,22 @@ public static partial class ThatQuantifiedCollectionResultShould
 		Func<TItem, bool> predicate,
 		string expression,
 		CollectionQuantifier quantifier,
-		Func<TCollection, IEvaluationContext, CollectionAccessor<TItem>> factory)
+		Func<TCollection, IEvaluationContext, ICollectionEvaluator<TItem>> evaluatorFactory)
 		: IAsyncContextConstraint<TCollection>
 	{
 		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
 		{
-			CollectionAccessor<TItem> accessor = factory(actual, context);
-			(bool, string) result = await accessor
-				.CheckCondition(quantifier, predicate, (a, p) => p(a))
+			ICollectionEvaluator<TItem> evaluator = evaluatorFactory(actual, context);
+			CollectionEvaluatorResult result = await evaluator
+				.CheckCondition(predicate, (a, p) => p(a))
 				.ConfigureAwait(false);
 
-			if (result.Item1)
+			if (result.IsSuccess)
 			{
 				return new ConstraintResult.Success<TCollection>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {result.Item2} items");
+			return new ConstraintResult.Failure(ToString(), $"found {result.Error} items");
 		}
 
 		public override string ToString()
