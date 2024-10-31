@@ -25,6 +25,29 @@ public sealed partial class DelegateShould
 		}
 
 		[Fact]
+		public async Task WhenAwaited_OnlyIfFalse_ShouldReturnNull()
+		{
+			Action action = () => { };
+
+			CustomException? result =
+				await Expect.That(action).Should().Throw<CustomException>().OnlyIf(false);
+
+			await Expect.That(result).Should().BeNull();
+		}
+
+		[Fact]
+		public async Task WhenAwaited_OnlyIfTrue_ShouldReturnThrownException()
+		{
+			Exception exception = CreateCustomException();
+			Action action = () => throw exception;
+
+			CustomException? result =
+				await Expect.That(action).Should().Throw<CustomException>().OnlyIf(true);
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
+
+		[Fact]
 		public async Task WhenFalse_ShouldFailWhenAnExceptionWasThrown()
 		{
 			Exception exception = new("");

@@ -89,16 +89,16 @@ public static partial class ThatExceptionShould
 			Exception? innerException = actual?.InnerException;
 			if (actual?.InnerException is TInnerException exception)
 			{
-				return new ConstraintResult.Success<Exception?>(exception, ToString());
+				return new ConstraintResult.Success<Exception?>(actual, ToString());
 			}
 
 			if (innerException is not null)
 			{
-				return new ConstraintResult.Failure<Exception?>(innerException, ToString(),
+				return new ConstraintResult.Failure<Exception?>(actual, ToString(),
 					$"found {innerException.FormatForMessage()}");
 			}
 
-			return new ConstraintResult.Failure(ToString(),
+			return new ConstraintResult.Failure<Exception?>(actual, ToString(),
 				"found <null>");
 		}
 

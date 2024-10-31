@@ -5,6 +5,29 @@ public sealed partial class DelegateThrows
 	public sealed class WithInnerTests
 	{
 		[Fact]
+		public async Task WhenAwaited_WithExpectations_ShouldReturnThrownException()
+		{
+			Exception exception = new CustomException("outer", new CustomException("inner"));
+
+			Exception result = await Expect.That(() => throw exception)
+				.Should().ThrowException().WithInner<CustomException>(
+					e => e.HaveMessage("inner"));
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
+
+		[Fact]
+		public async Task WhenAwaited_WithoutExpectations_ShouldReturnThrownException()
+		{
+			Exception exception = new CustomException("outer", new CustomException("inner"));
+
+			Exception result = await Expect.That(() => throw exception)
+				.Should().ThrowException().WithInner<CustomException>();
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
+
+		[Fact]
 		public async Task WhenInnerExceptionIsPresent_ShouldSucceed()
 		{
 			Action action = () => throw new CustomException("outer", new CustomException("inner"));

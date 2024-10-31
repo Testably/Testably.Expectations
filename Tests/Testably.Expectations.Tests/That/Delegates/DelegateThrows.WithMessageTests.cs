@@ -55,5 +55,16 @@ public sealed partial class DelegateThrows
 
 			await Expect.That(Act).Should().NotThrow();
 		}
+
+		[Fact]
+		public async Task WhenAwaited_ShouldReturnThrownException()
+		{
+			Exception exception = new("outer", new Exception("inner"));
+
+			Exception result = await Expect.That(() => throw exception)
+				.Should().ThrowException().WithMessage("outer").AsWildcard();
+
+			await Expect.That(result).Should().BeSameAs(exception);
+		}
 	}
 }
