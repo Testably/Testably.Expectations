@@ -1,6 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -16,25 +15,27 @@ public static partial class ThatGenericShould
 		object? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsSameAsValueConstraint<T>(expected, doNotPopulateThisValue))
+				.AddConstraint(new ConditionConstraint<object?>(
+					expected,
+					$"refer to {doNotPopulateThisValue} {Formatter.Format(expected)}",
+					(a, e) => ReferenceEquals(e, a),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(BeSameAs), doNotPopulateThisValue),
 			source);
 
-	private readonly struct IsSameAsValueConstraint<T>(object? expected, string expectedExpression)
-		: IValueConstraint<T?>
-	{
-		public ConstraintResult IsMetBy(T? actual)
-		{
-			if (ReferenceEquals(actual, expected))
-			{
-				return new ConstraintResult.Success<T?>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				$"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"refer to {expectedExpression} {Formatter.Format(expected)}";
-	}
+	/// <summary>
+	///     Expect the actual value to not be the same as the <paramref name="unexpected" /> value.
+	/// </summary>
+	public static AndOrExpectationResult<T, IThat<T>> NotBeSameAs<T>(this IThat<T> source,
+		object? unexpected,
+		[CallerArgumentExpression("unexpected")]
+		string doNotPopulateThisValue = "")
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new ConditionConstraint<object?>(
+					unexpected,
+					$"not refer to {doNotPopulateThisValue} {Formatter.Format(unexpected)}",
+					(a, e) => !ReferenceEquals(e, a),
+					(_, _) => "it did"))
+				.AppendMethodStatement(nameof(NotBeSameAs), doNotPopulateThisValue),
+			source);
 }

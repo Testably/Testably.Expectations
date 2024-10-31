@@ -169,6 +169,7 @@ namespace Testably.Expectations
     public static class ThatGenericShould
     {
         public static Testably.Expectations.Results.AndOrExpectationResult<T, Testably.Expectations.Core.IThat<T>> BeSameAs<T>(this Testably.Expectations.Core.IThat<T> source, object? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.AndOrExpectationResult<T, Testably.Expectations.Core.IThat<T>> NotBeSameAs<T>(this Testably.Expectations.Core.IThat<T> source, object? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatGuidShould
     {
