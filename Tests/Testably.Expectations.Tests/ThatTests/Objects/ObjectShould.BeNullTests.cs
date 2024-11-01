@@ -20,17 +20,18 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task WhenSubjectIsObject_ShouldFail()
 		{
-			object subject = new Other();
+			object subject = new MyClass();
 
 			async Task Act()
-				=> await That(subject).Should().BeNull();
+				=> await That(subject).Should().BeNull()
+					.Because("we want to test the failure");
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be null,
+				              be null, because we want to test the failure,
 				              but found {Formatter.Format(subject)}
-				              at Expect.That(subject).Should().BeNull()
+				              at Expect.That(subject).Should().BeNull().Because("we want to test the failure")
 				              """);
 		}
 	}
@@ -43,21 +44,22 @@ public sealed partial class ObjectShould
 			object? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBeNull();
+				=> await That(subject).Should().NotBeNull()
+					.Because("we want to test the failure");
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be null,
+				             not be null, because we want to test the failure,
 				             but it was
-				             at Expect.That(subject).Should().NotBeNull()
+				             at Expect.That(subject).Should().NotBeNull().Because("we want to test the failure")
 				             """);
 		}
 
 		[Fact]
 		public async Task WhenSubjectIsObject_ShouldSucceed()
 		{
-			object subject = new Other();
+			object subject = new MyClass();
 
 			async Task Act()
 				=> await That(subject).Should().NotBeNull();
