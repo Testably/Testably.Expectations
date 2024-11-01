@@ -5,6 +5,24 @@ public sealed partial class GuidShould
 	public sealed class BeTests
 	{
 		[Fact]
+		public async Task WhenExpectedIsNull_ShouldFail()
+		{
+			Guid subject = FixedGuid();
+			Guid? expected = null;
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be <null>,
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
+		}
+
+		[Fact]
 		public async Task WhenSubjectIsDifferent_ShouldFail()
 		{
 			Guid subject = FixedGuid();
@@ -65,6 +83,18 @@ public sealed partial class GuidShould
 				              but found {subject}
 				              at Expect.That(subject).Should().NotBe(unexpected)
 				              """);
+		}
+
+		[Fact]
+		public async Task WhenUnexpectedIsNull_ShouldSucceed()
+		{
+			Guid subject = FixedGuid();
+			Guid? unexpected = null;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected);
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }
