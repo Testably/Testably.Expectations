@@ -15,10 +15,11 @@ public sealed partial class DelegateShould
 			await That(Act).Should().NotThrow();
 		}
 
-		[Fact]
-		public async Task WhenActionThrows_ShouldFail()
+		[Theory]
+		[AutoData]
+		public async Task WhenActionThrows_ShouldFail(string message)
 		{
-			Exception exception = new CustomException();
+			Exception exception = new CustomException(message);
 			Action action = () => throw exception;
 
 			async Task Act()
@@ -29,7 +30,7 @@ public sealed partial class DelegateShould
 				              Expected action to
 				              not throw any exception,
 				              but it did throw a CustomException:
-				                {nameof(WhenActionThrows_ShouldFail)}
+				                {message}
 				              at Expect.That(action).Should().NotThrow()
 				              """);
 		}
