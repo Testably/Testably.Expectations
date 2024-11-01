@@ -9,8 +9,8 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task BasicObjects_ShouldBeEquivalent()
 		{
-			MyClass subject = new MyClass { Value = "Foo" };
-			MyClass expected = new MyClass { Value = "Foo" };
+			OuterClass subject = new() { Value = "Foo" };
+			OuterClass expected = new() { Value = "Foo" };
 
 			await That(subject).Should().BeEquivalentTo(expected);
 		}
@@ -18,8 +18,8 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task MismatchedObjects_ShouldNotBeEquivalent()
 		{
-			MyClass subject = new MyClass();
-			MyClass expected = new MyClass { Value = "Foo" };
+			OuterClass subject = new();
+			OuterClass expected = new() { Value = "Foo" };
 
 			await That(async () => await That(subject).Should().BeEquivalentTo(expected))
 				.Should()
@@ -36,7 +36,7 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task ObjectsWithNestedEnumerableMatches_ShouldBeEquivalent()
 		{
-			MyClass subject = new MyClass
+			OuterClass subject = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -49,7 +49,7 @@ public sealed partial class ObjectShould
 					}
 				}
 			};
-			MyClass expected = new MyClass
+			OuterClass expected = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -69,7 +69,7 @@ public sealed partial class ObjectShould
 		[Fact]
 		public void ObjectsWithNestedEnumerableMismatch_ShouldNotBeEquivalent()
 		{
-			MyClass subject = new MyClass
+			OuterClass subject = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -83,7 +83,7 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			MyClass expected = new MyClass
+			OuterClass expected = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -112,7 +112,7 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task ObjectsWithNestedEnumerableMismatch_WithIgnoreRule_ShouldBeEquivalent()
 		{
-			MyClass subject = new MyClass
+			OuterClass subject = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -126,7 +126,7 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			MyClass expected = new MyClass
+			OuterClass expected = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -147,7 +147,7 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task ObjectsWithNestedMatches_ShouldBeEquivalent()
 		{
-			MyClass subject = new MyClass
+			OuterClass subject = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -156,7 +156,7 @@ public sealed partial class ObjectShould
 					Inner = new InnerClass { Value = "Baz" }
 				}
 			};
-			MyClass expected = new MyClass
+			OuterClass expected = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -172,7 +172,7 @@ public sealed partial class ObjectShould
 		[Fact]
 		public async Task ObjectsWithNestedMismatch_ShouldNotBeEquivalent()
 		{
-			MyClass subject = new MyClass
+			OuterClass subject = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -181,7 +181,7 @@ public sealed partial class ObjectShould
 					Inner = new InnerClass()
 				}
 			};
-			MyClass expected = new MyClass
+			OuterClass expected = new()
 			{
 				Value = "Foo",
 				Inner = new InnerClass
@@ -203,7 +203,8 @@ public sealed partial class ObjectShould
 				                              """).Exactly();
 		}
 
-		public class InnerClass
+		// ReSharper disable UnusedAutoPropertyAccessor.Local
+		private class InnerClass
 		{
 			public IEnumerable<string>? Collection { get; set; }
 
@@ -211,10 +212,11 @@ public sealed partial class ObjectShould
 			public string? Value { get; set; }
 		}
 
-		public class MyClass
+		private class OuterClass
 		{
 			public InnerClass? Inner { get; set; }
 			public string? Value { get; set; }
 		}
+		// ReSharper restore UnusedAutoPropertyAccessor.Local
 	}
 }

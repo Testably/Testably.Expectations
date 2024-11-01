@@ -2,12 +2,12 @@
 
 public sealed partial class ObjectShould
 {
-	private class OtherBase
+	private class MyBaseClass
 	{
 		public int Value { get; set; }
 	}
 
-	private class Other : OtherBase
-	{
-	}
+	private class MyClass : MyBaseClass;
+
+	private class OtherClass;
 }

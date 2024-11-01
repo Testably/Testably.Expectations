@@ -4,21 +4,36 @@ public sealed partial class ObjectShould
 {
 	public sealed class ForTests
 	{
-		[Fact]
-		public async Task WhenSatisfyConditionFails_ShouldIncludeTextInMessage()
+		[Theory]
+		[AutoData]
+		public async Task WhenConditionIsNotSatisfied_ShouldFail(int value)
 		{
-			Other subject = new() { Value = 1 };
+			int expectedValue = value + 1;
+			MyClass subject = new() { Value = value };
 
 			async Task Act()
-				=> await That(subject).Should().For<Other, int>(o => o.Value, v => v.Be(2));
+				=> await That(subject).Should()
+					.For<MyClass, int>(o => o.Value, v => v.Be(expectedValue));
 
 			await That(Act).Should().Throw<XunitException>()
-				.WithMessage("""
-				             Expected subject to
-				             for .Value be 2,
-				             but found 1
-				             at Expect.That(subject).Should().For<Other, int>(o => o.Value, v => v.Be(2))
-				             """);
+				.WithMessage($"""
+				              Expected subject to
+				              for .Value be {expectedValue},
+				              but found {value}
+				              at Expect.That(subject).Should().For<MyClass, int>(o => o.Value, v => v.Be(expectedValue))
+				              """);
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task WhenConditionIsSatisfied_ShouldSucceed(int value)
+		{
+			MyClass subject = new() { Value = value };
+
+			async Task Act()
+				=> await That(subject).Should().For<MyClass, int>(o => o.Value, v => v.Be(value));
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }
