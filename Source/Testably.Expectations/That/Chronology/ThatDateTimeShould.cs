@@ -18,49 +18,41 @@ public static partial class ThatDateTimeShould
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 
-	/// <summary>
-	///     Start expectations for the current <see cref="DateTime" />? <paramref name="subject" />.
-	/// </summary>
-	public static IThat<DateTime?> Should(this IExpectSubject<DateTime?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
-
-	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan? difference)
+	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)
 	{
-		if (difference == null)
-		{
-			return false;
-		}
-
 		if (tolerance == null)
 		{
-			return difference.Value == TimeSpan.Zero;
+			return difference == TimeSpan.Zero;
 		}
 
-		return difference.Value <= tolerance.Value &&
-		       difference.Value >= tolerance.Value.Negate();
+		return difference <= tolerance.Value &&
+		       difference >= tolerance.Value.Negate();
 	}
 
-	private readonly struct ConditionConstraint<T>(
-		T expected,
+	private readonly struct ConditionConstraint(
+		DateTime? expected,
 		string expectation,
-		Func<T, T, TimeSpan, bool> condition,
-		Func<T, T, string> failureMessageFactory,
-		TimeTolerance tolerance) : IValueConstraint<T>
+		Func<DateTime, DateTime, TimeSpan, bool> condition,
+		Func<DateTime, DateTime?, string> failureMessageFactory,
+		TimeTolerance tolerance) : IValueConstraint<DateTime>
 	{
-		private readonly string _expectation = expectation;
-
-		public ConstraintResult IsMetBy(T actual)
+		public ConstraintResult IsMetBy(DateTime actual)
 		{
-			if (condition(actual, expected, tolerance.Tolerance ?? TimeSpan.Zero))
+			if (expected is null)
 			{
-				return new ConstraintResult.Success<T>(actual, ToString());
+				return new ConstraintResult.Failure(ToString(), failureMessageFactory(actual, expected));
 			}
 
-			return new ConstraintResult.Failure(ToString(), failureMessageFactory(actual, expected));
+			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
+			{
+				return new ConstraintResult.Success<DateTime>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected.Value));
 		}
 
 		public override string ToString()
-			=> _expectation + tolerance;
+			=> expectation + tolerance;
 	}
 }
