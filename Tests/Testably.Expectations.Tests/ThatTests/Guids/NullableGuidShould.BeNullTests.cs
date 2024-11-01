@@ -5,6 +5,23 @@ public sealed partial class NullableGuidShould
 	public sealed class BeNullTests
 	{
 		[Fact]
+		public async Task WhenSubjectIsEmpty_ShouldFail()
+		{
+			Guid? subject = Guid.Empty;
+
+			async Task Act()
+				=> await That(subject).Should().BeNull();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             be null,
+				             but found 00000000-0000-0000-0000-000000000000
+				             at Expect.That(subject).Should().BeNull()
+				             """);
+		}
+
+		[Fact]
 		public async Task WhenSubjectIsNotNull_ShouldFail()
 		{
 			Guid? subject = OtherGuid();
@@ -35,6 +52,17 @@ public sealed partial class NullableGuidShould
 
 	public sealed class NotBeNullTests
 	{
+		[Fact]
+		public async Task WhenSubjectIsEmpty_ShouldSucceed()
+		{
+			Guid? subject = Guid.Empty;
+
+			async Task Act()
+				=> await That(subject).Should().NotBeNull();
+
+			await That(Act).Should().NotThrow();
+		}
+
 		[Fact]
 		public async Task WhenSubjectIsNotNull_ShouldSucceed()
 		{
