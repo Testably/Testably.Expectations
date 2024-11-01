@@ -89,7 +89,7 @@ public sealed partial class NullableEnumShould
 		}
 
 		[Fact]
-		public async Task WhenUnexpectedIsNull_ShouldFail()
+		public async Task WhenUnexpectedIsNull_ShouldSucceed()
 		{
 			MyColors? subject = MyColors.Yellow;
 
