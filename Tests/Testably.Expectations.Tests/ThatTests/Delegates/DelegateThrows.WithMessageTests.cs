@@ -32,7 +32,8 @@ public sealed partial class DelegateThrows
 		{
 			Exception exception = new CustomException("outer",
 				new SubCustomException("inner1",
-					new ArgumentException("inner2", "param2")));
+					// ReSharper disable once NotResolvedInText
+					new ArgumentException("inner2", paramName: "param2")));
 			void Act() => throw exception;
 
 			CustomException result = await That(Act).Should().Throw<CustomException>()

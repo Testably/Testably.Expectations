@@ -45,6 +45,12 @@ public abstract partial class CollectionQuantifier
 		int? totalCount,
 		[NotNullWhen(false)] out CollectionEvaluatorResult? result);
 
+	public abstract string ToString(bool includeItems);
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> ToString(true);
+
 	private class SynchronousCollectionEvaluator<TItem>(
 		CollectionQuantifier quantifier,
 		IEnumerable<TItem> enumerable)

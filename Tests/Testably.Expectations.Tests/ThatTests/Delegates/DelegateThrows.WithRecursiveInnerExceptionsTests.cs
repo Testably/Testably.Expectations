@@ -9,29 +9,41 @@ public sealed partial class DelegateThrows
 		{
 			Exception exception = new("outer", new Exception("inner"));
 
-			Exception result = await That(() => throw exception)
+			Exception? result = await That(() => throw exception)
 				.Should().ThrowException().WithRecursiveInnerExceptions(
-					e => e.None().Satisfy(e => false));
+					e => e.None().Satisfy(_ => false));
 
 			await That(result).Should().BeSameAs(exception);
 		}
 
 		[Fact]
-		public async Task WhenNoInnerExceptionIsPresent_ShouldFail()
+		public async Task WhenInnerExceptionDoesNotMatch_ShouldFail()
 		{
-			string actual = "actual text";
-			Action action = () => throw new Exception(actual, new Exception("inner"));
+			Action action = () => throw new Exception("", new Exception("inner"));
 
 			async Task Act()
-				=> await That(action).Should().ThrowException().WithRecursiveInnerExceptions(e => e.All().Satisfy(_ => false));
+				=> await That(action).Should().ThrowException().WithRecursiveInnerExceptions(
+					e => e.All().Satisfy(_ => false));
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected action to
-				             throw an Exception with recursive inner exceptions which all satisfy "_ => false"
+				             throw an Exception with recursive inner exceptions which all satisfy "_ => false",
 				             but not all did
-				             at Expect.That(action).Should().ThrowException().WithRecursiveInnerExceptions(e => e.None().Satisfy(_ => true))
+				             at Expect.That(action).Should().ThrowException().WithRecursiveInnerExceptions(e => e.All().Satisfy(_ => false))
 				             """);
+		}
+
+		[Fact]
+		public async Task WhenNoInnerExceptionIsPresent_ShouldNotFailDirectly()
+		{
+			Action action = () => throw new Exception();
+
+			async Task Act()
+				=> await That(action).Should().ThrowException().WithRecursiveInnerExceptions(
+					e => e.All().Satisfy(_ => false));
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }

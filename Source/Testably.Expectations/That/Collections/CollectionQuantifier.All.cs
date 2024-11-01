@@ -13,7 +13,7 @@ public abstract partial class CollectionQuantifier
 	private class AllQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
-		public override string ToString() => "all items";
+		public override string ToString(bool includeItems) => $"all{(includeItems ? " items" : "")}";
 
 		/// <inheritdoc />
 		protected override bool ContinueEvaluation(

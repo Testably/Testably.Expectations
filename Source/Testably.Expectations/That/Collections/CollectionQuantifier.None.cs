@@ -13,7 +13,8 @@ public abstract partial class CollectionQuantifier
 	private class NoneQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
-		public override string ToString() => "no items";
+		public override string ToString(bool includeItems) =>
+			includeItems ? "no items" : "none";
 
 		/// <inheritdoc />
 		protected override bool ContinueEvaluation(

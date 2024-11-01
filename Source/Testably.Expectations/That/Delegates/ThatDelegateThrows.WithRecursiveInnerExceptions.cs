@@ -23,7 +23,7 @@ public partial class ThatDelegateThrows<TException>
 				.ForProperty(
 					PropertyAccessor<Exception?, IEnumerable<Exception>>.FromFunc(
 						e => e.GetInnerExpectations(), "recursive inner exceptions "),
-					(property, expectation) => $"have {property}which {expectation}")
+					(property, expectation) => $"with {property}which {expectation}")
 				.AddExpectations(e
 					=> expectations(new Expect.ThatSubject<IEnumerable<Exception>>(e)))
 				.AppendMethodStatement(nameof(WithRecursiveInnerExceptions),
