@@ -18,7 +18,7 @@ public sealed partial class DelegateShould
 		[Fact]
 		public async Task WhenActionThrows_ShouldFail()
 		{
-			Exception exception = new CustomException(nameof(WhenActionThrows_ShouldFail));
+			Exception exception = new CustomException();
 			Action action = () => throw exception;
 
 			async Task Act()
