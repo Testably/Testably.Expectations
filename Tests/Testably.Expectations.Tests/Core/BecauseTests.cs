@@ -3,7 +3,19 @@
 public class BecauseTests
 {
 	[Fact]
-	public async Task Apply_Because_Reason_On_Action()
+	public async Task ASpecifiedBecauseReason_ShouldBeIncludedInMessage()
+	{
+		string because = "I want to test 'because'";
+		bool subject = true;
+
+		async Task Act()
+			=> await That(subject).Should().BeFalse().Because(because);
+
+		await That(Act).Should().ThrowException().WithMessage($"*{because}*").AsWildcard();
+	}
+
+	[Fact]
+	public async Task Delegate_ShouldApplyBecauseReason()
 	{
 		string because = "this is the reason";
 		Action subject = () => throw new Exception();
@@ -14,8 +26,37 @@ public class BecauseTests
 		await That(Act).Should().ThrowException().WithMessage($"*{because}*").AsWildcard();
 	}
 
+	[Theory]
+	[InlineData("we prefix the reason", "because we prefix the reason")]
+	[InlineData("  we ignore whitespace", "because we ignore whitespace")]
+	[InlineData("because we honor a leading 'because'", "because we honor a leading 'because'")]
+	public async Task ShouldPrefixReasonWithBecause(string because, string expectedWithPrefix)
+	{
+		bool subject = true;
+
+		async Task Act()
+			=> await That(subject).Should().BeFalse().Because(because);
+
+		await That(Act).Should().ThrowException().WithMessage($"*{expectedWithPrefix}*")
+			.AsWildcard();
+	}
+
 	[Fact]
-	public async Task Apply_Because_Reason_When_Combining_With_And()
+	public async Task WhenApplyBecauseReasonMultipleTimes_ShouldNotOverwritePreviousReason()
+	{
+		string because1 = "this is the first reason";
+		string because2 = "this is the second reason";
+		bool subject = false;
+
+		async Task Act()
+			=> await That(subject).Should().BeTrue().Because(because1)
+				.And.BeFalse().Because(because2);
+
+		await That(Act).Should().ThrowException().WithMessage($"*{because1}*").AsWildcard();
+	}
+
+	[Fact]
+	public async Task WhenCombineWithAnd_ShouldApplyBecauseReason()
 	{
 		string because1 = "this is the first reason";
 		string because2 = "this is the second reason";
@@ -29,22 +70,7 @@ public class BecauseTests
 	}
 
 	[Fact]
-	public async Task Apply_Because_Reason_When_Combining_With_Or()
-	{
-		string because1 = "this is the first reason";
-		string because2 = "this is the second reason";
-		bool subject = true;
-
-		async Task Act()
-			=> await That(subject).Should().BeTrue().Because(because1)
-				.And.BeFalse().Because(because2);
-
-		await That(Act).Should().ThrowException().WithMessage($"*{because1}*{because2}*")
-			.AsWildcard();
-	}
-
-	[Fact]
-	public async Task Apply_Because_Reasons_Only_On_Previous_Constraints()
+	public async Task WhenCombineWithAnd_ShouldApplyBecauseReasonOnlyOnPreviousConstraint()
 	{
 		string expectedMessage = """
 		                         Expected subject to
@@ -64,62 +90,22 @@ public class BecauseTests
 	}
 
 	[Fact]
-	public async Task Do_Not_Overwrite_Previous_Because_Reasons()
+	public async Task WhenCombineWithOr_ShouldApplyBecauseReason()
 	{
 		string because1 = "this is the first reason";
 		string because2 = "this is the second reason";
-		bool subject = false;
+		bool subject = true;
 
 		async Task Act()
 			=> await That(subject).Should().BeTrue().Because(because1)
 				.And.BeFalse().Because(because2);
 
-		await That(Act).Should().ThrowException().WithMessage($"*{because1}*").AsWildcard();
-	}
-
-	[Fact]
-	public async Task Honor_Already_Present_Because_Prefix()
-	{
-		string because = "because we honor a leading 'because'";
-		bool subject = true;
-
-		async Task Act()
-			=> await That(subject).Should().BeFalse().Because(because);
-
-		Exception exception = await That(Act).Should().ThrowException()
-			.WithMessage("*because*").AsWildcard();
-		await That(exception.Message).Should().NotContain("because because");
-	}
-
-	[Fact]
-	public async Task Include_Because_Reason_In_Message()
-	{
-		string because = "I want to test 'because'";
-		bool subject = true;
-
-		async Task Act()
-			=> await That(subject).Should().BeFalse().Because(because);
-
-		await That(Act).Should().ThrowException().WithMessage($"*{because}*").AsWildcard();
-	}
-
-	[Theory]
-	[InlineData("we prefix the reason", "because we prefix the reason")]
-	[InlineData("  we ignore whitespace", "because we ignore whitespace")]
-	[InlineData("because we honor a leading 'because'", "because we honor a leading 'because'")]
-	public async Task Prefix_Because_Message(string because, string expectedWithPrefix)
-	{
-		bool subject = true;
-
-		async Task Act()
-			=> await That(subject).Should().BeFalse().Because(because);
-
-		await That(Act).Should().ThrowException().WithMessage($"*{expectedWithPrefix}*")
+		await That(Act).Should().ThrowException().WithMessage($"*{because1}*{because2}*")
 			.AsWildcard();
 	}
 
 	[Fact]
-	public async Task Without_Because_Use_Empty_String()
+	public async Task WhenNoBecauseReasonIsGiven_ShouldNotIncludeBecause()
 	{
 		string expectedMessage = """
 		                         Expected subject to
@@ -135,5 +121,19 @@ public class BecauseTests
 
 		await That(Act).Should().ThrowException()
 			.WithMessage(expectedMessage);
+	}
+
+	[Fact]
+	public async Task WhenReasonStartsWithBecause_ShouldHonorExistingPrefix()
+	{
+		string because = "because we honor a leading 'because'";
+		bool subject = true;
+
+		async Task Act()
+			=> await That(subject).Should().BeFalse().Because(because);
+
+		Exception exception = await That(Act).Should().ThrowException()
+			.WithMessage("*because*").AsWildcard();
+		await That(exception.Message).Should().NotContain("because because");
 	}
 }
