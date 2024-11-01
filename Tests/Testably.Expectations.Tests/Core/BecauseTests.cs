@@ -50,7 +50,7 @@ public class BecauseTests
 		                         Expected subject to
 		                         be True, because we only apply it to previous constraints and be False,
 		                         but found True
-		                         at Expect.That(subject).Should().BeTrue().And.BeFalse()
+		                         at Expect.That(subject).Should().BeTrue().Because(because).And.BeFalse()
 		                         """;
 		string because = "we only apply it to previous constraints";
 		bool subject = true;

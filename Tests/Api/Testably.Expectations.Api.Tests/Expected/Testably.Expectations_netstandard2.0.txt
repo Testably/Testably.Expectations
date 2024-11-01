@@ -97,17 +97,19 @@ namespace Testably.Expectations
     public static class ThatDateTimeShould
     {
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> Be(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> Be(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> BeAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> BeBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> BeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> BeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBe(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBe(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.TimeToleranceExpectationResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.DateTime> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTime> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.DateTime?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTime?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.DateTime> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTime> subject) { }
+        public static Testably.Expectations.Core.IThat<System.DateTime?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTime?> subject) { }
     }
     public abstract class ThatDelegate
     {
@@ -643,7 +645,7 @@ namespace Testably.Expectations.Results
         where TSelf : Testably.Expectations.Results.ExpectationResult<TResult, TSelf>
     {
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
-        public TSelf Because(string reason) { }
+        public TSelf Because(string reason, [System.Runtime.CompilerServices.CallerArgumentExpression("reason")] string doNotPopulateThisValue = "") { }
         [System.Diagnostics.StackTraceHidden]
         public System.Runtime.CompilerServices.TaskAwaiter<TResult> GetAwaiter() { }
     }

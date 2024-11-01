@@ -21,10 +21,11 @@ public static partial class ThatDateTimeShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(new ConditionConstraint<DateTime>(
 					expected,
-					(a, e, t) => a + t >= e,
 					$"be on or after {Formatter.Format(expected)}",
+					(a, e, t) => a + t >= e,
+					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance))
 				.AppendMethodStatement(nameof(BeOnOrAfter), doNotPopulateThisValue),
 			source,
@@ -42,10 +43,11 @@ public static partial class ThatDateTimeShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(new ConditionConstraint<DateTime>(
 					expected,
-					(a, e, t) => a - t < e,
 					$"not be on or after {Formatter.Format(expected)}",
+					(a, e, t) => a - t < e,
+					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance))
 				.AppendMethodStatement(nameof(NotBeOnOrAfter), doNotPopulateThisValue),
 			source,
