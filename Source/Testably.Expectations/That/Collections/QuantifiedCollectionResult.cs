@@ -14,7 +14,7 @@ namespace Testably.Expectations;
 /// <summary>
 ///     A quantifiable result matching items against the expected <see cref="Quantity" />.
 /// </summary>
-public class QuantifiedCollectionResult<TResult>(
+public partial class QuantifiedCollectionResult<TResult>(
 	TResult result,
 	ExpectationBuilder expectationBuilder,
 	CollectionQuantifier quantity)

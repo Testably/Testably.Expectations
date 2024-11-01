@@ -11,7 +11,7 @@ public static partial class ThatEnumerableShould
 	/// <summary>
 	///     Verifies that between <paramref name="minimum" />...
 	/// </summary>
-	public static BetweenResult<SyncQuantifiedCollectionResult
+	public static BetweenResult<QuantifiedCollectionResult.Sync
 			<IThat<IEnumerable<TItem>>, TItem, IEnumerable<TItem>>>
 		Between<TItem>(
 			this IThat<IEnumerable<TItem>> source,
@@ -19,9 +19,9 @@ public static partial class ThatEnumerableShould
 			[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
 	{
 		source.ExpectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue);
-		return new BetweenResult<SyncQuantifiedCollectionResult<IThat<IEnumerable<TItem>>, TItem, IEnumerable<TItem>>>(
+		return new BetweenResult<QuantifiedCollectionResult.Sync<IThat<IEnumerable<TItem>>, TItem, IEnumerable<TItem>>>(
 			source.ExpectationBuilder,
-			maximum => new SyncQuantifiedCollectionResult<IThat<IEnumerable<TItem>>, TItem, IEnumerable<TItem>>(
+			maximum => new QuantifiedCollectionResult.Sync<IThat<IEnumerable<TItem>>, TItem, IEnumerable<TItem>>(
 				source,
 				source.ExpectationBuilder,
 				CollectionQuantifier.Between(minimum, maximum)));
