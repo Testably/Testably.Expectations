@@ -4,12 +4,29 @@ public sealed partial class NullableEnumShould
 {
 	public sealed class HaveValueTests
 	{
+		[Fact]
+		public async Task WhenExpectedIsNull_ShouldFail()
+		{
+			MyColors? subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().HaveValue(null);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              have value <null>,
+				              but found {subject}
+				              at Expect.That(subject).Should().HaveValue(null)
+				              """);
+		}
+
 		[Theory]
 		[InlineData(MyNumbers.One, 2L)]
-		[InlineData(MyNumbers.Two, -7)]
-		[InlineData(MyNumbers.Three, 0)]
+		[InlineData(MyNumbers.Two, -7L)]
+		[InlineData(MyNumbers.Three, 0L)]
 		public async Task WhenSubjectDoesNotHaveExpectedValue_ShouldFail(MyNumbers? subject,
-			long expected)
+			long? expected)
 		{
 			async Task Act()
 				=> await That(subject).Should().HaveValue(expected);
@@ -24,11 +41,11 @@ public sealed partial class NullableEnumShould
 		}
 
 		[Theory]
-		[InlineData(MyNumbers.One, 1)]
-		[InlineData(MyNumbers.Two, 2)]
-		[InlineData(MyNumbers.Three, 3)]
+		[InlineData(MyNumbers.One, 1L)]
+		[InlineData(MyNumbers.Two, 2L)]
+		[InlineData(MyNumbers.Three, 3L)]
 		public async Task WhenSubjectHasExpectedValue_ShouldSucceed(MyNumbers? subject,
-			long expected)
+			long? expected)
 		{
 			async Task Act()
 				=> await That(subject).Should().HaveValue(expected);
@@ -41,10 +58,10 @@ public sealed partial class NullableEnumShould
 	{
 		[Theory]
 		[InlineData(MyNumbers.One, 2L)]
-		[InlineData(MyNumbers.Two, -7)]
-		[InlineData(MyNumbers.Three, 0)]
+		[InlineData(MyNumbers.Two, -7L)]
+		[InlineData(MyNumbers.Three, 0L)]
 		public async Task WhenSubjectDoesNotHaveUnexpectedValue_ShouldSucceed(MyNumbers? subject,
-			long unexpected)
+			long? unexpected)
 		{
 			async Task Act()
 				=> await That(subject).Should().NotHaveValue(unexpected);
@@ -53,11 +70,11 @@ public sealed partial class NullableEnumShould
 		}
 
 		[Theory]
-		[InlineData(MyNumbers.One, 1)]
-		[InlineData(MyNumbers.Two, 2)]
-		[InlineData(MyNumbers.Three, 3)]
+		[InlineData(MyNumbers.One, 1L)]
+		[InlineData(MyNumbers.Two, 2L)]
+		[InlineData(MyNumbers.Three, 3L)]
 		public async Task WhenSubjectHasUnexpectedValue_ShouldFail(MyNumbers? subject,
-			long unexpected)
+			long? unexpected)
 		{
 			async Task Act()
 				=> await That(subject).Should().NotHaveValue(unexpected);
@@ -69,6 +86,17 @@ public sealed partial class NullableEnumShould
 				              but found {subject}
 				              at Expect.That(subject).Should().NotHaveValue(unexpected)
 				              """);
+		}
+
+		[Fact]
+		public async Task WhenUnexpectedIsNull_ShouldFail()
+		{
+			MyColors? subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().NotHaveValue(null);
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }

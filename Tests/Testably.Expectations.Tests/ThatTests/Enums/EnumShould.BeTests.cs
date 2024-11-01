@@ -4,6 +4,23 @@ public sealed partial class EnumShould
 {
 	public sealed class BeTests
 	{
+		[Fact]
+		public async Task WhenExpectedIsNull_ShouldFail()
+		{
+			MyColors subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().Be(null);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be <null>,
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(null)
+				              """);
+		}
+
 		[Theory]
 		[InlineData(MyColors.Blue, MyColors.Green)]
 		[InlineData(MyColors.Green, MyColors.Blue)]
@@ -66,6 +83,17 @@ public sealed partial class EnumShould
 				              but found {subject}
 				              at Expect.That(subject).Should().NotBe(unexpected)
 				              """);
+		}
+
+		[Fact]
+		public async Task WhenUnexpectedIsNull_ShouldFail()
+		{
+			MyColors subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(null);
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }
