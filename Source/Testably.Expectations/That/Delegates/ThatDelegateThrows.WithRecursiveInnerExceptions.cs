@@ -14,6 +14,10 @@ public partial class ThatDelegateThrows<TException>
 	///     Verifies that the actual exception recursively has inner exceptions which satisfy the
 	///     <paramref name="expectations" />.
 	/// </summary>
+	/// <remarks>
+	///     Recursively applies the expectations on the <see cref="Exception.InnerException" /> (if not <see langword="null" />
+	///     and for <see cref="AggregateException" /> also on the <see cref="AggregateException.InnerExceptions" />.
+	/// </remarks>
 	public AndOrExpectationResult<TException?, ThatDelegateThrows<TException>>
 		WithRecursiveInnerExceptions(
 			Action<IThat<IEnumerable<Exception>>> expectations,
