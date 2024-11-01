@@ -2,6 +2,19 @@
 
 public sealed partial class EnumShould
 {
+	public enum EnumLong : long
+	{
+		Int64Max = long.MaxValue,
+		Int64LessOne = long.MaxValue - 1
+	}
+
+	public enum EnumULong : ulong
+	{
+		Int64Max = long.MaxValue,
+		UInt64LessOne = ulong.MaxValue - 1,
+		UInt64Max = ulong.MaxValue
+	}
+
 	[Flags]
 	public enum MyColors
 	{

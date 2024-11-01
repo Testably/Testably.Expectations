@@ -4,6 +4,34 @@ public sealed partial class NullableEnumShould
 {
 	public sealed class HaveFlagTests
 	{
+		[Fact]
+		public async Task WhenExpectedIsNull_ShouldFail()
+		{
+			MyColors? subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().HaveFlag(null);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              have flag <null>,
+				              but found {subject}
+				              at Expect.That(subject).Should().HaveFlag(null)
+				              """);
+		}
+
+		[Fact]
+		public async Task WhenSubjectAndExpectedIsNull_ShouldSucceed()
+		{
+			MyColors? subject = null;
+
+			async Task Act()
+				=> await That(subject).Should().HaveFlag(null);
+
+			await That(Act).Should().NotThrow();
+		}
+
 		[Theory]
 		[InlineData(MyColors.Blue | MyColors.Red, MyColors.Green)]
 		[InlineData(MyColors.Green | MyColors.Yellow, MyColors.Blue)]
@@ -51,6 +79,23 @@ public sealed partial class NullableEnumShould
 
 	public sealed class NotHaveFlagTests
 	{
+		[Fact]
+		public async Task WhenSubjectAndUnexpectedIsNull_ShouldFail()
+		{
+			MyColors? subject = null;
+
+			async Task Act()
+				=> await That(subject).Should().NotHaveFlag(null);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             not have flag <null>,
+				             but found <null>
+				             at Expect.That(subject).Should().NotHaveFlag(null)
+				             """);
+		}
+
 		[Theory]
 		[InlineData(MyColors.Blue)]
 		[InlineData(MyColors.Green)]
@@ -98,6 +143,17 @@ public sealed partial class NullableEnumShould
 				              but found {subject}
 				              at Expect.That(subject).Should().NotHaveFlag(unexpected)
 				              """);
+		}
+
+		[Fact]
+		public async Task WhenUnexpectedIsNull_ShouldSucceed()
+		{
+			MyColors? subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().NotHaveFlag(null);
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }

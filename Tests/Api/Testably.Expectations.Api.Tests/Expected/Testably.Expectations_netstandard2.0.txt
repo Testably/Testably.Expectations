@@ -143,21 +143,21 @@ namespace Testably.Expectations
     }
     public static class ThatEnumShould
     {
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> Be<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> Be<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
         public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> BeDefined<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source)
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> HaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum expectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("expectedFlag")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> HaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum? expectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("expectedFlag")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> HaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, long expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> HaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, long? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> NotBe<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> NotBe<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
         public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> NotBeDefined<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source)
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> NotHaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum unexpectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpectedFlag")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> NotHaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, TEnum? unexpectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpectedFlag")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> NotHaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, long unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum, Testably.Expectations.Core.IThat<TEnum>> NotHaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum> source, long? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
         public static Testably.Expectations.Core.IThat<TEnum> Should<TEnum>(this Testably.Expectations.Core.IExpectSubject<TEnum> subject)
             where TEnum :  struct, System.Enum { }
@@ -244,9 +244,9 @@ namespace Testably.Expectations
             where TEnum :  struct, System.Enum { }
         public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> BeNull<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source)
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> HaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, TEnum expectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("expectedFlag")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> HaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, TEnum? expectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("expectedFlag")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> HaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, long expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> HaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, long? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
         public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> NotBe<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, TEnum? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
@@ -254,9 +254,9 @@ namespace Testably.Expectations
             where TEnum :  struct, System.Enum { }
         public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> NotBeNull<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source)
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> NotHaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, TEnum unexpectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpectedFlag")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> NotHaveFlag<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, TEnum? unexpectedFlag, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpectedFlag")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
-        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> NotHaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, long unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.Results.AndOrExpectationResult<TEnum?, Testably.Expectations.Core.IThat<TEnum?>> NotHaveValue<TEnum>(this Testably.Expectations.Core.IThat<TEnum?> source, long? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "")
             where TEnum :  struct, System.Enum { }
         public static Testably.Expectations.Core.IThat<TEnum?> Should<TEnum>(this Testably.Expectations.Core.IExpectSubject<TEnum?> subject)
             where TEnum :  struct, System.Enum { }

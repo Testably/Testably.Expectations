@@ -14,14 +14,15 @@ public static partial class ThatNullableEnumShould
 	/// </summary>
 	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> HaveFlag<TEnum>(
 		this IThat<TEnum?> source,
-		TEnum expectedFlag,
+		TEnum? expectedFlag,
 		[CallerArgumentExpression("expectedFlag")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"have flag {Formatter.Format(expectedFlag)}",
-					actual => actual != null && actual.Value.HasFlag(expectedFlag)))
+					actual => actual == null && expectedFlag == null ||
+					          actual != null && expectedFlag != null && actual.Value.HasFlag(expectedFlag)))
 				.AppendMethodStatement(nameof(HaveFlag), doNotPopulateThisValue),
 			source);
 
@@ -30,14 +31,16 @@ public static partial class ThatNullableEnumShould
 	/// </summary>
 	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> NotHaveFlag<TEnum>(
 		this IThat<TEnum?> source,
-		TEnum unexpectedFlag,
+		TEnum? unexpectedFlag,
 		[CallerArgumentExpression("unexpectedFlag")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have flag {Formatter.Format(unexpectedFlag)}",
-					actual => actual != null && !actual.Value.HasFlag(unexpectedFlag)))
+					actual => actual != null && unexpectedFlag == null ||
+				              actual == null && unexpectedFlag != null ||
+				              actual != null && unexpectedFlag != null && !actual.Value.HasFlag(unexpectedFlag)))
 				.AppendMethodStatement(nameof(NotHaveFlag), doNotPopulateThisValue),
 			source);
 }

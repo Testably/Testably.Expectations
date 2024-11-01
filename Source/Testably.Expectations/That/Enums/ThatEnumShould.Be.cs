@@ -13,7 +13,7 @@ public static partial class ThatEnumShould
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<TEnum, IThat<TEnum>> Be<TEnum>(this IThat<TEnum> source,
-		TEnum expected,
+		TEnum? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
@@ -27,7 +27,7 @@ public static partial class ThatEnumShould
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
 	public static AndOrExpectationResult<TEnum, IThat<TEnum>> NotBe<TEnum>(this IThat<TEnum> source,
-		TEnum unexpected,
+		TEnum? unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 		where TEnum : struct, Enum

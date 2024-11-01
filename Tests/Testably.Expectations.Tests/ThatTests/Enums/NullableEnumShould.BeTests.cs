@@ -4,6 +4,85 @@ public sealed partial class NullableEnumShould
 {
 	public sealed class BeTests
 	{
+		[Theory]
+		[InlineData(EnumLong.Int64Max, EnumLong.Int64LessOne)]
+		public async Task ForLong_WhenSubjectIsDifferent_ShouldFail(EnumLong? subject,
+			EnumLong? expected)
+		{
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be {expected},
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
+		}
+
+		[Theory]
+		[InlineData(EnumLong.Int64Max)]
+		[InlineData(EnumLong.Int64LessOne)]
+		public async Task ForLong_WhenSubjectTheSame_ShouldSucceed(EnumLong? subject)
+		{
+			EnumLong? expected = subject;
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Theory]
+		[InlineData(EnumULong.UInt64Max, EnumULong.UInt64LessOne)]
+		[InlineData(EnumULong.UInt64Max, EnumULong.Int64Max)]
+		public async Task ForULong_WhenSubjectIsDifferent_ShouldFail(EnumULong? subject,
+			EnumULong? expected)
+		{
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be {expected},
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
+		}
+
+		[Theory]
+		[InlineData(EnumULong.Int64Max)]
+		[InlineData(EnumULong.UInt64LessOne)]
+		[InlineData(EnumULong.UInt64Max)]
+		public async Task ForULong_WhenSubjectTheSame_ShouldSucceed(EnumULong? subject)
+		{
+			EnumULong? expected = subject;
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenExpectedIsNull_ShouldFail()
+		{
+			MyColors? subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().Be(null);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be <null>,
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(null)
+				              """);
+		}
+
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreNull_ShouldSucceed()
 		{
@@ -69,6 +148,68 @@ public sealed partial class NullableEnumShould
 
 	public sealed class NotBeTests
 	{
+		[Theory]
+		[InlineData(EnumLong.Int64Max, EnumLong.Int64LessOne)]
+		public async Task ForLong_WhenSubjectIsDifferent_ShouldSucceed(EnumLong? subject,
+			EnumLong? unexpected)
+		{
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Theory]
+		[InlineData(EnumLong.Int64Max)]
+		[InlineData(EnumLong.Int64LessOne)]
+		public async Task ForLong_WhenSubjectTheSame_ShouldFail(EnumLong? subject)
+		{
+			EnumLong? unexpected = subject;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              not be {unexpected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotBe(unexpected)
+				              """);
+		}
+
+		[Theory]
+		[InlineData(EnumULong.UInt64Max, EnumULong.UInt64LessOne)]
+		[InlineData(EnumULong.UInt64Max, EnumULong.Int64Max)]
+		public async Task ForULong_WhenSubjectIsDifferent_ShouldSucceed(EnumULong? subject,
+			EnumULong? unexpected)
+		{
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Theory]
+		[InlineData(EnumULong.Int64Max)]
+		[InlineData(EnumULong.UInt64LessOne)]
+		[InlineData(EnumULong.UInt64Max)]
+		public async Task ForULong_WhenSubjectTheSame_ShouldFail(EnumULong? subject)
+		{
+			EnumULong? unexpected = subject;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              not be {unexpected},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotBe(unexpected)
+				              """);
+		}
+
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreNull_ShouldFail()
 		{
@@ -120,6 +261,17 @@ public sealed partial class NullableEnumShould
 				              but found {subject?.ToString() ?? "<null>"}
 				              at Expect.That(subject).Should().NotBe(unexpected)
 				              """);
+		}
+
+		[Fact]
+		public async Task WhenUnexpectedIsNull_ShouldSucceed()
+		{
+			MyColors? subject = MyColors.Yellow;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(null);
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }
