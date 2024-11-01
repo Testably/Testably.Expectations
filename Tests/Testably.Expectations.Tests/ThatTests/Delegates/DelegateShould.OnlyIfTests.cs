@@ -38,7 +38,7 @@ public sealed partial class DelegateShould
 		[Fact]
 		public async Task WhenAwaited_OnlyIfTrue_ShouldReturnThrownException()
 		{
-			Exception exception = CreateCustomException();
+			Exception exception = new CustomException();
 			Action action = () => throw exception;
 
 			CustomException? result =

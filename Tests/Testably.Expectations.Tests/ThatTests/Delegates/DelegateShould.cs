@@ -4,50 +4,21 @@ namespace Testably.Expectations.Tests.ThatTests.Delegates;
 
 public sealed partial class DelegateShould
 {
-	private static CustomException CreateCustomException(
+	private class CustomException(
 		[CallerMemberName] string message = "",
 		Exception? innerException = null)
+		: Exception(message, innerException)
 	{
-		return new CustomException(message, innerException);
+		public string? Value { get; set; }
 	}
 
-	private static OtherException CreateOtherException(
+	private class SubCustomException(
 		[CallerMemberName] string message = "",
 		Exception? innerException = null)
-	{
-		return new OtherException(message, innerException);
-	}
+		: CustomException(message, innerException);
 
-	private static SubCustomException CreateSubCustomException(
+	private class OtherException(
 		[CallerMemberName] string message = "",
 		Exception? innerException = null)
-	{
-		return new SubCustomException(message, innerException);
-	}
-
-	private class CustomException : Exception
-	{
-		public string Value => "Foo!";
-
-		public CustomException(string message, Exception? innerException = null)
-			: base(message, innerException)
-		{
-		}
-	}
-
-	private class SubCustomException : CustomException
-	{
-		public SubCustomException(string message, Exception? innerException = null)
-			: base(message, innerException)
-		{
-		}
-	}
-
-	private class OtherException : Exception
-	{
-		public OtherException(string message, Exception? innerException = null)
-			: base(message, innerException)
-		{
-		}
-	}
+		: Exception(message, innerException);
 }
