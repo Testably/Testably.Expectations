@@ -6,7 +6,7 @@ namespace Testably.Expectations.Tests.ThatTests.Collections;
 
 public sealed partial class EnumerableShould
 {
-	public sealed class NoneTests
+	public sealed class AllTests
 	{
 		[Fact]
 		public async Task DoesNotEnumerateTwice()
@@ -14,8 +14,8 @@ public sealed partial class EnumerableShould
 			ThrowWhenIteratingTwiceEnumerable subject = new();
 
 			async Task Act()
-				=> await That(subject).Should().None().Be(15)
-					.And.None().Be(81);
+				=> await That(subject).Should().All().Satisfy(_ => true)
+					.And.All().Satisfy(_ => true);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -26,31 +26,31 @@ public sealed partial class EnumerableShould
 			IEnumerable<int> subject = Factory.GetFibonacciNumbers();
 
 			async Task Act()
-				=> await That(subject).Should().None().Be(5);
+				=> await That(subject).Should().All().Be(1);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             have no items equal to 5,
-				             but at least one items were equal
-				             at Expect.That(subject).Should().None().Be(5)
+				             have all items equal to 1,
+				             but not all items were equal
+				             at Expect.That(subject).Should().All().Be(1)
 				             """);
 		}
 
 		[Fact]
-		public async Task WhenEnumerableContainsEqualValues_ShouldFail()
+		public async Task WhenEnumerableContainsDifferentValues_ShouldFail()
 		{
 			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
 
 			async Task Act()
-				=> await That(subject).Should().None().Be(1);
+				=> await That(subject).Should().All().Be(1);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             have no items equal to 1,
-				             but at least one items were equal
-				             at Expect.That(subject).Should().None().Be(1)
+				             have all items equal to 1,
+				             but not all items were equal
+				             at Expect.That(subject).Should().All().Be(1)
 				             """);
 		}
 
@@ -60,18 +60,18 @@ public sealed partial class EnumerableShould
 			IEnumerable<int> subject = ToEnumerable([]);
 
 			async Task Act()
-				=> await That(subject).Should().None().Be(0);
+				=> await That(subject).Should().All().Be(0);
 
 			await That(Act).Should().NotThrow();
 		}
 
 		[Fact]
-		public async Task WhenEnumerableOnlyContainsDifferentValues_ShouldSucceed()
+		public async Task WhenEnumerableOnlyContainsEqualValues_ShouldSucceed()
 		{
-			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 2, 2, 3]);
+			IEnumerable<int> subject = ToEnumerable([1, 1, 1, 1, 1, 1, 1]);
 
 			async Task Act()
-				=> await That(subject).Should().None().Be(42);
+				=> await That(subject).Should().All().Be(1);
 
 			await That(Act).Should().NotThrow();
 		}

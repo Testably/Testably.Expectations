@@ -22,6 +22,17 @@ public sealed partial class CollectionShould
 		}
 
 		[Fact]
+		public async Task WhenCollectionIsEmpty_ShouldSucceed()
+		{
+			bool[] subject = [];
+
+			async Task Act()
+				=> await That(subject).Should().All().Be(true);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
 		public async Task WhenCollectionOnlyContainsEqualValues_ShouldSucceed()
 		{
 			int[] subject = [1, 1, 1, 1];
