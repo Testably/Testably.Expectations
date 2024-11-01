@@ -7,7 +7,7 @@ public sealed partial class DelegateThrows
 		[Fact]
 		public async Task WhenAwaited_WithExpectations_ShouldReturnThrownException()
 		{
-			Exception exception = new("outer", new Exception("inner"));
+			Exception exception = new OuterException(innerException: new Exception("inner"));
 
 			Exception result = await That(() => throw exception)
 				.Should().ThrowException().WithInnerException(
@@ -19,7 +19,7 @@ public sealed partial class DelegateThrows
 		[Fact]
 		public async Task WhenAwaited_WithoutExpectations_ShouldReturnThrownException()
 		{
-			Exception exception = new("outer", new Exception("inner"));
+			Exception exception = new OuterException(innerException: new Exception("inner"));
 
 			Exception result = await That(() => throw exception)
 				.Should().ThrowException().WithInnerException();
@@ -30,7 +30,7 @@ public sealed partial class DelegateThrows
 		[Fact]
 		public async Task WhenInnerExceptionIsPresent_ShouldSucceed()
 		{
-			Action action = () => throw new Exception("outer", new Exception("inner"));
+			Action action = () => throw new OuterException(innerException: new Exception());
 
 			async Task Act()
 				=> await That(action).Should().ThrowException().WithInnerException();
@@ -41,8 +41,7 @@ public sealed partial class DelegateThrows
 		[Fact]
 		public async Task WhenNoInnerExceptionIsPresent_ShouldFail()
 		{
-			string actual = "actual text";
-			Action action = () => throw new Exception(actual);
+			Action action = () => throw new OuterException();
 
 			async Task Act()
 				=> await That(action).Should().ThrowException().WithInnerException();
