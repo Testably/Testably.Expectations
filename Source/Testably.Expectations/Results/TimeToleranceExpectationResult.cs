@@ -43,6 +43,11 @@ public class TimeToleranceExpectationResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("tolerance")]
 		string doNotPopulateThisValue = "")
 	{
+		if (tolerance < TimeSpan.Zero)
+		{
+			throw new ArgumentOutOfRangeException(nameof(tolerance), "Tolerance must be non-negative");
+		}
+
 		options.SetTolerance(tolerance);
 		_expectationBuilder1.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
 		return this;

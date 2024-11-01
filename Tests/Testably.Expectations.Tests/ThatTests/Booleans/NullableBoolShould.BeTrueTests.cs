@@ -4,38 +4,21 @@ public sealed partial class NullableBoolShould
 {
 	public sealed class BeTrueTests
 	{
-		[Fact]
-		public async Task WhenFalse_ShouldFail()
+		[Theory]
+		[InlineData(false)]
+		[InlineData(null)]
+		public async Task WhenFalseOrNull_ShouldFail(bool? subject)
 		{
-			bool? subject = false;
-
 			async Task Act()
-				=> await That(subject).Should().BeTrue();
+				=> await That(subject).Should().BeTrue().Because("we want to test the failure");
 
 			await That(Act).Should().Throw<XunitException>()
-				.WithMessage("""
-				             Expected subject to
-				             be True,
-				             but found False
-				             at Expect.That(subject).Should().BeTrue()
-				             """);
-		}
-
-		[Fact]
-		public async Task WhenNull_ShouldFail()
-		{
-			bool? subject = null;
-
-			async Task Act()
-				=> await That(subject).Should().BeTrue();
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage("""
-				             Expected subject to
-				             be True,
-				             but found <null>
-				             at Expect.That(subject).Should().BeTrue()
-				             """);
+				.WithMessage($"""
+				              Expected subject to
+				              be True, because we want to test the failure,
+				              but found {subject?.ToString() ?? "<null>"}
+				              at Expect.That(subject).Should().BeTrue().Because("we want to test the failure")
+				              """);
 		}
 
 		[Fact]
@@ -52,22 +35,11 @@ public sealed partial class NullableBoolShould
 
 	public sealed class NotBeTrueTests
 	{
-		[Fact]
-		public async Task WhenFalse_ShouldFail()
+		[Theory]
+		[InlineData(false)]
+		[InlineData(null)]
+		public async Task WhenFalseOrNull_ShouldFail(bool? subject)
 		{
-			bool? subject = false;
-
-			async Task Act()
-				=> await That(subject).Should().NotBeTrue();
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
-		public async Task WhenNull_ShouldFail()
-		{
-			bool? subject = null;
-
 			async Task Act()
 				=> await That(subject).Should().NotBeTrue();
 
@@ -80,14 +52,14 @@ public sealed partial class NullableBoolShould
 			bool? subject = true;
 
 			async Task Act()
-				=> await That(subject).Should().NotBeTrue();
+				=> await That(subject).Should().NotBeTrue().Because("we want to test the failure");
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be True,
+				             not be True, because we want to test the failure,
 				             but found True
-				             at Expect.That(subject).Should().NotBeTrue()
+				             at Expect.That(subject).Should().NotBeTrue().Because("we want to test the failure")
 				             """);
 		}
 	}

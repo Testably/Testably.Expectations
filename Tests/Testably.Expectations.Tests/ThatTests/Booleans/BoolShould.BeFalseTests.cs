@@ -31,5 +31,22 @@ public sealed partial class BoolShould
 				             at Expect.That(subject).Should().BeFalse()
 				             """);
 		}
+
+		[Fact]
+		public async Task WhenTrue_ShouldFailWithDescriptiveMessage()
+		{
+			bool subject = true;
+
+			async Task Act()
+				=> await That(subject).Should().BeFalse().Because("we want to test the failure");
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             be False, because we want to test the failure,
+				             but found True
+				             at Expect.That(subject).Should().BeFalse().Because("we want to test the failure")
+				             """);
+		}
 	}
 }

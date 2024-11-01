@@ -1,14 +1,26 @@
 ﻿namespace Testably.Expectations.Tests.ThatTests.Chronology;
 
-public sealed partial class DateTimeShould
+public sealed partial class NullableDateTimeShould
 {
 	public sealed class BeTests
 	{
 		[Fact]
-		public async Task WhenSubjectAndExpectedAreMaxValue_ShouldSucceed()
+		public async Task WhenNullableSubjectIsTheExpectedValue_ShouldSucceed()
 		{
-			DateTime subject = DateTime.MaxValue;
-			DateTime expected = DateTime.MaxValue;
+			DateTime? subject = CurrentTime();
+			DateTime expected = CurrentTime();
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenNullableSubjectIsTheNullableExpectedValue_ShouldSucceed()
+		{
+			DateTime? subject = CurrentTime();
+			DateTime? expected = CurrentTime();
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
@@ -19,8 +31,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreMinValue_ShouldSucceed()
 		{
-			DateTime subject = DateTime.MinValue;
-			DateTime expected = DateTime.MinValue;
+			DateTime? subject = DateTime.MinValue;
+			DateTime? expected = DateTime.MinValue;
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
@@ -31,8 +43,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task WhenSubjectIsDifferent_ShouldFail()
 		{
-			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime();
+			DateTime? subject = CurrentTime();
+			DateTime? expected = LaterTime();
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Because("we want to test the failure");
@@ -47,34 +59,10 @@ public sealed partial class DateTimeShould
 		}
 
 		[Fact]
-		public async Task WhenSubjectIsTheExpectedValue_ShouldSucceed()
-		{
-			DateTime subject = CurrentTime();
-			DateTime expected = CurrentTime();
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
-		public async Task WhenSubjectIsTheNullableExpectedValue_ShouldSucceed()
-		{
-			DateTime subject = CurrentTime();
-			DateTime? expected = CurrentTime();
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
 		public async Task WhenSubjectOnlyDiffersInKind_ShouldFail()
 		{
-			DateTime subject = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Utc);
-			DateTime expected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
+			DateTime? subject = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Utc);
+			DateTime? expected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected)
@@ -92,8 +80,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task Within_NegativeTolerance_ShouldThrowArgumentOutOfRangeException()
 		{
-			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? subject = CurrentTime();
+			DateTime? expected = LaterTime(4);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(-1));
@@ -106,8 +94,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldFail()
 		{
-			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? subject = CurrentTime();
+			DateTime? expected = LaterTime(4);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(3))
@@ -125,8 +113,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldSucceed()
 		{
-			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(3);
+			DateTime? subject = CurrentTime();
+			DateTime? expected = LaterTime(3);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(3));
@@ -140,8 +128,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreMaxValue_ShouldFail()
 		{
-			DateTime subject = DateTime.MaxValue;
-			DateTime unexpected = DateTime.MaxValue;
+			DateTime? subject = DateTime.MaxValue;
+			DateTime? unexpected = DateTime.MaxValue;
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected)
@@ -159,8 +147,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreMinValue_ShouldFail()
 		{
-			DateTime subject = DateTime.MinValue;
-			DateTime unexpected = DateTime.MinValue;
+			DateTime? subject = DateTime.MinValue;
+			DateTime? unexpected = DateTime.MinValue;
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected)
@@ -178,8 +166,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task WhenSubjectIsDifferent_ShouldSucceed()
 		{
-			DateTime subject = CurrentTime();
-			DateTime unexpected = LaterTime();
+			DateTime? subject = CurrentTime();
+			DateTime? unexpected = LaterTime();
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected);
@@ -190,8 +178,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task WhenSubjectIsTheSame_ShouldFail()
 		{
-			DateTime subject = CurrentTime();
-			DateTime unexpected = subject;
+			DateTime? subject = CurrentTime();
+			DateTime? unexpected = subject;
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected)
@@ -209,8 +197,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task WhenSubjectOnlyDiffersInKind_ShouldSucceed()
 		{
-			DateTime subject = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Utc);
-			DateTime unexpected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
+			DateTime? subject = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Utc);
+			DateTime? unexpected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected)
@@ -222,8 +210,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task Within_NegativeTolerance_ShouldThrowArgumentOutOfRangeException()
 		{
-			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? subject = CurrentTime();
+			DateTime? expected = LaterTime(4);
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(expected).Within(TimeSpan.FromSeconds(-1));
@@ -236,8 +224,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldSucceed()
 		{
-			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? subject = CurrentTime();
+			DateTime? expected = LaterTime(4);
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(expected)
@@ -249,8 +237,8 @@ public sealed partial class DateTimeShould
 		[Fact]
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldFail()
 		{
-			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(3);
+			DateTime? subject = CurrentTime();
+			DateTime? expected = LaterTime(3);
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(expected).Within(TimeSpan.FromSeconds(3))

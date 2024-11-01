@@ -8,48 +8,48 @@ using Testably.Expectations.Results;
 // ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
-public static partial class ThatDateTimeShould
+public static partial class ThatNullableDateTimeShould
 {
 	/// <summary>
-	///     Verifies that the subject is on or before the <paramref name="expected" /> value.
+	///     Verifies that the subject is on or after the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime, IThat<DateTime>> BeOnOrBefore(
-		this IThat<DateTime> source,
+	public static TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>> BeOnOrAfter(
+		this IThat<DateTime?> source,
 		DateTime? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
+		return new TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
-					$"be on or before {Formatter.Format(expected)}",
-					(a, e, t) => a - t <= e,
+					$"be on or after {Formatter.Format(expected)}",
+					(a, e, t) => a + t >= e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance))
-				.AppendMethodStatement(nameof(BeOnOrBefore), doNotPopulateThisValue),
+				.AppendMethodStatement(nameof(BeOnOrAfter), doNotPopulateThisValue),
 			source,
 			tolerance);
 	}
 
 	/// <summary>
-	///     Verifies that the subject is not on or before the <paramref name="expected" /> value.
+	///     Verifies that the subject is not on or after the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime, IThat<DateTime>> NotBeOnOrBefore(
-		this IThat<DateTime> source,
+	public static TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>> NotBeOnOrAfter(
+		this IThat<DateTime?> source,
 		DateTime? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime, IThat<DateTime>>(
+		return new TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
-					$"not be on or before {Formatter.Format(expected)}",
-					(a, e, t) => a + t > e,
+					$"not be on or after {Formatter.Format(expected)}",
+					(a, e, t) => a - t < e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance))
-				.AppendMethodStatement(nameof(NotBeOnOrBefore), doNotPopulateThisValue),
+				.AppendMethodStatement(nameof(NotBeOnOrAfter), doNotPopulateThisValue),
 			source,
 			tolerance);
 	}

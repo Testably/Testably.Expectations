@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 
 // ReSharper disable once CheckNamespace
@@ -16,16 +14,7 @@ public static partial class ThatDateTimeShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateTime" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<DateTime> Should(this IExpectSubject<DateTime> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
-
-	/// <summary>
-	///     Start expectations for the current <see cref="DateTime" />? <paramref name="subject" />.
-	/// </summary>
-	public static IThat<DateTime?> Should(this IExpectSubject<DateTime?> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static IThat<DateTime> Should(this IExpectSubject<DateTime> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 
@@ -36,28 +25,34 @@ public static partial class ThatDateTimeShould
 			return difference == TimeSpan.Zero;
 		}
 
-		return difference <= tolerance.Value && difference >= tolerance.Value.Negate();
+		return difference <= tolerance.Value &&
+		       difference >= tolerance.Value.Negate();
 	}
 
 	private readonly struct ConditionConstraint(
-		DateTime expected,
-		Func<DateTime, DateTime, TimeSpan, bool> condition,
+		DateTime? expected,
 		string expectation,
+		Func<DateTime, DateTime, TimeSpan, bool> condition,
+		Func<DateTime, DateTime?, string> failureMessageFactory,
 		TimeTolerance tolerance) : IValueConstraint<DateTime>
 	{
-		private readonly string _expectation = expectation;
-
 		public ConstraintResult IsMetBy(DateTime actual)
 		{
-			if (condition(actual, expected, tolerance.Tolerance ?? TimeSpan.Zero))
+			if (expected is null)
+			{
+				return new ConstraintResult.Failure(ToString(), failureMessageFactory(actual, expected));
+			}
+
+			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
 			{
 				return new ConstraintResult.Success<DateTime>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected.Value));
 		}
 
 		public override string ToString()
-			=> _expectation + tolerance;
+			=> expectation + tolerance;
 	}
 }

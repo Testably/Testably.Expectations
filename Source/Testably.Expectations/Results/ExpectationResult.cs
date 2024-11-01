@@ -67,9 +67,12 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 	///     Provide a <paramref name="reason" /> explaining why the constraint is needed.<br />
 	///     If the phrase does not start with the word <i>because</i>, it is prepended automatically.
 	/// </summary>
-	public TSelf Because(string reason)
+	public TSelf Because(string reason,
+		[CallerArgumentExpression("reason")] string doNotPopulateThisValue = "")
 	{
-		expectationBuilder.AddReason(reason);
+		expectationBuilder
+			.AppendMethodStatement(nameof(Because), doNotPopulateThisValue)
+			.AddReason(reason);
 		return (TSelf)this;
 	}
 

@@ -41,7 +41,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrExpectationResult<TNumber, IThat<TNumber>> NotBe<TNumber>(
 		this IThat<TNumber> source,
-		TNumber expected,
+		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		where TNumber : struct, IComparable<TNumber>
 		=> new(source.ExpectationBuilder
@@ -67,13 +67,13 @@ public static partial class ThatNumberShould
 			=> $"be {Formatter.Format(expected)}";
 	}
 
-	private readonly struct IsNotValueConstraint<TNumber>(TNumber expected)
+	private readonly struct IsNotValueConstraint<TNumber>(TNumber? expected)
 		: IValueConstraint<TNumber>
 		where TNumber : struct, IComparable<TNumber>
 	{
 		public ConstraintResult IsMetBy(TNumber actual)
 		{
-			if (expected.CompareTo(actual) != 0)
+			if (expected?.CompareTo(actual) != 0)
 			{
 				return new ConstraintResult.Success<TNumber>(actual, ToString());
 			}
