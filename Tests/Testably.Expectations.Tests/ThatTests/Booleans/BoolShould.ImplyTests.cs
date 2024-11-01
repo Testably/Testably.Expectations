@@ -11,14 +11,15 @@ public sealed partial class BoolShould
 			bool consequent = false;
 
 			async Task Act()
-				=> await That(antecedent).Should().Imply(consequent);
+				=> await That(antecedent).Should().Imply(consequent)
+					.Because("we want to test the failure");
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected antecedent to
-				              imply {consequent},
+				              imply {consequent}, because we want to test the failure,
 				              but it did not
-				              at Expect.That(antecedent).Should().Imply(consequent)
+				              at Expect.That(antecedent).Should().Imply(consequent).Because("we want to test the failure")
 				              """);
 		}
 

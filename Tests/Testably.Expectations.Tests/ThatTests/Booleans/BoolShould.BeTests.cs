@@ -24,6 +24,26 @@ public sealed partial class BoolShould
 		}
 
 		[Theory]
+		[InlineAutoData(true)]
+		[InlineAutoData(false)]
+		public async Task WhenSubjectIsDifferent_ShouldFailWithDescriptiveMessage(
+			bool subject, string reason)
+		{
+			bool expected = !subject;
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Because(reason);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be {expected}, because {reason},
+				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected).Because(reason)
+				              """);
+		}
+
+		[Theory]
 		[InlineData(true)]
 		[InlineData(false)]
 		public async Task WhenSubjectIsTheSame_ShouldSucceed(bool subject)
@@ -68,6 +88,26 @@ public sealed partial class BoolShould
 				              not be {unexpected},
 				              but found {subject}
 				              at Expect.That(subject).Should().NotBe(unexpected)
+				              """);
+		}
+
+		[Theory]
+		[InlineAutoData(true)]
+		[InlineAutoData(false)]
+		public async Task WhenSubjectIsTheSame_ShouldFailWithDescriptiveMessage(
+			bool subject, string reason)
+		{
+			bool unexpected = subject;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected).Because(reason);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              not be {unexpected}, because {reason},
+				              but found {subject}
+				              at Expect.That(subject).Should().NotBe(unexpected).Because(reason)
 				              """);
 		}
 	}
