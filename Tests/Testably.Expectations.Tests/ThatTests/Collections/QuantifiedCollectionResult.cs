@@ -4,9 +4,9 @@ namespace Testably.Expectations.Tests.ThatTests.Collections;
 
 public partial class QuantifiedCollectionResult
 {
-	public class MyClass;
+	public class MyClass(int Value);
 
-	public class SubClass : MyClass;
+	public class SubClass(int Value) : MyClass(Value);
 
-	public class OtherClass;
+	public class OtherClass(int Value);
 }

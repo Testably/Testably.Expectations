@@ -9,9 +9,9 @@ public sealed partial class QuantifiedCollectionResult
 		{
 			object[] subject =
 			[
-				new MyClass(),
-				new SubClass(),
-				new OtherClass()
+				new MyClass(1),
+				new SubClass(1),
+				new OtherClass(1)
 			];
 
 			async Task Act()
@@ -31,8 +31,8 @@ public sealed partial class QuantifiedCollectionResult
 		{
 			object[] subject =
 			[
-				new MyClass(),
-				new SubClass(),
+				new MyClass(1),
+				new SubClass(1),
 			];
 
 			async Task Act()
