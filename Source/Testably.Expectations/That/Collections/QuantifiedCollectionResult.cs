@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Testably.Expectations.Core;
-using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Formatting;
-using Testably.Expectations.Results;
+﻿using Testably.Expectations.Core;
 // ReSharper disable once CheckNamespace
 
 namespace Testably.Expectations;
@@ -14,7 +6,7 @@ namespace Testably.Expectations;
 /// <summary>
 ///     A quantifiable result matching items against the expected <see cref="Quantity" />.
 /// </summary>
-public partial class QuantifiedCollectionResult<TResult>(
+public class QuantifiedCollectionResult<TResult>(
 	TResult result,
 	ExpectationBuilder expectationBuilder,
 	CollectionQuantifier quantity)
