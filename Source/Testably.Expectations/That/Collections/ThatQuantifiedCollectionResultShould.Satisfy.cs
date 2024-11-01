@@ -53,26 +53,6 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 						(a, c) => source.Quantity.GetEvaluator<TItem, IEnumerable<TItem>>(a, c)))
 				.AppendMethodStatement(nameof(Satisfy), doNotPopulateThisValue),
 			source.Result);
-
-	/// <summary>
-	///     ...satisfy the <paramref name="predicate" />.
-	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
-		Satisfy<TItem>(
-			this QuantifiedCollectionResult<IThat<IEnumerable<TItem>>> source,
-			Func<TItem, bool> predicate,
-			[CallerArgumentExpression("predicate")]
-			string doNotPopulateThisValue = "")
-		=> new(source.ExpectationBuilder
-				.AddConstraint(
-					new ThatQuantifiedCollectionResultShould.SatisfyConstraint<TItem,
-						IEnumerable<TItem>>(
-						predicate,
-						doNotPopulateThisValue,
-						source.Quantity,
-						(a, c) => source.Quantity.GetEvaluator<TItem, IEnumerable<TItem>>(a, c)))
-				.AppendMethodStatement(nameof(Satisfy), doNotPopulateThisValue),
-			source.Result);
 }
 
 #if NET6_0_OR_GREATER
