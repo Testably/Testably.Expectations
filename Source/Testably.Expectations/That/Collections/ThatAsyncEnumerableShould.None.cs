@@ -10,7 +10,8 @@ public static partial class ThatAsyncEnumerableShould
 	/// <summary>
 	///     Verifies that no items in the enumerable...
 	/// </summary>
-	public static QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>> None<TItem>(
+	public static QuantifiedCollectionResult.Async
+		<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>> None<TItem>(
 		this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source,
 			source.ExpectationBuilder.AppendMethodStatement(nameof(None)),
