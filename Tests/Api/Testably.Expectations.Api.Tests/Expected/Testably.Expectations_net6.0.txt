@@ -18,6 +18,8 @@ namespace Testably.Expectations
             where TCollection : System.Collections.Generic.IAsyncEnumerable<TItem> { }
         public Testably.Expectations.ICollectionEvaluator<TItem> GetEvaluator<TItem, TCollection>(TCollection enumerable, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context)
             where TCollection : System.Collections.Generic.IEnumerable<TItem> { }
+        public override string ToString() { }
+        public abstract string ToString(bool includeItems);
         public static Testably.Expectations.CollectionQuantifier AtLeast(int minimum) { }
         public static Testably.Expectations.CollectionQuantifier AtMost(int maximum) { }
         public static Testably.Expectations.CollectionQuantifier Between(int minimum, int maximum) { }
@@ -173,6 +175,7 @@ namespace Testably.Expectations
         public Testably.Expectations.Results.AndOrExpectationResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithInnerException() { }
         public Testably.Expectations.Results.AndOrExpectationResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithInnerException(System.Action<Testably.Expectations.ThatExceptionShould<System.Exception?>> expectations, [System.Runtime.CompilerServices.CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "") { }
         public Testably.Expectations.Results.StringMatcherExpectationResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithMessage(Testably.Expectations.Options.StringMatcher expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public Testably.Expectations.Results.AndOrExpectationResult<TException?, Testably.Expectations.ThatDelegateThrows<TException>> WithRecursiveInnerExceptions(System.Action<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<System.Exception>>> expectations, [System.Runtime.CompilerServices.CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatEnumShould
     {
@@ -228,6 +231,7 @@ namespace Testably.Expectations
         public Testably.Expectations.Results.AndOrExpectationResult<TException, Testably.Expectations.ThatExceptionShould<TException>> HaveInnerException() { }
         public Testably.Expectations.Results.AndOrExpectationResult<TException?, Testably.Expectations.ThatExceptionShould<TException>> HaveInnerException(System.Action<Testably.Expectations.ThatExceptionShould<System.Exception?>> expectations, [System.Runtime.CompilerServices.CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "") { }
         public Testably.Expectations.Results.StringMatcherExpectationResult<TException?, Testably.Expectations.ThatExceptionShould<TException>> HaveMessage(Testably.Expectations.Options.StringMatcher expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public Testably.Expectations.Results.AndOrExpectationResult<TException?, Testably.Expectations.ThatExceptionShould<TException>> HaveRecursiveInnerExceptions(System.Action<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<System.Exception>>> expectations, [System.Runtime.CompilerServices.CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatGenericShould
     {

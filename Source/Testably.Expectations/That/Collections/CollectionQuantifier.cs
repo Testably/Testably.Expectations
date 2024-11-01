@@ -37,6 +37,15 @@ public abstract partial class CollectionQuantifier
 			context.UseMaterializedEnumerable<TItem, IEnumerable<TItem>>(enumerable));
 
 	/// <summary>
+	///     Returns a string representation which depending on <paramref name="includeItems" /> ends with `Items`.
+	/// </summary>
+	public abstract string ToString(bool includeItems);
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> ToString(true);
+
+	/// <summary>
 	///     Checks for each iteration, if the evaluation should continue.
 	/// </summary>
 	protected abstract bool ContinueEvaluation(

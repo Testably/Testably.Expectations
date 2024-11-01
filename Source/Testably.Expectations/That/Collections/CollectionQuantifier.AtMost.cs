@@ -13,8 +13,8 @@ public abstract partial class CollectionQuantifier
 	private class AtMostQuantifier(int maximum) : CollectionQuantifier
 	{
 		/// <inheritdoc />
-		public override string ToString()
-			=> $"at most {maximum} {(maximum == 1 ? "item" : "items")}";
+		public override string ToString(bool includeItems)
+			=> $"at most {maximum}{(includeItems ? (maximum == 1 ? " item" : " items") : "")}";
 
 		/// <inheritdoc />
 		protected override bool ContinueEvaluation(

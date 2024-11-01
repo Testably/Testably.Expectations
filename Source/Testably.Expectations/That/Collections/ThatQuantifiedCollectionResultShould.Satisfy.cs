@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
+using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -124,10 +126,10 @@ public static partial class ThatQuantifiedCollectionResultShould
 				return new ConstraintResult.Success<TCollection>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {result.Error} items");
+			return new ConstraintResult.Failure(ToString(), $"{result.Error} did");
 		}
 
 		public override string ToString()
-			=> $"have {quantifier} items satisfying {Formatter.Format(expression)}";
+			=> $"{quantifier.ToString(false)} satisfy {Formatter.Format(expression)}";
 	}
 }
