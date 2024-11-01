@@ -5,7 +5,72 @@ public sealed partial class DelegateThrows
 	public sealed class WithMessageTests
 	{
 		[Fact]
-		public async Task FailsForDifferentStrings()
+		public async Task CanCompareCaseInsensitive()
+		{
+			string message = "FOO";
+			Exception exception =
+				new OuterException(message, innerException: new CustomException());
+
+			async Task Act()
+				=> await That(() => throw exception).Should().ThrowException()
+					.WithMessage("foo").IgnoringCase();
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task CanUseWildcardCheck()
+		{
+			string message = "foo-bar";
+			Exception exception =
+				new OuterException(message, innerException: new CustomException());
+
+			async Task Act()
+				=> await That(() => throw exception).Should().ThrowException()
+					.WithMessage("foo*").AsWildcard();
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task ShouldCompareCaseSensitive()
+		{
+			string message = "FOO";
+			Exception exception =
+				new OuterException(message, innerException: new CustomException());
+
+			async Task Act()
+				=> await That(() => throw exception).Should().ThrowException()
+					.WithMessage("foo");
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected () => throw exception to
+				             throw an Exception with Message equal to "foo",
+				             but found "FOO" which differs at index 0:
+				                ↓ (actual)
+				               "FOO"
+				               "foo"
+				                ↑ (expected)
+				             at Expect.That(() => throw exception).Should().ThrowException().WithMessage("foo")
+				             """);
+		}
+
+		[Theory]
+		[AutoData]
+		public async Task WhenAwaited_ShouldReturnThrownException(string message)
+		{
+			Exception exception =
+				new OuterException(message, innerException: new CustomException());
+
+			Exception result = await That(() => throw exception)
+				.Should().ThrowException().WithMessage(message);
+
+			await That(result).Should().BeSameAs(exception);
+		}
+
+		[Fact]
+		public async Task WhenMessagesAreDifferent_ShouldFail()
 		{
 			string actual = "actual text";
 			string expected = "expected other text";
@@ -27,45 +92,16 @@ public sealed partial class DelegateThrows
 				             """);
 		}
 
-		[Fact]
-		public async Task ShouldSupportNestedChecks()
-		{
-			Exception exception = new CustomException("outer",
-				new SubCustomException("inner1",
-					// ReSharper disable once NotResolvedInText
-					new ArgumentException("inner2", paramName: "param2")));
-			void Act() => throw exception;
-
-			CustomException result = await That(Act).Should().Throw<CustomException>()
-				.WithInnerException(e1 => e1
-					.HaveMessage("inner1").And
-					.HaveInner<ArgumentException>(e2 => e2
-						.HaveParamName("param2").And.HaveMessage("inner2*").AsWildcard()));
-
-			await That(result).Should().BeSameAs(exception);
-		}
-
 		[Theory]
 		[AutoData]
-		public async Task SucceedsForSameStrings(string actual)
+		public async Task WhenMessagesAreSame_ShouldSucceed(string message)
 		{
-			Exception subject = new(actual);
+			Exception subject = new(message);
 
 			async Task Act()
-				=> await That(subject).Should().HaveMessage(actual);
+				=> await That(subject).Should().HaveMessage(message);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
-		public async Task WhenAwaited_ShouldReturnThrownException()
-		{
-			Exception exception = new("outer", new Exception("inner"));
-
-			Exception result = await That(() => throw exception)
-				.Should().ThrowException().WithMessage("outer").AsWildcard();
-
-			await That(result).Should().BeSameAs(exception);
 		}
 	}
 }

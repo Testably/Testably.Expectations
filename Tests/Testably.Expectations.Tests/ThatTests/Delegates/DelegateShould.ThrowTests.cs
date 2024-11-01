@@ -4,83 +4,73 @@ public sealed partial class DelegateShould
 {
 	public sealed class ThrowTests
 	{
-		[Fact]
-		public async Task WhenAwaited_ShouldReturnException()
+		[Theory]
+		[AutoData]
+		public async Task WhenAwaited_ShouldReturnThrownException(string value)
 		{
-			Exception exception = CreateCustomException();
-			Action action = () => throw exception;
-
-			CustomException result = await That(action).Should().Throw<CustomException>();
-
-			await That(result).Should().BeSameAs(exception);
-		}
-
-		[Fact]
-		public async Task WhenAwaited_ShouldReturnThrownException()
-		{
-			Exception exception = CreateCustomException();
+			Exception exception = new CustomException { Value = value };
 			Action action = () => throw exception;
 
 			CustomException result =
 				await That(action).Should().Throw<CustomException>();
 
+			await That(result.Value).Should().Be(value);
 			await That(result).Should().BeSameAs(exception);
 		}
 
 		[Fact]
-		public async Task WithoutThrownException_ShouldFail()
+		public async Task WhenExactExceptionTypeIsThrown_ShouldSucceed()
 		{
-			string expectedMessage = """
-			                         Expected action to
-			                         throw a CustomException,
-			                         but it did not
-			                         at Expect.That(action).Should().Throw<CustomException>()
-			                         """;
+			Exception exception = new CustomException();
+			Action action = () => throw exception;
+
+			async Task<CustomException> Act()
+				=> await That(action).Should().Throw<CustomException>();
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenNoExceptionIsThrown_ShouldFail()
+		{
 			Action action = () => { };
 
 			async Task<CustomException> Act()
 				=> await That(action).Should().Throw<CustomException>();
 
 			await That(Act).Should().ThrowException()
-				.WithMessage(expectedMessage);
+				.WithMessage("""
+				             Expected action to
+				             throw a CustomException,
+				             but it did not
+				             at Expect.That(action).Should().Throw<CustomException>()
+				             """);
 		}
 
-		[Fact]
-		public async Task WithThrownExactException_ShouldSucceed()
+		[Theory]
+		[AutoData]
+		public async Task WhenOtherExceptionIsThrown_ShouldFail(string message)
 		{
-			Exception exception = CreateCustomException();
-			Action action = () => throw exception;
-
-			async Task<CustomException> Act()
-				=> await That(action).Should().Throw<CustomException>();
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
-		public async Task WithThrownOtherException_ShouldFail()
-		{
-			string expectedMessage = $"""
-			                          Expected action to
-			                          throw a CustomException,
-			                          but it did throw an OtherException:
-			                            {nameof(WithThrownOtherException_ShouldFail)}
-			                          at Expect.That(action).Should().Throw<CustomException>()
-			                          """;
-			Exception exception = CreateOtherException();
+			Exception exception = new OtherException(message);
 			Action action = () => throw exception;
 
 			async Task<CustomException> Act()
 				=> await That(action).Should().Throw<CustomException>();
 
 			await That(Act).Should().ThrowException()
-				.WithMessage(expectedMessage);
+				.WithMessage($"""
+				              Expected action to
+				              throw a CustomException,
+				              but it did throw an OtherException:
+				                {message}
+				              at Expect.That(action).Should().Throw<CustomException>()
+				              """);
 		}
 
 		[Fact]
-		public async Task WithThrownSubtypeException_ShouldSucceed()
+		public async Task WhenSubCustomExceptionIsThrown_ShouldSucceed()
 		{
-			Exception exception = CreateSubCustomException();
+			Exception exception = new SubCustomException();
 			Action action = () => throw exception;
 
 			async Task<CustomException> Act()
@@ -89,24 +79,24 @@ public sealed partial class DelegateShould
 			await That(Act).Should().NotThrow();
 		}
 
-		[Fact]
-		public async Task WithThrownSupertypeException_ShouldFail()
+		[Theory]
+		[AutoData]
+		public async Task WhenSupertypeExceptionIsThrown_ShouldFail(string message)
 		{
-			string expectedMessage = $"""
-			                          Expected action to
-			                          throw a SubCustomException,
-			                          but it did throw a CustomException:
-			                            {nameof(WithThrownSupertypeException_ShouldFail)}
-			                          at Expect.That(action).Should().Throw<SubCustomException>()
-			                          """;
-			Exception exception = CreateCustomException();
+			Exception exception = new CustomException(message);
 			Action action = () => throw exception;
 
 			async Task<SubCustomException> Act()
 				=> await That(action).Should().Throw<SubCustomException>();
 
 			await That(Act).Should().ThrowException()
-				.WithMessage(expectedMessage);
+				.WithMessage($"""
+				              Expected action to
+				              throw a SubCustomException,
+				              but it did throw a CustomException:
+				                {message}
+				              at Expect.That(action).Should().Throw<SubCustomException>()
+				              """);
 		}
 	}
 }
