@@ -15,23 +15,6 @@ public sealed partial class NullableBoolShould
 			await That(Act).Should().NotThrow();
 		}
 
-		[Fact]
-		public async Task WhenTrue_ShouldFail()
-		{
-			bool? subject = true;
-
-			async Task Act()
-				=> await That(subject).Should().BeFalse();
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage("""
-				             Expected subject to
-				             be False,
-				             but found True
-				             at Expect.That(subject).Should().BeFalse()
-				             """);
-		}
-
 		[Theory]
 		[InlineData(true)]
 		[InlineData(null)]
