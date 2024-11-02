@@ -62,19 +62,19 @@ public sealed class DefaultFormatterTests
 		await That(result).Should().Be("System.Object (HashCode=*)").AsWildcard();
 	}
 
-	private class ClassWithExceptionProperty(Exception exception)
+	private sealed class ClassWithExceptionProperty(Exception exception)
 	{
 		// ReSharper disable once UnusedMember.Local
 		public int Value => throw exception;
 	}
 
-	private class ClassWithField
+	private sealed class ClassWithField
 	{
 		// ReSharper disable once NotAccessedField.Local
 		public int Value = 2;
 	}
 
-	private class Dummy
+	private sealed class Dummy
 	{
 		// ReSharper disable once UnusedAutoPropertyAccessor.Local
 		public InnerDummy? Inner { get; set; }
@@ -83,9 +83,9 @@ public sealed class DefaultFormatterTests
 		public int Value { get; set; }
 	}
 
-	private class EmptyClass;
+	private sealed class EmptyClass;
 
-	private class InnerDummy
+	private sealed class InnerDummy
 	{
 		// ReSharper disable once UnusedAutoPropertyAccessor.Local
 		public string? InnerValue { get; set; }

@@ -74,7 +74,7 @@ public sealed partial class DelegateThrows
 		{
 			string actual = "actual text";
 			string expected = "expected other text";
-			Action action = () => throw new Exception(actual);
+			Action action = () => throw new CustomException(actual);
 
 			async Task Act()
 				=> await That(action).Should().ThrowException().WithMessage(expected);

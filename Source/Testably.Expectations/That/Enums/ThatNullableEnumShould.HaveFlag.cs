@@ -21,8 +21,7 @@ public static partial class ThatNullableEnumShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"have flag {Formatter.Format(expectedFlag)}",
-					actual => actual == null && expectedFlag == null ||
-					          actual != null && expectedFlag != null && actual.Value.HasFlag(expectedFlag)))
+					actual => HasFlag(actual, expectedFlag)))
 				.AppendMethodStatement(nameof(HaveFlag), doNotPopulateThisValue),
 			source);
 
@@ -38,9 +37,13 @@ public static partial class ThatNullableEnumShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have flag {Formatter.Format(unexpectedFlag)}",
-					actual => (actual == null) != (unexpectedFlag == null) ||
-				              actual != null && unexpectedFlag != null &&
-				              !actual.Value.HasFlag(unexpectedFlag)))
+					actual => !HasFlag(actual, unexpectedFlag)))
 				.AppendMethodStatement(nameof(NotHaveFlag), doNotPopulateThisValue),
 			source);
+
+	private static bool HasFlag<TEnum>(TEnum? actual, TEnum? expectedFlag)
+		where TEnum : struct, Enum
+		=> (actual == null && expectedFlag == null) ||
+		   (actual != null && expectedFlag != null &&
+		    actual.Value.HasFlag(expectedFlag));
 }

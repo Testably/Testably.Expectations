@@ -79,7 +79,7 @@ public sealed partial class HttpResponseMessageShould
 			HttpStatusCode.PartialContent
 		];
 
-	private class HttpResponseBuilder
+	private sealed class HttpResponseBuilder
 	{
 		private HttpContent? _content;
 		private HttpRequestBuilder? _requestBuilder;

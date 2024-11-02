@@ -182,10 +182,10 @@ public sealed partial class StringShould
 		public async Task WhenSubjectDoesNotStartWithExpected_ShouldSucceed()
 		{
 			string subject = "some text";
-			string expected = "text";
+			string expected = "TEXT";
 
 			async Task Act()
-				=> await That(subject).Should().NotStartWith(expected);
+				=> await That(subject).Should().NotStartWith(expected).IgnoringCase();
 
 			await That(Act).Should().NotThrow();
 		}
@@ -194,17 +194,17 @@ public sealed partial class StringShould
 		public async Task WhenSubjectDoesStartWithExpected_ShouldFail()
 		{
 			string subject = "some text";
-			string expected = "some";
+			string expected = "SOME";
 
 			async Task Act()
-				=> await That(subject).Should().NotStartWith(expected);
+				=> await That(subject).Should().NotStartWith(expected).IgnoringCase();
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not start with "some",
+				             not start with "SOME" ignoring case,
 				             but found "some text"
-				             at Expect.That(subject).Should().NotStartWith(expected)
+				             at Expect.That(subject).Should().NotStartWith(expected).IgnoringCase()
 				             """);
 		}
 	}

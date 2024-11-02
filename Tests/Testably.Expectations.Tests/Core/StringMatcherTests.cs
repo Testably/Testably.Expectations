@@ -213,7 +213,7 @@ public class StringMatcherTests
 			WhenTheExpectedStringHasTrailingAndLeadingWhitespace_ShouldFailWithDescriptiveMessage()
 		{
 			string subject = "ABC";
-			string expected = "	ABC ";
+			string expected = "\tABC\t";
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
@@ -312,7 +312,7 @@ public class StringMatcherTests
 		[Fact]
 		public async Task WhenTheSubjectHasLeadingWhitespace_ShouldFailWithDescriptiveMessage()
 		{
-			string subject = "	 ABC";
+			string subject = "\t ABC";
 			string expected = "ABC";
 
 			async Task Act()
@@ -326,7 +326,7 @@ public class StringMatcherTests
 		public async Task
 			WhenTheSubjectHasTrailingAndLeadingWhitespace_ShouldFailWithDescriptiveMessage()
 		{
-			string subject = " ABC	";
+			string subject = " ABC\t";
 			string expected = "ABC";
 
 			async Task Act()
@@ -339,7 +339,7 @@ public class StringMatcherTests
 		[Fact]
 		public async Task WhenTheSubjectHasTrailingWhitespace_ShouldFailWithDescriptiveMessage()
 		{
-			string subject = "ABC	";
+			string subject = "ABC\t";
 			string expected = "ABC";
 
 			async Task Act()

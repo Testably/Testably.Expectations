@@ -41,7 +41,7 @@ public sealed partial class ObjectShould
 				await That(Act).Should().NotThrow();
 			}
 
-			private class MyComparer(bool considerEqual) : IEqualityComparer<object>
+			private sealed class MyComparer(bool considerEqual) : IEqualityComparer<object>
 			{
 				#region IEqualityComparer<object> Members
 

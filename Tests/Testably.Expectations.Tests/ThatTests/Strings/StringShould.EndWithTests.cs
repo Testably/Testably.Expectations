@@ -117,17 +117,17 @@ public sealed partial class StringShould
 		public async Task IgnoringCase_WhenSubjectDoesEndWithExpected_ShouldFail()
 		{
 			string subject = "some text";
-			string expected = "text";
+			string expected = "TEXT";
 
 			async Task Act()
-				=> await That(subject).Should().NotEndWith(expected);
+				=> await That(subject).Should().NotEndWith(expected).IgnoringCase();
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not end with "text",
+				             not end with "TEXT" ignoring case,
 				             but found "some text"
-				             at Expect.That(subject).Should().NotEndWith(expected)
+				             at Expect.That(subject).Should().NotEndWith(expected).IgnoringCase()
 				             """);
 		}
 
@@ -135,10 +135,10 @@ public sealed partial class StringShould
 		public async Task IgnoringCase_WhenSubjectDoesNotEndWithWithExpected_ShouldSucceed()
 		{
 			string subject = "some text";
-			string expected = "some";
+			string expected = "SOME";
 
 			async Task Act()
-				=> await That(subject).Should().NotEndWith(expected);
+				=> await That(subject).Should().NotEndWith(expected).IgnoringCase();
 
 			await That(Act).Should().NotThrow();
 		}

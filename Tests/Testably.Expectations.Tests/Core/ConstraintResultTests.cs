@@ -205,7 +205,7 @@ public sealed class ConstraintResultTests
 		await That(result).Should().Be($"SUCCEEDED {expectationText}");
 	}
 
-	private class Dummy
+	private sealed class Dummy
 	{
 		public int Value { get; set; }
 	}
