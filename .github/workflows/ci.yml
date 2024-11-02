@@ -1,145 +1,185 @@
 name: "CI"
 
 on:
-  workflow_dispatch: 
-  pull_request:
-    branches: [main]
-    
+    workflow_dispatch:
+    pull_request:
+        branches: [main]
+
 jobs:
-  test-macos:
-    name: Test (MacOS)
-    runs-on: macos-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            6.0.x
-      - name: Build solution
-        run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-      - name: Run tests
-        run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
-      - name: Upload test results (MacOS)
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: Test results (MacOS)
-          path: TestResults
-      - name: Upload coverage
-        uses: actions/upload-artifact@v3
-        with:
-          name: Code coverage (MacOS)
-          path: "**/coverage.cobertura.xml"
-
-  test-ubuntu:
-    name: Test (Ubuntu)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            6.0.x
-      - name: Build solution
-        run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-      - name: Run tests
-        run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
-      - name: Upload test results (Ubuntu)
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: Test results (Ubuntu)
-          path: TestResults
-      - name: Upload coverage
-        uses: actions/upload-artifact@v3
-        with:
-          name: Code coverage (Ubuntu)
-          path: "**/coverage.cobertura.xml"
-
-  test-windows:
-    name: Test (Windows)
-    runs-on: windows-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            6.0.x
-      - name: Build solution
-        run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-      - name: Run tests
-        run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
-      - name: Upload test results (Windows)
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: Test results (Windows)
-          path: TestResults
-      - name: Upload coverage
-        uses: actions/upload-artifact@v3
-        with:
-          name: Code coverage (Windows)
-          path: "**/coverage.cobertura.xml"
-        
-  test-net-framework:
-    name: Test (.NET Framework)
-    runs-on: windows-latest
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
-      - name: Setup VSTest
-        uses: darenm/Setup-VSTest@v1
-      - name: Navigate to Workspace
-        run: cd $GITHUB_WORKSPACE
-      - name: Build solution
-        run: msbuild.exe Testably.Expectations.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
-      - name: Run tests
-        run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll /Logger:trx /ResultsDirectory:TestResults
-      - name: Upload test results (.NET Framework)
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: Test results (.NET Framework)
-          path: TestResults
-
-  stryker-ubuntu:
-    name: Stryker mutation testing
-    runs-on: ubuntu-latest
-    timeout-minutes: 300
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: |
-            8.0.x
-      - name: Install .NET Stryker
-        shell: bash
-        run: |
-          dotnet tool install dotnet-stryker --tool-path ../tools
-      - name: Analyze Testably.Expectations
-        env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-        shell: bash
-        run: |
-          cd Tests
-          ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.CI.Config.json -v "${GITHUB_REF#refs/heads/}" -r "Dashboard" -r "cleartext"
+    test-macos:
+        name: Test (MacOS)
+        runs-on: macos-latest
+        steps:
+            - name: Checkout sources
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: |
+                      6.0.x
+                      8.0.x
+            - name: Build solution
+              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            - name: Run tests
+              run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
+            - name: Upload test results (MacOS)
+              if: ${{ always() }}
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Test results (MacOS)
+                  path: TestResults
+            - name: Upload coverage
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Code coverage (MacOS)
+                  path: "**/coverage.cobertura.xml"
+    
+    test-ubuntu:
+        name: Test (Ubuntu)
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout sources
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: |
+                      6.0.x
+                      8.0.x
+            - name: Build solution
+              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            - name: Run tests
+              run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
+            - name: Upload test results (Ubuntu)
+              if: ${{ always() }}
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Test results (Ubuntu)
+                  path: TestResults
+            - name: Upload coverage
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Code coverage (Ubuntu)
+                  path: "**/coverage.cobertura.xml"
+    
+    test-windows:
+        name: Test (Windows)
+        runs-on: windows-latest
+        steps:
+            - name: Checkout sources
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: |
+                      6.0.x
+                      8.0.x
+            - name: Build solution
+              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            - name: Run tests
+              run: dotnet test --no-build --collect:"XPlat Code Coverage" --logger trx --results-directory "TestResults"
+            - name: Upload test results (Windows)
+              if: ${{ always() }}
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Test results (Windows)
+                  path: TestResults
+            - name: Upload coverage
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Code coverage (Windows)
+                  path: "**/coverage.cobertura.xml"
+    
+    test-net-framework:
+        name: Test (.NET Framework)
+        runs-on: windows-latest
+        steps:
+            - name: Checkout sources
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Setup MSBuild
+              uses: microsoft/setup-msbuild@v2
+            - name: Setup VSTest
+              uses: darenm/Setup-VSTest@v1
+            - name: Navigate to Workspace
+              run: cd $GITHUB_WORKSPACE
+            - name: Build solution
+              run: msbuild.exe Testably.Expectations.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
+            - name: Run tests
+              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\TestFramework.NUnit3.Tests\net48\TestFramework.NUnit3.Tests.dll .\Build\Tests\TestFramework.NUnit4.Tests\net48\TestFramework.NUnit4.Tests.dll .\Build\Tests\TestFramework.XUnit2.Tests\net48\TestFramework.XUnit2.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
+            - name: Upload test results (.NET Framework)
+              if: ${{ always() }}
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Test results (.NET Framework)
+                  path: TestResults
+            - name: Upload coverage
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Code coverage (.NET Framework)
+                  path: "**/*.cobertura.xml"
+    
+    stryker:
+        name: Stryker mutation testing
+        runs-on: ubuntu-latest
+        timeout-minutes: 300
+        steps:
+            - name: Checkout sources
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: |
+                      6.0.x
+                      8.0.x
+            - name: Install .NET Stryker
+              shell: bash
+              run: |
+                  dotnet tool install dotnet-stryker --tool-path ../tools
+            - name: Prepare Reports directory
+              shell: bash
+              run: |
+                  mkdir Tests/StrykerOutput/Reports -p
+            - name: Analyze Testably.Expectations
+              env:
+                  STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+              shell: bash
+              run: |
+                  cd Tests
+                  ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.CI.Config.json -v "${GITHUB_HEAD_REF}" -r "Dashboard" -r "html" -r "cleartext" --since:main
+                  mv ./StrykerOutput/**/reports/*.html ./StrykerOutput/Reports/Testably.Expectations-report.html
+            - name: Upload Stryker reports
+              uses: actions/upload-artifact@v3
+              with:
+                  name: Stryker
+                  path: Tests/StrykerOutput/Reports/*
+            - name: Add comment to pull request
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              shell: bash
+              run: |
+                  prNumber="${{ github.event.number }}"
+                  commentsUrl="https://api.github.com/repos/Testably/Testably.Expectations/issues/$prNumber/comments"
+                  mutationBadge="[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FTestably%2FTestably.Expectations%2F${GITHUB_HEAD_REF})](https://dashboard.stryker-mutator.io/reports/github.com/Testably/Testably.Expectations/${GITHUB_HEAD_REF})"
+                  dashboardLink="[Stryker.NET](https://stryker-mutator.io/docs/stryker-net/introduction/) mutation tested the changes in the pull request:  \n$mutationBadge"
+                  echo "Search for comment in PR#$prNumber containing $mutationBadge..."
+                  result=$(curl -X GET $commentsUrl \
+                    -H "Content-Type: application/json" \
+                    -H "Authorization: token $GITHUB_TOKEN")
+                  if [[ $result != *"$mutationBadge"* ]]
+                  then
+                    body="{\"body\":\"$dashboardLink\"}"
+                    curl -X POST $commentsUrl \
+                      -H "Accept: application/vnd.github+json" \
+                      -H "Authorization: token $GITHUB_TOKEN" \
+                  	  -d "$body"
+                  fi
