@@ -11,7 +11,7 @@ public abstract partial class CollectionQuantifier
 	public static CollectionQuantifier Between(int minimum, int maximum)
 		=> new BetweenQuantifier(minimum, maximum);
 
-	private class BetweenQuantifier(int minimum, int maximum) : CollectionQuantifier
+	private sealed class BetweenQuantifier(int minimum, int maximum) : CollectionQuantifier
 	{
 		/// <inheritdoc />
 		public override string ToString(bool includeItems) => $"between {minimum} and {maximum}{(includeItems ? " items" : "")}";

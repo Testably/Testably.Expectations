@@ -147,7 +147,7 @@ internal class Tree
 		return true;
 	}
 
-	private class TreeNode
+	private sealed class TreeNode
 	{
 		public Node Node { get; set; } = Node.None;
 		public TreeNode? Parent { get; set; }

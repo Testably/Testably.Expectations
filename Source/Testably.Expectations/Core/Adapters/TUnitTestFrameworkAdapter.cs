@@ -59,7 +59,7 @@ internal class TUnitTestFrameworkAdapter : ITestFrameworkAdapter
 		}
 
 		Type exceptionType =
-			_assertionsAssembly?.GetType("TUnit.Assertions.Exceptions.AssertionException")
+			_assertionsAssembly.GetType("TUnit.Assertions.Exceptions.AssertionException")
 			?? throw new NotSupportedException(
 				"Failed to create the TUnit fail assertion type");
 

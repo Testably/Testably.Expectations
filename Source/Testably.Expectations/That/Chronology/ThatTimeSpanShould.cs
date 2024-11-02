@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
@@ -15,16 +14,14 @@ public static partial class ThatTimeSpanShould
 	/// <summary>
 	///     Start expectations for current <see cref="TimeSpan" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TimeSpan> Should(this IExpectSubject<TimeSpan> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static IThat<TimeSpan> Should(this IExpectSubject<TimeSpan> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeSpan" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TimeSpan?> Should(this IExpectSubject<TimeSpan?> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static IThat<TimeSpan?> Should(this IExpectSubject<TimeSpan?> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 

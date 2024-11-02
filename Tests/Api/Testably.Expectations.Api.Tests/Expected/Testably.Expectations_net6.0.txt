@@ -101,7 +101,6 @@ namespace Testably.Expectations
         public static Testably.Expectations.QuantifiedCollectionResult.Async<Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>>, TItem, System.Collections.Generic.IAsyncEnumerable<TItem>> AtMost<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>> source, int maximum, [System.Runtime.CompilerServices.CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.Collections.Generic.IAsyncEnumerable<TItem>, Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>>> BeEmpty<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>> source) { }
         public static Testably.Expectations.BetweenResult<Testably.Expectations.QuantifiedCollectionResult.Async<Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>>, TItem, System.Collections.Generic.IAsyncEnumerable<TItem>>> Between<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>> source, int minimum, [System.Runtime.CompilerServices.CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Results.AndOrResult<System.Collections.Generic.IAsyncEnumerable<TItem>, Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>>> Contain<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>> source, TItem expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.QuantifiedCollectionResult.Async<Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>>, TItem, System.Collections.Generic.IAsyncEnumerable<TItem>> None<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>> source) { }
         public static Testably.Expectations.Results.AndOrResult<System.Collections.Generic.IAsyncEnumerable<TItem>, Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>>> NotBeEmpty<TItem>(this Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>> source) { }
         public static Testably.Expectations.Core.IThat<System.Collections.Generic.IAsyncEnumerable<TItem>> Should<TItem>(this Testably.Expectations.Core.IExpectSubject<System.Collections.Generic.IAsyncEnumerable<TItem>> subject) { }
@@ -124,15 +123,15 @@ namespace Testably.Expectations
     {
         public static Testably.Expectations.Results.AndOrResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> Be(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> NotBe(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.DateOnly?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateOnly?> subject) { }
         public static Testably.Expectations.Core.IThat<System.DateOnly> Should(this Testably.Expectations.Core.IExpectSubject<System.DateOnly> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.DateOnly?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateOnly?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatDateTimeOffsetShould
     {
         public static Testably.Expectations.Results.AndOrResult<System.DateTimeOffset, Testably.Expectations.Core.IThat<System.DateTimeOffset>> Be(this Testably.Expectations.Core.IThat<System.DateTimeOffset> source, System.DateTimeOffset expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.DateTimeOffset, Testably.Expectations.Core.IThat<System.DateTimeOffset>> NotBe(this Testably.Expectations.Core.IThat<System.DateTimeOffset> source, System.DateTimeOffset unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.DateTimeOffset> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTimeOffset> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.DateTimeOffset?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTimeOffset?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.DateTimeOffset> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTimeOffset> subject) { }
+        public static Testably.Expectations.Core.IThat<System.DateTimeOffset?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTimeOffset?> subject) { }
     }
     public static class ThatDateTimeShould
     {
@@ -218,7 +217,7 @@ namespace Testably.Expectations
     {
         public static Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatExceptionShould<TException>> HaveParamName<TException>(this Testably.Expectations.ThatExceptionShould<TException> source, string expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
             where TException : System.ArgumentException? { }
-        public static Testably.Expectations.ThatExceptionShould<TException> Should<TException>(this Testably.Expectations.Core.IExpectSubject<TException> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+        public static Testably.Expectations.ThatExceptionShould<TException> Should<TException>(this Testably.Expectations.Core.IExpectSubject<TException> subject)
             where TException : System.Exception? { }
         public static Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithParamName<TException>(this Testably.Expectations.ThatDelegateThrows<TException> source, string expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
             where TException : System.ArgumentException? { }
@@ -248,7 +247,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<System.Guid, Testably.Expectations.Core.IThat<System.Guid>> BeEmpty(this Testably.Expectations.Core.IThat<System.Guid> source) { }
         public static Testably.Expectations.Results.AndOrResult<System.Guid, Testably.Expectations.Core.IThat<System.Guid>> NotBe(this Testably.Expectations.Core.IThat<System.Guid> source, System.Guid unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.Guid, Testably.Expectations.Core.IThat<System.Guid>> NotBeEmpty(this Testably.Expectations.Core.IThat<System.Guid> source) { }
-        public static Testably.Expectations.Core.IThat<System.Guid> Should(this Testably.Expectations.Core.IExpectSubject<System.Guid> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.Guid> Should(this Testably.Expectations.Core.IExpectSubject<System.Guid> subject) { }
     }
     public static class ThatHttpResponseMessageShould
     {
@@ -260,7 +259,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<System.Net.Http.HttpResponseMessage, Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?>> HaveServerError(this Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?> source) { }
         public static Testably.Expectations.Results.AndOrResult<System.Net.Http.HttpResponseMessage, Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?>> HaveStatusCode(this Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?> source, System.Net.HttpStatusCode expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.Net.Http.HttpResponseMessage, Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?>> NotHaveStatusCode(this Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?> source, System.Net.HttpStatusCode unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?> Should(this Testably.Expectations.Core.IExpectSubject<System.Net.Http.HttpResponseMessage?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.Net.Http.HttpResponseMessage?> Should(this Testably.Expectations.Core.IExpectSubject<System.Net.Http.HttpResponseMessage?> subject) { }
     }
     public static class ThatNullableBoolShould
     {
@@ -272,7 +271,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<bool?, Testably.Expectations.Core.IThat<bool?>> NotBeFalse(this Testably.Expectations.Core.IThat<bool?> source) { }
         public static Testably.Expectations.Results.AndOrResult<bool?, Testably.Expectations.Core.IThat<bool?>> NotBeNull(this Testably.Expectations.Core.IThat<bool?> source) { }
         public static Testably.Expectations.Results.AndOrResult<bool?, Testably.Expectations.Core.IThat<bool?>> NotBeTrue(this Testably.Expectations.Core.IThat<bool?> source) { }
-        public static Testably.Expectations.Core.IThat<bool?> Should(this Testably.Expectations.Core.IExpectSubject<bool?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<bool?> Should(this Testably.Expectations.Core.IExpectSubject<bool?> subject) { }
     }
     public static class ThatNullableDateTimeShould
     {
@@ -321,7 +320,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<System.Guid?, Testably.Expectations.Core.IThat<System.Guid?>> NotBe(this Testably.Expectations.Core.IThat<System.Guid?> source, System.Guid? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.Guid?, Testably.Expectations.Core.IThat<System.Guid?>> NotBeEmpty(this Testably.Expectations.Core.IThat<System.Guid?> source) { }
         public static Testably.Expectations.Results.AndOrResult<System.Guid?, Testably.Expectations.Core.IThat<System.Guid?>> NotBeNull(this Testably.Expectations.Core.IThat<System.Guid?> source) { }
-        public static Testably.Expectations.Core.IThat<System.Guid?> Should(this Testably.Expectations.Core.IExpectSubject<System.Guid?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.Guid?> Should(this Testably.Expectations.Core.IExpectSubject<System.Guid?> subject) { }
     }
     public static class ThatNumberShould
     {
@@ -343,32 +342,32 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> NotBeInfinite(this Testably.Expectations.Core.IThat<float> source) { }
         public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> NotBeNaN(this Testably.Expectations.Core.IThat<double> source) { }
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> NotBeNaN(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Core.IThat<byte> Should(this Testably.Expectations.Core.IExpectSubject<byte> subject) { }
+        public static Testably.Expectations.Core.IThat<decimal> Should(this Testably.Expectations.Core.IExpectSubject<decimal> subject) { }
+        public static Testably.Expectations.Core.IThat<double> Should(this Testably.Expectations.Core.IExpectSubject<double> subject) { }
+        public static Testably.Expectations.Core.IThat<short> Should(this Testably.Expectations.Core.IExpectSubject<short> subject) { }
         public static Testably.Expectations.Core.IThat<int> Should(this Testably.Expectations.Core.IExpectSubject<int> subject) { }
+        public static Testably.Expectations.Core.IThat<long> Should(this Testably.Expectations.Core.IExpectSubject<long> subject) { }
         public static Testably.Expectations.Core.IThat<System.IntPtr> Should(this Testably.Expectations.Core.IExpectSubject<System.IntPtr> subject) { }
         public static Testably.Expectations.Core.IThat<System.IntPtr?> Should(this Testably.Expectations.Core.IExpectSubject<System.IntPtr?> subject) { }
+        public static Testably.Expectations.Core.IThat<sbyte> Should(this Testably.Expectations.Core.IExpectSubject<sbyte> subject) { }
+        public static Testably.Expectations.Core.IThat<float> Should(this Testably.Expectations.Core.IExpectSubject<float> subject) { }
+        public static Testably.Expectations.Core.IThat<ushort> Should(this Testably.Expectations.Core.IExpectSubject<ushort> subject) { }
         public static Testably.Expectations.Core.IThat<uint> Should(this Testably.Expectations.Core.IExpectSubject<uint> subject) { }
+        public static Testably.Expectations.Core.IThat<ulong> Should(this Testably.Expectations.Core.IExpectSubject<ulong> subject) { }
         public static Testably.Expectations.Core.IThat<System.UIntPtr> Should(this Testably.Expectations.Core.IExpectSubject<System.UIntPtr> subject) { }
+        public static Testably.Expectations.Core.IThat<System.UIntPtr?> Should(this Testably.Expectations.Core.IExpectSubject<System.UIntPtr?> subject) { }
+        public static Testably.Expectations.Core.IThat<byte?> Should(this Testably.Expectations.Core.IExpectSubject<byte?> subject) { }
+        public static Testably.Expectations.Core.IThat<decimal?> Should(this Testably.Expectations.Core.IExpectSubject<decimal?> subject) { }
+        public static Testably.Expectations.Core.IThat<double?> Should(this Testably.Expectations.Core.IExpectSubject<double?> subject) { }
+        public static Testably.Expectations.Core.IThat<float?> Should(this Testably.Expectations.Core.IExpectSubject<float?> subject) { }
         public static Testably.Expectations.Core.IThat<int?> Should(this Testably.Expectations.Core.IExpectSubject<int?> subject) { }
+        public static Testably.Expectations.Core.IThat<long?> Should(this Testably.Expectations.Core.IExpectSubject<long?> subject) { }
+        public static Testably.Expectations.Core.IThat<sbyte?> Should(this Testably.Expectations.Core.IExpectSubject<sbyte?> subject) { }
+        public static Testably.Expectations.Core.IThat<short?> Should(this Testably.Expectations.Core.IExpectSubject<short?> subject) { }
         public static Testably.Expectations.Core.IThat<uint?> Should(this Testably.Expectations.Core.IExpectSubject<uint?> subject) { }
-        public static Testably.Expectations.Core.IThat<byte> Should(this Testably.Expectations.Core.IExpectSubject<byte> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<decimal> Should(this Testably.Expectations.Core.IExpectSubject<decimal> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<double> Should(this Testably.Expectations.Core.IExpectSubject<double> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<short> Should(this Testably.Expectations.Core.IExpectSubject<short> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<long> Should(this Testably.Expectations.Core.IExpectSubject<long> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<sbyte> Should(this Testably.Expectations.Core.IExpectSubject<sbyte> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<float> Should(this Testably.Expectations.Core.IExpectSubject<float> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<ushort> Should(this Testably.Expectations.Core.IExpectSubject<ushort> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<ulong> Should(this Testably.Expectations.Core.IExpectSubject<ulong> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.UIntPtr?> Should(this Testably.Expectations.Core.IExpectSubject<System.UIntPtr?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<byte?> Should(this Testably.Expectations.Core.IExpectSubject<byte?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<decimal?> Should(this Testably.Expectations.Core.IExpectSubject<decimal?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<double?> Should(this Testably.Expectations.Core.IExpectSubject<double?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<float?> Should(this Testably.Expectations.Core.IExpectSubject<float?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<long?> Should(this Testably.Expectations.Core.IExpectSubject<long?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<sbyte?> Should(this Testably.Expectations.Core.IExpectSubject<sbyte?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<short?> Should(this Testably.Expectations.Core.IExpectSubject<short?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<ulong?> Should(this Testably.Expectations.Core.IExpectSubject<ulong?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<ushort?> Should(this Testably.Expectations.Core.IExpectSubject<ushort?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<ulong?> Should(this Testably.Expectations.Core.IExpectSubject<ulong?> subject) { }
+        public static Testably.Expectations.Core.IThat<ushort?> Should(this Testably.Expectations.Core.IExpectSubject<ushort?> subject) { }
     }
     public static class ThatObjectShould
     {
@@ -377,7 +376,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<object?, Testably.Expectations.Core.IThat<object?>> BeNull(this Testably.Expectations.Core.IThat<object?> source) { }
         public static Testably.Expectations.Results.AndOrResult<T, Testably.Expectations.Core.IThat<object?>> For<T, TProperty>(this Testably.Expectations.Core.IThat<object?> source, System.Linq.Expressions.Expression<System.Func<T, TProperty?>> selector, System.Action<Testably.Expectations.Core.IThat<TProperty?>> expectations, [System.Runtime.CompilerServices.CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "", [System.Runtime.CompilerServices.CallerArgumentExpression("expectations")] string doNotPopulateThisValue2 = "") { }
         public static Testably.Expectations.Results.AndOrResult<object, Testably.Expectations.Core.IThat<object?>> NotBeNull(this Testably.Expectations.Core.IThat<object?> source) { }
-        public static Testably.Expectations.Core.IThat<object?> Should(this Testably.Expectations.Core.IExpectSubject<object?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<object?> Should(this Testably.Expectations.Core.IExpectSubject<object?> subject) { }
     }
     public static class ThatQuantifiedCollectionResultShould { }
     public static class ThatQuantifiedCollectionResultShouldAsync
@@ -433,22 +432,22 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotContain(this Testably.Expectations.Core.IThat<string?> source, string unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotEndWith(this Testably.Expectations.Core.IThat<string?> source, string unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotStartWith(this Testably.Expectations.Core.IThat<string?> source, string unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<string?> Should(this Testably.Expectations.Core.IExpectSubject<string?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<string?> Should(this Testably.Expectations.Core.IExpectSubject<string?> subject) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> StartWith(this Testably.Expectations.Core.IThat<string?> source, string expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatTimeOnlyShould
     {
         public static Testably.Expectations.Results.AndOrResult<System.TimeOnly, Testably.Expectations.Core.IThat<System.TimeOnly>> Be(this Testably.Expectations.Core.IThat<System.TimeOnly> source, System.TimeOnly expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.TimeOnly, Testably.Expectations.Core.IThat<System.TimeOnly>> NotBe(this Testably.Expectations.Core.IThat<System.TimeOnly> source, System.TimeOnly unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.TimeOnly> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeOnly> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.TimeOnly?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeOnly?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.TimeOnly> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeOnly> subject) { }
+        public static Testably.Expectations.Core.IThat<System.TimeOnly?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeOnly?> subject) { }
     }
     public static class ThatTimeSpanShould
     {
         public static Testably.Expectations.Results.AndOrResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> Be(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> NotBe(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.TimeSpan> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Core.IThat<System.TimeSpan?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan?> subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IThat<System.TimeSpan> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan> subject) { }
+        public static Testably.Expectations.Core.IThat<System.TimeSpan?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan?> subject) { }
     }
 }
 namespace Testably.Expectations.Core.Constraints
