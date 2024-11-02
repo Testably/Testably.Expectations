@@ -555,7 +555,7 @@ namespace Testably.Expectations.Options
         public ObjectEqualityOptions() { }
         public Testably.Expectations.Options.ObjectEqualityOptions Equals() { }
         public Testably.Expectations.Options.ObjectEqualityOptions Equivalent(Testably.Expectations.Options.EquivalencyOptions equivalencyOptions) { }
-        public Testably.Expectations.Options.ObjectEqualityOptions UsingComparer(System.Collections.Generic.IEqualityComparer<object> comparer) { }
+        public Testably.Expectations.Options.ObjectEqualityOptions Using(System.Collections.Generic.IEqualityComparer<object> comparer) { }
         public readonly struct Result
         {
             public Result(bool areConsideredEqual, string failure = "") { }
