@@ -113,7 +113,7 @@ jobs:
             - name: Build solution
               run: msbuild.exe Testably.Expectations.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
             - name: Run tests
-              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\Testably.Expectations.Parity.Tests\net48\Testably.Expectations.Parity.Tests.dll .\Build\Tests\Testably.Expectations.Testing.Tests\net48\Testably.Expectations.Testing.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
+              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\Testably.Expectations.Api.Tests\net48\Testably.Expectations.Api.Tests.dll .\Build\Tests\TestFramework.NUnit3.Tests\net48\TestFramework.NUnit3.Tests.dll .\Build\Tests\TestFramework.NUnit4.Tests\net48\TestFramework.NUnit4.Tests.dll .\Build\Tests\TestFramework.XUnit2.Tests\net48\TestFramework.XUnit2.Tests.dll .\Build\Tests\TestFramework.TUnit.Tests\net48\TestFramework.TUnit.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
             - name: Upload test results (.NET Framework)
               if: ${{ always() }}
               uses: actions/upload-artifact@v3
@@ -126,7 +126,7 @@ jobs:
                   name: Code coverage (.NET Framework)
                   path: "**/*.cobertura.xml"
     
-    stryker-ubuntu:
+    stryker:
         name: Stryker mutation testing
         runs-on: ubuntu-latest
         timeout-minutes: 300
@@ -149,25 +149,19 @@ jobs:
               shell: bash
               run: |
                   mkdir Tests/StrykerOutput/Reports -p
-            - name: Analyze Testably.Expectations.Testing
+            - name: Analyze Testably.Expectations
               env:
                   STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
               shell: bash
               run: |
                   cd Tests
                   ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.CI.Config.json -v "${GITHUB_HEAD_REF}" -r "Dashboard" -r "html" -r "cleartext" --since:main
-                  mv ./StrykerOutput/**/reports/*.html ./StrykerOutput/Reports/Testably.Expectations.Testing-report.html
+                  mv ./StrykerOutput/**/reports/*.html ./StrykerOutput/Reports/Testably.Expectations-report.html
             - name: Upload Stryker reports
               uses: actions/upload-artifact@v3
               with:
                   name: Stryker
                   path: Tests/StrykerOutput/Reports/*
-    
-    stryker:
-        name: Stryker mutation testing result
-        runs-on: ubuntu-latest
-        needs: [stryker-ubuntu]
-        steps:
             - name: Add comment to pull request
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

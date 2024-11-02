@@ -121,7 +121,7 @@ jobs:
             - name: Build solution
               run: msbuild.exe Testably.Expectations.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
             - name: Run tests
-              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\Testably.Expectations.Parity.Tests\net48\Testably.Expectations.Parity.Tests.dll .\Build\Tests\Testably.Expectations.Testing.Tests\net48\Testably.Expectations.Testing.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
+              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\Testably.Expectations.Api.Tests\net48\Testably.Expectations.Api.Tests.dll .\Build\Tests\TestFramework.NUnit3.Tests\net48\TestFramework.NUnit3.Tests.dll .\Build\Tests\TestFramework.NUnit4.Tests\net48\TestFramework.NUnit4.Tests.dll .\Build\Tests\TestFramework.XUnit2.Tests\net48\TestFramework.XUnit2.Tests.dll .\Build\Tests\TestFramework.TUnit.Tests\net48\TestFramework.TUnit.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
             - name: Upload coverage
               uses: actions/upload-artifact@v3
               with:
@@ -166,7 +166,7 @@ jobs:
                   project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
                   coverage-reports: coverage-report/Cobertura.xml
     
-    stryker-ubuntu:
+    stryker:
         name: Stryker mutation testing
         runs-on: ubuntu-latest
         timeout-minutes: 300
@@ -185,7 +185,7 @@ jobs:
               shell: bash
               run: |
                   dotnet tool install dotnet-stryker --tool-path ../tools
-            - name: Analyze Testably.Expectations.Testing
+            - name: Analyze Testably.Expectations
               env:
                   STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
               shell: bash
@@ -198,7 +198,7 @@ jobs:
         if: startsWith(github.ref, 'refs/heads/release/')
         runs-on: ubuntu-latest
         environment: production
-        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker-ubuntu]
+        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker]
         steps:
             - name: Checkout sources
               uses: actions/checkout@v4
@@ -226,7 +226,7 @@ jobs:
                   version="${GITHUB_REF#refs/heads/release/}"
                   # Add changelog badge to README.md
                   sed -i -e "2 a\[!\[Changelog](https:\/\/img\.shields\.io\/badge\/Changelog-${version}-blue)](https:\/\/github\.com\/Testably\/Testably\.Expectations\/releases\/tag\/${version})" "./README.md"
-                  for f in "README.md" "Docs/AccessControl.md" "Docs/Compression.md" "Docs/Interface.md" "Docs/Testing.md"
+                  for f in "README.md"
                   do
                     echo "Processing $f" # always double quote "$f" filename
                     # do something on $f
