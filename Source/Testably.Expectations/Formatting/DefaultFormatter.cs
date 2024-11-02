@@ -92,25 +92,30 @@ internal class DefaultFormatter : IValueFormatter
 	private static void WriteMemberValueTextFor(object value, MemberInfo member,
 		StringBuilder stringBuilder, int indentation, FormattingOptions options)
 	{
-		object? memberValue;
+		string? formattedValue;
 
 		try
 		{
-			memberValue = member switch
+			if (member is FieldInfo fi)
 			{
-				FieldInfo fi => fi.GetValue(value),
-				PropertyInfo pi => pi.GetValue(value),
-				_ => throw new InvalidOperationException()
-			};
+				formattedValue = Formatter.Format(fi.GetValue(value), options);
+			}
+			else if (member is PropertyInfo pi)
+			{
+				formattedValue = Formatter.Format(pi.GetValue(value), options);
+			}
+			else
+			{
+				return;
+			}
 		}
 		catch (Exception ex)
 		{
 			ex = (ex as TargetInvocationException)?.InnerException ?? ex;
-			memberValue = $"[Member '{member.Name}' threw an exception: '{ex.Message}']";
+			formattedValue = $"[Member '{member.Name}' threw an exception: '{ex.Message}']";
 		}
 
 		stringBuilder.Append($"{new string(' ', indentation)}{member.Name} = ");
-		string? formattedValue = Formatter.Format(memberValue, options);
 		stringBuilder.Append(formattedValue);
 	}
 

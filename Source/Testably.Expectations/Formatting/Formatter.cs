@@ -30,6 +30,7 @@ public class Formatter
 		new TimeOnlyFormatter(),
 #endif
 		new GuidFormatter(),
+		new EnumFormatter(),
 		new NumberFormatter<int>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new NumberFormatter<uint>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new NumberFormatter<byte>(v => v.ToString(CultureInfo.InvariantCulture)),
@@ -41,7 +42,7 @@ public class Formatter
 		new NumberFormatter<float>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new NumberFormatter<double>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new NumberFormatter<decimal>(v => v.ToString(CultureInfo.InvariantCulture)),
-		new EnumFormatter(),
+		new NumberFormatter(),
 	];
 
 	/// <summary>

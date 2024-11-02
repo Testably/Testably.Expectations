@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Formatting;
 
-internal abstract class FormatterBase<T> : IValueFormatter
+internal abstract class FormatterBase<T> : IValueFormatter<T>
 {
 	#region IValueFormatter Members
 
