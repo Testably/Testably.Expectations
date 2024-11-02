@@ -15,6 +15,8 @@ public class StringMatcher(string? pattern)
 	private const int LongMaxLength = 300;
 	private static readonly IMatchType ExactMatch = new ExactMatchType();
 	private static readonly IMatchType RegexMatch = new RegexMatchType();
+
+	private static readonly TimeSpan RegexTimeout = TimeSpan.FromMilliseconds(1000);
 	private static readonly IMatchType WildcardMatch = new WildcardMatchType();
 
 	private IEqualityComparer<string>? _comparer;
@@ -132,7 +134,8 @@ public class StringMatcher(string? pattern)
 				options |= RegexOptions.IgnoreCase;
 			}
 
-			return Regex.IsMatch(value, WildcardToRegularExpression(pattern), options);
+			return Regex.IsMatch(value, WildcardToRegularExpression(pattern), options,
+				RegexTimeout);
 		}
 
 		#endregion
@@ -251,7 +254,7 @@ public class StringMatcher(string? pattern)
 				options |= RegexOptions.IgnoreCase;
 			}
 
-			return Regex.IsMatch(value, pattern, options);
+			return Regex.IsMatch(value, pattern, options, RegexTimeout);
 		}
 
 		#endregion
