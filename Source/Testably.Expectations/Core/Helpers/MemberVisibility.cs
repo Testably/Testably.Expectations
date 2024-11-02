@@ -7,7 +7,7 @@ namespace Testably.Expectations.Core.Helpers;
 ///     Determines which members are included in the equivalency constraint
 /// </summary>
 [Flags]
-internal enum MemberVisibility
+internal enum MemberVisibilities
 {
 	None = 0,
 	Internal = 1,

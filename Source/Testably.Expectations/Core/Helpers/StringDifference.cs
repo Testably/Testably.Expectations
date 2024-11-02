@@ -10,9 +10,6 @@ internal class StringDifference(
 	string expectedValue,
 	IEqualityComparer<string>? comparer = null)
 {
-	private const char ArrowDown = '\u2193';
-	private const char ArrowUp = '\u2191';
-
 	/// <summary>
 	///     Returns the first index at which the two values do not match.
 	/// </summary>

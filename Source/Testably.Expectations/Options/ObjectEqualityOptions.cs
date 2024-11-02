@@ -113,7 +113,7 @@ public class ObjectEqualityOptions
 
 		#endregion
 
-		private bool HandleSpecialCases(object? a, object? b,
+		private static bool HandleSpecialCases(object? a, object? b,
 			[NotNullWhen(true)] out bool? isConsideredEqual)
 		{
 			if (a is IEqualityComparer basicEqualityComparer)

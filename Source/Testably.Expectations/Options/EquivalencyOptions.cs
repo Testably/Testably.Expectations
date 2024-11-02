@@ -24,12 +24,8 @@ public class EquivalencyOptions
 	/// <inheritdoc />
 	public override string ToString()
 	{
-		if (_membersToIgnore.Any())
-		{
-			return
-				$" ignoring [{string.Join(", ", _membersToIgnore.Select(m => Formatter.Format(m)))}]";
-		}
-
-		return "";
+		return _membersToIgnore.Count > 0
+			? $" ignoring [{string.Join(", ", _membersToIgnore.Select(m => Formatter.Format(m)))}]"
+			: "";
 	}
 }

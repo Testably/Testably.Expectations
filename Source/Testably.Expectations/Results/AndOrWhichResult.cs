@@ -68,8 +68,7 @@ public class AndOrWhichResult<TResult, TValue, TSelf>(
 		/// </summary>
 		public TReturn Should(
 			Action<IThat<TProperty?>> expectations,
-			[CallerArgumentExpression("expectations")]
-			string doNotPopulateThisValue = "")
+			[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
 		{
 			return resultCallback(expectations, doNotPopulateThisValue);
 		}

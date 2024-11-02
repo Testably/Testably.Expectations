@@ -19,7 +19,7 @@ public partial class ThatDelegateThrows<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					"with an inner exception which should ")
-				.Validate(new ThatExceptionShould.CastException<Exception>())
+				.Validate(new ThatExceptionShould.ExceptionCastConstraint<Exception>())
 				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e)))
 				.AppendMethodStatement(nameof(WithInnerException),
 					doNotPopulateThisValue),

@@ -15,16 +15,14 @@ public static partial class ThatDateTimeOffsetShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateTimeOffset" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<DateTimeOffset> Should(this IExpectSubject<DateTimeOffset> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static IThat<DateTimeOffset> Should(this IExpectSubject<DateTimeOffset> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 
 	/// <summary>
 	///     Start expectations for the current <see cref="DateTimeOffset" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<DateTimeOffset?> Should(this IExpectSubject<DateTimeOffset?> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static IThat<DateTimeOffset?> Should(this IExpectSubject<DateTimeOffset?> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 

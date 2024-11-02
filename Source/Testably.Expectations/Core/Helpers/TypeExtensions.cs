@@ -20,7 +20,7 @@ internal static class TypeExtensions
 
 	private static readonly ConcurrentDictionary<Type, bool> TypeIsRecordCache = new();
 
-	private static readonly ConcurrentDictionary<(Type Type, MemberVisibility Visibility),
+	private static readonly ConcurrentDictionary<(Type Type, MemberVisibilities Visibility),
 			TypeMemberReflector>
 		TypeMemberReflectorsCache = new();
 
@@ -34,7 +34,7 @@ internal static class TypeExtensions
 		return CustomAttributeExtensions.GetCustomAttributes<TAttribute>(type, inherit);
 	}
 
-	public static MemberInfo[] GetMembers(this Type typeToReflect, MemberVisibility visibility)
+	public static MemberInfo[] GetMembers(this Type typeToReflect, MemberVisibilities visibility)
 	{
 		return GetTypeReflectorFor(typeToReflect, visibility).Members;
 	}
@@ -97,7 +97,7 @@ internal static class TypeExtensions
 	}
 
 	private static TypeMemberReflector GetTypeReflectorFor(Type typeToReflect,
-		MemberVisibility visibility)
+		MemberVisibilities visibility)
 	{
 		return TypeMemberReflectorsCache.GetOrAdd((typeToReflect, visibility),
 			static key => new TypeMemberReflector(key.Type, key.Visibility));
