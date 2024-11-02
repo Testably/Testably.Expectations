@@ -5,7 +5,12 @@
 			"module": "Testably.Expectations"
 		},
 		"test-projects": [
-			"./Testably.Expectations.Tests/Testably.Expectations.Tests.csproj"
+			"./Testably.Expectations.Tests/Testably.Expectations.Tests.csproj",
+			"./TestFrameworks/TestFramework.FallbackTest/TestFramework.FallbackTest.csproj",
+			"./TestFrameworks/TestFramework.NUnit3.Tests/TestFramework.NUnit3.Tests.csproj",
+			"./TestFrameworks/TestFramework.NUnit4.Tests/TestFramework.NUnit4.Tests.csproj",
+			"./TestFrameworks/TestFramework.TUnit.Tests/TestFramework.TUnit.Tests.csproj",
+			"./TestFrameworks/TestFramework.XUnit2.Tests/TestFramework.XUnit2.Tests.csproj"
 		],
 		"project": "Testably.Expectations.csproj",
 		"target-framework": "net8.0",
