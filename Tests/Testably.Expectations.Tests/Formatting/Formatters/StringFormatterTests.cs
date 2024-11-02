@@ -1,6 +1,6 @@
 ﻿using Testably.Expectations.Formatting;
 
-namespace Testably.Expectations.Tests.Core.Formatting.Formatters;
+namespace Testably.Expectations.Tests.Formatting.Formatters;
 
 public sealed class StringFormatterTests
 {
