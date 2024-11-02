@@ -21,6 +21,16 @@ public sealed class DefaultFormatterTests
 	}
 
 	[Fact]
+	public async Task WhenClassContainsField_ShouldDisplayFieldValue()
+	{
+		object value = new ClassWithField { Value = 42 };
+
+		string result = Formatter.Format(value, FormattingOptions.SingleLine);
+
+		await That(result).Should().Be("ClassWithField{ Value = 42 }");
+	}
+
+	[Fact]
 	public async Task WhenClassIsEmpty_ShouldDisplayClassName()
 	{
 		object value = new EmptyClass();
@@ -31,24 +41,15 @@ public sealed class DefaultFormatterTests
 	}
 
 	[Fact]
-	public async Task WhenClassContainsField_ShouldDisplayFieldValue()
-	{
-		object value = new ClassWithField(){Value = 42};
-
-		string result = Formatter.Format(value, FormattingOptions.SingleLine);
-
-		await That(result).Should().Be("ClassWithField{ Value = 42 }");
-	}
-
-	[Fact]
 	public async Task WhenClassMemberThrowsException_ShouldDisplayException()
 	{
-		var exception = new Exception("foo");
+		Exception exception = new("foo");
 		object value = new ClassWithExceptionProperty(exception);
 
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
-		await That(result).Should().Be("ClassWithExceptionProperty{ Value = [Member 'Value' threw an exception: 'foo'] }");
+		await That(result).Should()
+			.Be("ClassWithExceptionProperty{ Value = [Member 'Value' threw an exception: 'foo'] }");
 	}
 
 	[Fact]
@@ -61,6 +62,18 @@ public sealed class DefaultFormatterTests
 		await That(result).Should().Be("System.Object (HashCode=*)").AsWildcard();
 	}
 
+	private class ClassWithExceptionProperty(Exception exception)
+	{
+		// ReSharper disable once UnusedMember.Local
+		public int Value => throw exception;
+	}
+
+	private class ClassWithField
+	{
+		// ReSharper disable once NotAccessedField.Local
+		public int Value = 2;
+	}
+
 	private class Dummy
 	{
 		// ReSharper disable once UnusedAutoPropertyAccessor.Local
@@ -71,16 +84,6 @@ public sealed class DefaultFormatterTests
 	}
 
 	private class EmptyClass;
-
-	private class ClassWithField
-	{
-		public int Value = 2;
-	}
-
-	private class ClassWithExceptionProperty(Exception exception)
-	{
-		public int Value => throw exception;
-	}
 
 	private class InnerDummy
 	{
