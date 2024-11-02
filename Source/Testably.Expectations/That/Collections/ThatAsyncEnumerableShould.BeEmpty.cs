@@ -15,7 +15,7 @@ public static partial class ThatAsyncEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable is empty.
 	/// </summary>
-	public static AndOrExpectationResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
+	public static AndOrResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
 		BeEmpty<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
@@ -26,7 +26,7 @@ public static partial class ThatAsyncEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable is not empty.
 	/// </summary>
-	public static AndOrExpectationResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
+	public static AndOrResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
 		NotBeEmpty<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder

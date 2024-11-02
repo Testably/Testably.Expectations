@@ -21,7 +21,7 @@ public partial class ThatExceptionShould<TException>
 	///     Recursively applies the expectations on the <see cref="Exception.InnerException" /> (if not <see langword="null" />
 	///     and for <see cref="AggregateException" /> also on the <see cref="AggregateException.InnerExceptions" />.
 	/// </remarks>
-	public AndOrExpectationResult<TException?, ThatExceptionShould<TException>>
+	public AndOrResult<TException?, ThatExceptionShould<TException>>
 		HaveRecursiveInnerExceptions(
 			Action<IThat<IEnumerable<Exception>>> expectations,
 			[CallerArgumentExpression("expectations")]

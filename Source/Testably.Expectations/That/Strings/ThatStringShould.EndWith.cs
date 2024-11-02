@@ -13,13 +13,13 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject ends with the <paramref name="expected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, IThat<string?>> EndWith(
+	public static StringEqualityResult<string?, IThat<string?>> EndWith(
 		this IThat<string?> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
-		StringOptions? options = new();
-		return new StringExpectationResult<string?, IThat<string?>>(
+		StringEqualityOptions? options = new();
+		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new EndsWithValueConstraint(expected, options))
 				.AppendMethodStatement(nameof(EndWith), doNotPopulateThisValue),
@@ -30,14 +30,14 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject does not end with the <paramref name="unexpected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, IThat<string?>> NotEndWith(
+	public static StringEqualityResult<string?, IThat<string?>> NotEndWith(
 		this IThat<string?> source,
 		string unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")
 	{
-		StringOptions? options = new();
-		return new StringExpectationResult<string?, IThat<string?>>(
+		StringEqualityOptions? options = new();
+		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new DoesNotEndWithValueConstraint(unexpected, options))
 				.AppendMethodStatement(nameof(NotEndWith), doNotPopulateThisValue),
@@ -47,7 +47,7 @@ public static partial class ThatStringShould
 
 	private readonly struct EndsWithValueConstraint(
 		string expected,
-		StringOptions options)
+		StringEqualityOptions options)
 		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />
@@ -84,7 +84,7 @@ public static partial class ThatStringShould
 
 	private readonly struct DoesNotEndWithValueConstraint(
 		string expected,
-		StringOptions options)
+		StringEqualityOptions options)
 		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />

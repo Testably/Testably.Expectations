@@ -7,17 +7,17 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
 ///     options
 ///     on
 ///     the <see cref="StringMatcher" />.
 /// </summary>
-public class CountExpectationResult<TResult, TValue>(
+public class CountResult<TResult, TValue>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier)
-	: CountExpectationResult<TResult, TValue,
-		CountExpectationResult<TResult, TValue>>(
+	: CountResult<TResult, TValue,
+		CountResult<TResult, TValue>>(
 		expectationBuilder,
 		returnValue,
 		quantifier);
@@ -25,17 +25,17 @@ public class CountExpectationResult<TResult, TValue>(
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
 ///     options
 ///     on
 ///     the <see cref="StringMatcher" />.
 /// </summary>
-public class CountExpectationResult<TResult, TValue, TSelf>(
+public class CountResult<TResult, TValue, TSelf>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier)
-	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
-	where TSelf : CountExpectationResult<TResult, TValue, TSelf>
+	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
+	where TSelf : CountResult<TResult, TValue, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 

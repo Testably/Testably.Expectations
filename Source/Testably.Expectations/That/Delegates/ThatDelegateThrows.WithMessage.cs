@@ -11,7 +11,7 @@ public partial class ThatDelegateThrows<TException>
 	/// <summary>
 	///     Verifies that the thrown exception has a message equal to <paramref name="expected" />
 	/// </summary>
-	public StringMatcherExpectationResult<TException, ThatDelegateThrows<TException>>
+	public StringMatcherResult<TException, ThatDelegateThrows<TException>>
 		WithMessage(
 			StringMatcher expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

@@ -30,7 +30,7 @@ public class QuantifiedCollectionResult
 		/// <summary>
 		///     ...are of type <typeparamref name="TExpected" />.
 		/// </summary>
-		public AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TExpected>()
+		public AndOrResult<TCollection, IThat<TCollection>> Be<TExpected>()
 			=> new(ExpectationBuilder
 					.AddConstraint(
 						new BeOfTypeConstraint<TItem, TCollection, TExpected>(
@@ -56,7 +56,7 @@ public class QuantifiedCollectionResult
 		/// <summary>
 		///     ...are of type <typeparamref name="TExpected" />.
 		/// </summary>
-		public AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TExpected>()
+		public AndOrResult<TCollection, IThat<TCollection>> Be<TExpected>()
 			=> new(ExpectationBuilder
 					.AddConstraint(
 						new BeOfTypeConstraint<TItem, TCollection, TExpected>(

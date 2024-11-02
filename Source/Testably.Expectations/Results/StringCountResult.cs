@@ -8,16 +8,16 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="CountExpectationResult{TResult,TValue}" />, allows specifying
-///     options on the <see cref="StringOptions" />.
+///     In addition to the combinations from <see cref="CountResult{TResult,TValue}" />, allows specifying
+///     options on the <see cref="StringEqualityOptions" />.
 /// </summary>
-public class StringCountExpectationResult<TResult, TValue>(
+public class StringCountResult<TResult, TValue>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier,
-	StringOptions options)
-	: StringCountExpectationResult<TResult, TValue,
-		StringCountExpectationResult<TResult, TValue>>(
+	StringEqualityOptions options)
+	: StringCountResult<TResult, TValue,
+		StringCountResult<TResult, TValue>>(
 		expectationBuilder,
 		returnValue,
 		quantifier,
@@ -26,23 +26,23 @@ public class StringCountExpectationResult<TResult, TValue>(
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="CountExpectationResult{TResult,TValue}" />, allows specifying
-///     options on the <see cref="StringOptions" />.
+///     In addition to the combinations from <see cref="CountResult{TResult,TValue}" />, allows specifying
+///     options on the <see cref="StringEqualityOptions" />.
 /// </summary>
-public class StringCountExpectationResult<TResult, TValue, TSelf>(
+public class StringCountResult<TResult, TValue, TSelf>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
 	Quantifier quantifier,
-	StringOptions options)
-	: CountExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue, quantifier)
-	where TSelf : StringCountExpectationResult<TResult, TValue, TSelf>
+	StringEqualityOptions options)
+	: CountResult<TResult, TValue, TSelf>(expectationBuilder, returnValue, quantifier)
+	where TSelf : StringCountResult<TResult, TValue, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
-	public StringCountExpectationResult<TResult, TValue, TSelf> IgnoringCase()
+	public StringCountResult<TResult, TValue, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
 		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
@@ -52,7 +52,7 @@ public class StringCountExpectationResult<TResult, TValue, TSelf>(
 	/// <summary>
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="string" />s.
 	/// </summary>
-	public StringCountExpectationResult<TResult, TValue, TSelf> Using(
+	public StringCountResult<TResult, TValue, TSelf> Using(
 		IEqualityComparer<string> comparer,
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{

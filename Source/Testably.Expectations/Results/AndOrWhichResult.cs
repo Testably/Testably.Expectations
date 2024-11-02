@@ -8,28 +8,28 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows accessing
+///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows accessing
 ///     underlying
-///     properties with <see cref="AndOrWhichExpectationResult{TResult,TValue,TSelf}.Which{TProperty}" />.
+///     properties with <see cref="AndOrWhichResult{TResult,TValue,TSelf}.Which{TProperty}" />.
 /// </summary>
-public class AndOrWhichExpectationResult<TResult, TValue>(
+public class AndOrWhichResult<TResult, TValue>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
-	: AndOrWhichExpectationResult<TResult, TValue, AndOrWhichExpectationResult<TResult, TValue>>(
+	: AndOrWhichResult<TResult, TValue, AndOrWhichResult<TResult, TValue>>(
 		expectationBuilder, returnValue);
 
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows accessing
+///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows accessing
 ///     underlying
 ///     properties with <see cref="Which{TProperty}" />.
 /// </summary>
-public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
+public class AndOrWhichResult<TResult, TValue, TSelf>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
-	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
-	where TSelf : AndOrWhichExpectationResult<TResult, TValue, TSelf>
+	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
+	where TSelf : AndOrWhichResult<TResult, TValue, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 	private readonly TValue _returnValue = returnValue;
@@ -37,15 +37,15 @@ public class AndOrWhichExpectationResult<TResult, TValue, TSelf>(
 	/// <summary>
 	///     Allows specifying expectations on a property of the current value.
 	/// </summary>
-	public WhichResult<TProperty, AndOrWhichExpectationResult<TResult, TValue, TSelf>>
+	public WhichResult<TProperty, AndOrWhichResult<TResult, TValue, TSelf>>
 		Which<TProperty>(
 			Expression<Func<TResult, TProperty?>> selector,
 			[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "")
 	{
-		return new WhichResult<TProperty, AndOrWhichExpectationResult<TResult, TValue, TSelf>>(
+		return new WhichResult<TProperty, AndOrWhichResult<TResult, TValue, TSelf>>(
 			(expectations, doNotPopulateThisValue2) =>
 			{
-				return new AndOrWhichExpectationResult<TResult, TValue, TSelf>(
+				return new AndOrWhichResult<TResult, TValue, TSelf>(
 					_expectationBuilder
 						.ForProperty(PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
 							(property, expectation) => $" which {property}should {expectation}")

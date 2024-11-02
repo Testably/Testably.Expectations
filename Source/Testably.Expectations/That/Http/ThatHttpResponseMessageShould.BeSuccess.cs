@@ -11,7 +11,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a success status code (2xx)
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
+	public static AndOrResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		BeSuccess(
 			this IThat<HttpResponseMessage?> source)
 		=> new(source.ExpectationBuilder

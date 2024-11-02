@@ -15,7 +15,7 @@ public static partial class ThatEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
+	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		Contain<TItem>(
 			this IThat<IEnumerable<TItem>> source,
 			TItem expected,

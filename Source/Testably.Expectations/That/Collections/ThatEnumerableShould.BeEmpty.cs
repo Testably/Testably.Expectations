@@ -14,7 +14,7 @@ public static partial class ThatEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable is empty.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
+	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		BeEmpty<TItem>(
 			this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
@@ -25,7 +25,7 @@ public static partial class ThatEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable is not empty.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
+	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		NotBeEmpty<TItem>(
 			this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder

@@ -12,7 +12,10 @@ public sealed partial class ObjectShould
 			OuterClass subject = new() { Value = "Foo" };
 			OuterClass expected = new() { Value = "Foo" };
 
-			await That(subject).Should().BeEquivalentTo(expected);
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent();
+
+			await That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -21,16 +24,18 @@ public sealed partial class ObjectShould
 			OuterClass subject = new();
 			OuterClass expected = new() { Value = "Foo" };
 
-			await That(async () => await That(subject).Should().BeEquivalentTo(expected))
-				.Should()
-				.ThrowException().WithMessage("""
-				                              Expected subject to
-				                              be equivalent to expected,
-				                              but Property Value did not match:
-				                                Expected: "Foo"
-				                                Received: <null>
-				                              at Expect.That(subject).Should().BeEquivalentTo(expected)
-				                              """);
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             be equivalent to expected,
+				             but Property Value did not match:
+				               Expected: "Foo"
+				               Received: <null>
+				             at Expect.That(subject).Should().Be(expected).Equivalent()
+				             """);
 		}
 
 		[Fact]
@@ -63,11 +68,14 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			await That(subject).Should().BeEquivalentTo(expected);
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent();
+
+			await That(Act).Should().NotThrow();
 		}
 
 		[Fact]
-		public void ObjectsWithNestedEnumerableMismatch_ShouldNotBeEquivalent()
+		public async Task ObjectsWithNestedEnumerableMismatch_ShouldNotBeEquivalent()
 		{
 			OuterClass subject = new()
 			{
@@ -97,16 +105,18 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			That(async () => await That(subject).Should().BeEquivalentTo(expected))
-				.Should()
-				.ThrowException().WithMessage("""
-				                              Expected subject to
-				                              be equivalent to expected,
-				                              but EnumerableItem Inner.Inner.Collection.[3] did not match
-				                                Expected: "4"
-				                                Received: null
-				                              at Expect.That(subject).Should().BeEquivalentTo(expected)
-				                              """);
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent();
+
+			await That(Act).Should().ThrowException()
+				.WithMessage("""
+				             Expected subject to
+				             be equivalent to expected,
+				             but EnumerableItem Inner.Inner.Collection.[3] did not match:
+				               Expected: "4"
+				               Received: <null>
+				             at Expect.That(subject).Should().Be(expected).Equivalent()
+				             """);
 		}
 
 		[Fact]
@@ -140,8 +150,53 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			await That(subject).Should().BeEquivalentTo(expected)
-				.IgnoringMember("Inner.Inner.Collection.[3]");
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent(o => o.IgnoringMember("Inner.Inner.Collection.[3]"));
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task ObjectsWithNestedEnumerableMismatch_WithIncorrectIgnoreRule_ShouldFail()
+		{
+			OuterClass subject = new()
+			{
+				Value = "Foo",
+				Inner = new InnerClass
+				{
+					Value = "Bar",
+					Inner = new InnerClass
+					{
+						Value = "Baz",
+						Collection = ["1", "2", "3"]
+					}
+				}
+			};
+
+			OuterClass expected = new()
+			{
+				Value = "Foo",
+				Inner = new InnerClass
+				{
+					Value = "Bar",
+					Inner = new InnerClass
+					{
+						Value = "Bart",
+						Collection = ["1", "2", "3", "4"]
+					}
+				}
+			};
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent(o => o.IgnoringMember("Inner.Inner.Collection.[3]"));
+
+			await That(Act).Should().ThrowException()
+				.WithMessage("""
+				             Expected subject to
+				             be equivalent to expected,
+				             but found z
+				             at Expect.That(subject).Should().Be(expected).Equivalent(o => o.IgnoringMember("Inner.Inner.Collection.[3]"))
+				             """);
 		}
 
 		[Fact]
@@ -166,7 +221,10 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			await That(subject).Should().BeEquivalentTo(expected);
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent();
+
+			await That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -191,16 +249,18 @@ public sealed partial class ObjectShould
 				}
 			};
 
-			await That(async () => await That(subject).Should().BeEquivalentTo(expected))
-				.Should()
-				.ThrowException().WithMessage("""
-				                              Expected subject to
-				                              be equivalent to expected,
-				                              but Property Inner.Inner.Value did not match:
-				                                Expected: "Baz"
-				                                Received: <null>
-				                              at Expect.That(subject).Should().BeEquivalentTo(expected)
-				                              """).Exactly();
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Equivalent();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             be equivalent to expected,
+				             but Property Inner.Inner.Value did not match:
+				               Expected: "Baz"
+				               Received: <null>
+				             at Expect.That(subject).Should().Be(expected).Equivalent()
+				             """);
 		}
 
 		// ReSharper disable UnusedAutoPropertyAccessor.Local

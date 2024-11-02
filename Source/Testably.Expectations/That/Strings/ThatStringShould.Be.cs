@@ -12,7 +12,7 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject is equal to <paramref name="expected" />.
 	/// </summary>
-	public static StringMatcherExpectationResult<string?, IThat<string?>> Be(
+	public static StringMatcherResult<string?, IThat<string?>> Be(
 		this IThat<string?> source,
 		StringMatcher expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

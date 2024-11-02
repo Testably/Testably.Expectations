@@ -13,7 +13,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber, IThat<TNumber>> Be<TNumber>(
+	public static AndOrResult<TNumber, IThat<TNumber>> Be<TNumber>(
 		this IThat<TNumber> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -26,7 +26,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber?, IThat<TNumber?>> Be<TNumber>(
+	public static AndOrResult<TNumber?, IThat<TNumber?>> Be<TNumber>(
 		this IThat<TNumber?> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -39,7 +39,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TNumber, IThat<TNumber>> NotBe<TNumber>(
+	public static AndOrResult<TNumber, IThat<TNumber>> NotBe<TNumber>(
 		this IThat<TNumber> source,
 		TNumber? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

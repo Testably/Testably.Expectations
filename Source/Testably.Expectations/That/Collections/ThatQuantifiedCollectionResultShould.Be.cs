@@ -16,7 +16,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
+	public static AndOrResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
 		this QuantifiedCollectionResult<IThat<TCollection>> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -37,7 +37,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
+	public static AndOrResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
 		this QuantifiedCollectionResult<IThat<TCollection>> source,
 		TItem expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

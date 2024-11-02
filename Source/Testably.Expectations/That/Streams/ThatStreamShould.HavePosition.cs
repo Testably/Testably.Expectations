@@ -11,7 +11,7 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> position.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, IThat<Stream?>> HavePosition(
+	public static AndOrResult<Stream?, IThat<Stream?>> HavePosition(
 		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -28,7 +28,7 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> has the <paramref name="expected" /> position.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotHavePosition(
+	public static AndOrResult<Stream?, IThat<Stream?>> NotHavePosition(
 		this IThat<Stream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

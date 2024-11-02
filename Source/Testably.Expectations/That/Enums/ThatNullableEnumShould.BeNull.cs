@@ -10,7 +10,7 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject is <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> BeNull<TEnum>(
+	public static AndOrResult<TEnum?, IThat<TEnum?>> BeNull<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
@@ -23,7 +23,7 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject is not <see langword="null" />.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> NotBeNull<TEnum>(
+	public static AndOrResult<TEnum?, IThat<TEnum?>> NotBeNull<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder

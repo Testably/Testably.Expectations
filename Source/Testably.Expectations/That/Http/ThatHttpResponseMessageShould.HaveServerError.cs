@@ -11,7 +11,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a server error status code (5xx)
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
+	public static AndOrResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveServerError(
 			this IThat<HttpResponseMessage?> source)
 		=> new(source.ExpectationBuilder

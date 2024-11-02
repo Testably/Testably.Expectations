@@ -12,7 +12,7 @@ public static partial class ThatDateTimeOffsetShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<DateTimeOffset, IThat<DateTimeOffset>> Be(
+	public static AndOrResult<DateTimeOffset, IThat<DateTimeOffset>> Be(
 		this IThat<DateTimeOffset> source,
 		DateTimeOffset expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -27,7 +27,7 @@ public static partial class ThatDateTimeOffsetShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<DateTimeOffset, IThat<DateTimeOffset>> NotBe(
+	public static AndOrResult<DateTimeOffset, IThat<DateTimeOffset>> NotBe(
 		this IThat<DateTimeOffset> source,
 		DateTimeOffset unexpected,
 		[CallerArgumentExpression("unexpected")]

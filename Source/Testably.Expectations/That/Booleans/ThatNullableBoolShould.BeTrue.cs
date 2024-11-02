@@ -9,7 +9,7 @@ public static partial class ThatNullableBoolShould
 	/// <summary>
 	///     Verifies that the subject is <see langword="true" />.
 	/// </summary>
-	public static AndOrExpectationResult<bool?, IThat<bool?>> BeTrue(this IThat<bool?> source)
+	public static AndOrResult<bool?, IThat<bool?>> BeTrue(this IThat<bool?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new IsValueConstraint(true))
 				.AppendMethodStatement(nameof(BeTrue)),
@@ -18,7 +18,7 @@ public static partial class ThatNullableBoolShould
 	/// <summary>
 	///     Verifies that the subject is not <see langword="true" />.
 	/// </summary>
-	public static AndOrExpectationResult<bool?, IThat<bool?>> NotBeTrue(this IThat<bool?> source)
+	public static AndOrResult<bool?, IThat<bool?>> NotBeTrue(this IThat<bool?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new IsNotValueConstraint(true))
 				.AppendMethodStatement(nameof(NotBeTrue)),

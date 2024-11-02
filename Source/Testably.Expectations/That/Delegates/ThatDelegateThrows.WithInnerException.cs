@@ -12,7 +12,7 @@ public partial class ThatDelegateThrows<TException>
 	///     Verifies that the thrown exception has an inner exception which
 	///     satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public AndOrExpectationResult<TException, ThatDelegateThrows<TException>> WithInnerException(
+	public AndOrResult<TException, ThatDelegateThrows<TException>> WithInnerException(
 		Action<ThatExceptionShould<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")
@@ -28,7 +28,7 @@ public partial class ThatDelegateThrows<TException>
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public AndOrExpectationResult<TException, ThatDelegateThrows<TException>> WithInnerException()
+	public AndOrResult<TException, ThatDelegateThrows<TException>> WithInnerException()
 		=> new(ExpectationBuilder
 				.AddConstraint(
 					new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with"))

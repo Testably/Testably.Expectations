@@ -10,7 +10,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is seen as finite (neither <see cref="float.IsInfinity" /> nor <see cref="float.IsNaN"/>).
 	/// </summary>
-	public static AndOrExpectationResult<float, IThat<float>> BeFinite(
+	public static AndOrResult<float, IThat<float>> BeFinite(
 		this IThat<float> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
@@ -24,7 +24,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is seen as finite (neither <see cref="double.IsInfinity" /> nor <see cref="double.IsNaN"/>).
 	/// </summary>
-	public static AndOrExpectationResult<double, IThat<double>> BeFinite(
+	public static AndOrResult<double, IThat<double>> BeFinite(
 		this IThat<double> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
@@ -38,7 +38,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is not seen as finite (either <see cref="float.IsInfinity" /> or <see cref="float.IsNaN"/>).
 	/// </summary>
-	public static AndOrExpectationResult<float, IThat<float>> NotBeFinite(
+	public static AndOrResult<float, IThat<float>> NotBeFinite(
 		this IThat<float> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
@@ -52,7 +52,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is not seen as finite (either <see cref="double.IsInfinity" /> or <see cref="double.IsNaN"/>).
 	/// </summary>
-	public static AndOrExpectationResult<double, IThat<double>> NotBeFinite(
+	public static AndOrResult<double, IThat<double>> NotBeFinite(
 		this IThat<double> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
