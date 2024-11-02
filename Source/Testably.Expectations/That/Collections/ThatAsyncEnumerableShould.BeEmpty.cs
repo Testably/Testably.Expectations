@@ -1,6 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
@@ -34,34 +34,53 @@ public static partial class ThatAsyncEnumerableShould
 				.AppendMethodStatement(nameof(NotBeEmpty)),
 			source);
 
-	private readonly struct IsEmptyValueConstraint<TItem> : IValueConstraint<IEnumerable<TItem>>
+	private readonly struct
+		IsEmptyValueConstraint<TItem> : IAsyncContextConstraint<IAsyncEnumerable<TItem>>
 	{
-		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
+		public async Task<ConstraintResult> IsMetBy(
+			IAsyncEnumerable<TItem> actual, IEvaluationContext context)
 		{
-			using IEnumerator<TItem> enumerator = actual.GetEnumerator();
-			if (enumerator.MoveNext())
+			IAsyncEnumerable<TItem> materializedEnumerable =
+				context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(actual);
+			await using IAsyncEnumerator<TItem> enumerator =
+				materializedEnumerable.GetAsyncEnumerator();
+			if (await enumerator.MoveNextAsync())
 			{
+				List<TItem> items = new(11) { enumerator.Current };
+				while (await enumerator.MoveNextAsync())
+				{
+					items.Add(enumerator.Current);
+					if (items.Count == 11)
+					{
+						break;
+					}
+				}
+
 				return new ConstraintResult.Failure(ToString(),
-					$"found {Formatter.Format(actual.Take(11))}");
+					$"found {Formatter.Format(items)}");
 			}
 
-			return new ConstraintResult.Success<IEnumerable<TItem>>(actual, ToString());
+			return new ConstraintResult.Success<IAsyncEnumerable<TItem>>(materializedEnumerable,
+				ToString());
 		}
 
 		public override string ToString()
 			=> "be empty";
 	}
 
-	private readonly struct IsNotEmptyConstraint<TItem> : IContextConstraint<IEnumerable<TItem>>
+	private readonly struct
+		IsNotEmptyConstraint<TItem> : IAsyncContextConstraint<IAsyncEnumerable<TItem>>
 	{
-		public ConstraintResult IsMetBy(IEnumerable<TItem> actual, IEvaluationContext context)
+		public async Task<ConstraintResult> IsMetBy(
+			IAsyncEnumerable<TItem> actual, IEvaluationContext context)
 		{
-			IEnumerable<TItem>? materializedEnumerable =
-				context.UseMaterializedEnumerable<TItem, IEnumerable<TItem>>(actual);
-			using IEnumerator<TItem> enumerator = materializedEnumerable.GetEnumerator();
-			if (enumerator.MoveNext())
+			IAsyncEnumerable<TItem> materializedEnumerable =
+				context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(actual);
+			await using IAsyncEnumerator<TItem> enumerator =
+				materializedEnumerable.GetAsyncEnumerator();
+			if (await enumerator.MoveNextAsync())
 			{
-				return new ConstraintResult.Success<IEnumerable<TItem>>(materializedEnumerable,
+				return new ConstraintResult.Success<IAsyncEnumerable<TItem>>(materializedEnumerable,
 					ToString());
 			}
 
