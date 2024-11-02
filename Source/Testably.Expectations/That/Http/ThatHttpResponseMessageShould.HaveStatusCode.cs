@@ -17,7 +17,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a status code equal to <paramref name="expected" />
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
+	public static AndOrResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveStatusCode(
 			this IThat<HttpResponseMessage?> source,
 			HttpStatusCode expected,
@@ -30,7 +30,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a status code different to <paramref name="unexpected" />
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
+	public static AndOrResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		NotHaveStatusCode(
 			this IThat<HttpResponseMessage?> source,
 			HttpStatusCode unexpected,

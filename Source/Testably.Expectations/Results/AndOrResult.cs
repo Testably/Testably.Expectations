@@ -5,13 +5,13 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     Allows combining multiple expectations with <see cref="AndOrExpectationResult{TResult,TValue,TSelf}.And" /> and
-///     <see cref="AndOrExpectationResult{TResult,TValue,TSelf}.Or" />.
+///     Allows combining multiple expectations with <see cref="AndOrResult{TResult,TValue,TSelf}.And" /> and
+///     <see cref="AndOrResult{TResult,TValue,TSelf}.Or" />.
 /// </summary>
-public class AndOrExpectationResult<TResult, TValue>(
+public class AndOrResult<TResult, TValue>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
-	: AndOrExpectationResult<TResult, TValue, AndOrExpectationResult<TResult, TValue>>(
+	: AndOrResult<TResult, TValue, AndOrResult<TResult, TValue>>(
 		expectationBuilder,
 		returnValue);
 
@@ -20,11 +20,11 @@ public class AndOrExpectationResult<TResult, TValue>(
 ///     <para />
 ///     Allows combining multiple expectations with <see cref="And" /> and <see cref="Or" />.
 /// </summary>
-public class AndOrExpectationResult<TResult, TValue, TSelf>(
+public class AndOrResult<TResult, TValue, TSelf>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue)
 	: ExpectationResult<TResult, TSelf>(expectationBuilder)
-	where TSelf : AndOrExpectationResult<TResult, TValue, TSelf>
+	where TSelf : AndOrResult<TResult, TValue, TSelf>
 {
 	/// <summary>
 	///     Combine multiple expectations with AND

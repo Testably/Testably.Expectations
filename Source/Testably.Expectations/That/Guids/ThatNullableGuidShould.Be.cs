@@ -12,7 +12,7 @@ public static partial class ThatNullableGuidShould
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<Guid?, IThat<Guid?>> Be(this IThat<Guid?> source,
+	public static AndOrResult<Guid?, IThat<Guid?>> Be(this IThat<Guid?> source,
 		Guid? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
@@ -26,7 +26,7 @@ public static partial class ThatNullableGuidShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<Guid?, IThat<Guid?>> NotBe(this IThat<Guid?> source,
+	public static AndOrResult<Guid?, IThat<Guid?>> NotBe(this IThat<Guid?> source,
 		Guid? unexpected,
 		[CallerArgumentExpression("unexpected")]
 		string doNotPopulateThisValue = "")

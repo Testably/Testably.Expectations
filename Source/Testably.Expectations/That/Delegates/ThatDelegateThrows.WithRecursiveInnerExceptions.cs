@@ -18,7 +18,7 @@ public partial class ThatDelegateThrows<TException>
 	///     Recursively applies the expectations on the <see cref="Exception.InnerException" /> (if not <see langword="null" />
 	///     and for <see cref="AggregateException" /> also on the <see cref="AggregateException.InnerExceptions" />.
 	/// </remarks>
-	public AndOrExpectationResult<TException?, ThatDelegateThrows<TException>>
+	public AndOrResult<TException?, ThatDelegateThrows<TException>>
 		WithRecursiveInnerExceptions(
 			Action<IThat<IEnumerable<Exception>>> expectations,
 			[CallerArgumentExpression("expectations")]

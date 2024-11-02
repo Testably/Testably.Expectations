@@ -10,7 +10,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is seen as not a number (<see cref="float.NaN" />).
 	/// </summary>
-	public static AndOrExpectationResult<float, IThat<float>> BeNaN(this IThat<float> source)
+	public static AndOrResult<float, IThat<float>> BeNaN(this IThat<float> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
 					float.NaN,
@@ -23,7 +23,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is seen as not a number (<see cref="double.NaN" />).
 	/// </summary>
-	public static AndOrExpectationResult<double, IThat<double>> BeNaN(this IThat<double> source)
+	public static AndOrResult<double, IThat<double>> BeNaN(this IThat<double> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
 					double.NaN,
@@ -36,7 +36,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is not seen as not a number (<see cref="float.NaN" />).
 	/// </summary>
-	public static AndOrExpectationResult<float, IThat<float>> NotBeNaN(this IThat<float> source)
+	public static AndOrResult<float, IThat<float>> NotBeNaN(this IThat<float> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
 					float.NaN,
@@ -49,7 +49,7 @@ public static partial class ThatNumberShould
 	/// <summary>
 	///     Verifies that the subject is not seen as not a number (<see cref="double.NaN" />).
 	/// </summary>
-	public static AndOrExpectationResult<double, IThat<double>> NotBeNaN(this IThat<double> source)
+	public static AndOrResult<double, IThat<double>> NotBeNaN(this IThat<double> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
 					double.NaN,

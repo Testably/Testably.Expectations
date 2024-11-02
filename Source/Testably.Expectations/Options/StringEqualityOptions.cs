@@ -7,7 +7,7 @@ namespace Testably.Expectations.Options;
 /// <summary>
 ///     Quantifier an occurrence.
 /// </summary>
-public class StringOptions
+public class StringEqualityOptions
 {
 	/// <summary>
 	///     The <see cref="IEqualityComparer{T}" /> to use for comparing <see langword="string" />s.
@@ -25,7 +25,7 @@ public class StringOptions
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
-	public StringOptions IgnoringCase(bool ignoreCase = true)
+	public StringEqualityOptions IgnoringCase(bool ignoreCase = true)
 	{
 		IgnoreCase = ignoreCase;
 		return this;
@@ -54,7 +54,7 @@ public class StringOptions
 	///     If set to <see langword="null" /> (default), uses the <see cref="StringComparer.Ordinal" /> or
 	///     <see cref="StringComparer.OrdinalIgnoreCase" /> depending on whether the casing is ignored.
 	/// </remarks>
-	public StringOptions UsingComparer(IEqualityComparer<string>? comparer)
+	public StringEqualityOptions UsingComparer(IEqualityComparer<string>? comparer)
 	{
 		_comparer = comparer;
 		return this;

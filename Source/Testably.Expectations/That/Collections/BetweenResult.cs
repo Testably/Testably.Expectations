@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
+// ReSharper disable once CheckNamespace
 
-namespace Testably.Expectations.Results;
+namespace Testably.Expectations;
 
 /// <summary>
 ///     An intermediate type to collect the maximum of the range.

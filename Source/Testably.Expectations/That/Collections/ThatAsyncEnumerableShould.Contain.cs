@@ -15,7 +15,7 @@ public static partial class ThatAsyncEnumerableShould
 	/// <summary>
 	///     Verifies that the actual enumerable contains the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
+	public static AndOrResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
 		Contain<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source,
 			TItem expected,

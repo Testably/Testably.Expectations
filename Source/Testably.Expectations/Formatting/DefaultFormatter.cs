@@ -76,10 +76,17 @@ internal class DefaultFormatter : IValueFormatter
 		foreach (MemberInfo? member in members.OrderBy(mi => mi.Name, StringComparer.Ordinal))
 		{
 			WriteMemberValueTextFor(obj, member, stringBuilder, indentation, options);
-			stringBuilder.Append(", ");
+			if (options.UseLineBreaks)
+			{
+				stringBuilder.AppendLine(",");
+			}
+			else
+			{
+				stringBuilder.Append(", ");
+			}
 		}
 
-		stringBuilder.Length -= 2;
+		stringBuilder.Length -= options.UseLineBreaks ? 1 + Environment.NewLine.Length : 2;
 	}
 
 	private static void WriteMemberValueTextFor(object value, MemberInfo member,

@@ -10,7 +10,7 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject is defined inside the <typeparamref name="TEnum" />.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, IThat<TEnum>> BeDefined<TEnum>(
+	public static AndOrResult<TEnum, IThat<TEnum>> BeDefined<TEnum>(
 		this IThat<TEnum> source)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
@@ -23,7 +23,7 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject is not defined inside the <typeparamref name="TEnum" />.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, IThat<TEnum>> NotBeDefined<TEnum>(
+	public static AndOrResult<TEnum, IThat<TEnum>> NotBeDefined<TEnum>(
 		this IThat<TEnum> source)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder

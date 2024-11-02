@@ -15,14 +15,14 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject contains the <paramref name="expected" /> <see langword="string" />.
 	/// </summary>
-	public static StringCountExpectationResult<string?, IThat<string?>> Contain(
+	public static StringCountResult<string?, IThat<string?>> Contain(
 		this IThat<string?> source,
 		string expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		Quantifier? quantifier = new();
-		StringOptions? options = new();
-		return new StringCountExpectationResult<string?, IThat<string?>>(
+		StringEqualityOptions? options = new();
+		return new StringCountResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new ContainsValueConstraint(expected, quantifier, options))
 				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
@@ -34,7 +34,7 @@ public static partial class ThatStringShould
 	/// <summary>
 	///     Verifies that the subject contains the <paramref name="unexpected" /> <see langword="string" />.
 	/// </summary>
-	public static StringExpectationResult<string?, IThat<string?>> NotContain(
+	public static StringEqualityResult<string?, IThat<string?>> NotContain(
 		this IThat<string?> source,
 		string unexpected,
 		[CallerArgumentExpression("unexpected")]
@@ -42,8 +42,8 @@ public static partial class ThatStringShould
 	{
 		Quantifier? quantifier = new();
 		quantifier.Exactly(0);
-		StringOptions? options = new();
-		return new StringExpectationResult<string?, IThat<string?>>(
+		StringEqualityOptions? options = new();
+		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new ContainsValueConstraint(unexpected, quantifier, options))
 				.AppendMethodStatement(nameof(NotContain), doNotPopulateThisValue),
@@ -54,7 +54,7 @@ public static partial class ThatStringShould
 	private readonly struct ContainsValueConstraint(
 		string expected,
 		Quantifier quantifier,
-		StringOptions options)
+		StringEqualityOptions options)
 		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />

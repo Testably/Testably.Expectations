@@ -10,7 +10,7 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is seekable.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, IThat<Stream?>> BeSeekable(
+	public static AndOrResult<Stream?, IThat<Stream?>> BeSeekable(
 		this IThat<Stream?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
@@ -23,7 +23,7 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="Stream" /> is not seekable.
 	/// </summary>
-	public static AndOrExpectationResult<Stream?, IThat<Stream?>> NotBeSeekable(
+	public static AndOrResult<Stream?, IThat<Stream?>> NotBeSeekable(
 		this IThat<Stream?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(

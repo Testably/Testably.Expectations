@@ -8,15 +8,15 @@ namespace Testably.Expectations.Results;
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying
-///     options on the <see cref="StringOptions" />.
+///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     options on the <see cref="StringEqualityOptions" />.
 /// </summary>
-public class StringExpectationResult<TResult, TValue>(
+public class StringEqualityResult<TResult, TValue>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
-	StringOptions options)
-	: StringExpectationResult<TResult, TValue,
-		StringExpectationResult<TResult, TValue>>(
+	StringEqualityOptions options)
+	: StringEqualityResult<TResult, TValue,
+		StringEqualityResult<TResult, TValue>>(
 		expectationBuilder,
 		returnValue,
 		options);
@@ -24,24 +24,22 @@ public class StringExpectationResult<TResult, TValue>(
 /// <summary>
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrExpectationResult{TResult,TValue}" />, allows specifying
-///     options
-///     on
-///     the <see cref="StringMatcher" />.
+///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     options on the <see cref="StringMatcher" />.
 /// </summary>
-public class StringExpectationResult<TResult, TValue, TSelf>(
+public class StringEqualityResult<TResult, TValue, TSelf>(
 	ExpectationBuilder expectationBuilder,
 	TValue returnValue,
-	StringOptions options)
-	: AndOrExpectationResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
-	where TSelf : StringExpectationResult<TResult, TValue, TSelf>
+	StringEqualityOptions options)
+	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
+	where TSelf : StringEqualityResult<TResult, TValue, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
-	public StringExpectationResult<TResult, TValue, TSelf> IgnoringCase()
+	public StringEqualityResult<TResult, TValue, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
 		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
@@ -52,7 +50,7 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 	///     Ignores casing when comparing the <see langword="string" />s, according to the <paramref name="ignoreCase" />
 	///     parameter.
 	/// </summary>
-	public StringExpectationResult<TResult, TValue, TSelf> IgnoringCase(
+	public StringEqualityResult<TResult, TValue, TSelf> IgnoringCase(
 		bool ignoreCase,
 		[CallerArgumentExpression("ignoreCase")]
 		string doNotPopulateThisValue = "")
@@ -65,7 +63,7 @@ public class StringExpectationResult<TResult, TValue, TSelf>(
 	/// <summary>
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="string" />s.
 	/// </summary>
-	public StringExpectationResult<TResult, TValue, TSelf> Using(
+	public StringEqualityResult<TResult, TValue, TSelf> Using(
 		IEqualityComparer<string> comparer,
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{

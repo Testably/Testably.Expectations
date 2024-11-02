@@ -14,7 +14,7 @@ public partial class ThatExceptionShould<TException>
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception.
 	/// </summary>
-	public AndOrExpectationResult<TException, ThatExceptionShould<TException>> HaveInnerException()
+	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInnerException()
 		=> new(ExpectationBuilder
 				.AddConstraint(
 					new ThatExceptionShould.HasInnerExceptionValueConstraint<TException>("have"))
@@ -24,7 +24,7 @@ public partial class ThatExceptionShould<TException>
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception which satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public AndOrExpectationResult<TException?, ThatExceptionShould<TException>> HaveInnerException(
+	public AndOrResult<TException?, ThatExceptionShould<TException>> HaveInnerException(
 		Action<ThatExceptionShould<Exception?>> expectations,
 		[CallerArgumentExpression("expectations")]
 		string doNotPopulateThisValue = "")

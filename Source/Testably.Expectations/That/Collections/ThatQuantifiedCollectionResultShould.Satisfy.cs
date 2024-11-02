@@ -18,7 +18,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>>
+	public static AndOrResult<TCollection, IThat<TCollection>>
 		Satisfy<TItem, TCollection>(
 			this QuantifiedCollectionResult<IThat<TCollection>> source,
 			Func<TItem, bool> predicate,
@@ -39,7 +39,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
-	public static AndOrExpectationResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
+	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		Satisfy<TItem>(
 			this QuantifiedCollectionResult<IThat<IEnumerable<TItem>>> source,
 			Func<TItem, bool> predicate,
@@ -63,7 +63,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>>
+	public static AndOrResult<TCollection, IThat<TCollection>>
 		Satisfy<TItem, TCollection>(
 			this QuantifiedCollectionResult<IThat<TCollection>> source,
 			Func<TItem, bool> predicate,
@@ -84,7 +84,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 	/// <summary>
 	///     ...satisfy the <paramref name="predicate" />.
 	/// </summary>
-	public static AndOrExpectationResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
+	public static AndOrResult<IAsyncEnumerable<TItem>, IThat<IAsyncEnumerable<TItem>>>
 		Satisfy<TItem>(
 			this QuantifiedCollectionResult<IThat<IAsyncEnumerable<TItem>>> source,
 			Func<TItem, bool> predicate,

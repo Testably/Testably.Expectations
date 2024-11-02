@@ -18,7 +18,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>> BeEquivalentTo<TItem,
+	public static AndOrResult<TCollection, IThat<TCollection>> BeEquivalentTo<TItem,
 		TCollection>(
 		this QuantifiedCollectionResult<IThat<TCollection>> source,
 		TItem expected,
@@ -26,7 +26,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 		where TCollection : IEnumerable<TItem>
 	{
 		EquivalencyOptions options = new();
-		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
+		return new AndOrResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
 				.AddConstraint(
 					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem,
 						TCollection>(
@@ -46,7 +46,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 	/// <summary>
 	///     ...are equal to <paramref name="expected" />.
 	/// </summary>
-	public static AndOrExpectationResult<TCollection, IThat<TCollection>> BeEquivalentTo<TItem,
+	public static AndOrResult<TCollection, IThat<TCollection>> BeEquivalentTo<TItem,
 		TCollection>(
 		this QuantifiedCollectionResult<IThat<TCollection>> source,
 		TItem expected,
@@ -54,7 +54,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 		where TCollection : IAsyncEnumerable<TItem>
 	{
 		EquivalencyOptions options = new();
-		return new AndOrExpectationResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
+		return new AndOrResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
 				.AddConstraint(
 					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem,
 						TCollection>(

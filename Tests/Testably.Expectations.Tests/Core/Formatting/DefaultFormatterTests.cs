@@ -16,8 +16,8 @@ public sealed class DefaultFormatterTests
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
 		await That(result).Should().Be("""
-		                                      Dummy{ Inner = InnerDummy{ InnerValue = "foo" }, Value = 2 }
-		                                      """);
+		                               Dummy{ Inner = InnerDummy{ InnerValue = "foo" }, Value = 2 }
+		                               """);
 	}
 
 	private class Dummy

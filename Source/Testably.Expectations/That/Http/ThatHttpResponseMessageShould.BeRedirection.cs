@@ -11,7 +11,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the response has a redirection status code (3xx)
 	/// </summary>
-	public static AndOrExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
+	public static AndOrResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		BeRedirection(
 			this IThat<HttpResponseMessage?> source)
 		=> new(source.ExpectationBuilder

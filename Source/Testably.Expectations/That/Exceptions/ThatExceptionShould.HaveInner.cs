@@ -15,7 +15,7 @@ public partial class ThatExceptionShould<TException>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TInnerException" /> which
 	///     satisfies the <paramref name="expectations" />.
 	/// </summary>
-	public AndOrExpectationResult<TException, ThatExceptionShould<TException>> HaveInner<
+	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner<
 		TInnerException>(
 		Action<ThatExceptionShould<TInnerException?>> expectations,
 		[CallerArgumentExpression("expectations")]
@@ -33,7 +33,7 @@ public partial class ThatExceptionShould<TException>
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <typeparamref name="TException" />.
 	/// </summary>
-	public AndOrExpectationResult<TException, ThatExceptionShould<TException>> HaveInner<
+	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner<
 		TInnerException>()
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder

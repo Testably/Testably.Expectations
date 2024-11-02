@@ -13,7 +13,7 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject has the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, IThat<TEnum>> HaveValue<TEnum>(
+	public static AndOrResult<TEnum, IThat<TEnum>> HaveValue<TEnum>(
 		this IThat<TEnum> source,
 		long? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -28,7 +28,7 @@ public static partial class ThatEnumShould
 	/// <summary>
 	///     Verifies that the subject does not have the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum, IThat<TEnum>> NotHaveValue<TEnum>(
+	public static AndOrResult<TEnum, IThat<TEnum>> NotHaveValue<TEnum>(
 		this IThat<TEnum> source,
 		long? unexpected,
 		[CallerArgumentExpression("unexpected")]

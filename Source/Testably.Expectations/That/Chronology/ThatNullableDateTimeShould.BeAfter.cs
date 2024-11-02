@@ -13,13 +13,13 @@ public static partial class ThatNullableDateTimeShould
 	/// <summary>
 	///     Verifies that the subject is after the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>> BeAfter(
+	public static TimeToleranceResult<DateTime?, IThat<DateTime?>> BeAfter(
 		this IThat<DateTime?> source,
 		DateTime? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>>(
+		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
@@ -35,13 +35,13 @@ public static partial class ThatNullableDateTimeShould
 	/// <summary>
 	///     Verifies that the subject is not after the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>> NotBeAfter(
+	public static TimeToleranceResult<DateTime?, IThat<DateTime?>> NotBeAfter(
 		this IThat<DateTime?> source,
 		DateTime? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceExpectationResult<DateTime?, IThat<DateTime?>>(
+		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,

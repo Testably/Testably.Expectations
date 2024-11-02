@@ -12,7 +12,7 @@ public static partial class ThatBufferedStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="BufferedStream" /> has the <paramref name="expected" /> buffer size.
 	/// </summary>
-	public static AndOrExpectationResult<BufferedStream?, IThat<BufferedStream?>> HaveBufferSize(
+	public static AndOrResult<BufferedStream?, IThat<BufferedStream?>> HaveBufferSize(
 		this IThat<BufferedStream?> source,
 		long expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
@@ -29,7 +29,7 @@ public static partial class ThatBufferedStreamShould
 	/// <summary>
 	///     Verifies that the subject <see cref="BufferedStream" /> has the <paramref name="expected" /> buffer size.
 	/// </summary>
-	public static AndOrExpectationResult<BufferedStream?, IThat<BufferedStream?>>
+	public static AndOrResult<BufferedStream?, IThat<BufferedStream?>>
 		NotHaveBufferSize(this IThat<BufferedStream?> source,
 			long expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")

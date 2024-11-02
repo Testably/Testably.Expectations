@@ -12,7 +12,7 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject has the <paramref name="expectedFlag" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> HaveFlag<TEnum>(
+	public static AndOrResult<TEnum?, IThat<TEnum?>> HaveFlag<TEnum>(
 		this IThat<TEnum?> source,
 		TEnum? expectedFlag,
 		[CallerArgumentExpression("expectedFlag")]
@@ -29,7 +29,7 @@ public static partial class ThatNullableEnumShould
 	/// <summary>
 	///     Verifies that the subject does not have the <paramref name="unexpectedFlag" /> value.
 	/// </summary>
-	public static AndOrExpectationResult<TEnum?, IThat<TEnum?>> NotHaveFlag<TEnum>(
+	public static AndOrResult<TEnum?, IThat<TEnum?>> NotHaveFlag<TEnum>(
 		this IThat<TEnum?> source,
 		TEnum? unexpectedFlag,
 		[CallerArgumentExpression("unexpectedFlag")]

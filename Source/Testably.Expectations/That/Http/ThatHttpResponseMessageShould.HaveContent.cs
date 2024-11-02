@@ -15,7 +15,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// <summary>
 	///     Verifies that the string content is equal to <paramref name="expected" />
 	/// </summary>
-	public static StringMatcherExpectationResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
+	public static StringMatcherResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveContent(
 			this IThat<HttpResponseMessage?> source,
 			StringMatcher expected,
