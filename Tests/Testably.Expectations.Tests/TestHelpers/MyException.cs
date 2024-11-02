@@ -2,7 +2,7 @@
 
 namespace Testably.Expectations.Tests.TestHelpers;
 
-internal class MyException(
+public class MyException(
 	[CallerMemberName] string message = "",
 	Exception? innerException = null)
 	: Exception(message, innerException);
