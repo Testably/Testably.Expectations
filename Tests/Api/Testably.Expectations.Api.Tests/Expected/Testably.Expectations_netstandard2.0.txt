@@ -302,15 +302,11 @@ namespace Testably.Expectations
         public static Testably.Expectations.Core.IThat<short> Should(this Testably.Expectations.Core.IExpectSubject<short> subject) { }
         public static Testably.Expectations.Core.IThat<int> Should(this Testably.Expectations.Core.IExpectSubject<int> subject) { }
         public static Testably.Expectations.Core.IThat<long> Should(this Testably.Expectations.Core.IExpectSubject<long> subject) { }
-        public static Testably.Expectations.Core.IThat<System.IntPtr> Should(this Testably.Expectations.Core.IExpectSubject<System.IntPtr> subject) { }
-        public static Testably.Expectations.Core.IThat<System.IntPtr?> Should(this Testably.Expectations.Core.IExpectSubject<System.IntPtr?> subject) { }
         public static Testably.Expectations.Core.IThat<sbyte> Should(this Testably.Expectations.Core.IExpectSubject<sbyte> subject) { }
         public static Testably.Expectations.Core.IThat<float> Should(this Testably.Expectations.Core.IExpectSubject<float> subject) { }
         public static Testably.Expectations.Core.IThat<ushort> Should(this Testably.Expectations.Core.IExpectSubject<ushort> subject) { }
         public static Testably.Expectations.Core.IThat<uint> Should(this Testably.Expectations.Core.IExpectSubject<uint> subject) { }
         public static Testably.Expectations.Core.IThat<ulong> Should(this Testably.Expectations.Core.IExpectSubject<ulong> subject) { }
-        public static Testably.Expectations.Core.IThat<System.UIntPtr> Should(this Testably.Expectations.Core.IExpectSubject<System.UIntPtr> subject) { }
-        public static Testably.Expectations.Core.IThat<System.UIntPtr?> Should(this Testably.Expectations.Core.IExpectSubject<System.UIntPtr?> subject) { }
         public static Testably.Expectations.Core.IThat<byte?> Should(this Testably.Expectations.Core.IExpectSubject<byte?> subject) { }
         public static Testably.Expectations.Core.IThat<decimal?> Should(this Testably.Expectations.Core.IExpectSubject<decimal?> subject) { }
         public static Testably.Expectations.Core.IThat<double?> Should(this Testably.Expectations.Core.IExpectSubject<double?> subject) { }

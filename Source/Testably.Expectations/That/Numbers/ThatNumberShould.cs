@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 // ReSharper disable once CheckNamespace
@@ -36,34 +35,6 @@ public static partial class ThatNumberShould
 	///     Start expectations for the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<uint?> Should(this IExpectSubject<uint?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
-
-	/// <summary>
-	///     Start expectations for the current <see langword="nint" /> <paramref name="subject" />.
-	/// </summary>
-	public static IThat<nint> Should(this IExpectSubject<nint> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
-
-	/// <summary>
-	///     Start expectations for the current <see langword="nint" /> <paramref name="subject" />.
-	/// </summary>
-	public static IThat<nint?> Should(this IExpectSubject<nint?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
-
-	/// <summary>
-	///     Start expectations for the current <see langword="nuint" /> <paramref name="subject" />.
-	/// </summary>
-	public static IThat<nuint> Should(this IExpectSubject<nuint> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
-
-	/// <summary>
-	///     Start expectations for the current <see langword="nuint" /> <paramref name="subject" />.
-	/// </summary>
-	public static IThat<nuint?> Should(this IExpectSubject<nuint?> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 
@@ -192,8 +163,7 @@ public static partial class ThatNumberShould
 	public static IThat<decimal?> Should(this IExpectSubject<decimal?> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
-	
-	
+
 	private readonly struct GenericConstraint<T>(
 		T expected,
 		string expectation,
@@ -208,7 +178,8 @@ public static partial class ThatNumberShould
 				return new ConstraintResult.Success<T>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), failureMessageFactory(actual, expected));
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected));
 		}
 
 		public override string ToString()
