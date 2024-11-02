@@ -8,7 +8,7 @@ public sealed partial class GenericShould
 		public int Value { get; set; }
 	}
 
-	private class Other : OtherBase
+	private sealed class Other : OtherBase
 	{
 	}
 }

@@ -14,9 +14,15 @@ public abstract partial class CollectionQuantifier
 	{
 		/// <inheritdoc />
 		public override string ToString(bool includeItems)
-			=> includeItems
-				? $"at least {minimum}{(minimum == 1 ? " item" : " items")}"
-				: $"at least {minimum}";
+		{
+			string result = $"at least {minimum}";
+			if (includeItems)
+			{
+				result += minimum == 1 ? " item" : " items";
+			}
+
+			return result;
+		}
 
 		/// <inheritdoc />
 		protected override bool ContinueEvaluation(

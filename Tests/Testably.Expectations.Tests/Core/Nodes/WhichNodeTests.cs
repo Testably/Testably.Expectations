@@ -28,7 +28,7 @@ public sealed class WhichNodeTests
 			             """);
 	}
 
-	private class Dummy
+	private sealed class Dummy
 	{
 		public Nested? Inner { get; set; }
 		public string? Value { get; set; }

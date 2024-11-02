@@ -7,7 +7,7 @@ public sealed partial class ObjectShould
 	public sealed partial class Be
 	{
 		// ReSharper disable UnusedAutoPropertyAccessor.Local
-		private class InnerClass
+		private sealed class InnerClass
 		{
 			public IEnumerable<string>? Collection { get; set; }
 
@@ -15,7 +15,7 @@ public sealed partial class ObjectShould
 			public string? Value { get; set; }
 		}
 
-		private class OuterClass
+		private sealed class OuterClass
 		{
 			public InnerClass? Inner { get; set; }
 			public string? Value { get; set; }

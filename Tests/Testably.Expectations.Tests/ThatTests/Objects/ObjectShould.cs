@@ -7,7 +7,7 @@ public sealed partial class ObjectShould
 		public int Value { get; set; }
 	}
 
-	private class MyClass : MyBaseClass;
+	private sealed class MyClass : MyBaseClass;
 
-	private class OtherClass;
+	private sealed class OtherClass;
 }

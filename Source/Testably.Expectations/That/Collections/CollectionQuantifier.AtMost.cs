@@ -14,9 +14,15 @@ public abstract partial class CollectionQuantifier
 	{
 		/// <inheritdoc />
 		public override string ToString(bool includeItems)
-			=> includeItems
-				? $"at most {maximum}{(maximum == 1 ? " item" : " items")}"
-				: $"at most {maximum}";
+		{
+			string result = $"at most {maximum}";
+			if (includeItems)
+			{
+				result += maximum == 1 ? " item" : " items";
+			}
+
+			return result;
+		}
 
 		/// <inheritdoc />
 		protected override bool ContinueEvaluation(

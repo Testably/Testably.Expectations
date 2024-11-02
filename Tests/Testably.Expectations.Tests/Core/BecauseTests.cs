@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.Core;
+﻿using Testably.Expectations.Tests.TestHelpers;
+
+namespace Testably.Expectations.Tests.Core;
 
 public class BecauseTests
 {
@@ -18,7 +20,7 @@ public class BecauseTests
 	public async Task Delegate_ShouldApplyBecauseReason()
 	{
 		string because = "this is the reason";
-		Action subject = () => throw new Exception();
+		Action subject = () => throw new MyException();
 
 		async Task Act()
 			=> await That(subject).Should().NotThrow().Because(because);

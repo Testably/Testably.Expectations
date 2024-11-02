@@ -4,40 +4,43 @@ namespace Testably.Expectations.Tests.ThatTests.Delegates;
 
 public sealed partial class DelegateThrows
 {
-	[Fact]
-	public async Task ShouldSupportNestedChecks()
+	[Theory]
+	[AutoData]
+	public async Task ShouldSupportNestedChecks(
+		string innermostMessage, string innerMessage, string outerMessage)
 	{
-		Exception exception = new CustomException("outer",
-			new SubCustomException("inner1",
+		Exception exception = new CustomException(outerMessage,
+			new SubCustomException(innerMessage,
 				// ReSharper disable once NotResolvedInText
-				new ArgumentException("inner2", paramName: "param2")));
+				new ArgumentException(innermostMessage, paramName: nameof(innermostMessage))));
 		void Act() => throw exception;
 
 		CustomException result = await That(Act).Should().Throw<CustomException>()
 			.WithInnerException(e1 => e1
-				.HaveMessage("inner1").And
+				.HaveMessage(innerMessage).And
 				.HaveInner<ArgumentException>(e2 => e2
-					.HaveParamName("param2").And.HaveMessage("inner2*").AsWildcard()));
+					.HaveParamName(nameof(innermostMessage)).And.HaveMessage($"{innermostMessage}*")
+					.AsWildcard()));
 
 		await That(result).Should().BeSameAs(exception);
 	}
 
-	private class CustomException(
+	public class CustomException(
 		[CallerMemberName] string message = "",
 		Exception? innerException = null)
 		: Exception(message, innerException);
 
-	private class OtherException(
+	public class OtherException(
 		[CallerMemberName] string message = "",
 		Exception? innerException = null)
 		: Exception(message, innerException);
 
-	private class OuterException(
+	public class OuterException(
 		[CallerMemberName] string message = "",
 		Exception? innerException = null)
 		: Exception(message, innerException);
 
-	private class SubCustomException(
+	public class SubCustomException(
 		[CallerMemberName] string message = "",
 		Exception? innerException = null)
 		: CustomException(message, innerException);
