@@ -113,7 +113,7 @@ jobs:
             - name: Build solution
               run: msbuild.exe Testably.Expectations.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
             - name: Run tests
-              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\Testably.Expectations.Api.Tests\net48\Testably.Expectations.Api.Tests.dll .\Build\Tests\TestFramework.NUnit3.Tests\net48\TestFramework.NUnit3.Tests.dll .\Build\Tests\TestFramework.NUnit4.Tests\net48\TestFramework.NUnit4.Tests.dll .\Build\Tests\TestFramework.XUnit2.Tests\net48\TestFramework.XUnit2.Tests.dll .\Build\Tests\TestFramework.TUnit.Tests\net48\TestFramework.TUnit.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
+              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\TestFramework.NUnit3.Tests\net48\TestFramework.NUnit3.Tests.dll .\Build\Tests\TestFramework.NUnit4.Tests\net48\TestFramework.NUnit4.Tests.dll .\Build\Tests\TestFramework.XUnit2.Tests\net48\TestFramework.XUnit2.Tests.dll .\Build\Tests\TestFramework.TUnit.Tests\net48\TestFramework.TUnit.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
             - name: Upload test results (.NET Framework)
               if: ${{ always() }}
               uses: actions/upload-artifact@v3
