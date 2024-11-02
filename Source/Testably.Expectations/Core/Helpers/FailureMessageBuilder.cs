@@ -14,24 +14,22 @@ internal class FailureMessageBuilder : IFailureMessageBuilder
 		ExpressionBuilder = new StringBuilder();
 		ExpressionBuilder
 			.Append(nameof(Expect))
-			.Append(".")
+			.Append('.')
 			.Append(nameof(Expect.That))
-			.Append("(")
+			.Append('(')
 			.Append(_subject)
-			.Append(")");
+			.Append(')');
 	}
 
 	#region IFailureMessageBuilder Members
 
 	public string FromFailure(ConstraintResult.Failure failure)
-	{
-		return $"""
-		        Expected {_subject} to
-		        {failure.ExpectationText},
-		        but {failure.ResultText}
-		        at {ExpressionBuilder}
-		        """;
-	}
+		=> $"""
+		    Expected {_subject} to
+		    {failure.ExpectationText},
+		    but {failure.ResultText}
+		    at {ExpressionBuilder}
+		    """;
 
 	#endregion
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
@@ -24,8 +23,7 @@ public static partial class ThatHttpResponseMessageShould
 	///     Start expectations for the current <see cref="HttpResponseMessage" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<HttpResponseMessage?> Should(
-		this IExpectSubject<HttpResponseMessage?> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		this IExpectSubject<HttpResponseMessage?> subject)
 		=> subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should)));
 
@@ -64,7 +62,7 @@ public static partial class ThatHttpResponseMessageShould
 
 			messageBuilder.Append(indentation)
 				.Append("HTTP/").Append(response.Version)
-				.Append(" ").Append((int)response.StatusCode).Append(" ")
+				.Append(' ').Append((int)response.StatusCode).Append(' ')
 				.Append(response.StatusCode)
 				.AppendLine();
 
@@ -80,7 +78,7 @@ public static partial class ThatHttpResponseMessageShould
 			{
 				messageBuilder.Append(indentation).AppendLine("The originating request was:");
 				messageBuilder.Append(indentation).Append(indentation)
-					.Append(request.Method.ToString().ToUpper()).Append(" ")
+					.Append(request.Method.ToString().ToUpper()).Append(' ')
 					.Append(request.RequestUri).Append(" HTTP ").Append(request.Version)
 					.AppendLine();
 
@@ -98,12 +96,7 @@ public static partial class ThatHttpResponseMessageShould
 			HttpContent content,
 			string indentation)
 		{
-			if (content is StringContent)
-			{
-				string stringContent = await content.ReadAsStringAsync();
-				messageBuilder.AppendLine(stringContent.Indent(indentation));
-			}
-			else if (content is FormUrlEncodedContent)
+			if (content is StringContent or FormUrlEncodedContent)
 			{
 				string stringContent = await content.ReadAsStringAsync();
 				messageBuilder.AppendLine(stringContent.Indent(indentation));

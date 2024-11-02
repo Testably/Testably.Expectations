@@ -10,11 +10,13 @@ public abstract partial class CollectionQuantifier
 	/// </summary>
 	public static CollectionQuantifier AtMost(int maximum) => new AtMostQuantifier(maximum);
 
-	private class AtMostQuantifier(int maximum) : CollectionQuantifier
+	private sealed class AtMostQuantifier(int maximum) : CollectionQuantifier
 	{
 		/// <inheritdoc />
 		public override string ToString(bool includeItems)
-			=> $"at most {maximum}{(includeItems ? (maximum == 1 ? " item" : " items") : "")}";
+			=> includeItems
+				? $"at most {maximum}{(maximum == 1 ? " item" : " items")}"
+				: $"at most {maximum}";
 
 		/// <inheritdoc />
 		protected override bool ContinueEvaluation(

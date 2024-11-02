@@ -32,7 +32,7 @@ internal static class EvaluationContextExtensions
 		return materializedEnumerable;
 	}
 
-	private class MaterializingEnumerable<T> : IEnumerable<T>
+	private sealed class MaterializingEnumerable<T> : IEnumerable<T>
 	{
 		private readonly IEnumerator<T> _enumerator;
 		private readonly List<T> _materializedItems = new();
@@ -68,7 +68,7 @@ internal static class EvaluationContextExtensions
 
 		public static IEnumerable<T> Wrap(IEnumerable<T> enumerable)
 		{
-			if (enumerable is ICollection<T>)
+			if (enumerable is ICollection<T> or MaterializingEnumerable<T>)
 			{
 				return enumerable;
 			}
@@ -77,7 +77,7 @@ internal static class EvaluationContextExtensions
 		}
 	}
 #if NET6_0_OR_GREATER
-	private const string MaterializedAsyncEnumerableKey = nameof(MaterializedEnumerableKey);
+	private const string MaterializedAsyncEnumerableKey = nameof(MaterializedAsyncEnumerableKey);
 
 	/// <summary>
 	///     Avoids enumerating an <see cref="IEnumerable{TItem}" /> multiple times,
@@ -87,7 +87,7 @@ internal static class EvaluationContextExtensions
 		this IEvaluationContext evaluationContext, TCollection collection)
 		where TCollection : IAsyncEnumerable<TItem>
 	{
-		if (evaluationContext.TryReceive(MaterializedEnumerableKey,
+		if (evaluationContext.TryReceive(MaterializedAsyncEnumerableKey,
 			out IAsyncEnumerable<TItem>? existingValue))
 		{
 			return existingValue;
@@ -95,12 +95,12 @@ internal static class EvaluationContextExtensions
 
 		IAsyncEnumerable<TItem> materializedEnumerable = MaterializingAsyncEnumerable<TItem>.Wrap(collection);
 		// ReSharper disable once PossibleMultipleEnumeration
-		evaluationContext.Store(MaterializedEnumerableKey, materializedEnumerable);
+		evaluationContext.Store(MaterializedAsyncEnumerableKey, materializedEnumerable);
 		// ReSharper disable once PossibleMultipleEnumeration
 		return materializedEnumerable;
 	}
 
-	private class MaterializingAsyncEnumerable<T> : IAsyncEnumerable<T>
+	private sealed class MaterializingAsyncEnumerable<T> : IAsyncEnumerable<T>
 	{
 		private readonly IAsyncEnumerator<T> _enumerator;
 		private readonly List<T> _materializedItems = new();
@@ -116,8 +116,7 @@ internal static class EvaluationContextExtensions
 		public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
 			=> GetAsyncEnumerator();
 
-		/// <inheritdoc />
-		public async IAsyncEnumerator<T> GetAsyncEnumerator()
+		private async IAsyncEnumerator<T> GetAsyncEnumerator()
 		{
 			foreach (T materializedItem in _materializedItems)
 			{
@@ -136,7 +135,7 @@ internal static class EvaluationContextExtensions
 
 		public static IAsyncEnumerable<T> Wrap(IAsyncEnumerable<T> enumerable)
 		{
-			if (enumerable is ICollection<T>)
+			if (enumerable is MaterializingAsyncEnumerable<T>)
 			{
 				return enumerable;
 			}

@@ -38,9 +38,9 @@ public static partial class ThatNullableEnumShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have flag {Formatter.Format(unexpectedFlag)}",
-					actual => actual != null && unexpectedFlag == null ||
-				              actual == null && unexpectedFlag != null ||
-				              actual != null && unexpectedFlag != null && !actual.Value.HasFlag(unexpectedFlag)))
+					actual => (actual == null) != (unexpectedFlag == null) ||
+				              actual != null && unexpectedFlag != null &&
+				              !actual.Value.HasFlag(unexpectedFlag)))
 				.AppendMethodStatement(nameof(NotHaveFlag), doNotPopulateThisValue),
 			source);
 }

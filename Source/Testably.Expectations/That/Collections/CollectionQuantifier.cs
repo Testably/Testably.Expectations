@@ -54,7 +54,7 @@ public abstract partial class CollectionQuantifier
 		int? totalCount,
 		[NotNullWhen(false)] out CollectionEvaluatorResult? result);
 
-	private class SynchronousCollectionEvaluator<TItem>(
+	private sealed class SynchronousCollectionEvaluator<TItem>(
 		CollectionQuantifier quantifier,
 		IEnumerable<TItem> enumerable)
 		: ICollectionEvaluator<TItem>
@@ -100,7 +100,7 @@ public abstract partial class CollectionQuantifier
 	}
 
 #if NET6_0_OR_GREATER
-	private class AsynchronousCollectionEvaluator<TItem>(
+	private sealed class AsynchronousCollectionEvaluator<TItem>(
 		CollectionQuantifier quantifier,
 		IAsyncEnumerable<TItem> asyncEnumerable)
 		: ICollectionEvaluator<TItem>

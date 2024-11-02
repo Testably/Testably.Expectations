@@ -13,7 +13,7 @@ public class Formatter
 {
 	internal const string NullString = "<null>";
 
-	private readonly IValueFormatter _defaultFormatter = new DefaultFormatter();
+	private readonly DefaultFormatter _defaultFormatter = new();
 
 	private readonly IValueFormatter[] _internalValueFormatters =
 	[

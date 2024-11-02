@@ -18,8 +18,7 @@ public static partial class ThatExceptionShould
 	///     Start expectations for the current <see cref="Exception" /> <paramref name="subject" />.
 	/// </summary>
 	public static ThatExceptionShould<TException> Should<TException>(
-		this IExpectSubject<TException> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+		this IExpectSubject<TException> subject)
 		where TException : Exception?
 		=> new(subject.Should(expectationBuilder => expectationBuilder
 			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
@@ -87,7 +86,7 @@ public static partial class ThatExceptionShould
 		public ConstraintResult IsMetBy(Exception? actual)
 		{
 			Exception? innerException = actual?.InnerException;
-			if (actual?.InnerException is TInnerException exception)
+			if (actual?.InnerException is TInnerException)
 			{
 				return new ConstraintResult.Success<Exception?>(actual, ToString());
 			}
@@ -106,7 +105,7 @@ public static partial class ThatExceptionShould
 			=> $"{verb} an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
-	internal class CastException<TTarget> : ICastConstraint<Exception?, TTarget>
+	internal class ExceptionCastConstraint<TTarget> : ICastConstraint<Exception?, TTarget>
 		where TTarget : Exception?
 	{
 		#region ICastConstraint<Exception?,TTarget> Members

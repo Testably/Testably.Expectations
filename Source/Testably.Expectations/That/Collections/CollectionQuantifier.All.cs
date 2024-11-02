@@ -10,7 +10,7 @@ public abstract partial class CollectionQuantifier
 	/// </summary>
 	public static CollectionQuantifier All => new AllQuantifier();
 
-	private class AllQuantifier : CollectionQuantifier
+	private sealed class AllQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
 		public override string ToString(bool includeItems) => $"all{(includeItems ? " items" : "")}";

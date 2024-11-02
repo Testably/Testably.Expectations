@@ -45,7 +45,7 @@ internal class DefaultFormatter : IValueFormatter
 	/// <remarks>The default is all non-private members.</remarks>
 	protected virtual MemberInfo[] GetMembers(Type type)
 	{
-		return type.GetMembers(MemberVisibility.Public);
+		return type.GetMembers(MemberVisibilities.Public);
 	}
 
 	/// <summary>
@@ -143,11 +143,11 @@ internal class DefaultFormatter : IValueFormatter
 		}
 		else
 		{
-			stringBuilder.Append("{");
+			stringBuilder.Append('{');
 			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");
 			WriteMemberValues(obj, members, stringBuilder, options.UseLineBreaks ? 2 : 0, options);
 			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");
-			stringBuilder.Append("}");
+			stringBuilder.Append('}');
 		}
 	}
 }

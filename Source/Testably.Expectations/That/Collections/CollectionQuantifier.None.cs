@@ -10,7 +10,7 @@ public abstract partial class CollectionQuantifier
 	/// </summary>
 	public static CollectionQuantifier None => new NoneQuantifier();
 
-	private class NoneQuantifier : CollectionQuantifier
+	private sealed class NoneQuantifier : CollectionQuantifier
 	{
 		/// <inheritdoc />
 		public override string ToString(bool includeItems) =>

@@ -11,7 +11,7 @@ internal class CollectionFormatter : FormatterBase<IEnumerable>
 	{
 		int maxCount = 10;
 		int count = maxCount;
-		stringBuilder.Append("[");
+		stringBuilder.Append('[');
 		bool hasMoreValues = false;
 		foreach (object? v in value)
 		{
@@ -35,6 +35,6 @@ internal class CollectionFormatter : FormatterBase<IEnumerable>
 			stringBuilder.Append(ellipsis);
 		}
 
-		stringBuilder.Append("]");
+		stringBuilder.Append(']');
 	}
 }
