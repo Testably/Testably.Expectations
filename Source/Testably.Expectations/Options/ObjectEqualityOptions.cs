@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,15 +12,15 @@ namespace Testably.Expectations.Options;
 /// </summary>
 public class ObjectEqualityOptions
 {
-	private static readonly IMatchType ExactMatch = new ExactMatchType();
-	private IMatchType _type = ExactMatch;
+	private static readonly IEquality EqualsType = new EqualsEquality();
+	private IEquality _type = EqualsType;
 
 	/// <summary>
 	///     Compares the objects via <see cref="object.Equals(object, object)" />.
 	/// </summary>
 	public ObjectEqualityOptions Equals()
 	{
-		_type = ExactMatch;
+		_type = EqualsType;
 		return this;
 	}
 
@@ -30,20 +29,16 @@ public class ObjectEqualityOptions
 	/// </summary>
 	public ObjectEqualityOptions Equivalent(EquivalencyOptions equivalencyOptions)
 	{
-		_type = new EquivalencyMatch(equivalencyOptions);
+		_type = new EquivalencyEquality(equivalencyOptions);
 		return this;
 	}
 
 	/// <summary>
 	///     Specifies a specific <see cref="IEqualityComparer{T}" /> to use for comparing <see cref="object" />s.
 	/// </summary>
-	/// <remarks>
-	///     If set to <see langword="null" /> (default), uses the <see cref="StringComparer.Ordinal" /> or
-	///     <see cref="StringComparer.OrdinalIgnoreCase" /> depending on whether the casing is ignored.
-	/// </remarks>
-	public ObjectEqualityOptions UsingComparer(IEqualityComparer<object> comparer)
+	public ObjectEqualityOptions Using(IEqualityComparer<object> comparer)
 	{
-		_type = new ComparerMatch(comparer);
+		_type = new ComparerEquality(comparer);
 		return this;
 	}
 
@@ -69,15 +64,16 @@ public class ObjectEqualityOptions
 		public string Failure { get; } = failure;
 	}
 
-	private interface IMatchType
+	private interface IEquality
 	{
 		Result AreConsideredEqual(object? a, object? b);
 		string GetExpectation(string expectedExpression);
 	}
 
-	private sealed class EquivalencyMatch(EquivalencyOptions equivalencyOptions) : IMatchType
+	private sealed class EquivalencyEquality(EquivalencyOptions equivalencyOptions)
+		: IEquality
 	{
-		#region IMatchType Members
+		#region IEquality Members
 
 		/// <inheritdoc />
 		public Result AreConsideredEqual(object? a, object? b)
@@ -144,9 +140,9 @@ public class ObjectEqualityOptions
 		}
 	}
 
-	private sealed class ExactMatchType : IMatchType
+	private sealed class EqualsEquality : IEquality
 	{
-		#region IMatchType Members
+		#region IEquality Members
 
 		/// <inheritdoc />
 		public Result AreConsideredEqual(object? a, object? b)
@@ -159,9 +155,9 @@ public class ObjectEqualityOptions
 		#endregion
 	}
 
-	private sealed class ComparerMatch(IEqualityComparer<object> comparer) : IMatchType
+	private sealed class ComparerEquality(IEqualityComparer<object> comparer) : IEquality
 	{
-		#region IMatchType Members
+		#region IEquality Members
 
 		/// <inheritdoc />
 		public Result AreConsideredEqual(object? a, object? b)

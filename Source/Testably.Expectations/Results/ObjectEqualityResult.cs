@@ -59,7 +59,7 @@ public class ObjectEqualityResult<TResult, TValue, TSelf>(
 		IEqualityComparer<object> comparer,
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{
-		options.UsingComparer(comparer);
+		options.Using(comparer);
 		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
