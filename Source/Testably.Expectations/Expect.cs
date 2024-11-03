@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
@@ -107,6 +108,7 @@ public static class Expect
 				doNotPopulateThisValue));
 #endif
 
+	[DebuggerDisplay("Expect.ThatSubject<{typeof(T)}>: {ExpectationBuilder}")]
 	internal readonly struct ThatSubject<T>(ExpectationBuilder expectationBuilder)
 		: IExpectSubject<T>, IThat<T>
 	{
