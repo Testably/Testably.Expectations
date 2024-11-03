@@ -21,7 +21,7 @@ public sealed partial class ObjectShould
 					.WithMessage("""
 					             Expected subject to
 					             be equal to expected using MyComparer,
-					             but found OuterClass{
+					             but found OuterClass {
 					               Inner = <null>,
 					               Value = "Foo"
 					             }

@@ -16,16 +16,14 @@ internal class DefaultFormatter : IValueFormatter
 		if (value.GetType() == typeof(object))
 		{
 			stringBuilder.Append($"System.Object (HashCode={value.GetHashCode()})");
-			return true;
 		}
-
-		if (HasCompilerGeneratedToStringImplementation(value))
+		else if (HasCompilerGeneratedToStringImplementation(value))
 		{
 			WriteTypeAndMemberValues(value, stringBuilder, options);
 		}
 		else if (options.UseLineBreaks)
 		{
-			stringBuilder.AppendLine(value.ToString());
+			stringBuilder.AppendLine(value.ToString().Indent(indentFirstLine: false));
 		}
 		else
 		{
@@ -116,6 +114,10 @@ internal class DefaultFormatter : IValueFormatter
 		}
 
 		stringBuilder.Append($"{new string(' ', indentation)}{member.Name} = ");
+		if (options.UseLineBreaks)
+		{
+			formattedValue = formattedValue.Indent("  ", false);	
+		}
 		stringBuilder.Append(formattedValue);
 	}
 
@@ -139,11 +141,11 @@ internal class DefaultFormatter : IValueFormatter
 		MemberInfo[] members = GetMembers(type);
 		if (members.Length == 0)
 		{
-			stringBuilder.Append("{ }");
+			stringBuilder.Append(" { }");
 		}
 		else
 		{
-			stringBuilder.Append('{');
+			stringBuilder.Append(" {");
 			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");
 			WriteMemberValues(obj, members, stringBuilder, options.UseLineBreaks ? 2 : 0, options);
 			stringBuilder.Append(options.UseLineBreaks ? Environment.NewLine : " ");

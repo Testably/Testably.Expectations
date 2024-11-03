@@ -28,10 +28,10 @@ public sealed partial class GenericShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             refer to expected Other{
+				             refer to expected Other {
 				               Value = 1
 				             },
-				             but found Other{
+				             but found Other {
 				               Value = 1
 				             }
 				             at Expect.That(subject).Should().BeSameAs(expected)
@@ -51,7 +51,7 @@ public sealed partial class GenericShould
 				.WithMessage("""
 				             Expected subject to
 				             refer to expected <null>,
-				             but found Other{
+				             but found Other {
 				               Value = 1
 				             }
 				             at Expect.That(subject).Should().BeSameAs(expected)
@@ -82,7 +82,7 @@ public sealed partial class GenericShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             refer to expected Other{
+				             refer to expected Other {
 				               Value = 1
 				             },
 				             but found <null>
@@ -105,7 +105,7 @@ public sealed partial class GenericShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not refer to expected Other{
+				             not refer to expected Other {
 				               Value = 1
 				             },
 				             but it did

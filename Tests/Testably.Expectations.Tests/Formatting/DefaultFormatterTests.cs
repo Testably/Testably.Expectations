@@ -16,8 +16,53 @@ public sealed class DefaultFormatterTests
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
 		await That(result).Should().Be("""
-		                               Dummy{ Inner = InnerDummy{ InnerValue = "foo" }, Value = 2 }
+		                               Dummy { Inner = InnerDummy { InnerValue = "foo" }, Value = 2 }
 		                               """);
+	}
+
+	[Fact]
+	public async Task ShouldUseMultipleLinesPerDefault()
+	{
+		Dummy value = new()
+		{
+			Inner = new InnerDummy { InnerValue = "foo" },
+			Value = 2
+		};
+
+		string result = Formatter.Format(value, FormattingOptions.Default);
+
+		await That(result).Should().Be("""
+		                               Dummy {
+		                                 Inner = InnerDummy {
+		                                   InnerValue = "foo"
+		                                 },
+		                                 Value = 2
+		                               }
+		                               """);
+	}
+
+	[Theory]
+	[AutoData]
+	public async Task ShouldUseToStringWhenImplemented_Default(string[] values)
+	{
+		string value = string.Join(Environment.NewLine, values);
+		string expected = string.Join($"{Environment.NewLine}  ", values) + Environment.NewLine;
+		ClassWithToString subject = new(value);
+
+		string result = Formatter.Format(subject, FormattingOptions.Default);
+
+		await That(result).Should().Be(expected);
+	}
+
+	[Theory]
+	[AutoData]
+	public async Task ShouldUseToStringWhenImplemented_WithSingleLine(string value)
+	{
+		ClassWithToString subject = new(value);
+
+		string result = Formatter.Format(subject, FormattingOptions.SingleLine);
+
+		await That(result).Should().Be(value);
 	}
 
 	[Fact]
@@ -27,7 +72,7 @@ public sealed class DefaultFormatterTests
 
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
-		await That(result).Should().Be("ClassWithField{ Value = 42 }");
+		await That(result).Should().Be("ClassWithField { Value = 42 }");
 	}
 
 	[Fact]
@@ -37,7 +82,7 @@ public sealed class DefaultFormatterTests
 
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
-		await That(result).Should().Be("EmptyClass{ }");
+		await That(result).Should().Be("EmptyClass { }");
 	}
 
 	[Fact]
@@ -49,7 +94,8 @@ public sealed class DefaultFormatterTests
 		string result = Formatter.Format(value, FormattingOptions.SingleLine);
 
 		await That(result).Should()
-			.Be("ClassWithExceptionProperty{ Value = [Member 'Value' threw an exception: 'foo'] }");
+			.Be(
+				"ClassWithExceptionProperty { Value = [Member 'Value' threw an exception: 'foo'] }");
 	}
 
 	[Fact]
@@ -72,6 +118,13 @@ public sealed class DefaultFormatterTests
 	{
 		// ReSharper disable once NotAccessedField.Local
 		public int Value = 2;
+	}
+
+	private sealed class ClassWithToString(string value)
+	{
+		/// <inheritdoc />
+		public override string ToString()
+			=> value;
 	}
 
 	private sealed class Dummy
