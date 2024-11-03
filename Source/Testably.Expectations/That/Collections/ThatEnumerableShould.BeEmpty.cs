@@ -15,8 +15,7 @@ public static partial class ThatEnumerableShould
 	///     Verifies that the actual enumerable is empty.
 	/// </summary>
 	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
-		BeEmpty<TItem>(
-			this IThat<IEnumerable<TItem>> source)
+		BeEmpty<TItem>(this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new IsEmptyValueConstraint<TItem>())
 				.AppendMethodStatement(nameof(BeEmpty)),

@@ -151,7 +151,8 @@ public abstract class ExpectationBuilder
 	}
 
 	internal abstract Task<ConstraintResult> IsMet(
-		Node rootNode, EvaluationContext.EvaluationContext context,
+		Node rootNode,
+		EvaluationContext.EvaluationContext context,
 		CancellationToken cancellationToken);
 
 	internal void Or(Action<StringBuilder> expressionBuilder,
@@ -207,16 +208,18 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 	/// </summary>
 	private readonly IValueSource<TValue> _subjectSource;
 
-	internal ExpectationBuilder(IValueSource<TValue> subjectSource, string subjectExpression) :
-		base(
-			subjectExpression)
+	internal ExpectationBuilder(
+		IValueSource<TValue> subjectSource,
+		string subjectExpression)
+		: base(subjectExpression)
 	{
 		_subjectSource = subjectSource;
 	}
 
 	/// <inheritdoc />
 	internal override async Task<ConstraintResult> IsMet(
-		Node rootNode, EvaluationContext.EvaluationContext context,
+		Node rootNode,
+		EvaluationContext.EvaluationContext context,
 		CancellationToken cancellationToken)
 	{
 		TValue? data = await _subjectSource.GetValue();

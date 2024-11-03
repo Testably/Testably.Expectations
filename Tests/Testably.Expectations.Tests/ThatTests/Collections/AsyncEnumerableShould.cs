@@ -34,9 +34,9 @@ public partial class AsyncEnumerableShould
 
 	/// <summary>
 	///     Returns an <see cref="IAsyncEnumerable{T}" /> with incrementing numbers, starting with 0, which cancels the
-	///     <paramref name="cancellationToken" /> after <paramref name="cancelAfter" /> iteration.
+	///     <paramref name="cancellationTokenSource" /> after <paramref name="cancelAfter" /> iteration.
 	/// </summary>
-	private static async IAsyncEnumerable<int> GetCancellingEnumerable(
+	private static async IAsyncEnumerable<int> GetCancellingAsyncEnumerable(
 		int cancelAfter,
 		CancellationTokenSource cancellationTokenSource,
 		[EnumeratorCancellation] CancellationToken cancellationToken = default)

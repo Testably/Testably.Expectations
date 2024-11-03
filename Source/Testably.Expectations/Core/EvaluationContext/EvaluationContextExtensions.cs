@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Testably.Expectations.Core.EvaluationContext;
@@ -94,7 +93,8 @@ internal static class EvaluationContextExtensions
 			return existingValue;
 		}
 
-		IAsyncEnumerable<TItem> materializedEnumerable = MaterializingAsyncEnumerable<TItem>.Wrap(collection);
+		IAsyncEnumerable<TItem> materializedEnumerable =
+			MaterializingAsyncEnumerable<TItem>.Wrap(collection);
 		// ReSharper disable once PossibleMultipleEnumeration
 		evaluationContext.Store(MaterializedAsyncEnumerableKey, materializedEnumerable);
 		// ReSharper disable once PossibleMultipleEnumeration
@@ -113,7 +113,8 @@ internal static class EvaluationContextExtensions
 
 		#region IAsyncEnumerable<T> Members
 
-		public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+		public async IAsyncEnumerator<T> GetAsyncEnumerator(
+			CancellationToken cancellationToken = default)
 		{
 			foreach (T materializedItem in _materializedItems)
 			{
@@ -126,6 +127,7 @@ internal static class EvaluationContextExtensions
 				{
 					break;
 				}
+
 				T item = _enumerator.Current;
 				_materializedItems.Add(item);
 				yield return item;

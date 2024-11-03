@@ -74,6 +74,11 @@ public abstract partial class CollectionQuantifier
 
 			foreach (TItem item in enumerable)
 			{
+				if (cancellationToken.IsCancellationRequested)
+				{
+					break;
+				}
+				
 				bool isMatch = predicate(item, expected);
 				if (isMatch)
 				{
@@ -91,11 +96,18 @@ public abstract partial class CollectionQuantifier
 				}
 			}
 
+			if (cancellationToken.IsCancellationRequested)
+			{
+				return Task.FromResult(
+					new CollectionEvaluatorResult(null,
+						"could not verify, because it was cancelled early"));
+			}
+
 			return Task.FromResult(!quantifier.ContinueEvaluation(
 				matchingCount, notMatchingCount, matchingCount + notMatchingCount,
 				out CollectionEvaluatorResult? finalResult)
 				? finalResult.Value
-				: new CollectionEvaluatorResult(false, "could not decide"));
+				: new CollectionEvaluatorResult(false, "could not verify"));
 		}
 
 		#endregion

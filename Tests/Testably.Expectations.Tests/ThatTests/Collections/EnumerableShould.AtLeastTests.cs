@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Testably.Expectations.Tests.TestHelpers;
 // ReSharper disable PossibleMultipleEnumeration
 
@@ -8,6 +9,20 @@ public sealed partial class EnumerableShould
 {
 	public sealed class AtLeastTests
 	{
+		[Fact]
+		public async Task ConsidersCancellationToken()
+		{
+			using CancellationTokenSource cts = new();
+			CancellationToken token = cts.Token;
+			IEnumerable<int> subject = GetCancellingEnumerable(6, cts);
+
+			async Task Act()
+				=> await That(subject).Should().AtLeast(6).Satisfy(x => x < 6)
+					.WithCancellation(token);
+
+			await That(Act).Should().NotThrow();
+		}
+
 		[Fact]
 		public async Task DoesNotEnumerateTwice()
 		{
