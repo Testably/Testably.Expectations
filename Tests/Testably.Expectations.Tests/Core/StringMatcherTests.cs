@@ -205,21 +205,7 @@ public class StringMatcherTests
 				=> await That(subject).Should().Be(expected);
 
 			await That(Act).Should().ThrowException()
-				.WithMessage("*misses some whitespace at the beginning*").AsWildcard();
-		}
-
-		[Fact]
-		public async Task
-			WhenTheExpectedStringHasTrailingAndLeadingWhitespace_ShouldFailWithDescriptiveMessage()
-		{
-			string subject = "ABC";
-			string expected = "\tABC\t";
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().ThrowException().WithMessage("*differs in whitespace*")
-				.AsWildcard();
+				.WithMessage("*misses some whitespace (\" \" at the beginning)*").AsWildcard();
 		}
 
 		[Fact]
@@ -233,7 +219,7 @@ public class StringMatcherTests
 				=> await That(subject).Should().Be(expected);
 
 			await That(Act).Should().ThrowException()
-				.WithMessage("*misses some whitespace at the end*").AsWildcard();
+				.WithMessage("*misses some whitespace (\"  \" at the end)*").AsWildcard();
 		}
 
 		[Fact]
@@ -247,7 +233,7 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 2 which is longer than the expected length of 0*")
+				.WithMessage("*length of 2 which is longer than the expected length of 0 and has superfluous*\"AB\"*")
 				.AsWildcard();
 		}
 
@@ -263,7 +249,7 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 2 which is shorter than the expected length of 3*")
+				.WithMessage("*length of 2 which is shorter than the expected length of 3 and misses*\"C\"*")
 				.AsWildcard();
 		}
 
@@ -292,7 +278,7 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 3 which is longer than the expected length of 2*")
+				.WithMessage("*length of 3 which is longer than the expected length of 2 and has superfluous*\"C\"*")
 				.AsWildcard();
 		}
 
@@ -319,21 +305,7 @@ public class StringMatcherTests
 				=> await That(subject).Should().Be(expected);
 
 			await That(Act).Should().ThrowException()
-				.WithMessage("*unexpected whitespace at the beginning*").AsWildcard();
-		}
-
-		[Fact]
-		public async Task
-			WhenTheSubjectHasTrailingAndLeadingWhitespace_ShouldFailWithDescriptiveMessage()
-		{
-			string subject = " ABC\t";
-			string expected = "ABC";
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().ThrowException().WithMessage("*differs in whitespace*")
-				.AsWildcard();
+				.WithMessage("*unexpected whitespace (\"\\t \" at the beginning)*").AsWildcard();
 		}
 
 		[Fact]
@@ -346,7 +318,7 @@ public class StringMatcherTests
 				=> await That(subject).Should().Be(expected);
 
 			await That(Act).Should().ThrowException()
-				.WithMessage("*unexpected whitespace at the end*").AsWildcard();
+				.WithMessage("*unexpected whitespace (\"\\t\" at the end)*").AsWildcard();
 		}
 
 		[Fact]
@@ -360,7 +332,7 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 0 which is shorter than the expected length of 2*")
+				.WithMessage("*length of 0 which is shorter than the expected length of 2 and misses*\"AB\"*")
 				.AsWildcard();
 		}
 
