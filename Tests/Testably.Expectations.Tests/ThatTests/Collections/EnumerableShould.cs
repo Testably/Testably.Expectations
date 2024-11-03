@@ -20,10 +20,11 @@ public partial class EnumerableShould
 	/// </summary>
 	private static IEnumerable<int> GetCancellingEnumerable(
 		int cancelAfter,
-		CancellationTokenSource cancellationTokenSource)
+		CancellationTokenSource cancellationTokenSource,
+		int limit = 10_000)
 	{
 		int index = 0;
-		while (true)
+		while (index < limit)
 		{
 			if (index == cancelAfter)
 			{
