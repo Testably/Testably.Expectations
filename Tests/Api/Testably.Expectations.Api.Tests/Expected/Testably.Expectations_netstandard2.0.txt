@@ -468,6 +468,7 @@ namespace Testably.Expectations.Core.EvaluationContext
 }
 namespace Testably.Expectations.Core
 {
+    [System.Diagnostics.DebuggerDisplay("{_tree}")]
     public abstract class ExpectationBuilder
     {
         protected ExpectationBuilder(string subjectExpression) { }
@@ -479,7 +480,6 @@ namespace Testably.Expectations.Core
         public void AddReason(string reason) { }
         public Testably.Expectations.Core.ExpectationBuilder AppendStatement(string value) { }
         public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(Testably.Expectations.Core.PropertyAccessor<TSource, TTarget?> propertyAccessor, System.Func<Testably.Expectations.Core.PropertyAccessor, string, string>? expectationTextGenerator = null) { }
-        public override string ToString() { }
         public class PropertyExpectationBuilder<TSource, TProperty>
         {
             public Testably.Expectations.Core.ExpectationBuilder AddExpectations(System.Action<Testably.Expectations.Core.ExpectationBuilder> expectation) { }
