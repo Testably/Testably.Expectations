@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Core.Helpers;
@@ -21,16 +22,17 @@ internal class AndNode : CombinationNode
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
 		TValue? value,
-		IEvaluationContext context)
+		IEvaluationContext context,
+		CancellationToken cancellationToken)
 		where TValue : default
 	{
-		ConstraintResult leftResult = await Left.IsMetBy(value, context);
+		ConstraintResult leftResult = await Left.IsMetBy(value, context, cancellationToken);
 		if (leftResult.IgnoreFurtherProcessing)
 		{
 			return leftResult;
 		}
 
-		ConstraintResult rightResult = await Right.IsMetBy(value, context);
+		ConstraintResult rightResult = await Right.IsMetBy(value, context, cancellationToken);
 
 		string combinedExpectation =
 			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";

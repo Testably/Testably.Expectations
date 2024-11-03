@@ -1,5 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -34,16 +35,18 @@ public static partial class ThatAsyncEnumerableShould
 				.AppendMethodStatement(nameof(NotBeEmpty)),
 			source);
 
-	private readonly struct
-		IsEmptyValueConstraint<TItem> : IAsyncContextConstraint<IAsyncEnumerable<TItem>>
+	private readonly struct IsEmptyValueConstraint<TItem>
+		: IAsyncContextConstraint<IAsyncEnumerable<TItem>>
 	{
 		public async Task<ConstraintResult> IsMetBy(
-			IAsyncEnumerable<TItem> actual, IEvaluationContext context)
+			IAsyncEnumerable<TItem> actual,
+			IEvaluationContext context,
+			CancellationToken cancellationToken)
 		{
 			IAsyncEnumerable<TItem> materializedEnumerable =
 				context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(actual);
 			await using IAsyncEnumerator<TItem> enumerator =
-				materializedEnumerable.GetAsyncEnumerator();
+				materializedEnumerable.GetAsyncEnumerator(cancellationToken);
 			if (await enumerator.MoveNextAsync())
 			{
 				List<TItem> items = new(11) { enumerator.Current };
@@ -68,16 +71,18 @@ public static partial class ThatAsyncEnumerableShould
 			=> "be empty";
 	}
 
-	private readonly struct
-		IsNotEmptyConstraint<TItem> : IAsyncContextConstraint<IAsyncEnumerable<TItem>>
+	private readonly struct IsNotEmptyConstraint<TItem>
+		: IAsyncContextConstraint<IAsyncEnumerable<TItem>>
 	{
 		public async Task<ConstraintResult> IsMetBy(
-			IAsyncEnumerable<TItem> actual, IEvaluationContext context)
+			IAsyncEnumerable<TItem> actual,
+			IEvaluationContext context,
+			CancellationToken cancellationToken)
 		{
 			IAsyncEnumerable<TItem> materializedEnumerable =
 				context.UseMaterializedAsyncEnumerable<TItem, IAsyncEnumerable<TItem>>(actual);
 			await using IAsyncEnumerator<TItem> enumerator =
-				materializedEnumerable.GetAsyncEnumerator();
+				materializedEnumerable.GetAsyncEnumerator(cancellationToken);
 			if (await enumerator.MoveNextAsync())
 			{
 				return new ConstraintResult.Success<IAsyncEnumerable<TItem>>(materializedEnumerable,

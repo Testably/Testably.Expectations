@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.EvaluationContext;
 // ReSharper disable once CheckNamespace
@@ -64,7 +65,8 @@ public abstract partial class CollectionQuantifier
 		/// <inheritdoc cref="ICollectionEvaluator{TItem}.CheckCondition{TExpected}" />
 		public Task<CollectionEvaluatorResult> CheckCondition<TExpected>(
 			TExpected expected,
-			Func<TItem, TExpected, bool> predicate)
+			Func<TItem, TExpected, bool> predicate,
+			CancellationToken cancellationToken)
 		{
 			int matchingCount = 0;
 			int notMatchingCount = 0;
@@ -110,13 +112,14 @@ public abstract partial class CollectionQuantifier
 		/// <inheritdoc cref="ICollectionEvaluator{TItem}.CheckCondition{TExpected}" />
 		public async Task<CollectionEvaluatorResult> CheckCondition<TExpected>(
 			TExpected expected,
-			Func<TItem, TExpected, bool> predicate)
+			Func<TItem, TExpected, bool> predicate,
+			CancellationToken cancellationToken)
 		{
 			int matchingCount = 0;
 			int notMatchingCount = 0;
 			int? totalCount = null;
 
-			await foreach (TItem item in asyncEnumerable)
+			await foreach (TItem item in asyncEnumerable.WithCancellation(cancellationToken))
 			{
 				bool isMatch = predicate(item, expected);
 				if (isMatch)

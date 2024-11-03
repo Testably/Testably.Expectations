@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 // ReSharper disable once CheckNamespace
 
@@ -15,5 +16,6 @@ public interface ICollectionEvaluator<out TItem>
 	/// </summary>
 	Task<CollectionEvaluatorResult> CheckCondition<TExpected>(
 		TExpected expected,
-		Func<TItem, TExpected, bool> predicate);
+		Func<TItem, TExpected, bool> predicate,
+		CancellationToken cancellationToken);
 }

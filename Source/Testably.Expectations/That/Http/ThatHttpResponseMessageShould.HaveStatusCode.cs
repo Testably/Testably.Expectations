@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -46,7 +47,9 @@ public static partial class ThatHttpResponseMessageShould
 	private readonly struct HasStatusCodeConstraint(HttpStatusCode expected)
 		: IAsyncConstraint<HttpResponseMessage>
 	{
-		public async Task<ConstraintResult> IsMetBy(HttpResponseMessage? actual)
+		public async Task<ConstraintResult> IsMetBy(
+			HttpResponseMessage? actual,
+			CancellationToken cancellationToken)
 		{
 			if (actual == null)
 			{
@@ -59,7 +62,8 @@ public static partial class ThatHttpResponseMessageShould
 				return new ConstraintResult.Success<HttpResponseMessage?>(actual, ToString());
 			}
 
-			string formattedResponse = await HttpResponseMessageFormatter.Format(actual, "  ");
+			string formattedResponse =
+				await HttpResponseMessageFormatter.Format(actual, "  ", cancellationToken);
 			return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
 				$"found {Formatter.Format(actual.StatusCode)}:{Environment.NewLine}{formattedResponse}");
 		}

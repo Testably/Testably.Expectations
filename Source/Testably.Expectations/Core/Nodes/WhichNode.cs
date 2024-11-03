@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
@@ -22,7 +23,8 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
 		TValue? value,
-		IEvaluationContext context)
+		IEvaluationContext context,
+		CancellationToken cancellationToken)
 		where TValue : default
 	{
 		if (_propertyAccessor is PropertyAccessor<TSource, TProperty> propertyAccessor)
@@ -37,7 +39,7 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 				typedValue,
 				out TProperty? matchingValue))
 			{
-				ConstraintResult result = (await Inner.IsMetBy(matchingValue, context))
+				ConstraintResult result = (await Inner.IsMetBy(matchingValue, context, cancellationToken))
 					.UpdateExpectationText(r
 						=> _expectationTextGenerator(_propertyAccessor, r.ExpectationText));
 				return result.UseValue(value);

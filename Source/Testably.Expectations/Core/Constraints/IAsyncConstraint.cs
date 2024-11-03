@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Constraints;
 
@@ -10,5 +11,5 @@ public interface IAsyncConstraint<in TValue> : IConstraint
 	/// <summary>
 	///     Checks if the <paramref name="actual" /> value meets the expectation.
 	/// </summary>
-	public Task<ConstraintResult> IsMetBy(TValue actual);
+	public Task<ConstraintResult> IsMetBy(TValue actual, CancellationToken cancellationToken);
 }

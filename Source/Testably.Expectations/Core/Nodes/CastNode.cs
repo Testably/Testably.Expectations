@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 
@@ -18,14 +19,15 @@ internal class CastNode<T1, T2> : ManipulationNode
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(
 		TValue? value,
-		IEvaluationContext context)
+		IEvaluationContext context,
+		CancellationToken cancellationToken)
 		where TValue : default
 	{
-		ConstraintResult? result = await TryMeet(CastConstraint, value, context, Reason);
+		ConstraintResult? result = await TryMeet(CastConstraint, value, Reason, context, cancellationToken);
 		if (!result.IgnoreFurtherProcessing && Inner != None &&
 		    result is ConstraintResult.Success<T2> success)
 		{
-			return (await Inner.IsMetBy(success.Value, context))
+			return (await Inner.IsMetBy(success.Value, context, cancellationToken))
 				.UpdateExpectationText(e => $"{result.ExpectationText} {e.ExpectationText}");
 		}
 

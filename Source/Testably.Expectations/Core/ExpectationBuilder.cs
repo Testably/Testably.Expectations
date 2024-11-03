@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
@@ -18,6 +19,8 @@ public abstract class ExpectationBuilder
 	///     The builder for the failure message.
 	/// </summary>
 	internal IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
+
+	private CancellationToken? _cancellationToken;
 
 	private readonly FailureMessageBuilder _failureMessageBuilder;
 	private readonly Tree _tree = new();
@@ -125,6 +128,14 @@ public abstract class ExpectationBuilder
 		return _tree.ToString();
 	}
 
+	/// <summary>
+	///     Adds a <paramref name="cancellationToken" /> to be used by the constraints.
+	/// </summary>
+	internal void AddCancellation(CancellationToken cancellationToken)
+	{
+		_cancellationToken = cancellationToken;
+	}
+
 	internal void And(Action<StringBuilder> expressionBuilder,
 		string textSeparator = " and ")
 	{
@@ -136,11 +147,12 @@ public abstract class ExpectationBuilder
 	{
 		EvaluationContext.EvaluationContext context = new();
 		Node rootNode = _tree.GetRoot();
-		return IsMet(context, rootNode);
+		return IsMet(rootNode, context, _cancellationToken ?? CancellationToken.None);
 	}
 
 	internal abstract Task<ConstraintResult> IsMet(
-		EvaluationContext.EvaluationContext context, Node rootNode);
+		Node rootNode, EvaluationContext.EvaluationContext context,
+		CancellationToken cancellationToken);
 
 	internal void Or(Action<StringBuilder> expressionBuilder,
 		string textSeparator = " or ")
@@ -204,9 +216,10 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 
 	/// <inheritdoc />
 	internal override async Task<ConstraintResult> IsMet(
-		EvaluationContext.EvaluationContext context, Node rootNode)
+		Node rootNode, EvaluationContext.EvaluationContext context,
+		CancellationToken cancellationToken)
 	{
 		TValue? data = await _subjectSource.GetValue();
-		return await rootNode.IsMetBy(data, context);
+		return await rootNode.IsMetBy(data, context, cancellationToken);
 	}
 }

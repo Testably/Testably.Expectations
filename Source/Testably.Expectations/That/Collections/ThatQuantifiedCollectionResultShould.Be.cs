@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -61,11 +62,14 @@ public static partial class ThatQuantifiedCollectionResultShould
 		Func<TCollection, IEvaluationContext, ICollectionEvaluator<TItem>> evaluatorFactory)
 		: IAsyncContextConstraint<TCollection>
 	{
-		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
+		public async Task<ConstraintResult> IsMetBy(
+			TCollection actual,
+			IEvaluationContext context,
+			CancellationToken cancellationToken)
 		{
 			ICollectionEvaluator<TItem> evaluator = evaluatorFactory(actual, context);
 			CollectionEvaluatorResult result = await evaluator
-				.CheckCondition(expected, (a, e) => a?.Equals(e) == true)
+				.CheckCondition(expected, (a, e) => a?.Equals(e) == true, cancellationToken)
 				.ConfigureAwait(false);
 
 			if (result.IsSuccess)
