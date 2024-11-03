@@ -18,7 +18,7 @@ internal class DelegateValueSource<TValue> : IValueSource<DelegateValue<TValue>>
 	{
 		try
 		{
-			TValue? value = _action();
+			TValue value = _action();
 			return Task.FromResult<DelegateValue<TValue>?>(new DelegateValue<TValue>(value, null));
 		}
 		catch (Exception ex)
