@@ -28,7 +28,7 @@ public sealed partial class ObjectShould
 				.WithMessage($$"""
 				               Expected subject to
 				               be type OtherClass, because we want to test the failure,
-				               but found MyClass{
+				               but found MyClass {
 				                 Value = {{value}}
 				               }
 				               at Expect.That(subject).Should().Be<OtherClass>().Because("we want to test the failure")
@@ -60,7 +60,7 @@ public sealed partial class ObjectShould
 				.WithMessage($$"""
 				               Expected subject to
 				               be type MyClass, because {{reason}},
-				               but found MyBaseClass{
+				               but found MyBaseClass {
 				                 Value = {{value}}
 				               }
 				               at Expect.That(subject).Should().Be<MyClass>().Because(reason)
