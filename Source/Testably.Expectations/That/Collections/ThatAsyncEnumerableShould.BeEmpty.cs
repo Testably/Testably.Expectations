@@ -63,6 +63,12 @@ public static partial class ThatAsyncEnumerableShould
 					$"found {Formatter.Format(items)}");
 			}
 
+			if (cancellationToken.IsCancellationRequested)
+			{
+				return new ConstraintResult.Failure(ToString(),
+					"could not evaluate it, because it was already cancelled");
+			}
+
 			return new ConstraintResult.Success<IAsyncEnumerable<TItem>>(materializedEnumerable,
 				ToString());
 		}

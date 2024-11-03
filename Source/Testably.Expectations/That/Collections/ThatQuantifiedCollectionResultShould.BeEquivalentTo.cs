@@ -98,13 +98,13 @@ public static partial class ThatQuantifiedCollectionResultShould
 					cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.IsSuccess)
+			return result.IsSuccess switch
 			{
-				return new ConstraintResult.Success<TCollection>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				$"{result.Error} items were equivalent");
+				true => new ConstraintResult.Success<TCollection>(actual, ToString()),
+				false => new ConstraintResult.Failure(ToString(),
+					$"{result.Error} items were equivalent"),
+				_ => new ConstraintResult.Failure(ToString(), result.Error)
+			};
 		}
 
 		public override string ToString()

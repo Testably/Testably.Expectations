@@ -72,12 +72,13 @@ public static partial class ThatQuantifiedCollectionResultShould
 				.CheckCondition(expected, (a, e) => a?.Equals(e) == true, cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.IsSuccess)
+			return result.IsSuccess switch
 			{
-				return new ConstraintResult.Success<TCollection>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(), $"{result.Error} items were equal");
+				true => new ConstraintResult.Success<TCollection>(actual, ToString()),
+				false => new ConstraintResult.Failure(ToString(),
+					$"{result.Error} items were equal"),
+				_ => new ConstraintResult.Failure(ToString(), result.Error)
+			};
 		}
 
 		public override string ToString()

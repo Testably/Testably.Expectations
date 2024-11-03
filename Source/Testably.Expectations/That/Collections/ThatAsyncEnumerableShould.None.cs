@@ -12,7 +12,7 @@ public static partial class ThatAsyncEnumerableShould
 	/// </summary>
 	public static QuantifiedCollectionResult.Async
 		<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>> None<TItem>(
-		this IThat<IAsyncEnumerable<TItem>> source)
+			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source,
 			source.ExpectationBuilder.AppendMethodStatement(nameof(None)),
 			CollectionQuantifier.None);

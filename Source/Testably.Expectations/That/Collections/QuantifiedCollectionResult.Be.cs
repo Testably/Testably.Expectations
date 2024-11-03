@@ -82,13 +82,12 @@ public class QuantifiedCollectionResult
 				.CheckCondition(default(TItem), (a, _) => a is TExpected, cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.IsSuccess)
+			return result.IsSuccess switch
 			{
-				return new ConstraintResult.Success<TCollection>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				$"{result.Error} items were");
+				true => new ConstraintResult.Success<TCollection>(actual, ToString()),
+				false => new ConstraintResult.Failure(ToString(), $"{result.Error} items were"),
+				_ => new ConstraintResult.Failure(ToString(), result.Error)
+			};
 		}
 
 		public override string ToString()

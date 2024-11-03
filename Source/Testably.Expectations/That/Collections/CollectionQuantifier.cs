@@ -138,11 +138,17 @@ public abstract partial class CollectionQuantifier
 				}
 			}
 
+			if (cancellationToken.IsCancellationRequested)
+			{
+				return new CollectionEvaluatorResult(null,
+					"could not verify, because it was cancelled early");
+			}
+
 			return !quantifier.ContinueEvaluation(
 				matchingCount, notMatchingCount, matchingCount + notMatchingCount,
 				out CollectionEvaluatorResult? finalResult)
 				? finalResult.Value
-				: new CollectionEvaluatorResult(false, "could not decide");
+				: new CollectionEvaluatorResult(false, "could not verify");
 		}
 
 		#endregion

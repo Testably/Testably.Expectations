@@ -13,8 +13,8 @@ public static partial class ThatAsyncEnumerableShould
 	/// </summary>
 	public static QuantifiedCollectionResult.Async
 		<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>> AtMost<TItem>(
-		this IThat<IAsyncEnumerable<TItem>> source,
-		int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
+			this IThat<IAsyncEnumerable<TItem>> source,
+			int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
 		=> new(source,
 			source.ExpectationBuilder.AppendMethodStatement(nameof(AtMost), doNotPopulateThisValue),
 			CollectionQuantifier.AtMost(maximum));
