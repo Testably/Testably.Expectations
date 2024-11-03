@@ -548,15 +548,20 @@ namespace Testably.Expectations.Core
             public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TProperty> Validate<TTarget>(Testably.Expectations.Core.Constraints.ICastConstraint<TProperty, TTarget> constraint) { }
         }
     }
-    public static class ExpectationBuilderHelpers
+    public static class ExpectationBuilderExtensions
     {
         public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName) { }
         public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2, string param3) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName) { }
         public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
         public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendGenericMethodStatement<T1, T2>(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2, string param3) { }
         public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName) { }
         public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1) { }
         public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2) { }
+        public static Testably.Expectations.Core.ExpectationBuilder AppendMethodStatement(this Testably.Expectations.Core.ExpectationBuilder builder, string methodName, string param1, string param2, string param3) { }
         public static Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(this Testably.Expectations.Core.ExpectationBuilder expectationBuilder, System.Func<TSource, TTarget> propertySelector, string displayName) { }
     }
     public interface IExpectSubject<out T>
