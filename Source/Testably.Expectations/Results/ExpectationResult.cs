@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -31,6 +32,19 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder)
 	{
 		Task result = GetResult();
 		return result.GetAwaiter();
+	}
+
+	/// <summary>
+	///     Sets the <see cref="CancellationToken" /> to be passed to expectations.
+	/// </summary>
+	public ExpectationResult WithCancellation(CancellationToken cancellationToken,
+		[CallerArgumentExpression("cancellationToken")]
+		string doNotPopulateThisValue = "")
+	{
+		expectationBuilder
+			.AppendMethodStatement(nameof(WithCancellation), doNotPopulateThisValue)
+			.AddCancellation(cancellationToken);
+		return this;
 	}
 
 	private async Task GetResult()
@@ -87,6 +101,19 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 	{
 		Task<TResult> result = GetResult();
 		return result.GetAwaiter();
+	}
+
+	/// <summary>
+	///     Sets the <see cref="CancellationToken" /> to be passed to expectations.
+	/// </summary>
+	public TSelf WithCancellation(CancellationToken cancellationToken,
+		[CallerArgumentExpression("cancellationToken")]
+		string doNotPopulateThisValue = "")
+	{
+		expectationBuilder
+			.AppendMethodStatement(nameof(WithCancellation), doNotPopulateThisValue)
+			.AddCancellation(cancellationToken);
+		return (TSelf)this;
 	}
 
 	[StackTraceHidden]

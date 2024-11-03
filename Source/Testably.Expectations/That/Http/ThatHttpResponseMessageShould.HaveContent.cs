@@ -1,6 +1,7 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -29,7 +30,9 @@ public static partial class ThatHttpResponseMessageShould
 	private readonly struct HasContentConstraint(StringMatcher expected)
 		: IAsyncConstraint<HttpResponseMessage>
 	{
-		public async Task<ConstraintResult> IsMetBy(HttpResponseMessage? actual)
+		public async Task<ConstraintResult> IsMetBy(
+			HttpResponseMessage? actual,
+			CancellationToken cancellationToken)
 		{
 			if (actual == null)
 			{
@@ -37,7 +40,7 @@ public static partial class ThatHttpResponseMessageShould
 					"found <null>");
 			}
 
-			string message = await actual.Content.ReadAsStringAsync();
+			string message = await actual.Content.ReadAsStringAsync(cancellationToken);
 			if (expected.Matches(message))
 			{
 				return new ConstraintResult.Success<HttpResponseMessage?>(actual, ToString());

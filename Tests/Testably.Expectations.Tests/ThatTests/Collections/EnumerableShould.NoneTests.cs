@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Testably.Expectations.Tests.TestHelpers;
 // ReSharper disable PossibleMultipleEnumeration
 
@@ -8,6 +9,26 @@ public sealed partial class EnumerableShould
 {
 	public sealed class NoneTests
 	{
+		[Fact]
+		public async Task ConsidersCancellationToken()
+		{
+			using CancellationTokenSource cts = new();
+			CancellationToken token = cts.Token;
+			IEnumerable<int> subject = GetCancellingEnumerable(6, cts);
+
+			async Task Act()
+				=> await That(subject).Should().None().Satisfy(x => x < 0)
+					.WithCancellation(token);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             none satisfy "x => x < 0",
+				             but could not verify, because it was cancelled early
+				             at Expect.That(subject).Should().None().Satisfy(x => x < 0).WithCancellation(token)
+				             """);
+		}
+
 		[Fact]
 		public async Task DoesNotEnumerateTwice()
 		{

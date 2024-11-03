@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 
@@ -16,9 +17,10 @@ internal class ExpectationNode : Node
 	/// <inheritdoc />
 	public override Task<ConstraintResult> IsMetBy<TValue>(
 		TValue? value,
-		IEvaluationContext context)
+		IEvaluationContext context,
+		CancellationToken cancellationToken)
 		where TValue : default
-		=> TryMeet(Constraint, value, context, Reason);
+		=> TryMeet(Constraint, value, Reason, context, cancellationToken);
 
 	/// <inheritdoc />
 	public override string ToString()

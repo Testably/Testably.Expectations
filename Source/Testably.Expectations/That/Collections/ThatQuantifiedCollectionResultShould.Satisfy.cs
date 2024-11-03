@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -114,19 +113,22 @@ public static partial class ThatQuantifiedCollectionResultShould
 		Func<TCollection, IEvaluationContext, ICollectionEvaluator<TItem>> evaluatorFactory)
 		: IAsyncContextConstraint<TCollection>
 	{
-		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
+		public async Task<ConstraintResult> IsMetBy(
+			TCollection actual,
+			IEvaluationContext context,
+			CancellationToken cancellationToken)
 		{
 			ICollectionEvaluator<TItem> evaluator = evaluatorFactory(actual, context);
 			CollectionEvaluatorResult result = await evaluator
-				.CheckCondition(predicate, (a, p) => p(a))
+				.CheckCondition(predicate, (a, p) => p(a), cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.IsSuccess)
+			return result.IsSuccess switch
 			{
-				return new ConstraintResult.Success<TCollection>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(), $"{result.Error} did");
+				true => new ConstraintResult.Success<TCollection>(actual, ToString()),
+				false => new ConstraintResult.Failure(ToString(), $"{result.Error} did"),
+				_ => new ConstraintResult.Failure(ToString(), result.Error),
+			};
 		}
 
 		public override string ToString()

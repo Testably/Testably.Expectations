@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -79,25 +80,31 @@ public static partial class ThatQuantifiedCollectionResultShould
 		Func<TCollection, IEvaluationContext, ICollectionEvaluator<TItem>> evaluatorFactory)
 		: IAsyncContextConstraint<TCollection>
 	{
-		public async Task<ConstraintResult> IsMetBy(TCollection actual, IEvaluationContext context)
+		public async Task<ConstraintResult> IsMetBy(
+			TCollection actual,
+			IEvaluationContext context,
+			CancellationToken cancellationToken)
 		{
 			string[] memberToIgnore = [.. options.MembersToIgnore];
 			ICollectionEvaluator<TItem> evaluator = evaluatorFactory(actual, context);
 			CollectionEvaluatorResult result = await evaluator
-				.CheckCondition(expected, (a, e) => !Compare.CheckEquivalent(a, e,
-					new CompareOptions
-					{
-						MembersToIgnore = memberToIgnore,
-					}).Any())
+				.CheckCondition(
+					expected,
+					(a, e) => !Compare.CheckEquivalent(a, e,
+						new CompareOptions
+						{
+							MembersToIgnore = memberToIgnore,
+						}).Any(),
+					cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.IsSuccess)
+			return result.IsSuccess switch
 			{
-				return new ConstraintResult.Success<TCollection>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				$"{result.Error} items were equivalent");
+				true => new ConstraintResult.Success<TCollection>(actual, ToString()),
+				false => new ConstraintResult.Failure(ToString(),
+					$"{result.Error} items were equivalent"),
+				_ => new ConstraintResult.Failure(ToString(), result.Error)
+			};
 		}
 
 		public override string ToString()

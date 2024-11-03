@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
@@ -14,7 +15,8 @@ internal abstract class Node
 
 	public abstract Task<ConstraintResult> IsMetBy<TValue>(
 		TValue? value,
-		IEvaluationContext context);
+		IEvaluationContext context,
+		CancellationToken cancellationToken);
 
 	public virtual void SetReason(BecauseReason reason)
 	{
@@ -27,8 +29,9 @@ internal abstract class Node
 
 	protected static async Task<ConstraintResult> TryMeet<TValue>(IConstraint constraint,
 		TValue? value,
+		BecauseReason? reason,
 		IEvaluationContext context,
-		BecauseReason? reason)
+		CancellationToken cancellationToken)
 	{
 		if (constraint is IValueConstraint<TValue?> valueConstraint)
 		{
@@ -46,21 +49,21 @@ internal abstract class Node
 
 		if (constraint is IAsyncConstraint<TValue?> asyncConstraint)
 		{
-			ConstraintResult result = await asyncConstraint.IsMetBy(value);
+			ConstraintResult result = await asyncConstraint.IsMetBy(value, cancellationToken);
 			result = reason?.ApplyTo(result) ?? result;
 			return result;
 		}
 
 		if (constraint is IAsyncContextConstraint<TValue?> asyncContextConstraint)
 		{
-			ConstraintResult result = await asyncContextConstraint.IsMetBy(value, context);
+			ConstraintResult result = await asyncContextConstraint.IsMetBy(value, context, cancellationToken);
 			result = reason?.ApplyTo(result) ?? result;
 			return result;
 		}
 
 		if (value is DelegateValue delegateValue)
 		{
-			return await TryMeet(constraint, delegateValue.Exception, context, reason);
+			return await TryMeet(constraint, delegateValue.Exception, reason, context, cancellationToken);
 		}
 
 		throw new InvalidOperationException(
@@ -71,7 +74,8 @@ internal abstract class Node
 	{
 		/// <inheritdoc />
 		public override Task<ConstraintResult> IsMetBy<TValue>(TValue? value,
-			IEvaluationContext context)
+			IEvaluationContext context,
+			CancellationToken cancellationToken)
 			where TValue : default
 			=> throw new InvalidOperationException(
 				"The expectation is incomplete! Did you add a trailing `.And()` or `.Or()` without specifying a second expectation?");

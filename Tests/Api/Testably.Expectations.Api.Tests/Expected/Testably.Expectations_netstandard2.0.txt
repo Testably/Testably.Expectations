@@ -9,9 +9,9 @@ namespace Testably.Expectations
     }
     public struct CollectionEvaluatorResult : System.IEquatable<Testably.Expectations.CollectionEvaluatorResult>
     {
-        public CollectionEvaluatorResult(bool IsSuccess, string Error) { }
+        public CollectionEvaluatorResult(bool? IsSuccess, string Error) { }
         public string Error { get; set; }
-        public bool IsSuccess { get; set; }
+        public bool? IsSuccess { get; set; }
     }
     public abstract class CollectionQuantifier
     {
@@ -51,7 +51,7 @@ namespace Testably.Expectations
     }
     public interface ICollectionEvaluator<out TItem>
     {
-        System.Threading.Tasks.Task<Testably.Expectations.CollectionEvaluatorResult> CheckCondition<TExpected>(TExpected expected, System.Func<TItem, TExpected, bool> predicate);
+        System.Threading.Tasks.Task<Testably.Expectations.CollectionEvaluatorResult> CheckCondition<TExpected>(TExpected expected, System.Func<TItem, TExpected, bool> predicate, System.Threading.CancellationToken cancellationToken);
     }
     public class QuantifiedCollectionResult
     {
@@ -441,11 +441,11 @@ namespace Testably.Expectations.Core.Constraints
     }
     public interface IAsyncConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
     {
-        System.Threading.Tasks.Task<Testably.Expectations.Core.Constraints.ConstraintResult> IsMetBy(TValue actual);
+        System.Threading.Tasks.Task<Testably.Expectations.Core.Constraints.ConstraintResult> IsMetBy(TValue actual, System.Threading.CancellationToken cancellationToken);
     }
     public interface IAsyncContextConstraint<in TValue> : Testably.Expectations.Core.Constraints.IConstraint
     {
-        System.Threading.Tasks.Task<Testably.Expectations.Core.Constraints.ConstraintResult> IsMetBy(TValue actual, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context);
+        System.Threading.Tasks.Task<Testably.Expectations.Core.Constraints.ConstraintResult> IsMetBy(TValue actual, Testably.Expectations.Core.EvaluationContext.IEvaluationContext context, System.Threading.CancellationToken cancellationToken);
     }
     public interface ICastConstraint<in TValue, TProperty> : Testably.Expectations.Core.Constraints.IConstraint, Testably.Expectations.Core.Constraints.IValueConstraint<TValue> { }
     public interface IConstraint { }
@@ -669,6 +669,7 @@ namespace Testably.Expectations.Results
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
         public Testably.Expectations.Results.ExpectationResult Because(string reason) { }
         public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { }
+        public Testably.Expectations.Results.ExpectationResult WithCancellation(System.Threading.CancellationToken cancellationToken, [System.Runtime.CompilerServices.CallerArgumentExpression("cancellationToken")] string doNotPopulateThisValue = "") { }
     }
     public class ExpectationResult<TResult> : Testably.Expectations.Results.ExpectationResult<TResult, Testably.Expectations.Results.ExpectationResult<TResult>>
     {
@@ -682,6 +683,7 @@ namespace Testably.Expectations.Results
         public TSelf Because(string reason, [System.Runtime.CompilerServices.CallerArgumentExpression("reason")] string doNotPopulateThisValue = "") { }
         [System.Diagnostics.StackTraceHidden]
         public System.Runtime.CompilerServices.TaskAwaiter<TResult> GetAwaiter() { }
+        public TSelf WithCancellation(System.Threading.CancellationToken cancellationToken, [System.Runtime.CompilerServices.CallerArgumentExpression("cancellationToken")] string doNotPopulateThisValue = "") { }
     }
     public class NumberToleranceResult<TNumber, TResult> : Testably.Expectations.Results.NumberToleranceResult<TNumber, TResult, Testably.Expectations.Results.NumberToleranceResult<TNumber, TResult>>
         where TNumber :  struct, System.IComparable<TNumber>

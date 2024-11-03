@@ -93,7 +93,8 @@ internal static class EvaluationContextExtensions
 			return existingValue;
 		}
 
-		IAsyncEnumerable<TItem> materializedEnumerable = MaterializingAsyncEnumerable<TItem>.Wrap(collection);
+		IAsyncEnumerable<TItem> materializedEnumerable =
+			MaterializingAsyncEnumerable<TItem>.Wrap(collection);
 		// ReSharper disable once PossibleMultipleEnumeration
 		evaluationContext.Store(MaterializedAsyncEnumerableKey, materializedEnumerable);
 		// ReSharper disable once PossibleMultipleEnumeration
@@ -110,13 +111,10 @@ internal static class EvaluationContextExtensions
 			_enumerator = enumerable.GetAsyncEnumerator();
 		}
 
-		#region IEnumerable<T> Members
+		#region IAsyncEnumerable<T> Members
 
-		/// <inheritdoc />
-		public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
-			=> GetAsyncEnumerator();
-
-		private async IAsyncEnumerator<T> GetAsyncEnumerator()
+		public async IAsyncEnumerator<T> GetAsyncEnumerator(
+			CancellationToken cancellationToken = default)
 		{
 			foreach (T materializedItem in _materializedItems)
 			{
@@ -125,6 +123,11 @@ internal static class EvaluationContextExtensions
 
 			while (await _enumerator.MoveNextAsync())
 			{
+				if (cancellationToken.IsCancellationRequested)
+				{
+					break;
+				}
+
 				T item = _enumerator.Current;
 				_materializedItems.Add(item);
 				yield return item;

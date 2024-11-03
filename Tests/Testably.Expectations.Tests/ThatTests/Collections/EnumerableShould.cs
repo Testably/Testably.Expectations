@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Testably.Expectations.Tests.ThatTests.Collections;
 
@@ -10,6 +11,27 @@ public partial class EnumerableShould
 		foreach (int item in items)
 		{
 			yield return item;
+		}
+	}
+
+	/// <summary>
+	///     Returns an <see cref="IEnumerable{T}" /> with incrementing numbers, starting with 0, which cancels the
+	///     <paramref name="cancellationTokenSource" /> after <paramref name="cancelAfter" /> iteration.
+	/// </summary>
+	private static IEnumerable<int> GetCancellingEnumerable(
+		int cancelAfter,
+		CancellationTokenSource cancellationTokenSource,
+		int limit = 10_000)
+	{
+		int index = 0;
+		while (index < limit)
+		{
+			if (index == cancelAfter)
+			{
+				cancellationTokenSource.Cancel();
+			}
+
+			yield return index++;
 		}
 	}
 

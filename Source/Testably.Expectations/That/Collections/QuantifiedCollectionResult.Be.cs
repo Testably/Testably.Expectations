@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
@@ -72,21 +72,22 @@ public class QuantifiedCollectionResult
 		Func<TCollection, IEvaluationContext, ICollectionEvaluator<TItem>> evaluatorFactory)
 		: IAsyncContextConstraint<TCollection>
 	{
-		public async Task<ConstraintResult> IsMetBy(TCollection actual,
-			IEvaluationContext context)
+		public async Task<ConstraintResult> IsMetBy(
+			TCollection actual,
+			IEvaluationContext context,
+			CancellationToken cancellationToken)
 		{
 			ICollectionEvaluator<TItem> evaluator = evaluatorFactory(actual, context);
 			CollectionEvaluatorResult result = await evaluator
-				.CheckCondition(default(TItem), (a, _) => a is TExpected)
+				.CheckCondition(default(TItem), (a, _) => a is TExpected, cancellationToken)
 				.ConfigureAwait(false);
 
-			if (result.IsSuccess)
+			return result.IsSuccess switch
 			{
-				return new ConstraintResult.Success<TCollection>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				$"{result.Error} items were");
+				true => new ConstraintResult.Success<TCollection>(actual, ToString()),
+				false => new ConstraintResult.Failure(ToString(), $"{result.Error} items were"),
+				_ => new ConstraintResult.Failure(ToString(), result.Error)
+			};
 		}
 
 		public override string ToString()
