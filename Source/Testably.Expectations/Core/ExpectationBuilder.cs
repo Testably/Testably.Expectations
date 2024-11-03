@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Testably.Expectations.Core;
 /// <summary>
 ///     The builder for collecting all expectations.
 /// </summary>
+[DebuggerDisplay("{_tree}")]
 public abstract class ExpectationBuilder
 {
 	/// <summary>
@@ -120,12 +122,6 @@ public abstract class ExpectationBuilder
 				expectationTextGenerator));
 			return this;
 		});
-	}
-
-	/// <inheritdoc />
-	public override string ToString()
-	{
-		return _tree.ToString();
 	}
 
 	/// <summary>
