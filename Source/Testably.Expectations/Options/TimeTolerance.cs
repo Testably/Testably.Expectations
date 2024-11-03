@@ -16,10 +16,15 @@ public class TimeTolerance
 	/// <summary>
 	///     Sets the tolerance to apply on the time comparisons.
 	/// </summary>
-	public TimeTolerance SetTolerance(TimeSpan tolerance)
+	public void SetTolerance(TimeSpan tolerance)
 	{
+		if (tolerance < TimeSpan.Zero)
+		{
+			throw new ArgumentOutOfRangeException(nameof(tolerance),
+				"Tolerance must be non-negative");
+		}
+
 		Tolerance = tolerance;
-		return this;
 	}
 
 	/// <inheritdoc />

@@ -6,7 +6,8 @@ namespace Testably.Expectations.Options;
 /// <summary>
 ///     Tolerance for number comparisons.
 /// </summary>
-public class NumberTolerance<TNumber>
+public class NumberTolerance<TNumber>(
+	Func<TNumber, TNumber, TNumber?, bool> isWithinTolerance)
 	where TNumber : struct, IComparable<TNumber>
 {
 	/// <summary>
@@ -17,10 +18,15 @@ public class NumberTolerance<TNumber>
 	/// <summary>
 	///     Sets the tolerance to apply on the time comparisons.
 	/// </summary>
-	public NumberTolerance<TNumber> SetTolerance(TNumber tolerance)
+	public void SetTolerance(TNumber tolerance)
 	{
+		if (tolerance.CompareTo(default) < 0)
+		{
+			throw new ArgumentOutOfRangeException(nameof(tolerance),
+				"Tolerance must be non-negative");
+		}
+
 		Tolerance = tolerance;
-		return this;
 	}
 
 	/// <inheritdoc />
@@ -32,33 +38,10 @@ public class NumberTolerance<TNumber>
 		}
 
 		const char plusMinus = '\u00b1';
-		return $" {plusMinus} {Formatter.Format(Tolerance.Value)}";
+		return $" {plusMinus} {Formatter.Format(Tolerance)}";
 	}
 
 	internal bool IsWithinTolerance(TNumber actual, TNumber? expected)
-	{
-		if (expected == null)
-		{
-			return false;
-		}
-
-		if (actual is int actualInt &&
-		    expected is int expectedInt &&
-		    Tolerance is int toleranceInt)
-		{
-			return Math.Abs(actualInt - expectedInt) <= toleranceInt;
-		}
-
-		if (actual is uint actualUint &&
-		    expected is uint expectedUint &&
-		    Tolerance is uint toleranceUint)
-		{
-			uint difference = actualUint > expectedUint
-				? actualUint - expectedUint
-				: expectedUint - actualUint;
-			return difference <= toleranceUint;
-		}
-
-		return expected.Value.CompareTo(actual) == 0;
-	}
+		=> expected != null &&
+		   isWithinTolerance(actual, expected.Value, Tolerance);
 }

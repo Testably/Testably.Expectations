@@ -34,7 +34,7 @@ public class TimeToleranceResult<TResult, TValue, TSelf>(
 	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
 	where TSelf : TimeToleranceResult<TResult, TValue, TSelf>
 {
-	private readonly ExpectationBuilder _expectationBuilder1 = expectationBuilder;
+	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Specifies a tolerance to apply on the time comparison.
@@ -43,13 +43,8 @@ public class TimeToleranceResult<TResult, TValue, TSelf>(
 		[CallerArgumentExpression("tolerance")]
 		string doNotPopulateThisValue = "")
 	{
-		if (tolerance < TimeSpan.Zero)
-		{
-			throw new ArgumentOutOfRangeException(nameof(tolerance), "Tolerance must be non-negative");
-		}
-
 		options.SetTolerance(tolerance);
-		_expectationBuilder1.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
+		_expectationBuilder.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
 		return this;
 	}
 }
