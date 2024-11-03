@@ -16,7 +16,7 @@ public class NumberTolerance<TNumber>(
 	public TNumber? Tolerance { get; private set; }
 
 	/// <summary>
-	///     Sets the tolerance to apply on the time comparisons.
+	///     Sets the tolerance to apply on the number comparisons.
 	/// </summary>
 	public void SetTolerance(TNumber tolerance)
 	{

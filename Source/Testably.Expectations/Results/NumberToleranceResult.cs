@@ -39,7 +39,7 @@ public class NumberToleranceResult<TNumber, TResult, TSelf>(
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
-	///     Specifies a tolerance to apply on the time comparison.
+	///     Specifies a tolerance to apply on the number comparison.
 	/// </summary>
 	public NumberToleranceResult<TNumber, TResult, TSelf> Within(TNumber tolerance,
 		[CallerArgumentExpression("tolerance")]
