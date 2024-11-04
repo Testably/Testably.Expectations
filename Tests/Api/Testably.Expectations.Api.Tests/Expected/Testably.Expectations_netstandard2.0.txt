@@ -36,6 +36,8 @@ namespace Testably.Expectations
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> That<TValue>(System.Func<TValue> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> That<TValue>(System.Threading.Tasks.Task<TValue> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<T> That<T>(T? subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.Expectation.Combination.All ThatAll(params Testably.Expectations.Results.Expectation[] expectations) { }
+        public static Testably.Expectations.Results.Expectation.Combination.Any ThatAny(params Testably.Expectations.Results.Expectation[] expectations) { }
     }
     [System.Diagnostics.StackTraceHidden]
     public static class Fail
@@ -669,7 +671,31 @@ namespace Testably.Expectations.Results
         public TSelf Once() { }
     }
     [System.Diagnostics.StackTraceHidden]
-    public class ExpectationResult
+    public abstract class Expectation
+    {
+        protected Expectation() { }
+        public abstract class Combination : Testably.Expectations.Results.Expectation
+        {
+            protected Combination(Testably.Expectations.Results.Expectation[] expectations) { }
+            public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { }
+            protected abstract string GetSubjectLine();
+            protected abstract bool IsSuccess(int failureCount, int totalCount);
+            public class All : Testably.Expectations.Results.Expectation.Combination
+            {
+                public All(Testably.Expectations.Results.Expectation[] expectations) { }
+                protected override string GetSubjectLine() { }
+                protected override bool IsSuccess(int failureCount, int totalCount) { }
+            }
+            public class Any : Testably.Expectations.Results.Expectation.Combination
+            {
+                public Any(Testably.Expectations.Results.Expectation[] expectations) { }
+                protected override string GetSubjectLine() { }
+                protected override bool IsSuccess(int failureCount, int totalCount) { }
+            }
+        }
+    }
+    [System.Diagnostics.StackTraceHidden]
+    public class ExpectationResult : Testably.Expectations.Results.Expectation
     {
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
         public Testably.Expectations.Results.ExpectationResult Because(string reason) { }
@@ -681,7 +707,7 @@ namespace Testably.Expectations.Results
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
     }
     [System.Diagnostics.StackTraceHidden]
-    public class ExpectationResult<TResult, TSelf>
+    public class ExpectationResult<TResult, TSelf> : Testably.Expectations.Results.Expectation
         where TSelf : Testably.Expectations.Results.ExpectationResult<TResult, TSelf>
     {
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }

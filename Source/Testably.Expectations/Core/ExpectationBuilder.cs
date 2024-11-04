@@ -21,6 +21,7 @@ public abstract class ExpectationBuilder
 	///     The builder for the failure message.
 	/// </summary>
 	internal IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
+	internal string Subject { get; }
 
 	private CancellationToken? _cancellationToken;
 
@@ -33,6 +34,7 @@ public abstract class ExpectationBuilder
 	/// </summary>
 	protected ExpectationBuilder(string subjectExpression)
 	{
+		Subject = subjectExpression;
 		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
 	}
 

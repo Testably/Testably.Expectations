@@ -10,5 +10,5 @@ internal interface IFailureMessageBuilder
 	/// <summary>
 	///     Creates the exception message from the <paramref name="failure" />.
 	/// </summary>
-	string FromFailure(ConstraintResult.Failure failure);
+	string FromFailure(string subject, ConstraintResult.Failure failure);
 }
