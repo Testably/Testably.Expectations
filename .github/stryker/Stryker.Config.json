@@ -6,6 +6,7 @@
 		},
 		"test-projects": [
 			"./Testably.Expectations.Tests/Testably.Expectations.Tests.csproj",
+			"./Testably.Expectations.Internal.Tests/Testably.Expectations.Internal.Tests.csproj",
 			"./TestFrameworks/TestFramework.FallbackTest/TestFramework.FallbackTest.csproj",
 			"./TestFrameworks/TestFramework.NUnit3.Tests/TestFramework.NUnit3.Tests.csproj",
 			"./TestFrameworks/TestFramework.NUnit4.Tests/TestFramework.NUnit4.Tests.csproj",

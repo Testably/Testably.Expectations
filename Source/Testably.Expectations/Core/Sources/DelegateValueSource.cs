@@ -1,29 +1,29 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
+using Testably.Expectations.Core.TimeSystem;
 
 namespace Testably.Expectations.Core.Sources;
 
-internal class DelegateValueSource<TValue> : IValueSource<DelegateValue<TValue>>
+internal class DelegateValueSource<TValue>(Func<CancellationToken, TValue> action)
+	: IValueSource<DelegateValue<TValue>>
 {
-	private readonly Func<TValue> _action;
-
-	public DelegateValueSource(Func<TValue> action)
-	{
-		_action = action;
-	}
-
 	#region IValueSource<DelegateValue<TValue>> Members
 
-	public Task<DelegateValue<TValue>?> GetValue()
+	public Task<DelegateValue<TValue>?> GetValue(ITimeSystem timeSystem, CancellationToken cancellationToken)
 	{
+		IStopwatch sw = timeSystem.Stopwatch.New();
 		try
 		{
-			TValue value = _action();
-			return Task.FromResult<DelegateValue<TValue>?>(new DelegateValue<TValue>(value, null));
+			sw.Start();
+			TValue value = action(cancellationToken);
+			sw.Stop();
+			return Task.FromResult<DelegateValue<TValue>?>(new DelegateValue<TValue>(value, null, sw.Elapsed));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<DelegateValue<TValue>?>(new DelegateValue<TValue>(default, ex));
+			return Task.FromResult<DelegateValue<TValue>?>(new DelegateValue<TValue>(default, ex, sw.Elapsed));
 		}
 	}
 

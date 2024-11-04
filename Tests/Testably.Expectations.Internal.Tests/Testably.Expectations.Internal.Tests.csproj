@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup Condition="'$(NCrunch)' == '1'">
+		<TargetFrameworks>net8.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Source\Testably.Expectations\Testably.Expectations.csproj"/>
+	</ItemGroup>
+
+</Project>

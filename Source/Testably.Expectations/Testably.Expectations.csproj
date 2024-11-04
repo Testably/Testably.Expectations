@@ -16,4 +16,10 @@
 		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="/Docs/" Link="Docs\README.md"/>
 	</ItemGroup>
 
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>Testably.Expectations.Internal.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
 </Project>

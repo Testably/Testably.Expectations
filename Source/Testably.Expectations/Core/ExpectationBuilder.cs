@@ -8,6 +8,7 @@ using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Core.Sources;
+using Testably.Expectations.Core.TimeSystem;
 
 namespace Testably.Expectations.Core;
 
@@ -21,11 +22,13 @@ public abstract class ExpectationBuilder
 	///     The builder for the failure message.
 	/// </summary>
 	internal IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
+
 	internal string Subject { get; }
 
 	private CancellationToken? _cancellationToken;
 
 	private readonly FailureMessageBuilder _failureMessageBuilder;
+	private ITimeSystem? _timeSystem;
 	private readonly Tree _tree = new();
 
 	/// <summary>
@@ -145,12 +148,14 @@ public abstract class ExpectationBuilder
 	{
 		EvaluationContext.EvaluationContext context = new();
 		Node rootNode = _tree.GetRoot();
-		return IsMet(rootNode, context, _cancellationToken ?? CancellationToken.None);
+		return IsMet(rootNode, context, _timeSystem ?? RealTimeSystem.Instance,
+			_cancellationToken ?? CancellationToken.None);
 	}
 
 	internal abstract Task<ConstraintResult> IsMet(
 		Node rootNode,
 		EvaluationContext.EvaluationContext context,
+		ITimeSystem timeSystem,
 		CancellationToken cancellationToken);
 
 	internal void Or(Action<StringBuilder> expressionBuilder,
@@ -158,6 +163,14 @@ public abstract class ExpectationBuilder
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
+	}
+
+	/// <summary>
+	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
+	/// </summary>
+	internal void UseTimeSystem(ITimeSystem timeSystem)
+	{
+		_timeSystem = timeSystem;
 	}
 
 	/// <summary>
@@ -218,9 +231,10 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 	internal override async Task<ConstraintResult> IsMet(
 		Node rootNode,
 		EvaluationContext.EvaluationContext context,
+		ITimeSystem timeSystem,
 		CancellationToken cancellationToken)
 	{
-		TValue? data = await _subjectSource.GetValue();
+		TValue? data = await _subjectSource.GetValue(timeSystem, cancellationToken);
 		return await rootNode.IsMetBy(data, context, cancellationToken);
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Testably.Expectations.Core.TimeSystem;
 
 namespace Testably.Expectations.Core.Sources;
 
@@ -13,7 +15,7 @@ internal class ValueSource<TValue> : IValueSource<TValue>
 
 	#region IValueSource<TValue> Members
 
-	public Task<TValue?> GetValue()
+	public Task<TValue?> GetValue(ITimeSystem timeSystem, CancellationToken cancellationToken)
 	{
 		return Task.FromResult(_value);
 	}
