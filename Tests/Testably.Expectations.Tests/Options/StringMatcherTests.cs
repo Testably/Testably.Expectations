@@ -1,4 +1,4 @@
-﻿namespace Testably.Expectations.Tests.Core;
+﻿namespace Testably.Expectations.Tests.Options;
 
 public class StringMatcherTests
 {

@@ -6,6 +6,12 @@ namespace Testably.Expectations.Core.Helpers;
 internal static class StringExtensions
 {
 	[return: NotNullIfNotNull(nameof(value))]
+	public static string? DisplayWhitespace(this string? value)
+	{
+		return value?.Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t");
+	}
+
+	[return: NotNullIfNotNull(nameof(value))]
 	public static string? Indent(this string? value, string indentation = "  ",
 		bool indentFirstLine = true)
 	{
@@ -33,12 +39,6 @@ internal static class StringExtensions
 	public static string? ToSingleLine(this string? value)
 	{
 		return value?.Replace("\n", "\\n").Replace("\r", "\\r");
-	}
-
-	[return: NotNullIfNotNull(nameof(value))]
-	public static string? DisplayWhitespace(this string? value)
-	{
-		return value?.Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t");
 	}
 
 	[return: NotNullIfNotNull(nameof(value))]
