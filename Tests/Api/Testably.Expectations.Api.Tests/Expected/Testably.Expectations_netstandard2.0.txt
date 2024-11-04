@@ -1,4 +1,5 @@
 [assembly: System.Reflection.AssemblyMetadata("RepositoryUrl", "https://github.com/Testably/Testably.Expectations.git")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Testably.Expectations.Internal.Tests")]
 [assembly: System.Runtime.Versioning.TargetFramework(".NETStandard,Version=v2.0", FrameworkDisplayName=".NET Standard 2.0")]
 namespace Testably.Expectations
 {
@@ -30,10 +31,14 @@ namespace Testably.Expectations
     public static class Expect
     {
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> That(System.Action @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> That(System.Action<System.Threading.CancellationToken> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> That(System.Func<System.Threading.Tasks.Task> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> That(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> That(System.Threading.Tasks.Task @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> That<TValue>(System.Func<System.Threading.Tasks.Task<TValue>> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> That<TValue>(System.Func<TValue> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> That<TValue>(System.Func<System.Threading.CancellationToken, System.Threading.Tasks.Task<TValue>> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> That<TValue>(System.Func<System.Threading.CancellationToken, TValue> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> That<TValue>(System.Threading.Tasks.Task<TValue> @delegate, [System.Runtime.CompilerServices.CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Core.IExpectSubject<T> That<T>(T? subject, [System.Runtime.CompilerServices.CallerArgumentExpression("subject")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.Expectation.Combination.All ThatAll(params Testably.Expectations.Results.Expectation[] expectations) { }
@@ -124,6 +129,10 @@ namespace Testably.Expectations
     }
     public static class ThatDelegateShould
     {
+        public static Testably.Expectations.Results.ExpectationResult ExecuteWithin(this Testably.Expectations.ThatDelegate.WithoutValue source, System.TimeSpan duration, [System.Runtime.CompilerServices.CallerArgumentExpression("duration")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.ExpectationResult<TValue> ExecuteWithin<TValue>(this Testably.Expectations.ThatDelegate.WithValue<TValue> source, System.TimeSpan duration, [System.Runtime.CompilerServices.CallerArgumentExpression("duration")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.ExpectationResult NotExecuteWithin(this Testably.Expectations.ThatDelegate.WithoutValue source, System.TimeSpan duration, [System.Runtime.CompilerServices.CallerArgumentExpression("duration")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.ExpectationResult<TValue> NotExecuteWithin<TValue>(this Testably.Expectations.ThatDelegate.WithValue<TValue> source, System.TimeSpan duration, [System.Runtime.CompilerServices.CallerArgumentExpression("duration")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.ExpectationResult NotThrow(this Testably.Expectations.ThatDelegate.WithoutValue source) { }
         public static Testably.Expectations.Results.ExpectationResult<TValue> NotThrow<TValue>(this Testably.Expectations.ThatDelegate.WithValue<TValue> source) { }
         public static Testably.Expectations.ThatDelegate.WithoutValue Should(this Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> subject) { }

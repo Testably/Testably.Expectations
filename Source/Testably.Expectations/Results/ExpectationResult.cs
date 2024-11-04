@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.TimeSystem;
 
 namespace Testably.Expectations.Results;
 
@@ -44,6 +45,12 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 		expectationBuilder
 			.AppendMethodStatement(nameof(WithCancellation), doNotPopulateThisValue)
 			.AddCancellation(cancellationToken);
+		return this;
+	}
+
+	internal ExpectationResult UseTimeSystem(ITimeSystem timeSystem)
+	{
+		expectationBuilder.UseTimeSystem(timeSystem);
 		return this;
 	}
 
@@ -119,6 +126,12 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 		expectationBuilder
 			.AppendMethodStatement(nameof(WithCancellation), doNotPopulateThisValue)
 			.AddCancellation(cancellationToken);
+		return (TSelf)this;
+	}
+
+	internal TSelf UseTimeSystem(ITimeSystem timeSystem)
+	{
+		expectationBuilder.UseTimeSystem(timeSystem);
 		return (TSelf)this;
 	}
 
