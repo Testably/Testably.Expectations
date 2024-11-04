@@ -86,9 +86,11 @@ public class StringMatcherTests
 		}
 
 		[Theory]
-		[InlineData("SomeVeryLongDummyTextWithMore_ThisLongTextIsUsedToCheckADifferenceAtTheEnd after 40 + 5 characters")]
+		[InlineData(
+			"SomeVeryLongDummyTextWithMore_ThisLongTextIsUsedToCheckADifferenceAtTheEnd after 40 + 5 characters")]
 		// ReSharper disable once StringLiteralTypo
-		[InlineData("SomeVeryLongDummyTextWithMore_ThisLongTextIsUsedToCheckADifferen after 40 + 15 characters")]
+		[InlineData(
+			"SomeVeryLongDummyTextWithMore_ThisLongTextIsUsedToCheckADifferen after 40 + 15 characters")]
 		public async Task
 			ShouldLookForAWordBoundaryBetween45And60CharactersAfterTheMismatchingIndexToHighlightTheMismatch(
 				string expected)
@@ -161,8 +163,10 @@ public class StringMatcherTests
 		[Fact]
 		public async Task WhenStringsAreLong_ShouldHighlightTheDifferences()
 		{
-			string subject = "this is a long text that differs in between two words and has lot of text afterwards";
-			string expected = "this is a long text which differs in between two words and has lot of text afterwards";
+			string subject =
+				"this is a long text that differs in between two words and has lot of text afterwards";
+			string expected =
+				"this is a long text which differs in between two words and has lot of text afterwards";
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
@@ -210,6 +214,23 @@ public class StringMatcherTests
 
 		[Fact]
 		public async Task
+			WhenTheExpectedStringHasLeadingWhitespace_ShouldLimitDisplayedWhitespaceTo100Characters()
+		{
+			const int maxCharacters = 100;
+			string subject = "ABC";
+			string expected = new string(' ', maxCharacters) + " ABC";
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().ThrowException()
+				.WithMessage(
+					$"*misses some whitespace (\"{new string(' ', maxCharacters)}…\" at the beginning)*")
+				.AsWildcard();
+		}
+
+		[Fact]
+		public async Task
 			WhenTheExpectedStringHasTrailingWhitespace_ShouldFailWithDescriptiveMessage()
 		{
 			string subject = "ABC";
@@ -223,6 +244,23 @@ public class StringMatcherTests
 		}
 
 		[Fact]
+		public async Task
+			WhenTheExpectedStringHasTrailingWhitespace_ShouldLimitDisplayedWhitespaceTo100Characters()
+		{
+			const int maxCharacters = 100;
+			string subject = "ABC";
+			string expected = "ABC " + new string(' ', maxCharacters);
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().ThrowException()
+				.WithMessage(
+					$"*misses some whitespace (\"{new string(' ', maxCharacters)}…\" at the end)*")
+				.AsWildcard();
+		}
+
+		[Fact]
 		public async Task WhenTheExpectedStringIsEmpty_ShouldFailWithDescriptiveMessage()
 		{
 			string subject = "AB";
@@ -233,7 +271,8 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 2 which is longer than the expected length of 0 and has superfluous*\"AB\"*")
+				.WithMessage(
+					"*length of 2 which is longer than the expected length of 0 and has superfluous*\"AB\"*")
 				.AsWildcard();
 		}
 
@@ -249,7 +288,26 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 2 which is shorter than the expected length of 3 and misses*\"C\"*")
+				.WithMessage(
+					"*length of 2 which is shorter than the expected length of 3 and misses*\"C\"*")
+				.AsWildcard();
+		}
+
+		[Fact]
+		public async Task
+			WhenTheExpectedStringIsLongerThanTheSubjectString_ShouldLimitDisplayedDifferenceTo100Characters()
+		{
+			const int maxCharacters = 100;
+			string subject = "AB";
+			string expected = "ABX" + new string('X', maxCharacters);
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should()
+				.ThrowException()
+				.WithMessage(
+					$"*length of 2 which is shorter than the expected length of 103 and misses*\"{new string('X', maxCharacters)}…\"*")
 				.AsWildcard();
 		}
 
@@ -278,7 +336,26 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 3 which is longer than the expected length of 2 and has superfluous*\"C\"*")
+				.WithMessage(
+					"*length of 3 which is longer than the expected length of 2 and has superfluous*\"C\"*")
+				.AsWildcard();
+		}
+
+		[Fact]
+		public async Task
+			WhenTheExpectedStringIsShorterThanTheSubjectString_ShouldLimitDisplayedDifferenceTo100Characters()
+		{
+			const int maxCharacters = 100;
+			string subject = "ABX" + new string('X', maxCharacters);
+			string expected = "AB";
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should()
+				.ThrowException()
+				.WithMessage(
+					$"*length of 103 which is longer than the expected length of 2 and has superfluous*\"{new string('X', maxCharacters)}…\"*")
 				.AsWildcard();
 		}
 
@@ -309,6 +386,23 @@ public class StringMatcherTests
 		}
 
 		[Fact]
+		public async Task
+			WhenTheSubjectHasLeadingWhitespace_ShouldLimitDisplayedWhitespaceTo100Characters()
+		{
+			const int maxCharacters = 100;
+			string subject = new string(' ', maxCharacters) + " ABC";
+			string expected = "ABC";
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().ThrowException()
+				.WithMessage(
+					$"*unexpected whitespace (\"{new string(' ', maxCharacters)}…\" at the beginning)*")
+				.AsWildcard();
+		}
+
+		[Fact]
 		public async Task WhenTheSubjectHasTrailingWhitespace_ShouldFailWithDescriptiveMessage()
 		{
 			string subject = "ABC\t";
@@ -322,6 +416,23 @@ public class StringMatcherTests
 		}
 
 		[Fact]
+		public async Task
+			WhenTheSubjectHasTrailingWhitespace_ShouldLimitDisplayedWhitespaceTo100Characters()
+		{
+			const int maxCharacters = 100;
+			string subject = "ABC " + new string(' ', maxCharacters);
+			string expected = "ABC";
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().ThrowException()
+				.WithMessage(
+					$"*unexpected whitespace (\"{new string(' ', maxCharacters)}…\" at the end)*")
+				.AsWildcard();
+		}
+
+		[Fact]
 		public async Task WhenTheSubjectStringIsEmpty_ShouldFailWithDescriptiveMessage()
 		{
 			string subject = "";
@@ -332,7 +443,8 @@ public class StringMatcherTests
 
 			await That(Act).Should()
 				.ThrowException()
-				.WithMessage("*length of 0 which is shorter than the expected length of 2 and misses*\"AB\"*")
+				.WithMessage(
+					"*length of 0 which is shorter than the expected length of 2 and misses*\"AB\"*")
 				.AsWildcard();
 		}
 
