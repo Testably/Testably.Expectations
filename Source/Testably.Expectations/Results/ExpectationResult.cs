@@ -11,7 +11,7 @@ namespace Testably.Expectations.Results;
 ///     The result of an expectation without an underlying value.
 /// </summary>
 [StackTraceHidden]
-public class ExpectationResult(ExpectationBuilder expectationBuilder)
+public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectation
 {
 	/// <summary>
 	///     Provide a <paramref name="reason" /> explaining why the constraint is needed.<br />
@@ -30,7 +30,7 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder)
 	/// </summary>
 	public TaskAwaiter GetAwaiter()
 	{
-		Task result = GetResult();
+		Task result = GetResultOrThrow();
 		return result.GetAwaiter();
 	}
 
@@ -47,9 +47,17 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder)
 		return this;
 	}
 
-	private async Task GetResult()
+	/// <inheritdoc />
+	internal override Task<ConstraintResult> GetResult()
+		=> expectationBuilder.IsMet();
+
+	/// <inheritdoc />
+	internal override string GetSubject()
+		=> expectationBuilder.Subject;
+
+	private async Task GetResultOrThrow()
 	{
-		ConstraintResult result = await expectationBuilder.IsMet();
+		ConstraintResult result = await GetResult();
 
 		if (result is ConstraintResult.Failure failure)
 		{
@@ -74,7 +82,7 @@ public class ExpectationResult<TResult>(ExpectationBuilder expectationBuilder)
 ///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
 /// </summary>
 [StackTraceHidden]
-public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBuilder)
+public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBuilder) : Expectation
 	where TSelf : ExpectationResult<TResult, TSelf>
 {
 	/// <summary>
@@ -99,7 +107,7 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 	[StackTraceHidden]
 	public TaskAwaiter<TResult> GetAwaiter()
 	{
-		Task<TResult> result = GetResult();
+		Task<TResult> result = GetResultOrThrow();
 		return result.GetAwaiter();
 	}
 
@@ -116,10 +124,18 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 		return (TSelf)this;
 	}
 
+	/// <inheritdoc />
+	internal override Task<ConstraintResult> GetResult()
+		=> expectationBuilder.IsMet();
+
+	/// <inheritdoc />
+	internal override string GetSubject()
+		=> expectationBuilder.Subject;
+
 	[StackTraceHidden]
-	private async Task<TResult> GetResult()
+	private async Task<TResult> GetResultOrThrow()
 	{
-		ConstraintResult result = await expectationBuilder.IsMet();
+		ConstraintResult result = await GetResult();
 
 		if (result is ConstraintResult.Failure failure)
 		{
