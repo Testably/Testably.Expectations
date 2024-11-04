@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Sources;
@@ -16,14 +17,17 @@ internal class DelegateAsyncValueSource<TValue> : IValueSource<DelegateValue<TVa
 
 	public async Task<DelegateValue<TValue>?> GetValue()
 	{
+		Stopwatch sw = new();
 		try
 		{
+			sw.Start();
 			TValue? value = await _action();
-			return new DelegateValue<TValue>(value, null);
+			sw.Stop();
+			return new DelegateValue<TValue>(value, null, sw.Elapsed);
 		}
 		catch (Exception ex)
 		{
-			return new DelegateValue<TValue>(default, ex);
+			return new DelegateValue<TValue>(default, ex, sw.Elapsed);
 		}
 	}
 

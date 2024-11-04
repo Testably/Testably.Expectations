@@ -5,8 +5,8 @@ namespace Testably.Expectations.Core.Sources;
 /// <summary>
 ///     An expectation source from a delegate can contain a <see cref="Value" /> or a thrown <see cref="Exception" />.
 /// </summary>
-internal class DelegateValue<TValue>(in TValue? value, Exception? exception)
-	: DelegateValue(exception)
+internal class DelegateValue<TValue>(in TValue? value, Exception? exception, TimeSpan duration)
+	: DelegateValue(exception, duration)
 {
 	/// <summary>
 	///     The value of the delegate, if no exception was thrown.
@@ -18,10 +18,15 @@ internal class DelegateValue<TValue>(in TValue? value, Exception? exception)
 ///     An expectation source from a delegate without value can represent <see langword="void" /> or a thrown
 ///     <see cref="Exception" />.
 /// </summary>
-internal class DelegateValue(Exception? exception)
+internal class DelegateValue(Exception? exception, TimeSpan duration)
 {
 	/// <summary>
 	///     The thrown exception of the delegate.
 	/// </summary>
 	public Exception? Exception { get; } = exception;
+
+	/// <summary>
+	/// The duration it took the delegate to complete.
+	/// </summary>
+	public TimeSpan Duration { get; } = duration;
 }
