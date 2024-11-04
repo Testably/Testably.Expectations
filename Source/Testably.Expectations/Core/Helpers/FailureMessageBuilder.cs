@@ -6,26 +6,24 @@ namespace Testably.Expectations.Core.Helpers;
 internal class FailureMessageBuilder : IFailureMessageBuilder
 {
 	public StringBuilder ExpressionBuilder { get; }
-	private readonly string _subject;
 
-	public FailureMessageBuilder(string subject)
+	public FailureMessageBuilder(string subjectExpression)
 	{
-		_subject = subject;
 		ExpressionBuilder = new StringBuilder();
 		ExpressionBuilder
 			.Append(nameof(Expect))
 			.Append('.')
 			.Append(nameof(Expect.That))
 			.Append('(')
-			.Append(_subject)
+			.Append(subjectExpression)
 			.Append(')');
 	}
 
 	#region IFailureMessageBuilder Members
 
-	public string FromFailure(ConstraintResult.Failure failure)
+	public string FromFailure(string subject, ConstraintResult.Failure failure)
 		=> $"""
-		    Expected {_subject} to
+		    Expected {subject} to
 		    {failure.ExpectationText},
 		    but {failure.ResultText}
 		    at {ExpressionBuilder}

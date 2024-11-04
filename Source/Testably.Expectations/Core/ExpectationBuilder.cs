@@ -35,7 +35,6 @@ public abstract class ExpectationBuilder
 	protected ExpectationBuilder(string subjectExpression)
 	{
 		Subject = subjectExpression;
-		// TODO VAB: Remove from FailureMessageBuilder???
 		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
 	}
 
