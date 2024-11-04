@@ -6,8 +6,22 @@
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FTestably%2FTestably.Expectations%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/Testably/Testably.Expectations/main)
 
 This library is used to assert unit tests in natural language by specifying expectations.
+It tries to take the best from [fluentassertions](https://github.com/fluentassertions/fluentassertions) and [TUnit](https://github.com/thomhurst/TUnit) and combines them to a new assertions library.
+
+## Architecture
+
+### Async everything
+All expectations are completely async. This allows complete support of `IAsyncEnumerable` as well es `HttpResponseMessage` or similar. No need to distinguish between `action.Should().Throw()` and `await asyncAction.Should().ThrowAsync()`
+
+### Delayed evaluation
+By using `await`, the evaluation is only triggered after the complete fluent chain is loaded, which has some nice benefits:
+- `Because` can be registered once as a general method that can be applied at the end of the expectation
+- `WithCancellation` can also be registered at the end an applies a `CancellationToken` to all async methods
+- Expectations can be combined directly (via `Expect.ThatAll`) instead of relying on global state (e.g. assertion scopes)
 
 ## Examples
+
+By adding `global using static Testably.Expectations.Expect;` anywhere in the test project, that `await` can be part of the sentence of the expectation.
 
   ```csharp
   [Fact]
@@ -17,3 +31,5 @@ This library is used to assert unit tests in natural language by specifying expe
       .WithMessage("Value cannot be null");
   }
   ```
+
+
