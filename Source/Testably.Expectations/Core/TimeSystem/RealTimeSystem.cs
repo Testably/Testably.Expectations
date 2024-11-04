@@ -7,13 +7,13 @@ internal class RealTimeSystem : ITimeSystem
 {
 	public static ITimeSystem Instance { get; } = new RealTimeSystem();
 	
-	private class RealStopwatchFactory : IStopwatchFactory
+	private sealed class RealStopwatchFactory : IStopwatchFactory
 	{
 		/// <inheritdoc />
 		public IStopwatch New()
 			=> new RealStopwatch();
 	}
-	private class RealStopwatch : IStopwatch
+	private sealed class RealStopwatch : IStopwatch
 	{
 		private readonly Stopwatch _stopwatch = new();
 

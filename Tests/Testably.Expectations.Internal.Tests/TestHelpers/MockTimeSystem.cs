@@ -27,9 +27,9 @@ internal class MockTimeSystem : ITimeSystem
 		return this;
 	}
 
-	private class MockStopwatchFactory : IStopwatchFactory
+	private sealed class MockStopwatchFactory : IStopwatchFactory
 	{
-		private MockStopwatch _current = new();
+		private readonly MockStopwatch _current = new();
 
 		#region IStopwatchFactory Members
 
@@ -47,7 +47,7 @@ internal class MockTimeSystem : ITimeSystem
 		}
 	}
 
-	private class MockStopwatch : IStopwatch
+	private sealed class MockStopwatch : IStopwatch
 	{
 		private TimeSpan _elapsed = TimeSpan.Zero;
 		private bool _isRunning = true;

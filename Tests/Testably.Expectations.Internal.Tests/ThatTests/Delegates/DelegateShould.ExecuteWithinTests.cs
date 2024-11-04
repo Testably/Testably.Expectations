@@ -1,7 +1,7 @@
 ﻿using Testably.Expectations.Extensions;
 using Testably.Expectations.Internal.Tests.TestHelpers;
 
-namespace Testably.Expectations.Internal.Tests.ThatTests;
+namespace Testably.Expectations.Internal.Tests.ThatTests.Delegates;
 
 public sealed class DelegateShould
 {
