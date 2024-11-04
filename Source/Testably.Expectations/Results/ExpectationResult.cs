@@ -48,16 +48,13 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 	}
 
 	/// <inheritdoc />
-	internal override Task<ConstraintResult> GetResult()
-		=> expectationBuilder.IsMet();
-
-	/// <inheritdoc />
-	internal override string GetSubject()
-		=> expectationBuilder.Subject;
+	internal override async Task<Result> GetResult(int index)
+		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
+			await expectationBuilder.IsMet());
 
 	private async Task GetResultOrThrow()
 	{
-		ConstraintResult result = await GetResult();
+		ConstraintResult result = await expectationBuilder.IsMet();
 
 		if (result is ConstraintResult.Failure failure)
 		{
@@ -126,17 +123,14 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 	}
 
 	/// <inheritdoc />
-	internal override Task<ConstraintResult> GetResult()
-		=> expectationBuilder.IsMet();
-
-	/// <inheritdoc />
-	internal override string GetSubject()
-		=> expectationBuilder.Subject;
+	internal override async Task<Result> GetResult(int index)
+		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
+			await expectationBuilder.IsMet());
 
 	[StackTraceHidden]
 	private async Task<TResult> GetResultOrThrow()
 	{
-		ConstraintResult result = await GetResult();
+		ConstraintResult result = await expectationBuilder.IsMet();
 
 		if (result is ConstraintResult.Failure failure)
 		{

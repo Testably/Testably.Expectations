@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
@@ -15,99 +14,23 @@ namespace Testably.Expectations.Results;
 [StackTraceHidden]
 public abstract class Expectation
 {
-	internal abstract Task<ConstraintResult> GetResult();
+	internal abstract Task<Result> GetResult(int index);
 
-	internal abstract string GetSubject();
-
-	public class All : Expectation
+	internal struct Result(int index, string subjectLine, ConstraintResult result)
 	{
-		private readonly Expectation[] _expectations;
-
-		internal All(Expectation[] expectations)
-		{
-			if (expectations.Length == 0)
-			{
-				throw new ArgumentException("You must provide at least one expectation.",
-					paramName: nameof(expectations));
-			}
-
-			_expectations = expectations;
-		}
-
-		/// <summary>
-		///     By awaiting the result, the expectations are verified.
-		///     <para />
-		///     Will throw an exception, when the expectations are not met.
-		/// </summary>
-		public TaskAwaiter GetAwaiter()
-		{
-			Task result = GetResultOrThrow();
-			return result.GetAwaiter();
-		}
-
-		/// <inheritdoc />
-		internal override async Task<ConstraintResult> GetResult()
-		{
-			Dictionary<int, string> expectationTexts = new();
-			Dictionary<int, string>? failureTexts = new();
-			int index = 0;
-			foreach (Expectation? expectation in _expectations)
-			{
-				index++;
-				ConstraintResult? result = await expectation.GetResult();
-				expectationTexts.Add(index,
-					$"Expected {expectation.GetSubject()} to {result.ExpectationText}");
-				if (result is ConstraintResult.Failure failure)
-				{
-					failureTexts.Add(index, failure.ResultText);
-				}
-			}
-
-			string expectationText = string.Join(Environment.NewLine, expectationTexts
-				.Select(expectation
-					=> $" [{expectation.Key:00}] {expectation.Value.Indent("      ", indentFirstLine: false)}"));
-
-			if (failureTexts.Count > 0)
-			{
-				return new ConstraintResult.Failure(expectationText, string.Join(
-					Environment.NewLine, failureTexts
-						.Select(failure
-							=> $" [{failure.Key:00}] {failure.Value.Indent("      ", indentFirstLine: false)}")));
-			}
-
-			return new ConstraintResult.Success(expectationText);
-		}
-
-		/// <inheritdoc />
-		internal override string GetSubject()
-			=> "";
-
-		private string CreateFailureMessage(ConstraintResult.Failure failure)
-		{
-			return $"""
-			        Expected all of the following to succeed:
-			        {failure.ExpectationText}
-			        but
-			        {failure.ResultText}
-			        """;
-		}
-
-		private async Task GetResultOrThrow()
-		{
-			ConstraintResult result = await GetResult();
-
-			if (result is ConstraintResult.Failure failure)
-			{
-				Fail.Test(CreateFailureMessage(failure));
-			}
-		}
+		public int Index { get; } = index;
+		public string SubjectLine { get; } = subjectLine;
+		public ConstraintResult ConstraintResult { get; } = result;
 	}
 
-	public class Any : Expectation
+	/// <summary>
+	///     Combination of multiple expectations.
+	/// </summary>
+	public abstract class Combination : Expectation
 	{
 		private readonly Expectation[] _expectations;
 
-		internal Any(Expectation[] expectations)
+		internal Combination(Expectation[] expectations)
 		{
 			if (expectations.Length == 0)
 			{
@@ -130,46 +53,74 @@ public abstract class Expectation
 		}
 
 		/// <inheritdoc />
-		internal override async Task<ConstraintResult> GetResult()
+		internal override async Task<Result> GetResult(int index)
 		{
-			Dictionary<int, string> expectationTexts = new();
-			Dictionary<int, string>? failureTexts = new();
-			int index = 0;
+			List<string> expectationTexts = new();
+			List<string>? failureTexts = new();
 			foreach (Expectation? expectation in _expectations)
 			{
-				index++;
-				ConstraintResult? result = await expectation.GetResult();
-				expectationTexts.Add(index,
-					$"Expected {expectation.GetSubject()} to {result.ExpectationText}");
-				if (result is ConstraintResult.Failure failure)
+				Result result = await expectation.GetResult(index);
+				index = result.Index;
+				if (expectation is Combination)
 				{
-					failureTexts.Add(index, failure.ResultText);
+					expectationTexts.Add(
+						$"{result.SubjectLine}{Environment.NewLine}{result.ConstraintResult.ExpectationText
+						}".Indent());
+				}
+				else
+				{
+					expectationTexts.Add(
+						$"{result.SubjectLine} {result.ConstraintResult.ExpectationText
+							.Indent("      ", indentFirstLine: false)}");
+				}
+
+				if (result.ConstraintResult is ConstraintResult.Failure failure)
+				{
+					string failureText;
+					if (expectation is Combination)
+					{
+						failureText =
+							$"{failure.ResultText.Indent()}";
+					}
+					else
+					{
+						failureText =
+							$" [{index:00}] {failure.ResultText.Indent("      ", indentFirstLine: false)}";
+					}
+
+					failureTexts.Add(failureText);
 				}
 			}
 
-			string expectationText = string.Join(Environment.NewLine, expectationTexts
-				.Select(expectation
-					=> $" [{expectation.Key:00}] {expectation.Value.Indent("      ", indentFirstLine: false)}"));
+			string expectationText = string.Join(Environment.NewLine, expectationTexts);
 
-			if (failureTexts.Count == expectationTexts.Count)
+			if (!IsSuccess(failureTexts.Count, expectationTexts.Count))
 			{
-				return new ConstraintResult.Failure(expectationText, string.Join(
-					Environment.NewLine, failureTexts
-						.Select(failure
-							=> $" [{failure.Key:00}] {failure.Value.Indent("      ", indentFirstLine: false)}")));
+				ConstraintResult.Failure? result = new(expectationText,
+					string.Join(
+						Environment.NewLine, failureTexts));
+				return new Result(index, GetSubjectLine(), result);
 			}
 
-			return new ConstraintResult.Success(expectationText);
+			return new Result(index, GetSubjectLine(),
+				new ConstraintResult.Success(expectationText));
 		}
 
-		/// <inheritdoc />
-		internal override string GetSubject()
-			=> "";
+		/// <summary>
+		///     Returns the subject line of the <see cref="Expectation.Combination" />.
+		/// </summary>
+		internal abstract string GetSubjectLine();
+
+		/// <summary>
+		///     Specifies, if the combination should be treated as
+		///     <see cref="ConstraintResult.Success" /> or <see cref="ConstraintResult.Failure" />
+		/// </summary>
+		internal abstract bool IsSuccess(int failureCount, int totalCount);
 
 		private string CreateFailureMessage(ConstraintResult.Failure failure)
 		{
 			return $"""
-			        Expected any of the following to succeed:
+			        {GetSubjectLine()}
 			        {failure.ExpectationText}
 			        but
 			        {failure.ResultText}
@@ -178,12 +129,39 @@ public abstract class Expectation
 
 		private async Task GetResultOrThrow()
 		{
-			ConstraintResult result = await GetResult();
-
-			if (result is ConstraintResult.Failure failure)
+			Result result = await GetResult(0);
+			if (result.ConstraintResult is ConstraintResult.Failure failure)
 			{
 				Fail.Test(CreateFailureMessage(failure));
 			}
+		}
+
+		/// <summary>
+		///     All <paramref name="expectations" /> must be met.
+		/// </summary>
+		public class All(Expectation[] expectations) : Combination(expectations)
+		{
+			/// <inheritdoc />
+			internal override string GetSubjectLine()
+				=> "Expected all of the following to succeed:";
+
+			/// <inheritdoc />
+			internal override bool IsSuccess(int failureCount, int totalCount)
+				=> failureCount == 0;
+		}
+
+		/// <summary>
+		///     Any of the <paramref name="expectations" /> must be met.
+		/// </summary>
+		public class Any(Expectation[] expectations) : Combination(expectations)
+		{
+			/// <inheritdoc />
+			internal override string GetSubjectLine()
+				=> "Expected any of the following to succeed:";
+
+			/// <inheritdoc />
+			internal override bool IsSuccess(int failureCount, int totalCount)
+				=> failureCount < totalCount;
 		}
 	}
 }

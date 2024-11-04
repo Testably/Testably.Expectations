@@ -108,17 +108,17 @@ public static class Expect
 					async () => await @delegate),
 				doNotPopulateThisValue));
 #endif
-	
+
 	/// <summary>
-	///     Verifies that any of the provided <paramref name="expectations"/> are met.
+	///     Verifies that any of the provided <paramref name="expectations" /> are met.
 	/// </summary>
-	public static Expectation.Any ThatAny(params Expectation[] expectations)
+	public static Expectation.Combination.Any ThatAny(params Expectation[] expectations)
 		=> new(expectations);
 
 	/// <summary>
-	///     Verifies that all provided <paramref name="expectations"/> are met.
+	///     Verifies that all provided <paramref name="expectations" /> are met.
 	/// </summary>
-	public static Expectation.All ThatAll(params Expectation[] expectations)
+	public static Expectation.Combination.All ThatAll(params Expectation[] expectations)
 		=> new(expectations);
 
 	[DebuggerDisplay("Expect.ThatSubject<{typeof(T)}>: {ExpectationBuilder}")]
