@@ -738,14 +738,21 @@ namespace Testably.Expectations.Results
         protected Expectation() { }
         public abstract class Combination : Testably.Expectations.Results.Expectation
         {
+            protected Combination(Testably.Expectations.Results.Expectation[] expectations) { }
             public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { }
+            protected abstract string GetSubjectLine();
+            protected abstract bool IsSuccess(int failureCount, int totalCount);
             public class All : Testably.Expectations.Results.Expectation.Combination
             {
                 public All(Testably.Expectations.Results.Expectation[] expectations) { }
+                protected override string GetSubjectLine() { }
+                protected override bool IsSuccess(int failureCount, int totalCount) { }
             }
             public class Any : Testably.Expectations.Results.Expectation.Combination
             {
                 public Any(Testably.Expectations.Results.Expectation[] expectations) { }
+                protected override string GetSubjectLine() { }
+                protected override bool IsSuccess(int failureCount, int totalCount) { }
             }
         }
     }

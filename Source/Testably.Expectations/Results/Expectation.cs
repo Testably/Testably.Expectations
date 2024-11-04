@@ -33,7 +33,10 @@ public abstract class Expectation
 	{
 		private readonly Expectation[] _expectations;
 
-		internal Combination(Expectation[] expectations)
+		/// <summary>
+		///     Combination of multiple expectations.
+		/// </summary>
+		protected Combination(Expectation[] expectations)
 		{
 			if (expectations.Length == 0)
 			{
@@ -54,6 +57,17 @@ public abstract class Expectation
 			Task result = GetResultOrThrow();
 			return result.GetAwaiter();
 		}
+
+		/// <summary>
+		///     Returns the subject line of the <see cref="Expectation.Combination" />.
+		/// </summary>
+		protected abstract string GetSubjectLine();
+
+		/// <summary>
+		///     Specifies, if the combination should be treated as
+		///     <see cref="ConstraintResult.Success" /> or <see cref="ConstraintResult.Failure" />
+		/// </summary>
+		protected abstract bool IsSuccess(int failureCount, int totalCount);
 
 		/// <inheritdoc />
 		internal override async Task<Result> GetResult(int index)
@@ -109,17 +123,6 @@ public abstract class Expectation
 				new ConstraintResult.Success(expectationText));
 		}
 
-		/// <summary>
-		///     Returns the subject line of the <see cref="Expectation.Combination" />.
-		/// </summary>
-		internal abstract string GetSubjectLine();
-
-		/// <summary>
-		///     Specifies, if the combination should be treated as
-		///     <see cref="ConstraintResult.Success" /> or <see cref="ConstraintResult.Failure" />
-		/// </summary>
-		internal abstract bool IsSuccess(int failureCount, int totalCount);
-
 		private string CreateFailureMessage(ConstraintResult.Failure failure)
 		{
 			return $"""
@@ -145,11 +148,11 @@ public abstract class Expectation
 		public class All(Expectation[] expectations) : Combination(expectations)
 		{
 			/// <inheritdoc />
-			internal override string GetSubjectLine()
+			protected override string GetSubjectLine()
 				=> "Expected all of the following to succeed:";
 
 			/// <inheritdoc />
-			internal override bool IsSuccess(int failureCount, int totalCount)
+			protected override bool IsSuccess(int failureCount, int totalCount)
 				=> failureCount == 0;
 		}
 
@@ -159,11 +162,11 @@ public abstract class Expectation
 		public class Any(Expectation[] expectations) : Combination(expectations)
 		{
 			/// <inheritdoc />
-			internal override string GetSubjectLine()
+			protected override string GetSubjectLine()
 				=> "Expected any of the following to succeed:";
 
 			/// <inheritdoc />
-			internal override bool IsSuccess(int failureCount, int totalCount)
+			protected override bool IsSuccess(int failureCount, int totalCount)
 				=> failureCount < totalCount;
 		}
 	}
