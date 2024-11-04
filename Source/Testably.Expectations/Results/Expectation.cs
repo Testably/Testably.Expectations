@@ -9,8 +9,11 @@ using Testably.Expectations.Core.Helpers;
 namespace Testably.Expectations.Results;
 
 /// <summary>
-///     The result of an expectation without an underlying value.
+///     Base class for expectation results.
 /// </summary>
+/// <remarks>
+///     Create instances by using the static methods on the <see cref="Expect" /> class.
+/// </remarks>
 [StackTraceHidden]
 public abstract class Expectation
 {
