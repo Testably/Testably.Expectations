@@ -22,13 +22,14 @@ public abstract class ExpectationBuilder
 	///     The builder for the failure message.
 	/// </summary>
 	internal IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
+
 	internal string Subject { get; }
 
 	private CancellationToken? _cancellationToken;
 
 	private readonly FailureMessageBuilder _failureMessageBuilder;
-	private readonly Tree _tree = new();
 	private ITimeSystem? _timeSystem;
+	private readonly Tree _tree = new();
 
 	/// <summary>
 	///     Initializes the <see cref="ExpectationBuilder" /> with the <paramref name="subjectExpression" />
@@ -147,7 +148,8 @@ public abstract class ExpectationBuilder
 	{
 		EvaluationContext.EvaluationContext context = new();
 		Node rootNode = _tree.GetRoot();
-		return IsMet(rootNode, context, _timeSystem ?? RealTimeSystem.Instance, _cancellationToken ?? CancellationToken.None);
+		return IsMet(rootNode, context, _timeSystem ?? RealTimeSystem.Instance,
+			_cancellationToken ?? CancellationToken.None);
 	}
 
 	internal abstract Task<ConstraintResult> IsMet(
@@ -161,6 +163,14 @@ public abstract class ExpectationBuilder
 	{
 		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
 		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
+	}
+
+	/// <summary>
+	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
+	/// </summary>
+	internal void UseTimeSystem(ITimeSystem timeSystem)
+	{
+		_timeSystem = timeSystem;
 	}
 
 	/// <summary>
@@ -199,11 +209,6 @@ public abstract class ExpectationBuilder
 			_constraint = constraint;
 			return this;
 		}
-	}
-
-	internal void UseTimeSystem(ITimeSystem timeSystem)
-	{
-		_timeSystem = timeSystem;
 	}
 }
 

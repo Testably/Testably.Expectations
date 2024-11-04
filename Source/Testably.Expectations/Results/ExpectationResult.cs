@@ -48,6 +48,9 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 		return this;
 	}
 
+	/// <summary>
+	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
+	/// </summary>
 	internal ExpectationResult UseTimeSystem(ITimeSystem timeSystem)
 	{
 		expectationBuilder.UseTimeSystem(timeSystem);
@@ -129,6 +132,9 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 		return (TSelf)this;
 	}
 
+	/// <summary>
+	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
+	/// </summary>
 	internal TSelf UseTimeSystem(ITimeSystem timeSystem)
 	{
 		expectationBuilder.UseTimeSystem(timeSystem);

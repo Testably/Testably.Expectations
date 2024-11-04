@@ -13,7 +13,7 @@ namespace Testably.Expectations;
 public static partial class ThatDelegateShould
 {
 	/// <summary>
-	///     Verifies that the delegate finishes execution within the given <paramref name="duration"/>.
+	///     Verifies that the delegate finishes execution within the given <paramref name="duration" />.
 	/// </summary>
 	public static ExpectationResult<TValue> ExecuteWithin<TValue>(
 		this ThatDelegate.WithValue<TValue> source,
@@ -22,9 +22,9 @@ public static partial class ThatDelegateShould
 		=> new(source.ExpectationBuilder
 			.AddConstraint(new ExecuteWithinConstraint<TValue>(duration))
 			.AppendMethodStatement(nameof(ExecuteWithin), doNotPopulateThisValue));
-	
+
 	/// <summary>
-	///     Verifies that the delegate finishes execution within the given <paramref name="duration"/>.
+	///     Verifies that the delegate finishes execution within the given <paramref name="duration" />.
 	/// </summary>
 	public static ExpectationResult ExecuteWithin(
 		this ThatDelegate.WithoutValue source,
@@ -33,9 +33,9 @@ public static partial class ThatDelegateShould
 		=> new(source.ExpectationBuilder
 			.AddConstraint(new ExecuteWithinConstraint(duration))
 			.AppendMethodStatement(nameof(ExecuteWithin), doNotPopulateThisValue));
-	
+
 	/// <summary>
-	///     Verifies that the delegate does not finish execution within the given <paramref name="duration"/>.
+	///     Verifies that the delegate does not finish execution within the given <paramref name="duration" />.
 	/// </summary>
 	public static ExpectationResult<TValue> NotExecuteWithin<TValue>(
 		this ThatDelegate.WithValue<TValue> source,
@@ -44,9 +44,9 @@ public static partial class ThatDelegateShould
 		=> new(source.ExpectationBuilder
 			.AddConstraint(new NotExecuteWithinConstraint<TValue>(duration))
 			.AppendMethodStatement(nameof(NotExecuteWithin), doNotPopulateThisValue));
-	
+
 	/// <summary>
-	///     Verifies that the delegate does not finish execution within the given <paramref name="duration"/>.
+	///     Verifies that the delegate does not finish execution within the given <paramref name="duration" />.
 	/// </summary>
 	public static ExpectationResult NotExecuteWithin(
 		this ThatDelegate.WithoutValue source,
@@ -56,106 +56,84 @@ public static partial class ThatDelegateShould
 			.AddConstraint(new NotExecuteWithinConstraint(duration))
 			.AppendMethodStatement(nameof(NotExecuteWithin), doNotPopulateThisValue));
 
-	private readonly struct ExecuteWithinConstraint<TValue>(TimeSpan duration) : IValueConstraint<DelegateValue<TValue>>
+	private readonly struct ExecuteWithinConstraint<TValue>(TimeSpan duration)
+		: IValueConstraint<DelegateValue<TValue>>
 	{
-		public ConstraintResult IsMetBy(DelegateValue<TValue>? actual)
+		public ConstraintResult IsMetBy(DelegateValue<TValue> actual)
 		{
-			if (actual?.Exception is { } exception)
+			if (actual.Exception is { } exception)
 			{
 				return new ConstraintResult.Failure<TValue?>(actual.Value, ToString(),
 					$"it did throw {exception.FormatForMessage()}");
 			}
 
-			if (actual?.Duration <= duration)
+			if (actual.Duration <= duration)
 			{
 				return new ConstraintResult.Success<TValue?>(actual.Value, ToString());
 			}
-			else if (actual?.Duration != null)
-			{
-				return new ConstraintResult.Failure<TValue?>(actual.Value, ToString(),
-					$"it took {Formatter.Format(actual.Duration)}");
-			}
 
-			throw new InvalidOperationException("Received <null> in ExecuteWithinConstraint.");
+			return new ConstraintResult.Failure<TValue?>(actual.Value, ToString(),
+				$"it took {Formatter.Format(actual.Duration)}");
 		}
 
 		public override string ToString()
 			=> $"execute within {Formatter.Format(duration)}";
 	}
-	private readonly struct ExecuteWithinConstraint(TimeSpan duration) : IValueConstraint<DelegateValue>
+
+	private readonly struct ExecuteWithinConstraint(TimeSpan duration)
+		: IValueConstraint<DelegateValue>
 	{
 		public ConstraintResult IsMetBy(DelegateValue actual)
 		{
-			if (actual?.Exception is { } exception)
+			if (actual.Exception is { } exception)
 			{
 				return new ConstraintResult.Failure(ToString(),
 					$"it did throw {exception.FormatForMessage()}");
 			}
 
-			if (actual?.Duration <= duration)
+			if (actual.Duration <= duration)
 			{
 				return new ConstraintResult.Success(ToString());
 			}
-			else if (actual?.Duration != null)
-			{
-				return new ConstraintResult.Failure(ToString(),
-					$"it took {Formatter.Format(actual.Duration)}");
-			}
 
-			throw new InvalidOperationException("Received <null> in ExecuteWithinConstraint.");
+			return new ConstraintResult.Failure(ToString(),
+				$"it took {Formatter.Format(actual.Duration)}");
 		}
 
 		public override string ToString()
 			=> $"execute within {Formatter.Format(duration)}";
 	}
-	
-	private readonly struct NotExecuteWithinConstraint<TValue>(TimeSpan duration) : IValueConstraint<DelegateValue<TValue>>
-	{
-		public ConstraintResult IsMetBy(DelegateValue<TValue>? actual)
-		{
-			if (actual?.Exception is { } exception)
-			{
-				return new ConstraintResult.Failure<TValue?>(actual.Value, ToString(),
-					$"it did throw {exception.FormatForMessage()}");
-			}
 
-			if (actual?.Duration > duration)
+	private readonly struct NotExecuteWithinConstraint<TValue>(TimeSpan duration)
+		: IValueConstraint<DelegateValue<TValue>>
+	{
+		public ConstraintResult IsMetBy(DelegateValue<TValue> actual)
+		{
+			if (actual.Exception is not null || actual.Duration > duration)
 			{
 				return new ConstraintResult.Success<TValue?>(actual.Value, ToString());
 			}
-			else if (actual?.Duration != null)
-			{
-				return new ConstraintResult.Failure<TValue?>(actual.Value, ToString(),
-					$"it took only {Formatter.Format(actual.Duration)}");
-			}
 
-			throw new InvalidOperationException("Received <null> in ExecuteWithinConstraint.");
+			return new ConstraintResult.Failure<TValue?>(actual.Value, ToString(),
+				$"it took only {Formatter.Format(actual.Duration)}");
 		}
 
 		public override string ToString()
 			=> $"not execute within {Formatter.Format(duration)}";
 	}
-	private readonly struct NotExecuteWithinConstraint(TimeSpan duration) : IValueConstraint<DelegateValue>
+
+	private readonly struct NotExecuteWithinConstraint(TimeSpan duration)
+		: IValueConstraint<DelegateValue>
 	{
 		public ConstraintResult IsMetBy(DelegateValue actual)
 		{
-			if (actual?.Exception is { } exception)
-			{
-				return new ConstraintResult.Failure(ToString(),
-					$"it did throw {exception.FormatForMessage()}");
-			}
-
-			if (actual?.Duration > duration)
+			if (actual.Exception is not null || actual.Duration > duration)
 			{
 				return new ConstraintResult.Success(ToString());
 			}
-			else if (actual?.Duration != null)
-			{
-				return new ConstraintResult.Failure(ToString(),
-					$"it took only {Formatter.Format(actual.Duration)}");
-			}
 
-			throw new InvalidOperationException("Received <null> in ExecuteWithinConstraint.");
+			return new ConstraintResult.Failure(ToString(),
+				$"it took only {Formatter.Format(actual.Duration)}");
 		}
 
 		public override string ToString()
