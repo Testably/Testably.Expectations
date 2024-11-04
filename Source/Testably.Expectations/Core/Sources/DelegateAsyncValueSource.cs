@@ -1,27 +1,22 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Testably.Expectations.Core.Sources;
 
-internal class DelegateAsyncValueSource<TValue> : IValueSource<DelegateValue<TValue>>
+internal class DelegateAsyncValueSource<TValue>(Func<CancellationToken, Task<TValue>> action)
+	: IValueSource<DelegateValue<TValue>>
 {
-	private readonly Func<Task<TValue>> _action;
-
-	public DelegateAsyncValueSource(Func<Task<TValue>> action)
-	{
-		_action = action;
-	}
-
 	#region IValueSource<DelegateValue<TValue>> Members
 
-	public async Task<DelegateValue<TValue>?> GetValue()
+	public async Task<DelegateValue<TValue>?> GetValue(CancellationToken cancellationToken)
 	{
 		Stopwatch sw = new();
 		try
 		{
 			sw.Start();
-			TValue? value = await _action();
+			TValue value = await action(cancellationToken);
 			sw.Stop();
 			return new DelegateValue<TValue>(value, null, sw.Elapsed);
 		}

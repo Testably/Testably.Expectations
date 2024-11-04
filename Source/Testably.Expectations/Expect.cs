@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Sources;
@@ -31,6 +32,18 @@ public static class Expect
 	{
 		return new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
+				new DelegateSource(_ => @delegate()), doNotPopulateThisValue));
+	}
+
+	/// <summary>
+	///     Specify expectations for the current <see cref="Action{CancellationToken}" /> <paramref name="delegate" />.
+	/// </summary>
+	public static IExpectSubject<ThatDelegate.WithoutValue> That(
+		Action<CancellationToken> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+	{
+		return new ThatSubject<ThatDelegate.WithoutValue>(
+			new ExpectationBuilder<DelegateValue>(
 				new DelegateSource(@delegate), doNotPopulateThisValue));
 	}
 
@@ -38,6 +51,16 @@ public static class Expect
 	///     Specify expectations for the current <see cref="Func{Task}" /> <paramref name="delegate" />.
 	/// </summary>
 	public static IExpectSubject<ThatDelegate.WithoutValue> That(Func<Task> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new ThatSubject<ThatDelegate.WithoutValue>(
+			new ExpectationBuilder<DelegateValue>(
+				new DelegateAsyncSource(_ => @delegate()), doNotPopulateThisValue));
+
+	/// <summary>
+	///     Specify expectations for the current <see cref="Func{CancellationToken, Task}" /> <paramref name="delegate" />.
+	/// </summary>
+	public static IExpectSubject<ThatDelegate.WithoutValue> That(
+		Func<CancellationToken, Task> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
@@ -50,7 +73,7 @@ public static class Expect
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
-				new DelegateAsyncSource(() => @delegate), doNotPopulateThisValue));
+				new DelegateAsyncSource(_ => @delegate), doNotPopulateThisValue));
 
 #if NET6_0_OR_GREATER
 	/// <summary>
@@ -60,7 +83,7 @@ public static class Expect
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ThatSubject<ThatDelegate.WithoutValue>(
 			new ExpectationBuilder<DelegateValue>(
-				new DelegateAsyncSource(async () => await @delegate), doNotPopulateThisValue));
+				new DelegateAsyncSource(async _ => await @delegate), doNotPopulateThisValue));
 #endif
 
 	/// <summary>
@@ -68,6 +91,16 @@ public static class Expect
 	/// </summary>
 	public static IExpectSubject<ThatDelegate.WithValue<TValue>> That<TValue>(
 		Func<TValue> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
+			new ExpectationBuilder<DelegateValue<TValue>>(
+				new DelegateValueSource<TValue>(_ => @delegate()), doNotPopulateThisValue));
+
+	/// <summary>
+	///     Specify expectations for the current <see cref="Func{CancellationToken, TValue}" /> <paramref name="delegate" />.
+	/// </summary>
+	public static IExpectSubject<ThatDelegate.WithValue<TValue>> That<TValue>(
+		Func<CancellationToken, TValue> @delegate,
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
@@ -82,6 +115,18 @@ public static class Expect
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
+				new DelegateAsyncValueSource<TValue>(_ => @delegate()),
+				doNotPopulateThisValue));
+
+	/// <summary>
+	///     Specify expectations for the current <see cref="Func{CancellationToken, T}" /> of <see cref="Task{TValue}" />
+	///     <paramref name="delegate" />.
+	/// </summary>
+	public static IExpectSubject<ThatDelegate.WithValue<TValue>> That<TValue>(
+		Func<CancellationToken, Task<TValue>> @delegate,
+		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
+		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
+			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(@delegate),
 				doNotPopulateThisValue));
 
@@ -93,7 +138,7 @@ public static class Expect
 		[CallerArgumentExpression("delegate")] string doNotPopulateThisValue = "")
 		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
-				new DelegateAsyncValueSource<TValue>(() => @delegate), doNotPopulateThisValue));
+				new DelegateAsyncValueSource<TValue>(_ => @delegate), doNotPopulateThisValue));
 
 #if NET6_0_OR_GREATER
 	/// <summary>
@@ -105,20 +150,20 @@ public static class Expect
 		=> new ThatSubject<ThatDelegate.WithValue<TValue>>(
 			new ExpectationBuilder<DelegateValue<TValue>>(
 				new DelegateAsyncValueSource<TValue>(
-					async () => await @delegate),
+					async _ => await @delegate),
 				doNotPopulateThisValue));
 #endif
-
-	/// <summary>
-	///     Verifies that any of the provided <paramref name="expectations" /> are met.
-	/// </summary>
-	public static Expectation.Combination.Any ThatAny(params Expectation[] expectations)
-		=> new(expectations);
 
 	/// <summary>
 	///     Verifies that all provided <paramref name="expectations" /> are met.
 	/// </summary>
 	public static Expectation.Combination.All ThatAll(params Expectation[] expectations)
+		=> new(expectations);
+
+	/// <summary>
+	///     Verifies that any of the provided <paramref name="expectations" /> are met.
+	/// </summary>
+	public static Expectation.Combination.Any ThatAny(params Expectation[] expectations)
 		=> new(expectations);
 
 	[DebuggerDisplay("Expect.ThatSubject<{typeof(T)}>: {ExpectationBuilder}")]

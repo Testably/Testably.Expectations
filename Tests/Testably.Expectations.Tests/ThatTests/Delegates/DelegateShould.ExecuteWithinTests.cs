@@ -34,6 +34,33 @@ public sealed partial class DelegateShould
 				             at Expect.That(action).Should().ExecuteWithin(100.Milliseconds())
 				             """).AsWildcard();
 		}
+		[Fact]
+		public async Task WhenFuncTaskExecutedWithinTheTimeout_ShouldSucceed()
+		{
+			Func<Task> action = () => Task.Delay(10);
+
+			async Task Act()
+				=> await That(action).Should().ExecuteWithin(500.Milliseconds());
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenFuncTaskTookLongerThanTheTimeout_ShouldFail()
+		{
+			Func<Task> action = () => Task.Delay(300);
+
+			async Task Act()
+				=> await That(action).Should().ExecuteWithin(100.Milliseconds());
+
+			await That(Act).Should().ThrowException()
+				.WithMessage("""
+				             Expected action to
+				             execute within 0:00.100,
+				             but it took 0:00.3??
+				             at Expect.That(action).Should().ExecuteWithin(100.Milliseconds())
+				             """).AsWildcard();
+		}
 	}
 
 	public sealed class NotExecuteWithinTests

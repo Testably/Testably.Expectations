@@ -220,7 +220,7 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 		EvaluationContext.EvaluationContext context,
 		CancellationToken cancellationToken)
 	{
-		TValue? data = await _subjectSource.GetValue();
+		TValue? data = await _subjectSource.GetValue(cancellationToken);
 		return await rootNode.IsMetBy(data, context, cancellationToken);
 	}
 }
