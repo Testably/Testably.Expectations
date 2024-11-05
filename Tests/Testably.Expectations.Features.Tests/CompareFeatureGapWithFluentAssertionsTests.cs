@@ -15,52 +15,55 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 {
 	#region Test Setup
 
+	private const string IGNORED = "*ignored*";
+
 	private readonly Dictionary<string, Dictionary<string, string>> _existingMapping = new()
 	{
 		{
 			"Action", new Dictionary<string, string>
 			{
-				{ ".Should().BeAssignableTo(Type)", "" },
-				{ ".Should().BeAssignableTo<T>()", "" },
-				{ ".Should().BeNull()", "" },
-				{ ".Should().BeOfType(Type)", "" },
-				{ ".Should().BeOfType<T>()", "" },
-				{ ".Should().BeSameAs(Action)", "" },
+				{ ".Should().BeAssignableTo(Type)", IGNORED },
+				{ ".Should().BeAssignableTo<T>()", IGNORED },
+				{ ".Should().BeNull()", IGNORED },
+				{ ".Should().BeOfType(Type)", IGNORED },
+				{ ".Should().BeOfType<T>()", IGNORED },
+				{ ".Should().BeSameAs(Action)", IGNORED },
 				{ ".Should().Match(Expression<Func<Action, bool>>)", "" },
 				{ ".Should().Match<T>(Expression<Func<T, bool>>)", "" },
-				{ ".Should().NotBeAssignableTo(Type)", "" },
-				{ ".Should().NotBeAssignableTo<T>()", "" },
-				{ ".Should().NotBeNull()", "" },
-				{ ".Should().NotBeOfType(Type)", "" },
-				{ ".Should().NotBeOfType<T>()", "" },
-				{ ".Should().NotBeSameAs(Action)", "" },
+				{ ".Should().NotBeAssignableTo(Type)", IGNORED },
+				{ ".Should().NotBeAssignableTo<T>()", IGNORED },
+				{ ".Should().NotBeNull()", IGNORED },
+				{ ".Should().NotBeOfType(Type)", IGNORED },
+				{ ".Should().NotBeOfType<T>()", IGNORED },
+				{ ".Should().NotBeSameAs(Action)", IGNORED },
 				{ ".Should().NotThrow()", $".Should().{nameof(ThatDelegateShould.NotThrow)}()" },
 				{ ".Should().NotThrow<TException>()", "" },
 				{ ".Should().NotThrowAfter(TimeSpan, TimeSpan)", "" },
 				{ ".Should().Throw<TException>()", $".Should().{nameof(ThatDelegateShould.Throw)}<TException>()" },
-				{ ".Should().ThrowExactly<TException>()", $".Should().{nameof(ThatDelegateShould.ThrowExactly)}<TException>()" },
+				{ ".Should().ThrowExactly<TException>()", $".Should().{nameof(ThatDelegateShould.ThrowExactly)}<TException>()"
+				},
 			}
 		},
 		{
 			"Assembly", new Dictionary<string, string>
 			{
-				{ ".Should().BeAssignableTo(Type)", "" },
-				{ ".Should().BeAssignableTo<T>()", "" },
+				{ ".Should().BeAssignableTo(Type)", IGNORED },
+				{ ".Should().BeAssignableTo<T>()", IGNORED },
 				{ ".Should().BeNull()", "" },
-				{ ".Should().BeOfType(Type)", "" },
-				{ ".Should().BeOfType<T>()", "" },
-				{ ".Should().BeSameAs(Assembly)", "" },
+				{ ".Should().BeOfType(Type)", IGNORED },
+				{ ".Should().BeOfType<T>()", IGNORED },
+				{ ".Should().BeSameAs(Assembly)", $".Should().{nameof(ThatGenericShould.BeSameAs)}(Assembly)" },
 				{ ".Should().BeSignedWithPublicKey(string)", "" },
 				{ ".Should().BeUnsigned()", "" },
 				{ ".Should().DefineType(string, string)", "" },
 				{ ".Should().Match(Expression<Func<Assembly, bool>>)", "" },
 				{ ".Should().Match<T>(Expression<Func<T, bool>>)", "" },
-				{ ".Should().NotBeAssignableTo(Type)", "" },
-				{ ".Should().NotBeAssignableTo<T>()", "" },
+				{ ".Should().NotBeAssignableTo(Type)", IGNORED },
+				{ ".Should().NotBeAssignableTo<T>()", IGNORED },
 				{ ".Should().NotBeNull()", "" },
-				{ ".Should().NotBeOfType(Type)", "" },
-				{ ".Should().NotBeOfType<T>()", "" },
-				{ ".Should().NotBeSameAs(Assembly)", "" },
+				{ ".Should().NotBeOfType(Type)", IGNORED },
+				{ ".Should().NotBeOfType<T>()", IGNORED },
+				{ ".Should().NotBeSameAs(Assembly)", $".Should().{nameof(ThatGenericShould.NotBeSameAs)}(Assembly)" },
 				{ ".Should().NotReference(Assembly)", "" },
 				{ ".Should().Reference(Assembly)", "" },
 			}
@@ -90,8 +93,8 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().BeWritable()", $".Should().{nameof(ThatStreamShould.BeWritable)}()" },
 				{ ".Should().BeWriteOnly()", $".Should().{nameof(ThatStreamShould.BeWriteOnly)}()" },
 				{ ".Should().HaveBufferSize(int)", $".Should().{nameof(ThatBufferedStreamShould.HaveBufferSize)}(long)" },
-				{ ".Should().HaveLength()", $".Should().{nameof(ThatStreamShould.HaveLength)}()" },
-				{ ".Should().HavePosition()", $".Should().{nameof(ThatStreamShould.HavePosition)}()" },
+				{ ".Should().HaveLength(long)", $".Should().{nameof(ThatStreamShould.HaveLength)}(long)" },
+				{ ".Should().HavePosition(long)", $".Should().{nameof(ThatStreamShould.HavePosition)}(long)" },
 				{ ".Should().Match(Expression<Func<BufferedStream, bool>>)", "" },
 				{ ".Should().Match<T>(Expression<Func<T, bool>>)", "" },
 				{ ".Should().NotBeAssignableTo(Type)", "" },
@@ -106,8 +109,8 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeWritable()", $".Should().{nameof(ThatStreamShould.NotBeWritable)}()" },
 				{ ".Should().NotBeWriteOnly()", $".Should().{nameof(ThatStreamShould.NotBeWriteOnly)}()" },
 				{ ".Should().NotHaveBufferSize(int)", $".Should().{nameof(ThatBufferedStreamShould.NotHaveBufferSize)}(long)" },
-				{ ".Should().NotHaveLength()", $".Should().{nameof(ThatStreamShould.NotHaveLength)}()" },
-				{ ".Should().NotHavePosition()", $".Should().{nameof(ThatStreamShould.NotHavePosition)}()" },
+				{ ".Should().NotHaveLength(long)", $".Should().{nameof(ThatStreamShould.NotHaveLength)}(long)" },
+				{ ".Should().NotHavePosition(long)", $".Should().{nameof(ThatStreamShould.NotHavePosition)}(long)" },
 			}
 		},
 		{
@@ -244,7 +247,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 			{
 				{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
-				{ ".Should().BeEquivalentTo(DataSet, Func<IDataEquivalencyAssertionOptions<DataSet>, IDataEquivalencyAssertionOptions<DataSet>>)", "" },
+				{
+					".Should().BeEquivalentTo(DataSet, Func<IDataEquivalencyAssertionOptions<DataSet>, IDataEquivalencyAssertionOptions<DataSet>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo(DataSet)", "" },
 				{ ".Should().BeNull()", "" },
 				{ ".Should().BeOfType(Type)", "" },
@@ -269,7 +275,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 			{
 				{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
-				{ ".Should().BeEquivalentTo(DataTable, Func<IDataEquivalencyAssertionOptions<DataTable>, IDataEquivalencyAssertionOptions<DataTable>>)", "" },
+				{
+					".Should().BeEquivalentTo(DataTable, Func<IDataEquivalencyAssertionOptions<DataTable>, IDataEquivalencyAssertionOptions<DataTable>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo(DataTable)", "" },
 				{ ".Should().BeNull()", "" },
 				{ ".Should().BeOfType(Type)", "" },
@@ -569,10 +578,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeOfType<T>()", "" },
 				{ ".Should().NotBeSameAs(Func<T>)", "" },
 				{ ".Should().NotThrow()", "" },
-				{ ".Should().NotThrow()", "" },
+				//{ ".Should().NotThrow()", "" },
 				{ ".Should().NotThrow<TException>()", "" },
 				{ ".Should().NotThrowAfter(TimeSpan, TimeSpan)", "" },
-				{ ".Should().NotThrowAfter(TimeSpan, TimeSpan)", "" },
+				//{ ".Should().NotThrowAfter(TimeSpan, TimeSpan)", "" },
 				{ ".Should().Throw<TException>()", "" },
 				{ ".Should().ThrowExactly<TException>()", "" },
 			}
@@ -587,7 +596,7 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().BeOfType<T>()", "" },
 				{ ".Should().BeSameAs(Func<Task<TResult>>)", "" },
 				{ ".Should().CompleteWithinAsync(TimeSpan)", "" },
-				{ ".Should().CompleteWithinAsync(TimeSpan)", "" },
+				//{ ".Should().CompleteWithinAsync(TimeSpan)", "" },
 				{ ".Should().Match(Expression<Func<Func<Task<TResult>>, bool>>)", "" },
 				{ ".Should().Match<T>(Expression<Func<T, bool>>)", "" },
 				{ ".Should().NotBeAssignableTo(Type)", "" },
@@ -598,9 +607,9 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeSameAs(Func<Task<TResult>>)", "" },
 				{ ".Should().NotCompleteWithinAsync(TimeSpan)", "" },
 				{ ".Should().NotThrowAfterAsync(TimeSpan, TimeSpan)", "" },
-				{ ".Should().NotThrowAfterAsync(TimeSpan, TimeSpan)", "" },
+				//{ ".Should().NotThrowAfterAsync(TimeSpan, TimeSpan)", "" },
 				{ ".Should().NotThrowAsync()", "" },
-				{ ".Should().NotThrowAsync()", "" },
+				//{ ".Should().NotThrowAsync()", "" },
 				{ ".Should().NotThrowAsync<TException>()", "" },
 				{ ".Should().ThrowAsync<TException>()", "" },
 				{ ".Should().ThrowExactlyAsync<TException>()", "" },
@@ -612,7 +621,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 			{
 				{ ".Should().AllBeAssignableTo(Type)", "" },
 				{ ".Should().AllBeAssignableTo<TExpectation>()", "" },
-				{ ".Should().AllBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().AllBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().AllBeEquivalentTo<TExpectation>(TExpectation)", "" },
 				{ ".Should().AllBeOfType(Type)", "" },
 				{ ".Should().AllBeOfType<TExpectation>()", "" },
@@ -620,17 +632,26 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
 				{ ".Should().BeEmpty()", "" },
-				{ ".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>)", "" },
 				{ ".Should().BeInAscendingOrder()", "" },
 				{ ".Should().BeInAscendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().BeInAscendingOrder(IComparer<T>)", "" },
-				{ ".Should().BeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
+				{
+					".Should().BeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
 				{ ".Should().BeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
 				{ ".Should().BeInDescendingOrder()", "" },
 				{ ".Should().BeInDescendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().BeInDescendingOrder(IComparer<T>)", "" },
-				{ ".Should().BeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
+				{
+					".Should().BeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
 				{ ".Should().BeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
 				{ ".Should().BeNull()", "" },
 				{ ".Should().BeNullOrEmpty()", "" },
@@ -641,7 +662,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().Contain(Expression<Func<T, bool>>)", "" },
 				{ ".Should().Contain(IEnumerable<T>)", "" },
 				{ ".Should().Contain(T)", "" },
-				{ ".Should().ContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().ContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().ContainEquivalentOf<TExpectation>(TExpectation)", "" },
 				{ ".Should().ContainInConsecutiveOrder(IEnumerable<T>)", "" },
 				{ ".Should().ContainInConsecutiveOrder(T[])", "" },
@@ -652,10 +676,16 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().ContainSingle(Expression<Func<T, bool>>)", "" },
 				{ ".Should().EndWith(IEnumerable<T>)", "" },
 				{ ".Should().EndWith(T)", "" },
-				{ ".Should().EndWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)", "" },
+				{
+					".Should().EndWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)",
+					""
+				},
 				{ ".Should().Equal(IEnumerable<T>)", "" },
 				{ ".Should().Equal(T[])", "" },
-				{ ".Should().Equal<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)", "" },
+				{
+					".Should().Equal<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)",
+					""
+				},
 				{ ".Should().HaveCount(Expression<Func<int, bool>>)", "" },
 				{ ".Should().HaveCount(int)", "" },
 				{ ".Should().HaveCountGreaterOrEqualTo(int)", "" },
@@ -674,18 +704,32 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeAssignableTo(Type)", "" },
 				{ ".Should().NotBeAssignableTo<T>()", "" },
 				{ ".Should().NotBeEmpty()", "" },
-				{ ".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>)", "" },
 				{ ".Should().NotBeInAscendingOrder()", "" },
 				{ ".Should().NotBeInAscendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().NotBeInAscendingOrder(IComparer<T>)", "" },
-				{ ".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
+				{
+					".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)", ""
+				},
 				{ ".Should().NotBeInDescendingOrder()", "" },
 				{ ".Should().NotBeInDescendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().NotBeInDescendingOrder(IComparer<T>)", "" },
-				{ ".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
+				{
+					".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)",
+					""
+				},
 				{ ".Should().NotBeNull()", "" },
 				{ ".Should().NotBeNullOrEmpty()", "" },
 				{ ".Should().NotBeOfType(Type)", "" },
@@ -695,7 +739,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotContain(Expression<Func<T, bool>>)", "" },
 				{ ".Should().NotContain(IEnumerable<T>)", "" },
 				{ ".Should().NotContain(T)", "" },
-				{ ".Should().NotContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotContainEquivalentOf<TExpectation>(TExpectation)", "" },
 				{ ".Should().NotContainInConsecutiveOrder(IEnumerable<T>)", "" },
 				{ ".Should().NotContainInConsecutiveOrder(T[])", "" },
@@ -718,7 +765,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().SatisfyRespectively(IEnumerable<Action<T>>)", "" },
 				{ ".Should().StartWith(IEnumerable<T>)", "" },
 				{ ".Should().StartWith(T)", "" },
-				{ ".Should().StartWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)", "" },
+				{
+					".Should().StartWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)",
+					""
+				},
 			}
 		},
 		{
@@ -739,13 +789,19 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().Be(HttpResponseMessage)", "" },
 				{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
-				{ ".Should().BeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().BeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo<TExpectation>(TExpectation)", "" },
 				{ ".Should().BeNull()", "" },
 				{ ".Should().BeOfType(Type)", "" },
 				{ ".Should().BeOfType<T>()", "" },
 				{ ".Should().BeOneOf(HttpResponseMessage[])", "" },
-				{ ".Should().BeOneOf(IEnumerable<HttpResponseMessage>, IEqualityComparer<HttpResponseMessage>)", "" },
+				{
+					".Should().BeOneOf(IEnumerable<HttpResponseMessage>, IEqualityComparer<HttpResponseMessage>)",
+					""
+				},
 				{ ".Should().BeOneOf(IEnumerable<HttpResponseMessage>)", "" },
 				{ ".Should().BeRedirection()", "" },
 				{ ".Should().BeSameAs(HttpResponseMessage)", "" },
@@ -756,11 +812,17 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().HaveStatusCode(HttpStatusCode)", "" },
 				{ ".Should().Match(Expression<Func<HttpResponseMessage, bool>>)", "" },
 				{ ".Should().Match<T>(Expression<Func<T, bool>>)", "" },
-				{ ".Should().NotBe(HttpResponseMessage, IEqualityComparer<HttpResponseMessage>)", "" },
+				{
+					".Should().NotBe(HttpResponseMessage, IEqualityComparer<HttpResponseMessage>)",
+					""
+				},
 				{ ".Should().NotBe(HttpResponseMessage)", "" },
 				{ ".Should().NotBeAssignableTo(Type)", "" },
 				{ ".Should().NotBeAssignableTo<T>()", "" },
-				{ ".Should().NotBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotBeEquivalentTo<TExpectation>(TExpectation)", "" },
 				{ ".Should().NotBeNull()", "" },
 				{ ".Should().NotBeOfType(Type)", "" },
@@ -861,7 +923,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeAssignableTo<T>()", "" },
 				{ ".Should().NotBeAsync()", "" },
 				{ ".Should().NotBeDecoratedWith<TAttribute>()", "" },
-				{ ".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().NotBeNull()", "" },
 				{ ".Should().NotBeOfType(Type)", "" },
 				{ ".Should().NotBeOfType<T>()", "" },
@@ -887,7 +952,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBe(CSharpAccessModifier)", "" },
 				{ ".Should().NotBeAsync()", "" },
 				{ ".Should().NotBeDecoratedWith<TAttribute>()", "" },
-				{ ".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().NotBeVirtual()", "" },
 			}
 		},
@@ -1545,7 +1613,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().Be<TExpectation>(TExpectation, IEqualityComparer<TExpectation>)", "" },
 				{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
-				{ ".Should().BeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().BeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo<TExpectation>(TExpectation)", "" },
 				{ ".Should().BeNull()", "" },
 				{ ".Should().BeOfType(Type)", "" },
@@ -1553,16 +1624,25 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().BeOneOf(IEnumerable<object>, IEqualityComparer<object>)", "" },
 				{ ".Should().BeOneOf(IEnumerable<object>)", "" },
 				{ ".Should().BeOneOf(object[])", "" },
-				{ ".Should().BeOneOf<TExpectation>(IEnumerable<TExpectation>, IEqualityComparer<TExpectation>)", "" },
+				{
+					".Should().BeOneOf<TExpectation>(IEnumerable<TExpectation>, IEqualityComparer<TExpectation>)",
+					""
+				},
 				{ ".Should().BeSameAs(object)", "" },
 				{ ".Should().Match(Expression<Func<object, bool>>)", "" },
 				{ ".Should().Match<T>(Expression<Func<T, bool>>)", "" },
 				{ ".Should().NotBe(object, IEqualityComparer<object>)", "" },
 				{ ".Should().NotBe(object)", "" },
-				{ ".Should().NotBe<TExpectation>(TExpectation, IEqualityComparer<TExpectation>)", "" },
+				{
+					".Should().NotBe<TExpectation>(TExpectation, IEqualityComparer<TExpectation>)",
+					""
+				},
 				{ ".Should().NotBeAssignableTo(Type)", "" },
 				{ ".Should().NotBeAssignableTo<T>()", "" },
-				{ ".Should().NotBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotBeEquivalentTo<TExpectation>(TExpectation)", "" },
 				{ ".Should().NotBeNull()", "" },
 				{ ".Should().NotBeOfType(Type)", "" },
@@ -1591,7 +1671,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeAssignableTo(Type)", "" },
 				{ ".Should().NotBeAssignableTo<T>()", "" },
 				{ ".Should().NotBeDecoratedWith<TAttribute>()", "" },
-				{ ".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().NotBeNull()", "" },
 				{ ".Should().NotBeOfType(Type)", "" },
 				{ ".Should().NotBeOfType<T>()", "" },
@@ -1785,11 +1868,17 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 		{
 			"StringCollection", new Dictionary<string, string>
 			{
-				{ ".Should().AllBe(string, Func<EquivalencyAssertionOptions<string>, EquivalencyAssertionOptions<string>>)", "" },
+				{
+					".Should().AllBe(string, Func<EquivalencyAssertionOptions<string>, EquivalencyAssertionOptions<string>>)",
+					""
+				},
 				{ ".Should().AllBe(string)", "" },
 				{ ".Should().AllBeAssignableTo(Type)", "" },
 				{ ".Should().AllBeAssignableTo<TExpectation>()", "" },
-				{ ".Should().AllBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().AllBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().AllBeEquivalentTo<TExpectation>(TExpectation)", "" },
 				{ ".Should().AllBeOfType(Type)", "" },
 				{ ".Should().AllBeOfType<TExpectation>()", "" },
@@ -1797,21 +1886,39 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
 				{ ".Should().BeEmpty()", "" },
-				{ ".Should().BeEquivalentTo(IEnumerable<string>, Func<EquivalencyAssertionOptions<string>, EquivalencyAssertionOptions<string>>)", "" },
+				{
+					".Should().BeEquivalentTo(IEnumerable<string>, Func<EquivalencyAssertionOptions<string>, EquivalencyAssertionOptions<string>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo(IEnumerable<string>)", "" },
 				{ ".Should().BeEquivalentTo(string[])", "" },
-				{ ".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>)", "" },
 				{ ".Should().BeInAscendingOrder()", "" },
 				{ ".Should().BeInAscendingOrder(Func<string, string, int>)", "" },
 				{ ".Should().BeInAscendingOrder(IComparer<string>)", "" },
-				{ ".Should().BeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().BeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>)", "" },
+				{
+					".Should().BeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().BeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>)",
+					""
+				},
 				{ ".Should().BeInDescendingOrder()", "" },
 				{ ".Should().BeInDescendingOrder(Func<string, string, int>)", "" },
 				{ ".Should().BeInDescendingOrder(IComparer<string>)", "" },
-				{ ".Should().BeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().BeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>)", "" },
+				{
+					".Should().BeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().BeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>)",
+					""
+				},
 				{ ".Should().BeNull()", "" },
 				{ ".Should().BeNullOrEmpty()", "" },
 				{ ".Should().BeOfType(Type)", "" },
@@ -1821,7 +1928,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().Contain(Expression<Func<string, bool>>)", "" },
 				{ ".Should().Contain(IEnumerable<string>)", "" },
 				{ ".Should().Contain(string)", "" },
-				{ ".Should().ContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().ContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().ContainEquivalentOf<TExpectation>(TExpectation)", "" },
 				{ ".Should().ContainInConsecutiveOrder(IEnumerable<string>)", "" },
 				{ ".Should().ContainInConsecutiveOrder(string[])", "" },
@@ -1833,12 +1943,18 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().ContainSingle(Expression<Func<string, bool>>)", "" },
 				{ ".Should().EndWith(IEnumerable<string>)", "" },
 				{ ".Should().EndWith(string)", "" },
-				{ ".Should().EndWith<TExpectation>(IEnumerable<TExpectation>, Func<string, TExpectation, bool>)", "" },
+				{
+					".Should().EndWith<TExpectation>(IEnumerable<TExpectation>, Func<string, TExpectation, bool>)",
+					""
+				},
 				{ ".Should().Equal(IEnumerable<string>)", "" },
-				{ ".Should().Equal(IEnumerable<string>)", "" },
+				//{ ".Should().Equal(IEnumerable<string>)", "" },
 				{ ".Should().Equal(string[])", "" },
-				{ ".Should().Equal(string[])", "" },
-				{ ".Should().Equal<TExpectation>(IEnumerable<TExpectation>, Func<string, TExpectation, bool>)", "" },
+				//{ ".Should().Equal(string[])", "" },
+				{
+					".Should().Equal<TExpectation>(IEnumerable<TExpectation>, Func<string, TExpectation, bool>)",
+					""
+				},
 				{ ".Should().HaveCount(Expression<Func<int, bool>>)", "" },
 				{ ".Should().HaveCount(int)", "" },
 				{ ".Should().HaveCountGreaterOrEqualTo(int)", "" },
@@ -1857,18 +1973,33 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeAssignableTo(Type)", "" },
 				{ ".Should().NotBeAssignableTo<T>()", "" },
 				{ ".Should().NotBeEmpty()", "" },
-				{ ".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>)", "" },
 				{ ".Should().NotBeInAscendingOrder()", "" },
 				{ ".Should().NotBeInAscendingOrder(Func<string, string, int>)", "" },
 				{ ".Should().NotBeInAscendingOrder(IComparer<string>)", "" },
-				{ ".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>)", "" },
+				{
+					".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<string, TSelector>>)",
+					""
+				},
 				{ ".Should().NotBeInDescendingOrder()", "" },
 				{ ".Should().NotBeInDescendingOrder(Func<string, string, int>)", "" },
 				{ ".Should().NotBeInDescendingOrder(IComparer<string>)", "" },
-				{ ".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>)", "" },
+				{
+					".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<string, TSelector>>)",
+					""
+				},
 				{ ".Should().NotBeNull()", "" },
 				{ ".Should().NotBeNullOrEmpty()", "" },
 				{ ".Should().NotBeOfType(Type)", "" },
@@ -1878,7 +2009,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotContain(Expression<Func<string, bool>>)", "" },
 				{ ".Should().NotContain(IEnumerable<string>)", "" },
 				{ ".Should().NotContain(string)", "" },
-				{ ".Should().NotContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotContainEquivalentOf<TExpectation>(TExpectation)", "" },
 				{ ".Should().NotContainInConsecutiveOrder(IEnumerable<string>)", "" },
 				{ ".Should().NotContainInConsecutiveOrder(string[])", "" },
@@ -1902,7 +2036,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().SatisfyRespectively(IEnumerable<Action<string>>)", "" },
 				{ ".Should().StartWith(IEnumerable<string>)", "" },
 				{ ".Should().StartWith(string)", "" },
-				{ ".Should().StartWith<TExpectation>(IEnumerable<TExpectation>, Func<string, TExpectation, bool>)", "" },
+				{
+					".Should().StartWith<TExpectation>(IEnumerable<TExpectation>, Func<string, TExpectation, bool>)",
+					""
+				},
 			}
 		},
 		{
@@ -1910,7 +2047,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 			{
 				{ ".Should().AllBeAssignableTo(Type)", "" },
 				{ ".Should().AllBeAssignableTo<TExpectation>()", "" },
-				{ ".Should().AllBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().AllBeEquivalentTo<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().AllBeEquivalentTo<TExpectation>(TExpectation)", "" },
 				{ ".Should().AllBeOfType(Type)", "" },
 				{ ".Should().AllBeOfType<TExpectation>()", "" },
@@ -1918,17 +2058,26 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
 				{ ".Should().BeEmpty()", "" },
-				{ ".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().BeEquivalentTo<TExpectation>(IEnumerable<TExpectation>)", "" },
 				{ ".Should().BeInAscendingOrder()", "" },
 				{ ".Should().BeInAscendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().BeInAscendingOrder(IComparer<T>)", "" },
-				{ ".Should().BeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
+				{
+					".Should().BeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
 				{ ".Should().BeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
 				{ ".Should().BeInDescendingOrder()", "" },
 				{ ".Should().BeInDescendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().BeInDescendingOrder(IComparer<T>)", "" },
-				{ ".Should().BeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
+				{
+					".Should().BeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
 				{ ".Should().BeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
 				{ ".Should().BeNull()", "" },
 				{ ".Should().BeNullOrEmpty()", "" },
@@ -1939,7 +2088,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().Contain(Expression<Func<T, bool>>)", "" },
 				{ ".Should().Contain(IEnumerable<T>)", "" },
 				{ ".Should().Contain(T)", "" },
-				{ ".Should().ContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().ContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().ContainEquivalentOf<TExpectation>(TExpectation)", "" },
 				{ ".Should().ContainInConsecutiveOrder(IEnumerable<T>)", "" },
 				{ ".Should().ContainInConsecutiveOrder(T[])", "" },
@@ -1950,10 +2102,16 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().ContainSingle(Expression<Func<T, bool>>)", "" },
 				{ ".Should().EndWith(IEnumerable<T>)", "" },
 				{ ".Should().EndWith(T)", "" },
-				{ ".Should().EndWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)", "" },
+				{
+					".Should().EndWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)",
+					""
+				},
 				{ ".Should().Equal(IEnumerable<T>)", "" },
 				{ ".Should().Equal(T[])", "" },
-				{ ".Should().Equal<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)", "" },
+				{
+					".Should().Equal<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)",
+					""
+				},
 				{ ".Should().HaveCount(Expression<Func<int, bool>>)", "" },
 				{ ".Should().HaveCount(int)", "" },
 				{ ".Should().HaveCountGreaterOrEqualTo(int)", "" },
@@ -1972,18 +2130,32 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeAssignableTo(Type)", "" },
 				{ ".Should().NotBeAssignableTo<T>()", "" },
 				{ ".Should().NotBeEmpty()", "" },
-				{ ".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotBeEquivalentTo<TExpectation>(IEnumerable<TExpectation>)", "" },
 				{ ".Should().NotBeInAscendingOrder()", "" },
 				{ ".Should().NotBeInAscendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().NotBeInAscendingOrder(IComparer<T>)", "" },
-				{ ".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
+				{
+					".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().NotBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)", ""
+				},
 				{ ".Should().NotBeInDescendingOrder()", "" },
 				{ ".Should().NotBeInDescendingOrder(Func<T, T, int>)", "" },
 				{ ".Should().NotBeInDescendingOrder(IComparer<T>)", "" },
-				{ ".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
+				{
+					".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().NotBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)",
+					""
+				},
 				{ ".Should().NotBeNull()", "" },
 				{ ".Should().NotBeNullOrEmpty()", "" },
 				{ ".Should().NotBeOfType(Type)", "" },
@@ -1993,7 +2165,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotContain(Expression<Func<T, bool>>)", "" },
 				{ ".Should().NotContain(IEnumerable<T>)", "" },
 				{ ".Should().NotContain(T)", "" },
-				{ ".Should().NotContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)", "" },
+				{
+					".Should().NotContainEquivalentOf<TExpectation>(TExpectation, Func<EquivalencyAssertionOptions<TExpectation>, EquivalencyAssertionOptions<TExpectation>>)",
+					""
+				},
 				{ ".Should().NotContainEquivalentOf<TExpectation>(TExpectation)", "" },
 				{ ".Should().NotContainInConsecutiveOrder(IEnumerable<T>)", "" },
 				{ ".Should().NotContainInConsecutiveOrder(T[])", "" },
@@ -2016,11 +2191,26 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().SatisfyRespectively(IEnumerable<Action<T>>)", "" },
 				{ ".Should().StartWith(IEnumerable<T>)", "" },
 				{ ".Should().StartWith(T)", "" },
-				{ ".Should().StartWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)", "" },
-				{ ".Should().ThenBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().ThenBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
-				{ ".Should().ThenBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)", "" },
-				{ ".Should().ThenBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)", "" },
+				{
+					".Should().StartWith<TExpectation>(IEnumerable<TExpectation>, Func<T, TExpectation, bool>)",
+					""
+				},
+				{
+					".Should().ThenBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().ThenBeInAscendingOrder<TSelector>(Expression<Func<T, TSelector>>)",
+					""
+				},
+				{
+					".Should().ThenBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>, IComparer<TSelector>)",
+					""
+				},
+				{
+					".Should().ThenBeInDescendingOrder<TSelector>(Expression<Func<T, TSelector>>)",
+					""
+				},
 			}
 		},
 		{
@@ -2068,13 +2258,16 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().Be<TExpected>()", "" },
 				{ ".Should().BeAbstract()", "" },
 				{ ".Should().BeAssignableTo(Type)", "" },
-				{ ".Should().BeAssignableTo(Type)", "" },
+				//{ ".Should().BeAssignableTo(Type)", "" },
 				{ ".Should().BeAssignableTo<T>()", "" },
-				{ ".Should().BeAssignableTo<T>()", "" },
+				//{ ".Should().BeAssignableTo<T>()", "" },
 				{ ".Should().BeDecoratedWith<TAttribute>()", "" },
 				{ ".Should().BeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
 				{ ".Should().BeDecoratedWithOrInherit<TAttribute>()", "" },
-				{ ".Should().BeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().BeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().BeDerivedFrom(Type)", "" },
 				{ ".Should().BeDerivedFrom<TBaseClass>()", "" },
 				{ ".Should().BeNull()", "" },
@@ -2106,13 +2299,19 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBe<TUnexpected>()", "" },
 				{ ".Should().NotBeAbstract()", "" },
 				{ ".Should().NotBeAssignableTo(Type)", "" },
-				{ ".Should().NotBeAssignableTo(Type)", "" },
+				//{ ".Should().NotBeAssignableTo(Type)", "" },
 				{ ".Should().NotBeAssignableTo<T>()", "" },
-				{ ".Should().NotBeAssignableTo<T>()", "" },
+				//{ ".Should().NotBeAssignableTo<T>()", "" },
 				{ ".Should().NotBeDecoratedWith<TAttribute>()", "" },
-				{ ".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().NotBeDecoratedWithOrInherit<TAttribute>()", "" },
-				{ ".Should().NotBeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().NotBeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().NotBeDerivedFrom(Type)", "" },
 				{ ".Should().NotBeDerivedFrom<TBaseClass>()", "" },
 				{ ".Should().NotBeNull()", "" },
@@ -2145,14 +2344,23 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().BeDecoratedWith<TAttribute>()", "" },
 				{ ".Should().BeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
 				{ ".Should().BeDecoratedWithOrInherit<TAttribute>()", "" },
-				{ ".Should().BeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().BeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().BeInNamespace(string)", "" },
 				{ ".Should().BeSealed()", "" },
 				{ ".Should().BeUnderNamespace(string)", "" },
 				{ ".Should().NotBeDecoratedWith<TAttribute>()", "" },
-				{ ".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().NotBeDecoratedWith<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().NotBeDecoratedWithOrInherit<TAttribute>()", "" },
-				{ ".Should().NotBeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)", "" },
+				{
+					".Should().NotBeDecoratedWithOrInherit<TAttribute>(Expression<Func<TAttribute, bool>>)",
+					""
+				},
 				{ ".Should().NotBeInNamespace(string)", "" },
 				{ ".Should().NotBeSealed()", "" },
 				{ ".Should().NotBeUnderNamespace(string)", "" },
@@ -2358,7 +2566,6 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				{ ".Should().NotBeSameAs(XmlNode)", "" },
 			}
 		},
-
 	};
 
 	#endregion
@@ -2455,6 +2662,19 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 			int index = 0;
 			foreach (string method in group.Value.Distinct().OrderBy(x => x))
 			{
+				string existingMapping = "";
+				if (!_existingMapping.TryGetValue(group.Key,
+					    out Dictionary<string, string>? existingGroup) ||
+				    !existingGroup.TryGetValue(method, out existingMapping))
+				{
+					throw new InvalidOperationException($"Did not find {group.Key} > {method}");
+				}
+
+				if (existingMapping == IGNORED)
+				{
+					continue;
+				}
+
 				if (index++ == 0)
 				{
 					sb.Append("| ").Append(group.Key).Append(new string(' ', 23 - group.Key.Length))
@@ -2468,17 +2688,8 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 				sb.Append($" `{method}`");
 				sb.Append(new string(' ', Math.Max(0, 50 - method.Length)));
 				sb.Append(" | ");
-				if (_existingMapping.TryGetValue(group.Key,
-					    out Dictionary<string, string>? existingGroup) &&
-				    existingGroup.TryGetValue(method, out string? existingMapping))
-				{
-					sb.Append($"`{existingMapping}`");
-					sb.Append(new string(' ', Math.Max(0, 50 - method.Length)));
-				}
-				else
-				{
-					sb.Append(new string(' ', 52));
-				}
+				sb.Append($"`{existingMapping}`");
+				sb.Append(new string(' ', Math.Max(0, 50 - existingMapping.Length)));
 
 				sb.AppendLine(" |");
 			}
