@@ -50,12 +50,15 @@ internal class MockTimeSystem : ITimeSystem
 	private sealed class MockStopwatch : IStopwatch
 	{
 		private TimeSpan _elapsed = TimeSpan.Zero;
-		private bool _isRunning = true;
+		private bool _isRunning;
 
 		#region IStopwatch Members
 
 		/// <inheritdoc />
 		public TimeSpan Elapsed => _elapsed;
+
+		/// <inheritdoc />
+		public bool IsRunning => _isRunning;
 
 		/// <inheritdoc />
 		public void Start()
