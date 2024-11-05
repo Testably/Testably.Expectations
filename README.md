@@ -19,6 +19,10 @@ By using `await`, the evaluation is only triggered after the complete fluent cha
 - `WithCancellation` can also be registered at the end an applies a `CancellationToken` to all async methods
 - Expectations can be combined directly (via `Expect.ThatAll`) instead of relying on global state (e.g. assertion scopes)
 
+### Extensibility
+The proven extensibility achieved with extension methods on `.Should()` from fluentassertions is also applied here.
+Extensions can be written for new types (by writing a `.Should()` extension methods for `IExpectSubjectThat<TType>`) and also for existing types (by writing an extension method on `IThat<TType>`).
+
 ## Examples
 
 By adding `global using static Testably.Expectations.Expect;` anywhere in the test project, that `await` can be part of the sentence of the expectation.
@@ -31,5 +35,3 @@ By adding `global using static Testably.Expectations.Expect;` anywhere in the te
       .WithMessage("Value cannot be null");
   }
   ```
-
-
