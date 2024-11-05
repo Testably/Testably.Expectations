@@ -20,7 +20,8 @@ internal class EvaluationContext : IEvaluationContext
 	public bool TryReceive<T>(string key, [NotNullWhen(true)] out T? value)
 	{
 		if (_store != null &&
-		    _store.TryGetValue(key, out object? storedValue) && storedValue is T typeMatchingValue)
+		    _store.TryGetValue(key, out object? storedValue)
+		    && storedValue is T typeMatchingValue)
 		{
 			value = typeMatchingValue;
 			return true;

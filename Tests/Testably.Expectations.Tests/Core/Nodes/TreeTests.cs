@@ -42,7 +42,7 @@ public class TreeTests
 				"You have to specify expectations between combinations! Add expectations between `And()` or `Or()`.");
 	}
 
-	private class DummyCastConstraint : ICastConstraint<bool, bool>
+	private sealed class DummyCastConstraint : ICastConstraint<bool, bool>
 	{
 		#region ICastConstraint<bool,bool> Members
 
@@ -53,7 +53,7 @@ public class TreeTests
 		#endregion
 	}
 
-	private class DummyConstraint : IValueConstraint<bool>
+	private sealed class DummyConstraint : IValueConstraint<bool>
 	{
 		#region IValueConstraint<bool> Members
 
