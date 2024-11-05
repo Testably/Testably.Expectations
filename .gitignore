@@ -2,8 +2,6 @@
 ##
 ## Get latest from https://github.com/JetBrains/resharper-rider-samples/blob/master/.gitignore
 
-**/.idea/**/.idea/*
-
 # User specific
 **/.idea/**/workspace.xml
 **/.idea/**/tasks.xml
