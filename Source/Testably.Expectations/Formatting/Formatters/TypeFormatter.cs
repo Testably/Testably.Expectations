@@ -33,9 +33,34 @@ internal class TypeFormatter : FormatterBase<Type>
 	public override void Format(Type value, StringBuilder stringBuilder,
 		FormattingOptions options)
 	{
-		if (FindPrimitiveAlias(value, out string? alias))
+		if (value.IsArray)
+		{
+			Format(value.GetElementType()!, stringBuilder, FormattingOptions.SingleLine);
+			stringBuilder.Append("[]");
+		}
+		else if (TryFindPrimitiveAlias(value, out string? alias))
 		{
 			stringBuilder.Append(alias);
+		}
+		else if (value.IsGenericType)
+		{
+			Type? genericTypeDefinition = value.GetGenericTypeDefinition();
+			stringBuilder.Append(genericTypeDefinition.Name
+				.Substring(0, genericTypeDefinition.Name.IndexOf('`')));
+			stringBuilder.Append('<');
+			bool isFirstArgument = true;
+			foreach (Type argument in value.GetGenericArguments())
+			{
+				if (!isFirstArgument)
+				{
+					stringBuilder.Append(", ");
+				}
+
+				isFirstArgument = false;
+				Format(argument, stringBuilder, FormattingOptions.SingleLine);
+			}
+
+			stringBuilder.Append('>');
 		}
 		else
 		{
@@ -43,7 +68,7 @@ internal class TypeFormatter : FormatterBase<Type>
 		}
 	}
 
-	private static bool FindPrimitiveAlias(Type value, [NotNullWhen(true)] out string? alias)
+	private static bool TryFindPrimitiveAlias(Type value, [NotNullWhen(true)] out string? alias)
 	{
 		if (Aliases.TryGetValue(value, out string? typeAlias))
 		{
