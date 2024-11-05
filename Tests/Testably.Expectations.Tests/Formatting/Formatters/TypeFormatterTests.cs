@@ -1,4 +1,6 @@
-﻿using Testably.Expectations.Formatting;
+﻿using System.Collections.Generic;
+using System.Linq.Expressions;
+using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Tests.Formatting.Formatters;
 
@@ -46,6 +48,43 @@ public sealed class TypeFormatterTests
 
 	#endregion
 
+	[Fact]
+	public async Task ShouldSupportArraySyntax()
+	{
+		Type value = typeof(int[]);
+		string result = Formatter.Format(value);
+
+		await That(result).Should().Be("int[]");
+	}
+
+	[Fact]
+	public async Task ShouldSupportArraySyntaxWithComplexObjects()
+	{
+		Type value = typeof(TypeFormatterTests[]);
+		string result = Formatter.Format(value);
+
+		await That(result).Should().Be($"{nameof(TypeFormatterTests)}[]");
+	}
+
+	[Fact]
+	public async Task ShouldSupportGenericTypeDefinitions()
+	{
+		Type value = typeof(IEnumerable<int>);
+		string result = Formatter.Format(value);
+
+		await That(result).Should().Be("IEnumerable<int>");
+	}
+
+	[Fact]
+	public async Task ShouldSupportNestedGenericTypeDefinitions()
+	{
+		Type value = typeof(Expression<Func<TypeFormatterTests[], bool>>);
+		string result = Formatter.Format(value);
+
+		await That(result).Should()
+			.Be($"Expression<Func<{nameof(TypeFormatterTests)}[], bool>>");
+	}
+
 	[Theory]
 	[MemberData(nameof(SimpleTypes))]
 	public async Task SimpleTypes_ShouldUseSimpleNames(Type value, string expectedResult)
@@ -58,9 +97,9 @@ public sealed class TypeFormatterTests
 	[Fact]
 	public async Task Types_ShouldOnlyIncludeTheName()
 	{
-		Type value = typeof(BooleanFormatterTests);
+		Type value = typeof(TypeFormatterTests);
 		string result = Formatter.Format(value);
 
-		await That(result).Should().Be(nameof(BooleanFormatterTests));
+		await That(result).Should().Be(nameof(TypeFormatterTests));
 	}
 }
