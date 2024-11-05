@@ -81,7 +81,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testably.Expectations.Featu
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{127FDE13-FDA0-45BA-86A6-9903E01FCE44}"
 	ProjectSection(SolutionItems) = preProject
-		Docs\FeatureGapToFluentAssertions.md = Docs\FeatureGapToFluentAssertions.md
+		Docs\FeatureComparisonWithFluentAssertions.md = Docs\FeatureComparisonWithFluentAssertions.md
 	EndProjectSection
 EndProject
 Global

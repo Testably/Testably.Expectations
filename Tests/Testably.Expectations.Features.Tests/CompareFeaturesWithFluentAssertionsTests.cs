@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Testably.Expectations.Features.Tests;
 
-public sealed class CompareFeatureGapWithFluentAssertionsTests
+public sealed class CompareFeaturesWithFluentAssertionsTests
 {
 	#region Test Setup
 
@@ -2571,10 +2571,10 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 	#endregion
 
 	[Fact]
-	public async Task CompareFeatureGap()
+	public async Task CompareFeaturesWithFluentAssertions()
 	{
 		StringBuilder sb = new();
-		sb.AppendLine("# Feature Gap between FluentAssertions and Testably.Expectations");
+		sb.AppendLine("# Feature comparison between FluentAssertions and Testably.Expectations");
 		sb.AppendLine();
 		sb.AppendLine(
 			"|        Category         |                   FluentAssertions                   |                Testably.Expectations                 |");
@@ -2696,7 +2696,7 @@ public sealed class CompareFeatureGapWithFluentAssertionsTests
 		}
 
 		string filePath = Path.Combine("..", "..", "..", "..", "Docs",
-			"FeatureGapToFluentAssertions.md");
+			"FeatureComparisonWithFluentAssertions.md");
 		string result = sb.ToString();
 		string content = await File.ReadAllTextAsync(filePath);
 

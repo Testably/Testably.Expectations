@@ -6,7 +6,7 @@
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FTestably%2FTestably.Expectations%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/Testably/Testably.Expectations/main)
 
 This library is used to assert unit tests in natural language by specifying expectations.
-It tries to take the best from [fluentassertions](https://github.com/fluentassertions/fluentassertions) and [TUnit](https://github.com/thomhurst/TUnit) and combine them to a new assertions library.
+It tries to take the best from [fluentassertions](https://github.com/fluentassertions/fluentassertions) and [TUnit](https://github.com/thomhurst/TUnit) and combine them to a new assertion library.
 
 ## Architecture
 
@@ -38,3 +38,6 @@ By adding `global using static Testably.Expectations.Expect;` anywhere in the te
 	  .Because("we tested the null edge case");
   }
   ```
+
+## Features
+Find [here](Docs/FeatureComparisonWithFluentAssertions.md) a comparison of the features and syntax from fluentassertions and Testably.Expectations.

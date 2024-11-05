@@ -1,4 +1,4 @@
-# Feature Gap between FluentAssertions and Testably.Expectations
+# Feature comparison between FluentAssertions and Testably.Expectations
 
 |        Category         |                   FluentAssertions                   |                Testably.Expectations                 |
 | ----------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
