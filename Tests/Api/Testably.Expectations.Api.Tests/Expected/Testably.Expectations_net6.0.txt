@@ -123,8 +123,8 @@ namespace Testably.Expectations
     }
     public static class ThatBufferedStreamShould
     {
-        public static Testably.Expectations.Results.AndOrResult<System.IO.BufferedStream?, Testably.Expectations.Core.IThat<System.IO.BufferedStream?>> HaveBufferSize(this Testably.Expectations.Core.IThat<System.IO.BufferedStream?> source, long expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
-        public static Testably.Expectations.Results.AndOrResult<System.IO.BufferedStream?, Testably.Expectations.Core.IThat<System.IO.BufferedStream?>> NotHaveBufferSize(this Testably.Expectations.Core.IThat<System.IO.BufferedStream?> source, long expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.AndOrResult<System.IO.BufferedStream?, Testably.Expectations.Core.IThat<System.IO.BufferedStream?>> HaveBufferSize(this Testably.Expectations.Core.IThat<System.IO.BufferedStream?> source, int expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.AndOrResult<System.IO.BufferedStream?, Testably.Expectations.Core.IThat<System.IO.BufferedStream?>> NotHaveBufferSize(this Testably.Expectations.Core.IThat<System.IO.BufferedStream?> source, int expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatDateOnlyShould
     {

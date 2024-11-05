@@ -9,31 +9,31 @@ public sealed partial class BufferedStreamShould
 	{
 		[Theory]
 		[AutoData]
-		public async Task WhenSubjectHasDifferentBufferSize_ShouldFail(int buffersize)
+		public async Task WhenSubjectHasDifferentBufferSize_ShouldFail(int bufferSize)
 		{
-			int actualBufferSize = buffersize > 10000 ? buffersize - 1 : buffersize + 1;
+			int actualBufferSize = bufferSize > 10000 ? bufferSize - 1 : bufferSize + 1;
 			using BufferedStream subject = GetBufferedStream(actualBufferSize);
 
 			async Task Act()
-				=> await That(subject).Should().HaveBufferSize(buffersize);
+				=> await That(subject).Should().HaveBufferSize(bufferSize);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				                   Expected subject to
-				                   have buffer size {buffersize},
+				                   have buffer size {bufferSize},
 				                   but it had buffer size {actualBufferSize}
-				                   at Expect.That(subject).Should().HaveBufferSize(buffersize)
+				                   at Expect.That(subject).Should().HaveBufferSize(bufferSize)
 				                   """);
 		}
 
 		[Theory]
 		[AutoData]
-		public async Task WhenSubjectHasSameBufferSize_ShouldSucceed(int buffersize)
+		public async Task WhenSubjectHasSameBufferSize_ShouldSucceed(int bufferSize)
 		{
-			using BufferedStream subject = GetBufferedStream(buffersize);
+			using BufferedStream subject = GetBufferedStream(bufferSize);
 
 			async Task Act()
-				=> await That(subject).Should().HaveBufferSize(buffersize);
+				=> await That(subject).Should().HaveBufferSize(bufferSize);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -60,32 +60,32 @@ public sealed partial class BufferedStreamShould
 	{
 		[Theory]
 		[AutoData]
-		public async Task WhenSubjectHasDifferentBufferSize_ShouldSucceed(int buffersize)
+		public async Task WhenSubjectHasDifferentBufferSize_ShouldSucceed(int bufferSize)
 		{
-			int actualBufferSize = buffersize > 10000 ? buffersize - 1 : buffersize + 1;
+			int actualBufferSize = bufferSize > 10000 ? bufferSize - 1 : bufferSize + 1;
 			using BufferedStream subject = GetBufferedStream(actualBufferSize);
 
 			async Task Act()
-				=> await That(subject).Should().NotHaveBufferSize(buffersize);
+				=> await That(subject).Should().NotHaveBufferSize(bufferSize);
 
 			await That(Act).Should().NotThrow();
 		}
 
 		[Theory]
 		[AutoData]
-		public async Task WhenSubjectHasSameBufferSize_ShouldFail(int buffersize)
+		public async Task WhenSubjectHasSameBufferSize_ShouldFail(int bufferSize)
 		{
-			using BufferedStream subject = GetBufferedStream(buffersize);
+			using BufferedStream subject = GetBufferedStream(bufferSize);
 
 			async Task Act()
-				=> await That(subject).Should().NotHaveBufferSize(buffersize);
+				=> await That(subject).Should().NotHaveBufferSize(bufferSize);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				                   Expected subject to
-				                   not have buffer size {buffersize},
+				                   not have buffer size {bufferSize},
 				                   but it had
-				                   at Expect.That(subject).Should().NotHaveBufferSize(buffersize)
+				                   at Expect.That(subject).Should().NotHaveBufferSize(bufferSize)
 				                   """);
 		}
 

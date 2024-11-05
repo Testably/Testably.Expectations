@@ -14,7 +14,7 @@ public static partial class ThatBufferedStreamShould
 	/// </summary>
 	public static AndOrResult<BufferedStream?, IThat<BufferedStream?>> HaveBufferSize(
 		this IThat<BufferedStream?> source,
-		long expected,
+		int expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
@@ -31,7 +31,7 @@ public static partial class ThatBufferedStreamShould
 	/// </summary>
 	public static AndOrResult<BufferedStream?, IThat<BufferedStream?>>
 		NotHaveBufferSize(this IThat<BufferedStream?> source,
-			long expected,
+			int expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
