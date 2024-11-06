@@ -41,7 +41,8 @@ public class NumberTolerance<TNumber>(
 		return $" {plusMinus} {Formatter.Format(Tolerance)}";
 	}
 
-	internal bool IsWithinTolerance(TNumber actual, TNumber? expected)
-		=> expected != null &&
-		   isWithinTolerance(actual, expected.Value, Tolerance);
+	internal bool IsWithinTolerance(TNumber? actual, TNumber? expected)
+		=> expected == null && actual == null ||
+		   expected != null && actual != null &&
+		   isWithinTolerance(actual.Value, expected.Value, Tolerance);
 }

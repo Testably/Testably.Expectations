@@ -6,42 +6,42 @@ using Testably.Expectations.Options;
 namespace Testably.Expectations.Results;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TNumber" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying a
+///     In addition to the combinations from <see cref="AndOrResult{TNumber,TThat}" />, allows specifying a
 ///     tolerance.
 /// </summary>
-public class NumberToleranceResult<TNumber, TResult>(
+public class NumberToleranceResult<TType, TThat>(
 	ExpectationBuilder expectationBuilder,
-	TResult returnValue,
-	NumberTolerance<TNumber> options)
-	: NumberToleranceResult<TNumber, TResult,
-		NumberToleranceResult<TNumber, TResult>>(
+	TThat returnValue,
+	NumberTolerance<TType> options)
+	: NumberToleranceResult<TType, TThat,
+		NumberToleranceResult<TType, TThat>>(
 		expectationBuilder,
 		returnValue,
 		options)
-	where TNumber : struct, IComparable<TNumber>;
+	where TType : struct, IComparable<TType>;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying a
+///     In addition to the combinations from <see cref="AndOrResult{TNumber,TThat}" />, allows specifying a
 ///     tolerance.
 /// </summary>
-public class NumberToleranceResult<TNumber, TResult, TSelf>(
+public class NumberToleranceResult<TType, TThat, TSelf>(
 	ExpectationBuilder expectationBuilder,
-	TResult returnValue,
-	NumberTolerance<TNumber> options)
-	: AndOrResult<TNumber, TResult, TSelf>(expectationBuilder, returnValue)
-	where TSelf : NumberToleranceResult<TNumber, TResult, TSelf>
-	where TNumber : struct, IComparable<TNumber>
+	TThat returnValue,
+	NumberTolerance<TType> options)
+	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
+	where TSelf : NumberToleranceResult<TType, TThat, TSelf>
+	where TType : struct, IComparable<TType>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Specifies a tolerance to apply on the number comparison.
 	/// </summary>
-	public NumberToleranceResult<TNumber, TResult, TSelf> Within(TNumber tolerance,
+	public NumberToleranceResult<TType, TThat, TSelf> Within(TType tolerance,
 		[CallerArgumentExpression("tolerance")]
 		string doNotPopulateThisValue = "")
 	{

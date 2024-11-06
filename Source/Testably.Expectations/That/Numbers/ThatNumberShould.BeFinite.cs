@@ -8,7 +8,8 @@ namespace Testably.Expectations;
 public static partial class ThatNumberShould
 {
 	/// <summary>
-	///     Verifies that the subject is seen as finite (neither <see cref="float.IsInfinity" /> nor <see cref="float.IsNaN"/>).
+	///     Verifies that the subject is seen as finite (neither <see cref="float.IsInfinity" /> nor <see cref="float.IsNaN" />
+	///     ).
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> BeFinite(
 		this IThat<float> source)
@@ -22,7 +23,8 @@ public static partial class ThatNumberShould
 			source);
 
 	/// <summary>
-	///     Verifies that the subject is seen as finite (neither <see cref="double.IsInfinity" /> nor <see cref="double.IsNaN"/>).
+	///     Verifies that the subject is seen as finite (neither <see cref="double.IsInfinity" /> nor
+	///     <see cref="double.IsNaN" />).
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> BeFinite(
 		this IThat<double> source)
@@ -34,9 +36,40 @@ public static partial class ThatNumberShould
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(BeFinite)),
 			source);
-	
+
 	/// <summary>
-	///     Verifies that the subject is not seen as finite (either <see cref="float.IsInfinity" /> or <see cref="float.IsNaN"/>).
+	///     Verifies that the subject is seen as finite (neither <see cref="float.IsInfinity" /> nor
+	///     <see cref="float.IsNaN" /> nor <see langword="null" />).
+	/// </summary>
+	public static AndOrResult<float, IThat<float?>> BeFinite(
+		this IThat<float?> source)
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new GenericConstraint<float?>(
+					float.PositiveInfinity,
+					"be finite",
+					(a, _) => a != null && !float.IsInfinity(a.Value) && !float.IsNaN(a.Value),
+					(a, _) => $"found {Formatter.Format(a)}"))
+				.AppendMethodStatement(nameof(BeFinite)),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject is seen as finite (neither <see cref="double.IsInfinity" /> nor
+	///     <see cref="double.IsNaN" /> nor <see langword="null" />).
+	/// </summary>
+	public static AndOrResult<double, IThat<double?>> BeFinite(
+		this IThat<double?> source)
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new GenericConstraint<double?>(
+					double.PositiveInfinity,
+					"be finite",
+					(a, _) => a != null && !double.IsInfinity(a.Value) && !double.IsNaN(a.Value),
+					(a, _) => $"found {Formatter.Format(a)}"))
+				.AppendMethodStatement(nameof(BeFinite)),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject is not seen as finite (either <see cref="float.IsInfinity" /> or
+	///     <see cref="float.IsNaN" />).
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> NotBeFinite(
 		this IThat<float> source)
@@ -50,7 +83,8 @@ public static partial class ThatNumberShould
 			source);
 
 	/// <summary>
-	///     Verifies that the subject is not seen as finite (either <see cref="double.IsInfinity" /> or <see cref="double.IsNaN"/>).
+	///     Verifies that the subject is not seen as finite (either <see cref="double.IsInfinity" /> or
+	///     <see cref="double.IsNaN" />).
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> NotBeFinite(
 		this IThat<double> source)
@@ -59,6 +93,36 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					"not be finite",
 					(a, _) => double.IsInfinity(a) || double.IsNaN(a),
+					(a, _) => $"found {Formatter.Format(a)}"))
+				.AppendMethodStatement(nameof(NotBeFinite)),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject is not seen as finite (either <see cref="float.IsInfinity" /> or
+	///     <see cref="float.IsNaN" /> or <see langword="null" />).
+	/// </summary>
+	public static AndOrResult<float?, IThat<float?>> NotBeFinite(
+		this IThat<float?> source)
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new GenericConstraint<float?>(
+					float.PositiveInfinity,
+					"not be finite",
+					(a, _) => a == null || float.IsInfinity(a.Value) || float.IsNaN(a.Value),
+					(a, _) => $"found {Formatter.Format(a)}"))
+				.AppendMethodStatement(nameof(NotBeFinite)),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject is not seen as finite (either <see cref="double.IsInfinity" /> or
+	///     <see cref="double.IsNaN" /> or <see langword="null" />).
+	/// </summary>
+	public static AndOrResult<double?, IThat<double?>> NotBeFinite(
+		this IThat<double?> source)
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new GenericConstraint<double?>(
+					double.PositiveInfinity,
+					"not be finite",
+					(a, _) => a == null || double.IsInfinity(a.Value) || double.IsNaN(a.Value),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBeFinite)),
 			source);

@@ -6,40 +6,42 @@ using Testably.Expectations.Options;
 namespace Testably.Expectations.Results;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />?.
 ///     <para />
 ///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying a
 ///     tolerance.
 /// </summary>
-public class TimeToleranceResult<TType, TThat>(
+public class NullableNumberToleranceResult<TType, TThat>(
 	ExpectationBuilder expectationBuilder,
 	TThat returnValue,
-	TimeTolerance options)
-	: TimeToleranceResult<TType, TThat,
-		TimeToleranceResult<TType, TThat>>(
+	NumberTolerance<TType> options)
+	: NullableNumberToleranceResult<TType, TThat,
+		NullableNumberToleranceResult<TType, TThat>>(
 		expectationBuilder,
 		returnValue,
-		options);
+		options)
+	where TType : struct, IComparable<TType>;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />?.
 ///     <para />
 ///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying a
 ///     tolerance.
 /// </summary>
-public class TimeToleranceResult<TType, TThat, TSelf>(
+public class NullableNumberToleranceResult<TType, TThat, TSelf>(
 	ExpectationBuilder expectationBuilder,
 	TThat returnValue,
-	TimeTolerance options)
-	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
-	where TSelf : TimeToleranceResult<TType, TThat, TSelf>
+	NumberTolerance<TType> options)
+	: AndOrResult<TType?, TThat, TSelf>(expectationBuilder, returnValue)
+	where TSelf : NullableNumberToleranceResult<TType, TThat, TSelf>
+	where TType : struct, IComparable<TType>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
-	///     Specifies a tolerance to apply on the time comparison.
+	///     Specifies a tolerance to apply on the number comparison.
 	/// </summary>
-	public TimeToleranceResult<TType, TThat, TSelf> Within(TimeSpan tolerance,
+	public NullableNumberToleranceResult<TType, TThat, TSelf> Within(TType tolerance,
 		[CallerArgumentExpression("tolerance")]
 		string doNotPopulateThisValue = "")
 	{

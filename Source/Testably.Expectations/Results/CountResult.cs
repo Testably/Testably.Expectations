@@ -5,37 +5,37 @@ using Testably.Expectations.Options;
 namespace Testably.Expectations.Results;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying
 ///     options
 ///     on
 ///     the <see cref="StringMatcher" />.
 /// </summary>
-public class CountResult<TResult, TValue>(
+public class CountResult<TType, TThat>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue,
+	TThat returnValue,
 	Quantifier quantifier)
-	: CountResult<TResult, TValue,
-		CountResult<TResult, TValue>>(
+	: CountResult<TType, TThat,
+		CountResult<TType, TThat>>(
 		expectationBuilder,
 		returnValue,
 		quantifier);
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying
 ///     options
 ///     on
 ///     the <see cref="StringMatcher" />.
 /// </summary>
-public class CountResult<TResult, TValue, TSelf>(
+public class CountResult<TType, TThat, TSelf>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue,
+	TThat returnValue,
 	Quantifier quantifier)
-	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
-	where TSelf : CountResult<TResult, TValue, TSelf>
+	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
+	where TSelf : CountResult<TType, TThat, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 

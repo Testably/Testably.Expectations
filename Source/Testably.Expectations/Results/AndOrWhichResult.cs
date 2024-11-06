@@ -6,52 +6,52 @@ using Testably.Expectations.Core;
 namespace Testably.Expectations.Results;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows accessing
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows accessing
 ///     underlying
 ///     properties with <see cref="AndOrWhichResult{TResult,TValue,TSelf}.Which{TProperty}" />.
 /// </summary>
-public class AndOrWhichResult<TResult, TValue>(
+public class AndOrWhichResult<TType, TThat>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue)
-	: AndOrWhichResult<TResult, TValue, AndOrWhichResult<TResult, TValue>>(
+	TThat returnValue)
+	: AndOrWhichResult<TType, TThat, AndOrWhichResult<TType, TThat>>(
 		expectationBuilder, returnValue);
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows accessing
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows accessing
 ///     underlying
 ///     properties with <see cref="Which{TProperty}" />.
 /// </summary>
-public class AndOrWhichResult<TResult, TValue, TSelf>(
+public class AndOrWhichResult<TType, TThat, TSelf>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue)
-	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
-	where TSelf : AndOrWhichResult<TResult, TValue, TSelf>
+	TThat returnValue)
+	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
+	where TSelf : AndOrWhichResult<TType, TThat, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
-	private readonly TValue _returnValue = returnValue;
+	private readonly TThat _returnValue = returnValue;
 
 	/// <summary>
 	///     Allows specifying expectations on a property of the current value.
 	/// </summary>
-	public WhichResult<TProperty, AndOrWhichResult<TResult, TValue, TSelf>>
+	public WhichResult<TProperty, AndOrWhichResult<TType, TThat, TSelf>>
 		Which<TProperty>(
-			Expression<Func<TResult, TProperty?>> selector,
+			Expression<Func<TType, TProperty?>> selector,
 			[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "")
 	{
-		return new WhichResult<TProperty, AndOrWhichResult<TResult, TValue, TSelf>>(
+		return new WhichResult<TProperty, AndOrWhichResult<TType, TThat, TSelf>>(
 			(expectations, doNotPopulateThisValue2) =>
 			{
-				return new AndOrWhichResult<TResult, TValue, TSelf>(
+				return new AndOrWhichResult<TType, TThat, TSelf>(
 					_expectationBuilder
-						.ForProperty(PropertyAccessor<TResult, TProperty?>.FromExpression(selector),
+						.ForProperty(PropertyAccessor<TType, TProperty?>.FromExpression(selector),
 							(property, expectation) => $" which {property}should {expectation}")
 						.AddExpectations(e => expectations(new Expect.ThatSubject<TProperty?>(e)))
 						.AppendMethodStatement(nameof(Which), doNotPopulateThisValue1)
-						.AppendMethodStatement(nameof(WhichResult<TProperty, TResult>.Should),
+						.AppendMethodStatement(nameof(WhichResult<TProperty, TType>.Should),
 							doNotPopulateThisValue2),
 					_returnValue);
 			});

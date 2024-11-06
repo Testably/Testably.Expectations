@@ -6,40 +6,40 @@ using Testably.Expectations.Options;
 namespace Testably.Expectations.Results;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying
 ///     options on the <see cref="StringEqualityOptions" />.
 /// </summary>
-public class StringEqualityResult<TResult, TValue>(
+public class StringEqualityResult<TType, TThat>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue,
+	TThat returnValue,
 	StringEqualityOptions options)
-	: StringEqualityResult<TResult, TValue,
-		StringEqualityResult<TResult, TValue>>(
+	: StringEqualityResult<TType, TThat,
+		StringEqualityResult<TType, TThat>>(
 		expectationBuilder,
 		returnValue,
 		options);
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying
 ///     options on the <see cref="StringMatcher" />.
 /// </summary>
-public class StringEqualityResult<TResult, TValue, TSelf>(
+public class StringEqualityResult<TType, TThat, TSelf>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue,
+	TThat returnValue,
 	StringEqualityOptions options)
-	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
-	where TSelf : StringEqualityResult<TResult, TValue, TSelf>
+	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
+	where TSelf : StringEqualityResult<TType, TThat, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
-	public StringEqualityResult<TResult, TValue, TSelf> IgnoringCase()
+	public StringEqualityResult<TType, TThat, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
 		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
@@ -50,7 +50,7 @@ public class StringEqualityResult<TResult, TValue, TSelf>(
 	///     Ignores casing when comparing the <see langword="string" />s, according to the <paramref name="ignoreCase" />
 	///     parameter.
 	/// </summary>
-	public StringEqualityResult<TResult, TValue, TSelf> IgnoringCase(
+	public StringEqualityResult<TType, TThat, TSelf> IgnoringCase(
 		bool ignoreCase,
 		[CallerArgumentExpression("ignoreCase")]
 		string doNotPopulateThisValue = "")
@@ -63,7 +63,7 @@ public class StringEqualityResult<TResult, TValue, TSelf>(
 	/// <summary>
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="string" />s.
 	/// </summary>
-	public StringEqualityResult<TResult, TValue, TSelf> Using(
+	public StringEqualityResult<TType, TThat, TSelf> Using(
 		IEqualityComparer<string> comparer,
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{
