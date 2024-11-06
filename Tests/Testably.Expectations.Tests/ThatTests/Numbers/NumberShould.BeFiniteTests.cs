@@ -143,7 +143,7 @@ public sealed partial class NumberShould
 		[Fact]
 		public async Task ForNullableFloat_ShouldSupportChaining()
 		{
-			float subject = float.Epsilon;
+			float? subject = float.Epsilon;
 
 			async Task Act() => await That(subject).Should().BeFinite()
 				.And.Be(subject);
