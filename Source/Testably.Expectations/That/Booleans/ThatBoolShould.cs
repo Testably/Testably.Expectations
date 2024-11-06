@@ -2,7 +2,6 @@
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
 
-// ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 /// <summary>

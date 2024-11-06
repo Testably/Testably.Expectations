@@ -4,7 +4,6 @@ using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Results;
 
-// ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 public static partial class ThatObjectShould

@@ -6,7 +6,6 @@ using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
-// ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 public static partial class ThatStringCollectionShould

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Testably.Expectations.Core;
 
-// ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 public static partial class ThatEnumerableShould

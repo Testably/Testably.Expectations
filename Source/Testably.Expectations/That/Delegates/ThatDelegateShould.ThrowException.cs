@@ -1,7 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
 
-// ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 public static partial class ThatDelegateShould

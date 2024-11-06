@@ -11,7 +11,6 @@ using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
-// ReSharper disable once CheckNamespace
 namespace Testably.Expectations;
 
 public static partial class ThatQuantifiedCollectionResultShouldSync
