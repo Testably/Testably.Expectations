@@ -300,12 +300,29 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.NumberToleranceResult<ushort, Testably.Expectations.Core.IThat<ushort>> Be(this Testably.Expectations.Core.IThat<ushort> source, ushort? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<uint, Testably.Expectations.Core.IThat<uint>> Be(this Testably.Expectations.Core.IThat<uint> source, uint? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<ulong, Testably.Expectations.Core.IThat<ulong>> Be(this Testably.Expectations.Core.IThat<ulong> source, ulong? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<byte, Testably.Expectations.Core.IThat<byte?>> Be(this Testably.Expectations.Core.IThat<byte?> source, byte? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<decimal, Testably.Expectations.Core.IThat<decimal?>> Be(this Testably.Expectations.Core.IThat<decimal?> source, decimal? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<double, Testably.Expectations.Core.IThat<double?>> Be(this Testably.Expectations.Core.IThat<double?> source, double? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<float, Testably.Expectations.Core.IThat<float?>> Be(this Testably.Expectations.Core.IThat<float?> source, float? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<int, Testably.Expectations.Core.IThat<int?>> Be(this Testably.Expectations.Core.IThat<int?> source, int? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<long, Testably.Expectations.Core.IThat<long?>> Be(this Testably.Expectations.Core.IThat<long?> source, long? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<sbyte, Testably.Expectations.Core.IThat<sbyte?>> Be(this Testably.Expectations.Core.IThat<sbyte?> source, sbyte? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<short, Testably.Expectations.Core.IThat<short?>> Be(this Testably.Expectations.Core.IThat<short?> source, short? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<uint, Testably.Expectations.Core.IThat<uint?>> Be(this Testably.Expectations.Core.IThat<uint?> source, uint? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<ulong, Testably.Expectations.Core.IThat<ulong?>> Be(this Testably.Expectations.Core.IThat<ulong?> source, ulong? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<ushort, Testably.Expectations.Core.IThat<ushort?>> Be(this Testably.Expectations.Core.IThat<ushort?> source, ushort? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> BeFinite(this Testably.Expectations.Core.IThat<double> source) { }
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> BeFinite(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double?>> BeFinite(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float?>> BeFinite(this Testably.Expectations.Core.IThat<float?> source) { }
         public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> BeInfinite(this Testably.Expectations.Core.IThat<double> source) { }
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> BeInfinite(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> BeInfinite(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> BeInfinite(this Testably.Expectations.Core.IThat<float?> source) { }
         public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> BeNaN(this Testably.Expectations.Core.IThat<double> source) { }
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> BeNaN(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> BeNaN(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> BeNaN(this Testably.Expectations.Core.IThat<float?> source) { }
         public static Testably.Expectations.Results.NumberToleranceResult<byte, Testably.Expectations.Core.IThat<byte>> NotBe(this Testably.Expectations.Core.IThat<byte> source, byte? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<decimal, Testably.Expectations.Core.IThat<decimal>> NotBe(this Testably.Expectations.Core.IThat<decimal> source, decimal? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<double, Testably.Expectations.Core.IThat<double>> NotBe(this Testably.Expectations.Core.IThat<double> source, double? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
@@ -317,12 +334,29 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.NumberToleranceResult<ushort, Testably.Expectations.Core.IThat<ushort>> NotBe(this Testably.Expectations.Core.IThat<ushort> source, ushort? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<uint, Testably.Expectations.Core.IThat<uint>> NotBe(this Testably.Expectations.Core.IThat<uint> source, uint? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<ulong, Testably.Expectations.Core.IThat<ulong>> NotBe(this Testably.Expectations.Core.IThat<ulong> source, ulong? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<byte, Testably.Expectations.Core.IThat<byte?>> NotBe(this Testably.Expectations.Core.IThat<byte?> source, byte? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<decimal, Testably.Expectations.Core.IThat<decimal?>> NotBe(this Testably.Expectations.Core.IThat<decimal?> source, decimal? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<double, Testably.Expectations.Core.IThat<double?>> NotBe(this Testably.Expectations.Core.IThat<double?> source, double? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<float, Testably.Expectations.Core.IThat<float?>> NotBe(this Testably.Expectations.Core.IThat<float?> source, float? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<int, Testably.Expectations.Core.IThat<int?>> NotBe(this Testably.Expectations.Core.IThat<int?> source, int? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<long, Testably.Expectations.Core.IThat<long?>> NotBe(this Testably.Expectations.Core.IThat<long?> source, long? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<sbyte, Testably.Expectations.Core.IThat<sbyte?>> NotBe(this Testably.Expectations.Core.IThat<sbyte?> source, sbyte? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<short, Testably.Expectations.Core.IThat<short?>> NotBe(this Testably.Expectations.Core.IThat<short?> source, short? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<uint, Testably.Expectations.Core.IThat<uint?>> NotBe(this Testably.Expectations.Core.IThat<uint?> source, uint? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<ulong, Testably.Expectations.Core.IThat<ulong?>> NotBe(this Testably.Expectations.Core.IThat<ulong?> source, ulong? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.NullableNumberToleranceResult<ushort, Testably.Expectations.Core.IThat<ushort?>> NotBe(this Testably.Expectations.Core.IThat<ushort?> source, ushort? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> NotBeFinite(this Testably.Expectations.Core.IThat<double> source) { }
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> NotBeFinite(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> NotBeFinite(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> NotBeFinite(this Testably.Expectations.Core.IThat<float?> source) { }
         public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> NotBeInfinite(this Testably.Expectations.Core.IThat<double> source) { }
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> NotBeInfinite(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> NotBeInfinite(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> NotBeInfinite(this Testably.Expectations.Core.IThat<float?> source) { }
         public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> NotBeNaN(this Testably.Expectations.Core.IThat<double> source) { }
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> NotBeNaN(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> NotBeNaN(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> NotBeNaN(this Testably.Expectations.Core.IThat<float?> source) { }
         public static Testably.Expectations.Core.IThat<byte> Should(this Testably.Expectations.Core.IExpectSubject<byte> subject) { }
         public static Testably.Expectations.Core.IThat<decimal> Should(this Testably.Expectations.Core.IExpectSubject<decimal> subject) { }
         public static Testably.Expectations.Core.IThat<double> Should(this Testably.Expectations.Core.IExpectSubject<double> subject) { }
@@ -638,40 +672,40 @@ namespace Testably.Expectations.Options
 }
 namespace Testably.Expectations.Results
 {
-    public class AndOrResult<TResult, TValue> : Testably.Expectations.Results.AndOrResult<TResult, TValue, Testably.Expectations.Results.AndOrResult<TResult, TValue>>
+    public class AndOrResult<TType, TThat> : Testably.Expectations.Results.AndOrResult<TType, TThat, Testably.Expectations.Results.AndOrResult<TType, TThat>>
     {
-        public AndOrResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue) { }
+        public AndOrResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue) { }
     }
-    public class AndOrResult<TResult, TValue, TSelf> : Testably.Expectations.Results.ExpectationResult<TResult, TSelf>
-        where TSelf : Testably.Expectations.Results.AndOrResult<TResult, TValue, TSelf>
+    public class AndOrResult<TType, TThat, TSelf> : Testably.Expectations.Results.ExpectationResult<TType, TSelf>
+        where TSelf : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
     {
-        public AndOrResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue) { }
-        public TValue And { get; }
-        public TValue Or { get; }
+        public AndOrResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue) { }
+        public TThat And { get; }
+        public TThat Or { get; }
     }
-    public class AndOrWhichResult<TResult, TValue> : Testably.Expectations.Results.AndOrWhichResult<TResult, TValue, Testably.Expectations.Results.AndOrWhichResult<TResult, TValue>>
+    public class AndOrWhichResult<TType, TThat> : Testably.Expectations.Results.AndOrWhichResult<TType, TThat, Testably.Expectations.Results.AndOrWhichResult<TType, TThat>>
     {
-        public AndOrWhichResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue) { }
+        public AndOrWhichResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue) { }
     }
-    public class AndOrWhichResult<TResult, TValue, TSelf> : Testably.Expectations.Results.AndOrResult<TResult, TValue, TSelf>
-        where TSelf : Testably.Expectations.Results.AndOrWhichResult<TResult, TValue, TSelf>
+    public class AndOrWhichResult<TType, TThat, TSelf> : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
+        where TSelf : Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>
     {
-        public AndOrWhichResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue) { }
-        public Testably.Expectations.Results.AndOrWhichResult<TResult, TValue, TSelf>.WhichResult<TProperty, Testably.Expectations.Results.AndOrWhichResult<TResult, TValue, TSelf>> Which<TProperty>(System.Linq.Expressions.Expression<System.Func<TResult, TProperty?>> selector, [System.Runtime.CompilerServices.CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "") { }
+        public AndOrWhichResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue) { }
+        public Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>.WhichResult<TProperty, Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>> Which<TProperty>(System.Linq.Expressions.Expression<System.Func<TType, TProperty?>> selector, [System.Runtime.CompilerServices.CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "") { }
         public class WhichResult<TProperty, TReturn>
         {
             public WhichResult(System.Func<System.Action<Testably.Expectations.Core.IThat<TProperty?>>, string, TReturn> resultCallback) { }
             public TReturn Should(System.Action<Testably.Expectations.Core.IThat<TProperty?>> expectations, [System.Runtime.CompilerServices.CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "") { }
         }
     }
-    public class CountResult<TResult, TValue> : Testably.Expectations.Results.CountResult<TResult, TValue, Testably.Expectations.Results.CountResult<TResult, TValue>>
+    public class CountResult<TType, TThat> : Testably.Expectations.Results.CountResult<TType, TThat, Testably.Expectations.Results.CountResult<TType, TThat>>
     {
-        public CountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.Quantifier quantifier) { }
+        public CountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.Quantifier quantifier) { }
     }
-    public class CountResult<TResult, TValue, TSelf> : Testably.Expectations.Results.AndOrResult<TResult, TValue, TSelf>
-        where TSelf : Testably.Expectations.Results.CountResult<TResult, TValue, TSelf>
+    public class CountResult<TType, TThat, TSelf> : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
+        where TSelf : Testably.Expectations.Results.CountResult<TType, TThat, TSelf>
     {
-        public CountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.Quantifier quantifier) { }
+        public CountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.Quantifier quantifier) { }
         public TSelf AtLeast(int minimum, [System.Runtime.CompilerServices.CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "") { }
         public TSelf AtMost(int maximum, [System.Runtime.CompilerServices.CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "") { }
         public Testably.Expectations.BetweenResult<TSelf> Between(int minimum, [System.Runtime.CompilerServices.CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "") { }
@@ -711,83 +745,95 @@ namespace Testably.Expectations.Results
         public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { }
         public Testably.Expectations.Results.ExpectationResult WithCancellation(System.Threading.CancellationToken cancellationToken, [System.Runtime.CompilerServices.CallerArgumentExpression("cancellationToken")] string doNotPopulateThisValue = "") { }
     }
-    public class ExpectationResult<TResult> : Testably.Expectations.Results.ExpectationResult<TResult, Testably.Expectations.Results.ExpectationResult<TResult>>
+    public class ExpectationResult<TType> : Testably.Expectations.Results.ExpectationResult<TType, Testably.Expectations.Results.ExpectationResult<TType>>
     {
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
     }
     [System.Diagnostics.StackTraceHidden]
-    public class ExpectationResult<TResult, TSelf> : Testably.Expectations.Results.Expectation
-        where TSelf : Testably.Expectations.Results.ExpectationResult<TResult, TSelf>
+    public class ExpectationResult<TType, TSelf> : Testably.Expectations.Results.Expectation
+        where TSelf : Testably.Expectations.Results.ExpectationResult<TType, TSelf>
     {
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
         public TSelf Because(string reason, [System.Runtime.CompilerServices.CallerArgumentExpression("reason")] string doNotPopulateThisValue = "") { }
         [System.Diagnostics.StackTraceHidden]
-        public System.Runtime.CompilerServices.TaskAwaiter<TResult> GetAwaiter() { }
+        public System.Runtime.CompilerServices.TaskAwaiter<TType> GetAwaiter() { }
         public TSelf WithCancellation(System.Threading.CancellationToken cancellationToken, [System.Runtime.CompilerServices.CallerArgumentExpression("cancellationToken")] string doNotPopulateThisValue = "") { }
     }
-    public class NumberToleranceResult<TNumber, TResult> : Testably.Expectations.Results.NumberToleranceResult<TNumber, TResult, Testably.Expectations.Results.NumberToleranceResult<TNumber, TResult>>
-        where TNumber :  struct, System.IComparable<TNumber>
+    public class NullableNumberToleranceResult<TType, TThat> : Testably.Expectations.Results.NullableNumberToleranceResult<TType, TThat, Testably.Expectations.Results.NullableNumberToleranceResult<TType, TThat>>
+        where TType :  struct, System.IComparable<TType>
     {
-        public NumberToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TResult returnValue, Testably.Expectations.Options.NumberTolerance<TNumber> options) { }
+        public NullableNumberToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.NumberTolerance<TType> options) { }
     }
-    public class NumberToleranceResult<TNumber, TResult, TSelf> : Testably.Expectations.Results.AndOrResult<TNumber, TResult, TSelf>
-        where TNumber :  struct, System.IComparable<TNumber>
-        where TSelf : Testably.Expectations.Results.NumberToleranceResult<TNumber, TResult, TSelf>
+    public class NullableNumberToleranceResult<TType, TThat, TSelf> : Testably.Expectations.Results.AndOrResult<TType?, TThat, TSelf>
+        where TType :  struct, System.IComparable<TType>
+        where TSelf : Testably.Expectations.Results.NullableNumberToleranceResult<TType, TThat, TSelf>
     {
-        public NumberToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TResult returnValue, Testably.Expectations.Options.NumberTolerance<TNumber> options) { }
-        public Testably.Expectations.Results.NumberToleranceResult<TNumber, TResult, TSelf> Within(TNumber tolerance, [System.Runtime.CompilerServices.CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "") { }
+        public NullableNumberToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.NumberTolerance<TType> options) { }
+        public Testably.Expectations.Results.NullableNumberToleranceResult<TType, TThat, TSelf> Within(TType tolerance, [System.Runtime.CompilerServices.CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "") { }
     }
-    public class ObjectEqualityResult<TResult, TValue> : Testably.Expectations.Results.ObjectEqualityResult<TResult, TValue, Testably.Expectations.Results.ObjectEqualityResult<TResult, TValue>>
+    public class NumberToleranceResult<TType, TThat> : Testably.Expectations.Results.NumberToleranceResult<TType, TThat, Testably.Expectations.Results.NumberToleranceResult<TType, TThat>>
+        where TType :  struct, System.IComparable<TType>
     {
-        public ObjectEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.ObjectEqualityOptions options) { }
+        public NumberToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.NumberTolerance<TType> options) { }
     }
-    public class ObjectEqualityResult<TResult, TValue, TSelf> : Testably.Expectations.Results.AndOrResult<TResult, TValue, TSelf>
-        where TSelf : Testably.Expectations.Results.ObjectEqualityResult<TResult, TValue, TSelf>
+    public class NumberToleranceResult<TType, TThat, TSelf> : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
+        where TType :  struct, System.IComparable<TType>
+        where TSelf : Testably.Expectations.Results.NumberToleranceResult<TType, TThat, TSelf>
     {
-        public ObjectEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.ObjectEqualityOptions options) { }
-        public Testably.Expectations.Results.ObjectEqualityResult<TResult, TValue, TSelf> Equivalent(System.Func<Testably.Expectations.Options.EquivalencyOptions, Testably.Expectations.Options.EquivalencyOptions>? optionsCallback = null, [System.Runtime.CompilerServices.CallerArgumentExpression("optionsCallback")] string doNotPopulateThisValue = "") { }
-        public Testably.Expectations.Results.ObjectEqualityResult<TResult, TValue, TSelf> Using(System.Collections.Generic.IEqualityComparer<object> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
+        public NumberToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.NumberTolerance<TType> options) { }
+        public Testably.Expectations.Results.NumberToleranceResult<TType, TThat, TSelf> Within(TType tolerance, [System.Runtime.CompilerServices.CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "") { }
     }
-    public class StringCountResult<TResult, TValue> : Testably.Expectations.Results.StringCountResult<TResult, TValue, Testably.Expectations.Results.StringCountResult<TResult, TValue>>
+    public class ObjectEqualityResult<TType, TThat> : Testably.Expectations.Results.ObjectEqualityResult<TType, TThat, Testably.Expectations.Results.ObjectEqualityResult<TType, TThat>>
     {
-        public StringCountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.Quantifier quantifier, Testably.Expectations.Options.StringEqualityOptions options) { }
+        public ObjectEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.ObjectEqualityOptions options) { }
     }
-    public class StringCountResult<TResult, TValue, TSelf> : Testably.Expectations.Results.CountResult<TResult, TValue, TSelf>
-        where TSelf : Testably.Expectations.Results.StringCountResult<TResult, TValue, TSelf>
+    public class ObjectEqualityResult<TType, TThat, TSelf> : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
+        where TSelf : Testably.Expectations.Results.ObjectEqualityResult<TType, TThat, TSelf>
     {
-        public StringCountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.Quantifier quantifier, Testably.Expectations.Options.StringEqualityOptions options) { }
-        public Testably.Expectations.Results.StringCountResult<TResult, TValue, TSelf> IgnoringCase() { }
-        public Testably.Expectations.Results.StringCountResult<TResult, TValue, TSelf> Using(System.Collections.Generic.IEqualityComparer<string> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
+        public ObjectEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.ObjectEqualityOptions options) { }
+        public Testably.Expectations.Results.ObjectEqualityResult<TType, TThat, TSelf> Equivalent(System.Func<Testably.Expectations.Options.EquivalencyOptions, Testably.Expectations.Options.EquivalencyOptions>? optionsCallback = null, [System.Runtime.CompilerServices.CallerArgumentExpression("optionsCallback")] string doNotPopulateThisValue = "") { }
+        public Testably.Expectations.Results.ObjectEqualityResult<TType, TThat, TSelf> Using(System.Collections.Generic.IEqualityComparer<object> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
     }
-    public class StringEqualityResult<TResult, TValue> : Testably.Expectations.Results.StringEqualityResult<TResult, TValue, Testably.Expectations.Results.StringEqualityResult<TResult, TValue>>
+    public class StringCountResult<TType, TThat> : Testably.Expectations.Results.StringCountResult<TType, TThat, Testably.Expectations.Results.StringCountResult<TType, TThat>>
     {
-        public StringEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.StringEqualityOptions options) { }
+        public StringCountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.Quantifier quantifier, Testably.Expectations.Options.StringEqualityOptions options) { }
     }
-    public class StringEqualityResult<TResult, TValue, TSelf> : Testably.Expectations.Results.AndOrResult<TResult, TValue, TSelf>
-        where TSelf : Testably.Expectations.Results.StringEqualityResult<TResult, TValue, TSelf>
+    public class StringCountResult<TType, TThat, TSelf> : Testably.Expectations.Results.CountResult<TType, TThat, TSelf>
+        where TSelf : Testably.Expectations.Results.StringCountResult<TType, TThat, TSelf>
     {
-        public StringEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.StringEqualityOptions options) { }
-        public Testably.Expectations.Results.StringEqualityResult<TResult, TValue, TSelf> IgnoringCase() { }
-        public Testably.Expectations.Results.StringEqualityResult<TResult, TValue, TSelf> IgnoringCase(bool ignoreCase, [System.Runtime.CompilerServices.CallerArgumentExpression("ignoreCase")] string doNotPopulateThisValue = "") { }
-        public Testably.Expectations.Results.StringEqualityResult<TResult, TValue, TSelf> Using(System.Collections.Generic.IEqualityComparer<string> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
+        public StringCountResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.Quantifier quantifier, Testably.Expectations.Options.StringEqualityOptions options) { }
+        public Testably.Expectations.Results.StringCountResult<TType, TThat, TSelf> IgnoringCase() { }
+        public Testably.Expectations.Results.StringCountResult<TType, TThat, TSelf> Using(System.Collections.Generic.IEqualityComparer<string> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
     }
-    public class StringMatcherResult<TResult, TValue> : Testably.Expectations.Results.AndOrResult<TResult, TValue>
+    public class StringEqualityResult<TType, TThat> : Testably.Expectations.Results.StringEqualityResult<TType, TThat, Testably.Expectations.Results.StringEqualityResult<TType, TThat>>
     {
-        public StringMatcherResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.StringMatcher expected) { }
-        public Testably.Expectations.Results.StringMatcherResult<TResult, TValue> AsRegex() { }
-        public Testably.Expectations.Results.StringMatcherResult<TResult, TValue> AsWildcard() { }
-        public Testably.Expectations.Results.StringMatcherResult<TResult, TValue> Exactly() { }
-        public Testably.Expectations.Results.StringMatcherResult<TResult, TValue> IgnoringCase() { }
-        public Testably.Expectations.Results.StringMatcherResult<TResult, TValue> Using(System.Collections.Generic.IEqualityComparer<string> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
+        public StringEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.StringEqualityOptions options) { }
     }
-    public class TimeToleranceResult<TResult, TValue> : Testably.Expectations.Results.TimeToleranceResult<TResult, TValue, Testably.Expectations.Results.TimeToleranceResult<TResult, TValue>>
+    public class StringEqualityResult<TType, TThat, TSelf> : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
+        where TSelf : Testably.Expectations.Results.StringEqualityResult<TType, TThat, TSelf>
     {
-        public TimeToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.TimeTolerance options) { }
+        public StringEqualityResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.StringEqualityOptions options) { }
+        public Testably.Expectations.Results.StringEqualityResult<TType, TThat, TSelf> IgnoringCase() { }
+        public Testably.Expectations.Results.StringEqualityResult<TType, TThat, TSelf> IgnoringCase(bool ignoreCase, [System.Runtime.CompilerServices.CallerArgumentExpression("ignoreCase")] string doNotPopulateThisValue = "") { }
+        public Testably.Expectations.Results.StringEqualityResult<TType, TThat, TSelf> Using(System.Collections.Generic.IEqualityComparer<string> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
     }
-    public class TimeToleranceResult<TResult, TValue, TSelf> : Testably.Expectations.Results.AndOrResult<TResult, TValue, TSelf>
-        where TSelf : Testably.Expectations.Results.TimeToleranceResult<TResult, TValue, TSelf>
+    public class StringMatcherResult<TType, TThat> : Testably.Expectations.Results.AndOrResult<TType, TThat>
     {
-        public TimeToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TValue returnValue, Testably.Expectations.Options.TimeTolerance options) { }
-        public Testably.Expectations.Results.TimeToleranceResult<TResult, TValue, TSelf> Within(System.TimeSpan tolerance, [System.Runtime.CompilerServices.CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "") { }
+        public StringMatcherResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.StringMatcher expected) { }
+        public Testably.Expectations.Results.StringMatcherResult<TType, TThat> AsRegex() { }
+        public Testably.Expectations.Results.StringMatcherResult<TType, TThat> AsWildcard() { }
+        public Testably.Expectations.Results.StringMatcherResult<TType, TThat> Exactly() { }
+        public Testably.Expectations.Results.StringMatcherResult<TType, TThat> IgnoringCase() { }
+        public Testably.Expectations.Results.StringMatcherResult<TType, TThat> Using(System.Collections.Generic.IEqualityComparer<string> comparer, [System.Runtime.CompilerServices.CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "") { }
+    }
+    public class TimeToleranceResult<TType, TThat> : Testably.Expectations.Results.TimeToleranceResult<TType, TThat, Testably.Expectations.Results.TimeToleranceResult<TType, TThat>>
+    {
+        public TimeToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.TimeTolerance options) { }
+    }
+    public class TimeToleranceResult<TType, TThat, TSelf> : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
+        where TSelf : Testably.Expectations.Results.TimeToleranceResult<TType, TThat, TSelf>
+    {
+        public TimeToleranceResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue, Testably.Expectations.Options.TimeTolerance options) { }
+        public Testably.Expectations.Results.TimeToleranceResult<TType, TThat, TSelf> Within(System.TimeSpan tolerance, [System.Runtime.CompilerServices.CallerArgumentExpression("tolerance")] string doNotPopulateThisValue = "") { }
     }
 }
