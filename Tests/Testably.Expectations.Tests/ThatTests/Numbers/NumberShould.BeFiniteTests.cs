@@ -19,10 +19,10 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(double.PositiveInfinity)]
-		[InlineData(double.NegativeInfinity)]
-		[InlineData(double.NaN)]
-		public async Task ForDouble_WhenSubjectIsInfinityOrNaN_ShouldFail(double subject)
+		[InlineData(double.PositiveInfinity, "+\u221e")]
+		[InlineData(double.NegativeInfinity, "-\u221e")]
+		[InlineData(double.NaN, "NaN")]
+		public async Task ForDouble_WhenSubjectIsInfinityOrNaN_ShouldFail(double subject, string format)
 		{
 			async Task Act() => await That(subject).Should().BeFinite();
 
@@ -30,7 +30,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
+				              but found {format}
 				              at Expect.That(subject).Should().BeFinite()
 				              """);
 		}
@@ -62,10 +62,10 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(float.PositiveInfinity)]
-		[InlineData(float.NegativeInfinity)]
-		[InlineData(float.NaN)]
-		public async Task ForFloat_WhenSubjectIsInfinityOrNaN_ShouldFail(float subject)
+		[InlineData(float.PositiveInfinity, "+\u221e")]
+		[InlineData(float.NegativeInfinity, "-\u221e")]
+		[InlineData(float.NaN, "NaN")]
+		public async Task ForFloat_WhenSubjectIsInfinityOrNaN_ShouldFail(float subject, string format)
 		{
 			async Task Act()
 				=> await That(subject).Should().BeFinite();
@@ -74,7 +74,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
+				              but found {format}
 				              at Expect.That(subject).Should().BeFinite()
 				              """);
 		}
@@ -107,12 +107,12 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(double.PositiveInfinity)]
-		[InlineData(double.NegativeInfinity)]
-		[InlineData(double.NaN)]
-		[InlineData(null)]
+		[InlineData(double.PositiveInfinity, "+\u221e")]
+		[InlineData(double.NegativeInfinity, "-\u221e")]
+		[InlineData(double.NaN, "NaN")]
+		[InlineData(null, "<null>")]
 		public async Task ForNullableDouble_WhenSubjectIsInfinityOrNaNOrNull_ShouldFail(
-			double? subject)
+			double? subject, string format)
 		{
 			async Task Act() => await That(subject).Should().BeFinite();
 
@@ -120,7 +120,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
+				              but found {format}
 				              at Expect.That(subject).Should().BeFinite()
 				              """);
 		}
@@ -152,12 +152,12 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(float.PositiveInfinity)]
-		[InlineData(float.NegativeInfinity)]
-		[InlineData(float.NaN)]
-		[InlineData(null)]
+		[InlineData(float.PositiveInfinity, "+\u221e")]
+		[InlineData(float.NegativeInfinity, "-\u221e")]
+		[InlineData(float.NaN, "NaN")]
+		[InlineData(null, "<null>")]
 		public async Task ForNullableFloat_WhenSubjectIsInfinityOrNaNOrNull_ShouldFail(
-			float? subject)
+			float? subject, string format)
 		{
 			async Task Act()
 				=> await That(subject).Should().BeFinite();
@@ -166,7 +166,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
+				              but found {format}
 				              at Expect.That(subject).Should().BeFinite()
 				              """);
 		}

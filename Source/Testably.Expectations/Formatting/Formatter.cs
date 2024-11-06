@@ -39,8 +39,18 @@ public class Formatter
 		new NumberFormatter<ushort>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new NumberFormatter<long>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new NumberFormatter<ulong>(v => v.ToString(CultureInfo.InvariantCulture)),
-		new NumberFormatter<float>(v => v.ToString(CultureInfo.InvariantCulture)),
-		new NumberFormatter<double>(v => v.ToString(CultureInfo.InvariantCulture)),
+		new NumberFormatter<float>(v => v switch
+		{
+			float.NegativeInfinity => "-\u221e",
+			float.PositiveInfinity => "+\u221e",
+			_ => v.ToString(CultureInfo.InvariantCulture)
+		}),
+		new NumberFormatter<double>(v => v switch
+		{
+			double.NegativeInfinity => "-\u221e",
+			double.PositiveInfinity => "+\u221e",
+			_ => v.ToString(CultureInfo.InvariantCulture)
+		}),
 		new NumberFormatter<decimal>(v => v.ToString(CultureInfo.InvariantCulture)),
 		new NumberFormatter(),
 	];

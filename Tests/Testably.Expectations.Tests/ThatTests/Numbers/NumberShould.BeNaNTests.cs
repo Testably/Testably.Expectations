@@ -18,6 +18,23 @@ public sealed partial class NumberShould
 			await That(Act).Should().NotThrow();
 		}
 
+		[Theory]
+		[InlineData(double.PositiveInfinity, "+\u221e")]
+		[InlineData(double.NegativeInfinity, "-\u221e")]
+		public async Task ForDouble_WhenSubjectIsInfinity_ShouldFail(double subject, string format)
+		{
+			async Task Act()
+				=> await That(subject).Should().BeNaN();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be NaN,
+				              but found {format}
+				              at Expect.That(subject).Should().BeNaN()
+				              """);
+		}
+
 		[Fact]
 		public async Task ForDouble_WhenSubjectIsNaN_ShouldSucceed()
 		{
@@ -35,8 +52,6 @@ public sealed partial class NumberShould
 		[InlineData(double.MinValue)]
 		[InlineData(double.MaxValue)]
 		[InlineData(double.Epsilon)]
-		[InlineData(double.NegativeInfinity)]
-		[InlineData(double.PositiveInfinity)]
 		public async Task ForDouble_WhenSubjectIsNormalValue_ShouldFail(double subject)
 		{
 			async Task Act()
@@ -62,6 +77,23 @@ public sealed partial class NumberShould
 			await That(Act).Should().NotThrow();
 		}
 
+		[Theory]
+		[InlineData(float.PositiveInfinity, "+\u221e")]
+		[InlineData(float.NegativeInfinity, "-\u221e")]
+		public async Task ForFloat_WhenSubjectIsInfinity_ShouldFail(float subject, string format)
+		{
+			async Task Act()
+				=> await That(subject).Should().BeNaN();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be NaN,
+				              but found {format}
+				              at Expect.That(subject).Should().BeNaN()
+				              """);
+		}
+
 		[Fact]
 		public async Task ForFloat_WhenSubjectIsNaN_ShouldSucceed()
 		{
@@ -80,8 +112,6 @@ public sealed partial class NumberShould
 		[InlineData(float.MinValue)]
 		[InlineData(float.MaxValue)]
 		[InlineData(float.Epsilon)]
-		[InlineData(float.NegativeInfinity)]
-		[InlineData(float.PositiveInfinity)]
 		public async Task ForFloat_WhenSubjectIsNormalValue_ShouldFail(float subject)
 		{
 			async Task Act()
@@ -108,6 +138,25 @@ public sealed partial class NumberShould
 			await That(Act).Should().NotThrow();
 		}
 
+		[Theory]
+		[InlineData(double.PositiveInfinity, "+\u221e")]
+		[InlineData(double.NegativeInfinity, "-\u221e")]
+		[InlineData(null, "<null>")]
+		public async Task ForNullableDouble_WhenSubjectIsInfinityOrNull_ShouldFail(
+			double? subject, string format)
+		{
+			async Task Act()
+				=> await That(subject).Should().BeNaN();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be NaN,
+				              but found {format}
+				              at Expect.That(subject).Should().BeNaN()
+				              """);
+		}
+
 		[Fact]
 		public async Task ForNullableDouble_WhenSubjectIsNaN_ShouldSucceed()
 		{
@@ -125,10 +174,7 @@ public sealed partial class NumberShould
 		[InlineData(double.MinValue)]
 		[InlineData(double.MaxValue)]
 		[InlineData(double.Epsilon)]
-		[InlineData(double.NegativeInfinity)]
-		[InlineData(double.PositiveInfinity)]
-		[InlineData(null)]
-		public async Task ForNullableDouble_WhenSubjectIsNormalValueOrNull_ShouldFail(
+		public async Task ForNullableDouble_WhenSubjectIsNormalValue_ShouldFail(
 			double? subject)
 		{
 			async Task Act()
@@ -154,6 +200,24 @@ public sealed partial class NumberShould
 			await That(Act).Should().NotThrow();
 		}
 
+		[Theory]
+		[InlineData(float.PositiveInfinity, "+\u221e")]
+		[InlineData(float.NegativeInfinity, "-\u221e")]
+		public async Task ForNullableFloat_WhenSubjectIsInfinity_ShouldFail(float? subject,
+			string format)
+		{
+			async Task Act()
+				=> await That(subject).Should().BeNaN();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be NaN,
+				              but found {format}
+				              at Expect.That(subject).Should().BeNaN()
+				              """);
+		}
+
 		[Fact]
 		public async Task ForNullableFloat_WhenSubjectIsNaN_ShouldSucceed()
 		{
@@ -172,8 +236,6 @@ public sealed partial class NumberShould
 		[InlineData(float.MinValue)]
 		[InlineData(float.MaxValue)]
 		[InlineData(float.Epsilon)]
-		[InlineData(float.NegativeInfinity)]
-		[InlineData(float.PositiveInfinity)]
 		public async Task ForNullableFloat_WhenSubjectIsNormalValue_ShouldFail(float? subject)
 		{
 			async Task Act()
