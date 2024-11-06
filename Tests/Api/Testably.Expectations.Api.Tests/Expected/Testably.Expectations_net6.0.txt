@@ -457,6 +457,34 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> BeNaN(this Testably.Expectations.Core.IThat<float> source) { }
         public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> BeNaN(this Testably.Expectations.Core.IThat<double?> source) { }
         public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> BeNaN(this Testably.Expectations.Core.IThat<float?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<decimal, Testably.Expectations.Core.IThat<decimal>> BeNegative(this Testably.Expectations.Core.IThat<decimal> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> BeNegative(this Testably.Expectations.Core.IThat<double> source) { }
+        public static Testably.Expectations.Results.AndOrResult<short, Testably.Expectations.Core.IThat<short>> BeNegative(this Testably.Expectations.Core.IThat<short> source) { }
+        public static Testably.Expectations.Results.AndOrResult<int, Testably.Expectations.Core.IThat<int>> BeNegative(this Testably.Expectations.Core.IThat<int> source) { }
+        public static Testably.Expectations.Results.AndOrResult<long, Testably.Expectations.Core.IThat<long>> BeNegative(this Testably.Expectations.Core.IThat<long> source) { }
+        public static Testably.Expectations.Results.AndOrResult<sbyte, Testably.Expectations.Core.IThat<sbyte>> BeNegative(this Testably.Expectations.Core.IThat<sbyte> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> BeNegative(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<decimal?, Testably.Expectations.Core.IThat<decimal?>> BeNegative(this Testably.Expectations.Core.IThat<decimal?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> BeNegative(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> BeNegative(this Testably.Expectations.Core.IThat<float?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<int?, Testably.Expectations.Core.IThat<int?>> BeNegative(this Testably.Expectations.Core.IThat<int?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<long?, Testably.Expectations.Core.IThat<long?>> BeNegative(this Testably.Expectations.Core.IThat<long?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<sbyte?, Testably.Expectations.Core.IThat<sbyte?>> BeNegative(this Testably.Expectations.Core.IThat<sbyte?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<short?, Testably.Expectations.Core.IThat<short?>> BeNegative(this Testably.Expectations.Core.IThat<short?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<decimal, Testably.Expectations.Core.IThat<decimal>> BePositive(this Testably.Expectations.Core.IThat<decimal> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double, Testably.Expectations.Core.IThat<double>> BePositive(this Testably.Expectations.Core.IThat<double> source) { }
+        public static Testably.Expectations.Results.AndOrResult<short, Testably.Expectations.Core.IThat<short>> BePositive(this Testably.Expectations.Core.IThat<short> source) { }
+        public static Testably.Expectations.Results.AndOrResult<int, Testably.Expectations.Core.IThat<int>> BePositive(this Testably.Expectations.Core.IThat<int> source) { }
+        public static Testably.Expectations.Results.AndOrResult<long, Testably.Expectations.Core.IThat<long>> BePositive(this Testably.Expectations.Core.IThat<long> source) { }
+        public static Testably.Expectations.Results.AndOrResult<sbyte, Testably.Expectations.Core.IThat<sbyte>> BePositive(this Testably.Expectations.Core.IThat<sbyte> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float, Testably.Expectations.Core.IThat<float>> BePositive(this Testably.Expectations.Core.IThat<float> source) { }
+        public static Testably.Expectations.Results.AndOrResult<decimal?, Testably.Expectations.Core.IThat<decimal?>> BePositive(this Testably.Expectations.Core.IThat<decimal?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<double?, Testably.Expectations.Core.IThat<double?>> BePositive(this Testably.Expectations.Core.IThat<double?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<float?, Testably.Expectations.Core.IThat<float?>> BePositive(this Testably.Expectations.Core.IThat<float?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<int?, Testably.Expectations.Core.IThat<int?>> BePositive(this Testably.Expectations.Core.IThat<int?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<long?, Testably.Expectations.Core.IThat<long?>> BePositive(this Testably.Expectations.Core.IThat<long?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<sbyte?, Testably.Expectations.Core.IThat<sbyte?>> BePositive(this Testably.Expectations.Core.IThat<sbyte?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<short?, Testably.Expectations.Core.IThat<short?>> BePositive(this Testably.Expectations.Core.IThat<short?> source) { }
         public static Testably.Expectations.Results.NumberToleranceResult<byte, Testably.Expectations.Core.IThat<byte>> NotBe(this Testably.Expectations.Core.IThat<byte> source, byte? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<decimal, Testably.Expectations.Core.IThat<decimal>> NotBe(this Testably.Expectations.Core.IThat<decimal> source, decimal? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.NumberToleranceResult<double, Testably.Expectations.Core.IThat<double>> NotBe(this Testably.Expectations.Core.IThat<double> source, double? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
