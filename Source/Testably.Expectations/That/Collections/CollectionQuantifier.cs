@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.EvaluationContext;
-// ReSharper disable once CheckNamespace
 
 namespace Testably.Expectations;
 
