@@ -7,40 +7,40 @@ using Testably.Expectations.Options;
 namespace Testably.Expectations.Results;
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying
 ///     options on the <see cref="ObjectEqualityOptions" />.
 /// </summary>
-public class ObjectEqualityResult<TResult, TValue>(
+public class ObjectEqualityResult<TType, TThat>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue,
+	TThat returnValue,
 	ObjectEqualityOptions options)
-	: ObjectEqualityResult<TResult, TValue,
-		ObjectEqualityResult<TResult, TValue>>(
+	: ObjectEqualityResult<TType, TThat,
+		ObjectEqualityResult<TType, TThat>>(
 		expectationBuilder,
 		returnValue,
 		options);
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 ///     <para />
-///     In addition to the combinations from <see cref="AndOrResult{TResult,TValue}" />, allows specifying
+///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows specifying
 ///     options on the <see cref="ObjectEqualityOptions" />.
 /// </summary>
-public class ObjectEqualityResult<TResult, TValue, TSelf>(
+public class ObjectEqualityResult<TType, TThat, TSelf>(
 	ExpectationBuilder expectationBuilder,
-	TValue returnValue,
+	TThat returnValue,
 	ObjectEqualityOptions options)
-	: AndOrResult<TResult, TValue, TSelf>(expectationBuilder, returnValue)
-	where TSelf : ObjectEqualityResult<TResult, TValue, TSelf>
+	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
+	where TSelf : ObjectEqualityResult<TType, TThat, TSelf>
 {
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
 	///     Use equivalency to compare objects.
 	/// </summary>
-	public ObjectEqualityResult<TResult, TValue, TSelf> Equivalent(
+	public ObjectEqualityResult<TType, TThat, TSelf> Equivalent(
 		Func<EquivalencyOptions, EquivalencyOptions>? optionsCallback = null,
 		[CallerArgumentExpression("optionsCallback")]
 		string doNotPopulateThisValue = "")
@@ -55,7 +55,7 @@ public class ObjectEqualityResult<TResult, TValue, TSelf>(
 	/// <summary>
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="object" />s.
 	/// </summary>
-	public ObjectEqualityResult<TResult, TValue, TSelf> Using(
+	public ObjectEqualityResult<TType, TThat, TSelf> Using(
 		IEqualityComparer<object> comparer,
 		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
 	{

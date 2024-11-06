@@ -81,17 +81,17 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 }
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 /// </summary>
-public class ExpectationResult<TResult>(ExpectationBuilder expectationBuilder)
-	: ExpectationResult<TResult, ExpectationResult<TResult>>(expectationBuilder);
+public class ExpectationResult<TType>(ExpectationBuilder expectationBuilder)
+	: ExpectationResult<TType, ExpectationResult<TType>>(expectationBuilder);
 
 /// <summary>
-///     The result of an expectation with an underlying value of type <typeparamref name="TResult" />.
+///     The result of an expectation with an underlying value of type <typeparamref name="TType" />.
 /// </summary>
 [StackTraceHidden]
-public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBuilder) : Expectation
-	where TSelf : ExpectationResult<TResult, TSelf>
+public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuilder) : Expectation
+	where TSelf : ExpectationResult<TType, TSelf>
 {
 	/// <summary>
 	///     Provide a <paramref name="reason" /> explaining why the constraint is needed.<br />
@@ -110,12 +110,12 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 	///     By awaiting the result, the expectations are verified.
 	///     <para />
 	///     Will throw an exception, when the expectations are not met.<br />
-	///     Otherwise, it will return the <typeparamref name="TResult" />.
+	///     Otherwise, it will return the <typeparamref name="TType" />.
 	/// </summary>
 	[StackTraceHidden]
-	public TaskAwaiter<TResult> GetAwaiter()
+	public TaskAwaiter<TType> GetAwaiter()
 	{
-		Task<TResult> result = GetResultOrThrow();
+		Task<TType> result = GetResultOrThrow();
 		return result.GetAwaiter();
 	}
 
@@ -147,7 +147,7 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 			await expectationBuilder.IsMet());
 
 	[StackTraceHidden]
-	private async Task<TResult> GetResultOrThrow()
+	private async Task<TType> GetResultOrThrow()
 	{
 		ConstraintResult result = await expectationBuilder.IsMet();
 
@@ -156,12 +156,12 @@ public class ExpectationResult<TResult, TSelf>(ExpectationBuilder expectationBui
 			Fail.Test(expectationBuilder.FailureMessageBuilder.FromFailure(
 				expectationBuilder.Subject, failure));
 		}
-		else if (result is ConstraintResult.Success<TResult> matchingSuccess)
+		else if (result is ConstraintResult.Success<TType> matchingSuccess)
 		{
 			return matchingSuccess.Value;
 		}
 		else if (result is ConstraintResult.Success success &&
-		         success.TryGetValue(out TResult? value))
+		         success.TryGetValue(out TType? value))
 		{
 			return value;
 		}
