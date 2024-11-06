@@ -19,7 +19,7 @@ internal class Tree
 		if (!TryAddCombination(nodeGenerator, precedence))
 		{
 			throw new InvalidOperationException(
-				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+				"You have to specify expectations between combinations! Add expectations between `And()` or `Or()`.");
 		}
 	}
 
@@ -67,18 +67,6 @@ internal class Tree
 			Parent = _current.Parent
 		};
 		_setExpectationNode = n => manipulationNode.Inner = n;
-	}
-
-	public void AddNode(Node node)
-	{
-		if (_setExpectationNode == null)
-		{
-			throw new InvalidOperationException(
-				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
-		}
-
-		_setExpectationNode.Invoke(node);
-		_setExpectationNode = null;
 	}
 
 	public Node GetCurrent()

@@ -32,32 +32,4 @@ internal static class ExpressionHelpers
 
 		return path.ToString();
 	}
-
-	public static object? GetPropertyValue(object? obj, string propertyPath)
-	{
-		if (propertyPath.IndexOf('.', StringComparison.Ordinal) < 0)
-		{
-			Type? objType = obj?.GetType();
-			return objType?.GetProperty(propertyPath)?.GetValue(obj, null);
-		}
-
-		object? propertyValue = obj;
-		foreach (string propertyName in propertyPath.Split('.'))
-		{
-			propertyValue = GetPropertyValue(propertyValue, propertyName);
-		}
-
-		return propertyValue;
-	}
-
-	public static TProperty? GetPropertyValue<TProperty>(object? obj, string propertyPath)
-	{
-		object? propertyValue = GetPropertyValue(obj, propertyPath);
-		if (propertyValue is TProperty property)
-		{
-			return property;
-		}
-
-		return default;
-	}
 }

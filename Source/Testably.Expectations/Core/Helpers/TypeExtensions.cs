@@ -10,12 +10,6 @@ namespace Testably.Expectations.Core.Helpers;
 
 internal static class TypeExtensions
 {
-	private const BindingFlags AllStaticAndInstanceMembersFlag =
-		PublicInstanceMembersFlag | BindingFlags.NonPublic | BindingFlags.Static;
-
-	private const BindingFlags PublicInstanceMembersFlag =
-		BindingFlags.Public | BindingFlags.Instance;
-
 	private static readonly ConcurrentDictionary<Type, bool> TypeIsCompilerGeneratedCache = new();
 
 	private static readonly ConcurrentDictionary<Type, bool> TypeIsRecordCache = new();
@@ -24,34 +18,11 @@ internal static class TypeExtensions
 			TypeMemberReflector>
 		TypeMemberReflectorsCache = new();
 
-	public static IEnumerable<TAttribute> GetCustomAttributes<TAttribute>(this MemberInfo type,
-		bool inherit = false)
-		where TAttribute : Attribute
-	{
-		// Do not use MemberInfo.GetCustomAttributes.
-		// There is an issue with PropertyInfo and EventInfo preventing the inherit option to work.
-		// https://github.com/dotnet/runtime/issues/30219
-		return CustomAttributeExtensions.GetCustomAttributes<TAttribute>(type, inherit);
-	}
-
 	public static MemberInfo[] GetMembers(this Type typeToReflect, MemberVisibilities visibility)
 	{
 		return GetTypeReflectorFor(typeToReflect, visibility).Members;
 	}
 
-	public static MethodInfo? GetMethod(this Type type, string methodName,
-		IEnumerable<Type> parameterTypes)
-	{
-		return type.GetMethods(AllStaticAndInstanceMembersFlag)
-			.SingleOrDefault(m =>
-				m.Name == methodName && m.GetParameters().Select(p => p.ParameterType)
-					.SequenceEqual(parameterTypes));
-	}
-
-	public static MethodInfo? GetParameterlessMethod(this Type type, string methodName)
-	{
-		return type.GetMethod(methodName, Enumerable.Empty<Type>());
-	}
 
 	/// <summary>
 	///     Check if the type has a human-readable name.

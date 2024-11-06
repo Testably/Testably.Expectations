@@ -3,5 +3,4 @@
 internal interface ITimeSystem
 {
 	IStopwatchFactory Stopwatch { get; }
-	
 }
