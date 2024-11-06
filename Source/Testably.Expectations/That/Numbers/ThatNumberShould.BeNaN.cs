@@ -14,7 +14,7 @@ public static partial class ThatNumberShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
 					float.NaN,
-					"be NaN",
+					_ => "be NaN",
 					(a, _) => float.IsNaN(a),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(BeNaN)),
@@ -27,7 +27,7 @@ public static partial class ThatNumberShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
 					double.NaN,
-					"be NaN",
+					_ => "be NaN",
 					(a, _) => double.IsNaN(a),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(BeNaN)),
@@ -38,9 +38,9 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> BeNaN(this IThat<float?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float?>(
+				.AddConstraint(new NullableGenericConstraint<float>(
 					float.NaN,
-					"be NaN",
+					_ => "be NaN",
 					(a, _) => a != null && float.IsNaN(a.Value),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(BeNaN)),
@@ -51,9 +51,9 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> BeNaN(this IThat<double?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double?>(
+				.AddConstraint(new NullableGenericConstraint<double>(
 					double.NaN,
-					"be NaN",
+					_ => "be NaN",
 					(a, _) => a != null && double.IsNaN(a.Value),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(BeNaN)),
@@ -66,7 +66,7 @@ public static partial class ThatNumberShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
 					float.NaN,
-					"not be NaN",
+					_ => "not be NaN",
 					(a, _) => !float.IsNaN(a),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBeNaN)),
@@ -79,7 +79,7 @@ public static partial class ThatNumberShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
 					double.NaN,
-					"not be NaN",
+					_ => "not be NaN",
 					(a, _) => !double.IsNaN(a),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBeNaN)),
@@ -91,9 +91,9 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> NotBeNaN(this IThat<float?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float?>(
+				.AddConstraint(new NullableGenericConstraint<float>(
 					float.NaN,
-					"not be NaN",
+					_ => "not be NaN",
 					(a, _) => a == null || !float.IsNaN(a.Value),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBeNaN)),
@@ -104,9 +104,9 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> NotBeNaN(this IThat<double?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double?>(
+				.AddConstraint(new NullableGenericConstraint<double>(
 					double.NaN,
-					"not be NaN",
+					_ => "not be NaN",
 					(a, _) => a == null || !double.IsNaN(a.Value),
 					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBeNaN)),

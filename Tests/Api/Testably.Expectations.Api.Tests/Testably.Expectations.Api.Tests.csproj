@@ -8,4 +8,8 @@
 		<PackageReference Include="PublicApiGenerator" Version="11.1.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Source\Testably.Expectations\Testably.Expectations.csproj" />
+	</ItemGroup>
+
 </Project>

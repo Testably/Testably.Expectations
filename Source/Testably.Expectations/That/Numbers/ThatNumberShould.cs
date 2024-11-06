@@ -165,11 +165,12 @@ public static partial class ThatNumberShould
 			.AppendMethodStatement(nameof(Should)));
 
 	private readonly struct GenericConstraint<T>(
-		T expected,
-		string expectation,
-		Func<T, T, bool> condition,
-		Func<T, T, string> failureMessageFactory)
+		T? expected,
+		Func<T?, string> expectation,
+		Func<T, T?, bool> condition,
+		Func<T, T?, string> failureMessageFactory)
 		: IValueConstraint<T>
+		where T: struct
 	{
 		public ConstraintResult IsMetBy(T actual)
 		{
@@ -183,6 +184,28 @@ public static partial class ThatNumberShould
 		}
 
 		public override string ToString()
-			=> expectation;
+			=> expectation(expected);
+	}
+	private readonly struct NullableGenericConstraint<T>(
+		T? expected,
+		Func<T?, string> expectation,
+		Func<T?, T?, bool> condition,
+		Func<T?, T?, string> failureMessageFactory)
+		: IValueConstraint<T?>
+		where T: struct
+	{
+		public ConstraintResult IsMetBy(T? actual)
+		{
+			if (condition(actual, expected))
+			{
+				return new ConstraintResult.Success<T?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected));
+		}
+
+		public override string ToString()
+			=> expectation(expected);
 	}
 }

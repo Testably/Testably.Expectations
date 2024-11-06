@@ -1,7 +1,5 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -22,7 +20,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<byte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<byte, IThat<byte>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<byte>(expected, options))
+				.AddConstraint(new GenericConstraint<byte>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -39,7 +41,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<sbyte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<sbyte, IThat<sbyte>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<sbyte>(expected, options))
+				.AddConstraint(new GenericConstraint<sbyte>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -56,7 +62,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<short> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<short, IThat<short>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<short>(expected, options))
+				.AddConstraint(new GenericConstraint<short>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -73,7 +83,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ushort> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<ushort, IThat<ushort>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<ushort>(expected, options))
+				.AddConstraint(new GenericConstraint<ushort>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -90,7 +104,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<int> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<int, IThat<int>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<int>(expected, options))
+				.AddConstraint(new GenericConstraint<int>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -107,7 +125,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<uint> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<uint, IThat<uint>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<uint>(expected, options))
+				.AddConstraint(new GenericConstraint<uint>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -124,7 +146,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<long> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<long, IThat<long>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<long>(expected, options))
+				.AddConstraint(new GenericConstraint<long>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -141,7 +167,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ulong> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<ulong, IThat<ulong>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<ulong>(expected, options))
+				.AddConstraint(new GenericConstraint<ulong>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -158,7 +188,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<float> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<float>(expected, options))
+				.AddConstraint(new GenericConstraint<float>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -175,7 +209,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<double> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<double>(expected, options))
+				.AddConstraint(new GenericConstraint<double>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -192,7 +230,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<decimal> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<decimal, IThat<decimal>>(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<decimal>(expected, options))
+				.AddConstraint(new GenericConstraint<decimal>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -209,7 +251,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<byte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<byte, IThat<byte?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<byte>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<byte>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -226,7 +272,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<sbyte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<sbyte, IThat<sbyte?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<sbyte>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<sbyte>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -243,7 +293,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<short> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<short, IThat<short?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<short>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<short>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -260,7 +314,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ushort> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<ushort, IThat<ushort?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<ushort>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<ushort>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -277,7 +335,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<int> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<int, IThat<int?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<int>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<int>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -294,7 +356,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<uint> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<uint, IThat<uint?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<uint>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<uint>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -311,7 +377,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<long> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<long, IThat<long?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<long>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<long>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -328,7 +398,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ulong> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<ulong, IThat<ulong?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<ulong>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<ulong>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -345,7 +419,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<float> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<float>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<float>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -362,7 +440,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<double> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<double>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<double>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -379,7 +461,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<decimal> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<decimal, IThat<decimal?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNullableValueConstraint<decimal>(expected, options))
+				.AddConstraint(new NullableGenericConstraint<decimal>(
+					expected,
+					e => $"be {Formatter.Format(e)}{options}",
+					(a, e) => options.IsWithinTolerance(a, e),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
 			source,
 			options);
@@ -397,7 +483,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<byte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<byte, IThat<byte>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<byte>(unexpected, options))
+				.AddConstraint(new GenericConstraint<byte>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -415,7 +505,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<sbyte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<sbyte, IThat<sbyte>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<sbyte>(unexpected, options))
+				.AddConstraint(new GenericConstraint<sbyte>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -433,7 +527,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<short> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<short, IThat<short>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<short>(unexpected, options))
+				.AddConstraint(new GenericConstraint<short>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -451,7 +549,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ushort> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<ushort, IThat<ushort>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<ushort>(unexpected, options))
+				.AddConstraint(new GenericConstraint<ushort>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -469,7 +571,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<int> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<int, IThat<int>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<int>(unexpected, options))
+				.AddConstraint(new GenericConstraint<int>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -487,7 +593,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<uint> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<uint, IThat<uint>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<uint>(unexpected, options))
+				.AddConstraint(new GenericConstraint<uint>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -505,7 +615,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<long> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<long, IThat<long>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<long>(unexpected, options))
+				.AddConstraint(new GenericConstraint<long>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -523,7 +637,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ulong> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<ulong, IThat<ulong>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<ulong>(unexpected, options))
+				.AddConstraint(new GenericConstraint<ulong>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -541,7 +659,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<float> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<float>(unexpected, options))
+				.AddConstraint(new GenericConstraint<float>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -559,7 +681,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<double> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<double>(unexpected, options))
+				.AddConstraint(new GenericConstraint<double>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -577,7 +703,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<decimal> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NumberToleranceResult<decimal, IThat<decimal>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint<decimal>(unexpected, options))
+				.AddConstraint(new GenericConstraint<decimal>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -595,7 +725,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<byte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<byte, IThat<byte?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<byte>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<byte>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -613,7 +747,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<sbyte> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<sbyte, IThat<sbyte?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<sbyte>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<sbyte>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -631,7 +769,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<short> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<short, IThat<short?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<short>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<short>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -649,7 +791,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ushort> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<ushort, IThat<ushort?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<ushort>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<ushort>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -667,7 +813,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<int> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<int, IThat<int?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<int>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<int>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -685,7 +835,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<uint> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<uint, IThat<uint?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<uint>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<uint>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -703,7 +857,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<long> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<long, IThat<long?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<long>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<long>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -721,7 +879,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<ulong> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<ulong, IThat<ulong?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<ulong>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<ulong>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -739,7 +901,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<float> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<float>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<float>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -757,7 +923,11 @@ public static partial class ThatNumberShould
 		NumberTolerance<double> options = new(
 			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<double>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<double>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
@@ -775,89 +945,13 @@ public static partial class ThatNumberShould
 		NumberTolerance<decimal> options = new(
 			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
 		return new NullableNumberToleranceResult<decimal, IThat<decimal?>>(source.ExpectationBuilder
-				.AddConstraint(new IsNotNullableValueConstraint<decimal>(unexpected, options))
+				.AddConstraint(new NullableGenericConstraint<decimal>(
+					unexpected,
+					u => $"not be {Formatter.Format(u)}{options}",
+					(a, u) => !options.IsWithinTolerance(a, u),
+					(a, _) => $"found {Formatter.Format(a)}"))
 				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
 			source,
 			options);
-	}
-
-	private readonly struct IsValueConstraint<TNumber>(
-		TNumber? expected,
-		NumberTolerance<TNumber> options)
-		: IValueConstraint<TNumber>
-		where TNumber : struct, IComparable<TNumber>
-	{
-		public ConstraintResult IsMetBy(TNumber actual)
-		{
-			if (options.IsWithinTolerance(actual, expected))
-			{
-				return new ConstraintResult.Success<TNumber>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"be {Formatter.Format(expected)}{options}";
-	}
-
-	private readonly struct IsNullableValueConstraint<TNumber>(
-		TNumber? expected,
-		NumberTolerance<TNumber> options)
-		: IValueConstraint<TNumber?>
-		where TNumber : struct, IComparable<TNumber>
-	{
-		public ConstraintResult IsMetBy(TNumber? actual)
-		{
-			if (options.IsWithinTolerance(actual, expected))
-			{
-				return new ConstraintResult.Success<TNumber?>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"be {Formatter.Format(expected)}{options}";
-	}
-
-	private readonly struct IsNotValueConstraint<TNumber>(
-		TNumber? unexpected,
-		NumberTolerance<TNumber> options)
-		: IValueConstraint<TNumber>
-		where TNumber : struct, IComparable<TNumber>
-	{
-		public ConstraintResult IsMetBy(TNumber actual)
-		{
-			if (!options.IsWithinTolerance(actual, unexpected))
-			{
-				return new ConstraintResult.Success<TNumber>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"not be {Formatter.Format(unexpected)}{options}";
-	}
-
-	private readonly struct IsNotNullableValueConstraint<TNumber>(
-		TNumber? unexpected,
-		NumberTolerance<TNumber> options)
-		: IValueConstraint<TNumber?>
-		where TNumber : struct, IComparable<TNumber>
-	{
-		public ConstraintResult IsMetBy(TNumber? actual)
-		{
-			if (!options.IsWithinTolerance(actual, unexpected))
-			{
-				return new ConstraintResult.Success<TNumber?>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
-		}
-
-		public override string ToString()
-			=> $"not be {Formatter.Format(unexpected)}{options}";
 	}
 }
