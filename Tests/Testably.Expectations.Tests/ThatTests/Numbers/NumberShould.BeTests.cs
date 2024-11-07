@@ -136,6 +136,34 @@ public sealed partial class NumberShould
 				              """);
 		}
 
+		[Fact]
+		public async Task ForDouble_WhenSubjectAndExpectedAreNaN_ShouldSucceed()
+		{
+			double subject = double.NaN;
+			double expected = double.NaN;
+
+			async Task Act() => await That(subject).Should().Be(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Theory]
+		[InlineData(double.NaN, 0.0)]
+		[InlineData(0.0, double.NaN)]
+		public async Task ForDouble_WhenSubjectOrExpectedIsNaN_ShouldFail(double subject,
+			double expected)
+		{
+			async Task Act() => await That(subject).Should().Be(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be {expected.ToString(CultureInfo.InvariantCulture)},
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
+		}
+
 		[Theory]
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
@@ -179,6 +207,34 @@ public sealed partial class NumberShould
 				              Expected subject to
 				              be <null>,
 				              but found {subject}
+				              at Expect.That(subject).Should().Be(expected)
+				              """);
+		}
+
+		[Fact]
+		public async Task ForFloat_WhenSubjectAndExpectedAreNaN_ShouldSucceed()
+		{
+			float subject = float.NaN;
+			float expected = float.NaN;
+
+			async Task Act() => await That(subject).Should().Be(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Theory]
+		[InlineData(float.NaN, 0.0)]
+		[InlineData(0.0, float.NaN)]
+		public async Task ForFloat_WhenSubjectOrExpectedIsNaN_ShouldFail(float subject,
+			float expected)
+		{
+			async Task Act() => await That(subject).Should().Be(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be {expected.ToString(CultureInfo.InvariantCulture)},
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}
 				              at Expect.That(subject).Should().Be(expected)
 				              """);
 		}
@@ -1181,6 +1237,34 @@ public sealed partial class NumberShould
 				              """);
 		}
 
+		[Fact]
+		public async Task ForDouble_WhenSubjectAndExpectedAreNaN_ShouldFail()
+		{
+			double subject = double.NaN;
+			double expected = double.NaN;
+
+			async Task Act() => await That(subject).Should().NotBe(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             not be NaN,
+				             but found NaN
+				             at Expect.That(subject).Should().NotBe(expected)
+				             """);
+		}
+
+		[Theory]
+		[InlineData(double.NaN, 0.0)]
+		[InlineData(0.0, double.NaN)]
+		public async Task ForDouble_WhenSubjectOrExpectedIsNaN_ShouldSucceed(
+			double subject, double expected)
+		{
+			async Task Act() => await That(subject).Should().NotBe(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
 		[Theory]
 		[InlineData(2.0, 2.0F)]
 		public async Task ForDouble_WhenUnexpectedIsEqualFloat_ShouldFail(
@@ -1237,6 +1321,34 @@ public sealed partial class NumberShould
 				              but found {subject.ToString(CultureInfo.InvariantCulture)}
 				              at Expect.That(subject).Should().NotBe(unexpected)
 				              """);
+		}
+
+		[Fact]
+		public async Task ForFloat_WhenSubjectAndExpectedAreNaN_ShouldFail()
+		{
+			float subject = float.NaN;
+			float expected = float.NaN;
+
+			async Task Act() => await That(subject).Should().NotBe(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             not be NaN,
+				             but found NaN
+				             at Expect.That(subject).Should().NotBe(expected)
+				             """);
+		}
+
+		[Theory]
+		[InlineData(float.NaN, 0.0)]
+		[InlineData(0.0, float.NaN)]
+		public async Task ForFloat_WhenSubjectOrExpectedIsNaN_ShouldSucceed(
+			float subject, float expected)
+		{
+			async Task Act() => await That(subject).Should().NotBe(expected);
+
+			await That(Act).Should().NotThrow();
 		}
 
 		[Theory]

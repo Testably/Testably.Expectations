@@ -877,7 +877,7 @@ public sealed partial class NumberShould
 			}
 		}
 	}
-	
+
 	public sealed class NotBe
 	{
 		public sealed class WithinTests
