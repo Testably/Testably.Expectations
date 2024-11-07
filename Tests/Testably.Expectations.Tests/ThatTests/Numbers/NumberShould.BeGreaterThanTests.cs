@@ -138,6 +138,23 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
+		[InlineData(double.NaN, 0.0)]
+		[InlineData(0.0, double.NaN)]
+		public async Task ForDouble_WhenSubjectOrExpectedIsNaN_ShouldFail(
+			double subject, double expected)
+		{
+			async Task Act() => await That(subject).Should().BeGreaterThan(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be greater than {expected.ToString(CultureInfo.InvariantCulture)},
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}
+				              at Expect.That(subject).Should().BeGreaterThan(expected)
+				              """);
+		}
+
+		[Theory]
 		[InlineData(2.1, 1.1)]
 		public async Task ForDouble_WhenValueIsGreaterThanExpected_ShouldSucceed(
 			double subject, double? expected)
@@ -181,6 +198,23 @@ public sealed partial class NumberShould
 				              Expected subject to
 				              be greater than <null>,
 				              but found {subject}
+				              at Expect.That(subject).Should().BeGreaterThan(expected)
+				              """);
+		}
+
+		[Theory]
+		[InlineData(float.NaN, 0.0)]
+		[InlineData(0.0, float.NaN)]
+		public async Task ForFloat_WhenSubjectOrExpectedIsNaN_ShouldFail(
+			float subject, float expected)
+		{
+			async Task Act() => await That(subject).Should().BeGreaterThan(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be greater than {expected.ToString(CultureInfo.InvariantCulture)},
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}
 				              at Expect.That(subject).Should().BeGreaterThan(expected)
 				              """);
 		}
