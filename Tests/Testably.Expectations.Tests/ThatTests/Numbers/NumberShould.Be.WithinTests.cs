@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.ThatTests.Numbers;
+﻿using System.Globalization;
+
+namespace Testably.Expectations.Tests.ThatTests.Numbers;
 
 public sealed partial class NumberShould
 {
@@ -6,41 +8,44 @@ public sealed partial class NumberShould
 	{
 		public sealed class WithinTests
 		{
-			[Fact]
-			public async Task ForByte_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((byte)5, (byte)6)]
+			[InlineData((byte)5, (byte)4)]
+			public async Task ForByte_WhenInsideTolerance_ShouldSucceed(
+				byte subject, byte expected)
 			{
-				byte subject = 12;
-				byte expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForByte_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((byte)5, (byte)7)]
+			[InlineData((byte)5, (byte)3)]
+			public async Task ForByte_WhenOutsideTolerance_ShouldFail(
+				byte subject, byte expected)
 			{
-				byte subject = 12;
-				byte expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForDecimal_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForDecimal_WhenInsideTolerance_ShouldSucceed(
+				double subjectValue, double expectedValue)
 			{
-				decimal subject = new(12.2);
-				decimal expected = new(12.1);
+				decimal subject = new(subjectValue);
+				decimal expected = new(expectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(new decimal(0.1));
@@ -48,31 +53,33 @@ public sealed partial class NumberShould
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForDecimal_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForDecimal_WhenOutsideTolerance_ShouldFail(
+				double subjectValue, double expectedValue)
 			{
-				decimal subject = new(12.3);
-				decimal expected = new(12.1);
+				decimal subject = new(subjectValue);
+				decimal expected = new(expectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(new decimal(0.1));
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 12.1 ± 0.1,
-					             but found 12.3
-					             at Expect.That(subject).Should().Be(expected).Within(new decimal(0.1))
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().Be(expected).Within(new decimal(0.1))
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					decimal subject, decimal expected)
 			{
-				decimal subject = new(12.2);
-				decimal expected = new(12.1);
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(new decimal(-0.1));
 
@@ -81,43 +88,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForDouble_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForDouble_WhenInsideTolerance_ShouldSucceed(
+				double subject, double expected)
 			{
-				double subject = 12.2;
-				double expected = 12.1;
-
 				async Task Act()
-					=> await That(subject).Should().Be(expected).Within(0.1);
+					=> await That(subject).Should().Be(expected).Within(0.11);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForDouble_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForDouble_WhenOutsideTolerance_ShouldFail(
+				double subject, double expected)
 			{
-				double subject = 12.3;
-				double expected = 12.1;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(0.1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 12.1 ± 0.1,
-					             but found 12.3
-					             at Expect.That(subject).Should().Be(expected).Within(0.1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().Be(expected).Within(0.1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					double subject, double expected)
 			{
-				double subject = 12.2;
-				double expected = 12.1;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-0.1);
 
@@ -126,43 +132,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForFloat_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5F, 12.6F)]
+			[InlineData(12.5F, 12.4F)]
+			public async Task ForFloat_WhenInsideTolerance_ShouldSucceed(
+				float subject, float expected)
 			{
-				float subject = 12.2F;
-				float expected = 12.1F;
-
 				async Task Act()
-					=> await That(subject).Should().Be(expected).Within(0.1F);
+					=> await That(subject).Should().Be(expected).Within(0.11F);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForFloat_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5F, 12.7F)]
+			[InlineData(12.5F, 12.3F)]
+			public async Task ForFloat_WhenOutsideTolerance_ShouldFail(
+				float subject, float expected)
 			{
-				float subject = 12.3F;
-				float expected = 12.1F;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(0.1F);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 12.1 ± 0.1,
-					             but found 12.3
-					             at Expect.That(subject).Should().Be(expected).Within(0.1F)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().Be(expected).Within(0.1F)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					float subject, float expected)
 			{
-				float subject = 12.2F;
-				float expected = 12.1F;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-0.1F);
 
@@ -171,43 +176,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForInt_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForInt_WhenInsideTolerance_ShouldSucceed(
+				int subject, int expected)
 			{
-				int subject = 12;
-				int expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForInt_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForInt_WhenOutsideTolerance_ShouldFail(
+				int subject, int expected)
 			{
-				int subject = 12;
-				int expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					int subject, int expected)
 			{
-				int subject = 12;
-				int expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -216,43 +220,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForLong_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5L, 6L)]
+			[InlineData(5L, 4L)]
+			public async Task ForLong_WhenInsideTolerance_ShouldSucceed(
+				long subject, long expected)
 			{
-				long subject = 12;
-				long expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForLong_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5L, 7L)]
+			[InlineData(5L, 3L)]
+			public async Task ForLong_WhenOutsideTolerance_ShouldFail(
+				long subject, long expected)
 			{
-				long subject = 12;
-				long expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					long subject, long expected)
 			{
-				long subject = 12;
-				long expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -261,41 +264,44 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableByte_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((byte)5, (byte)6)]
+			[InlineData((byte)5, (byte)4)]
+			public async Task ForNullableByte_WhenInsideTolerance_ShouldSucceed(
+				byte? subject, byte? expected)
 			{
-				byte? subject = 12;
-				byte? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableByte_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((byte)5, (byte)7)]
+			[InlineData((byte)5, (byte)3)]
+			public async Task ForNullableByte_WhenOutsideTolerance_ShouldFail(
+				byte? subject, byte? expected)
 			{
-				byte? subject = 12;
-				byte? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldSucceed(
+				double subjectValue, double expectedValue)
 			{
-				decimal? subject = new(12.2);
-				decimal? expected = new(12.1);
+				decimal? subject = new(subjectValue);
+				decimal? expected = new(expectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(new decimal(0.1));
@@ -303,31 +309,33 @@ public sealed partial class NumberShould
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldFail(
+				double subjectValue, double expectedValue)
 			{
-				decimal? subject = new(12.3);
-				decimal? expected = new(12.1);
+				decimal? subject = new(subjectValue);
+				decimal expected = new(expectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(new decimal(0.1));
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 12.1 ± 0.1,
-					             but found 12.3
-					             at Expect.That(subject).Should().Be(expected).Within(new decimal(0.1))
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().Be(expected).Within(new decimal(0.1))
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					decimal? subject, decimal? expected)
 			{
-				decimal? subject = new(12.2);
-				decimal? expected = new(12.1);
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(new decimal(-0.1));
 
@@ -336,43 +344,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableDouble_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForNullableDouble_WhenInsideTolerance_ShouldSucceed(
+				double? subject, double? expected)
 			{
-				double? subject = 12.2;
-				double? expected = 12.1;
-
 				async Task Act()
-					=> await That(subject).Should().Be(expected).Within(0.1);
+					=> await That(subject).Should().Be(expected).Within(0.11);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableDouble_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForNullableDouble_WhenOutsideTolerance_ShouldFail(
+				double? subject, double? expected)
 			{
-				double? subject = 12.3;
-				double? expected = 12.1;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(0.1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 12.1 ± 0.1,
-					             but found 12.3
-					             at Expect.That(subject).Should().Be(expected).Within(0.1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected?.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().Be(expected).Within(0.1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					double? subject, double? expected)
 			{
-				double? subject = 12.2;
-				double? expected = 12.1;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-0.1);
 
@@ -381,43 +388,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableFloat_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5F, 12.6F)]
+			[InlineData(12.5F, 12.4F)]
+			public async Task ForNullableFloat_WhenInsideTolerance_ShouldSucceed(
+				float? subject, float? expected)
 			{
-				float? subject = 12.2F;
-				float? expected = 12.1F;
-
 				async Task Act()
-					=> await That(subject).Should().Be(expected).Within(0.1F);
+					=> await That(subject).Should().Be(expected).Within(0.11F);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableFloat_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5F, 12.7F)]
+			[InlineData(12.5F, 12.3F)]
+			public async Task ForNullableFloat_WhenOutsideTolerance_ShouldFail(
+				float? subject, float? expected)
 			{
-				float? subject = 12.3F;
-				float? expected = 12.1F;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(0.1F);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 12.1 ± 0.1,
-					             but found 12.3
-					             at Expect.That(subject).Should().Be(expected).Within(0.1F)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected?.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().Be(expected).Within(0.1F)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					float? subject, float? expected)
 			{
-				float? subject = 12.2F;
-				float? expected = 12.1F;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-0.1F);
 
@@ -426,43 +432,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableInt_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForNullableInt_WhenInsideTolerance_ShouldSucceed(
+				int? subject, int? expected)
 			{
-				int? subject = 12;
-				int? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableInt_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForNullableInt_WhenOutsideTolerance_ShouldFail(
+				int? subject, int? expected)
 			{
-				int? subject = 12;
-				int? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					int? subject, int? expected)
 			{
-				int? subject = 12;
-				int? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -471,43 +476,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableLong_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((long)5, (long)6)]
+			[InlineData((long)5, (long)4)]
+			public async Task ForNullableLong_WhenInsideTolerance_ShouldSucceed(
+				long? subject, long? expected)
 			{
-				long? subject = 12;
-				long? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableLong_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((long)5, (long)7)]
+			[InlineData((long)5, (long)3)]
+			public async Task ForNullableLong_WhenOutsideTolerance_ShouldFail(
+				long? subject, long? expected)
 			{
-				long? subject = 12;
-				long? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					long? subject, long? expected)
 			{
-				long? subject = 12;
-				long? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -516,43 +520,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableSbyte_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((sbyte)5, (sbyte)6)]
+			[InlineData((sbyte)5, (sbyte)4)]
+			public async Task ForNullableSbyte_WhenInsideTolerance_ShouldSucceed(
+				sbyte? subject, sbyte? expected)
 			{
-				sbyte? subject = 12;
-				sbyte? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableSbyte_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((sbyte)5, (sbyte)7)]
+			[InlineData((sbyte)5, (sbyte)3)]
+			public async Task ForNullableSbyte_WhenOutsideTolerance_ShouldFail(
+				sbyte? subject, sbyte? expected)
 			{
-				sbyte? subject = 12;
-				sbyte? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					sbyte? subject, sbyte? expected)
 			{
-				sbyte? subject = 12;
-				sbyte? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -561,43 +564,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableShort_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((short)5, (short)6)]
+			[InlineData((short)5, (short)4)]
+			public async Task ForNullableShort_WhenInsideTolerance_ShouldSucceed(
+				short? subject, short? expected)
 			{
-				short? subject = 12;
-				short? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableShort_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((short)5, (short)7)]
+			[InlineData((short)5, (short)3)]
+			public async Task ForNullableShort_WhenOutsideTolerance_ShouldFail(
+				short? subject, short? expected)
 			{
-				short? subject = 12;
-				short? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					short? subject, short? expected)
 			{
-				short? subject = 12;
-				short? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -606,133 +608,132 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableUint_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((uint)5, (uint)6)]
+			[InlineData((uint)5, (uint)4)]
+			public async Task ForNullableUint_WhenInsideTolerance_ShouldSucceed(
+				uint? subject, uint? expected)
 			{
-				uint? subject = 12;
-				uint? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableUint_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((uint)5, (uint)7)]
+			[InlineData((uint)5, (uint)3)]
+			public async Task ForNullableUint_WhenOutsideTolerance_ShouldFail(
+				uint? subject, uint? expected)
 			{
-				uint? subject = 12;
-				uint? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableUlong_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((ulong)5, (ulong)6)]
+			[InlineData((ulong)5, (ulong)4)]
+			public async Task ForNullableUlong_WhenInsideTolerance_ShouldSucceed(
+				ulong? subject, ulong? expected)
 			{
-				ulong? subject = 12;
-				ulong? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableUlong_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((ulong)5, (ulong)7)]
+			[InlineData((ulong)5, (ulong)3)]
+			public async Task ForNullableUlong_WhenOutsideTolerance_ShouldFail(
+				ulong? subject, ulong? expected)
 			{
-				ulong? subject = 12;
-				ulong? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableUshort_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((ushort)5, (ushort)6)]
+			[InlineData((ushort)5, (ushort)4)]
+			public async Task ForNullableUshort_WhenInsideTolerance_ShouldSucceed(
+				ushort? subject, ushort? expected)
 			{
-				ushort? subject = 12;
-				ushort? expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableUshort_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((ushort)5, (ushort)7)]
+			[InlineData((ushort)5, (ushort)3)]
+			public async Task ForNullableUshort_WhenOutsideTolerance_ShouldFail(
+				ushort? subject, ushort? expected)
 			{
-				ushort? subject = 12;
-				ushort? expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForSbyte_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForSbyte_WhenInsideTolerance_ShouldSucceed(
+				sbyte subject, sbyte expected)
 			{
-				sbyte subject = 12;
-				sbyte expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForSbyte_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForSbyte_WhenOutsideTolerance_ShouldFail(
+				sbyte subject, sbyte expected)
 			{
-				sbyte subject = 12;
-				sbyte expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					sbyte subject, sbyte expected)
 			{
-				sbyte subject = 12;
-				sbyte expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -741,43 +742,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForShort_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForShort_WhenInsideTolerance_ShouldSucceed(
+				short subject, short expected)
 			{
-				short subject = 12;
-				short expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForShort_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForShort_WhenOutsideTolerance_ShouldFail(
+				short subject, short expected)
 			{
-				short subject = 12;
-				short expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					short subject, short expected)
 			{
-				short subject = 12;
-				short expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(-1);
 
@@ -786,155 +786,161 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForUint_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForUint_WhenInsideTolerance_ShouldSucceed(
+				uint subject, uint expected)
 			{
-				uint subject = 12;
-				uint expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForUint_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForUint_WhenOutsideTolerance_ShouldFail(
+				uint subject, uint expected)
 			{
-				uint subject = 12;
-				uint expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForUlong_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForUlong_WhenInsideTolerance_ShouldSucceed(
+				ulong subject, ulong expected)
 			{
-				ulong subject = 12;
-				ulong expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForUlong_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForUlong_WhenOutsideTolerance_ShouldFail(
+				ulong subject, ulong expected)
 			{
-				ulong subject = 12;
-				ulong expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForUshort_WhenInsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForUshort_WhenInsideTolerance_ShouldSucceed(
+				ushort subject, ushort expected)
 			{
-				ushort subject = 12;
-				ushort expected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForUshort_WhenOutsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForUshort_WhenOutsideTolerance_ShouldFail(
+				ushort subject, ushort expected)
 			{
-				ushort subject = 12;
-				ushort expected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             be 10 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().Be(expected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              be {expected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().Be(expected).Within(1)
+					              """);
 			}
 		}
 	}
-
+	
 	public sealed class NotBe
 	{
 		public sealed class WithinTests
 		{
-			[Fact]
-			public async Task ForByte_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((byte)5, (byte)6)]
+			[InlineData((byte)5, (byte)4)]
+			public async Task ForByte_WhenInsideTolerance_ShouldFail(
+				byte subject, byte unexpected)
 			{
-				byte subject = 12;
-				byte unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForByte_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((byte)5, (byte)7)]
+			[InlineData((byte)5, (byte)3)]
+			public async Task ForByte_WhenOutsideTolerance_ShouldSucceed(
+				byte subject, byte unexpected)
 			{
-				byte subject = 12;
-				byte unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForDecimal_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForDecimal_WhenInsideTolerance_ShouldFail(
+				double subjectValue, double unexpectedValue)
 			{
-				decimal subject = new(12.2);
-				decimal unexpected = new(12.1);
+				decimal subject = new(subjectValue);
+				decimal unexpected = new(unexpectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(new decimal(0.1));
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 12.1 ± 0.1,
-					             but found 12.2
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(new decimal(0.1))
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(new decimal(0.1))
+					              """);
 			}
 
-			[Fact]
-			public async Task ForDecimal_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForDecimal_WhenOutsideTolerance_ShouldSucceed(
+				double subjectValue, double unexpectedValue)
 			{
-				decimal subject = new(12.3);
-				decimal unexpected = new(12.1);
+				decimal subject = new(subjectValue);
+				decimal unexpected = new(unexpectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(new decimal(0.1));
@@ -942,13 +948,12 @@ public sealed partial class NumberShould
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					decimal subject, decimal unexpected)
 			{
-				decimal subject = new(12.2);
-				decimal unexpected = new(12.1);
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(new decimal(-0.1));
 
@@ -957,43 +962,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForDouble_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForDouble_WhenInsideTolerance_ShouldFail(
+				double subject, double unexpected)
 			{
-				double subject = 12.2;
-				double unexpected = 12.1;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 12.1 ± 0.1,
-					             but found 12.2
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(0.1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected.ToString(CultureInfo.InvariantCulture)} ± 0.11,
+					              but found 12.5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(0.11)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForDouble_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForDouble_WhenOutsideTolerance_ShouldSucceed(
+				double subject, double unexpected)
 			{
-				double subject = 12.3;
-				double unexpected = 12.1;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					double subject, double unexpected)
 			{
-				double subject = 12.2;
-				double unexpected = 12.1;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-0.1);
 
@@ -1002,43 +1006,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForFloat_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5F, 12.6F)]
+			[InlineData(12.5F, 12.4F)]
+			public async Task ForFloat_WhenInsideTolerance_ShouldFail(
+				float subject, float unexpected)
 			{
-				float subject = 12.2F;
-				float unexpected = 12.1F;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1F);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11F);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 12.1 ± 0.1,
-					             but found 12.2
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(0.1F)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected.ToString(CultureInfo.InvariantCulture)} ± 0.11,
+					              but found 12.5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(0.11F)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForFloat_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5F, 12.7F)]
+			[InlineData(12.5F, 12.3F)]
+			public async Task ForFloat_WhenOutsideTolerance_ShouldSucceed(
+				float subject, float unexpected)
 			{
-				float subject = 12.3F;
-				float unexpected = 12.1F;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1F);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11F);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					float subject, float unexpected)
 			{
-				float subject = 12.2F;
-				float unexpected = 12.1F;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-0.1F);
 
@@ -1047,43 +1050,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForInt_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForInt_WhenInsideTolerance_ShouldFail(
+				int subject, int unexpected)
 			{
-				int subject = 12;
-				int unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForInt_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForInt_WhenOutsideTolerance_ShouldSucceed(
+				int subject, int unexpected)
 			{
-				int subject = 12;
-				int unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					int subject, int unexpected)
 			{
-				int subject = 12;
-				int unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1092,43 +1094,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForLong_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5L, 6L)]
+			[InlineData(5L, 4L)]
+			public async Task ForLong_WhenInsideTolerance_ShouldFail(
+				long subject, long unexpected)
 			{
-				long subject = 12;
-				long unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForLong_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5L, 7L)]
+			[InlineData(5L, 3L)]
+			public async Task ForLong_WhenOutsideTolerance_ShouldSucceed(
+				long subject, long unexpected)
 			{
-				long subject = 12;
-				long unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					long subject, long unexpected)
 			{
-				long subject = 12;
-				long unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1137,59 +1138,65 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableByte_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((byte)5, (byte)6)]
+			[InlineData((byte)5, (byte)4)]
+			public async Task ForNullableByte_WhenInsideTolerance_ShouldFail(
+				byte? subject, byte? unexpected)
 			{
-				byte? subject = 12;
-				byte? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableByte_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((byte)5, (byte)7)]
+			[InlineData((byte)5, (byte)3)]
+			public async Task ForNullableByte_WhenOutsideTolerance_ShouldSucceed(
+				byte? subject, byte? unexpected)
 			{
-				byte? subject = 12;
-				byte? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldFail(
+				double subjectValue, double unexpectedValue)
 			{
-				decimal? subject = new(12.2);
-				decimal? unexpected = new(12.1);
+				decimal? subject = new(subjectValue);
+				decimal unexpected = new(unexpectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(new decimal(0.1));
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 12.1 ± 0.1,
-					             but found 12.2
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(new decimal(0.1))
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected.ToString(CultureInfo.InvariantCulture)} ± 0.1,
+					              but found 12.5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(new decimal(0.1))
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldSucceed(
+				double subjectValue, double unexpectedValue)
 			{
-				decimal? subject = new(12.3);
-				decimal? unexpected = new(12.1);
+				decimal? subject = new(subjectValue);
+				decimal? unexpected = new(unexpectedValue);
 
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(new decimal(0.1));
@@ -1197,13 +1204,12 @@ public sealed partial class NumberShould
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableDecimal_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					decimal? subject, decimal? unexpected)
 			{
-				decimal? subject = new(12.2);
-				decimal? unexpected = new(12.1);
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(new decimal(-0.1));
 
@@ -1212,43 +1218,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableDouble_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5, 12.6)]
+			[InlineData(12.5, 12.4)]
+			public async Task ForNullableDouble_WhenInsideTolerance_ShouldFail(
+				double? subject, double? unexpected)
 			{
-				double? subject = 12.2;
-				double? unexpected = 12.1;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 12.1 ± 0.1,
-					             but found 12.2
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(0.1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected?.ToString(CultureInfo.InvariantCulture)} ± 0.11,
+					              but found 12.5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(0.11)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableDouble_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5, 12.7)]
+			[InlineData(12.5, 12.3)]
+			public async Task ForNullableDouble_WhenOutsideTolerance_ShouldSucceed(
+				double? subject, double? unexpected)
 			{
-				double? subject = 12.3;
-				double? unexpected = 12.1;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableDouble_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					double? subject, double? unexpected)
 			{
-				double? subject = 12.2;
-				double? unexpected = 12.1;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-0.1);
 
@@ -1257,43 +1262,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableFloat_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(12.5F, 12.6F)]
+			[InlineData(12.5F, 12.4F)]
+			public async Task ForNullableFloat_WhenInsideTolerance_ShouldFail(
+				float? subject, float? unexpected)
 			{
-				float? subject = 12.2F;
-				float? unexpected = 12.1F;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1F);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11F);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 12.1 ± 0.1,
-					             but found 12.2
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(0.1F)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected?.ToString(CultureInfo.InvariantCulture)} ± 0.11,
+					              but found 12.5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(0.11F)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableFloat_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(12.5F, 12.7F)]
+			[InlineData(12.5F, 12.3F)]
+			public async Task ForNullableFloat_WhenOutsideTolerance_ShouldSucceed(
+				float? subject, float? unexpected)
 			{
-				float? subject = 12.3F;
-				float? unexpected = 12.1F;
-
 				async Task Act()
-					=> await That(subject).Should().NotBe(unexpected).Within(0.1F);
+					=> await That(subject).Should().NotBe(unexpected).Within(0.11F);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableFloat_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					float? subject, float? unexpected)
 			{
-				float? subject = 12.2F;
-				float? unexpected = 12.1F;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-0.1F);
 
@@ -1302,43 +1306,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableInt_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForNullableInt_WhenInsideTolerance_ShouldFail(
+				int? subject, int? unexpected)
 			{
-				int? subject = 12;
-				int? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableInt_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForNullableInt_WhenOutsideTolerance_ShouldSucceed(
+				int? subject, int? unexpected)
 			{
-				int? subject = 12;
-				int? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableInt_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					int? subject, int? unexpected)
 			{
-				int? subject = 12;
-				int? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1347,43 +1350,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableLong_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((long)5, (long)6)]
+			[InlineData((long)5, (long)4)]
+			public async Task ForNullableLong_WhenInsideTolerance_ShouldFail(
+				long? subject, long? unexpected)
 			{
-				long? subject = 12;
-				long? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableLong_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((long)5, (long)7)]
+			[InlineData((long)5, (long)3)]
+			public async Task ForNullableLong_WhenOutsideTolerance_ShouldSucceed(
+				long? subject, long? unexpected)
 			{
-				long? subject = 12;
-				long? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableLong_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					long? subject, long? unexpected)
 			{
-				long? subject = 12;
-				long? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1392,43 +1394,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableSbyte_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((sbyte)5, (sbyte)6)]
+			[InlineData((sbyte)5, (sbyte)4)]
+			public async Task ForNullableSbyte_WhenInsideTolerance_ShouldFail(
+				sbyte? subject, sbyte? unexpected)
 			{
-				sbyte? subject = 12;
-				sbyte? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableSbyte_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((sbyte)5, (sbyte)7)]
+			[InlineData((sbyte)5, (sbyte)3)]
+			public async Task ForNullableSbyte_WhenOutsideTolerance_ShouldSucceed(
+				sbyte? subject, sbyte? unexpected)
 			{
-				sbyte? subject = 12;
-				sbyte? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					sbyte? subject, sbyte? unexpected)
 			{
-				sbyte? subject = 12;
-				sbyte? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1437,43 +1438,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableShort_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((short)5, (short)6)]
+			[InlineData((short)5, (short)4)]
+			public async Task ForNullableShort_WhenInsideTolerance_ShouldFail(
+				short? subject, short? unexpected)
 			{
-				short? subject = 12;
-				short? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableShort_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((short)5, (short)7)]
+			[InlineData((short)5, (short)3)]
+			public async Task ForNullableShort_WhenOutsideTolerance_ShouldSucceed(
+				short? subject, short? unexpected)
 			{
-				short? subject = 12;
-				short? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForNullableShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForNullableShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					short? subject, short? unexpected)
 			{
-				short? subject = 12;
-				short? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1482,133 +1482,132 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForNullableUint_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((uint)5, (uint)6)]
+			[InlineData((uint)5, (uint)4)]
+			public async Task ForNullableUint_WhenInsideTolerance_ShouldFail(
+				uint? subject, uint? unexpected)
 			{
-				uint? subject = 12;
-				uint? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableUint_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((uint)5, (uint)7)]
+			[InlineData((uint)5, (uint)3)]
+			public async Task ForNullableUint_WhenOutsideTolerance_ShouldSucceed(
+				uint? subject, uint? unexpected)
 			{
-				uint? subject = 12;
-				uint? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableUlong_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((ulong)5, (ulong)6)]
+			[InlineData((ulong)5, (ulong)4)]
+			public async Task ForNullableUlong_WhenInsideTolerance_ShouldFail(
+				ulong? subject, ulong? unexpected)
 			{
-				ulong? subject = 12;
-				ulong? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableUlong_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((ulong)5, (ulong)7)]
+			[InlineData((ulong)5, (ulong)3)]
+			public async Task ForNullableUlong_WhenOutsideTolerance_ShouldSucceed(
+				ulong? subject, ulong? unexpected)
 			{
-				ulong? subject = 12;
-				ulong? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForNullableUshort_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData((ushort)5, (ushort)6)]
+			[InlineData((ushort)5, (ushort)4)]
+			public async Task ForNullableUshort_WhenInsideTolerance_ShouldFail(
+				ushort? subject, ushort? unexpected)
 			{
-				ushort? subject = 12;
-				ushort? unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForNullableUshort_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData((ushort)5, (ushort)7)]
+			[InlineData((ushort)5, (ushort)3)]
+			public async Task ForNullableUshort_WhenOutsideTolerance_ShouldSucceed(
+				ushort? subject, ushort? unexpected)
 			{
-				ushort? subject = 12;
-				ushort? unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForSbyte_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForSbyte_WhenInsideTolerance_ShouldFail(
+				sbyte subject, sbyte unexpected)
 			{
-				sbyte subject = 12;
-				sbyte unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForSbyte_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForSbyte_WhenOutsideTolerance_ShouldSucceed(
+				sbyte subject, sbyte unexpected)
 			{
-				sbyte subject = 12;
-				sbyte unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForSbyte_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					sbyte subject, sbyte unexpected)
 			{
-				sbyte subject = 12;
-				sbyte unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1617,43 +1616,42 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForShort_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForShort_WhenInsideTolerance_ShouldFail(
+				short subject, short unexpected)
 			{
-				short subject = 12;
-				short unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForShort_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForShort_WhenOutsideTolerance_ShouldSucceed(
+				short subject, short unexpected)
 			{
-				short subject = 12;
-				short unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
+			[Theory]
+			[AutoData]
 			public async Task
-				ForShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException()
+				ForShort_WhenToleranceIsNegative_ShouldThrowArgumentOutOfRangeException(
+					short subject, short unexpected)
 			{
-				short subject = 12;
-				short unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(-1);
 
@@ -1662,90 +1660,90 @@ public sealed partial class NumberShould
 					.WithMessage("*Tolerance must be non-negative*").AsWildcard();
 			}
 
-			[Fact]
-			public async Task ForUint_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForUint_WhenInsideTolerance_ShouldFail(
+				uint subject, uint unexpected)
 			{
-				uint subject = 12;
-				uint unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForUint_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForUint_WhenOutsideTolerance_ShouldSucceed(
+				uint subject, uint unexpected)
 			{
-				uint subject = 12;
-				uint unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForUlong_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForUlong_WhenInsideTolerance_ShouldFail(
+				ulong subject, ulong unexpected)
 			{
-				ulong subject = 12;
-				ulong unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForUlong_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForUlong_WhenOutsideTolerance_ShouldSucceed(
+				ulong subject, ulong unexpected)
 			{
-				ulong subject = 12;
-				ulong unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().NotThrow();
 			}
 
-			[Fact]
-			public async Task ForUshort_WhenInsideTolerance_ShouldFail()
+			[Theory]
+			[InlineData(5, 6)]
+			[InlineData(5, 4)]
+			public async Task ForUshort_WhenInsideTolerance_ShouldFail(
+				ushort subject, ushort unexpected)
 			{
-				ushort subject = 12;
-				ushort unexpected = 11;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 
 				await That(Act).Should().Throw<XunitException>()
-					.WithMessage("""
-					             Expected subject to
-					             not be 11 ± 1,
-					             but found 12
-					             at Expect.That(subject).Should().NotBe(unexpected).Within(1)
-					             """);
+					.WithMessage($"""
+					              Expected subject to
+					              not be {unexpected} ± 1,
+					              but found 5
+					              at Expect.That(subject).Should().NotBe(unexpected).Within(1)
+					              """);
 			}
 
-			[Fact]
-			public async Task ForUshort_WhenOutsideTolerance_ShouldSucceed()
+			[Theory]
+			[InlineData(5, 7)]
+			[InlineData(5, 3)]
+			public async Task ForUshort_WhenOutsideTolerance_ShouldSucceed(
+				ushort subject, ushort unexpected)
 			{
-				ushort subject = 12;
-				ushort unexpected = 10;
-
 				async Task Act()
 					=> await That(subject).Should().NotBe(unexpected).Within(1);
 

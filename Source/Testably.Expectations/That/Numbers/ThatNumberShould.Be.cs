@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
@@ -17,7 +18,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<byte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<byte, IThat<byte>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<byte>(
 					expected,
@@ -38,7 +39,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<sbyte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<sbyte, IThat<sbyte>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<sbyte>(
 					expected,
@@ -59,7 +60,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<short> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<short, IThat<short>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<short>(
 					expected,
@@ -80,7 +81,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<ushort> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<ushort, IThat<ushort>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<ushort>(
 					expected,
@@ -101,7 +102,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<int> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<int, IThat<int>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<int>(
 					expected,
@@ -143,7 +144,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<long> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<long, IThat<long>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<long>(
 					expected,
@@ -185,7 +186,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
 					expected,
@@ -206,7 +207,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
 					expected,
@@ -227,7 +228,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<decimal> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<decimal, IThat<decimal>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<decimal>(
 					expected,
@@ -248,7 +249,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<byte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<byte, IThat<byte?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<byte>(
 					expected,
@@ -269,7 +270,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<sbyte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<sbyte, IThat<sbyte?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<sbyte>(
 					expected,
@@ -290,7 +291,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<short> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<short, IThat<short?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<short>(
 					expected,
@@ -311,7 +312,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<ushort> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<ushort, IThat<ushort?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<ushort>(
 					expected,
@@ -332,7 +333,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<int> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<int, IThat<int?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<int>(
 					expected,
@@ -374,7 +375,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<long> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<long, IThat<long?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<long>(
 					expected,
@@ -416,7 +417,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<float>(
 					expected,
@@ -437,7 +438,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<double>(
 					expected,
@@ -458,7 +459,7 @@ public static partial class ThatNumberShould
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<decimal> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<decimal, IThat<decimal?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<decimal>(
 					expected,
@@ -480,7 +481,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<byte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<byte, IThat<byte>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<byte>(
 					unexpected,
@@ -502,7 +503,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<sbyte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<sbyte, IThat<sbyte>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<sbyte>(
 					unexpected,
@@ -524,7 +525,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<short> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<short, IThat<short>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<short>(
 					unexpected,
@@ -546,7 +547,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<ushort> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<ushort, IThat<ushort>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<ushort>(
 					unexpected,
@@ -568,7 +569,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<int> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<int, IThat<int>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<int>(
 					unexpected,
@@ -612,7 +613,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<long> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<long, IThat<long>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<long>(
 					unexpected,
@@ -656,7 +657,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<float>(
 					unexpected,
@@ -678,7 +679,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<double>(
 					unexpected,
@@ -700,7 +701,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<decimal> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<decimal, IThat<decimal>>(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint<decimal>(
 					unexpected,
@@ -722,7 +723,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<byte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<byte, IThat<byte?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<byte>(
 					unexpected,
@@ -744,7 +745,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<sbyte> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<sbyte, IThat<sbyte?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<sbyte>(
 					unexpected,
@@ -766,7 +767,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<short> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<short, IThat<short?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<short>(
 					unexpected,
@@ -788,7 +789,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<ushort> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<ushort, IThat<ushort?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<ushort>(
 					unexpected,
@@ -810,7 +811,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<int> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<int, IThat<int?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<int>(
 					unexpected,
@@ -854,7 +855,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<long> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<long, IThat<long?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<long>(
 					unexpected,
@@ -898,7 +899,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<float>(
 					unexpected,
@@ -920,7 +921,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<double>(
 					unexpected,
@@ -942,7 +943,7 @@ public static partial class ThatNumberShould
 		string doNotPopulateThisValue = "")
 	{
 		NumberTolerance<decimal> options = new(
-			(a, e, t) => (a > e ? a - e : e - a) <= (t ?? 0));
+			(a, e, t) => Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<decimal, IThat<decimal?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericConstraint<decimal>(
 					unexpected,
