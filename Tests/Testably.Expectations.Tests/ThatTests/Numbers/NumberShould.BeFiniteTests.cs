@@ -22,7 +22,8 @@ public sealed partial class NumberShould
 		[InlineData(double.PositiveInfinity, "+\u221e")]
 		[InlineData(double.NegativeInfinity, "-\u221e")]
 		[InlineData(double.NaN, "NaN")]
-		public async Task ForDouble_WhenSubjectIsInfinityOrNaN_ShouldFail(double subject, string format)
+		public async Task ForDouble_WhenSubjectIsInfinityOrNaN_ShouldFail(
+			double subject, string format)
 		{
 			async Task Act() => await That(subject).Should().BeFinite();
 
@@ -65,7 +66,8 @@ public sealed partial class NumberShould
 		[InlineData(float.PositiveInfinity, "+\u221e")]
 		[InlineData(float.NegativeInfinity, "-\u221e")]
 		[InlineData(float.NaN, "NaN")]
-		public async Task ForFloat_WhenSubjectIsInfinityOrNaN_ShouldFail(float subject, string format)
+		public async Task ForFloat_WhenSubjectIsInfinityOrNaN_ShouldFail(
+			float subject, string format)
 		{
 			async Task Act()
 				=> await That(subject).Should().BeFinite();
