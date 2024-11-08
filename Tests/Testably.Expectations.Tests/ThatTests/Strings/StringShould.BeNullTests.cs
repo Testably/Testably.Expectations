@@ -43,7 +43,7 @@ public sealed partial class StringShould
 			async Task Act()
 				=> await That(subject).Should().BeNull();
 
-			await Act();
+			await That(Act).Should().NotThrow();
 		}
 	}
 

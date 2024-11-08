@@ -7,28 +7,28 @@ namespace Testably.Expectations;
 public static partial class ThatStringShould
 {
 	/// <summary>
-	///     Verifies that the subject is <see langword="null" />.
+	///     Verifies that the subject is empty.
 	/// </summary>
-	public static AndOrResult<string?, IThat<string?>> BeNull(
+	public static AndOrResult<string?, IThat<string?>> BeEmpty(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint(
 					"",
-					_ => "be null",
-					(a, _) => a is null,
+					_ => "be empty",
+					(a, _) => a == "",
 					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
-	///     Verifies that the subject is not <see langword="null" />.
+	///     Verifies that the subject is not empty.
 	/// </summary>
-	public static AndOrResult<string, IThat<string?>> NotBeNull(
+	public static AndOrResult<string, IThat<string?>> NotBeEmpty(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint(
 					"",
-					_ => "not be null",
-					(a, _) => a is not null,
+					_ => "not be empty",
+					(a, _) => a != "",
 					(_, _) => "it was")),
 			source);
 }
