@@ -11,8 +11,7 @@ public partial class ThatDelegateThrows<TException>
 	/// </summary>
 	public StringMatcherResult<TException, ThatDelegateThrows<TException>>
 		WithMessage(
-			StringMatcher expected,
-			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+			StringMatcher expected)
 		=> new(ExpectationBuilder
 				.AddConstraint(new ThatExceptionShould.HasMessageValueConstraint<TException>(
 					expected, "with")),
