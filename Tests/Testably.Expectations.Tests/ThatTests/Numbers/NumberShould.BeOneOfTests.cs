@@ -1,91 +1,59 @@
-﻿using System.Globalization;
+﻿using System.Linq;
+using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Tests.ThatTests.Numbers;
 
 public sealed partial class NumberShould
 {
-	public sealed partial class BeTests
+	public sealed partial class BeOneOfTests
 	{
-		[Theory]
-		[AutoData]
-		public async Task ForByte_WhenExpectedIsNull_ShouldFail(
-			byte subject)
-		{
-			byte? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
-		}
-
 		[Theory]
 		[InlineData((byte)1, (byte)2)]
 		[InlineData((byte)1, (byte)0)]
 		public async Task ForByte_WhenValueIsDifferentToExpected_ShouldFail(byte subject,
-			byte? expected)
+			params byte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((byte)1, (byte)1)]
 		public async Task ForByte_WhenValueIsEqualToExpected_ShouldSucceed(byte subject,
-			byte? expected)
+			params byte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForDecimal_WhenExpectedIsNull_ShouldFail(decimal subject)
-		{
-			decimal? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForDecimal_WhenValueIsDifferentToExpected_ShouldFail(
-			double subjectValue, double expectedValue)
+			double subjectValue, params double[] expectedValues)
 		{
 			decimal subject = new(subjectValue);
-			decimal expected = new(expectedValue);
+			decimal[] expected = expectedValues
+				.Select(expectedValue => new decimal(expectedValue))
+				.ToArray();
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -98,7 +66,7 @@ public sealed partial class NumberShould
 			decimal? expected = new(expectedValue);
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -109,26 +77,9 @@ public sealed partial class NumberShould
 			double subject, float expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForDouble_WhenExpectedIsNull_ShouldFail(double subject)
-		{
-			double? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Fact]
@@ -137,7 +88,7 @@ public sealed partial class NumberShould
 			double subject = double.NaN;
 			double expected = double.NaN;
 
-			async Task Act() => await That(subject).Should().Be(expected);
+			async Task Act() => await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -146,15 +97,15 @@ public sealed partial class NumberShould
 		[InlineData(double.NaN, 0.0)]
 		[InlineData(0.0, double.NaN)]
 		public async Task ForDouble_WhenSubjectOrExpectedIsNaN_ShouldFail(double subject,
-			double expected)
+			params double[] expected)
 		{
-			async Task Act() => await That(subject).Should().Be(expected);
+			async Task Act() => await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -162,45 +113,28 @@ public sealed partial class NumberShould
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForDouble_WhenValueIsDifferentToExpected_ShouldFail(
-			double subject, double expected)
+			double subject, params double[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData(1.1, 1.1)]
 		public async Task ForDouble_WhenValueIsEqualToExpected_ShouldSucceed(
-			double subject, double? expected)
+			double subject, params double?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForFloat_WhenExpectedIsNull_ShouldFail(float subject)
-		{
-			float? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Fact]
@@ -209,24 +143,24 @@ public sealed partial class NumberShould
 			float subject = float.NaN;
 			float expected = float.NaN;
 
-			async Task Act() => await That(subject).Should().Be(expected);
+			async Task Act() => await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
 
 		[Theory]
-		[InlineData(float.NaN, 0.0)]
-		[InlineData(0.0, float.NaN)]
+		[InlineData(float.NaN, 0.0F)]
+		[InlineData(0.0F, float.NaN)]
 		public async Task ForFloat_WhenSubjectOrExpectedIsNaN_ShouldFail(float subject,
-			float expected)
+			params float[] expected)
 		{
-			async Task Act() => await That(subject).Should().Be(expected);
+			async Task Act() => await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -234,72 +168,54 @@ public sealed partial class NumberShould
 		[InlineData((float)1.1, (float)2.1)]
 		[InlineData((float)1.1, (float)0.1)]
 		public async Task ForFloat_WhenValueIsDifferentToExpected_ShouldFail(
-			float subject, float expected)
+			float subject, params float[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((float)1.1, (float)1.1)]
 		public async Task ForFloat_WhenValueIsEqualToExpected_ShouldSucceed(
-			float subject, float? expected)
+			float subject, params float?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForInt_WhenExpectedIsNull_ShouldFail(
-			int subject)
-		{
-			int? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData(1, 2)]
 		[InlineData(2, 1)]
 		public async Task ForInt_WhenValueIsDifferentToExpected_ShouldFail(int subject,
-			int? expected)
+			params int?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData(1, 1)]
 		public async Task ForInt_WhenValueIsEqualToExpected_ShouldSucceed(int subject,
-			int? expected)
+			params int?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -309,53 +225,35 @@ public sealed partial class NumberShould
 		public async Task ForLong_WhenExpectedIsEqualInt_ShouldSucceed(long subject, int expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForLong_WhenExpectedIsNull_ShouldFail(
-			long subject)
-		{
-			long? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData((long)1, (long)2)]
 		[InlineData((long)1, (long)0)]
 		public async Task ForLong_WhenValueIsDifferentToExpected_ShouldFail(long subject,
-			long? expected)
+			params long?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((long)1, (long)1)]
 		public async Task ForLong_WhenValueIsEqualToExpected_ShouldSucceed(long subject,
-			long? expected)
+			params long?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -364,26 +262,26 @@ public sealed partial class NumberShould
 		[InlineData((byte)1, (byte)2)]
 		[InlineData((byte)1, (byte)0)]
 		public async Task ForNullableByte_WhenValueIsDifferentToExpected_ShouldFail(
-			byte? subject, byte? expected)
+			byte? subject, params byte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((byte)1, (byte)1)]
 		public async Task ForNullableByte_WhenValueIsEqualToExpected_ShouldSucceed(
-			byte? subject, byte? expected)
+			byte? subject, params byte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -391,35 +289,18 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableByte_WhenValueIsNull_ShouldFail(
-			byte? expected)
+			params byte?[] expected)
 		{
 			byte? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
-				              """);
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForNullableDecimal_WhenExpectedIsNull_ShouldFail(decimal? subject)
-		{
-			decimal? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
 				              """);
 		}
 
@@ -427,19 +308,23 @@ public sealed partial class NumberShould
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForNullableDecimal_WhenValueIsDifferentToExpected_ShouldFail(
-			double? subjectValue, double? expectedValue)
+			double? subjectValue, params double?[] expectedValues)
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
-			decimal? expected = expectedValue == null ? null : new decimal(expectedValue.Value);
+			decimal?[] expected = expectedValues
+				.Select(expectedValue => expectedValue == null
+					? (decimal?)null
+					: new decimal(expectedValue.Value))
+				.ToArray();
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -452,97 +337,63 @@ public sealed partial class NumberShould
 			decimal? expected = expectedValue == null ? null : new decimal(expectedValue.Value);
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForNullableDouble_WhenExpectedIsNull_ShouldFail(double? subject)
-		{
-			double? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForNullableDouble_WhenValueIsDifferentToExpected_ShouldFail(
-			double? subject, double? expected)
+			double? subject, params double?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData(1.1, 1.1)]
 		public async Task ForNullableDouble_WhenValueIsEqualToExpected_ShouldSucceed(
-			double? subject, double? expected)
+			double? subject, params double?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForNullableFloat_WhenExpectedIsNull_ShouldFail(float? subject)
-		{
-			float? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData((float)1.1, (float)2.1)]
 		[InlineData((float)1.1, (float)0.1)]
 		public async Task ForNullableFloat_WhenValueIsDifferentToExpected_ShouldFail(
-			float? subject, float? expected)
+			float? subject, params float?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((float)1.1, (float)1.1)]
 		public async Task ForNullableFloat_WhenValueIsEqualToExpected_ShouldSucceed(
-			float? subject, float? expected)
+			float? subject, params float?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -551,26 +402,26 @@ public sealed partial class NumberShould
 		[InlineData(1, 2)]
 		[InlineData(1, 0)]
 		public async Task ForNullableInt_WhenValueIsDifferentToExpected_ShouldFail(
-			int? subject, int? expected)
+			int? subject, params int?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData(1, 1)]
 		public async Task ForNullableInt_WhenValueIsEqualToExpected_ShouldSucceed(
-			int? subject, int? expected)
+			int? subject, params int?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -578,17 +429,17 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableInt_WhenValueIsNull_ShouldFail(
-			int? expected)
+			params int?[] expected)
 		{
 			int? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
 				              """);
 		}
@@ -597,26 +448,26 @@ public sealed partial class NumberShould
 		[InlineData((long)1, (long)2)]
 		[InlineData((long)1, (long)0)]
 		public async Task ForNullableLong_WhenValueIsDifferentToExpected_ShouldFail(
-			long? subject, long? expected)
+			long? subject, params long?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((long)1, (long)1)]
 		public async Task ForNullableLong_WhenValueIsEqualToExpected_ShouldSucceed(
-			long? subject, long? expected)
+			long? subject, params long?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -624,17 +475,17 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableLong_WhenValueIsNull_ShouldFail(
-			long? expected)
+			params long?[] expected)
 		{
 			long? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
 				              """);
 		}
@@ -643,26 +494,26 @@ public sealed partial class NumberShould
 		[InlineData((sbyte)1, (sbyte)2)]
 		[InlineData((sbyte)1, (sbyte)0)]
 		public async Task ForNullableSbyte_WhenValueIsDifferentToExpected_ShouldFail(
-			sbyte? subject, sbyte? expected)
+			sbyte? subject, params sbyte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((sbyte)1, (sbyte)1)]
 		public async Task ForNullableSbyte_WhenValueIsEqualToExpected_ShouldSucceed(
-			sbyte? subject, sbyte? expected)
+			sbyte? subject, params sbyte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -670,17 +521,17 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableSbyte_WhenValueIsNull_ShouldFail(
-			sbyte? expected)
+			params sbyte?[] expected)
 		{
 			sbyte? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
 				              """);
 		}
@@ -689,26 +540,26 @@ public sealed partial class NumberShould
 		[InlineData((short)1, (short)2)]
 		[InlineData((short)1, (short)0)]
 		public async Task ForNullableShort_WhenValueIsDifferentToExpected_ShouldFail(
-			short? subject, short? expected)
+			short? subject, params short?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((short)1, (short)1)]
 		public async Task ForNullableShort_WhenValueIsEqualToExpected_ShouldSucceed(
-			short? subject, short? expected)
+			short? subject, params short?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -716,17 +567,17 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableShort_WhenValueIsNull_ShouldFail(
-			short? expected)
+			params short?[] expected)
 		{
 			short? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
 				              """);
 		}
@@ -735,26 +586,26 @@ public sealed partial class NumberShould
 		[InlineData((uint)1, (uint)2)]
 		[InlineData((uint)1, (uint)0)]
 		public async Task ForNullableUint_WhenValueIsDifferentToExpected_ShouldFail(
-			uint? subject, uint? expected)
+			uint? subject, params uint?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((uint)1, (uint)1)]
 		public async Task ForNullableUint_WhenValueIsEqualToExpected_ShouldSucceed(
-			uint? subject, uint? expected)
+			uint? subject, params uint?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -762,17 +613,17 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableUint_WhenValueIsNull_ShouldFail(
-			uint? expected)
+			params uint?[] expected)
 		{
 			uint? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
 				              """);
 		}
@@ -781,26 +632,26 @@ public sealed partial class NumberShould
 		[InlineData((ulong)1, (ulong)2)]
 		[InlineData((ulong)1, (ulong)0)]
 		public async Task ForNullableUlong_WhenValueIsDifferentToExpected_ShouldFail(
-			ulong? subject, ulong? expected)
+			ulong? subject, params ulong?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((ulong)1, (ulong)1)]
 		public async Task ForNullableUlong_WhenValueIsEqualToExpected_ShouldSucceed(
-			ulong? subject, ulong? expected)
+			ulong? subject, params ulong?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -808,17 +659,17 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableUlong_WhenValueIsNull_ShouldFail(
-			ulong? expected)
+			params ulong?[] expected)
 		{
 			ulong? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
 				              """);
 		}
@@ -827,26 +678,26 @@ public sealed partial class NumberShould
 		[InlineData((ushort)1, (ushort)2)]
 		[InlineData((ushort)1, (ushort)0)]
 		public async Task ForNullableUshort_WhenValueIsDifferentToExpected_ShouldFail(
-			ushort? subject, ushort? expected)
+			ushort? subject, params ushort?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((ushort)1, (ushort)1)]
 		public async Task ForNullableUshort_WhenValueIsEqualToExpected_ShouldSucceed(
-			ushort? subject, ushort? expected)
+			ushort? subject, params ushort?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -854,36 +705,18 @@ public sealed partial class NumberShould
 		[Theory]
 		[AutoData]
 		public async Task ForNullableUshort_WhenValueIsNull_ShouldFail(
-			ushort? expected)
+			params ushort?[] expected)
 		{
 			ushort? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
+				              be one of {Formatter.Format(expected)},
 				              but found <null>.
-				              """);
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForSbyte_WhenExpectedIsNull_ShouldFail(
-			sbyte subject)
-		{
-			sbyte? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
 				              """);
 		}
 
@@ -891,216 +724,144 @@ public sealed partial class NumberShould
 		[InlineData((sbyte)1, (sbyte)2)]
 		[InlineData((sbyte)1, (sbyte)0)]
 		public async Task ForSbyte_WhenValueIsDifferentToExpected_ShouldFail(sbyte subject,
-			sbyte? expected)
+			params sbyte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((sbyte)1, (sbyte)1)]
 		public async Task ForSbyte_WhenValueIsEqualToExpected_ShouldSucceed(sbyte subject,
-			sbyte? expected)
+			params sbyte?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForShort_WhenExpectedIsNull_ShouldFail(
-			short subject)
-		{
-			short? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData((short)1, (short)2)]
 		[InlineData((short)1, (short)0)]
 		public async Task ForShort_WhenValueIsDifferentToExpected_ShouldFail(short subject,
-			short? expected)
+			params short?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((short)1, (short)1)]
 		public async Task ForShort_WhenValueIsEqualToExpected_ShouldSucceed(short subject,
-			short? expected)
+			params short?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForUint_WhenExpectedIsNull_ShouldFail(
-			uint subject)
-		{
-			uint? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData((uint)1, (uint)2)]
 		[InlineData((uint)1, (uint)0)]
 		public async Task ForUint_WhenValueIsDifferentToExpected_ShouldFail(uint subject,
-			uint? expected)
+			params uint?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((uint)1, (uint)1)]
 		public async Task ForUint_WhenValueIsEqualToExpected_ShouldSucceed(uint subject,
-			uint? expected)
+			params uint?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForUlong_WhenExpectedIsNull_ShouldFail(
-			ulong subject)
-		{
-			ulong? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData((ulong)1, (ulong)2)]
 		[InlineData((ulong)1, (ulong)0)]
 		public async Task ForUlong_WhenValueIsDifferentToExpected_ShouldFail(ulong subject,
-			ulong? expected)
+			params ulong?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((ulong)1, (ulong)1)]
 		public async Task ForUlong_WhenValueIsEqualToExpected_ShouldSucceed(ulong subject,
-			ulong? expected)
+			params ulong?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Theory]
-		[AutoData]
-		public async Task ForUshort_WhenExpectedIsNull_ShouldFail(
-			ushort subject)
-		{
-			ushort? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              be <null>,
-				              but found {subject}.
-				              """);
 		}
 
 		[Theory]
 		[InlineData((ushort)1, (ushort)2)]
 		[InlineData((ushort)1, (ushort)0)]
 		public async Task ForUshort_WhenValueIsDifferentToExpected_ShouldFail(ushort subject,
-			ushort? expected)
+			params ushort?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be one of {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[InlineData((ushort)1, (ushort)1)]
 		public async Task ForUshort_WhenValueIsEqualToExpected_ShouldSucceed(ushort subject,
-			ushort? expected)
+			params ushort?[] expected)
 		{
 			async Task Act()
-				=> await That(subject).Should().Be(expected);
+				=> await That(subject).Should().BeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
 	}
 
-	public sealed partial class NotBeTests
+	public sealed partial class NotBeOneOfTests
 	{
 		[Theory]
 		[AutoData]
@@ -1110,7 +871,7 @@ public sealed partial class NumberShould
 			byte? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1119,10 +880,10 @@ public sealed partial class NumberShould
 		[InlineData((byte)1, (byte)2)]
 		[InlineData((byte)1, (byte)0)]
 		public async Task ForByte_WhenValueIsDifferentToUnexpected_ShouldSucceed(byte subject,
-			byte? unexpected)
+			params byte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1130,16 +891,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((byte)1, (byte)1)]
 		public async Task ForByte_WhenValueIsEqualToUnexpected_ShouldFail(byte subject,
-			byte? unexpected)
+			params byte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1150,7 +911,7 @@ public sealed partial class NumberShould
 			decimal? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1159,13 +920,15 @@ public sealed partial class NumberShould
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForDecimal_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			double subjectValue, double unexpectedValue)
+			double subjectValue, params double[] unexpectedValues)
 		{
 			decimal subject = new(subjectValue);
-			decimal unexpected = new(unexpectedValue);
+			decimal[] unexpected = unexpectedValues
+				.Select(unexpectedValue => new decimal(unexpectedValue))
+				.ToArray();
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1173,19 +936,21 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData(1.1, 1.1)]
 		public async Task ForDecimal_WhenValueIsEqualToUnexpected_ShouldFail(
-			double subjectValue, double unexpectedValue)
+			double subjectValue, params double[] unexpectedValues)
 		{
 			decimal subject = new(subjectValue);
-			decimal unexpected = new(unexpectedValue);
+			decimal[] unexpected = unexpectedValues
+				.Select(unexpectedValue => new decimal(unexpectedValue))
+				.ToArray();
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1193,14 +958,14 @@ public sealed partial class NumberShould
 		public async Task ForDouble_WhenSubjectAndExpectedAreNaN_ShouldFail()
 		{
 			double subject = double.NaN;
-			double expected = double.NaN;
+			double[] expected = [double.NaN];
 
-			async Task Act() => await That(subject).Should().NotBe(expected);
+			async Task Act() => await That(subject).Should().NotBeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be NaN,
+				             not be one of [NaN],
 				             but found NaN.
 				             """);
 		}
@@ -1209,9 +974,9 @@ public sealed partial class NumberShould
 		[InlineData(double.NaN, 0.0)]
 		[InlineData(0.0, double.NaN)]
 		public async Task ForDouble_WhenSubjectOrExpectedIsNaN_ShouldSucceed(
-			double subject, double expected)
+			double subject, params double[] expected)
 		{
-			async Task Act() => await That(subject).Should().NotBe(expected);
+			async Task Act() => await That(subject).Should().NotBeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1222,13 +987,13 @@ public sealed partial class NumberShould
 			double subject, float unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              not be one of [{Formatter.Format(unexpected)}],
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1239,7 +1004,7 @@ public sealed partial class NumberShould
 			double? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1248,10 +1013,10 @@ public sealed partial class NumberShould
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForDouble_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			double subject, double unexpected)
+			double subject, params double[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1259,16 +1024,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData(1.1, 1.1)]
 		public async Task ForDouble_WhenValueIsEqualToUnexpected_ShouldFail(
-			double subject, double? unexpected)
+			double subject, params double?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1276,25 +1041,25 @@ public sealed partial class NumberShould
 		public async Task ForFloat_WhenSubjectAndExpectedAreNaN_ShouldFail()
 		{
 			float subject = float.NaN;
-			float expected = float.NaN;
+			float[] expected = [float.NaN];
 
-			async Task Act() => await That(subject).Should().NotBe(expected);
+			async Task Act() => await That(subject).Should().NotBeOneOf(expected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be NaN,
+				             not be one of [NaN],
 				             but found NaN.
 				             """);
 		}
 
 		[Theory]
-		[InlineData(float.NaN, 0.0)]
-		[InlineData(0.0, float.NaN)]
+		[InlineData(float.NaN, 0.0F)]
+		[InlineData(0.0F, float.NaN)]
 		public async Task ForFloat_WhenSubjectOrExpectedIsNaN_ShouldSucceed(
-			float subject, float expected)
+			float subject, params float[] expected)
 		{
-			async Task Act() => await That(subject).Should().NotBe(expected);
+			async Task Act() => await That(subject).Should().NotBeOneOf(expected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1306,7 +1071,7 @@ public sealed partial class NumberShould
 			float? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1315,10 +1080,10 @@ public sealed partial class NumberShould
 		[InlineData((float)1.1, (float)2.1)]
 		[InlineData((float)1.1, (float)0.1)]
 		public async Task ForFloat_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			float subject, float unexpected)
+			float subject, params float[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1326,16 +1091,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((float)1.1, (float)1.1)]
 		public async Task ForFloat_WhenValueIsEqualToUnexpected_ShouldFail(
-			float subject, float? unexpected)
+			float subject, params float?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1347,7 +1112,7 @@ public sealed partial class NumberShould
 			int? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1356,10 +1121,10 @@ public sealed partial class NumberShould
 		[InlineData(1, 2)]
 		[InlineData(2, 1)]
 		public async Task ForInt_WhenValueIsDifferentToUnexpected_ShouldSucceed(int subject,
-			int? unexpected)
+			params int?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1367,16 +1132,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData(1, 1)]
 		public async Task ForInt_WhenValueIsEqualToUnexpected_ShouldFail(int subject,
-			int? unexpected)
+			params int?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1386,13 +1151,13 @@ public sealed partial class NumberShould
 			long subject, int unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of [{Formatter.Format(unexpected)}],
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1404,7 +1169,7 @@ public sealed partial class NumberShould
 			long? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1413,10 +1178,10 @@ public sealed partial class NumberShould
 		[InlineData((long)1, (long)2)]
 		[InlineData((long)1, (long)0)]
 		public async Task ForLong_WhenValueIsDifferentToUnexpected_ShouldSucceed(long subject,
-			long? unexpected)
+			params long?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1424,16 +1189,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((long)1, (long)1)]
 		public async Task ForLong_WhenValueIsEqualToUnexpected_ShouldFail(long subject,
-			long? unexpected)
+			params long?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1441,10 +1206,10 @@ public sealed partial class NumberShould
 		[InlineData((byte)1, (byte)2)]
 		[InlineData((byte)1, (byte)0)]
 		public async Task ForNullableByte_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			byte? subject, byte? unexpected)
+			byte? subject, params byte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1452,28 +1217,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((byte)1, (byte)1)]
 		public async Task ForNullableByte_WhenValueIsEqualToUnexpected_ShouldFail(
-			byte? subject, byte? unexpected)
+			byte? subject, params byte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableByte_WhenValueIsNull_ShouldSucceed(
-			byte? unexpected)
+			params byte?[] unexpected)
 		{
 			byte? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1485,7 +1250,7 @@ public sealed partial class NumberShould
 			decimal? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1494,14 +1259,17 @@ public sealed partial class NumberShould
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForNullableDecimal_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			double? subjectValue, double? unexpectedValue)
+			double? subjectValue, params double?[] unexpectedValues)
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
-			decimal? unexpected =
-				unexpectedValue == null ? null : new decimal(unexpectedValue.Value);
+			decimal?[] unexpected = unexpectedValues
+				.Select(unexpectedValue => unexpectedValue == null
+					? (decimal?)null
+					: new decimal(unexpectedValue.Value))
+				.ToArray();
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1509,20 +1277,23 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData(1.1, 1.1)]
 		public async Task ForNullableDecimal_WhenValueIsEqualToUnexpected_ShouldFail(
-			double? subjectValue, double? unexpectedValue)
+			double? subjectValue, params double?[] unexpectedValues)
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
-			decimal? unexpected =
-				unexpectedValue == null ? null : new decimal(unexpectedValue.Value);
+			decimal?[] unexpected = unexpectedValues
+				.Select(unexpectedValue => unexpectedValue == null
+					? (decimal?)null
+					: new decimal(unexpectedValue.Value))
+				.ToArray();
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture)}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1533,7 +1304,7 @@ public sealed partial class NumberShould
 			double? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1542,10 +1313,10 @@ public sealed partial class NumberShould
 		[InlineData(1.1, 2.1)]
 		[InlineData(1.1, 0.1)]
 		public async Task ForNullableDouble_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			double? subject, double? unexpected)
+			double? subject, params double?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1553,16 +1324,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData(1.1, 1.1)]
 		public async Task ForNullableDouble_WhenValueIsEqualToUnexpected_ShouldFail(
-			double? subject, double? unexpected)
+			double? subject, params double?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture)}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1573,7 +1344,7 @@ public sealed partial class NumberShould
 			float? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1582,10 +1353,10 @@ public sealed partial class NumberShould
 		[InlineData((float)1.1, (float)2.1)]
 		[InlineData((float)1.1, (float)0.1)]
 		public async Task ForNullableFloat_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			float? subject, float? unexpected)
+			float? subject, params float?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1593,16 +1364,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((float)1.1, (float)1.1)]
 		public async Task ForNullableFloat_WhenValueIsEqualToUnexpected_ShouldFail(
-			float? subject, float? unexpected)
+			float? subject, params float?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture)}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1610,10 +1381,10 @@ public sealed partial class NumberShould
 		[InlineData(1, 2)]
 		[InlineData(1, 0)]
 		public async Task ForNullableInt_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			int? subject, int? unexpected)
+			int? subject, params int?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1621,28 +1392,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData(1, 1)]
 		public async Task ForNullableInt_WhenValueIsEqualToUnexpected_ShouldFail(
-			int? subject, int? unexpected)
+			int? subject, params int?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableInt_WhenValueIsNull_ShouldSucceed(
-			int? unexpected)
+			params int?[] unexpected)
 		{
 			int? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1651,10 +1422,10 @@ public sealed partial class NumberShould
 		[InlineData((long)1, (long)2)]
 		[InlineData((long)1, (long)0)]
 		public async Task ForNullableLong_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			long? subject, long? unexpected)
+			long? subject, params long?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1662,28 +1433,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((long)1, (long)1)]
 		public async Task ForNullableLong_WhenValueIsEqualToUnexpected_ShouldFail(
-			long? subject, long? unexpected)
+			long? subject, params long?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableLong_WhenValueIsNull_ShouldSucceed(
-			long? unexpected)
+			params long?[] unexpected)
 		{
 			long? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1692,10 +1463,10 @@ public sealed partial class NumberShould
 		[InlineData((sbyte)1, (sbyte)2)]
 		[InlineData((sbyte)1, (sbyte)0)]
 		public async Task ForNullableSbyte_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			sbyte? subject, sbyte? unexpected)
+			sbyte? subject, params sbyte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1703,28 +1474,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((sbyte)1, (sbyte)1)]
 		public async Task ForNullableSbyte_WhenValueIsEqualToUnexpected_ShouldFail(
-			sbyte? subject, sbyte? unexpected)
+			sbyte? subject, params sbyte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableSbyte_WhenValueIsNull_ShouldSucceed(
-			sbyte? unexpected)
+			params sbyte?[] unexpected)
 		{
 			sbyte? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1733,10 +1504,10 @@ public sealed partial class NumberShould
 		[InlineData((short)1, (short)2)]
 		[InlineData((short)1, (short)0)]
 		public async Task ForNullableShort_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			short? subject, short? unexpected)
+			short? subject, params short?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1744,28 +1515,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((short)1, (short)1)]
 		public async Task ForNullableShort_WhenValueIsEqualToUnexpected_ShouldFail(
-			short? subject, short? unexpected)
+			short? subject, params short?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableShort_WhenValueIsNull_ShouldSucceed(
-			short? unexpected)
+			params short?[] unexpected)
 		{
 			short? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1774,10 +1545,10 @@ public sealed partial class NumberShould
 		[InlineData((uint)1, (uint)2)]
 		[InlineData((uint)1, (uint)0)]
 		public async Task ForNullableUint_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			uint? subject, uint? unexpected)
+			uint? subject, params uint?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1785,28 +1556,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((uint)1, (uint)1)]
 		public async Task ForNullableUint_WhenValueIsEqualToUnexpected_ShouldFail(
-			uint? subject, uint? unexpected)
+			uint? subject, params uint?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableUint_WhenValueIsNull_ShouldSucceed(
-			uint? unexpected)
+			params uint?[] unexpected)
 		{
 			uint? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1815,10 +1586,10 @@ public sealed partial class NumberShould
 		[InlineData((ulong)1, (ulong)2)]
 		[InlineData((ulong)1, (ulong)0)]
 		public async Task ForNullableUlong_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			ulong? subject, ulong? unexpected)
+			ulong? subject, params ulong?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1826,28 +1597,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((ulong)1, (ulong)1)]
 		public async Task ForNullableUlong_WhenValueIsEqualToUnexpected_ShouldFail(
-			ulong? subject, ulong? unexpected)
+			ulong? subject, params ulong?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableUlong_WhenValueIsNull_ShouldSucceed(
-			ulong? unexpected)
+			params ulong?[] unexpected)
 		{
 			ulong? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1856,10 +1627,10 @@ public sealed partial class NumberShould
 		[InlineData((ushort)1, (ushort)2)]
 		[InlineData((ushort)1, (ushort)0)]
 		public async Task ForNullableUshort_WhenValueIsDifferentToUnexpected_ShouldSucceed(
-			ushort? subject, ushort? unexpected)
+			ushort? subject, params ushort?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1867,28 +1638,28 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((ushort)1, (ushort)1)]
 		public async Task ForNullableUshort_WhenValueIsEqualToUnexpected_ShouldFail(
-			ushort? subject, ushort? unexpected)
+			ushort? subject, params ushort?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
 		[Theory]
 		[AutoData]
 		public async Task ForNullableUshort_WhenValueIsNull_ShouldSucceed(
-			ushort? unexpected)
+			params ushort?[] unexpected)
 		{
 			ushort? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1901,7 +1672,7 @@ public sealed partial class NumberShould
 			sbyte? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1910,10 +1681,10 @@ public sealed partial class NumberShould
 		[InlineData((sbyte)1, (sbyte)2)]
 		[InlineData((sbyte)1, (sbyte)0)]
 		public async Task ForSbyte_WhenValueIsDifferentToUnexpected_ShouldSucceed(sbyte subject,
-			sbyte? unexpected)
+			params sbyte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1921,16 +1692,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((sbyte)1, (sbyte)1)]
 		public async Task ForSbyte_WhenValueIsEqualToUnexpected_ShouldFail(sbyte subject,
-			sbyte? unexpected)
+			params sbyte?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1942,7 +1713,7 @@ public sealed partial class NumberShould
 			short? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1951,10 +1722,10 @@ public sealed partial class NumberShould
 		[InlineData((short)1, (short)2)]
 		[InlineData((short)1, (short)0)]
 		public async Task ForShort_WhenValueIsDifferentToUnexpected_ShouldSucceed(short subject,
-			short? unexpected)
+			params short?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1962,16 +1733,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((short)1, (short)1)]
 		public async Task ForShort_WhenValueIsEqualToUnexpected_ShouldFail(short subject,
-			short? unexpected)
+			params short?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -1983,7 +1754,7 @@ public sealed partial class NumberShould
 			uint? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -1992,10 +1763,10 @@ public sealed partial class NumberShould
 		[InlineData((uint)1, (uint)2)]
 		[InlineData((uint)1, (uint)0)]
 		public async Task ForUint_WhenValueIsDifferentToUnexpected_ShouldSucceed(uint subject,
-			uint? unexpected)
+			params uint?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -2003,16 +1774,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((uint)1, (uint)1)]
 		public async Task ForUint_WhenValueIsEqualToUnexpected_ShouldFail(uint subject,
-			uint? unexpected)
+			params uint?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -2024,7 +1795,7 @@ public sealed partial class NumberShould
 			ulong? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -2033,10 +1804,10 @@ public sealed partial class NumberShould
 		[InlineData((ulong)1, (ulong)2)]
 		[InlineData((ulong)1, (ulong)0)]
 		public async Task ForUlong_WhenValueIsDifferentToUnexpected_ShouldSucceed(ulong subject,
-			ulong? unexpected)
+			params ulong?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -2044,16 +1815,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((ulong)1, (ulong)1)]
 		public async Task ForUlong_WhenValueIsEqualToUnexpected_ShouldFail(ulong subject,
-			ulong? unexpected)
+			params ulong?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -2065,7 +1836,7 @@ public sealed partial class NumberShould
 			ushort? unexpected = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -2074,10 +1845,10 @@ public sealed partial class NumberShould
 		[InlineData((ushort)1, (ushort)2)]
 		[InlineData((ushort)1, (ushort)0)]
 		public async Task ForUshort_WhenValueIsDifferentToUnexpected_ShouldSucceed(ushort subject,
-			ushort? unexpected)
+			params ushort?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().NotThrow();
 		}
@@ -2085,16 +1856,16 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((ushort)1, (ushort)1)]
 		public async Task ForUshort_WhenValueIsEqualToUnexpected_ShouldFail(ushort subject,
-			ushort? unexpected)
+			params ushort?[] unexpected)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBeOneOf(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be one of {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 	}
