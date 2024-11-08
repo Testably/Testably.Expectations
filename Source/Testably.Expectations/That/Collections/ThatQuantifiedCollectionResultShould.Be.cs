@@ -18,16 +18,14 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 	/// </summary>
 	public static AndOrResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
 		this QuantifiedCollectionResult<IThat<TCollection>> source,
-		TItem expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		TItem expected)
 		where TCollection : IEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
 					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(
 						expected,
 						source.Quantity,
-						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c)))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c))),
 			source.Result);
 }
 
@@ -39,16 +37,14 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 	/// </summary>
 	public static AndOrResult<TCollection, IThat<TCollection>> Be<TItem, TCollection>(
 		this QuantifiedCollectionResult<IThat<TCollection>> source,
-		TItem expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		TItem expected)
 		where TCollection : IAsyncEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
 					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(
 						expected,
 						source.Quantity,
-						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c)))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c))),
 			source.Result);
 }
 #endif

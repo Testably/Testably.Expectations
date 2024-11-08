@@ -16,8 +16,7 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<TException>(source.ExpectationBuilder
-				.AddConstraint(new ThrowsExactlyCastConstraint<TException>(throwOptions))
-				.AppendGenericMethodStatement<TException>(nameof(ThrowExactly)),
+				.AddConstraint(new ThrowsExactlyCastConstraint<TException>(throwOptions)),
 			throwOptions);
 	}
 

@@ -15,8 +15,7 @@ public static partial class ThatEnumShould
 	/// </summary>
 	public static IThat<TEnum> Should<TEnum>(this IExpectSubject<TEnum> subject)
 		where TEnum : struct, Enum
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct ValueConstraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
 		: IValueConstraint<TEnum>

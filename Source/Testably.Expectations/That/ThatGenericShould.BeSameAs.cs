@@ -18,8 +18,7 @@ public static partial class ThatGenericShould
 					expected,
 					$"refer to {doNotPopulateThisValue} {Formatter.Format(expected)}",
 					(a, e) => ReferenceEquals(e, a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeSameAs), doNotPopulateThisValue),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -34,7 +33,6 @@ public static partial class ThatGenericShould
 					unexpected,
 					$"not refer to {doNotPopulateThisValue} {Formatter.Format(unexpected)}",
 					(a, e) => !ReferenceEquals(e, a),
-					(_, _) => "it did"))
-				.AppendMethodStatement(nameof(NotBeSameAs), doNotPopulateThisValue),
+					(_, _) => "it did")),
 			source);
 }

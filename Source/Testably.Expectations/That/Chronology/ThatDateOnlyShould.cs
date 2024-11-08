@@ -15,17 +15,14 @@ public static partial class ThatDateOnlyShould
 	/// <summary>
 	///     Start expectations for current <see cref="DateOnly" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<DateOnly> Should(this IExpectSubject<DateOnly> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+	public static IThat<DateOnly> Should(this IExpectSubject<DateOnly> subject)
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="DateOnly" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<DateOnly?> Should(this IExpectSubject<DateOnly?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct ConditionConstraint(
 		DateOnly expected,

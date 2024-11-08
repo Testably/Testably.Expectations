@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations.Results;
@@ -37,40 +36,29 @@ public class CountResult<TType, TThat, TSelf>(
 	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
 	where TSelf : CountResult<TType, TThat, TSelf>
 {
-	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
-
 	/// <summary>
 	///     Verifies, that it occurs at least <paramref name="minimum" /> times.
 	/// </summary>
-	public TSelf AtLeast(
-		int minimum,
-		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
+	public TSelf AtLeast(int minimum)
 	{
 		quantifier.AtLeast(minimum);
-		_expectationBuilder.AppendMethodStatement(nameof(AtLeast), doNotPopulateThisValue);
 		return (TSelf)this;
 	}
 
 	/// <summary>
 	///     Verifies, that it occurs at most <paramref name="maximum" /> times.
 	/// </summary>
-	public TSelf AtMost(
-		int maximum,
-		[CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
+	public TSelf AtMost(int maximum)
 	{
 		quantifier.AtMost(maximum);
-		_expectationBuilder.AppendMethodStatement(nameof(AtMost), doNotPopulateThisValue);
 		return (TSelf)this;
 	}
 
 	/// <summary>
 	///     Verifies, that it occurs between <paramref name="minimum" />...
 	/// </summary>
-	public BetweenResult<TSelf> Between(
-		int minimum,
-		[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
-		=> new(_expectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue),
-			maximum =>
+	public BetweenResult<TSelf> Between(int minimum)
+		=> new(maximum =>
 			{
 				quantifier.Between(minimum, maximum);
 				return (TSelf)this;
@@ -79,12 +67,9 @@ public class CountResult<TType, TThat, TSelf>(
 	/// <summary>
 	///     Verifies, that it occurs exactly <paramref name="expected" /> times.
 	/// </summary>
-	public TSelf Exactly(
-		int expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+	public TSelf Exactly(int expected)
 	{
 		quantifier.Exactly(expected);
-		_expectationBuilder.AppendMethodStatement(nameof(Exactly), doNotPopulateThisValue);
 		return (TSelf)this;
 	}
 
@@ -94,7 +79,6 @@ public class CountResult<TType, TThat, TSelf>(
 	public TSelf Never()
 	{
 		quantifier.Exactly(0);
-		_expectationBuilder.AppendMethodStatement(nameof(Never));
 		return (TSelf)this;
 	}
 
@@ -104,7 +88,6 @@ public class CountResult<TType, TThat, TSelf>(
 	public TSelf Once()
 	{
 		quantifier.Exactly(1);
-		_expectationBuilder.AppendMethodStatement(nameof(Once));
 		return (TSelf)this;
 	}
 }

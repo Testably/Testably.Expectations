@@ -34,8 +34,7 @@ public class QuantifiedCollectionResult
 					.AddConstraint(
 						new BeOfTypeConstraint<TItem, TCollection, TExpected>(
 							Quantity,
-							(a, c) => Quantity.GetEvaluator<TItem, TCollection>(a, c)))
-					.AppendGenericMethodStatement<TExpected>(nameof(Be)),
+							(a, c) => Quantity.GetEvaluator<TItem, TCollection>(a, c))),
 				Result);
 	}
 
@@ -60,8 +59,7 @@ public class QuantifiedCollectionResult
 					.AddConstraint(
 						new BeOfTypeConstraint<TItem, TCollection, TExpected>(
 							Quantity,
-							(a, c) => Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c)))
-					.AppendGenericMethodStatement<TExpected>(nameof(Be)),
+							(a, c) => Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c))),
 				Result);
 	}
 #endif

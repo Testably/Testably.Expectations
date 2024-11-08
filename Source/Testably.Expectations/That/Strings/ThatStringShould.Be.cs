@@ -13,11 +13,9 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringMatcherResult<string?, IThat<string?>> Be(
 		this IThat<string?> source,
-		StringMatcher expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		StringMatcher expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint(expected))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+				.AddConstraint(new IsValueConstraint(expected)),
 			source,
 			expected);
 

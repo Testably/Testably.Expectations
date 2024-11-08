@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Testably.Expectations.Core;
 using Testably.Expectations.Options;
@@ -18,15 +17,12 @@ public class StringMatcherResult<TType, TThat>(
 	StringMatcher expected)
 	: AndOrResult<TType, TThat>(expectationBuilder, returnValue)
 {
-	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
-
 	/// <summary>
 	///     Interprets the expected <see langword="string" /> as <see cref="Regex" /> pattern.
 	/// </summary>
 	public StringMatcherResult<TType, TThat> AsRegex()
 	{
 		expected.AsRegex();
-		_expectationBuilder.AppendMethodStatement(nameof(AsRegex));
 		return this;
 	}
 
@@ -37,7 +33,6 @@ public class StringMatcherResult<TType, TThat>(
 	public StringMatcherResult<TType, TThat> AsWildcard()
 	{
 		expected.AsWildcard();
-		_expectationBuilder.AppendMethodStatement(nameof(AsWildcard));
 		return this;
 	}
 
@@ -47,7 +42,6 @@ public class StringMatcherResult<TType, TThat>(
 	public StringMatcherResult<TType, TThat> Exactly()
 	{
 		expected.Exactly();
-		_expectationBuilder.AppendMethodStatement(nameof(Exactly));
 		return this;
 	}
 
@@ -57,7 +51,6 @@ public class StringMatcherResult<TType, TThat>(
 	public StringMatcherResult<TType, TThat> IgnoringCase()
 	{
 		expected.IgnoringCase();
-		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
 		return this;
 	}
 
@@ -65,11 +58,9 @@ public class StringMatcherResult<TType, TThat>(
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="string" />s.
 	/// </summary>
 	public StringMatcherResult<TType, TThat> Using(
-		IEqualityComparer<string> comparer,
-		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
+		IEqualityComparer<string> comparer)
 	{
 		expected.UsingComparer(comparer);
-		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
 }

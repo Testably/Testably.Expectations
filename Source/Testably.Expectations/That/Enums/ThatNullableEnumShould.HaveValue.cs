@@ -14,16 +14,14 @@ public static partial class ThatNullableEnumShould
 	/// </summary>
 	public static AndOrResult<TEnum?, IThat<TEnum?>> HaveValue<TEnum>(
 		this IThat<TEnum?> source,
-		long? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		long? expected)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"have value {Formatter.Format(expected)}",
 					actual => actual != null &&
 					          Convert.ToInt64(actual, CultureInfo.InvariantCulture)
-					          == expected))
-				.AppendMethodStatement(nameof(HaveValue), doNotPopulateThisValue),
+					          == expected)),
 			source);
 
 	/// <summary>
@@ -31,16 +29,13 @@ public static partial class ThatNullableEnumShould
 	/// </summary>
 	public static AndOrResult<TEnum?, IThat<TEnum?>> NotHaveValue<TEnum>(
 		this IThat<TEnum?> source,
-		long? unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		long? unexpected)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"not have value {Formatter.Format(unexpected)}",
 					actual => actual != null &&
 					          Convert.ToInt64(actual.Value, CultureInfo.InvariantCulture) !=
-					          unexpected))
-				.AppendMethodStatement(nameof(NotHaveValue), doNotPopulateThisValue),
+					          unexpected)),
 			source);
 }

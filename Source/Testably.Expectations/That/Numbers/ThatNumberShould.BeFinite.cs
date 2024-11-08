@@ -17,8 +17,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => !float.IsInfinity(a) && !float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -32,8 +31,7 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => !double.IsInfinity(a) && !double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -47,8 +45,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => a != null && !float.IsInfinity(a.Value) && !float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -62,8 +59,7 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => a != null && !double.IsInfinity(a.Value) && !double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -77,8 +73,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => float.IsInfinity(a) || float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -92,8 +87,7 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => double.IsInfinity(a) || double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -107,8 +101,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => a == null || float.IsInfinity(a.Value) || float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -122,7 +115,6 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => a == null || double.IsInfinity(a.Value) || double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeFinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 }

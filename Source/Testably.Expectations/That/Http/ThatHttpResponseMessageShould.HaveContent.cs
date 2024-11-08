@@ -21,8 +21,7 @@ public static partial class ThatHttpResponseMessageShould
 			StringMatcher expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasContentConstraint(expected))
-				.AppendMethodStatement(nameof(HaveContent), doNotPopulateThisValue),
+				.AddConstraint(new HasContentConstraint(expected)),
 			source,
 			expected);
 

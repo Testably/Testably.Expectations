@@ -24,8 +24,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// </summary>
 	public static IThat<HttpResponseMessage?> Should(
 		this IExpectSubject<HttpResponseMessage?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct HasStatusCodeRangeConstraint(
 		Func<int, bool> predicate,

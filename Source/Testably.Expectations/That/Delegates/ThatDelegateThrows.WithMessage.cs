@@ -16,8 +16,7 @@ public partial class ThatDelegateThrows<TException>
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(ExpectationBuilder
 				.AddConstraint(new ThatExceptionShould.HasMessageValueConstraint<TException>(
-					expected, "with"))
-				.AppendMethodStatement(nameof(WithMessage), doNotPopulateThisValue),
+					expected, "with")),
 			this,
 			expected);
 }

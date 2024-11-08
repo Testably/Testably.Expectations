@@ -16,8 +16,7 @@ public static partial class ThatHttpResponseMessageShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new HasStatusCodeRangeConstraint(
 					statusCode => statusCode >= 300 && statusCode < 400,
-					"be redirection (status code 3xx)"))
-				.AppendMethodStatement(nameof(BeRedirection)),
+					"be redirection (status code 3xx)")),
 			source);
 }
 #endif

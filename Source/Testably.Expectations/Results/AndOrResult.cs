@@ -33,7 +33,7 @@ public class AndOrResult<TType, TThat, TSelf>(
 	{
 		get
 		{
-			_expectationBuilder.And(b => b.Append('.').Append(nameof(And)));
+			_expectationBuilder.And();
 			return returnValue;
 		}
 	}
@@ -45,7 +45,7 @@ public class AndOrResult<TType, TThat, TSelf>(
 	{
 		get
 		{
-			_expectationBuilder.Or(b => b.Append('.').Append(nameof(Or)));
+			_expectationBuilder.Or();
 			return returnValue;
 		}
 	}

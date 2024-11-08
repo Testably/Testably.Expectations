@@ -15,8 +15,7 @@ public static partial class ThatStreamShould
 				.AddConstraint(new ValueConstraint(
 					"be readable",
 					actual => actual?.CanRead == true,
-					actual => actual == null ? "found <null>" : "it was not"))
-				.AppendMethodStatement(nameof(BeReadable)),
+					actual => actual == null ? "found <null>" : "it was not")),
 			source);
 
 	/// <summary>
@@ -28,7 +27,6 @@ public static partial class ThatStreamShould
 				.AddConstraint(new ValueConstraint(
 					"not be readable",
 					actual => actual?.CanRead == false,
-					actual => actual == null ? "found <null>" : "it was"))
-				.AppendMethodStatement(nameof(NotBeReadable)),
+					actual => actual == null ? "found <null>" : "it was")),
 			source);
 }

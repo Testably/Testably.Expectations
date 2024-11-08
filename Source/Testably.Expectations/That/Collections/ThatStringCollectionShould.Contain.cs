@@ -15,11 +15,9 @@ public static partial class ThatStringCollectionShould
 	/// </summary>
 	public static AndOrResult<IEnumerable<string>, IThat<IEnumerable<string>>> Contain(
 		this IThat<IEnumerable<string>> source,
-		string expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		string expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ContainsValueConstraint(expected))
-				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
+				.AddConstraint(new ContainsValueConstraint(expected)),
 			source);
 
 	private readonly struct ContainsValueConstraint(string expected)

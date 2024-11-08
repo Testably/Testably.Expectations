@@ -15,8 +15,7 @@ public static partial class ThatNullableEnumShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					"be null",
-					actual => actual == null))
-				.AppendMethodStatement(nameof(BeNull)),
+					actual => actual == null)),
 			source);
 
 	/// <summary>
@@ -28,7 +27,6 @@ public static partial class ThatNullableEnumShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					"not be null",
-					actual => actual != null))
-				.AppendMethodStatement(nameof(NotBeNull)),
+					actual => actual != null)),
 			source);
 }

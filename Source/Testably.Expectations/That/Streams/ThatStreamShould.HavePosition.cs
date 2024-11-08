@@ -12,16 +12,14 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> HavePosition(
 		this IThat<Stream?> source,
-		long expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		long expected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
 					$"have position {expected}",
 					actual => actual?.Position == expected,
 					actual => actual == null
 						? "found <null>"
-						: $"it had position {actual.Position}"))
-				.AppendMethodStatement(nameof(HavePosition), doNotPopulateThisValue),
+						: $"it had position {actual.Position}")),
 			source);
 
 	/// <summary>
@@ -29,13 +27,11 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> NotHavePosition(
 		this IThat<Stream?> source,
-		long expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		long expected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
 					$"not have position {expected}",
 					actual => actual != null && actual.Position != expected,
-					actual => actual == null ? "found <null>" : "it had"))
-				.AppendMethodStatement(nameof(NotHavePosition), doNotPopulateThisValue),
+					actual => actual == null ? "found <null>" : "it had")),
 			source);
 }

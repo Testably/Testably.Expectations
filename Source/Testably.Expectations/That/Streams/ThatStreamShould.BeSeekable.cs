@@ -15,8 +15,7 @@ public static partial class ThatStreamShould
 				.AddConstraint(new ValueConstraint(
 					"be seekable",
 					actual => actual?.CanSeek == true,
-					actual => actual == null ? "found <null>" : "it was not"))
-				.AppendMethodStatement(nameof(BeSeekable)),
+					actual => actual == null ? "found <null>" : "it was not")),
 			source);
 
 	/// <summary>
@@ -28,7 +27,6 @@ public static partial class ThatStreamShould
 				.AddConstraint(new ValueConstraint(
 					"not be seekable",
 					actual => actual?.CanSeek == false,
-					actual => actual == null ? "found <null>" : "it was"))
-				.AppendMethodStatement(nameof(NotBeSeekable)),
+					actual => actual == null ? "found <null>" : "it was")),
 			source);
 }

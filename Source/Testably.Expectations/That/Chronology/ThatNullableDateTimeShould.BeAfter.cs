@@ -14,8 +14,7 @@ public static partial class ThatNullableDateTimeShould
 	/// </summary>
 	public static TimeToleranceResult<DateTime?, IThat<DateTime?>> BeAfter(
 		this IThat<DateTime?> source,
-		DateTime? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		DateTime? expected)
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
@@ -25,8 +24,7 @@ public static partial class ThatNullableDateTimeShould
 					$"be after {Formatter.Format(expected)}",
 					(a, e, t) => a + t > e,
 					(a, _) => $"found {Formatter.Format(a)}",
-					tolerance))
-				.AppendMethodStatement(nameof(BeAfter), doNotPopulateThisValue),
+					tolerance)),
 			source,
 			tolerance);
 	}
@@ -36,8 +34,7 @@ public static partial class ThatNullableDateTimeShould
 	/// </summary>
 	public static TimeToleranceResult<DateTime?, IThat<DateTime?>> NotBeAfter(
 		this IThat<DateTime?> source,
-		DateTime? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		DateTime? expected)
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
@@ -47,8 +44,7 @@ public static partial class ThatNullableDateTimeShould
 					$"not be after {Formatter.Format(expected)}",
 					(a, e, t) => a - t <= e,
 					(a, _) => $"found {Formatter.Format(a)}",
-					tolerance))
-				.AppendMethodStatement(nameof(NotBeAfter), doNotPopulateThisValue),
+					tolerance)),
 			source,
 			tolerance);
 	}

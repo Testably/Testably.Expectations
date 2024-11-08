@@ -16,8 +16,7 @@ public static partial class ThatEnumerableShould
 	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		BeEmpty<TItem>(this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsEmptyValueConstraint<TItem>())
-				.AppendMethodStatement(nameof(BeEmpty)),
+				.AddConstraint(new IsEmptyValueConstraint<TItem>()),
 			source);
 
 	/// <summary>
@@ -27,8 +26,7 @@ public static partial class ThatEnumerableShould
 		NotBeEmpty<TItem>(
 			this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsNotEmptyConstraint<TItem>())
-				.AppendMethodStatement(nameof(NotBeEmpty)),
+				.AddConstraint(new IsNotEmptyConstraint<TItem>()),
 			source);
 
 	private readonly struct IsEmptyValueConstraint<TItem> : IValueConstraint<IEnumerable<TItem>>

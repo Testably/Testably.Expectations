@@ -15,8 +15,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "be infinite",
 					(a, _) => float.IsInfinity(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -29,8 +28,7 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "be infinite",
 					(a, _) => double.IsInfinity(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -42,8 +40,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "be infinite",
 					(a, _) => a != null && float.IsInfinity(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -56,8 +53,7 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "be infinite",
 					(a, _) => a != null && double.IsInfinity(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -70,8 +66,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "not be infinite",
 					(a, _) => !float.IsInfinity(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -84,8 +79,7 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "not be infinite",
 					(a, _) => !double.IsInfinity(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -98,8 +92,7 @@ public static partial class ThatNumberShould
 					float.PositiveInfinity,
 					_ => "not be infinite",
 					(a, _) => a == null || !float.IsInfinity(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -113,7 +106,6 @@ public static partial class ThatNumberShould
 					double.PositiveInfinity,
 					_ => "not be infinite",
 					(a, _) => a == null || !double.IsInfinity(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeInfinite)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 }

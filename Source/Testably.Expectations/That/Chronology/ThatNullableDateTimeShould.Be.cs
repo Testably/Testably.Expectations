@@ -14,8 +14,7 @@ public static partial class ThatNullableDateTimeShould
 	/// </summary>
 	public static TimeToleranceResult<DateTime?, IThat<DateTime?>> Be(
 		this IThat<DateTime?> source,
-		DateTime? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		DateTime? expected)
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
@@ -27,8 +26,7 @@ public static partial class ThatNullableDateTimeShould
 					(a, e) => a?.Kind == e?.Kind
 						? $"found {Formatter.Format(a)}"
 						: "it differed in the Kind property",
-					tolerance))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+					tolerance)),
 			source,
 			tolerance);
 	}
@@ -38,9 +36,7 @@ public static partial class ThatNullableDateTimeShould
 	/// </summary>
 	public static TimeToleranceResult<DateTime?, IThat<DateTime?>> NotBe(
 		this IThat<DateTime?> source,
-		DateTime? unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		DateTime? unexpected)
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
@@ -50,8 +46,7 @@ public static partial class ThatNullableDateTimeShould
 					$"not be {Formatter.Format(unexpected)}{tolerance}",
 					(a, e, t) => a?.Kind != e?.Kind || !IsWithinTolerance(t, a - e),
 					(a, _) => $"found {Formatter.Format(a)}",
-					tolerance))
-				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
+					tolerance)),
 			source,
 			tolerance);
 	}

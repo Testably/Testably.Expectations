@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
@@ -34,15 +33,12 @@ public class StringEqualityResult<TType, TThat, TSelf>(
 	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
 	where TSelf : StringEqualityResult<TType, TThat, TSelf>
 {
-	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
-
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
 	public StringEqualityResult<TType, TThat, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
-		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
 		return this;
 	}
 
@@ -51,12 +47,9 @@ public class StringEqualityResult<TType, TThat, TSelf>(
 	///     parameter.
 	/// </summary>
 	public StringEqualityResult<TType, TThat, TSelf> IgnoringCase(
-		bool ignoreCase,
-		[CallerArgumentExpression("ignoreCase")]
-		string doNotPopulateThisValue = "")
+		bool ignoreCase)
 	{
 		options.IgnoringCase(ignoreCase);
-		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase), doNotPopulateThisValue);
 		return this;
 	}
 
@@ -64,11 +57,9 @@ public class StringEqualityResult<TType, TThat, TSelf>(
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="string" />s.
 	/// </summary>
 	public StringEqualityResult<TType, TThat, TSelf> Using(
-		IEqualityComparer<string> comparer,
-		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
+		IEqualityComparer<string> comparer)
 	{
 		options.UsingComparer(comparer);
-		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
 }

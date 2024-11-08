@@ -16,8 +16,7 @@ public static partial class ThatHttpResponseMessageShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new HasStatusCodeRangeConstraint(
 					statusCode => statusCode >= 400 && statusCode < 500,
-					"have client error (status code 4xx)"))
-				.AppendMethodStatement(nameof(HaveClientError)),
+					"have client error (status code 4xx)")),
 			source);
 }
 #endif

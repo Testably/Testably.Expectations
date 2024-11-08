@@ -15,8 +15,7 @@ public static partial class ThatNullableGuidShould
 	///     Start expectations for the current <see cref="Guid" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<Guid?> Should(this IExpectSubject<Guid?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct ValueConstraint(string expectation, Func<Guid?, bool> successIf)
 		: IValueConstraint<Guid?>

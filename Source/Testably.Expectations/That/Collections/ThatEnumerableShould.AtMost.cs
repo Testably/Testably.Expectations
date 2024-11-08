@@ -12,13 +12,9 @@ public static partial class ThatEnumerableShould
 	public static QuantifiedCollectionResult.Sync
 		<IThat<IEnumerable<TItem>>, TItem, IEnumerable<TItem>> AtMost<TItem>(
 			this IThat<IEnumerable<TItem>> source,
-			int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
-	{
-		source.ExpectationBuilder.AppendMethodStatement(nameof(AtMost), doNotPopulateThisValue);
-		return new QuantifiedCollectionResult.Sync<IThat<IEnumerable<TItem>>, TItem,
-			IEnumerable<TItem>>(
+			int maximum)
+		=> new(
 			source,
 			source.ExpectationBuilder,
 			CollectionQuantifier.AtMost(maximum));
-	}
 }

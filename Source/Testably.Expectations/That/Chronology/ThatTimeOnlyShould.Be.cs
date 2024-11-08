@@ -13,14 +13,12 @@ public static partial class ThatTimeOnlyShould
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrResult<TimeOnly, IThat<TimeOnly>> Be(this IThat<TimeOnly> source,
-		TimeOnly expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		TimeOnly expected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
-					$"be {Formatter.Format(expected)}"))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+					$"be {Formatter.Format(expected)}")),
 			source);
 
 	/// <summary>
@@ -28,15 +26,12 @@ public static partial class ThatTimeOnlyShould
 	/// </summary>
 	public static AndOrResult<TimeOnly, IThat<TimeOnly>> NotBe(
 		this IThat<TimeOnly> source,
-		TimeOnly unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		TimeOnly unexpected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
-					$"not be {Formatter.Format(unexpected)}"))
-				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
+					$"not be {Formatter.Format(unexpected)}")),
 			source);
 }
 #endif

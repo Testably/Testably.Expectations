@@ -14,11 +14,9 @@ public static partial class ThatStreamShould
 	/// <summary>
 	///     Start expectations for the current <typeparamref name="TStream" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TStream?> Should<TStream>(this IExpectSubject<TStream?> subject,
-		[CallerArgumentExpression("subject")] string doNotPopulateThisValue = "")
+	public static IThat<TStream?> Should<TStream>(this IExpectSubject<TStream?> subject)
 		where TStream : Stream
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct ValueConstraint(
 		string expectation,

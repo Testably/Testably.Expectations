@@ -12,26 +12,21 @@ public static partial class ThatGuidShould
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrResult<Guid, IThat<Guid>> Be(this IThat<Guid> source,
-		Guid? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		Guid? expected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
 					$"be {Formatter.Format(expected)}",
-					actual => actual.Equals(expected)))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+					actual => actual.Equals(expected))),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
 	public static AndOrResult<Guid, IThat<Guid>> NotBe(this IThat<Guid> source,
-		Guid? unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		Guid? unexpected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
 					$"not be {Formatter.Format(unexpected)}",
-					actual => !actual.Equals(unexpected)))
-				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
+					actual => !actual.Equals(unexpected))),
 			source);
 }

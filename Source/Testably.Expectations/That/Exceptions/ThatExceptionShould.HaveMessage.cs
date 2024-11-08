@@ -20,8 +20,7 @@ public partial class ThatExceptionShould<TException>
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(ExpectationBuilder
 				.AddConstraint(
-					new ThatExceptionShould.HasMessageValueConstraint<TException>(expected, "have"))
-				.AppendMethodStatement(nameof(HaveMessage), doNotPopulateThisValue),
+					new ThatExceptionShould.HasMessageValueConstraint<TException>(expected, "have")),
 			this,
 			expected);
 }

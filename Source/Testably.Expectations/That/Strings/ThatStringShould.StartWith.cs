@@ -14,15 +14,12 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringEqualityResult<string?, IThat<string?>> NotStartWith(
 		this IThat<string?> source,
-		string unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		string unexpected)
 	{
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new DoesNotStartWithValueConstraint(unexpected, options))
-				.AppendMethodStatement(nameof(NotStartWith), doNotPopulateThisValue),
+				.AddConstraint(new DoesNotStartWithValueConstraint(unexpected, options)),
 			source,
 			options);
 	}
@@ -32,14 +29,12 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringEqualityResult<string?, IThat<string?>> StartWith(
 		this IThat<string?> source,
-		string expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		string expected)
 	{
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new StartsWithValueConstraint(expected, options))
-				.AppendMethodStatement(nameof(StartWith), doNotPopulateThisValue),
+				.AddConstraint(new StartsWithValueConstraint(expected, options)),
 			source,
 			options);
 	}

@@ -14,14 +14,12 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringEqualityResult<string?, IThat<string?>> EndWith(
 		this IThat<string?> source,
-		string expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		string expected)
 	{
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new EndsWithValueConstraint(expected, options))
-				.AppendMethodStatement(nameof(EndWith), doNotPopulateThisValue),
+				.AddConstraint(new EndsWithValueConstraint(expected, options)),
 			source,
 			options);
 	}
@@ -31,15 +29,12 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringEqualityResult<string?, IThat<string?>> NotEndWith(
 		this IThat<string?> source,
-		string unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		string unexpected)
 	{
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new DoesNotEndWithValueConstraint(unexpected, options))
-				.AppendMethodStatement(nameof(NotEndWith), doNotPopulateThisValue),
+				.AddConstraint(new DoesNotEndWithValueConstraint(unexpected, options)),
 			source,
 			options);
 	}

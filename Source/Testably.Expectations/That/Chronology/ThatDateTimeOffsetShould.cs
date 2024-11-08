@@ -15,15 +15,13 @@ public static partial class ThatDateTimeOffsetShould
 	///     Start expectations for current <see cref="DateTimeOffset" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<DateTimeOffset> Should(this IExpectSubject<DateTimeOffset> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="DateTimeOffset" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<DateTimeOffset?> Should(this IExpectSubject<DateTimeOffset?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct ConditionConstraint(
 		DateTimeOffset expected,

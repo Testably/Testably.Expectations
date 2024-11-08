@@ -13,8 +13,7 @@ public static partial class ThatNullableGuidShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
 					"be empty",
-					actual => actual != null && actual == Guid.Empty))
-				.AppendMethodStatement(nameof(BeEmpty)),
+					actual => actual != null && actual == Guid.Empty)),
 			source);
 
 	/// <summary>
@@ -24,7 +23,6 @@ public static partial class ThatNullableGuidShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint(
 					"not be empty",
-					actual => actual != null && actual != Guid.Empty))
-				.AppendMethodStatement(nameof(NotBeEmpty)),
+					actual => actual != null && actual != Guid.Empty)),
 			source);
 }

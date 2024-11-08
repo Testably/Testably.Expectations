@@ -19,8 +19,7 @@ public static partial class ThatAsyncEnumerableShould
 		BeEmpty<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsEmptyValueConstraint<TItem>())
-				.AppendMethodStatement(nameof(BeEmpty)),
+				.AddConstraint(new IsEmptyValueConstraint<TItem>()),
 			source);
 
 	/// <summary>
@@ -30,8 +29,7 @@ public static partial class ThatAsyncEnumerableShould
 		NotBeEmpty<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsNotEmptyConstraint<TItem>())
-				.AppendMethodStatement(nameof(NotBeEmpty)),
+				.AddConstraint(new IsNotEmptyConstraint<TItem>()),
 			source);
 
 	private readonly struct IsEmptyValueConstraint<TItem>

@@ -20,8 +20,7 @@ public static partial class ThatEnumerableShould
 			TItem expected,
 			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ContainsConstraint<TItem>(expected))
-				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
+				.AddConstraint(new ContainsConstraint<TItem>(expected)),
 			source);
 
 	private readonly struct ContainsConstraint<TItem>(TItem expected)

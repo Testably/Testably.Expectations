@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
@@ -35,20 +34,15 @@ public class ObjectEqualityResult<TType, TThat, TSelf>(
 	: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
 	where TSelf : ObjectEqualityResult<TType, TThat, TSelf>
 {
-	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
-
 	/// <summary>
 	///     Use equivalency to compare objects.
 	/// </summary>
 	public ObjectEqualityResult<TType, TThat, TSelf> Equivalent(
-		Func<EquivalencyOptions, EquivalencyOptions>? optionsCallback = null,
-		[CallerArgumentExpression("optionsCallback")]
-		string doNotPopulateThisValue = "")
+		Func<EquivalencyOptions, EquivalencyOptions>? optionsCallback = null)
 	{
 		EquivalencyOptions? equivalencyOptions =
 			optionsCallback?.Invoke(new EquivalencyOptions()) ?? new EquivalencyOptions();
 		options.Equivalent(equivalencyOptions);
-		_expectationBuilder.AppendMethodStatement(nameof(Equivalent), doNotPopulateThisValue);
 		return this;
 	}
 
@@ -56,11 +50,9 @@ public class ObjectEqualityResult<TType, TThat, TSelf>(
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="object" />s.
 	/// </summary>
 	public ObjectEqualityResult<TType, TThat, TSelf> Using(
-		IEqualityComparer<object> comparer,
-		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
+		IEqualityComparer<object> comparer)
 	{
 		options.Using(comparer);
-		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
 }

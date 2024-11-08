@@ -15,8 +15,7 @@ public static partial class ThatNumberShould
 					float.NaN,
 					_ => "be NaN",
 					(a, _) => float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -28,8 +27,7 @@ public static partial class ThatNumberShould
 					double.NaN,
 					_ => "be NaN",
 					(a, _) => double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -41,8 +39,7 @@ public static partial class ThatNumberShould
 					float.NaN,
 					_ => "be NaN",
 					(a, _) => a != null && float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -54,8 +51,7 @@ public static partial class ThatNumberShould
 					double.NaN,
 					_ => "be NaN",
 					(a, _) => a != null && double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -67,8 +63,7 @@ public static partial class ThatNumberShould
 					float.NaN,
 					_ => "not be NaN",
 					(a, _) => !float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -80,8 +75,7 @@ public static partial class ThatNumberShould
 					double.NaN,
 					_ => "not be NaN",
 					(a, _) => !double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -94,8 +88,7 @@ public static partial class ThatNumberShould
 					float.NaN,
 					_ => "not be NaN",
 					(a, _) => a == null || !float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -107,7 +100,6 @@ public static partial class ThatNumberShould
 					double.NaN,
 					_ => "not be NaN",
 					(a, _) => a == null || !double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(NotBeNaN)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 }

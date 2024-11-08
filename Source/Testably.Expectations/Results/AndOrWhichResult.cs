@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 
 namespace Testably.Expectations.Results;
@@ -39,20 +38,16 @@ public class AndOrWhichResult<TType, TThat, TSelf>(
 	/// </summary>
 	public WhichResult<TProperty, AndOrWhichResult<TType, TThat, TSelf>>
 		Which<TProperty>(
-			Expression<Func<TType, TProperty?>> selector,
-			[CallerArgumentExpression("selector")] string doNotPopulateThisValue1 = "")
+			Expression<Func<TType, TProperty?>> selector)
 	{
 		return new WhichResult<TProperty, AndOrWhichResult<TType, TThat, TSelf>>(
-			(expectations, doNotPopulateThisValue2) =>
+			(expectations) =>
 			{
 				return new AndOrWhichResult<TType, TThat, TSelf>(
 					_expectationBuilder
 						.ForProperty(PropertyAccessor<TType, TProperty?>.FromExpression(selector),
 							(property, expectation) => $" which {property}should {expectation}")
-						.AddExpectations(e => expectations(new Expect.ThatSubject<TProperty?>(e)))
-						.AppendMethodStatement(nameof(Which), doNotPopulateThisValue1)
-						.AppendMethodStatement(nameof(WhichResult<TProperty, TType>.Should),
-							doNotPopulateThisValue2),
+						.AddExpectations(e => expectations(new Expect.ThatSubject<TProperty?>(e))),
 					_returnValue);
 			});
 	}
@@ -61,16 +56,13 @@ public class AndOrWhichResult<TType, TThat, TSelf>(
 	///     Intermediate result for chaining Which and Should methods.
 	/// </summary>
 	public class WhichResult<TProperty, TReturn>(
-		Func<Action<IThat<TProperty?>>, string, TReturn> resultCallback)
+		Func<Action<IThat<TProperty?>>, TReturn> resultCallback)
 	{
 		/// <summary>
 		///     Specifies the expectations on the selected property.
 		/// </summary>
 		public TReturn Should(
-			Action<IThat<TProperty?>> expectations,
-			[CallerArgumentExpression("expectations")] string doNotPopulateThisValue = "")
-		{
-			return resultCallback(expectations, doNotPopulateThisValue);
-		}
+			Action<IThat<TProperty?>> expectations)
+			=> resultCallback(expectations);
 	}
 }

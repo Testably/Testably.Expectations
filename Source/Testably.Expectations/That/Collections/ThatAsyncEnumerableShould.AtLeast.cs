@@ -13,10 +13,9 @@ public static partial class ThatAsyncEnumerableShould
 	public static QuantifiedCollectionResult.Async
 		<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>> AtLeast<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source,
-			int minimum, [CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
+			int minimum)
 		=> new(source,
-			source.ExpectationBuilder.AppendMethodStatement(nameof(AtLeast),
-				doNotPopulateThisValue),
+			source.ExpectationBuilder,
 			CollectionQuantifier.AtLeast(minimum));
 }
 #endif

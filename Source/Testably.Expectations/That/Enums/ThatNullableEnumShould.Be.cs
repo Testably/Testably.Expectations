@@ -12,14 +12,12 @@ public static partial class ThatNullableEnumShould
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrResult<TEnum?, IThat<TEnum?>> Be<TEnum>(this IThat<TEnum?> source,
-		TEnum? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		TEnum? expected)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ValueConstraint<TEnum>(
 					$"be {Formatter.Format(expected)}",
-					actual => actual?.Equals(expected) ?? expected == null))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+					actual => actual?.Equals(expected) ?? expected == null)),
 			source);
 
 	/// <summary>
@@ -27,15 +25,12 @@ public static partial class ThatNullableEnumShould
 	/// </summary>
 	public static AndOrResult<TEnum?, IThat<TEnum?>> NotBe<TEnum>(
 		this IThat<TEnum?> source,
-		TEnum? unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		TEnum? unexpected)
 		where TEnum : struct, Enum
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
 					new ValueConstraint<TEnum>(
 						$"not be {Formatter.Format(unexpected)}",
-						actual => !actual?.Equals(unexpected) ?? unexpected != null))
-				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
+						actual => !actual?.Equals(unexpected) ?? unexpected != null)),
 			source);
 }

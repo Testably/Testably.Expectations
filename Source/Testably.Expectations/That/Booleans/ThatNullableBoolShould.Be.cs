@@ -10,22 +10,17 @@ public static partial class ThatNullableBoolShould
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrResult<bool?, IThat<bool?>> Be(this IThat<bool?> source,
-		bool? expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		bool? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint(expected))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+				.AddConstraint(new IsValueConstraint(expected)),
 			source);
 
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
 	public static AndOrResult<bool?, IThat<bool?>> NotBe(this IThat<bool?> source,
-		bool? unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		bool? unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint(unexpected))
-				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
+				.AddConstraint(new IsNotValueConstraint(unexpected)),
 			source);
 }

@@ -19,17 +19,13 @@ public partial class ThatDelegateThrows<TException>
 	/// </remarks>
 	public AndOrResult<TException?, ThatDelegateThrows<TException>>
 		WithRecursiveInnerExceptions(
-			Action<IThat<IEnumerable<Exception>>> expectations,
-			[CallerArgumentExpression("expectations")]
-			string doNotPopulateThisValue = "")
+			Action<IThat<IEnumerable<Exception>>> expectations)
 		=> new(ExpectationBuilder
 				.ForProperty(
 					PropertyAccessor<Exception?, IEnumerable<Exception>>.FromFunc(
 						e => e.GetInnerExpectations(), "recursive inner exceptions "),
 					(property, expectation) => $"with {property}which {expectation}")
 				.AddExpectations(e
-					=> expectations(new Expect.ThatSubject<IEnumerable<Exception>>(e)))
-				.AppendMethodStatement(nameof(WithRecursiveInnerExceptions),
-					doNotPopulateThisValue),
+					=> expectations(new Expect.ThatSubject<IEnumerable<Exception>>(e))),
 			this);
 }

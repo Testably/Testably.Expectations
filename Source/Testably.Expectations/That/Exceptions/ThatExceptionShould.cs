@@ -19,8 +19,7 @@ public static partial class ThatExceptionShould
 	public static ThatExceptionShould<TException> Should<TException>(
 		this IExpectSubject<TException> subject)
 		where TException : Exception?
-		=> new(subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
+		=> new(subject.Should(_ => { }).ExpectationBuilder);
 
 	internal readonly struct HasMessageValueConstraint<TException>(
 		StringMatcher expected,
