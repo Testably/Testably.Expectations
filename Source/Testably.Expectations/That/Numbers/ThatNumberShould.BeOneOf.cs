@@ -169,7 +169,7 @@ public static partial class ThatNumberShould
 		params float?[] expected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint<float>(
 					expected,
@@ -188,7 +188,7 @@ public static partial class ThatNumberShould
 		params double?[] expected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint<double>(
 					expected,
@@ -378,7 +378,7 @@ public static partial class ThatNumberShould
 		params float?[] expected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint<float>(
 					expected,
@@ -397,7 +397,7 @@ public static partial class ThatNumberShould
 		params double?[] expected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint<double>(
 					expected,
@@ -587,7 +587,7 @@ public static partial class ThatNumberShould
 		params float[] expected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint2<float>(
 					expected,
@@ -606,7 +606,7 @@ public static partial class ThatNumberShould
 		params double[] expected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint2<double>(
 					expected,
@@ -796,7 +796,7 @@ public static partial class ThatNumberShould
 		params float[] expected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint2<float>(
 					expected,
@@ -815,7 +815,7 @@ public static partial class ThatNumberShould
 		params double[] expected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint2<double>(
 					expected,
@@ -1005,7 +1005,7 @@ public static partial class ThatNumberShould
 		params float?[] unexpected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint<float>(
 					unexpected,
@@ -1024,7 +1024,7 @@ public static partial class ThatNumberShould
 		params double?[] unexpected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint<double>(
 					unexpected,
@@ -1214,7 +1214,7 @@ public static partial class ThatNumberShould
 		params float?[] unexpected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint<float>(
 					unexpected,
@@ -1233,7 +1233,7 @@ public static partial class ThatNumberShould
 		params double?[] unexpected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint<double>(
 					unexpected,
@@ -1423,7 +1423,7 @@ public static partial class ThatNumberShould
 		params float[] unexpected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<float, IThat<float>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint2<float>(
 					unexpected,
@@ -1442,7 +1442,7 @@ public static partial class ThatNumberShould
 		params double[] unexpected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NumberToleranceResult<double, IThat<double>>(source.ExpectationBuilder
 				.AddConstraint(new GenericArrayConstraint2<double>(
 					unexpected,
@@ -1632,7 +1632,7 @@ public static partial class ThatNumberShould
 		params float[] unexpected)
 	{
 		NumberTolerance<float> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (float.IsNaN(a) && float.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<float, IThat<float?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint2<float>(
 					unexpected,
@@ -1651,7 +1651,7 @@ public static partial class ThatNumberShould
 		params double[] unexpected)
 	{
 		NumberTolerance<double> options = new(
-			(a, e, t) => a.Equals(e) || Math.Abs(a - e) <= (t ?? 0));
+			(a, e, t) => (double.IsNaN(a) && double.IsNaN(e)) || Math.Abs(a - e) <= (t ?? 0));
 		return new NullableNumberToleranceResult<double, IThat<double?>>(source.ExpectationBuilder
 				.AddConstraint(new NullableGenericArrayConstraint2<double>(
 					unexpected,
