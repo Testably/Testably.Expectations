@@ -8,9 +8,9 @@ public sealed partial class NumberShould
 	public sealed partial class BeOneOfTests
 	{
 		[Theory]
-		[InlineData((byte)1, (byte)2)]
-		[InlineData((byte)1, (byte)0)]
-		public async Task ForByte_WhenValueIsDifferentToExpected_ShouldFail(byte subject,
+		[InlineData((byte)1, (byte)2, (byte)3)]
+		[InlineData((byte)1, (byte)0, (byte)3)]
+		public async Task ForByte_WhenValueIsDifferentToAllExpected_ShouldFail(byte subject,
 			params byte?[] expected)
 		{
 			async Task Act()
@@ -25,8 +25,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((byte)1, (byte)1)]
-		public async Task ForByte_WhenValueIsEqualToExpected_ShouldSucceed(byte subject,
+		[InlineData((byte)1, (byte)0, (byte)1, (byte)3)]
+		public async Task ForByte_WhenValueIsEqualToAnyExpected_ShouldSucceed(byte subject,
 			params byte?[] expected)
 		{
 			async Task Act()
@@ -36,9 +36,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForDecimal_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForDecimal_WhenValueIsDifferentToAllExpected_ShouldFail(
 			double subjectValue, params double[] expectedValues)
 		{
 			decimal subject = new(subjectValue);
@@ -58,12 +58,14 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForDecimal_WhenValueIsEqualToExpected_ShouldSucceed(
-			double subjectValue, double expectedValue)
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForDecimal_WhenValueIsEqualToAnyExpected_ShouldSucceed(
+			double subjectValue, params double[] expectedValues)
 		{
 			decimal subject = new(subjectValue);
-			decimal? expected = new(expectedValue);
+			decimal[] expected = expectedValues
+				.Select(expectedValue => new decimal(expectedValue))
+				.ToArray();
 
 			async Task Act()
 				=> await That(subject).Should().BeOneOf(expected);
@@ -94,8 +96,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(double.NaN, 0.0)]
-		[InlineData(0.0, double.NaN)]
+		[InlineData(double.NaN, 0.0, 1.0)]
+		[InlineData(0.0, 1.0, double.NaN)]
 		public async Task ForDouble_WhenSubjectOrExpectedIsNaN_ShouldFail(double subject,
 			params double[] expected)
 		{
@@ -110,9 +112,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForDouble_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForDouble_WhenValueIsDifferentToAllExpected_ShouldFail(
 			double subject, params double[] expected)
 		{
 			async Task Act()
@@ -127,8 +129,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForDouble_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForDouble_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			double subject, params double?[] expected)
 		{
 			async Task Act()
@@ -149,8 +151,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(float.NaN, 0.0F)]
-		[InlineData(0.0F, float.NaN)]
+		[InlineData(float.NaN, 0.0F, 1.0F)]
+		[InlineData(0.0F, 1.0F, float.NaN)]
 		public async Task ForFloat_WhenSubjectOrExpectedIsNaN_ShouldFail(float subject,
 			params float[] expected)
 		{
@@ -165,9 +167,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)2.1)]
-		[InlineData((float)1.1, (float)0.1)]
-		public async Task ForFloat_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((float)1.1, (float)2.1, (float)3.1)]
+		[InlineData((float)1.1, (float)0.1, (float)3.1)]
+		public async Task ForFloat_WhenValueIsDifferentToAllExpected_ShouldFail(
 			float subject, params float[] expected)
 		{
 			async Task Act()
@@ -182,8 +184,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)1.1)]
-		public async Task ForFloat_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((float)1.1, (float)0.1, (float)1.1, (float)3.1)]
+		public async Task ForFloat_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			float subject, params float?[] expected)
 		{
 			async Task Act()
@@ -193,9 +195,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 2)]
-		[InlineData(2, 1)]
-		public async Task ForInt_WhenValueIsDifferentToExpected_ShouldFail(int subject,
+		[InlineData(1, 2, 3)]
+		[InlineData(2, 1, 3)]
+		public async Task ForInt_WhenValueIsDifferentToAllExpected_ShouldFail(int subject,
 			params int?[] expected)
 		{
 			async Task Act()
@@ -210,8 +212,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 1)]
-		public async Task ForInt_WhenValueIsEqualToExpected_ShouldSucceed(int subject,
+		[InlineData(1, 0, 1, 3)]
+		public async Task ForInt_WhenValueIsEqualToAnyExpected_ShouldSucceed(int subject,
 			params int?[] expected)
 		{
 			async Task Act()
@@ -231,9 +233,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)2)]
-		[InlineData((long)1, (long)0)]
-		public async Task ForLong_WhenValueIsDifferentToExpected_ShouldFail(long subject,
+		[InlineData((long)1, (long)2, (long)3)]
+		[InlineData((long)1, (long)0, (long)3)]
+		public async Task ForLong_WhenValueIsDifferentToAllExpected_ShouldFail(long subject,
 			params long?[] expected)
 		{
 			async Task Act()
@@ -248,8 +250,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)1)]
-		public async Task ForLong_WhenValueIsEqualToExpected_ShouldSucceed(long subject,
+		[InlineData((long)1, (long)0, (long)1, (long)3)]
+		public async Task ForLong_WhenValueIsEqualToAnyExpected_ShouldSucceed(long subject,
 			params long?[] expected)
 		{
 			async Task Act()
@@ -259,9 +261,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((byte)1, (byte)2)]
-		[InlineData((byte)1, (byte)0)]
-		public async Task ForNullableByte_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((byte)1, (byte)2, (byte)3)]
+		[InlineData((byte)1, (byte)0, (byte)3)]
+		public async Task ForNullableByte_WhenValueIsDifferentToAllExpected_ShouldFail(
 			byte? subject, params byte?[] expected)
 		{
 			async Task Act()
@@ -276,8 +278,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((byte)1, (byte)1)]
-		public async Task ForNullableByte_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((byte)1, (byte)0, (byte)1, (byte)3)]
+		public async Task ForNullableByte_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			byte? subject, params byte?[] expected)
 		{
 			async Task Act()
@@ -305,9 +307,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForNullableDecimal_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForNullableDecimal_WhenValueIsDifferentToAllExpected_ShouldFail(
 			double? subjectValue, params double?[] expectedValues)
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
@@ -329,12 +331,14 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForNullableDecimal_WhenValueIsEqualToExpected_ShouldSucceed(
-			double? subjectValue, double? expectedValue)
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForNullableDecimal_WhenValueIsEqualToAnyExpected_ShouldSucceed(
+			double? subjectValue, params double?[] expectedValues)
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
-			decimal? expected = expectedValue == null ? null : new decimal(expectedValue.Value);
+			decimal?[] expected = expectedValues
+				.Select(expectedValue => expectedValue == null ? (decimal?)null : new decimal(expectedValue.Value))
+				.ToArray();
 
 			async Task Act()
 				=> await That(subject).Should().BeOneOf(expected);
@@ -343,9 +347,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForNullableDouble_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForNullableDouble_WhenValueIsDifferentToAllExpected_ShouldFail(
 			double? subject, params double?[] expected)
 		{
 			async Task Act()
@@ -360,8 +364,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForNullableDouble_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForNullableDouble_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			double? subject, params double?[] expected)
 		{
 			async Task Act()
@@ -371,9 +375,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)2.1)]
-		[InlineData((float)1.1, (float)0.1)]
-		public async Task ForNullableFloat_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((float)1.1, (float)2.1, (float)3.1)]
+		[InlineData((float)1.1, (float)0.1, (float)3.1)]
+		public async Task ForNullableFloat_WhenValueIsDifferentToAllExpected_ShouldFail(
 			float? subject, params float?[] expected)
 		{
 			async Task Act()
@@ -388,8 +392,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)1.1)]
-		public async Task ForNullableFloat_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((float)1.1, (float)0.1, (float)1.1, (float)3.1)]
+		public async Task ForNullableFloat_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			float? subject, params float?[] expected)
 		{
 			async Task Act()
@@ -399,9 +403,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 2)]
-		[InlineData(1, 0)]
-		public async Task ForNullableInt_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData(1, 2, 3)]
+		[InlineData(1, 0, 3)]
+		public async Task ForNullableInt_WhenValueIsDifferentToAllExpected_ShouldFail(
 			int? subject, params int?[] expected)
 		{
 			async Task Act()
@@ -416,8 +420,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 1)]
-		public async Task ForNullableInt_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData(1, 0, 1, 3)]
+		public async Task ForNullableInt_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			int? subject, params int?[] expected)
 		{
 			async Task Act()
@@ -445,9 +449,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)2)]
-		[InlineData((long)1, (long)0)]
-		public async Task ForNullableLong_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((long)1, (long)2, (long)3)]
+		[InlineData((long)1, (long)0, (long)3)]
+		public async Task ForNullableLong_WhenValueIsDifferentToAllExpected_ShouldFail(
 			long? subject, params long?[] expected)
 		{
 			async Task Act()
@@ -462,8 +466,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)1)]
-		public async Task ForNullableLong_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((long)1, (long)0, (long)1, (long)3)]
+		public async Task ForNullableLong_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			long? subject, params long?[] expected)
 		{
 			async Task Act()
@@ -491,9 +495,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)2)]
-		[InlineData((sbyte)1, (sbyte)0)]
-		public async Task ForNullableSbyte_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((sbyte)1, (sbyte)2, (sbyte)3)]
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)3)]
+		public async Task ForNullableSbyte_WhenValueIsDifferentToAllExpected_ShouldFail(
 			sbyte? subject, params sbyte?[] expected)
 		{
 			async Task Act()
@@ -508,8 +512,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)1)]
-		public async Task ForNullableSbyte_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)1, (sbyte)3)]
+		public async Task ForNullableSbyte_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			sbyte? subject, params sbyte?[] expected)
 		{
 			async Task Act()
@@ -537,9 +541,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)2)]
-		[InlineData((short)1, (short)0)]
-		public async Task ForNullableShort_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((short)1, (short)2, (short)3)]
+		[InlineData((short)1, (short)0, (short)3)]
+		public async Task ForNullableShort_WhenValueIsDifferentToAllExpected_ShouldFail(
 			short? subject, params short?[] expected)
 		{
 			async Task Act()
@@ -554,8 +558,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)1)]
-		public async Task ForNullableShort_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((short)1, (short)0, (short)1, (short)3)]
+		public async Task ForNullableShort_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			short? subject, params short?[] expected)
 		{
 			async Task Act()
@@ -583,9 +587,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)2)]
-		[InlineData((uint)1, (uint)0)]
-		public async Task ForNullableUint_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((uint)1, (uint)2, (uint)3)]
+		[InlineData((uint)1, (uint)0, (uint)3)]
+		public async Task ForNullableUint_WhenValueIsDifferentToAllExpected_ShouldFail(
 			uint? subject, params uint?[] expected)
 		{
 			async Task Act()
@@ -600,8 +604,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)1)]
-		public async Task ForNullableUint_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((uint)1, (uint)0, (uint)1, (uint)3)]
+		public async Task ForNullableUint_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			uint? subject, params uint?[] expected)
 		{
 			async Task Act()
@@ -629,9 +633,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)2)]
-		[InlineData((ulong)1, (ulong)0)]
-		public async Task ForNullableUlong_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((ulong)1, (ulong)2, (ulong)3)]
+		[InlineData((ulong)1, (ulong)0, (ulong)3)]
+		public async Task ForNullableUlong_WhenValueIsDifferentToAllExpected_ShouldFail(
 			ulong? subject, params ulong?[] expected)
 		{
 			async Task Act()
@@ -646,8 +650,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)1)]
-		public async Task ForNullableUlong_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((ulong)1, (ulong)0, (ulong)1, (ulong)3)]
+		public async Task ForNullableUlong_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			ulong? subject, params ulong?[] expected)
 		{
 			async Task Act()
@@ -675,9 +679,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)2)]
-		[InlineData((ushort)1, (ushort)0)]
-		public async Task ForNullableUshort_WhenValueIsDifferentToExpected_ShouldFail(
+		[InlineData((ushort)1, (ushort)2, (ushort)3)]
+		[InlineData((ushort)1, (ushort)0, (ushort)3)]
+		public async Task ForNullableUshort_WhenValueIsDifferentToAllExpected_ShouldFail(
 			ushort? subject, params ushort?[] expected)
 		{
 			async Task Act()
@@ -692,8 +696,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)1)]
-		public async Task ForNullableUshort_WhenValueIsEqualToExpected_ShouldSucceed(
+		[InlineData((ushort)1, (ushort)0, (ushort)1, (ushort)3)]
+		public async Task ForNullableUshort_WhenValueIsEqualToAnyExpected_ShouldSucceed(
 			ushort? subject, params ushort?[] expected)
 		{
 			async Task Act()
@@ -721,9 +725,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)2)]
-		[InlineData((sbyte)1, (sbyte)0)]
-		public async Task ForSbyte_WhenValueIsDifferentToExpected_ShouldFail(sbyte subject,
+		[InlineData((sbyte)1, (sbyte)2, (sbyte)3)]
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)3)]
+		public async Task ForSbyte_WhenValueIsDifferentToAllExpected_ShouldFail(sbyte subject,
 			params sbyte?[] expected)
 		{
 			async Task Act()
@@ -738,8 +742,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)1)]
-		public async Task ForSbyte_WhenValueIsEqualToExpected_ShouldSucceed(sbyte subject,
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)1, (sbyte)3)]
+		public async Task ForSbyte_WhenValueIsEqualToAnyExpected_ShouldSucceed(sbyte subject,
 			params sbyte?[] expected)
 		{
 			async Task Act()
@@ -749,9 +753,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)2)]
-		[InlineData((short)1, (short)0)]
-		public async Task ForShort_WhenValueIsDifferentToExpected_ShouldFail(short subject,
+		[InlineData((short)1, (short)2, (short)3)]
+		[InlineData((short)1, (short)0, (short)3)]
+		public async Task ForShort_WhenValueIsDifferentToAllExpected_ShouldFail(short subject,
 			params short?[] expected)
 		{
 			async Task Act()
@@ -766,8 +770,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)1)]
-		public async Task ForShort_WhenValueIsEqualToExpected_ShouldSucceed(short subject,
+		[InlineData((short)1, (short)0, (short)1, (short)3)]
+		public async Task ForShort_WhenValueIsEqualToAnyExpected_ShouldSucceed(short subject,
 			params short?[] expected)
 		{
 			async Task Act()
@@ -777,9 +781,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)2)]
-		[InlineData((uint)1, (uint)0)]
-		public async Task ForUint_WhenValueIsDifferentToExpected_ShouldFail(uint subject,
+		[InlineData((uint)1, (uint)2, (uint)3)]
+		[InlineData((uint)1, (uint)0, (uint)3)]
+		public async Task ForUint_WhenValueIsDifferentToAllExpected_ShouldFail(uint subject,
 			params uint?[] expected)
 		{
 			async Task Act()
@@ -794,8 +798,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)1)]
-		public async Task ForUint_WhenValueIsEqualToExpected_ShouldSucceed(uint subject,
+		[InlineData((uint)1, (uint)0, (uint)1, (uint)3)]
+		public async Task ForUint_WhenValueIsEqualToAnyExpected_ShouldSucceed(uint subject,
 			params uint?[] expected)
 		{
 			async Task Act()
@@ -805,9 +809,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)2)]
-		[InlineData((ulong)1, (ulong)0)]
-		public async Task ForUlong_WhenValueIsDifferentToExpected_ShouldFail(ulong subject,
+		[InlineData((ulong)1, (ulong)2, (ulong)3)]
+		[InlineData((ulong)1, (ulong)0, (ulong)3)]
+		public async Task ForUlong_WhenValueIsDifferentToAllExpected_ShouldFail(ulong subject,
 			params ulong?[] expected)
 		{
 			async Task Act()
@@ -822,8 +826,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)1)]
-		public async Task ForUlong_WhenValueIsEqualToExpected_ShouldSucceed(ulong subject,
+		[InlineData((ulong)1, (ulong)0, (ulong)1, (ulong)3)]
+		public async Task ForUlong_WhenValueIsEqualToAnyExpected_ShouldSucceed(ulong subject,
 			params ulong?[] expected)
 		{
 			async Task Act()
@@ -833,9 +837,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)2)]
-		[InlineData((ushort)1, (ushort)0)]
-		public async Task ForUshort_WhenValueIsDifferentToExpected_ShouldFail(ushort subject,
+		[InlineData((ushort)1, (ushort)2, (ushort)3)]
+		[InlineData((ushort)1, (ushort)0, (ushort)3)]
+		public async Task ForUshort_WhenValueIsDifferentToAllExpected_ShouldFail(ushort subject,
 			params ushort?[] expected)
 		{
 			async Task Act()
@@ -850,8 +854,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)1)]
-		public async Task ForUshort_WhenValueIsEqualToExpected_ShouldSucceed(ushort subject,
+		[InlineData((ushort)1, (ushort)0, (ushort)1, (ushort)3)]
+		public async Task ForUshort_WhenValueIsEqualToAnyExpected_ShouldSucceed(ushort subject,
 			params ushort?[] expected)
 		{
 			async Task Act()
@@ -877,9 +881,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((byte)1, (byte)2)]
-		[InlineData((byte)1, (byte)0)]
-		public async Task ForByte_WhenValueIsDifferentToUnexpected_ShouldSucceed(byte subject,
+		[InlineData((byte)1, (byte)2, (byte)3)]
+		[InlineData((byte)1, (byte)0, (byte)3)]
+		public async Task ForByte_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(byte subject,
 			params byte?[] unexpected)
 		{
 			async Task Act()
@@ -889,8 +893,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((byte)1, (byte)1)]
-		public async Task ForByte_WhenValueIsEqualToUnexpected_ShouldFail(byte subject,
+		[InlineData((byte)1, (byte)0, (byte)1, (byte)3)]
+		public async Task ForByte_WhenValueIsEqualToAnyUnexpected_ShouldFail(byte subject,
 			params byte?[] unexpected)
 		{
 			async Task Act()
@@ -917,9 +921,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForDecimal_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForDecimal_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			double subjectValue, params double[] unexpectedValues)
 		{
 			decimal subject = new(subjectValue);
@@ -934,8 +938,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForDecimal_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForDecimal_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			double subjectValue, params double[] unexpectedValues)
 		{
 			decimal subject = new(subjectValue);
@@ -971,8 +975,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(double.NaN, 0.0)]
-		[InlineData(0.0, double.NaN)]
+		[InlineData(double.NaN, 0.0, 1.0)]
+		[InlineData(0.0, 1.0, double.NaN)]
 		public async Task ForDouble_WhenSubjectOrExpectedIsNaN_ShouldSucceed(
 			double subject, params double[] expected)
 		{
@@ -1010,9 +1014,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForDouble_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForDouble_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			double subject, params double[] unexpected)
 		{
 			async Task Act()
@@ -1022,8 +1026,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForDouble_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForDouble_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			double subject, params double?[] unexpected)
 		{
 			async Task Act()
@@ -1054,8 +1058,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(float.NaN, 0.0F)]
-		[InlineData(0.0F, float.NaN)]
+		[InlineData(float.NaN, 0.0F, 1.0F)]
+		[InlineData(0.0F, 1.0F, float.NaN)]
 		public async Task ForFloat_WhenSubjectOrExpectedIsNaN_ShouldSucceed(
 			float subject, params float[] expected)
 		{
@@ -1077,9 +1081,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)2.1)]
-		[InlineData((float)1.1, (float)0.1)]
-		public async Task ForFloat_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((float)1.1, (float)2.1, (float)3.1)]
+		[InlineData((float)1.1, (float)0.1, (float)3.1)]
+		public async Task ForFloat_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			float subject, params float[] unexpected)
 		{
 			async Task Act()
@@ -1089,8 +1093,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)1.1)]
-		public async Task ForFloat_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((float)1.1, (float)0.1, (float)1.1, (float)3.1)]
+		public async Task ForFloat_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			float subject, params float?[] unexpected)
 		{
 			async Task Act()
@@ -1118,9 +1122,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 2)]
-		[InlineData(2, 1)]
-		public async Task ForInt_WhenValueIsDifferentToUnexpected_ShouldSucceed(int subject,
+		[InlineData(1, 2, 3)]
+		[InlineData(2, 1, 3)]
+		public async Task ForInt_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(int subject,
 			params int?[] unexpected)
 		{
 			async Task Act()
@@ -1130,8 +1134,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 1)]
-		public async Task ForInt_WhenValueIsEqualToUnexpected_ShouldFail(int subject,
+		[InlineData(1, 0, 1, 3)]
+		public async Task ForInt_WhenValueIsEqualToAnyUnexpected_ShouldFail(int subject,
 			params int?[] unexpected)
 		{
 			async Task Act()
@@ -1175,9 +1179,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)2)]
-		[InlineData((long)1, (long)0)]
-		public async Task ForLong_WhenValueIsDifferentToUnexpected_ShouldSucceed(long subject,
+		[InlineData((long)1, (long)2, (long)3)]
+		[InlineData((long)1, (long)0, (long)3)]
+		public async Task ForLong_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(long subject,
 			params long?[] unexpected)
 		{
 			async Task Act()
@@ -1187,8 +1191,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)1)]
-		public async Task ForLong_WhenValueIsEqualToUnexpected_ShouldFail(long subject,
+		[InlineData((long)1, (long)0, (long)1, (long)3)]
+		public async Task ForLong_WhenValueIsEqualToAnyUnexpected_ShouldFail(long subject,
 			params long?[] unexpected)
 		{
 			async Task Act()
@@ -1203,9 +1207,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((byte)1, (byte)2)]
-		[InlineData((byte)1, (byte)0)]
-		public async Task ForNullableByte_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((byte)1, (byte)2, (byte)3)]
+		[InlineData((byte)1, (byte)0, (byte)3)]
+		public async Task ForNullableByte_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			byte? subject, params byte?[] unexpected)
 		{
 			async Task Act()
@@ -1215,8 +1219,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((byte)1, (byte)1)]
-		public async Task ForNullableByte_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((byte)1, (byte)0, (byte)1, (byte)3)]
+		public async Task ForNullableByte_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			byte? subject, params byte?[] unexpected)
 		{
 			async Task Act()
@@ -1256,9 +1260,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForNullableDecimal_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForNullableDecimal_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			double? subjectValue, params double?[] unexpectedValues)
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
@@ -1275,8 +1279,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForNullableDecimal_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForNullableDecimal_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			double? subjectValue, params double?[] unexpectedValues)
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
@@ -1310,9 +1314,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 2.1)]
-		[InlineData(1.1, 0.1)]
-		public async Task ForNullableDouble_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData(1.1, 2.1, 3.1)]
+		[InlineData(1.1, 0.1, 3.1)]
+		public async Task ForNullableDouble_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			double? subject, params double?[] unexpected)
 		{
 			async Task Act()
@@ -1322,8 +1326,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1.1, 1.1)]
-		public async Task ForNullableDouble_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData(1.1, 0.1, 1.1, 3.1)]
+		public async Task ForNullableDouble_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			double? subject, params double?[] unexpected)
 		{
 			async Task Act()
@@ -1350,9 +1354,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)2.1)]
-		[InlineData((float)1.1, (float)0.1)]
-		public async Task ForNullableFloat_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((float)1.1, (float)2.1, (float)3.1)]
+		[InlineData((float)1.1, (float)0.1, (float)3.1)]
+		public async Task ForNullableFloat_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			float? subject, params float?[] unexpected)
 		{
 			async Task Act()
@@ -1362,8 +1366,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((float)1.1, (float)1.1)]
-		public async Task ForNullableFloat_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((float)1.1, (float)0.1, (float)1.1, (float)3.1)]
+		public async Task ForNullableFloat_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			float? subject, params float?[] unexpected)
 		{
 			async Task Act()
@@ -1378,9 +1382,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 2)]
-		[InlineData(1, 0)]
-		public async Task ForNullableInt_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData(1, 2, 3)]
+		[InlineData(1, 0, 3)]
+		public async Task ForNullableInt_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			int? subject, params int?[] unexpected)
 		{
 			async Task Act()
@@ -1390,8 +1394,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(1, 1)]
-		public async Task ForNullableInt_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData(1, 0, 1, 3)]
+		public async Task ForNullableInt_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			int? subject, params int?[] unexpected)
 		{
 			async Task Act()
@@ -1419,9 +1423,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)2)]
-		[InlineData((long)1, (long)0)]
-		public async Task ForNullableLong_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((long)1, (long)2, (long)3)]
+		[InlineData((long)1, (long)0, (long)3)]
+		public async Task ForNullableLong_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			long? subject, params long?[] unexpected)
 		{
 			async Task Act()
@@ -1431,8 +1435,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((long)1, (long)1)]
-		public async Task ForNullableLong_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((long)1, (long)0, (long)1, (long)3)]
+		public async Task ForNullableLong_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			long? subject, params long?[] unexpected)
 		{
 			async Task Act()
@@ -1460,9 +1464,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)2)]
-		[InlineData((sbyte)1, (sbyte)0)]
-		public async Task ForNullableSbyte_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((sbyte)1, (sbyte)2, (sbyte)3)]
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)3)]
+		public async Task ForNullableSbyte_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			sbyte? subject, params sbyte?[] unexpected)
 		{
 			async Task Act()
@@ -1472,8 +1476,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)1)]
-		public async Task ForNullableSbyte_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)1, (sbyte)3)]
+		public async Task ForNullableSbyte_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			sbyte? subject, params sbyte?[] unexpected)
 		{
 			async Task Act()
@@ -1501,9 +1505,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)2)]
-		[InlineData((short)1, (short)0)]
-		public async Task ForNullableShort_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((short)1, (short)2, (short)3)]
+		[InlineData((short)1, (short)0, (short)3)]
+		public async Task ForNullableShort_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			short? subject, params short?[] unexpected)
 		{
 			async Task Act()
@@ -1513,8 +1517,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)1)]
-		public async Task ForNullableShort_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((short)1, (short)0, (short)1, (short)3)]
+		public async Task ForNullableShort_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			short? subject, params short?[] unexpected)
 		{
 			async Task Act()
@@ -1542,9 +1546,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)2)]
-		[InlineData((uint)1, (uint)0)]
-		public async Task ForNullableUint_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((uint)1, (uint)2, (uint)3)]
+		[InlineData((uint)1, (uint)0, (uint)3)]
+		public async Task ForNullableUint_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			uint? subject, params uint?[] unexpected)
 		{
 			async Task Act()
@@ -1554,8 +1558,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)1)]
-		public async Task ForNullableUint_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((uint)1, (uint)0, (uint)1, (uint)3)]
+		public async Task ForNullableUint_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			uint? subject, params uint?[] unexpected)
 		{
 			async Task Act()
@@ -1583,9 +1587,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)2)]
-		[InlineData((ulong)1, (ulong)0)]
-		public async Task ForNullableUlong_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((ulong)1, (ulong)2, (ulong)3)]
+		[InlineData((ulong)1, (ulong)0, (ulong)3)]
+		public async Task ForNullableUlong_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			ulong? subject, params ulong?[] unexpected)
 		{
 			async Task Act()
@@ -1595,8 +1599,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)1)]
-		public async Task ForNullableUlong_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((ulong)1, (ulong)0, (ulong)1, (ulong)3)]
+		public async Task ForNullableUlong_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			ulong? subject, params ulong?[] unexpected)
 		{
 			async Task Act()
@@ -1624,9 +1628,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)2)]
-		[InlineData((ushort)1, (ushort)0)]
-		public async Task ForNullableUshort_WhenValueIsDifferentToUnexpected_ShouldSucceed(
+		[InlineData((ushort)1, (ushort)2, (ushort)3)]
+		[InlineData((ushort)1, (ushort)0, (ushort)3)]
+		public async Task ForNullableUshort_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
 			ushort? subject, params ushort?[] unexpected)
 		{
 			async Task Act()
@@ -1636,8 +1640,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)1)]
-		public async Task ForNullableUshort_WhenValueIsEqualToUnexpected_ShouldFail(
+		[InlineData((ushort)1, (ushort)0, (ushort)1, (ushort)3)]
+		public async Task ForNullableUshort_WhenValueIsEqualToAnyUnexpected_ShouldFail(
 			ushort? subject, params ushort?[] unexpected)
 		{
 			async Task Act()
@@ -1678,9 +1682,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)2)]
-		[InlineData((sbyte)1, (sbyte)0)]
-		public async Task ForSbyte_WhenValueIsDifferentToUnexpected_ShouldSucceed(sbyte subject,
+		[InlineData((sbyte)1, (sbyte)2, (sbyte)3)]
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)3)]
+		public async Task ForSbyte_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(sbyte subject,
 			params sbyte?[] unexpected)
 		{
 			async Task Act()
@@ -1690,8 +1694,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((sbyte)1, (sbyte)1)]
-		public async Task ForSbyte_WhenValueIsEqualToUnexpected_ShouldFail(sbyte subject,
+		[InlineData((sbyte)1, (sbyte)0, (sbyte)1, (sbyte)3)]
+		public async Task ForSbyte_WhenValueIsEqualToAnyUnexpected_ShouldFail(sbyte subject,
 			params sbyte?[] unexpected)
 		{
 			async Task Act()
@@ -1719,9 +1723,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)2)]
-		[InlineData((short)1, (short)0)]
-		public async Task ForShort_WhenValueIsDifferentToUnexpected_ShouldSucceed(short subject,
+		[InlineData((short)1, (short)2, (short)3)]
+		[InlineData((short)1, (short)0, (short)3)]
+		public async Task ForShort_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(short subject,
 			params short?[] unexpected)
 		{
 			async Task Act()
@@ -1731,8 +1735,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((short)1, (short)1)]
-		public async Task ForShort_WhenValueIsEqualToUnexpected_ShouldFail(short subject,
+		[InlineData((short)1, (short)0, (short)1, (short)3)]
+		public async Task ForShort_WhenValueIsEqualToAnyUnexpected_ShouldFail(short subject,
 			params short?[] unexpected)
 		{
 			async Task Act()
@@ -1760,9 +1764,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)2)]
-		[InlineData((uint)1, (uint)0)]
-		public async Task ForUint_WhenValueIsDifferentToUnexpected_ShouldSucceed(uint subject,
+		[InlineData((uint)1, (uint)2, (uint)3)]
+		[InlineData((uint)1, (uint)0, (uint)3)]
+		public async Task ForUint_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(uint subject,
 			params uint?[] unexpected)
 		{
 			async Task Act()
@@ -1772,8 +1776,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((uint)1, (uint)1)]
-		public async Task ForUint_WhenValueIsEqualToUnexpected_ShouldFail(uint subject,
+		[InlineData((uint)1, (uint)0, (uint)1, (uint)3)]
+		public async Task ForUint_WhenValueIsEqualToAnyUnexpected_ShouldFail(uint subject,
 			params uint?[] unexpected)
 		{
 			async Task Act()
@@ -1801,9 +1805,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)2)]
-		[InlineData((ulong)1, (ulong)0)]
-		public async Task ForUlong_WhenValueIsDifferentToUnexpected_ShouldSucceed(ulong subject,
+		[InlineData((ulong)1, (ulong)2, (ulong)3)]
+		[InlineData((ulong)1, (ulong)0, (ulong)3)]
+		public async Task ForUlong_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(ulong subject,
 			params ulong?[] unexpected)
 		{
 			async Task Act()
@@ -1813,8 +1817,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ulong)1, (ulong)1)]
-		public async Task ForUlong_WhenValueIsEqualToUnexpected_ShouldFail(ulong subject,
+		[InlineData((ulong)1, (ulong)0, (ulong)1, (ulong)3)]
+		public async Task ForUlong_WhenValueIsEqualToAnyUnexpected_ShouldFail(ulong subject,
 			params ulong?[] unexpected)
 		{
 			async Task Act()
@@ -1842,9 +1846,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)2)]
-		[InlineData((ushort)1, (ushort)0)]
-		public async Task ForUshort_WhenValueIsDifferentToUnexpected_ShouldSucceed(ushort subject,
+		[InlineData((ushort)1, (ushort)2, (ushort)3)]
+		[InlineData((ushort)1, (ushort)0, (ushort)3)]
+		public async Task ForUshort_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(ushort subject,
 			params ushort?[] unexpected)
 		{
 			async Task Act()
@@ -1854,8 +1858,8 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData((ushort)1, (ushort)1)]
-		public async Task ForUshort_WhenValueIsEqualToUnexpected_ShouldFail(ushort subject,
+		[InlineData((ushort)1, (ushort)0, (ushort)1, (ushort)3)]
+		public async Task ForUshort_WhenValueIsEqualToAnyUnexpected_ShouldFail(ushort subject,
 			params ushort?[] unexpected)
 		{
 			async Task Act()

@@ -10,8 +10,8 @@ public sealed partial class NumberShould
 		public sealed class WithinTests
 		{
 			[Theory]
-			[InlineData((byte)5, (byte)6)]
-			[InlineData((byte)5, (byte)4)]
+			[InlineData((byte)5, (byte)0, (byte)6, (byte)16)]
+			[InlineData((byte)5, (byte)0, (byte)4, (byte)14)]
 			public async Task ForByte_WhenInsideTolerance_ShouldSucceed(
 				byte subject, params byte[] expected)
 			{
@@ -22,8 +22,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((byte)5, (byte)7)]
-			[InlineData((byte)5, (byte)3)]
+			[InlineData((byte)5, (byte)0, (byte)7, (byte)17)]
+			[InlineData((byte)5, (byte)0, (byte)3, (byte)13)]
 			public async Task ForByte_WhenOutsideTolerance_ShouldFail(
 				byte subject, params byte[] expected)
 			{
@@ -39,8 +39,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForDecimal_WhenInsideTolerance_ShouldSucceed(
 				double subjectValue, params double[] expectedValues)
 			{
@@ -56,8 +56,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForDecimal_WhenOutsideTolerance_ShouldFail(
 				double subjectValue, params double[] expectedValues)
 			{
@@ -92,8 +92,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForDouble_WhenInsideTolerance_ShouldSucceed(
 				double subject, params double[] expected)
 			{
@@ -104,8 +104,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForDouble_WhenOutsideTolerance_ShouldFail(
 				double subject, params double[] expected)
 			{
@@ -135,8 +135,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.6F)]
-			[InlineData(12.5F, 12.4F)]
+			[InlineData(12.5F, 12.0F, 12.6F, 13.6F)]
+			[InlineData(12.5F, 12.0F, 12.4F, 13.4F)]
 			public async Task ForFloat_WhenInsideTolerance_ShouldSucceed(
 				float subject, params float[] expected)
 			{
@@ -147,8 +147,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.7F)]
-			[InlineData(12.5F, 12.3F)]
+			[InlineData(12.5F, 12.0F, 12.7F, 13.7F)]
+			[InlineData(12.5F, 12.0F, 12.3F, 13.3F)]
 			public async Task ForFloat_WhenOutsideTolerance_ShouldFail(
 				float subject, params float[] expected)
 			{
@@ -178,8 +178,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 6)]
-			[InlineData(5, 4)]
+			[InlineData(5, 0, 6, 16)]
+			[InlineData(5, 0, 4, 14)]
 			public async Task ForInt_WhenInsideTolerance_ShouldSucceed(
 				int subject, params int[] expected)
 			{
@@ -190,8 +190,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 7)]
-			[InlineData(5, 3)]
+			[InlineData(5, 0, 7, 17)]
+			[InlineData(5, 0, 3, 13)]
 			public async Task ForInt_WhenOutsideTolerance_ShouldFail(
 				int subject, params int[] expected)
 			{
@@ -221,8 +221,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5L, 6L)]
-			[InlineData(5L, 4L)]
+			[InlineData(5L, 0L, 6L, 16L)]
+			[InlineData(5L, 0L, 4L, 14L)]
 			public async Task ForLong_WhenInsideTolerance_ShouldSucceed(
 				long subject, params long[] expected)
 			{
@@ -233,8 +233,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5L, 7L)]
-			[InlineData(5L, 3L)]
+			[InlineData(5L, 0L, 7L, 17L)]
+			[InlineData(5L, 0L, 3L, 13L)]
 			public async Task ForLong_WhenOutsideTolerance_ShouldFail(
 				long subject, params long[] expected)
 			{
@@ -264,8 +264,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((byte)5, (byte)6)]
-			[InlineData((byte)5, (byte)4)]
+			[InlineData((byte)5, (byte)0, (byte)6, (byte)16)]
+			[InlineData((byte)5, (byte)0, (byte)4, (byte)14)]
 			public async Task ForNullableByte_WhenInsideTolerance_ShouldSucceed(
 				byte? subject, params byte?[] expected)
 			{
@@ -276,8 +276,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((byte)5, (byte)7)]
-			[InlineData((byte)5, (byte)3)]
+			[InlineData((byte)5, (byte)0, (byte)7, (byte)17)]
+			[InlineData((byte)5, (byte)0, (byte)3, (byte)13)]
 			public async Task ForNullableByte_WhenOutsideTolerance_ShouldFail(
 				byte? subject, params byte?[] expected)
 			{
@@ -293,8 +293,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldSucceed(
 				double subjectValue, params double?[] expectedValues)
 			{
@@ -312,8 +312,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldFail(
 				double subjectValue, params double?[] expectedValues)
 			{
@@ -350,8 +350,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForNullableDouble_WhenInsideTolerance_ShouldSucceed(
 				double? subject, params double?[] expected)
 			{
@@ -362,8 +362,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForNullableDouble_WhenOutsideTolerance_ShouldFail(
 				double? subject, params double?[] expected)
 			{
@@ -393,8 +393,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.6F)]
-			[InlineData(12.5F, 12.4F)]
+			[InlineData(12.5F, 12.0F, 12.6F, 13.6F)]
+			[InlineData(12.5F, 12.0F, 12.4F, 13.4F)]
 			public async Task ForNullableFloat_WhenInsideTolerance_ShouldSucceed(
 				float? subject, params float?[] expected)
 			{
@@ -405,8 +405,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.7F)]
-			[InlineData(12.5F, 12.3F)]
+			[InlineData(12.5F, 12.0F, 12.7F, 13.7F)]
+			[InlineData(12.5F, 12.0F, 12.3F, 13.3F)]
 			public async Task ForNullableFloat_WhenOutsideTolerance_ShouldFail(
 				float? subject, params float?[] expected)
 			{
@@ -436,8 +436,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 6)]
-			[InlineData(5, 4)]
+			[InlineData(5, 0, 6, 16)]
+			[InlineData(5, 0, 4, 14)]
 			public async Task ForNullableInt_WhenInsideTolerance_ShouldSucceed(
 				int? subject, params int?[] expected)
 			{
@@ -448,8 +448,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 7)]
-			[InlineData(5, 3)]
+			[InlineData(5, 0, 7, 17)]
+			[InlineData(5, 0, 3, 13)]
 			public async Task ForNullableInt_WhenOutsideTolerance_ShouldFail(
 				int? subject, params int?[] expected)
 			{
@@ -479,8 +479,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((long)5, (long)6)]
-			[InlineData((long)5, (long)4)]
+			[InlineData((long)5, (long)0, (long)6, (long)16)]
+			[InlineData((long)5, (long)0, (long)4, (long)14)]
 			public async Task ForNullableLong_WhenInsideTolerance_ShouldSucceed(
 				long? subject, params long?[] expected)
 			{
@@ -491,8 +491,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((long)5, (long)7)]
-			[InlineData((long)5, (long)3)]
+			[InlineData((long)5, (long)0, (long)7, (long)17)]
+			[InlineData((long)5, (long)0, (long)3, (long)13)]
 			public async Task ForNullableLong_WhenOutsideTolerance_ShouldFail(
 				long? subject, params long?[] expected)
 			{
@@ -522,8 +522,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)6)]
-			[InlineData((sbyte)5, (sbyte)4)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)6, (sbyte)16)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)4, (sbyte)14)]
 			public async Task ForNullableSbyte_WhenInsideTolerance_ShouldSucceed(
 				sbyte? subject, params sbyte?[] expected)
 			{
@@ -534,8 +534,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)7)]
-			[InlineData((sbyte)5, (sbyte)3)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)7, (sbyte)17)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)3, (sbyte)13)]
 			public async Task ForNullableSbyte_WhenOutsideTolerance_ShouldFail(
 				sbyte? subject, params sbyte?[] expected)
 			{
@@ -565,8 +565,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)6)]
-			[InlineData((short)5, (short)4)]
+			[InlineData((short)5, (short)0, (short)6, (short)16)]
+			[InlineData((short)5, (short)0, (short)4, (short)14)]
 			public async Task ForNullableShort_WhenInsideTolerance_ShouldSucceed(
 				short? subject, params short?[] expected)
 			{
@@ -577,8 +577,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)7)]
-			[InlineData((short)5, (short)3)]
+			[InlineData((short)5, (short)0, (short)7, (short)17)]
+			[InlineData((short)5, (short)0, (short)3, (short)13)]
 			public async Task ForNullableShort_WhenOutsideTolerance_ShouldFail(
 				short? subject, params short?[] expected)
 			{
@@ -608,8 +608,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)6)]
-			[InlineData((uint)5, (uint)4)]
+			[InlineData((uint)5, (uint)0, (uint)6, (uint)16)]
+			[InlineData((uint)5, (uint)0, (uint)4, (uint)14)]
 			public async Task ForNullableUint_WhenInsideTolerance_ShouldSucceed(
 				uint? subject, params uint?[] expected)
 			{
@@ -620,8 +620,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)7)]
-			[InlineData((uint)5, (uint)3)]
+			[InlineData((uint)5, (uint)0, (uint)7, (uint)17)]
+			[InlineData((uint)5, (uint)0, (uint)3, (uint)13)]
 			public async Task ForNullableUint_WhenOutsideTolerance_ShouldFail(
 				uint? subject, params uint?[] expected)
 			{
@@ -637,8 +637,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)6)]
-			[InlineData((ulong)5, (ulong)4)]
+			[InlineData((ulong)5, (ulong)0, (ulong)6, (ulong)16)]
+			[InlineData((ulong)5, (ulong)0, (ulong)4, (ulong)14)]
 			public async Task ForNullableUlong_WhenInsideTolerance_ShouldSucceed(
 				ulong? subject, params ulong?[] expected)
 			{
@@ -649,8 +649,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)7)]
-			[InlineData((ulong)5, (ulong)3)]
+			[InlineData((ulong)5, (ulong)0, (ulong)7, (ulong)17)]
+			[InlineData((ulong)5, (ulong)0, (ulong)3, (ulong)13)]
 			public async Task ForNullableUlong_WhenOutsideTolerance_ShouldFail(
 				ulong? subject, params ulong?[] expected)
 			{
@@ -666,8 +666,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)6)]
-			[InlineData((ushort)5, (ushort)4)]
+			[InlineData((ushort)5, (ushort)0, (ushort)6, (ushort)16)]
+			[InlineData((ushort)5, (ushort)0, (ushort)4, (ushort)14)]
 			public async Task ForNullableUshort_WhenInsideTolerance_ShouldSucceed(
 				ushort? subject, params ushort?[] expected)
 			{
@@ -678,8 +678,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)7)]
-			[InlineData((ushort)5, (ushort)3)]
+			[InlineData((ushort)5, (ushort)0, (ushort)7, (ushort)17)]
+			[InlineData((ushort)5, (ushort)0, (ushort)3, (ushort)13)]
 			public async Task ForNullableUshort_WhenOutsideTolerance_ShouldFail(
 				ushort? subject, params ushort?[] expected)
 			{
@@ -695,8 +695,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)6)]
-			[InlineData((sbyte)5, (sbyte)4)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)6, (sbyte)16)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)4, (sbyte)14)]
 			public async Task ForSbyte_WhenInsideTolerance_ShouldSucceed(
 				sbyte subject, params sbyte[] expected)
 			{
@@ -707,8 +707,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)7)]
-			[InlineData((sbyte)5, (sbyte)3)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)7, (sbyte)17)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)3, (sbyte)13)]
 			public async Task ForSbyte_WhenOutsideTolerance_ShouldFail(
 				sbyte subject, params sbyte[] expected)
 			{
@@ -738,8 +738,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)6)]
-			[InlineData((short)5, (short)4)]
+			[InlineData((short)5, (short)0, (short)6, (short)16)]
+			[InlineData((short)5, (short)0, (short)4, (short)14)]
 			public async Task ForShort_WhenInsideTolerance_ShouldSucceed(
 				short subject, params short[] expected)
 			{
@@ -750,8 +750,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)7)]
-			[InlineData((short)5, (short)3)]
+			[InlineData((short)5, (short)0, (short)7, (short)17)]
+			[InlineData((short)5, (short)0, (short)3, (short)13)]
 			public async Task ForShort_WhenOutsideTolerance_ShouldFail(
 				short subject, params short[] expected)
 			{
@@ -781,8 +781,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)6)]
-			[InlineData((uint)5, (uint)4)]
+			[InlineData((uint)5, (uint)0, (uint)6, (uint)16)]
+			[InlineData((uint)5, (uint)0, (uint)4, (uint)14)]
 			public async Task ForUint_WhenInsideTolerance_ShouldSucceed(
 				uint subject, params uint[] expected)
 			{
@@ -793,8 +793,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)7)]
-			[InlineData((uint)5, (uint)3)]
+			[InlineData((uint)5, (uint)0, (uint)7, (uint)17)]
+			[InlineData((uint)5, (uint)0, (uint)3, (uint)13)]
 			public async Task ForUint_WhenOutsideTolerance_ShouldFail(
 				uint subject, params uint[] expected)
 			{
@@ -810,8 +810,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)6)]
-			[InlineData((ulong)5, (ulong)4)]
+			[InlineData((ulong)5, (ulong)0, (ulong)6, (ulong)16)]
+			[InlineData((ulong)5, (ulong)0, (ulong)4, (ulong)14)]
 			public async Task ForUlong_WhenInsideTolerance_ShouldSucceed(
 				ulong subject, params ulong[] expected)
 			{
@@ -822,8 +822,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)7)]
-			[InlineData((ulong)5, (ulong)3)]
+			[InlineData((ulong)5, (ulong)0, (ulong)7, (ulong)17)]
+			[InlineData((ulong)5, (ulong)0, (ulong)3, (ulong)13)]
 			public async Task ForUlong_WhenOutsideTolerance_ShouldFail(
 				ulong subject, params ulong[] expected)
 			{
@@ -839,8 +839,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)6)]
-			[InlineData((ushort)5, (ushort)4)]
+			[InlineData((ushort)5, (ushort)0, (ushort)6, (ushort)16)]
+			[InlineData((ushort)5, (ushort)0, (ushort)4, (ushort)14)]
 			public async Task ForUshort_WhenInsideTolerance_ShouldSucceed(
 				ushort subject, params ushort[] expected)
 			{
@@ -851,8 +851,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)7)]
-			[InlineData((ushort)5, (ushort)3)]
+			[InlineData((ushort)5, (ushort)0, (ushort)7, (ushort)17)]
+			[InlineData((ushort)5, (ushort)0, (ushort)3, (ushort)13)]
 			public async Task ForUshort_WhenOutsideTolerance_ShouldFail(
 				ushort subject, params ushort[] expected)
 			{
@@ -874,8 +874,8 @@ public sealed partial class NumberShould
 		public sealed class WithinTests
 		{
 			[Theory]
-			[InlineData((byte)5, (byte)6)]
-			[InlineData((byte)5, (byte)4)]
+			[InlineData((byte)5, (byte)0, (byte)6, (byte)16)]
+			[InlineData((byte)5, (byte)0, (byte)4, (byte)14)]
 			public async Task ForByte_WhenInsideTolerance_ShouldFail(
 				byte subject, params byte[] unexpected)
 			{
@@ -891,8 +891,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((byte)5, (byte)7)]
-			[InlineData((byte)5, (byte)3)]
+			[InlineData((byte)5, (byte)0, (byte)7, (byte)17)]
+			[InlineData((byte)5, (byte)0, (byte)3, (byte)13)]
 			public async Task ForByte_WhenOutsideTolerance_ShouldSucceed(
 				byte subject, params byte[] unexpected)
 			{
@@ -903,8 +903,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForDecimal_WhenInsideTolerance_ShouldFail(
 				double subjectValue, params double[] unexpectedValues)
 			{
@@ -925,8 +925,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForDecimal_WhenOutsideTolerance_ShouldSucceed(
 				double subjectValue, params double[] unexpectedValues)
 			{
@@ -957,8 +957,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForDouble_WhenInsideTolerance_ShouldFail(
 				double subject, params double[] unexpected)
 			{
@@ -974,8 +974,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForDouble_WhenOutsideTolerance_ShouldSucceed(
 				double subject, params double[] unexpected)
 			{
@@ -1000,8 +1000,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.6F)]
-			[InlineData(12.5F, 12.4F)]
+			[InlineData(12.5F, 12.0F, 12.6F, 13.6F)]
+			[InlineData(12.5F, 12.0F, 12.4F, 13.4F)]
 			public async Task ForFloat_WhenInsideTolerance_ShouldFail(
 				float subject, params float[] unexpected)
 			{
@@ -1017,8 +1017,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.7F)]
-			[InlineData(12.5F, 12.3F)]
+			[InlineData(12.5F, 12.0F, 12.7F, 13.7F)]
+			[InlineData(12.5F, 12.0F, 12.3F, 13.3F)]
 			public async Task ForFloat_WhenOutsideTolerance_ShouldSucceed(
 				float subject, params float[] unexpected)
 			{
@@ -1043,8 +1043,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 6)]
-			[InlineData(5, 4)]
+			[InlineData(5, 0, 6, 16)]
+			[InlineData(5, 0, 4, 14)]
 			public async Task ForInt_WhenInsideTolerance_ShouldFail(
 				int subject, params int[] unexpected)
 			{
@@ -1060,8 +1060,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 7)]
-			[InlineData(5, 3)]
+			[InlineData(5, 0, 7, 17)]
+			[InlineData(5, 0, 3, 13)]
 			public async Task ForInt_WhenOutsideTolerance_ShouldSucceed(
 				int subject, params int[] unexpected)
 			{
@@ -1086,8 +1086,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5L, 6L)]
-			[InlineData(5L, 4L)]
+			[InlineData(5L, 0L, 6L, 16L)]
+			[InlineData(5L, 0L, 4L, 14L)]
 			public async Task ForLong_WhenInsideTolerance_ShouldFail(
 				long subject, params long[] unexpected)
 			{
@@ -1103,8 +1103,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5L, 7L)]
-			[InlineData(5L, 3L)]
+			[InlineData(5L, 0L, 7L, 17L)]
+			[InlineData(5L, 0L, 3L, 13L)]
 			public async Task ForLong_WhenOutsideTolerance_ShouldSucceed(
 				long subject, params long[] unexpected)
 			{
@@ -1129,8 +1129,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((byte)5, (byte)6)]
-			[InlineData((byte)5, (byte)4)]
+			[InlineData((byte)5, (byte)0, (byte)6, (byte)16)]
+			[InlineData((byte)5, (byte)0, (byte)4, (byte)14)]
 			public async Task ForNullableByte_WhenInsideTolerance_ShouldFail(
 				byte? subject, params byte?[] unexpected)
 			{
@@ -1146,8 +1146,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((byte)5, (byte)7)]
-			[InlineData((byte)5, (byte)3)]
+			[InlineData((byte)5, (byte)0, (byte)7, (byte)17)]
+			[InlineData((byte)5, (byte)0, (byte)3, (byte)13)]
 			public async Task ForNullableByte_WhenOutsideTolerance_ShouldSucceed(
 				byte? subject, params byte?[] unexpected)
 			{
@@ -1158,8 +1158,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldFail(
 				double subjectValue, params double?[] unexpectedValues)
 			{
@@ -1182,8 +1182,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldSucceed(
 				double subjectValue, params double?[] unexpectedValues)
 			{
@@ -1216,8 +1216,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.6)]
-			[InlineData(12.5, 12.4)]
+			[InlineData(12.5, 12.0, 12.6, 13.6)]
+			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForNullableDouble_WhenInsideTolerance_ShouldFail(
 				double? subject, params double?[] unexpected)
 			{
@@ -1233,8 +1233,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5, 12.7)]
-			[InlineData(12.5, 12.3)]
+			[InlineData(12.5, 12.0, 12.7, 13.7)]
+			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForNullableDouble_WhenOutsideTolerance_ShouldSucceed(
 				double? subject, params double?[] unexpected)
 			{
@@ -1259,8 +1259,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.6F)]
-			[InlineData(12.5F, 12.4F)]
+			[InlineData(12.5F, 12.0F, 12.6F, 13.6F)]
+			[InlineData(12.5F, 12.0F, 12.4F, 13.4F)]
 			public async Task ForNullableFloat_WhenInsideTolerance_ShouldFail(
 				float? subject, params float?[] unexpected)
 			{
@@ -1276,8 +1276,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(12.5F, 12.7F)]
-			[InlineData(12.5F, 12.3F)]
+			[InlineData(12.5F, 12.0F, 12.7F, 13.7F)]
+			[InlineData(12.5F, 12.0F, 12.3F, 13.3F)]
 			public async Task ForNullableFloat_WhenOutsideTolerance_ShouldSucceed(
 				float? subject, params float?[] unexpected)
 			{
@@ -1302,8 +1302,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 6)]
-			[InlineData(5, 4)]
+			[InlineData(5, 0, 6, 16)]
+			[InlineData(5, 0, 4, 14)]
 			public async Task ForNullableInt_WhenInsideTolerance_ShouldFail(
 				int? subject, params int?[] unexpected)
 			{
@@ -1319,8 +1319,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData(5, 7)]
-			[InlineData(5, 3)]
+			[InlineData(5, 0, 7, 17)]
+			[InlineData(5, 0, 3, 13)]
 			public async Task ForNullableInt_WhenOutsideTolerance_ShouldSucceed(
 				int? subject, params int?[] unexpected)
 			{
@@ -1345,8 +1345,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((long)5, (long)6)]
-			[InlineData((long)5, (long)4)]
+			[InlineData((long)5, (long)0, (long)6, (long)16)]
+			[InlineData((long)5, (long)0, (long)4, (long)14)]
 			public async Task ForNullableLong_WhenInsideTolerance_ShouldFail(
 				long? subject, params long?[] unexpected)
 			{
@@ -1362,8 +1362,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((long)5, (long)7)]
-			[InlineData((long)5, (long)3)]
+			[InlineData((long)5, (long)0, (long)7, (long)17)]
+			[InlineData((long)5, (long)0, (long)3, (long)13)]
 			public async Task ForNullableLong_WhenOutsideTolerance_ShouldSucceed(
 				long? subject, params long?[] unexpected)
 			{
@@ -1388,8 +1388,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)6)]
-			[InlineData((sbyte)5, (sbyte)4)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)6, (sbyte)16)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)4, (sbyte)14)]
 			public async Task ForNullableSbyte_WhenInsideTolerance_ShouldFail(
 				sbyte? subject, params sbyte?[] unexpected)
 			{
@@ -1405,8 +1405,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)7)]
-			[InlineData((sbyte)5, (sbyte)3)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)7, (sbyte)17)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)3, (sbyte)13)]
 			public async Task ForNullableSbyte_WhenOutsideTolerance_ShouldSucceed(
 				sbyte? subject, params sbyte?[] unexpected)
 			{
@@ -1431,8 +1431,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)6)]
-			[InlineData((short)5, (short)4)]
+			[InlineData((short)5, (short)0, (short)6, (short)16)]
+			[InlineData((short)5, (short)0, (short)4, (short)14)]
 			public async Task ForNullableShort_WhenInsideTolerance_ShouldFail(
 				short? subject, params short?[] unexpected)
 			{
@@ -1448,8 +1448,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)7)]
-			[InlineData((short)5, (short)3)]
+			[InlineData((short)5, (short)0, (short)7, (short)17)]
+			[InlineData((short)5, (short)0, (short)3, (short)13)]
 			public async Task ForNullableShort_WhenOutsideTolerance_ShouldSucceed(
 				short? subject, params short?[] unexpected)
 			{
@@ -1474,8 +1474,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)6)]
-			[InlineData((uint)5, (uint)4)]
+			[InlineData((uint)5, (uint)0, (uint)6, (uint)16)]
+			[InlineData((uint)5, (uint)0, (uint)4, (uint)14)]
 			public async Task ForNullableUint_WhenInsideTolerance_ShouldFail(
 				uint? subject, params uint?[] unexpected)
 			{
@@ -1491,8 +1491,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)7)]
-			[InlineData((uint)5, (uint)3)]
+			[InlineData((uint)5, (uint)0, (uint)7, (uint)17)]
+			[InlineData((uint)5, (uint)0, (uint)3, (uint)13)]
 			public async Task ForNullableUint_WhenOutsideTolerance_ShouldSucceed(
 				uint? subject, params uint?[] unexpected)
 			{
@@ -1503,8 +1503,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)6)]
-			[InlineData((ulong)5, (ulong)4)]
+			[InlineData((ulong)5, (ulong)0, (ulong)6, (ulong)16)]
+			[InlineData((ulong)5, (ulong)0, (ulong)4, (ulong)14)]
 			public async Task ForNullableUlong_WhenInsideTolerance_ShouldFail(
 				ulong? subject, params ulong?[] unexpected)
 			{
@@ -1520,8 +1520,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)7)]
-			[InlineData((ulong)5, (ulong)3)]
+			[InlineData((ulong)5, (ulong)0, (ulong)7, (ulong)17)]
+			[InlineData((ulong)5, (ulong)0, (ulong)3, (ulong)13)]
 			public async Task ForNullableUlong_WhenOutsideTolerance_ShouldSucceed(
 				ulong? subject, params ulong?[] unexpected)
 			{
@@ -1532,8 +1532,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)6)]
-			[InlineData((ushort)5, (ushort)4)]
+			[InlineData((ushort)5, (ushort)0, (ushort)6, (ushort)16)]
+			[InlineData((ushort)5, (ushort)0, (ushort)4, (ushort)14)]
 			public async Task ForNullableUshort_WhenInsideTolerance_ShouldFail(
 				ushort? subject, params ushort?[] unexpected)
 			{
@@ -1549,8 +1549,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)7)]
-			[InlineData((ushort)5, (ushort)3)]
+			[InlineData((ushort)5, (ushort)0, (ushort)7, (ushort)17)]
+			[InlineData((ushort)5, (ushort)0, (ushort)3, (ushort)13)]
 			public async Task ForNullableUshort_WhenOutsideTolerance_ShouldSucceed(
 				ushort? subject, params ushort?[] unexpected)
 			{
@@ -1561,8 +1561,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)6)]
-			[InlineData((sbyte)5, (sbyte)4)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)6, (sbyte)16)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)4, (sbyte)14)]
 			public async Task ForSbyte_WhenInsideTolerance_ShouldFail(
 				sbyte subject, params sbyte[] unexpected)
 			{
@@ -1578,8 +1578,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((sbyte)5, (sbyte)7)]
-			[InlineData((sbyte)5, (sbyte)3)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)7, (sbyte)17)]
+			[InlineData((sbyte)5, (sbyte)0, (sbyte)3, (sbyte)13)]
 			public async Task ForSbyte_WhenOutsideTolerance_ShouldSucceed(
 				sbyte subject, params sbyte[] unexpected)
 			{
@@ -1604,8 +1604,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)6)]
-			[InlineData((short)5, (short)4)]
+			[InlineData((short)5, (short)0, (short)6, (short)16)]
+			[InlineData((short)5, (short)0, (short)4, (short)14)]
 			public async Task ForShort_WhenInsideTolerance_ShouldFail(
 				short subject, params short[] unexpected)
 			{
@@ -1621,8 +1621,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((short)5, (short)7)]
-			[InlineData((short)5, (short)3)]
+			[InlineData((short)5, (short)0, (short)7, (short)17)]
+			[InlineData((short)5, (short)0, (short)3, (short)13)]
 			public async Task ForShort_WhenOutsideTolerance_ShouldSucceed(
 				short subject, params short[] unexpected)
 			{
@@ -1647,8 +1647,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)6)]
-			[InlineData((uint)5, (uint)4)]
+			[InlineData((uint)5, (uint)0, (uint)6, (uint)16)]
+			[InlineData((uint)5, (uint)0, (uint)4, (uint)14)]
 			public async Task ForUint_WhenInsideTolerance_ShouldFail(
 				uint subject, params uint[] unexpected)
 			{
@@ -1664,8 +1664,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((uint)5, (uint)7)]
-			[InlineData((uint)5, (uint)3)]
+			[InlineData((uint)5, (uint)0, (uint)7, (uint)17)]
+			[InlineData((uint)5, (uint)0, (uint)3, (uint)13)]
 			public async Task ForUint_WhenOutsideTolerance_ShouldSucceed(
 				uint subject, params uint[] unexpected)
 			{
@@ -1676,8 +1676,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)6)]
-			[InlineData((ulong)5, (ulong)4)]
+			[InlineData((ulong)5, (ulong)0, (ulong)6, (ulong)16)]
+			[InlineData((ulong)5, (ulong)0, (ulong)4, (ulong)14)]
 			public async Task ForUlong_WhenInsideTolerance_ShouldFail(
 				ulong subject, params ulong[] unexpected)
 			{
@@ -1693,8 +1693,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ulong)5, (ulong)7)]
-			[InlineData((ulong)5, (ulong)3)]
+			[InlineData((ulong)5, (ulong)0, (ulong)7, (ulong)17)]
+			[InlineData((ulong)5, (ulong)0, (ulong)3, (ulong)13)]
 			public async Task ForUlong_WhenOutsideTolerance_ShouldSucceed(
 				ulong subject, params ulong[] unexpected)
 			{
@@ -1705,8 +1705,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)6)]
-			[InlineData((ushort)5, (ushort)4)]
+			[InlineData((ushort)5, (ushort)0, (ushort)6, (ushort)16)]
+			[InlineData((ushort)5, (ushort)0, (ushort)4, (ushort)14)]
 			public async Task ForUshort_WhenInsideTolerance_ShouldFail(
 				ushort subject, params ushort[] unexpected)
 			{
@@ -1722,8 +1722,8 @@ public sealed partial class NumberShould
 			}
 
 			[Theory]
-			[InlineData((ushort)5, (ushort)7)]
-			[InlineData((ushort)5, (ushort)3)]
+			[InlineData((ushort)5, (ushort)0, (ushort)7, (ushort)17)]
+			[InlineData((ushort)5, (ushort)0, (ushort)3, (ushort)13)]
 			public async Task ForUshort_WhenOutsideTolerance_ShouldSucceed(
 				ushort subject, params ushort[] unexpected)
 			{
