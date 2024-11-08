@@ -356,7 +356,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              but found NaN.
 				              """);
 		}
 
@@ -402,7 +402,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              but found NaN.
 				              """);
 		}
 
