@@ -8,29 +8,29 @@ namespace Testably.Expectations;
 public static partial class ThatStringShould
 {
 	/// <summary>
-	///     Verifies that the subject is empty.
+	///     Verifies that the subject is <see langword="null" /> or empty.
 	/// </summary>
-	public static AndOrResult<string?, IThat<string?>> BeEmpty(
+	public static AndOrResult<string?, IThat<string?>> BeNullOrEmpty(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint(
 					"",
-					_ => "be empty",
-					(a, _) => a == "",
+					_ => "be null or empty",
+					(a, _) => string.IsNullOrEmpty(a),
 					(a, _)
 						=> $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
 			source);
 
 	/// <summary>
-	///     Verifies that the subject is not empty.
+	///     Verifies that the subject is not <see langword="null" /> or empty.
 	/// </summary>
-	public static AndOrResult<string, IThat<string?>> NotBeEmpty(
+	public static AndOrResult<string, IThat<string?>> NotBeNullOrEmpty(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new GenericConstraint(
 					"",
-					_ => "not be empty",
-					(a, _) => a != "",
-					(_, _) => "it was")),
+					_ => "not be null or empty",
+					(a, _) => !string.IsNullOrEmpty(a),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 }

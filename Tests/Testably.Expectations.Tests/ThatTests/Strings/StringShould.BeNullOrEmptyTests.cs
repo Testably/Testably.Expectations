@@ -2,7 +2,7 @@
 
 public sealed partial class StringShould
 {
-	public class BeEmptyTests
+	public class BeNullOrEmptyTests
 	{
 		[Fact]
 		public async Task WhenActualIsEmpty_ShouldSucceed()
@@ -10,7 +10,7 @@ public sealed partial class StringShould
 			string subject = "";
 
 			async Task Act()
-				=> await That(subject).Should().BeEmpty();
+				=> await That(subject).Should().BeNullOrEmpty();
 
 			await That(Act).Should().NotThrow();
 		}
@@ -20,30 +20,25 @@ public sealed partial class StringShould
 		public async Task WhenActualIsNotEmpty_ShouldFail(string? subject)
 		{
 			async Task Act()
-				=> await That(subject).Should().BeEmpty();
+				=> await That(subject).Should().BeNullOrEmpty();
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be empty,
+				              be null or empty,
 				              but found "{subject}".
 				              """);
 		}
 
 		[Fact]
-		public async Task WhenActualIsNull_ShouldFail()
+		public async Task WhenActualIsNull_ShouldSucceed()
 		{
 			string? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().BeEmpty();
+				=> await That(subject).Should().BeNullOrEmpty();
 
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage("""
-				             Expected subject to
-				             be empty,
-				             but found <null>.
-				             """);
+			await That(Act).Should().NotThrow();
 		}
 
 		[Fact]
@@ -52,18 +47,18 @@ public sealed partial class StringShould
 			string subject = " \t ";
 
 			async Task Act()
-				=> await That(subject).Should().BeEmpty();
+				=> await That(subject).Should().BeNullOrEmpty();
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             be empty,
+				             be null or empty,
 				             but found " \t ".
 				             """);
 		}
 	}
 
-	public sealed class NotBeEmptyTests
+	public sealed class NotBeNullOrEmptyTests
 	{
 		[Fact]
 		public async Task WhenActualIsEmpty_ShouldFail()
@@ -71,13 +66,13 @@ public sealed partial class StringShould
 			string subject = "";
 
 			async Task Act()
-				=> await That(subject).Should().NotBeEmpty();
+				=> await That(subject).Should().NotBeNullOrEmpty();
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be empty,
-				             but it was.
+				             not be null or empty,
+				             but found "".
 				             """);
 		}
 
@@ -86,7 +81,7 @@ public sealed partial class StringShould
 		public async Task WhenActualIsNotEmpty_ShouldSucceed(string? subject)
 		{
 			async Task Act()
-				=> await That(subject).Should().NotBeEmpty();
+				=> await That(subject).Should().NotBeNullOrEmpty();
 
 			await That(Act).Should().NotThrow();
 		}
@@ -97,9 +92,14 @@ public sealed partial class StringShould
 			string? subject = null;
 
 			async Task Act()
-				=> await That(subject).Should().NotBeEmpty();
+				=> await That(subject).Should().NotBeNullOrEmpty();
 
-			await That(Act).Should().NotThrow();
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             not be null or empty,
+				             but found <null>.
+				             """);
 		}
 
 		[Fact]
@@ -108,7 +108,7 @@ public sealed partial class StringShould
 			string subject = " \t ";
 
 			async Task Act()
-				=> await That(subject).Should().NotBeEmpty();
+				=> await That(subject).Should().NotBeNullOrEmpty();
 
 			await That(Act).Should().NotThrow();
 		}
