@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.TimeSystem;
@@ -11,7 +10,8 @@ internal class DelegateAsyncValueSource<TValue>(Func<CancellationToken, Task<TVa
 {
 	#region IValueSource<DelegateValue<TValue>> Members
 
-	public async Task<DelegateValue<TValue>?> GetValue(ITimeSystem timeSystem, CancellationToken cancellationToken)
+	public async Task<DelegateValue<TValue>?> GetValue(ITimeSystem timeSystem,
+		CancellationToken cancellationToken)
 	{
 		IStopwatch sw = timeSystem.Stopwatch.New();
 		try

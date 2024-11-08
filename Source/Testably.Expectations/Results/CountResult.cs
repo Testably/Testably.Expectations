@@ -59,10 +59,10 @@ public class CountResult<TType, TThat, TSelf>(
 	/// </summary>
 	public BetweenResult<TSelf> Between(int minimum)
 		=> new(maximum =>
-			{
-				quantifier.Between(minimum, maximum);
-				return (TSelf)this;
-			});
+		{
+			quantifier.Between(minimum, maximum);
+			return (TSelf)this;
+		});
 
 	/// <summary>
 	///     Verifies, that it occurs exactly <paramref name="expected" /> times.

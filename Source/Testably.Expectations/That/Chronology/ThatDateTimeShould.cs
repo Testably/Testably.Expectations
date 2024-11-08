@@ -38,7 +38,8 @@ public static partial class ThatDateTimeShould
 		{
 			if (expected is null)
 			{
-				return new ConstraintResult.Failure(ToString(), failureMessageFactory(actual, expected));
+				return new ConstraintResult.Failure(ToString(),
+					failureMessageFactory(actual, expected));
 			}
 
 			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))

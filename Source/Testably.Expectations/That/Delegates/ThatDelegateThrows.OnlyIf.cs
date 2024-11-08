@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
-
-namespace Testably.Expectations;
+﻿namespace Testably.Expectations;
 
 public partial class ThatDelegateThrows<TException>
 {

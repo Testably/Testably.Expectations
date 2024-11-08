@@ -42,7 +42,7 @@ public class NumberTolerance<TNumber>(
 	}
 
 	internal bool IsWithinTolerance(TNumber? actual, TNumber? expected)
-		=> expected == null && actual == null ||
-		   expected != null && actual != null &&
-		   isWithinTolerance(actual.Value, expected.Value, Tolerance);
+		=> (expected == null && actual == null) ||
+		   (expected != null && actual != null &&
+		    isWithinTolerance(actual.Value, expected.Value, Tolerance));
 }

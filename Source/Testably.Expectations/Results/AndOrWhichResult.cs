@@ -41,7 +41,7 @@ public class AndOrWhichResult<TType, TThat, TSelf>(
 			Expression<Func<TType, TProperty?>> selector)
 	{
 		return new WhichResult<TProperty, AndOrWhichResult<TType, TThat, TSelf>>(
-			(expectations) =>
+			expectations =>
 			{
 				return new AndOrWhichResult<TType, TThat, TSelf>(
 					_expectationBuilder

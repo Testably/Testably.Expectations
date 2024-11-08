@@ -46,7 +46,8 @@ public static partial class ThatNullableDateTimeShould
 				return new ConstraintResult.Success<DateTime?>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), failureMessageFactory(actual, expected));
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected));
 		}
 
 		public override string ToString()

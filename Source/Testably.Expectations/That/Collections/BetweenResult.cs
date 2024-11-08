@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
 
 namespace Testably.Expectations;
 

@@ -116,8 +116,9 @@ internal class DefaultFormatter : IValueFormatter
 		stringBuilder.Append($"{new string(' ', indentation)}{member.Name} = ");
 		if (options.UseLineBreaks)
 		{
-			formattedValue = formattedValue.Indent("  ", false);	
+			formattedValue = formattedValue.Indent("  ", false);
 		}
+
 		stringBuilder.Append(formattedValue);
 	}
 

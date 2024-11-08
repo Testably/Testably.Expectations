@@ -39,7 +39,8 @@ internal class WhichNode<TSource, TProperty> : ManipulationNode
 				typedValue,
 				out TProperty? matchingValue))
 			{
-				ConstraintResult result = (await Inner.IsMetBy(matchingValue, context, cancellationToken))
+				ConstraintResult result =
+					(await Inner.IsMetBy(matchingValue, context, cancellationToken))
 					.UpdateExpectationText(r
 						=> _expectationTextGenerator(_propertyAccessor, r.ExpectationText));
 				return result.UseValue(value);

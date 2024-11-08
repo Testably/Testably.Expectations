@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -22,7 +20,6 @@ internal static class TypeExtensions
 	{
 		return GetTypeReflectorFor(typeToReflect, visibility).Members;
 	}
-
 
 	/// <summary>
 	///     Check if the type has a human-readable name.

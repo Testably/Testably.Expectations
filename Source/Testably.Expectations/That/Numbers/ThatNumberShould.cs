@@ -147,7 +147,7 @@ public static partial class ThatNumberShould
 		Func<T, T?, bool> condition,
 		Func<T, T?, string> failureMessageFactory)
 		: IValueConstraint<T>
-		where T: struct
+		where T : struct
 	{
 		public ConstraintResult IsMetBy(T actual)
 		{
@@ -163,13 +163,14 @@ public static partial class ThatNumberShould
 		public override string ToString()
 			=> expectation(expected);
 	}
+
 	private readonly struct NullableGenericConstraint<T>(
 		T? expected,
 		Func<T?, string> expectation,
 		Func<T?, T?, bool> condition,
 		Func<T?, T?, string> failureMessageFactory)
 		: IValueConstraint<T?>
-		where T: struct
+		where T : struct
 	{
 		public ConstraintResult IsMetBy(T? actual)
 		{

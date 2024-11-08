@@ -1,5 +1,4 @@
 ﻿using System;
-using Testably.Expectations.Core;
 
 namespace Testably.Expectations;
 

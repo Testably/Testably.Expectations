@@ -77,7 +77,7 @@ public abstract partial class CollectionQuantifier
 				{
 					break;
 				}
-				
+
 				bool isMatch = predicate(item, expected);
 				if (isMatch)
 				{

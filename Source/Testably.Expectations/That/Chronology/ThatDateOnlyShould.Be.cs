@@ -1,6 +1,5 @@
 ﻿#if !NETSTANDARD2_0
 using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;

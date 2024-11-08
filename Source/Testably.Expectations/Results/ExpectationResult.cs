@@ -44,6 +44,11 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 		return this;
 	}
 
+	/// <inheritdoc />
+	internal override async Task<Result> GetResult(int index)
+		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
+			await expectationBuilder.IsMet());
+
 	/// <summary>
 	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
 	/// </summary>
@@ -52,11 +57,6 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 		expectationBuilder.UseTimeSystem(timeSystem);
 		return this;
 	}
-
-	/// <inheritdoc />
-	internal override async Task<Result> GetResult(int index)
-		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
-			await expectationBuilder.IsMet());
 
 	private async Task GetResultOrThrow()
 	{
@@ -121,6 +121,11 @@ public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuild
 		return (TSelf)this;
 	}
 
+	/// <inheritdoc />
+	internal override async Task<Result> GetResult(int index)
+		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
+			await expectationBuilder.IsMet());
+
 	/// <summary>
 	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
 	/// </summary>
@@ -129,11 +134,6 @@ public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuild
 		expectationBuilder.UseTimeSystem(timeSystem);
 		return (TSelf)this;
 	}
-
-	/// <inheritdoc />
-	internal override async Task<Result> GetResult(int index)
-		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
-			await expectationBuilder.IsMet());
 
 	[StackTraceHidden]
 	private async Task<TType> GetResultOrThrow()

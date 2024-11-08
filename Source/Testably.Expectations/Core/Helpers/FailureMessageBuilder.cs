@@ -1,5 +1,4 @@
-﻿using System.Text;
-using Testably.Expectations.Core.Constraints;
+﻿using Testably.Expectations.Core.Constraints;
 
 namespace Testably.Expectations.Core.Helpers;
 

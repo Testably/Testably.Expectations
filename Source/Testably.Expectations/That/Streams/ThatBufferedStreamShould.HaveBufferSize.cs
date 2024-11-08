@@ -1,6 +1,5 @@
 ﻿#if NET6_0_OR_GREATER
 using System.IO;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Results;
 

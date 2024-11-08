@@ -20,7 +20,8 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 		Satisfy<TItem, TCollection>(
 			this QuantifiedCollectionResult<IThat<TCollection>> source,
 			Func<TItem, bool> predicate,
-			[CallerArgumentExpression("predicate")] string doNotPopulateThisValue = "")
+			[CallerArgumentExpression("predicate")]
+			string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
@@ -61,7 +62,8 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 		Satisfy<TItem, TCollection>(
 			this QuantifiedCollectionResult<IThat<TCollection>> source,
 			Func<TItem, bool> predicate,
-			[CallerArgumentExpression("predicate")] string doNotPopulateThisValue = "")
+			[CallerArgumentExpression("predicate")]
+			string doNotPopulateThisValue = "")
 		where TCollection : IAsyncEnumerable<TItem>
 		=> new(source.ExpectationBuilder
 				.AddConstraint(

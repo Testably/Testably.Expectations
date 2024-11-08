@@ -46,7 +46,8 @@ public static partial class ThatHttpResponseMessageShould
 				return new ConstraintResult.Success<HttpResponseMessage?>(actual, ToString());
 			}
 
-			string formattedResponse = await HttpResponseMessageFormatter.Format(actual, "  ", cancellationToken);
+			string formattedResponse =
+				await HttpResponseMessageFormatter.Format(actual, "  ", cancellationToken);
 			return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
 				$"found {Formatter.Format(actual.StatusCode)}:{Environment.NewLine}{formattedResponse}");
 		}
@@ -89,7 +90,8 @@ public static partial class ThatHttpResponseMessageShould
 				AppendHeaders(messageBuilder, request.Headers, indentation);
 				if (request.Content != null)
 				{
-					await AppendContent(messageBuilder, request.Content, indentation + indentation, cancellationToken);
+					await AppendContent(messageBuilder, request.Content, indentation + indentation,
+						cancellationToken);
 				}
 			}
 
