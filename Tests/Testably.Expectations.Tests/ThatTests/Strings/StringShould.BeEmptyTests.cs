@@ -31,6 +31,22 @@ public sealed partial class StringShould
 		}
 
 		[Fact]
+		public async Task WhenActualIsNotEmpty_ShouldLimitDisplayedStringTo100Characters()
+		{
+			string subject = StringWithMoreThan100Characters;
+
+			async Task Act()
+				=> await That(subject).Should().BeEmpty();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be empty,
+				              but found "{StringWith100Characters}…".
+				              """);
+		}
+
+		[Fact]
 		public async Task WhenActualIsNull_ShouldFail()
 		{
 			string? subject = null;

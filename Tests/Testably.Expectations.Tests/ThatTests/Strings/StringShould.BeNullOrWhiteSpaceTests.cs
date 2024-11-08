@@ -31,6 +31,22 @@ public sealed partial class StringShould
 		}
 
 		[Fact]
+		public async Task WhenActualIsNotEmpty_ShouldLimitDisplayedStringTo100Characters()
+		{
+			string subject = StringWithMoreThan100Characters;
+
+			async Task Act()
+				=> await That(subject).Should().BeNullOrWhiteSpace();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              be null or white-space,
+				              but found "{StringWith100Characters}…".
+				              """);
+		}
+
+		[Fact]
 		public async Task WhenActualIsNull_ShouldSucceed()
 		{
 			string? subject = null;
@@ -95,6 +111,22 @@ public sealed partial class StringShould
 				             not be null or white-space,
 				             but found <null>.
 				             """);
+		}
+
+		[Fact]
+		public async Task WhenActualIsWhiteSpace_ShouldLimitDisplayedStringTo100Characters()
+		{
+			string subject = new(' ', 101);
+
+			async Task Act()
+				=> await That(subject).Should().NotBeNullOrWhiteSpace();
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              not be null or white-space,
+				              but found "{new string(' ', 100)}…".
+				              """);
 		}
 
 		[Fact]
