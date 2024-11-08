@@ -584,9 +584,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.6, 13.6)]
 			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldSucceed(
-				double subjectValue, params double[] expectedValues)
+				double? subjectValue, params double[] expectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal[] expected = expectedValues
 					.Select(expectedValue => new decimal(expectedValue))
 					.ToArray();
@@ -601,9 +601,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.7, 13.7)]
 			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldFail(
-				double subjectValue, params double[] expectedValues)
+				double? subjectValue, params double[] expectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal[] expected = expectedValues
 					.Select(expectedValue => new decimal(expectedValue))
 					.ToArray();
@@ -638,9 +638,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task
 				ForNullableDecimal_WithNullableExpected_WhenInsideTolerance_ShouldSucceed(
-					double subjectValue, params double?[] expectedValues)
+					double? subjectValue, params double?[] expectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal?[] expected = expectedValues
 					.Select(expectedValue => expectedValue == null
 						? (decimal?)null
@@ -658,9 +658,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task
 				ForNullableDecimal_WithNullableExpected_WhenOutsideTolerance_ShouldFail(
-					double subjectValue, params double?[] expectedValues)
+					double? subjectValue, params double?[] expectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal?[] expected = expectedValues
 					.Select(expectedValue => expectedValue == null
 						? (decimal?)null
@@ -2321,9 +2321,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.6, 13.6)]
 			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task ForNullableDecimal_WhenInsideTolerance_ShouldFail(
-				double subjectValue, params double[] unexpectedValues)
+				double? subjectValue, params double[] unexpectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal[] unexpected = unexpectedValues
 					.Select(unexpectedValue => new decimal(unexpectedValue))
 					.ToArray();
@@ -2343,9 +2343,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.7, 13.7)]
 			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task ForNullableDecimal_WhenOutsideTolerance_ShouldSucceed(
-				double subjectValue, params double[] unexpectedValues)
+				double? subjectValue, params double[] unexpectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal[] unexpected = unexpectedValues
 					.Select(unexpectedValue => new decimal(unexpectedValue))
 					.ToArray();
@@ -2376,9 +2376,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.4, 13.4)]
 			public async Task
 				ForNullableDecimal_WithNullableExpected_WhenInsideTolerance_ShouldFail(
-					double subjectValue, params double?[] unexpectedValues)
+					double? subjectValue, params double?[] unexpectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal?[] unexpected = unexpectedValues
 					.Select(unexpectedValue => unexpectedValue == null
 						? (decimal?)null
@@ -2401,9 +2401,9 @@ public sealed partial class NumberShould
 			[InlineData(12.5, 12.0, 12.3, 13.3)]
 			public async Task
 				ForNullableDecimal_WithNullableExpected_WhenOutsideTolerance_ShouldSucceed(
-					double subjectValue, params double?[] unexpectedValues)
+					double? subjectValue, params double?[] unexpectedValues)
 			{
-				decimal? subject = new(subjectValue);
+				decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 				decimal?[] unexpected = unexpectedValues
 					.Select(unexpectedValue => unexpectedValue == null
 						? (decimal?)null
