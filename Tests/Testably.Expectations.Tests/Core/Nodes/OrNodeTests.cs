@@ -30,8 +30,7 @@ public sealed class OrNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be False or imply False,
-			             but found True and it did not
-			             at Expect.That(true).Should().BeFalse().Or.Imply(false)
+			             but found True and it did not.
 			             """);
 	}
 

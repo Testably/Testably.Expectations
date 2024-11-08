@@ -51,8 +51,7 @@ public sealed partial class DelegateThrows
 				                ↓ (actual)
 				               "FOO"
 				               "foo"
-				                ↑ (expected)
-				             at Expect.That(() => throw exception).Should().ThrowException().WithMessage("foo")
+				                ↑ (expected).
 				             """);
 		}
 
@@ -87,8 +86,7 @@ public sealed partial class DelegateThrows
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"
-				                ↑ (expected)
-				             at Expect.That(action).Should().ThrowException().WithMessage(expected)
+				                ↑ (expected).
 				             """);
 		}
 

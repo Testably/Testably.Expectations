@@ -22,8 +22,7 @@ public sealed partial class ExceptionShould
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"
-				                ↑ (expected)
-				             at Expect.That(subject).Should().HaveMessage(expected)
+				                ↑ (expected).
 				             """);
 		}
 

@@ -20,8 +20,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenActionThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenActionThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 
@@ -38,8 +37,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenFuncTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenFuncTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 
@@ -56,8 +54,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenFuncTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenFuncTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 
@@ -74,8 +71,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenFuncValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenFuncValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 
@@ -92,8 +88,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 
@@ -110,8 +105,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 
@@ -129,8 +123,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenValueTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenValueTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 
@@ -150,8 +143,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenValueTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
-				              at Expect.That(@delegate).Should().ExecuteWithin(500.Milliseconds())
+				                {nameof(WhenValueTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
 				              """);
 		}
 #endif

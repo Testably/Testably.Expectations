@@ -19,8 +19,7 @@ public sealed partial class ExceptionShould
 				             Expected subject to
 				             have an inner CustomException which should have Message equal to "inner",
 				             but found an Exception:
-				               inner
-				             at Expect.That(subject).Should().HaveInner<CustomException>(e => e.HaveMessage("inner"))
+				               inner.
 				             """);
 		}
 
@@ -42,8 +41,7 @@ public sealed partial class ExceptionShould
 				                ↓ (actual)
 				               "inner"
 				               "some other message"
-				                ↑ (expected)
-				             at Expect.That(subject).Should().HaveInner<CustomException>(e => e.HaveMessage("some other message"))
+				                ↑ (expected).
 				             """);
 		}
 
@@ -65,8 +63,7 @@ public sealed partial class ExceptionShould
 				                ↓ (actual)
 				               "inner"
 				               "some other message"
-				                ↑ (expected)
-				             at Expect.That(subject).Should().HaveInnerException(e => e.HaveMessage("some other message"))
+				                ↑ (expected).
 				             """);
 		}
 
@@ -84,8 +81,7 @@ public sealed partial class ExceptionShould
 				             Expected subject to
 				             have an inner CustomException,
 				             but found an Exception:
-				               inner
-				             at Expect.That(subject).Should().HaveInner<CustomException>()
+				               inner.
 				             """);
 		}
 
@@ -101,8 +97,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have an inner exception,
-				             but found <null>
-				             at Expect.That(subject).Should().HaveInnerException()
+				             but found <null>.
 				             """);
 		}
 

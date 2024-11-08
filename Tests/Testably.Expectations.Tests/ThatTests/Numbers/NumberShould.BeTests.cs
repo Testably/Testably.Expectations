@@ -20,8 +20,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -38,8 +37,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -67,8 +65,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -88,8 +85,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -131,8 +127,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -159,8 +154,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -177,8 +171,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -206,8 +199,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -234,8 +226,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -252,8 +243,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -282,8 +272,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -300,8 +289,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -340,8 +328,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -358,8 +345,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -387,8 +373,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -417,8 +402,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -435,8 +419,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -456,8 +439,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
 				              """);
 		}
 
@@ -488,8 +470,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -506,8 +487,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
 				              """);
 		}
 
@@ -535,8 +515,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -553,8 +532,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
 				              """);
 		}
 
@@ -582,8 +560,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -612,8 +589,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -630,8 +606,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -660,8 +635,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -678,8 +652,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -708,8 +681,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -726,8 +698,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -756,8 +727,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -774,8 +744,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -804,8 +773,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -822,8 +790,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -852,8 +819,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -870,8 +836,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -900,8 +865,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found <null>
-				              at Expect.That(subject).Should().Be(expected)
+				              but found <null>.
 				              """);
 		}
 
@@ -919,8 +883,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -937,8 +900,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -967,8 +929,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -985,8 +946,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1015,8 +975,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1033,8 +992,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1063,8 +1021,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1081,8 +1038,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1111,8 +1067,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1129,8 +1084,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1185,8 +1139,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1232,8 +1185,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -1249,8 +1201,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             not be NaN,
-				             but found NaN
-				             at Expect.That(subject).Should().NotBe(expected)
+				             but found NaN.
 				             """);
 		}
 
@@ -1277,8 +1228,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -1318,8 +1268,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -1335,8 +1284,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             not be NaN,
-				             but found NaN
-				             at Expect.That(subject).Should().NotBe(expected)
+				             but found NaN.
 				             """);
 		}
 
@@ -1387,8 +1335,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -1429,8 +1376,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1446,8 +1392,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1488,8 +1433,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1517,8 +1461,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1579,8 +1522,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject?.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -1620,8 +1562,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject?.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -1661,8 +1602,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject?.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -1690,8 +1630,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1732,8 +1671,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1774,8 +1712,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1816,8 +1753,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1858,8 +1794,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1900,8 +1835,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1942,8 +1876,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -1997,8 +1930,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -2039,8 +1971,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -2081,8 +2012,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -2123,8 +2053,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -2165,8 +2094,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 	}

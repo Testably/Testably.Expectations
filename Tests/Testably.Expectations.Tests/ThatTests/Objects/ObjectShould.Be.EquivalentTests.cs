@@ -33,8 +33,7 @@ public sealed partial class ObjectShould
 					             be equivalent to expected,
 					             but Property Value did not match:
 					               Expected: "Foo"
-					               Received: <null>
-					             at Expect.That(subject).Should().Be(expected).Equivalent()
+					               Received: <null>.
 					             """);
 			}
 
@@ -114,8 +113,7 @@ public sealed partial class ObjectShould
 					             be equivalent to expected,
 					             but EnumerableItem Inner.Inner.Collection.[3] did not match:
 					               Expected: "4"
-					               Received: <null>
-					             at Expect.That(subject).Should().Be(expected).Equivalent()
+					               Received: <null>.
 					             """);
 			}
 
@@ -198,8 +196,7 @@ public sealed partial class ObjectShould
 					.WithMessage("""
 					             Expected subject to
 					             be equivalent to expected,
-					             but found z
-					             at Expect.That(subject).Should().Be(expected).Equivalent(o => o.IgnoringMember("Inner.Inner.Collection.[3]"))
+					             but found z.
 					             """);
 			}
 
@@ -262,8 +259,7 @@ public sealed partial class ObjectShould
 					             be equivalent to expected,
 					             but Property Inner.Inner.Value did not match:
 					               Expected: "Baz"
-					               Received: <null>
-					             at Expect.That(subject).Should().Be(expected).Equivalent()
+					               Received: <null>.
 					             """);
 			}
 		}

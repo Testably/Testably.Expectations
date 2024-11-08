@@ -18,8 +18,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be writable,
-				             but it was not
-				             at Expect.That(subject).Should().BeWritable()
+				             but it was not.
 				             """);
 		}
 
@@ -35,8 +34,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be writable,
-				             but found <null>
-				             at Expect.That(subject).Should().BeWritable()
+				             but found <null>.
 				             """);
 		}
 
@@ -77,8 +75,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be writable,
-				             but found <null>
-				             at Expect.That(subject).Should().NotBeWritable()
+				             but found <null>.
 				             """);
 		}
 
@@ -94,8 +91,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be writable,
-				             but it was
-				             at Expect.That(subject).Should().NotBeWritable()
+				             but it was.
 				             """);
 		}
 	}

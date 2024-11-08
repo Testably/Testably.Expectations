@@ -16,8 +16,7 @@ public sealed partial class CollectionShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found [1, 1, 2]
-				             at Expect.That(subject).Should().BeEmpty()
+				             but found [1, 1, 2].
 				             """);
 		}
 
@@ -60,8 +59,7 @@ public sealed partial class CollectionShould
 				.WithMessage("""
 				             Expected subject to
 				             not be empty,
-				             but it was
-				             at Expect.That(subject).Should().NotBeEmpty()
+				             but it was.
 				             """);
 		}
 	}

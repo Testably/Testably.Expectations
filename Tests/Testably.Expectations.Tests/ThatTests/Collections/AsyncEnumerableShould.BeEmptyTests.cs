@@ -24,8 +24,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but could not evaluate it, because it was already cancelled
-				             at Expect.That(subject).Should().BeEmpty().WithCancellation(token)
+				             but could not evaluate it, because it was already cancelled.
 				             """);
 		}
 
@@ -44,8 +43,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found [0, 1, 2, 3, 4]
-				             at Expect.That(subject).Should().BeEmpty().WithCancellation(token)
+				             but found [0, 1, 2, 3, 4].
 				             """);
 		}
 
@@ -63,8 +61,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, …]
-				             at Expect.That(subject).Should().BeEmpty()
+				             but found [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, …].
 				             """);
 		}
 
@@ -80,8 +77,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found [1, 1, 2]
-				             at Expect.That(subject).Should().BeEmpty()
+				             but found [1, 1, 2].
 				             """);
 		}
 
@@ -122,8 +118,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             not be empty,
-				             but it was
-				             at Expect.That(subject).Should().NotBeEmpty()
+				             but it was.
 				             """);
 		}
 	}

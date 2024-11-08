@@ -27,8 +27,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              be empty,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeEmpty()
+				              but found {subject}.
 				              """);
 		}
 
@@ -44,8 +43,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found <null>
-				             at Expect.That(subject).Should().BeEmpty()
+				             but found <null>.
 				             """);
 		}
 	}
@@ -64,8 +62,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be empty,
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBeEmpty()
+				              but found {subject}.
 				              """);
 		}
 
@@ -92,8 +89,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage("""
 				             Expected subject to
 				             not be empty,
-				             but found <null>
-				             at Expect.That(subject).Should().NotBeEmpty()
+				             but found <null>.
 				             """);
 		}
 	}

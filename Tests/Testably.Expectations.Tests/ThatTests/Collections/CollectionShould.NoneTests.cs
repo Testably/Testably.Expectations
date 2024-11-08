@@ -16,8 +16,7 @@ public sealed partial class CollectionShould
 				.WithMessage("""
 				             Expected subject to
 				             have no items equal to 1,
-				             but at least one items were equal
-				             at Expect.That(subject).Should().None().Be(1)
+				             but at least one items were equal.
 				             """);
 		}
 

@@ -30,8 +30,7 @@ public sealed partial class DelegateShould
 				              Expected action to
 				              not throw any exception,
 				              but it did throw a CustomException:
-				                {message}
-				              at Expect.That(action).Should().NotThrow()
+				                {message}.
 				              """);
 		}
 

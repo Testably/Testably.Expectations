@@ -25,8 +25,7 @@ public sealed partial class HttpResponseMessageShould
 				                ↓ (actual)
 				               "some content"
 				               "other content"
-				                ↑ (expected)
-				             at Expect.That(subject).Should().HaveContent(expected)
+				                ↑ (expected).
 				             """);
 		}
 

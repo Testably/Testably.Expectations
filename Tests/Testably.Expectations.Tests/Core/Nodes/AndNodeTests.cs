@@ -12,8 +12,7 @@ public sealed class AndNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be False and be True,
-			             but found True
-			             at Expect.That(true).Should().BeFalse().And.BeTrue()
+			             but found True.
 			             """);
 	}
 
@@ -27,8 +26,7 @@ public sealed class AndNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be True and be False,
-			             but found True
-			             at Expect.That(true).Should().BeTrue().And.BeFalse()
+			             but found True.
 			             """);
 	}
 
@@ -42,8 +40,7 @@ public sealed class AndNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be False and imply False,
-			             but found True and it did not
-			             at Expect.That(true).Should().BeFalse().And.Imply(false)
+			             but found True and it did not.
 			             """);
 	}
 

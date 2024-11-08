@@ -50,8 +50,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception with an inner exception,
-				             but found <null>
-				             at Expect.That(action).Should().ThrowException().WithInnerException()
+				             but found <null>.
 				             """);
 		}
 	}

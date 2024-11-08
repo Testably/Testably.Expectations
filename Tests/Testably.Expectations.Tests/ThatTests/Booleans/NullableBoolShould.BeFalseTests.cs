@@ -27,8 +27,7 @@ public sealed partial class NullableBoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be False, because we want to test the failure,
-				              but found {subject?.ToString() ?? "<null>"}
-				              at Expect.That(subject).Should().BeFalse().Because("we want to test the failure")
+				              but found {subject?.ToString() ?? "<null>"}.
 				              """);
 		}
 	}
@@ -47,8 +46,7 @@ public sealed partial class NullableBoolShould
 				.WithMessage("""
 				             Expected subject to
 				             not be False, because we want to test the failure,
-				             but found False
-				             at Expect.That(subject).Should().NotBeFalse().Because("we want to test the failure")
+				             but found False.
 				             """);
 		}
 

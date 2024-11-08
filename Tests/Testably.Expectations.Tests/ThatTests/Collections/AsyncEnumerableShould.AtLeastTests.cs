@@ -70,8 +70,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have at least 5 items equal to 1,
-				             but only 4 of 7 items were equal
-				             at Expect.That(subject).Should().AtLeast(5).Be(1)
+				             but only 4 of 7 items were equal.
 				             """);
 		}
 
@@ -87,8 +86,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have at least 5 items equivalent to 1,
-				             but only 4 of 7 items were equivalent
-				             at Expect.That(subject).Should().AtLeast(5).BeEquivalentTo(1)
+				             but only 4 of 7 items were equivalent.
 				             """);
 		}
 	}

@@ -20,8 +20,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              have position {position},
-				              but it had position {actualPosition}
-				              at Expect.That(subject).Should().HavePosition(position)
+				              but it had position {actualPosition}.
 				              """);
 		}
 
@@ -49,8 +48,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             have position 0,
-				             but found <null>
-				             at Expect.That(subject).Should().HavePosition(0)
+				             but found <null>.
 				             """);
 		}
 	}
@@ -83,8 +81,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have position {position},
-				              but it had
-				              at Expect.That(subject).Should().NotHavePosition(position)
+				              but it had.
 				              """);
 		}
 
@@ -100,8 +97,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not have position 0,
-				             but found <null>
-				             at Expect.That(subject).Should().NotHavePosition(0)
+				             but found <null>.
 				             """);
 		}
 	}

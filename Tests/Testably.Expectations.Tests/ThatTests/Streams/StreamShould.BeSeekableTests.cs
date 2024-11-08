@@ -18,8 +18,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be seekable,
-				             but it was not
-				             at Expect.That(subject).Should().BeSeekable()
+				             but it was not.
 				             """);
 		}
 
@@ -35,8 +34,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be seekable,
-				             but found <null>
-				             at Expect.That(subject).Should().BeSeekable()
+				             but found <null>.
 				             """);
 		}
 
@@ -77,8 +75,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be seekable,
-				             but found <null>
-				             at Expect.That(subject).Should().NotBeSeekable()
+				             but found <null>.
 				             """);
 		}
 
@@ -94,8 +91,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be seekable,
-				             but it was
-				             at Expect.That(subject).Should().NotBeSeekable()
+				             but it was.
 				             """);
 		}
 	}

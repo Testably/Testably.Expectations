@@ -16,8 +16,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -47,8 +46,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -78,8 +76,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(null)
+				              but found {subject}.
 				              """);
 		}
 
@@ -95,8 +92,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -141,8 +137,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -173,8 +168,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -204,8 +198,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 

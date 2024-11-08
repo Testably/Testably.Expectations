@@ -20,8 +20,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              have length {length},
-				              but it had length {actualLength}
-				              at Expect.That(subject).Should().HaveLength(length)
+				              but it had length {actualLength}.
 				              """);
 		}
 
@@ -49,8 +48,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             have length 0,
-				             but found <null>
-				             at Expect.That(subject).Should().HaveLength(0)
+				             but found <null>.
 				             """);
 		}
 	}
@@ -83,8 +81,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have length {length},
-				              but it had
-				              at Expect.That(subject).Should().NotHaveLength(length)
+				              but it had.
 				              """);
 		}
 
@@ -100,8 +97,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not have length 0,
-				             but found <null>
-				             at Expect.That(subject).Should().NotHaveLength(0)
+				             but found <null>.
 				             """);
 		}
 	}

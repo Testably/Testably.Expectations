@@ -23,8 +23,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "SOME",
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().StartWith(expected).IgnoringCase(ignoreCase)
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -42,8 +41,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "TEXT" ignoring case,
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().StartWith(expected).IgnoringCase()
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -62,8 +60,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "SOME" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().StartWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -94,8 +91,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "text",
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().StartWith(expected)
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -139,8 +135,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not start with "some",
-				             but found "some text"
-				             at Expect.That(subject).Should().NotStartWith(expected)
+				             but found "some text".
 				             """);
 		}
 
@@ -173,8 +168,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not start with "sOmE" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().NotStartWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -203,8 +197,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not start with "SOME" ignoring case,
-				             but found "some text"
-				             at Expect.That(subject).Should().NotStartWith(expected).IgnoringCase()
+				             but found "some text".
 				             """);
 		}
 	}

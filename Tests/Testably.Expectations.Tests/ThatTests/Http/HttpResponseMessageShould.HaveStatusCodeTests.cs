@@ -29,8 +29,7 @@ public sealed partial class HttpResponseMessageShould
 				               some content
 				               The originating request was:
 				                 GET https://example.com/ HTTP 1.1
-				                 request content
-				             at Expect.That(subject).Should().HaveContent(HttpStatusCode.OK)
+				                 request content.
 				             """);
 		}
 
@@ -51,8 +50,7 @@ public sealed partial class HttpResponseMessageShould
 				             but found 400 BadRequest:
 				               HTTP/1.1 400 BadRequest
 				               some content
-				               The originating request was <null>
-				             at Expect.That(subject).Should().HaveContent(HttpStatusCode.OK)
+				               The originating request was <null>.
 				             """);
 		}
 
@@ -116,8 +114,7 @@ public sealed partial class HttpResponseMessageShould
 				=> await That(subject).Should().NotHaveStatusCode(unexpected);
 
 			await That(Act).Should().Throw<XunitException>()
-				.WithMessage(
-					"*StatusCode different to*Expect.That(subject).Should().NotHaveStatusCode(unexpected)")
+				.WithMessage("*StatusCode different to*")
 				.AsWildcard();
 		}
 	}

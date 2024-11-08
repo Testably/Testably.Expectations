@@ -19,8 +19,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -64,8 +63,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 	}

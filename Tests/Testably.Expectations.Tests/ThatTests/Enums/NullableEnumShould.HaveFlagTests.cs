@@ -16,8 +16,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have flag <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().HaveFlag(null)
+				              but found {subject}.
 				              """);
 		}
 
@@ -45,8 +44,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have flag {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().HaveFlag(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -91,8 +89,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage("""
 				             Expected subject to
 				             not have flag <null>,
-				             but found <null>
-				             at Expect.That(subject).Should().NotHaveFlag(null)
+				             but found <null>.
 				             """);
 		}
 
@@ -121,8 +118,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have flag {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotHaveFlag(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -140,8 +136,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have flag {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotHaveFlag(unexpected)
+				              but found {subject}.
 				              """);
 		}
 

@@ -18,8 +18,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -38,8 +37,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected}, because {reason},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected).Because(reason)
+				              but found {subject}.
 				              """);
 		}
 
@@ -86,8 +84,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -106,8 +103,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected}, because {reason},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected).Because(reason)
+				              but found {subject}.
 				              """);
 		}
 	}

@@ -16,8 +16,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be null,
-				             but found ""
-				             at Expect.That(subject).Should().BeNull()
+				             but found "".
 				             """);
 		}
 
@@ -32,8 +31,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null,
-				              but found "{subject}"
-				              at Expect.That(subject).Should().BeNull()
+				              but found "{subject}".
 				              """);
 		}
 
@@ -84,8 +82,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null,
-				             but it was
-				             at Expect.That(subject).Should().NotBeNull()
+				             but it was.
 				             """);
 		}
 	}
