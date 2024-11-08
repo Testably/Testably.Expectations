@@ -4,7 +4,7 @@ namespace Testably.Expectations.Tests.ThatTests.Numbers;
 
 public sealed partial class NumberShould
 {
-	public sealed class BeTests
+	public sealed partial class BeTests
 	{
 		[Theory]
 		[AutoData]
@@ -1100,7 +1100,7 @@ public sealed partial class NumberShould
 		}
 	}
 
-	public sealed class NotBeTests
+	public sealed partial class NotBeTests
 	{
 		[Theory]
 		[AutoData]
