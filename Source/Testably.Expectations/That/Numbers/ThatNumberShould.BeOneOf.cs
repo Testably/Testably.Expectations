@@ -426,19 +426,7 @@ public static partial class ThatNumberShould
 			source,
 			options);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/// <summary>
 	///     Verifies that the subject is one of the <paramref name="expected" /> values.
 	/// </summary>
@@ -856,28 +844,6 @@ public static partial class ThatNumberShould
 			source,
 			options);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/// <summary>
 	///     Verifies that the subject is not one of the <paramref name="unexpected" /> values.
@@ -1296,23 +1262,6 @@ public static partial class ThatNumberShould
 			source,
 			options);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	/// <summary>
 	///     Verifies that the subject is not one of the <paramref name="unexpected" /> values.
@@ -1731,12 +1680,4 @@ public static partial class ThatNumberShould
 			source,
 			options);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -337,7 +337,9 @@ public sealed partial class NumberShould
 		{
 			decimal? subject = subjectValue == null ? null : new decimal(subjectValue.Value);
 			decimal?[] expected = expectedValues
-				.Select(expectedValue => expectedValue == null ? (decimal?)null : new decimal(expectedValue.Value))
+				.Select(expectedValue => expectedValue == null
+					? (decimal?)null
+					: new decimal(expectedValue.Value))
 				.ToArray();
 
 			async Task Act()
@@ -1848,7 +1850,8 @@ public sealed partial class NumberShould
 		[Theory]
 		[InlineData((ushort)1, (ushort)2, (ushort)3)]
 		[InlineData((ushort)1, (ushort)0, (ushort)3)]
-		public async Task ForUshort_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(ushort subject,
+		public async Task ForUshort_WhenValueIsDifferentToAllUnexpected_ShouldSucceed(
+			ushort subject,
 			params ushort?[] unexpected)
 		{
 			async Task Act()

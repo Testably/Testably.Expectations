@@ -163,7 +163,7 @@ public static partial class ThatNumberShould
 		public override string ToString()
 			=> expectation(expected);
 	}
-	
+
 	private readonly struct GenericArrayConstraint2<T>(
 		T[] expected,
 		Func<T[], string> expectation,
@@ -232,6 +232,7 @@ public static partial class ThatNumberShould
 		public override string ToString()
 			=> expectation(expected);
 	}
+
 	private readonly struct NullableGenericArrayConstraint<T>(
 		T?[] expected,
 		Func<T?[], string> expectation,
@@ -254,6 +255,7 @@ public static partial class ThatNumberShould
 		public override string ToString()
 			=> expectation(expected);
 	}
+
 	private readonly struct NullableGenericArrayConstraint2<T>(
 		T[] expected,
 		Func<T[], string> expectation,
