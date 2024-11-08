@@ -631,10 +631,16 @@ namespace Testably.Expectations
     public static class ThatStringShould
     {
         public static Testably.Expectations.Results.StringMatcherResult<string?, Testably.Expectations.Core.IThat<string?>> Be(this Testably.Expectations.Core.IThat<string?> source, Testably.Expectations.Options.StringMatcher expected) { }
+        public static Testably.Expectations.Results.AndOrResult<string?, Testably.Expectations.Core.IThat<string?>> BeEmpty(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.AndOrResult<string?, Testably.Expectations.Core.IThat<string?>> BeNull(this Testably.Expectations.Core.IThat<string?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<string?, Testably.Expectations.Core.IThat<string?>> BeNullOrEmpty(this Testably.Expectations.Core.IThat<string?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<string?, Testably.Expectations.Core.IThat<string?>> BeNullOrWhiteSpace(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.StringCountResult<string?, Testably.Expectations.Core.IThat<string?>> Contain(this Testably.Expectations.Core.IThat<string?> source, string expected) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> EndWith(this Testably.Expectations.Core.IThat<string?> source, string expected) { }
+        public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeEmpty(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeNull(this Testably.Expectations.Core.IThat<string?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeNullOrEmpty(this Testably.Expectations.Core.IThat<string?> source) { }
+        public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeNullOrWhiteSpace(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotContain(this Testably.Expectations.Core.IThat<string?> source, string unexpected) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotEndWith(this Testably.Expectations.Core.IThat<string?> source, string unexpected) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotStartWith(this Testably.Expectations.Core.IThat<string?> source, string unexpected) { }
