@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
@@ -16,44 +14,36 @@ public static partial class ThatDelegateShould
 	/// </summary>
 	public static ExpectationResult<TValue> ExecuteWithin<TValue>(
 		this ThatDelegate.WithValue<TValue> source,
-		TimeSpan duration,
-		[CallerArgumentExpression("duration")] string doNotPopulateThisValue = "")
+		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ExecuteWithinConstraint<TValue>(duration))
-			.AppendMethodStatement(nameof(ExecuteWithin), doNotPopulateThisValue));
+			.AddConstraint(new ExecuteWithinConstraint<TValue>(duration)));
 
 	/// <summary>
 	///     Verifies that the delegate finishes execution within the given <paramref name="duration" />.
 	/// </summary>
 	public static ExpectationResult ExecuteWithin(
 		this ThatDelegate.WithoutValue source,
-		TimeSpan duration,
-		[CallerArgumentExpression("duration")] string doNotPopulateThisValue = "")
+		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ExecuteWithinConstraint(duration))
-			.AppendMethodStatement(nameof(ExecuteWithin), doNotPopulateThisValue));
+			.AddConstraint(new ExecuteWithinConstraint(duration)));
 
 	/// <summary>
 	///     Verifies that the delegate does not finish execution within the given <paramref name="duration" />.
 	/// </summary>
 	public static ExpectationResult<TValue> NotExecuteWithin<TValue>(
 		this ThatDelegate.WithValue<TValue> source,
-		TimeSpan duration,
-		[CallerArgumentExpression("duration")] string doNotPopulateThisValue = "")
+		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new NotExecuteWithinConstraint<TValue>(duration))
-			.AppendMethodStatement(nameof(NotExecuteWithin), doNotPopulateThisValue));
+			.AddConstraint(new NotExecuteWithinConstraint<TValue>(duration)));
 
 	/// <summary>
 	///     Verifies that the delegate does not finish execution within the given <paramref name="duration" />.
 	/// </summary>
 	public static ExpectationResult NotExecuteWithin(
 		this ThatDelegate.WithoutValue source,
-		TimeSpan duration,
-		[CallerArgumentExpression("duration")] string doNotPopulateThisValue = "")
+		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new NotExecuteWithinConstraint(duration))
-			.AppendMethodStatement(nameof(NotExecuteWithin), doNotPopulateThisValue));
+			.AddConstraint(new NotExecuteWithinConstraint(duration)));
 
 	private readonly struct ExecuteWithinConstraint<TValue>(TimeSpan duration)
 		: IValueConstraint<DelegateValue<TValue>>

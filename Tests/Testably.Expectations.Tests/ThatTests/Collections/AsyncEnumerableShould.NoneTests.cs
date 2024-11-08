@@ -25,8 +25,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             none satisfy "x => x < 0",
-				             but could not verify, because it was cancelled early
-				             at Expect.That(subject).Should().None().Satisfy(x => x < 0).WithCancellation(token)
+				             but could not verify, because it was cancelled early.
 				             """);
 		}
 
@@ -54,8 +53,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have no items equal to 5,
-				             but at least one items were equal
-				             at Expect.That(subject).Should().None().Be(5)
+				             but at least one items were equal.
 				             """);
 		}
 
@@ -71,8 +69,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have no items equal to 1,
-				             but at least one items were equal
-				             at Expect.That(subject).Should().None().Be(1)
+				             but at least one items were equal.
 				             """);
 		}
 

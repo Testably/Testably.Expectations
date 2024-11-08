@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
@@ -13,11 +12,9 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringMatcherResult<string?, IThat<string?>> Be(
 		this IThat<string?> source,
-		StringMatcher expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		StringMatcher expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint(expected))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+				.AddConstraint(new IsValueConstraint(expected)),
 			source,
 			expected);
 

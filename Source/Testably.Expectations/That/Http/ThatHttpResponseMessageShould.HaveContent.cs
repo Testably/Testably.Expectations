@@ -18,11 +18,9 @@ public static partial class ThatHttpResponseMessageShould
 	public static StringMatcherResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		HaveContent(
 			this IThat<HttpResponseMessage?> source,
-			StringMatcher expected,
-			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+			StringMatcher expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasContentConstraint(expected))
-				.AppendMethodStatement(nameof(HaveContent), doNotPopulateThisValue),
+				.AddConstraint(new HasContentConstraint(expected)),
 			source,
 			expected);
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Results;
@@ -22,18 +21,13 @@ public partial class ThatExceptionShould<TException>
 	/// </remarks>
 	public AndOrResult<TException?, ThatExceptionShould<TException>>
 		HaveRecursiveInnerExceptions(
-			Action<IThat<IEnumerable<Exception>>> expectations,
-			[CallerArgumentExpression("expectations")]
-			string doNotPopulateThisValue = "")
+			Action<IThat<IEnumerable<Exception>>> expectations)
 		=> new(ExpectationBuilder
 				.ForProperty(PropertyAccessor<Exception?, IEnumerable<Exception>>.FromFunc(
 						e => e.GetInnerExpectations(),
 						"recursive inner exceptions "),
 					(property, expectation) => $"have {property}which {expectation}")
 				.AddExpectations(e => expectations(
-					new Expect.ThatSubject<IEnumerable<Exception>>(e)))
-				.AppendMethodStatement(
-					nameof(HaveRecursiveInnerExceptions),
-					doNotPopulateThisValue),
+					new Expect.ThatSubject<IEnumerable<Exception>>(e))),
 			this);
 }

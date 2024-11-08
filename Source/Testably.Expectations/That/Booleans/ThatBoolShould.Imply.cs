@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
+﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
@@ -12,12 +11,9 @@ public static partial class ThatBoolShould
 	///     Verifies that the subject implies the <paramref name="consequent" /> value.
 	/// </summary>
 	public static AndOrResult<bool, IThat<bool>> Imply(this IThat<bool> source,
-		bool consequent,
-		[CallerArgumentExpression("consequent")]
-		string doNotPopulateThisValue = "")
+		bool consequent)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ImpliesValueConstraint(consequent))
-				.AppendMethodStatement(nameof(Imply), doNotPopulateThisValue),
+				.AddConstraint(new ImpliesValueConstraint(consequent)),
 			source);
 
 	private readonly struct ImpliesValueConstraint(bool consequent) : IValueConstraint<bool>

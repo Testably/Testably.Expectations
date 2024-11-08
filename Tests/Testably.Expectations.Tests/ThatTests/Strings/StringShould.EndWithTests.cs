@@ -22,8 +22,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "TEXT",
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().EndWith(expected).IgnoringCase(ignoreCase)
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -41,8 +40,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "SOME" ignoring case,
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().EndWith(expected).IgnoringCase()
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -61,8 +59,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "TEXT" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().EndWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -93,8 +90,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "some",
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().EndWith(expected)
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -126,8 +122,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not end with "TEXT" ignoring case,
-				             but found "some text"
-				             at Expect.That(subject).Should().NotEndWith(expected).IgnoringCase()
+				             but found "some text".
 				             """);
 		}
 
@@ -158,8 +153,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not end with "tExt" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text"
-				             at Expect.That(subject).Should().NotEndWith(expected).Using(new IgnoreCaseForVocalsComparer())
+				             but found "some arbitrary text".
 				             """);
 		}
 
@@ -190,8 +184,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not end with "text",
-				             but found "some text"
-				             at Expect.That(subject).Should().NotEndWith(expected)
+				             but found "some text".
 				             """);
 		}
 

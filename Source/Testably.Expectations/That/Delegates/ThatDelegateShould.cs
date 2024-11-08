@@ -18,16 +18,14 @@ public static partial class ThatDelegateShould
 	/// </summary>
 	public static ThatDelegate.WithoutValue Should(
 		this IExpectSubject<ThatDelegate.WithoutValue> subject)
-		=> new(subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
+		=> new(subject.Should(_ => { }).ExpectationBuilder);
 
 	/// <summary>
 	///     Start expectations for the current <see cref="Func{TValue}" /> <paramref name="subject" />.
 	/// </summary>
 	public static ThatDelegate.WithValue<TValue> Should<TValue>(
 		this IExpectSubject<ThatDelegate.WithValue<TValue>> subject)
-		=> new(subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should))).ExpectationBuilder);
+		=> new(subject.Should(_ => { }).ExpectationBuilder);
 
 	private static ConstraintResult DoesNotThrowResult<TException>(Exception? exception)
 		where TException : Exception?

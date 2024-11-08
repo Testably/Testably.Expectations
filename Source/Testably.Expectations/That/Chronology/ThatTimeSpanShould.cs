@@ -14,15 +14,13 @@ public static partial class ThatTimeSpanShould
 	///     Start expectations for current <see cref="TimeSpan" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<TimeSpan> Should(this IExpectSubject<TimeSpan> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeSpan" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<TimeSpan?> Should(this IExpectSubject<TimeSpan?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct ConditionConstraint(
 		TimeSpan expected,

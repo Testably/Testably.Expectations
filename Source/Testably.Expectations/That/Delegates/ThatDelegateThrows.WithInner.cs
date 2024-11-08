@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Results;
 
@@ -13,17 +12,13 @@ public partial class ThatDelegateThrows<TException>
 	/// </summary>
 	public AndOrResult<TException, ThatDelegateThrows<TException>>
 		WithInner<TInnerException>(
-			Action<ThatExceptionShould<TInnerException?>> expectations,
-			[CallerArgumentExpression("expectations")]
-			string doNotPopulateThisValue = "")
+			Action<ThatExceptionShould<TInnerException?>> expectations)
 		where TInnerException : Exception
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"with an inner {typeof(TInnerException).Name} which should ")
 				.Validate(new ThatExceptionShould.ExceptionCastConstraint<TInnerException>())
-				.AddExpectations(e => expectations(new ThatExceptionShould<TInnerException?>(e)))
-				.AppendGenericMethodStatement<TInnerException>(nameof(WithInner),
-					doNotPopulateThisValue),
+				.AddExpectations(e => expectations(new ThatExceptionShould<TInnerException?>(e))),
 			this);
 
 	/// <summary>
@@ -35,7 +30,6 @@ public partial class ThatDelegateThrows<TException>
 		=> new(ExpectationBuilder
 				.AddConstraint(
 					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
-						"with"))
-				.AppendGenericMethodStatement<TInnerException>(nameof(WithInner)),
+						"with")),
 			this);
 }

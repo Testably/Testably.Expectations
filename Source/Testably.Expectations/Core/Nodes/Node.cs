@@ -56,14 +56,16 @@ internal abstract class Node
 
 		if (constraint is IAsyncContextConstraint<TValue?> asyncContextConstraint)
 		{
-			ConstraintResult result = await asyncContextConstraint.IsMetBy(value, context, cancellationToken);
+			ConstraintResult result =
+				await asyncContextConstraint.IsMetBy(value, context, cancellationToken);
 			result = reason?.ApplyTo(result) ?? result;
 			return result;
 		}
 
 		if (value is DelegateValue delegateValue)
 		{
-			return await TryMeet(constraint, delegateValue.Exception, reason, context, cancellationToken);
+			return await TryMeet(constraint, delegateValue.Exception, reason, context,
+				cancellationToken);
 		}
 
 		throw new InvalidOperationException(

@@ -34,8 +34,7 @@ public sealed partial class HttpResponseMessageShould
 				=> await That(subject).Should().BeRedirection();
 
 			await That(Act).Should().Throw<XunitException>()
-				.WithMessage(
-					"*be redirection (status code 3xx)*Expect.That(subject).Should().BeRedirection()")
+				.WithMessage("*be redirection (status code 3xx)*")
 				.AsWildcard();
 		}
 	}

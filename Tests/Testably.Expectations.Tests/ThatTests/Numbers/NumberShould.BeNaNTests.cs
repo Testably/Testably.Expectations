@@ -30,8 +30,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {format}.
 				              """);
 		}
 
@@ -61,8 +60,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -89,8 +87,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {format}.
 				              """);
 		}
 
@@ -121,8 +118,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -152,8 +148,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {format}.
 				              """);
 		}
 
@@ -184,8 +179,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
 				              """);
 		}
 
@@ -213,8 +207,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {format}.
 				              """);
 		}
 
@@ -245,8 +238,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().BeNaN()
+				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
 				              """);
 		}
 	}
@@ -276,8 +268,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBeNaN()
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -321,8 +312,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBeNaN()
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -366,8 +356,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().NotBeNaN()
+				              but found NaN.
 				              """);
 		}
 
@@ -413,8 +402,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().NotBeNaN()
+				              but found NaN.
 				              """);
 		}
 

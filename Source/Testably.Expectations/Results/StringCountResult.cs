@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
@@ -37,15 +36,12 @@ public class StringCountResult<TType, TThat, TSelf>(
 	: CountResult<TType, TThat, TSelf>(expectationBuilder, returnValue, quantifier)
 	where TSelf : StringCountResult<TType, TThat, TSelf>
 {
-	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
-
 	/// <summary>
 	///     Ignores casing when comparing the <see langword="string" />s.
 	/// </summary>
 	public StringCountResult<TType, TThat, TSelf> IgnoringCase()
 	{
 		options.IgnoringCase();
-		_expectationBuilder.AppendMethodStatement(nameof(IgnoringCase));
 		return this;
 	}
 
@@ -53,11 +49,9 @@ public class StringCountResult<TType, TThat, TSelf>(
 	///     Uses the provided <paramref name="comparer" /> for comparing <see langword="string" />s.
 	/// </summary>
 	public StringCountResult<TType, TThat, TSelf> Using(
-		IEqualityComparer<string> comparer,
-		[CallerArgumentExpression("comparer")] string doNotPopulateThisValue = "")
+		IEqualityComparer<string> comparer)
 	{
 		options.UsingComparer(comparer);
-		_expectationBuilder.AppendMethodStatement(nameof(Using), doNotPopulateThisValue);
 		return this;
 	}
 }

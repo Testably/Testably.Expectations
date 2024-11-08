@@ -42,8 +42,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected action to
 				             throw exactly a CustomException,
-				             but it did not
-				             at Expect.That(action).Should().ThrowExactly<CustomException>()
+				             but it did not.
 				             """);
 		}
 
@@ -62,8 +61,7 @@ public sealed partial class DelegateShould
 				              Expected action to
 				              throw exactly a CustomException,
 				              but it did throw an OtherException:
-				                {message}
-				              at Expect.That(action).Should().ThrowExactly<CustomException>()
+				                {message}.
 				              """);
 		}
 
@@ -82,8 +80,7 @@ public sealed partial class DelegateShould
 				              Expected action to
 				              throw exactly a CustomException,
 				              but it did throw a SubCustomException:
-				                {message}
-				              at Expect.That(action).Should().ThrowExactly<CustomException>()
+				                {message}.
 				              """);
 		}
 	}

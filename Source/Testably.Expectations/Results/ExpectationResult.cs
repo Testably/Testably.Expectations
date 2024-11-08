@@ -38,15 +38,16 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 	/// <summary>
 	///     Sets the <see cref="CancellationToken" /> to be passed to expectations.
 	/// </summary>
-	public ExpectationResult WithCancellation(CancellationToken cancellationToken,
-		[CallerArgumentExpression("cancellationToken")]
-		string doNotPopulateThisValue = "")
+	public ExpectationResult WithCancellation(CancellationToken cancellationToken)
 	{
-		expectationBuilder
-			.AppendMethodStatement(nameof(WithCancellation), doNotPopulateThisValue)
-			.AddCancellation(cancellationToken);
+		expectationBuilder.AddCancellation(cancellationToken);
 		return this;
 	}
+
+	/// <inheritdoc />
+	internal override async Task<Result> GetResult(int index)
+		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
+			await expectationBuilder.IsMet());
 
 	/// <summary>
 	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
@@ -56,11 +57,6 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 		expectationBuilder.UseTimeSystem(timeSystem);
 		return this;
 	}
-
-	/// <inheritdoc />
-	internal override async Task<Result> GetResult(int index)
-		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
-			await expectationBuilder.IsMet());
 
 	private async Task GetResultOrThrow()
 	{
@@ -97,12 +93,9 @@ public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuild
 	///     Provide a <paramref name="reason" /> explaining why the constraint is needed.<br />
 	///     If the phrase does not start with the word <i>because</i>, it is prepended automatically.
 	/// </summary>
-	public TSelf Because(string reason,
-		[CallerArgumentExpression("reason")] string doNotPopulateThisValue = "")
+	public TSelf Because(string reason)
 	{
-		expectationBuilder
-			.AppendMethodStatement(nameof(Because), doNotPopulateThisValue)
-			.AddReason(reason);
+		expectationBuilder.AddReason(reason);
 		return (TSelf)this;
 	}
 
@@ -122,15 +115,16 @@ public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuild
 	/// <summary>
 	///     Sets the <see cref="CancellationToken" /> to be passed to expectations.
 	/// </summary>
-	public TSelf WithCancellation(CancellationToken cancellationToken,
-		[CallerArgumentExpression("cancellationToken")]
-		string doNotPopulateThisValue = "")
+	public TSelf WithCancellation(CancellationToken cancellationToken)
 	{
-		expectationBuilder
-			.AppendMethodStatement(nameof(WithCancellation), doNotPopulateThisValue)
-			.AddCancellation(cancellationToken);
+		expectationBuilder.AddCancellation(cancellationToken);
 		return (TSelf)this;
 	}
+
+	/// <inheritdoc />
+	internal override async Task<Result> GetResult(int index)
+		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
+			await expectationBuilder.IsMet());
 
 	/// <summary>
 	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
@@ -140,11 +134,6 @@ public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuild
 		expectationBuilder.UseTimeSystem(timeSystem);
 		return (TSelf)this;
 	}
-
-	/// <inheritdoc />
-	internal override async Task<Result> GetResult(int index)
-		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
-			await expectationBuilder.IsMet());
 
 	[StackTraceHidden]
 	private async Task<TType> GetResultOrThrow()

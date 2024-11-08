@@ -37,8 +37,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have recursive inner exceptions which all satisfy "e => e.Message != "inner3A"",
-				             but not all did
-				             at Expect.That(subject).Should().HaveRecursiveInnerExceptions(c => c.All().Satisfy(e => e.Message != "inner3A"))
+				             but not all did.
 				             """);
 		}
 
@@ -59,8 +58,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have recursive inner exceptions which none satisfy "e => e.Message != "inner3A"",
-				             but at least one did
-				             at Expect.That(subject).Should().HaveRecursiveInnerExceptions(c => c.None().Satisfy(e => e.Message != "inner3A"))
+				             but at least one did.
 				             """);
 		}
 	}

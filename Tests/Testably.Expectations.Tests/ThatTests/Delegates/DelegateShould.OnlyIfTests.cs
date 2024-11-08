@@ -60,8 +60,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected action to
 				             not throw any exception,
-				             but it did throw an Exception
-				             at Expect.That(action).Should().ThrowException().OnlyIf(false)
+				             but it did throw an Exception.
 				             """);
 		}
 
@@ -88,8 +87,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception,
-				             but it did not
-				             at Expect.That(action).Should().ThrowException().OnlyIf(true)
+				             but it did not.
 				             """);
 		}
 

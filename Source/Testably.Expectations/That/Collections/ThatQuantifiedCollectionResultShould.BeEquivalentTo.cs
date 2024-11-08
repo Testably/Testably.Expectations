@@ -34,8 +34,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 						doNotPopulateThisValue,
 						source.Quantity,
 						options,
-						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c)))
-				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
+						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c))),
 			source.Result);
 	}
 }
@@ -62,8 +61,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 						doNotPopulateThisValue,
 						source.Quantity,
 						options,
-						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c)))
-				.AppendMethodStatement(nameof(BeEquivalentTo), doNotPopulateThisValue),
+						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c))),
 			source.Result);
 	}
 }

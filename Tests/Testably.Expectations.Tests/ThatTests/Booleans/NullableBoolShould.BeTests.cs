@@ -20,8 +20,7 @@ public sealed partial class NullableBoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected?.ToString() ?? "<null>"},
-				              but found {subject?.ToString() ?? "<null>"}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject?.ToString() ?? "<null>"}.
 				              """);
 		}
 
@@ -72,8 +71,7 @@ public sealed partial class NullableBoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected?.ToString() ?? "<null>"},
-				              but found {subject?.ToString() ?? "<null>"}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject?.ToString() ?? "<null>"}.
 				              """);
 		}
 	}

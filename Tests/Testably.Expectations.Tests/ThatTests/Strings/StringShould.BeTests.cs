@@ -49,8 +49,7 @@ public sealed partial class StringShould
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"
-				                ↑ (expected)
-				             at Expect.That(subject).Should().Be(expected)
+				                ↑ (expected).
 				             """);
 		}
 	}

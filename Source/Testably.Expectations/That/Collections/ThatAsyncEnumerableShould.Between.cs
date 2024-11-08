@@ -1,6 +1,5 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 
 namespace Testably.Expectations;
@@ -14,13 +13,10 @@ public static partial class ThatAsyncEnumerableShould
 			<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>>>
 		Between<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source,
-			int minimum,
-			[CallerArgumentExpression("minimum")] string doNotPopulateThisValue = "")
+			int minimum)
 	{
-		source.ExpectationBuilder.AppendMethodStatement(nameof(Between), doNotPopulateThisValue);
 		return new BetweenResult<QuantifiedCollectionResult.Async
 			<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>>>(
-			source.ExpectationBuilder,
 			maximum => new QuantifiedCollectionResult.Async
 				<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>>(source,
 					source.ExpectationBuilder,

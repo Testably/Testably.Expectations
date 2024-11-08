@@ -21,8 +21,7 @@ public static partial class ThatObjectShould
 		return new ObjectEqualityResult<object?, IThat<object?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new IsEqualValueConstraint(
-					expected, doNotPopulateThisValue, options))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+					expected, doNotPopulateThisValue, options)),
 			source,
 			options);
 	}
@@ -33,8 +32,7 @@ public static partial class ThatObjectShould
 	public static AndOrWhichResult<TType, IThat<object?>> Be<TType>(
 		this IThat<object?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<TType>())
-				.AppendGenericMethodStatement<TType>(nameof(Be)),
+				.AddConstraint(new IsValueConstraint<TType>()),
 			source);
 
 	private readonly struct IsEqualValueConstraint(

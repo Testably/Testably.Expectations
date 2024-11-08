@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
@@ -37,14 +36,11 @@ public class TimeToleranceResult<TType, TThat, TSelf>(
 	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
 
 	/// <summary>
-	///     Specifies a tolerance to apply on the time comparison.
+	///     Specifies a <paramref name="tolerance" /> to apply on the time comparison.
 	/// </summary>
-	public TimeToleranceResult<TType, TThat, TSelf> Within(TimeSpan tolerance,
-		[CallerArgumentExpression("tolerance")]
-		string doNotPopulateThisValue = "")
+	public TimeToleranceResult<TType, TThat, TSelf> Within(TimeSpan tolerance)
 	{
 		options.SetTolerance(tolerance);
-		_expectationBuilder.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
 		return this;
 	}
 }

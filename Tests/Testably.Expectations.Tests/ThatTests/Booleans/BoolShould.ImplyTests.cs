@@ -18,8 +18,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected antecedent to
 				              imply {consequent}, because we want to test the failure,
-				              but it did not
-				              at Expect.That(antecedent).Should().Imply(consequent).Because("we want to test the failure")
+				              but it did not.
 				              """);
 		}
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Results;
 
@@ -12,16 +11,12 @@ public partial class ThatDelegateThrows<TException>
 	///     satisfies the <paramref name="expectations" />.
 	/// </summary>
 	public AndOrResult<TException, ThatDelegateThrows<TException>> WithInnerException(
-		Action<ThatExceptionShould<Exception?>> expectations,
-		[CallerArgumentExpression("expectations")]
-		string doNotPopulateThisValue = "")
+		Action<ThatExceptionShould<Exception?>> expectations)
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					"with an inner exception which should ")
 				.Validate(new ThatExceptionShould.ExceptionCastConstraint<Exception>())
-				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e)))
-				.AppendMethodStatement(nameof(WithInnerException),
-					doNotPopulateThisValue),
+				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
 			this);
 
 	/// <summary>
@@ -30,7 +25,6 @@ public partial class ThatDelegateThrows<TException>
 	public AndOrResult<TException, ThatDelegateThrows<TException>> WithInnerException()
 		=> new(ExpectationBuilder
 				.AddConstraint(
-					new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with"))
-				.AppendMethodStatement(nameof(WithInnerException)),
+					new ThatExceptionShould.HasInnerExceptionValueConstraint<Exception>("with")),
 			this);
 }

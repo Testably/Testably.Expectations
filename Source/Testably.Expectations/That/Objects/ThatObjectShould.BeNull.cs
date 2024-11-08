@@ -16,8 +16,7 @@ public static partial class ThatObjectShould
 					null,
 					"be null",
 					(a, _) => a is null,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BeNull)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -30,7 +29,6 @@ public static partial class ThatObjectShould
 					null,
 					"not be null",
 					(a, _) => a is not null,
-					(_, _) => "it was"))
-				.AppendMethodStatement(nameof(NotBeNull)),
+					(_, _) => "it was")),
 			source);
 }

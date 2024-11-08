@@ -14,8 +14,7 @@ public static partial class ThatStringShould
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
-					new IsNullValueConstraint())
-				.AppendMethodStatement(nameof(BeNull)),
+					new IsNullValueConstraint()),
 			source);
 
 	/// <summary>
@@ -25,8 +24,7 @@ public static partial class ThatStringShould
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(
-					new IsNotNullValueConstraint())
-				.AppendMethodStatement(nameof(NotBeNull)),
+					new IsNotNullValueConstraint()),
 			source);
 
 	private readonly struct IsNullValueConstraint : IValueConstraint<string?>

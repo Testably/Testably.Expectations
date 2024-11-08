@@ -23,8 +23,7 @@ public sealed class WhichNodeTests
 			                ↓ (actual)
 			               "foo"
 			               "bar"
-			                ↑ (expected)
-			             at Expect.That(subject).Should().Be<Dummy>().Which(p => p.Value).Should(e => e.Be("bar"))
+			                ↑ (expected).
 			             """);
 	}
 

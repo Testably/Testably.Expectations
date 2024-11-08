@@ -27,8 +27,7 @@ public sealed partial class BoolShould
 				.WithMessage("""
 				             Expected subject to
 				             be False,
-				             but found True
-				             at Expect.That(subject).Should().BeFalse()
+				             but found True.
 				             """);
 		}
 
@@ -44,8 +43,7 @@ public sealed partial class BoolShould
 				.WithMessage("""
 				             Expected subject to
 				             be False, because we want to test the failure,
-				             but found True
-				             at Expect.That(subject).Should().BeFalse().Because("we want to test the failure")
+				             but found True.
 				             """);
 		}
 	}

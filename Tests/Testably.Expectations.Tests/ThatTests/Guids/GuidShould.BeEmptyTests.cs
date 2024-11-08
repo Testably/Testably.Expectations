@@ -27,8 +27,7 @@ public sealed partial class GuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              be empty,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeEmpty()
+				              but found {subject}.
 				              """);
 		}
 	}
@@ -47,8 +46,7 @@ public sealed partial class GuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be empty,
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBeEmpty()
+				              but found {subject}.
 				              """);
 		}
 

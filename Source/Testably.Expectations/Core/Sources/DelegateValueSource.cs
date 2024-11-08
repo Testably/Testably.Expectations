@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.TimeSystem;
@@ -11,7 +10,8 @@ internal class DelegateValueSource<TValue>(Func<CancellationToken, TValue> actio
 {
 	#region IValueSource<DelegateValue<TValue>> Members
 
-	public Task<DelegateValue<TValue>?> GetValue(ITimeSystem timeSystem, CancellationToken cancellationToken)
+	public Task<DelegateValue<TValue>?> GetValue(ITimeSystem timeSystem,
+		CancellationToken cancellationToken)
 	{
 		IStopwatch sw = timeSystem.Stopwatch.New();
 		try
@@ -19,11 +19,13 @@ internal class DelegateValueSource<TValue>(Func<CancellationToken, TValue> actio
 			sw.Start();
 			TValue value = action(cancellationToken);
 			sw.Stop();
-			return Task.FromResult<DelegateValue<TValue>?>(new DelegateValue<TValue>(value, null, sw.Elapsed));
+			return Task.FromResult<DelegateValue<TValue>?>(
+				new DelegateValue<TValue>(value, null, sw.Elapsed));
 		}
 		catch (Exception ex)
 		{
-			return Task.FromResult<DelegateValue<TValue>?>(new DelegateValue<TValue>(default, ex, sw.Elapsed));
+			return Task.FromResult<DelegateValue<TValue>?>(
+				new DelegateValue<TValue>(default, ex, sw.Elapsed));
 		}
 	}
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -16,12 +15,11 @@ public partial class ThatExceptionShould<TException>
 	/// </summary>
 	public StringMatcherResult<TException?, ThatExceptionShould<TException>>
 		HaveMessage(
-			StringMatcher expected,
-			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+			StringMatcher expected)
 		=> new(ExpectationBuilder
 				.AddConstraint(
-					new ThatExceptionShould.HasMessageValueConstraint<TException>(expected, "have"))
-				.AppendMethodStatement(nameof(HaveMessage), doNotPopulateThisValue),
+					new ThatExceptionShould.HasMessageValueConstraint<TException>(expected,
+						"have")),
 			this,
 			expected);
 }

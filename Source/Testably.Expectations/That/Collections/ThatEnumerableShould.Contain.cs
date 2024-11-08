@@ -17,11 +17,9 @@ public static partial class ThatEnumerableShould
 	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		Contain<TItem>(
 			this IThat<IEnumerable<TItem>> source,
-			TItem expected,
-			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+			TItem expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ContainsConstraint<TItem>(expected))
-				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
+				.AddConstraint(new ContainsConstraint<TItem>(expected)),
 			source);
 
 	private readonly struct ContainsConstraint<TItem>(TItem expected)

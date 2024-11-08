@@ -21,12 +21,12 @@ internal class DelegateValue<TValue>(in TValue? value, Exception? exception, Tim
 internal class DelegateValue(Exception? exception, TimeSpan duration)
 {
 	/// <summary>
+	///     The duration it took the delegate to complete.
+	/// </summary>
+	public TimeSpan Duration { get; } = duration;
+
+	/// <summary>
 	///     The thrown exception of the delegate.
 	/// </summary>
 	public Exception? Exception { get; } = exception;
-
-	/// <summary>
-	/// The duration it took the delegate to complete.
-	/// </summary>
-	public TimeSpan Duration { get; } = duration;
 }

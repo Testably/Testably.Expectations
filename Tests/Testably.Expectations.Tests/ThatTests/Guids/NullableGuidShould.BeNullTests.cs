@@ -16,8 +16,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage("""
 				             Expected subject to
 				             be null,
-				             but found 00000000-0000-0000-0000-000000000000
-				             at Expect.That(subject).Should().BeNull()
+				             but found 00000000-0000-0000-0000-000000000000.
 				             """);
 		}
 
@@ -33,8 +32,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNull()
+				              but found {subject}.
 				              """);
 		}
 
@@ -86,8 +84,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null,
-				             but found <null>
-				             at Expect.That(subject).Should().NotBeNull()
+				             but found <null>.
 				             """);
 		}
 	}

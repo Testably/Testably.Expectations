@@ -16,8 +16,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have value <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().HaveValue(null)
+				              but found {subject}.
 				              """);
 		}
 
@@ -35,8 +34,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have value {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().HaveValue(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -83,8 +81,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have value {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotHaveValue(unexpected)
+				              but found {subject}.
 				              """);
 		}
 

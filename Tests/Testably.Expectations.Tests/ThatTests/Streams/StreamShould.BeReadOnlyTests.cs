@@ -21,8 +21,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be read-only,
-				             but it was not
-				             at Expect.That(subject).Should().BeReadOnly()
+				             but it was not.
 				             """);
 		}
 
@@ -38,8 +37,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be read-only,
-				             but found <null>
-				             at Expect.That(subject).Should().BeReadOnly()
+				             but found <null>.
 				             """);
 		}
 
@@ -83,8 +81,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be read-only,
-				             but found <null>
-				             at Expect.That(subject).Should().NotBeReadOnly()
+				             but found <null>.
 				             """);
 		}
 
@@ -100,8 +97,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be read-only,
-				             but it was
-				             at Expect.That(subject).Should().NotBeReadOnly()
+				             but it was.
 				             """);
 		}
 	}

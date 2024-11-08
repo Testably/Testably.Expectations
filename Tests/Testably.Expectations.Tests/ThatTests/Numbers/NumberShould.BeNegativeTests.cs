@@ -16,8 +16,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -43,8 +42,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -70,8 +68,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -98,8 +95,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found +∞
-				             at Expect.That(subject).Should().BeNegative()
+				             but found +∞.
 				             """);
 		}
 
@@ -115,8 +111,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -142,8 +137,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -170,8 +164,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found +∞
-				             at Expect.That(subject).Should().BeNegative()
+				             but found +∞.
 				             """);
 		}
 
@@ -187,8 +180,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -214,8 +206,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -244,8 +235,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -274,8 +264,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found <null>
-				             at Expect.That(subject).Should().BeNegative()
+				             but found <null>.
 				             """);
 		}
 
@@ -292,8 +281,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -320,8 +308,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -348,8 +335,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found <null>
-				             at Expect.That(subject).Should().BeNegative()
+				             but found <null>.
 				             """);
 		}
 
@@ -365,8 +351,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found +∞
-				             at Expect.That(subject).Should().BeNegative()
+				             but found +∞.
 				             """);
 		}
 
@@ -383,8 +368,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -410,8 +394,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -438,8 +421,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found <null>
-				             at Expect.That(subject).Should().BeNegative()
+				             but found <null>.
 				             """);
 		}
 
@@ -455,8 +437,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found +∞
-				             at Expect.That(subject).Should().BeNegative()
+				             but found +∞.
 				             """);
 		}
 
@@ -473,8 +454,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -500,8 +480,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found <null>
-				             at Expect.That(subject).Should().BeNegative()
+				             but found <null>.
 				             """);
 		}
 
@@ -518,8 +497,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -545,8 +523,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found <null>
-				             at Expect.That(subject).Should().BeNegative()
+				             but found <null>.
 				             """);
 		}
 
@@ -563,8 +540,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -590,8 +566,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found <null>
-				             at Expect.That(subject).Should().BeNegative()
+				             but found <null>.
 				             """);
 		}
 
@@ -608,8 +583,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -635,8 +609,7 @@ public sealed partial class NumberShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but found <null>
-				             at Expect.That(subject).Should().BeNegative()
+				             but found <null>.
 				             """);
 		}
 
@@ -652,8 +625,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 
@@ -679,8 +651,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be negative,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeNegative()
+				              but found {subject}.
 				              """);
 		}
 

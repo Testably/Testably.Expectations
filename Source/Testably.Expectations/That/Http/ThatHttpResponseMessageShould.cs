@@ -24,8 +24,7 @@ public static partial class ThatHttpResponseMessageShould
 	/// </summary>
 	public static IThat<HttpResponseMessage?> Should(
 		this IExpectSubject<HttpResponseMessage?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct HasStatusCodeRangeConstraint(
 		Func<int, bool> predicate,
@@ -47,7 +46,8 @@ public static partial class ThatHttpResponseMessageShould
 				return new ConstraintResult.Success<HttpResponseMessage?>(actual, ToString());
 			}
 
-			string formattedResponse = await HttpResponseMessageFormatter.Format(actual, "  ", cancellationToken);
+			string formattedResponse =
+				await HttpResponseMessageFormatter.Format(actual, "  ", cancellationToken);
 			return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
 				$"found {Formatter.Format(actual.StatusCode)}:{Environment.NewLine}{formattedResponse}");
 		}
@@ -90,7 +90,8 @@ public static partial class ThatHttpResponseMessageShould
 				AppendHeaders(messageBuilder, request.Headers, indentation);
 				if (request.Content != null)
 				{
-					await AppendContent(messageBuilder, request.Content, indentation + indentation, cancellationToken);
+					await AppendContent(messageBuilder, request.Content, indentation + indentation,
+						cancellationToken);
 				}
 			}
 

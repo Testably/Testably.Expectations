@@ -16,8 +16,7 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -30,8 +29,7 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -44,8 +42,7 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -58,8 +55,7 @@ public static partial class ThatNumberShould
 					0L,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -72,8 +68,7 @@ public static partial class ThatNumberShould
 					0.0F,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -86,8 +81,7 @@ public static partial class ThatNumberShould
 					0.0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -100,8 +94,7 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -114,8 +107,7 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -128,8 +120,7 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -142,8 +133,7 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -156,8 +146,7 @@ public static partial class ThatNumberShould
 					0L,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -170,8 +159,7 @@ public static partial class ThatNumberShould
 					0.0F,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -184,8 +172,7 @@ public static partial class ThatNumberShould
 					0.0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -198,7 +185,6 @@ public static partial class ThatNumberShould
 					0,
 					_ => "be positive",
 					(a, e) => a > e,
-					(a, _) => $"found {Formatter.Format(a)}"))
-				.AppendMethodStatement(nameof(BePositive)),
+					(a, _) => $"found {Formatter.Format(a)}")),
 			source);
 }

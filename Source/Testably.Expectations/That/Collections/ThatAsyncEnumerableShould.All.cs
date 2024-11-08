@@ -13,7 +13,7 @@ public static partial class ThatAsyncEnumerableShould
 		<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>> All<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source,
-			source.ExpectationBuilder.AppendMethodStatement(nameof(All)),
+			source.ExpectationBuilder,
 			CollectionQuantifier.All);
 }
 #endif

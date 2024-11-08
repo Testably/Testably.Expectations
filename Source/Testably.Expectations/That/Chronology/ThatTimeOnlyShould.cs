@@ -1,6 +1,5 @@
 ﻿#if !NETSTANDARD2_0
 using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
@@ -16,15 +15,13 @@ public static partial class ThatTimeOnlyShould
 	///     Start expectations for current <see cref="TimeOnly" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<TimeOnly> Should(this IExpectSubject<TimeOnly> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="TimeOnly" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<TimeOnly?> Should(this IExpectSubject<TimeOnly?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct ConditionConstraint(
 		TimeOnly expected,

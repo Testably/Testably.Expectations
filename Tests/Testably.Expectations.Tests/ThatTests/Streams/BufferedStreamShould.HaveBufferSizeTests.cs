@@ -21,8 +21,7 @@ public sealed partial class BufferedStreamShould
 				.WithMessage($"""
 				                   Expected subject to
 				                   have buffer size {bufferSize},
-				                   but it had buffer size {actualBufferSize}
-				                   at Expect.That(subject).Should().HaveBufferSize(bufferSize)
+				                   but it had buffer size {actualBufferSize}.
 				                   """);
 		}
 
@@ -50,8 +49,7 @@ public sealed partial class BufferedStreamShould
 				.WithMessage("""
 				             Expected subject to
 				             have buffer size 0,
-				             but found <null>
-				             at Expect.That(subject).Should().HaveBufferSize(0)
+				             but found <null>.
 				             """);
 		}
 	}
@@ -84,8 +82,7 @@ public sealed partial class BufferedStreamShould
 				.WithMessage($"""
 				                   Expected subject to
 				                   not have buffer size {bufferSize},
-				                   but it had
-				                   at Expect.That(subject).Should().NotHaveBufferSize(bufferSize)
+				                   but it had.
 				                   """);
 		}
 
@@ -101,8 +98,7 @@ public sealed partial class BufferedStreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not have buffer size 0,
-				             but found <null>
-				             at Expect.That(subject).Should().NotHaveBufferSize(0)
+				             but found <null>.
 				             """);
 		}
 	}

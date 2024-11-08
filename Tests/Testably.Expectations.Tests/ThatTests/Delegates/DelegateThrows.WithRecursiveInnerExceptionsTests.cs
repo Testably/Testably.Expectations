@@ -25,8 +25,7 @@ public sealed partial class DelegateThrows
 				.WithMessage($"""
 				              Expected action to
 				              throw an Exception with recursive inner exceptions which have at least {minimum} items of type CustomException,
-				              but only 1 of 5 items were
-				              at Expect.That(action).Should().ThrowException().WithRecursiveInnerExceptions(e => e.AtLeast(minimum).Be<CustomException>())
+				              but only 1 of 5 items were.
 				              """);
 		}
 
@@ -55,8 +54,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception with recursive inner exceptions which all satisfy "_ => false",
-				             but not all did
-				             at Expect.That(action).Should().ThrowException().WithRecursiveInnerExceptions(e => e.All().Satisfy(_ => false))
+				             but not all did.
 				             """);
 		}
 

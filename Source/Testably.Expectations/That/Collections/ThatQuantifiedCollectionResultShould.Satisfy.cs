@@ -29,9 +29,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 						predicate,
 						doNotPopulateThisValue,
 						source.Quantity,
-						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c)))
-				.AppendGenericMethodStatement<TCollection, IThat<TCollection>>(
-					nameof(Satisfy), doNotPopulateThisValue),
+						(a, c) => source.Quantity.GetEvaluator<TItem, TCollection>(a, c))),
 			source.Result);
 
 	/// <summary>
@@ -50,8 +48,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 						predicate,
 						doNotPopulateThisValue,
 						source.Quantity,
-						(a, c) => source.Quantity.GetEvaluator<TItem, IEnumerable<TItem>>(a, c)))
-				.AppendMethodStatement(nameof(Satisfy), doNotPopulateThisValue),
+						(a, c) => source.Quantity.GetEvaluator<TItem, IEnumerable<TItem>>(a, c))),
 			source.Result);
 }
 
@@ -74,9 +71,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 						predicate,
 						doNotPopulateThisValue,
 						source.Quantity,
-						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c)))
-				.AppendGenericMethodStatement<TCollection, IThat<TCollection>>(
-					nameof(Satisfy), doNotPopulateThisValue),
+						(a, c) => source.Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c))),
 			source.Result);
 
 	/// <summary>
@@ -97,8 +92,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 						source.Quantity,
 						(a, c)
 							=> source.Quantity.GetAsyncEvaluator<TItem, IAsyncEnumerable<TItem>>(a,
-								c)))
-				.AppendMethodStatement(nameof(Satisfy), doNotPopulateThisValue),
+								c))),
 			source.Result);
 }
 #endif

@@ -13,155 +13,133 @@ public static partial class ThatNumberShould
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<int> Should(this IExpectSubject<int> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<int?> Should(this IExpectSubject<int?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<uint> Should(this IExpectSubject<uint> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="uint" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<uint?> Should(this IExpectSubject<uint?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<byte> Should(this IExpectSubject<byte> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<byte?> Should(this IExpectSubject<byte?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<sbyte> Should(this IExpectSubject<sbyte> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<sbyte?> Should(this IExpectSubject<sbyte?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<short> Should(this IExpectSubject<short> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<short?> Should(this IExpectSubject<short?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<ushort> Should(this IExpectSubject<ushort> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<ushort?> Should(this IExpectSubject<ushort?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<long> Should(this IExpectSubject<long> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<long?> Should(this IExpectSubject<long?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<ulong> Should(this IExpectSubject<ulong> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<ulong?> Should(this IExpectSubject<ulong?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<float> Should(this IExpectSubject<float> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<float?> Should(this IExpectSubject<float?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<double> Should(this IExpectSubject<double> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<double?> Should(this IExpectSubject<double?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<decimal> Should(this IExpectSubject<decimal> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	/// <summary>
 	///     Start expectations for the current <see cref="int" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<decimal?> Should(this IExpectSubject<decimal?> subject)
-		=> subject.Should(expectationBuilder => expectationBuilder
-			.AppendMethodStatement(nameof(Should)));
+		=> subject.Should(_ => { });
 
 	private readonly struct GenericConstraint<T>(
 		T? expected,
@@ -169,7 +147,7 @@ public static partial class ThatNumberShould
 		Func<T, T?, bool> condition,
 		Func<T, T?, string> failureMessageFactory)
 		: IValueConstraint<T>
-		where T: struct
+		where T : struct
 	{
 		public ConstraintResult IsMetBy(T actual)
 		{
@@ -185,13 +163,14 @@ public static partial class ThatNumberShould
 		public override string ToString()
 			=> expectation(expected);
 	}
+
 	private readonly struct NullableGenericConstraint<T>(
 		T? expected,
 		Func<T?, string> expectation,
 		Func<T?, T?, bool> condition,
 		Func<T?, T?, string> failureMessageFactory)
 		: IValueConstraint<T?>
-		where T: struct
+		where T : struct
 	{
 		public ConstraintResult IsMetBy(T? actual)
 		{

@@ -21,8 +21,7 @@ public sealed partial class QuantifiedCollectionResult
 				.WithMessage("""
 				             Expected subject to
 				             have all items of type MyClass,
-				             but not all of 3 items were
-				             at Expect.That(subject).Should().All().Be<MyClass>()
+				             but not all of 3 items were.
 				             """);
 		}
 

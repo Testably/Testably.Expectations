@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
@@ -12,14 +11,12 @@ public static partial class ThatTimeSpanShould
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrResult<TimeSpan, IThat<TimeSpan>> Be(this IThat<TimeSpan> source,
-		TimeSpan expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		TimeSpan expected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
-					$"be {Formatter.Format(expected)}"))
-				.AppendMethodStatement(nameof(Be), doNotPopulateThisValue),
+					$"be {Formatter.Format(expected)}")),
 			source);
 
 	/// <summary>
@@ -27,14 +24,11 @@ public static partial class ThatTimeSpanShould
 	/// </summary>
 	public static AndOrResult<TimeSpan, IThat<TimeSpan>> NotBe(
 		this IThat<TimeSpan> source,
-		TimeSpan unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		TimeSpan unexpected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					unexpected,
 					(a, e) => !a.Equals(e),
-					$"not be {Formatter.Format(unexpected)}"))
-				.AppendMethodStatement(nameof(NotBe), doNotPopulateThisValue),
+					$"not be {Formatter.Format(unexpected)}")),
 			source);
 }

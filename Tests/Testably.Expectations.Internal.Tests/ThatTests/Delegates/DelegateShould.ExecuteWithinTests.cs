@@ -38,8 +38,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -74,8 +73,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -118,8 +116,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -162,8 +159,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -205,8 +201,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -253,8 +248,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -295,8 +289,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -347,8 +340,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             execute within 0:00.100,
-				             but it took 0:00.300
-				             at Expect.That(@delegate).Should().ExecuteWithin(100.Milliseconds())
+				             but it took 0:00.300.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -372,8 +364,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -408,8 +399,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -448,8 +438,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -492,8 +481,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -534,8 +522,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -578,8 +565,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -623,8 +609,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}
@@ -671,8 +656,7 @@ public sealed class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             not execute within 0:00.500,
-				             but it took only 0:00.010
-				             at Expect.That(@delegate).Should().NotExecuteWithin(500.Milliseconds())
+				             but it took only 0:00.010.
 				             """);
 			await That(stopwatch.IsRunning).Should().BeFalse();
 		}

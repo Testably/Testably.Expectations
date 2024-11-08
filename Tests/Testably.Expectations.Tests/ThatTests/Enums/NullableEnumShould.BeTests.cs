@@ -16,8 +16,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -47,8 +46,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected},
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -78,8 +76,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}
-				              at Expect.That(subject).Should().Be(null)
+				              but found {subject}.
 				              """);
 		}
 
@@ -110,8 +107,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected?.ToString() ?? "<null>"},
-				              but found {subject?.ToString() ?? "<null>"}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject?.ToString() ?? "<null>"}.
 				              """);
 		}
 
@@ -127,8 +123,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage("""
 				             Expected subject to
 				             be Red,
-				             but found <null>
-				             at Expect.That(subject).Should().Be(MyColors.Red)
+				             but found <null>.
 				             """);
 		}
 
@@ -173,8 +168,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -205,8 +199,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected},
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject}.
 				              """);
 		}
 
@@ -222,8 +215,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage("""
 				             Expected subject to
 				             not be <null>,
-				             but found <null>
-				             at Expect.That(subject).Should().NotBe(null)
+				             but found <null>.
 				             """);
 		}
 
@@ -258,8 +250,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected?.ToString() ?? "<null>"},
-				              but found {subject?.ToString() ?? "<null>"}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject?.ToString() ?? "<null>"}.
 				              """);
 		}
 

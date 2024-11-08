@@ -56,8 +56,7 @@ public sealed partial class EnumerableShould
 				.WithMessage($"""
 				              Expected subject to
 				              contain "{expected}",
-				              but found ["{string.Join("\", \"", subject)}"]
-				              at Expect.That(subject).Should().Contain(expected)
+				              but found ["{string.Join("\", \"", subject)}"].
 				              """);
 		}
 	}

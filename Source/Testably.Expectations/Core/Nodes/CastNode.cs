@@ -23,7 +23,8 @@ internal class CastNode<T1, T2> : ManipulationNode
 		CancellationToken cancellationToken)
 		where TValue : default
 	{
-		ConstraintResult? result = await TryMeet(CastConstraint, value, Reason, context, cancellationToken);
+		ConstraintResult? result =
+			await TryMeet(CastConstraint, value, Reason, context, cancellationToken);
 		if (!result.IgnoreFurtherProcessing && Inner != None &&
 		    result is ConstraintResult.Success<T2> success)
 		{

@@ -17,8 +17,7 @@ public sealed partial class DateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {expected:O},
-				              but found {subject:O}
-				              at Expect.That(subject).Should().Be(expected)
+				              but found {subject:O}.
 				              """);
 		}
 
@@ -62,8 +61,7 @@ public sealed partial class DateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {unexpected:O},
-				              but found {subject:O}
-				              at Expect.That(subject).Should().NotBe(unexpected)
+				              but found {subject:O}.
 				              """);
 		}
 	}

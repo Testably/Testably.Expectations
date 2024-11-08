@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Options;
 
@@ -36,17 +35,12 @@ public class NumberToleranceResult<TType, TThat, TSelf>(
 	where TSelf : NumberToleranceResult<TType, TThat, TSelf>
 	where TType : struct, IComparable<TType>
 {
-	private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
-
 	/// <summary>
-	///     Specifies a tolerance to apply on the number comparison.
+	///     Specifies a <paramref name="tolerance" /> to apply on the number comparison.
 	/// </summary>
-	public NumberToleranceResult<TType, TThat, TSelf> Within(TType tolerance,
-		[CallerArgumentExpression("tolerance")]
-		string doNotPopulateThisValue = "")
+	public NumberToleranceResult<TType, TThat, TSelf> Within(TType tolerance)
 	{
 		options.SetTolerance(tolerance);
-		_expectationBuilder.AppendMethodStatement(nameof(Within), doNotPopulateThisValue);
 		return this;
 	}
 }

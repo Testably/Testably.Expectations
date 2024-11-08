@@ -1,6 +1,5 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 
 namespace Testably.Expectations;
@@ -13,9 +12,9 @@ public static partial class ThatAsyncEnumerableShould
 	public static QuantifiedCollectionResult.Async
 		<IThat<IAsyncEnumerable<TItem>>, TItem, IAsyncEnumerable<TItem>> AtMost<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source,
-			int maximum, [CallerArgumentExpression("maximum")] string doNotPopulateThisValue = "")
+			int maximum)
 		=> new(source,
-			source.ExpectationBuilder.AppendMethodStatement(nameof(AtMost), doNotPopulateThisValue),
+			source.ExpectationBuilder,
 			CollectionQuantifier.AtMost(maximum));
 }
 #endif

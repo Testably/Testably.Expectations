@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
@@ -38,7 +37,7 @@ public abstract class ExpectationBuilder
 	protected ExpectationBuilder(string subjectExpression)
 	{
 		Subject = subjectExpression;
-		_failureMessageBuilder = new FailureMessageBuilder(subjectExpression);
+		_failureMessageBuilder = new FailureMessageBuilder();
 	}
 
 	/// <summary>
@@ -100,15 +99,6 @@ public abstract class ExpectationBuilder
 	}
 
 	/// <summary>
-	///     Appends the <paramref name="value" /> to the statement builder.
-	/// </summary>
-	public ExpectationBuilder AppendStatement(string value)
-	{
-		_failureMessageBuilder.ExpressionBuilder.Append(value);
-		return this;
-	}
-
-	/// <summary>
 	///     Specifies a constraint that applies to the property selected
 	///     by the <paramref name="propertyAccessor" />.
 	/// </summary>
@@ -137,12 +127,8 @@ public abstract class ExpectationBuilder
 		_cancellationToken = cancellationToken;
 	}
 
-	internal void And(Action<StringBuilder> expressionBuilder,
-		string textSeparator = " and ")
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
-	}
+	internal void And(string textSeparator = " and ")
+		=> _tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
 
 	internal Task<ConstraintResult> IsMet()
 	{
@@ -158,12 +144,8 @@ public abstract class ExpectationBuilder
 		ITimeSystem timeSystem,
 		CancellationToken cancellationToken);
 
-	internal void Or(Action<StringBuilder> expressionBuilder,
-		string textSeparator = " or ")
-	{
-		expressionBuilder.Invoke(_failureMessageBuilder.ExpressionBuilder);
-		_tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
-	}
+	internal void Or(string textSeparator = " or ")
+		=> _tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
 
 	/// <summary>
 	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.

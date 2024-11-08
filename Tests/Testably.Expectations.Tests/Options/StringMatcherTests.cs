@@ -80,8 +80,7 @@ public class StringMatcherTests
 				                           ↓ (actual)
 				                "…-> Bob : Another authentication Request{nl}Alice <-- Bob :…"
 				                "…-> Bob : Invalid authentication Request{nl}Alice <-- Bob :…"
-				                           ↑ (expected)
-				              at Expect.That(subject).Should().Be(expected)
+				                           ↑ (expected).
 				              """);
 		}
 
@@ -179,8 +178,7 @@ public class StringMatcherTests
 				                                ↓ (actual)
 				               "…is a long text that differs in between two words and has lot…"
 				               "…is a long text which differs in between two words and has…"
-				                                ↑ (expected)
-				             at Expect.That(subject).Should().Be(expected)
+				                                ↑ (expected).
 				             """);
 		}
 

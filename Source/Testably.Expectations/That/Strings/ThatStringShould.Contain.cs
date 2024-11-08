@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
@@ -16,15 +15,13 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringCountResult<string?, IThat<string?>> Contain(
 		this IThat<string?> source,
-		string expected,
-		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+		string expected)
 	{
 		Quantifier? quantifier = new();
 		StringEqualityOptions? options = new();
 		return new StringCountResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ContainsValueConstraint(expected, quantifier, options))
-				.AppendMethodStatement(nameof(Contain), doNotPopulateThisValue),
+				.AddConstraint(new ContainsValueConstraint(expected, quantifier, options)),
 			source,
 			quantifier,
 			options);
@@ -35,17 +32,14 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static StringEqualityResult<string?, IThat<string?>> NotContain(
 		this IThat<string?> source,
-		string unexpected,
-		[CallerArgumentExpression("unexpected")]
-		string doNotPopulateThisValue = "")
+		string unexpected)
 	{
 		Quantifier? quantifier = new();
 		quantifier.Exactly(0);
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ContainsValueConstraint(unexpected, quantifier, options))
-				.AppendMethodStatement(nameof(NotContain), doNotPopulateThisValue),
+				.AddConstraint(new ContainsValueConstraint(unexpected, quantifier, options)),
 			source,
 			options);
 	}

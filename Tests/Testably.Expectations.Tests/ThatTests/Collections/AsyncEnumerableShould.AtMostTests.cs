@@ -25,8 +25,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             at most 8 satisfy "x => x < 6",
-				             but could not verify, because it was cancelled early
-				             at Expect.That(subject).Should().AtMost(8).Satisfy(x => x < 6).WithCancellation(token)
+				             but could not verify, because it was cancelled early.
 				             """);
 		}
 
@@ -54,8 +53,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have at most 1 item equal to 1,
-				             but at least 2 items were equal
-				             at Expect.That(subject).Should().AtMost(1).Be(1)
+				             but at least 2 items were equal.
 				             """);
 		}
 
@@ -82,8 +80,7 @@ public sealed partial class AsyncEnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have at most 3 items equal to 1,
-				             but at least 4 items were equal
-				             at Expect.That(subject).Should().AtMost(3).Be(1)
+				             but at least 4 items were equal.
 				             """);
 		}
 	}

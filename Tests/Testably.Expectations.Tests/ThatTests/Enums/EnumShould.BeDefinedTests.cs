@@ -27,8 +27,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be defined,
-				              but found {subject}
-				              at Expect.That(subject).Should().BeDefined()
+				              but found {subject}.
 				              """);
 		}
 	}
@@ -47,8 +46,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be defined,
-				              but found {subject}
-				              at Expect.That(subject).Should().NotBeDefined()
+				              but found {subject}.
 				              """);
 		}
 

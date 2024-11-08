@@ -19,8 +19,7 @@ public sealed partial class ObjectShould
 				.WithMessage($"""
 				              Expected subject to
 				              for .Value be {expectedValue},
-				              but found {value}
-				              at Expect.That(subject).Should().For<MyClass, int>(o => o.Value, v => v.Be(expectedValue))
+				              but found {value}.
 				              """);
 		}
 

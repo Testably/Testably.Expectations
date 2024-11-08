@@ -31,8 +31,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {format}
-				              at Expect.That(subject).Should().BeFinite()
+				              but found {format}.
 				              """);
 		}
 
@@ -76,8 +75,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {format}
-				              at Expect.That(subject).Should().BeFinite()
+				              but found {format}.
 				              """);
 		}
 
@@ -122,8 +120,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {format}
-				              at Expect.That(subject).Should().BeFinite()
+				              but found {format}.
 				              """);
 		}
 
@@ -168,8 +165,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {format}
-				              at Expect.That(subject).Should().BeFinite()
+				              but found {format}.
 				              """);
 		}
 
@@ -230,8 +226,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBeFinite()
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -274,8 +269,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}
-				              at Expect.That(subject).Should().NotBeFinite()
+				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
 				              """);
 		}
 
@@ -320,8 +314,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().NotBeFinite()
+				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
 				              """);
 		}
 
@@ -366,8 +359,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}
-				              at Expect.That(subject).Should().NotBeFinite()
+				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
 				              """);
 		}
 	}

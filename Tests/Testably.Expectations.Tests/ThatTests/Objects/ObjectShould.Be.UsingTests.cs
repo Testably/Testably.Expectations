@@ -24,8 +24,7 @@ public sealed partial class ObjectShould
 					             but found OuterClass {
 					               Inner = <null>,
 					               Value = "Foo"
-					             }
-					             at Expect.That(subject).Should().Be(expected).Using(new MyComparer(false))
+					             }.
 					             """);
 			}
 

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Testably.Expectations.Core;
 using Testably.Expectations.Results;
-using Testably.Expectations;
 
 namespace Testably.Expectations;
 
@@ -17,12 +15,10 @@ public static partial class ThatExceptionShould
 	public static AndOrResult<TException, ThatExceptionShould<TException>>
 		HaveParamName<TException>(
 			this ThatExceptionShould<TException> source,
-			string expected,
-			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+			string expected)
 		where TException : ArgumentException?
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasParamNameValueConstraint<TException>(expected, "have"))
-				.AppendMethodStatement(nameof(HaveParamName), doNotPopulateThisValue),
+				.AddConstraint(new HasParamNameValueConstraint<TException>(expected, "have")),
 			source);
 
 	/// <summary>
@@ -31,11 +27,9 @@ public static partial class ThatExceptionShould
 	public static AndOrResult<TException, ThatDelegateThrows<TException>>
 		WithParamName<TException>(
 			this ThatDelegateThrows<TException> source,
-			string expected,
-			[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
+			string expected)
 		where TException : ArgumentException?
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasParamNameValueConstraint<TException>(expected, "with"))
-				.AppendMethodStatement(nameof(HaveParamName), doNotPopulateThisValue),
+				.AddConstraint(new HasParamNameValueConstraint<TException>(expected, "with")),
 			source);
 }
