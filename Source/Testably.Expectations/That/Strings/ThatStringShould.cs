@@ -15,11 +15,11 @@ public static partial class ThatStringShould
 	public static IThat<string?> Should(this IExpectSubject<string?> subject)
 		=> subject.Should(_ => { });
 
-	private readonly struct GenericConstraint(
-		string? expected,
-		Func<string?, string> expectation,
-		Func<string?, string?, bool> condition,
-		Func<string?, string?, string> failureMessageFactory) : IValueConstraint<string?>
+	private readonly struct GenericConstraint<T>(
+		T expected,
+		Func<T, string> expectation,
+		Func<string?, T, bool> condition,
+		Func<string?, T, string> failureMessageFactory) : IValueConstraint<string?>
 	{
 		public ConstraintResult IsMetBy(string? actual)
 		{

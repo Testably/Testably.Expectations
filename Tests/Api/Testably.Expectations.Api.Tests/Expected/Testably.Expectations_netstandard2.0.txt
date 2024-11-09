@@ -639,6 +639,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<string?, Testably.Expectations.Core.IThat<string?>> BeUpperCased(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.StringCountResult<string?, Testably.Expectations.Core.IThat<string?>> Contain(this Testably.Expectations.Core.IThat<string?> source, string expected) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> EndWith(this Testably.Expectations.Core.IThat<string?> source, string expected) { }
+        public static Testably.Expectations.Results.AndOrResult<string?, Testably.Expectations.Core.IThat<string?>> HaveLength(this Testably.Expectations.Core.IThat<string?> source, int expected) { }
         public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeEmpty(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeLowerCased(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeNull(this Testably.Expectations.Core.IThat<string?> source) { }
@@ -647,6 +648,7 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotBeUpperCased(this Testably.Expectations.Core.IThat<string?> source) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotContain(this Testably.Expectations.Core.IThat<string?> source, string unexpected) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotEndWith(this Testably.Expectations.Core.IThat<string?> source, string unexpected) { }
+        public static Testably.Expectations.Results.AndOrResult<string, Testably.Expectations.Core.IThat<string?>> NotHaveLength(this Testably.Expectations.Core.IThat<string?> source, int unexpected) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> NotStartWith(this Testably.Expectations.Core.IThat<string?> source, string unexpected) { }
         public static Testably.Expectations.Core.IThat<string?> Should(this Testably.Expectations.Core.IExpectSubject<string?> subject) { }
         public static Testably.Expectations.Results.StringEqualityResult<string?, Testably.Expectations.Core.IThat<string?>> StartWith(this Testably.Expectations.Core.IThat<string?> source, string expected) { }
