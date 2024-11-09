@@ -10,24 +10,24 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="DateOnly" /> values.
 /// </summary>
-public static partial class ThatDateOnlyShould
+public static partial class ThatNullableDateOnlyShould
 {
 	/// <summary>
-	///     Start expectations for current <see cref="DateOnly" /> <paramref name="subject" />.
+	///     Start expectations for current <see cref="DateOnly" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<DateOnly> Should(this IExpectSubject<DateOnly> subject)
+	public static IThat<DateOnly?> Should(this IExpectSubject<DateOnly?> subject)
 		=> subject.Should(_ => { });
 
 	private readonly struct ConditionConstraint(
 		DateOnly? expected,
-		Func<DateOnly, DateOnly?, bool> condition,
-		string expectation) : IValueConstraint<DateOnly>
+		Func<DateOnly?, DateOnly?, bool> condition,
+		string expectation) : IValueConstraint<DateOnly?>
 	{
-		public ConstraintResult IsMetBy(DateOnly actual)
+		public ConstraintResult IsMetBy(DateOnly? actual)
 		{
 			if (condition(actual, expected))
 			{
-				return new ConstraintResult.Success<DateOnly>(actual, ToString());
+				return new ConstraintResult.Success<DateOnly?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
@@ -40,12 +40,12 @@ public static partial class ThatDateOnlyShould
 	private readonly struct ConditionConstraintWithTolerance(
 		DateOnly? expected,
 		Func<DateOnly?, TimeTolerance, string> expectation,
-		Func<DateOnly, DateOnly?, TimeSpan, bool> condition,
-		Func<DateOnly, DateOnly?, string> failureMessageFactory,
+		Func<DateOnly?, DateOnly?, TimeSpan, bool> condition,
+		Func<DateOnly?, DateOnly?, string> failureMessageFactory,
 		TimeTolerance tolerance)
-		: IValueConstraint<DateOnly>
+		: IValueConstraint<DateOnly?>
 	{
-		public ConstraintResult IsMetBy(DateOnly actual)
+		public ConstraintResult IsMetBy(DateOnly? actual)
 		{
 			if (expected is null)
 			{
@@ -55,7 +55,7 @@ public static partial class ThatDateOnlyShould
 
 			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
 			{
-				return new ConstraintResult.Success<DateOnly>(actual, ToString());
+				return new ConstraintResult.Success<DateOnly?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),

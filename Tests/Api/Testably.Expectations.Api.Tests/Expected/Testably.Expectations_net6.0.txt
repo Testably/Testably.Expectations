@@ -128,10 +128,17 @@ namespace Testably.Expectations
     }
     public static class ThatDateOnlyShould
     {
-        public static Testably.Expectations.Results.AndOrResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> Be(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly expected) { }
+        public static Testably.Expectations.Results.AndOrResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> Be(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> BeAfter(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> BeBefore(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> BeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> BeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? expected) { }
         public static Testably.Expectations.Results.AndOrResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> NotBe(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> NotBeAfter(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> NotBeBefore(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> NotBeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly, Testably.Expectations.Core.IThat<System.DateOnly>> NotBeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateOnly> source, System.DateOnly? unexpected) { }
         public static Testably.Expectations.Core.IThat<System.DateOnly> Should(this Testably.Expectations.Core.IExpectSubject<System.DateOnly> subject) { }
-        public static Testably.Expectations.Core.IThat<System.DateOnly?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateOnly?> subject) { }
     }
     public static class ThatDateTimeOffsetShould
     {
@@ -148,10 +155,10 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> BeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? expected) { }
         public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> BeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? expected) { }
         public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBe(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? unexpected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? expected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? expected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? expected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime, Testably.Expectations.Core.IThat<System.DateTime>> NotBeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime> source, System.DateTime? unexpected) { }
         public static Testably.Expectations.Core.IThat<System.DateTime> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTime> subject) { }
     }
     public abstract class ThatDelegate
@@ -290,6 +297,20 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<bool?, Testably.Expectations.Core.IThat<bool?>> NotBeTrue(this Testably.Expectations.Core.IThat<bool?> source) { }
         public static Testably.Expectations.Core.IThat<bool?> Should(this Testably.Expectations.Core.IExpectSubject<bool?> subject) { }
     }
+    public static class ThatNullableDateOnlyShould
+    {
+        public static Testably.Expectations.Results.AndOrResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> Be(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> BeAfter(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> BeBefore(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> BeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> BeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? expected) { }
+        public static Testably.Expectations.Results.AndOrResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> NotBe(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> NotBeAfter(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> NotBeBefore(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> NotBeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateOnly?, Testably.Expectations.Core.IThat<System.DateOnly?>> NotBeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateOnly?> source, System.DateOnly? unexpected) { }
+        public static Testably.Expectations.Core.IThat<System.DateOnly?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateOnly?> subject) { }
+    }
     public static class ThatNullableDateTimeShould
     {
         public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> Be(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected) { }
@@ -298,10 +319,10 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> BeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected) { }
         public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> BeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected) { }
         public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBe(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? unexpected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeAfter(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeBefore(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected) { }
-        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeAfter(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeBefore(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeOnOrAfter(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.DateTime?, Testably.Expectations.Core.IThat<System.DateTime?>> NotBeOnOrBefore(this Testably.Expectations.Core.IThat<System.DateTime?> source, System.DateTime? unexpected) { }
         public static Testably.Expectations.Core.IThat<System.DateTime?> Should(this Testably.Expectations.Core.IExpectSubject<System.DateTime?> subject) { }
     }
     public static class ThatNullableEnumShould
@@ -941,6 +962,7 @@ namespace Testably.Expectations.Options
         public TimeTolerance() { }
         public System.TimeSpan? Tolerance { get; }
         public void SetTolerance(System.TimeSpan tolerance) { }
+        public string ToDayString() { }
         public override string ToString() { }
     }
 }

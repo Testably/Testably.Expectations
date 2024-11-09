@@ -6,15 +6,15 @@ using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
 
-public static partial class ThatDateOnlyShould
+public static partial class ThatNullableDateOnlyShould
 {
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrResult<DateOnly, IThat<DateOnly>> Be(this IThat<DateOnly> source,
+	public static AndOrResult<DateOnly?, IThat<DateOnly?>> Be(this IThat<DateOnly?> source,
 		DateOnly? expected)
 	{
-		return new AndOrResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder
+		return new AndOrResult<DateOnly?, IThat<DateOnly?>>(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
 					(a, e) => a.Equals(e),
@@ -25,9 +25,9 @@ public static partial class ThatDateOnlyShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrResult<DateOnly, IThat<DateOnly>> NotBe(
-		this IThat<DateOnly> source,
-		DateOnly unexpected)
+	public static AndOrResult<DateOnly?, IThat<DateOnly?>> NotBe(
+		this IThat<DateOnly?> source,
+		DateOnly? unexpected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					unexpected,
