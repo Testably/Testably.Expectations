@@ -30,9 +30,32 @@ public partial class ThatExceptionShould<TException>
 	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner<
 		TInnerException>()
 		where TInnerException : Exception?
+		=> new(ExpectationBuilder.AddConstraint(
+				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
+					"have")),
+			this);
+
+	/// <summary>
+	///     Verifies that the actual exception has an inner exception of type <paramref name="innerExceptionType" /> which
+	///     satisfies the <paramref name="expectations" />.
+	/// </summary>
+	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner(
+		Type innerExceptionType,
+		Action<ThatExceptionShould<Exception?>> expectations)
 		=> new(ExpectationBuilder
-				.AddConstraint(
-					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
-						"have")),
+				.ForProperty<Exception, Exception?>(e => e.InnerException,
+					$"have an inner {innerExceptionType.Name} which should ")
+				.Validate(new ThatExceptionShould.ExceptionCastConstraint(innerExceptionType))
+				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
+			this);
+
+	/// <summary>
+	///     Verifies that the actual exception has an inner exception of type <paramref name="innerExceptionType" />.
+	/// </summary>
+	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner(
+		Type innerExceptionType)
+		=> new(ExpectationBuilder.AddConstraint(
+				new ThatExceptionShould.HasInnerExceptionValueConstraint(
+					innerExceptionType, "have")),
 			this);
 }

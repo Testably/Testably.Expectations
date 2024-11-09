@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
@@ -17,7 +18,7 @@ public static partial class ThatObjectShould
 		object? expected,
 		[CallerArgumentExpression("expected")] string doNotPopulateThisValue = "")
 	{
-		ObjectEqualityOptions? options = new();
+		ObjectEqualityOptions options = new();
 		return new ObjectEqualityResult<object?, IThat<object?>>(
 			source.ExpectationBuilder
 				.AddConstraint(new IsEqualValueConstraint(
@@ -33,6 +34,16 @@ public static partial class ThatObjectShould
 		this IThat<object?> source)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new IsValueConstraint<TType>()),
+			source);
+
+	/// <summary>
+	///     Verifies that the subject is of type <paramref name="type" />.
+	/// </summary>
+	public static AndOrWhichResult<object?, IThat<object?>> Be(
+		this IThat<object?> source,
+		Type type)
+		=> new(source.ExpectationBuilder
+				.AddConstraint(new IsValueConstraint(type)),
 			source);
 
 	private readonly struct IsEqualValueConstraint(
@@ -72,5 +83,22 @@ public static partial class ThatObjectShould
 
 		public override string ToString()
 			=> $"be type {Formatter.Format(typeof(TType))}";
+	}
+
+	private readonly struct IsValueConstraint(Type type) : IValueConstraint<object?>
+	{
+		public ConstraintResult IsMetBy(object? actual)
+		{
+			if (type.IsAssignableFrom(actual?.GetType()))
+			{
+				return new ConstraintResult.Success<object?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				$"found {Formatter.Format(actual, FormattingOptions.MultipleLines)}");
+		}
+
+		public override string ToString()
+			=> $"be type {Formatter.Format(type)}";
 	}
 }
