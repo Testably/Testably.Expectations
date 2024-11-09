@@ -43,7 +43,7 @@ public sealed partial class DelegateThrows
 				              Expected action to
 				              throw an Exception with an inner SubCustomException,
 				              but found a CustomException:
-				                {message}.
+				                {message}
 				              """);
 		}
 
@@ -62,7 +62,7 @@ public sealed partial class DelegateThrows
 				              Expected action to
 				              throw an Exception with an inner CustomException,
 				              but found an OtherException:
-				                {message}.
+				                {message}
 				              """);
 		}
 
@@ -101,7 +101,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception with an inner CustomException,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}

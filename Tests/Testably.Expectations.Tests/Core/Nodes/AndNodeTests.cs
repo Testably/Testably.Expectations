@@ -12,7 +12,7 @@ public sealed class AndNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be False and be True,
-			             but found True.
+			             but found True
 			             """);
 	}
 
@@ -26,7 +26,7 @@ public sealed class AndNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be True and be False,
-			             but found True.
+			             but found True
 			             """);
 	}
 
@@ -40,7 +40,7 @@ public sealed class AndNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be False and imply False,
-			             but found True and it did not.
+			             but found True and it did not
 			             """);
 	}
 

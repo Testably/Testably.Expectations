@@ -60,7 +60,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be lower-cased,
-				             but found "aBc".
+				             but found "aBc"
 				             """);
 		}
 
@@ -76,7 +76,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be lower-cased,
-				              but found "{StringWith100Characters}…".
+				              but found "{StringWith100Characters}…"
 				              """);
 		}
 
@@ -92,7 +92,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be lower-cased,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -108,7 +108,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be lower-cased,
-				             but found "ABC".
+				             but found "ABC"
 				             """);
 		}
 
@@ -138,7 +138,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be lower-cased,
-				             but found "".
+				             but found ""
 				             """);
 		}
 
@@ -154,7 +154,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be lower-cased,
-				             but found "abc".
+				             but found "abc"
 				             """);
 		}
 
@@ -170,7 +170,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be lower-cased,
-				             but found "a漢字b".
+				             but found "a漢字b"
 				             """);
 		}
 
@@ -186,7 +186,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be lower-cased,
-				             but found "a-b-c!".
+				             but found "a-b-c!"
 				             """);
 		}
 
@@ -213,7 +213,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be lower-cased,
-				              but found "{StringWith100Characters.ToLowerInvariant()}…".
+				              but found "{StringWith100Characters.ToLowerInvariant()}…"
 				              """);
 		}
 
@@ -251,7 +251,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be lower-cased,
-				             but found " \t ".
+				             but found " \t "
 				             """);
 		}
 	}

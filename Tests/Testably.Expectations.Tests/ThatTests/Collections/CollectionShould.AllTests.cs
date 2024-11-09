@@ -16,7 +16,7 @@ public sealed partial class CollectionShould
 				.WithMessage("""
 				             Expected subject to
 				             have all items equal to 1,
-				             but not all of 7 items were equal.
+				             but not all of 7 items were equal
 				             """);
 		}
 

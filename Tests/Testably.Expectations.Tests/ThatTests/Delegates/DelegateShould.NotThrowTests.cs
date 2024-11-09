@@ -30,7 +30,7 @@ public sealed partial class DelegateShould
 				              Expected action to
 				              not throw any exception,
 				              but it did throw a CustomException:
-				                {message}.
+				                {message}
 				              """);
 		}
 

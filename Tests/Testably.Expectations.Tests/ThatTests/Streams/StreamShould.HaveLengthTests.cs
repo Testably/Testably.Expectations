@@ -20,7 +20,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              have length {length},
-				              but it had length {actualLength}.
+				              but it had length {actualLength}
 				              """);
 		}
 
@@ -48,7 +48,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             have length 0,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}
@@ -81,7 +81,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have length {length},
-				              but it had.
+				              but it had
 				              """);
 		}
 
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not have length 0,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}

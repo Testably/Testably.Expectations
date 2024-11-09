@@ -16,7 +16,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -57,7 +57,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}

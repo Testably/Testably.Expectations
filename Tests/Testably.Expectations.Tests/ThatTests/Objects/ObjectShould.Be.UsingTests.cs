@@ -24,7 +24,7 @@ public sealed partial class ObjectShould
 					             but found OuterClass {
 					               Inner = <null>,
 					               Value = "Foo"
-					             }.
+					             }
 					             """);
 			}
 

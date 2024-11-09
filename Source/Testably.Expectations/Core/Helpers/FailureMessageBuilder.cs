@@ -10,7 +10,7 @@ internal class FailureMessageBuilder : IFailureMessageBuilder
 		=> $"""
 		    Expected {subject} to
 		    {failure.ExpectationText},
-		    but {failure.ResultText}.
+		    but {failure.ResultText}
 		    """;
 
 	#endregion

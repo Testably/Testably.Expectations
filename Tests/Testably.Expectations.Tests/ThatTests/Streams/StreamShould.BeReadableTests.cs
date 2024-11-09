@@ -18,7 +18,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be readable,
-				             but it was not.
+				             but it was not
 				             """);
 		}
 
@@ -34,7 +34,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be readable,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -75,7 +75,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be readable,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -91,7 +91,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be readable,
-				             but it was.
+				             but it was
 				             """);
 		}
 	}

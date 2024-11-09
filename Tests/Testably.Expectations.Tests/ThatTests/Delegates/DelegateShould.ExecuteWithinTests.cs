@@ -20,7 +20,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenActionThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenActionThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 
@@ -37,7 +37,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenFuncTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenFuncTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 
@@ -54,7 +54,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenFuncTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenFuncTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 
@@ -71,7 +71,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenFuncValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenFuncValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 
@@ -88,7 +88,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 
@@ -105,7 +105,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 
@@ -123,7 +123,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenValueTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenValueTaskThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 
@@ -143,7 +143,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              execute within 0:00.500,
 				              but it did throw a MyException:
-				                {nameof(WhenValueTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}.
+				                {nameof(WhenValueTaskValueThrowsAnException_ShouldFailWithDescriptiveMessage)}
 				              """);
 		}
 #endif

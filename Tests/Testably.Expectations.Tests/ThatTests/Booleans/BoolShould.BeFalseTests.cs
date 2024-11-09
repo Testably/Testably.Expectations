@@ -27,7 +27,7 @@ public sealed partial class BoolShould
 				.WithMessage("""
 				             Expected subject to
 				             be False,
-				             but found True.
+				             but found True
 				             """);
 		}
 
@@ -43,7 +43,7 @@ public sealed partial class BoolShould
 				.WithMessage("""
 				             Expected subject to
 				             be False, because we want to test the failure,
-				             but found True.
+				             but found True
 				             """);
 		}
 	}

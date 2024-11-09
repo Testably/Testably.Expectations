@@ -22,7 +22,7 @@ public sealed partial class ExceptionShould
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"
-				                ↑ (expected).
+				                ↑ (expected)
 				             """);
 		}
 

@@ -18,7 +18,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected antecedent to
 				              imply {Formatter.Format(consequent)}, because we want to test the failure,
-				              but it did not.
+				              but it did not
 				              """);
 		}
 

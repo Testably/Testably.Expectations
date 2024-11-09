@@ -33,7 +33,7 @@ public sealed partial class GenericShould
 				             },
 				             but found Other {
 				               Value = 1
-				             }.
+				             }
 				             """);
 		}
 
@@ -52,7 +52,7 @@ public sealed partial class GenericShould
 				             refer to expected <null>,
 				             but found Other {
 				               Value = 1
-				             }.
+				             }
 				             """);
 		}
 
@@ -83,7 +83,7 @@ public sealed partial class GenericShould
 				             refer to expected Other {
 				               Value = 1
 				             },
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}
@@ -105,7 +105,7 @@ public sealed partial class GenericShould
 				             not refer to expected Other {
 				               Value = 1
 				             },
-				             but it did.
+				             but it did
 				             """);
 		}
 
@@ -146,7 +146,7 @@ public sealed partial class GenericShould
 				.WithMessage("""
 				             Expected subject to
 				             not refer to expected <null>,
-				             but it did.
+				             but it did
 				             """);
 		}
 

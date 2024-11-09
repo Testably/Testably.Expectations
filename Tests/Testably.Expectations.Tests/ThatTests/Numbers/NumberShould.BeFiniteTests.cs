@@ -29,7 +29,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -73,7 +73,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -118,7 +118,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -163,7 +163,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -224,7 +224,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -267,7 +267,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -312,7 +312,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -357,7 +357,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be finite,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 	}

@@ -23,7 +23,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "SOME",
-				             but found "some arbitrary text".
+				             but found "some arbitrary text"
 				             """);
 		}
 
@@ -41,7 +41,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "TEXT" ignoring case,
-				             but found "some arbitrary text".
+				             but found "some arbitrary text"
 				             """);
 		}
 
@@ -60,7 +60,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "SOME" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text".
+				             but found "some arbitrary text"
 				             """);
 		}
 
@@ -91,7 +91,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             start with "text",
-				             but found "some arbitrary text".
+				             but found "some arbitrary text"
 				             """);
 		}
 
@@ -135,7 +135,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not start with "some",
-				             but found "some text".
+				             but found "some text"
 				             """);
 		}
 
@@ -168,7 +168,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not start with "sOmE" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text".
+				             but found "some arbitrary text"
 				             """);
 		}
 
@@ -197,7 +197,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not start with "SOME" ignoring case,
-				             but found "some text".
+				             but found "some text"
 				             """);
 		}
 	}

@@ -74,11 +74,6 @@ public class BecauseTests
 	[Fact]
 	public async Task WhenCombineWithAnd_ShouldApplyBecauseReasonOnlyOnPreviousConstraint()
 	{
-		string expectedMessage = """
-		                         Expected subject to
-		                         be True, because we only apply it to previous constraints and be False,
-		                         but found True.
-		                         """;
 		string because = "we only apply it to previous constraints";
 		bool subject = true;
 
@@ -87,7 +82,11 @@ public class BecauseTests
 				.And.BeFalse();
 
 		await That(Act).Should().ThrowException()
-			.WithMessage(expectedMessage);
+			.WithMessage("""
+			             Expected subject to
+			             be True, because we only apply it to previous constraints and be False,
+			             but found True
+			             """);
 	}
 
 	[Fact]
@@ -111,7 +110,7 @@ public class BecauseTests
 		string expectedMessage = """
 		                         Expected subject to
 		                         be False,
-		                         but found True.
+		                         but found True
 		                         """;
 
 		bool subject = true;

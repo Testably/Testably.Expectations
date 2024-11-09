@@ -30,7 +30,7 @@ public sealed partial class ObjectShould
 				               be type OtherClass, because we want to test the failure,
 				               but found MyClass {
 				                 Value = {{value}}
-				               }.
+				               }
 				               """);
 		}
 
@@ -61,7 +61,7 @@ public sealed partial class ObjectShould
 				               be type MyClass, because {{reason}},
 				               but found MyBaseClass {
 				                 Value = {{value}}
-				               }.
+				               }
 				               """);
 		}
 

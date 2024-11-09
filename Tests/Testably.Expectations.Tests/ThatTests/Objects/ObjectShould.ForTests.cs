@@ -19,7 +19,7 @@ public sealed partial class ObjectShould
 				.WithMessage($"""
 				              Expected subject to
 				              for .Value be {Formatter.Format(expectedValue)},
-				              but found {Formatter.Format(value)}.
+				              but found {Formatter.Format(value)}
 				              """);
 		}
 
