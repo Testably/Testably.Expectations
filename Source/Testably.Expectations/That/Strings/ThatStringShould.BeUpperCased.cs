@@ -14,7 +14,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string?, IThat<string?>> BeUpperCased(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "be upper-cased",
 					(a, _) => a != null && a == a.ToUpperInvariant(),
@@ -28,7 +28,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string, IThat<string?>> NotBeUpperCased(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "not be upper-cased",
 					(a, _) => a == null || a != a.ToUpperInvariant(),

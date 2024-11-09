@@ -14,7 +14,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string?, IThat<string?>> BeLowerCased(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "be lower-cased",
 					(a, _) => a != null && a == a.ToLowerInvariant(),
@@ -29,7 +29,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string, IThat<string?>> NotBeLowerCased(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "not be lower-cased",
 					(a, _) => a == null || a != a.ToLowerInvariant(),

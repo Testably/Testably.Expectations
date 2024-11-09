@@ -13,7 +13,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string?, IThat<string?>> BeEmpty(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "be empty",
 					(a, _) => a == "",
@@ -27,7 +27,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string, IThat<string?>> NotBeEmpty(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "not be empty",
 					(a, _) => a != "",

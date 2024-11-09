@@ -13,7 +13,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string?, IThat<string?>> BeNullOrWhiteSpace(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "be null or white-space",
 					(a, _) => string.IsNullOrWhiteSpace(a),
@@ -27,7 +27,7 @@ public static partial class ThatStringShould
 	public static AndOrResult<string, IThat<string?>> NotBeNullOrWhiteSpace(
 		this IThat<string?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint(
+				.AddConstraint(new GenericConstraint<string>(
 					"",
 					_ => "not be null or white-space",
 					(a, _) => !string.IsNullOrWhiteSpace(a),
