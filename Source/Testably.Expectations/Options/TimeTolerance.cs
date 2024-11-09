@@ -27,6 +27,21 @@ public class TimeTolerance
 		Tolerance = tolerance;
 	}
 
+	/// <summary>
+	///     A string representation in total days.
+	/// </summary>
+	public string ToDayString()
+	{
+		if (Tolerance == null)
+		{
+			return "";
+		}
+
+		int days = (int)Tolerance.Value.TotalDays;
+		const char plusMinus = '\u00b1';
+		return $" {plusMinus} {days} days";
+	}
+
 	/// <inheritdoc />
 	public override string ToString()
 	{

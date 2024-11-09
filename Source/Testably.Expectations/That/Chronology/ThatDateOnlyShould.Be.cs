@@ -12,7 +12,7 @@ public static partial class ThatDateOnlyShould
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
 	public static AndOrResult<DateOnly, IThat<DateOnly>> Be(this IThat<DateOnly> source,
-		DateOnly expected)
+		DateOnly? expected)
 	{
 		return new AndOrResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(

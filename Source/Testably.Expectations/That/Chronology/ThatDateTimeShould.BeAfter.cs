@@ -29,18 +29,18 @@ public static partial class ThatDateTimeShould
 	}
 
 	/// <summary>
-	///     Verifies that the subject is not after the <paramref name="expected" /> value.
+	///     Verifies that the subject is not after the <paramref name="unexpected" /> value.
 	/// </summary>
 	public static TimeToleranceResult<DateTime, IThat<DateTime>> NotBeAfter(
 		this IThat<DateTime> source,
-		DateTime? expected)
+		DateTime? unexpected)
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
-					expected,
-					$"not be after {Formatter.Format(expected)}",
+					unexpected,
+					$"not be after {Formatter.Format(unexpected)}",
 					(a, e, t) => a - t <= e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance)),
