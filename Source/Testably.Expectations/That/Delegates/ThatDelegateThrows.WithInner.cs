@@ -32,10 +32,7 @@ public partial class ThatDelegateThrows<TException>
 					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
 						"with")),
 			this);
-	
-	
-	
-	
+
 	/// <summary>
 	///     Verifies that the thrown exception has an inner exception of type <paramref name="innerExceptionType" /> which
 	///     satisfies the <paramref name="expectations" />.
@@ -53,7 +50,8 @@ public partial class ThatDelegateThrows<TException>
 	/// <summary>
 	///     Verifies that the actual exception has an inner exception of type <paramref name="innerExceptionType" />.
 	/// </summary>
-	public AndOrResult<TException, ThatDelegateThrows<TException>> WithInner(Type innerExceptionType)
+	public AndOrResult<TException, ThatDelegateThrows<TException>> WithInner(
+		Type innerExceptionType)
 		=> new(ExpectationBuilder
 				.AddConstraint(
 					new ThatExceptionShould.HasInnerExceptionValueConstraint(
