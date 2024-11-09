@@ -16,7 +16,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 

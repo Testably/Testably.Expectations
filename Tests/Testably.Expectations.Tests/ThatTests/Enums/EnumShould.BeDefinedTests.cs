@@ -27,7 +27,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be defined,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 	}
@@ -46,7 +46,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be defined,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 

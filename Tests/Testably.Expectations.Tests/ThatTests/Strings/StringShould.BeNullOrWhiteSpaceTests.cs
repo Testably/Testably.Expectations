@@ -26,7 +26,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null or white-space,
-				              but found "{subject}".
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 

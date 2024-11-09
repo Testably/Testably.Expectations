@@ -16,8 +16,8 @@ public sealed partial class DateTimeOffsetShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected:O},
-				              but found {subject:O}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -60,8 +60,8 @@ public sealed partial class DateTimeOffsetShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected:O},
-				              but found {subject:O}.
+				              not be {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 	}

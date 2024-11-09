@@ -16,7 +16,7 @@ public sealed partial class NullableBoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be True, because we want to test the failure,
-				              but found {subject?.ToString() ?? "<null>"}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 

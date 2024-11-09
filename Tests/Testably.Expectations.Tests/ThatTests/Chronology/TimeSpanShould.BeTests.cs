@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.ThatTests.Chronology;
+﻿namespace Testably.Expectations.Tests.ThatTests.Chronology;
 
 public sealed partial class TimeSpanShould
 {

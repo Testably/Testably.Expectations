@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.ThatTests.Objects;
+﻿namespace Testably.Expectations.Tests.ThatTests.Objects;
 
 public sealed partial class ObjectShould
 {

@@ -17,8 +17,8 @@ public sealed partial class BoolShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -36,8 +36,8 @@ public sealed partial class BoolShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected}, because {reason},
-				              but found {subject}.
+				              be {Formatter.Format(expected)}, because {reason},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -83,8 +83,8 @@ public sealed partial class BoolShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -102,8 +102,8 @@ public sealed partial class BoolShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected}, because {reason},
-				              but found {subject}.
+				              not be {Formatter.Format(unexpected)}, because {reason},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 	}

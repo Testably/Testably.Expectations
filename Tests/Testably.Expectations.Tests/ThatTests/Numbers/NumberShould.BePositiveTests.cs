@@ -26,7 +26,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -52,7 +52,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -121,7 +121,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -190,7 +190,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -216,7 +216,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -248,7 +248,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -292,7 +292,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -378,7 +378,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -463,7 +463,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -505,7 +505,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -548,7 +548,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -591,7 +591,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -633,7 +633,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -659,7 +659,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 	}

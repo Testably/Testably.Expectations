@@ -1,5 +1,4 @@
 ﻿using Testably.Expectations.Extensions;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Tests.Formatting.Formatters;
 

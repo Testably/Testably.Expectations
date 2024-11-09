@@ -17,7 +17,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage($"""
 				              Expected subject to
 				              be on or before <null>,
-				              but found {subject:O}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -57,8 +57,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be on or before {expected:O},
-				              but found {subject:O}.
+				              be on or before {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -99,8 +99,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be on or before {expected:O} ± 0:03,
-				              but found {subject:O}.
+				              be on or before {Formatter.Format(expected)} ± 0:03,
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -117,8 +117,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be on or before {expected:O} ± 0:03,
-				              but found {subject:O}.
+				              be on or before {Formatter.Format(expected)} ± 0:03,
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -184,8 +184,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be on or before {unexpected:O},
-				              but found {subject:O}.
+				              not be on or before {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -201,8 +201,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be on or before {unexpected:O},
-				              but found {subject:O}.
+				              not be on or before {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -232,7 +232,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or before <null>, because we want to test the failure,
-				              but found {subject:O}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -250,8 +250,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be on or before {unexpected:O} ± 0:03, because we want to test the failure,
-				              but found {subject:O}.
+				              not be on or before {Formatter.Format(unexpected)} ± 0:03, because we want to test the failure,
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -268,8 +268,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be on or before {unexpected:O} ± 0:03,
-				              but found {subject:O}.
+				              not be on or before {Formatter.Format(unexpected)} ± 0:03,
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 

@@ -32,7 +32,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 

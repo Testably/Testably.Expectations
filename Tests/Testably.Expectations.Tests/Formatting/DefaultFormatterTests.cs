@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.Formatting;
+﻿namespace Testably.Expectations.Tests.Formatting;
 
 public sealed class DefaultFormatterTests
 {

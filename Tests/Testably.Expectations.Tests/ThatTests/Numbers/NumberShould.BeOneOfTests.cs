@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Tests.ThatTests.Numbers;
 

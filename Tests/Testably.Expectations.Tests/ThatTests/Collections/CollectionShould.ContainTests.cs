@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Testably.Expectations.Tests.ThatTests.Collections;
 
@@ -16,8 +17,8 @@ public sealed partial class CollectionShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              contain "{expected}",
-				              but found ["{string.Join("\", \"", subject)}"].
+				              contain {Formatter.Format(expected)},
+				              but found [{string.Join(", ", subject.Select(s => Formatter.Format(s)))}].
 				              """);
 		}
 

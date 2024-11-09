@@ -16,7 +16,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have value <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -33,8 +33,8 @@ public sealed partial class EnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              have value {expected},
-				              but found {subject}.
+				              have value {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
@@ -80,8 +80,8 @@ public sealed partial class EnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not have value {unexpected},
-				              but found {subject}.
+				              not have value {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 

@@ -31,7 +31,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null,
-				              but found "{subject}".
+				              but found {Formatter.Format(subject)}.
 				              """);
 		}
 
