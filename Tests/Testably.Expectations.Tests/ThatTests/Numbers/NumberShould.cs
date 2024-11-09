@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Testably.Expectations.Tests.ThatTests.Numbers;
+﻿namespace Testably.Expectations.Tests.ThatTests.Numbers;
 
 public sealed partial class NumberShould
 {
@@ -16,8 +14,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -31,8 +29,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -46,8 +44,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -61,8 +59,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -76,8 +74,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -91,8 +89,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -106,8 +104,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -121,8 +119,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -136,8 +134,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -151,8 +149,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -166,8 +164,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 	}

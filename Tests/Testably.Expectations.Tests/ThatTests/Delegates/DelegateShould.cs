@@ -66,7 +66,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -83,7 +83,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_Action_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_Action_WhenThrown)}
 				              """);
 		}
 
@@ -114,7 +114,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -131,7 +131,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_Action_WithCancellationToken_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_Action_WithCancellationToken_WhenThrown)}
 				              """);
 		}
 
@@ -147,7 +147,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -164,7 +164,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_FuncTask_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_FuncTask_WhenThrown)}
 				              """);
 		}
 
@@ -195,7 +195,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -212,7 +212,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_FuncTask_WithCancellationToken_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_FuncTask_WithCancellationToken_WhenThrown)}
 				              """);
 		}
 
@@ -228,7 +228,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -245,7 +245,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_FuncTaskValue_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_FuncTaskValue_WhenThrown)}
 				              """);
 		}
 
@@ -276,7 +276,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -294,7 +294,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_FuncTaskValue_WithCancellationToken_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_FuncTaskValue_WithCancellationToken_WhenThrown)}
 				              """);
 		}
 
@@ -310,7 +310,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -327,7 +327,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_FuncValue_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_FuncValue_WhenThrown)}
 				              """);
 		}
 
@@ -361,7 +361,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -378,7 +378,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_FuncValue_WithCancellationToken_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_FuncValue_WithCancellationToken_WhenThrown)}
 				              """);
 		}
 
@@ -394,7 +394,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -411,7 +411,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_Task_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_Task_WhenThrown)}
 				              """);
 		}
 
@@ -427,7 +427,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 
@@ -444,7 +444,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_TaskValue_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_TaskValue_WhenThrown)}
 				              """);
 		}
 
@@ -461,7 +461,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 #endif
@@ -480,7 +480,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_ValueTask_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_ValueTask_WhenThrown)}
 				              """);
 		}
 #endif
@@ -498,7 +498,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 #endif
@@ -517,7 +517,7 @@ public sealed partial class DelegateShould
 				              Expected @delegate to
 				              not throw any exception,
 				              but it did throw a MyException:
-				                {nameof(ShouldSupportDelegate_ValueTaskValue_WhenThrown)}.
+				                {nameof(ShouldSupportDelegate_ValueTaskValue_WhenThrown)}
 				              """);
 		}
 #endif

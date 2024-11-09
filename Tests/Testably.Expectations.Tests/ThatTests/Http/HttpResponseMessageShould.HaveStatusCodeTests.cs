@@ -29,7 +29,7 @@ public sealed partial class HttpResponseMessageShould
 				               some content
 				               The originating request was:
 				                 GET https://example.com/ HTTP 1.1
-				                 request content.
+				                 request content
 				             """);
 		}
 
@@ -50,7 +50,7 @@ public sealed partial class HttpResponseMessageShould
 				             but found 400 BadRequest:
 				               HTTP/1.1 400 BadRequest
 				               some content
-				               The originating request was <null>.
+				               The originating request was <null>
 				             """);
 		}
 

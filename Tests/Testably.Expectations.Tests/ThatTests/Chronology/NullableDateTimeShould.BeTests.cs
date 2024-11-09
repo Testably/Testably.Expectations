@@ -52,8 +52,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected:O}, because we want to test the failure,
-				              but found {subject:O}.
+				              be {Formatter.Format(expected)}, because we want to test the failure,
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -70,8 +70,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected:O}, because we also test the kind property,
-				              but it differed in the Kind property.
+				              be {Formatter.Format(expected)}, because we also test the kind property,
+				              but it differed in the Kind property
 				              """);
 		}
 
@@ -102,8 +102,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected:O} ± 0:03, because we want to test the failure,
-				              but found {subject:O}.
+				              be {Formatter.Format(expected)} ± 0:03, because we want to test the failure,
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -136,7 +136,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage("""
 				             Expected subject to
 				             not be 9999-12-31T23:59:59.9999999, because we want to test the failure,
-				             but found 9999-12-31T23:59:59.9999999.
+				             but found 9999-12-31T23:59:59.9999999
 				             """);
 		}
 
@@ -154,7 +154,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage("""
 				             Expected subject to
 				             not be 0001-01-01T00:00:00.0000000, because we want to test the failure,
-				             but found 0001-01-01T00:00:00.0000000.
+				             but found 0001-01-01T00:00:00.0000000
 				             """);
 		}
 
@@ -183,8 +183,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected:O}, because we want to test the failure,
-				              but found {subject:O}.
+				              not be {Formatter.Format(unexpected)}, because we want to test the failure,
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -241,8 +241,8 @@ public sealed partial class NullableDateTimeShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {expected:O} ± 0:03, because we want to test the failure,
-				              but found {subject:O}.
+				              not be {Formatter.Format(expected)} ± 0:03, because we want to test the failure,
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 	}

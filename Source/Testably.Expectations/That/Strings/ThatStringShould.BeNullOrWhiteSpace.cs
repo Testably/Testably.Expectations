@@ -18,7 +18,7 @@ public static partial class ThatStringShould
 					_ => "be null or white-space",
 					(a, _) => string.IsNullOrWhiteSpace(a),
 					(a, _)
-						=> $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+						=> $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 
 	/// <summary>
@@ -32,6 +32,6 @@ public static partial class ThatStringShould
 					_ => "not be null or white-space",
 					(a, _) => !string.IsNullOrWhiteSpace(a),
 					(a, _)
-						=> $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+						=> $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 }

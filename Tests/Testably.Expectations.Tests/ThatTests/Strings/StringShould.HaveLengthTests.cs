@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.ThatTests.Strings;
+﻿namespace Testably.Expectations.Tests.ThatTests.Strings;
 
 public sealed partial class StringShould
 {
@@ -18,7 +16,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             have length 0,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -50,7 +48,7 @@ public sealed partial class StringShould
 				              Expected subject to
 				              have length {length},
 				              but it did have a length of {subject.Length}:
-				                {Formatter.Format(subject)}.
+				                {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -106,7 +104,7 @@ public sealed partial class StringShould
 				              Expected subject to
 				              not have length {length},
 				              but it did:
-				                {Formatter.Format(subject)}.
+				                {Formatter.Format(subject)}
 				              """);
 		}
 

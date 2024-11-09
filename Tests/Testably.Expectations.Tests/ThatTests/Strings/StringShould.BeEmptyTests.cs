@@ -26,7 +26,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be empty,
-				              but found "{subject}".
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -42,7 +42,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be empty,
-				              but found "{StringWith100Characters}…".
+				              but found "{StringWith100Characters}…"
 				              """);
 		}
 
@@ -58,7 +58,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -74,7 +74,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found " \t ".
+				             but found " \t "
 				             """);
 		}
 	}
@@ -93,7 +93,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be empty,
-				             but it was.
+				             but it was
 				             """);
 		}
 

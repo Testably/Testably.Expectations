@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Tests.ThatTests.Numbers;
 
@@ -34,7 +33,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -63,7 +62,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -102,7 +101,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -159,7 +158,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -202,7 +201,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -245,7 +244,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -288,7 +287,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -331,7 +330,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -374,7 +373,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -417,7 +416,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -460,7 +459,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -503,7 +502,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -546,7 +545,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -576,7 +575,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -615,7 +614,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -674,7 +673,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -717,7 +716,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -762,7 +761,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -805,7 +804,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -849,7 +848,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -892,7 +891,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -935,7 +934,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -978,7 +977,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1022,7 +1021,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1065,7 +1064,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1109,7 +1108,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1152,7 +1151,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1196,7 +1195,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1239,7 +1238,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1269,7 +1268,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1298,7 +1297,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1328,7 +1327,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1357,7 +1356,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1388,7 +1387,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1417,7 +1416,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1460,7 +1459,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1503,7 +1502,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1546,7 +1545,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1589,7 +1588,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1618,7 +1617,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1647,7 +1646,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1676,7 +1675,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1705,7 +1704,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1734,7 +1733,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              be one of {Formatter.Format(expected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 		}
@@ -1757,7 +1756,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1786,7 +1785,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -1820,7 +1819,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -1876,7 +1875,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -1927,7 +1926,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -1970,7 +1969,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2013,7 +2012,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2056,7 +2055,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2099,7 +2098,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2142,7 +2141,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2185,7 +2184,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2228,7 +2227,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2271,7 +2270,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2300,7 +2299,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2335,7 +2334,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2392,7 +2391,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.1,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2444,7 +2443,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2487,7 +2486,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2531,7 +2530,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2574,7 +2573,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 0.11,
-					              but found 12.5.
+					              but found 12.5
 					              """);
 			}
 
@@ -2618,7 +2617,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2661,7 +2660,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2705,7 +2704,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2748,7 +2747,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2792,7 +2791,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2835,7 +2834,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2879,7 +2878,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2922,7 +2921,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2966,7 +2965,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -2995,7 +2994,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3025,7 +3024,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3054,7 +3053,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3084,7 +3083,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3113,7 +3112,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3143,7 +3142,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3186,7 +3185,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3229,7 +3228,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3272,7 +3271,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3315,7 +3314,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3344,7 +3343,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3373,7 +3372,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3402,7 +3401,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3431,7 +3430,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 
@@ -3460,7 +3459,7 @@ public sealed partial class NumberShould
 					.WithMessage($"""
 					              Expected subject to
 					              not be one of {Formatter.Format(unexpected)} ± 1,
-					              but found 5.
+					              but found 5
 					              """);
 			}
 

@@ -67,7 +67,7 @@ public static partial class ThatObjectShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"found {Formatter.Format(actual)}");
+				$"found {Formatter.Format(actual, FormattingOptions.MultipleLines)}");
 		}
 
 		public override string ToString()

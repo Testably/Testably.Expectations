@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Testably.Expectations.Tests.ThatTests.Numbers;
+﻿namespace Testably.Expectations.Tests.ThatTests.Numbers;
 
 public sealed partial class NumberShould
 {
@@ -20,7 +18,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -36,8 +34,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -65,7 +63,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -85,8 +83,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -128,7 +126,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -143,8 +141,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -161,8 +159,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -190,7 +188,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -205,8 +203,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -223,8 +221,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected?.ToString(CultureInfo.InvariantCulture)},
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -253,7 +251,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -269,8 +267,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -309,7 +307,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -325,8 +323,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -353,8 +351,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -382,8 +380,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -400,7 +398,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -420,8 +418,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -452,7 +450,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -469,8 +467,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -498,7 +496,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -515,8 +513,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected?.ToString(CultureInfo.InvariantCulture) ?? "<null>"},
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -543,8 +541,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -572,8 +570,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -589,8 +587,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -618,8 +616,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -635,8 +633,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -664,8 +662,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -681,8 +679,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -710,8 +708,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -727,8 +725,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -756,8 +754,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -773,8 +771,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -802,8 +800,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -819,8 +817,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -848,8 +846,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found <null>.
+				              be less than {Formatter.Format(expected)},
+				              but found <null>
 				              """);
 		}
 
@@ -867,7 +865,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -883,8 +881,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -913,7 +911,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -929,8 +927,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -959,7 +957,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -975,8 +973,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -1005,7 +1003,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -1021,8 +1019,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -1051,7 +1049,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -1068,8 +1066,8 @@ public sealed partial class NumberShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be less than {expected},
-				              but found {subject}.
+				              be less than {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 

@@ -18,8 +18,8 @@ public sealed partial class ObjectShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              for .Value be {expectedValue},
-				              but found {value}.
+				              for .Value be {Formatter.Format(expectedValue)},
+				              but found {Formatter.Format(value)}
 				              """);
 		}
 

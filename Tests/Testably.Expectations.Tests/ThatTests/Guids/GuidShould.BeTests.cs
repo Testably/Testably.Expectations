@@ -17,7 +17,7 @@ public sealed partial class GuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -33,8 +33,8 @@ public sealed partial class GuidShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -77,8 +77,8 @@ public sealed partial class GuidShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 

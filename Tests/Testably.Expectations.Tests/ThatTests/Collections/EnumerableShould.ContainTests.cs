@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Testably.Expectations.Tests.TestHelpers;
 // ReSharper disable PossibleMultipleEnumeration
 
@@ -55,8 +56,8 @@ public sealed partial class EnumerableShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              contain "{expected}",
-				              but found ["{string.Join("\", \"", subject)}"].
+				              contain {Formatter.Format(expected)},
+				              but found [{string.Join(", ", subject.Select(s => Formatter.Format(s)))}]
 				              """);
 		}
 	}

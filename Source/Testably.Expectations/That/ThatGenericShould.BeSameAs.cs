@@ -16,9 +16,9 @@ public static partial class ThatGenericShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint<object?>(
 					expected,
-					$"refer to {doNotPopulateThisValue} {Formatter.Format(expected)}",
+					$"refer to {doNotPopulateThisValue} {Formatter.Format(expected, FormattingOptions.MultipleLines)}",
 					(a, e) => ReferenceEquals(e, a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _) => $"found {Formatter.Format(a, FormattingOptions.MultipleLines)}")),
 			source);
 
 	/// <summary>
@@ -31,7 +31,7 @@ public static partial class ThatGenericShould
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint<object?>(
 					unexpected,
-					$"not refer to {doNotPopulateThisValue} {Formatter.Format(unexpected)}",
+					$"not refer to {doNotPopulateThisValue} {Formatter.Format(unexpected, FormattingOptions.MultipleLines)}",
 					(a, e) => !ReferenceEquals(e, a),
 					(_, _) => "it did")),
 			source);

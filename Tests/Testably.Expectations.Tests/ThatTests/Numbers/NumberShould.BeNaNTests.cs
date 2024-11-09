@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Testably.Expectations.Tests.ThatTests.Numbers;
+﻿namespace Testably.Expectations.Tests.ThatTests.Numbers;
 
 public sealed partial class NumberShould
 {
@@ -19,9 +17,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(double.PositiveInfinity, "+\u221e")]
-		[InlineData(double.NegativeInfinity, "-\u221e")]
-		public async Task ForDouble_WhenSubjectIsInfinity_ShouldFail(double subject, string format)
+		[InlineData(double.PositiveInfinity)]
+		[InlineData(double.NegativeInfinity)]
+		public async Task ForDouble_WhenSubjectIsInfinity_ShouldFail(double subject)
 		{
 			async Task Act()
 				=> await That(subject).Should().BeNaN();
@@ -30,7 +28,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -60,7 +58,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -76,9 +74,9 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(float.PositiveInfinity, "+\u221e")]
-		[InlineData(float.NegativeInfinity, "-\u221e")]
-		public async Task ForFloat_WhenSubjectIsInfinity_ShouldFail(float subject, string format)
+		[InlineData(float.PositiveInfinity)]
+		[InlineData(float.NegativeInfinity)]
+		public async Task ForFloat_WhenSubjectIsInfinity_ShouldFail(float subject)
 		{
 			async Task Act()
 				=> await That(subject).Should().BeNaN();
@@ -87,7 +85,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -118,7 +116,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -135,11 +133,11 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(double.PositiveInfinity, "+\u221e")]
-		[InlineData(double.NegativeInfinity, "-\u221e")]
-		[InlineData(null, "<null>")]
+		[InlineData(double.PositiveInfinity)]
+		[InlineData(double.NegativeInfinity)]
+		[InlineData(null)]
 		public async Task ForNullableDouble_WhenSubjectIsInfinityOrNull_ShouldFail(
-			double? subject, string format)
+			double? subject)
 		{
 			async Task Act()
 				=> await That(subject).Should().BeNaN();
@@ -148,7 +146,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -179,7 +177,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -195,10 +193,10 @@ public sealed partial class NumberShould
 		}
 
 		[Theory]
-		[InlineData(float.PositiveInfinity, "+\u221e")]
-		[InlineData(float.NegativeInfinity, "-\u221e")]
-		public async Task ForNullableFloat_WhenSubjectIsInfinity_ShouldFail(float? subject,
-			string format)
+		[InlineData(float.PositiveInfinity)]
+		[InlineData(float.NegativeInfinity)]
+		public async Task ForNullableFloat_WhenSubjectIsInfinity_ShouldFail(
+			float? subject)
 		{
 			async Task Act()
 				=> await That(subject).Should().BeNaN();
@@ -207,7 +205,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {format}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -238,7 +236,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              be NaN,
-				              but found {subject?.ToString(CultureInfo.InvariantCulture) ?? "<null>"}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 	}
@@ -268,7 +266,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -312,7 +310,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found {subject.ToString(CultureInfo.InvariantCulture)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -356,7 +354,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found NaN.
+				              but found NaN
 				              """);
 		}
 
@@ -402,7 +400,7 @@ public sealed partial class NumberShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be NaN,
-				              but found NaN.
+				              but found NaN
 				              """);
 		}
 

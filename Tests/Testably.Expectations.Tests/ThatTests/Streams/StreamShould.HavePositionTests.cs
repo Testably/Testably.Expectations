@@ -20,7 +20,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              have position {position},
-				              but it had position {actualPosition}.
+				              but it had position {actualPosition}
 				              """);
 		}
 
@@ -48,7 +48,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             have position 0,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}
@@ -81,7 +81,7 @@ public sealed partial class StreamShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have position {position},
-				              but it had.
+				              but it had
 				              """);
 		}
 
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not have position 0,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}

@@ -14,7 +14,7 @@ public sealed class PrecedenceTests
 				.WithMessage("""
 				             Expected true to
 				             be False and be True or be False,
-				             but found True.
+				             but found True
 				             """);
 		}
 
@@ -37,7 +37,7 @@ public sealed class PrecedenceTests
 				.WithMessage("""
 				             Expected true to
 				             be False or be True and be False,
-				             but found True.
+				             but found True
 				             """);
 		}
 
@@ -51,7 +51,7 @@ public sealed class PrecedenceTests
 				.WithMessage("""
 				             Expected true to
 				             be True and be False or be False,
-				             but found True.
+				             but found True
 				             """);
 		}
 

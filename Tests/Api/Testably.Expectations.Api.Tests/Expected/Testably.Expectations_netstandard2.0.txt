@@ -803,7 +803,7 @@ namespace Testably.Expectations.Formatting
     }
     public class FormattingOptions
     {
-        public static Testably.Expectations.Formatting.FormattingOptions Default { get; }
+        public static Testably.Expectations.Formatting.FormattingOptions MultipleLines { get; }
         public static Testably.Expectations.Formatting.FormattingOptions SingleLine { get; }
     }
 }

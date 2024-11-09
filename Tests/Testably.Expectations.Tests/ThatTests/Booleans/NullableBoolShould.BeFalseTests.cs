@@ -27,7 +27,7 @@ public sealed partial class NullableBoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be False, because we want to test the failure,
-				              but found {subject?.ToString() ?? "<null>"}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 	}
@@ -46,7 +46,7 @@ public sealed partial class NullableBoolShould
 				.WithMessage("""
 				             Expected subject to
 				             not be False, because we want to test the failure,
-				             but found False.
+				             but found False
 				             """);
 		}
 

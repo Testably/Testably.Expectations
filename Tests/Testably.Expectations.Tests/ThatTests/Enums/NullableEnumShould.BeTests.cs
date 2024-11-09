@@ -15,8 +15,8 @@ public sealed partial class NullableEnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -45,8 +45,8 @@ public sealed partial class NullableEnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected},
-				              but found {subject}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -76,7 +76,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              be <null>,
-				              but found {subject}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -106,8 +106,8 @@ public sealed partial class NullableEnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {expected?.ToString() ?? "<null>"},
-				              but found {subject?.ToString() ?? "<null>"}.
+				              be {Formatter.Format(expected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -123,7 +123,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage("""
 				             Expected subject to
 				             be Red,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -167,8 +167,8 @@ public sealed partial class NullableEnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -198,8 +198,8 @@ public sealed partial class NullableEnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected},
-				              but found {subject}.
+				              not be {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -215,7 +215,7 @@ public sealed partial class NullableEnumShould
 				.WithMessage("""
 				             Expected subject to
 				             not be <null>,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -249,8 +249,8 @@ public sealed partial class NullableEnumShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {unexpected?.ToString() ?? "<null>"},
-				              but found {subject?.ToString() ?? "<null>"}.
+				              not be {Formatter.Format(unexpected)},
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 

@@ -50,7 +50,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception with an inner exception,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 	}

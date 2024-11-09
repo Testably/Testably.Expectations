@@ -60,7 +60,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected action to
 				             not throw any exception,
-				             but it did throw an Exception.
+				             but it did throw an Exception
 				             """);
 		}
 
@@ -87,7 +87,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception,
-				             but it did not.
+				             but it did not
 				             """);
 		}
 

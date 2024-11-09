@@ -18,7 +18,7 @@ public static partial class ThatStringShould
 					_ => "be null or empty",
 					(a, _) => string.IsNullOrEmpty(a),
 					(a, _)
-						=> $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+						=> $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 
 	/// <summary>

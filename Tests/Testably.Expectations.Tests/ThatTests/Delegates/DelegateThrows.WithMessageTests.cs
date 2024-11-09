@@ -51,7 +51,7 @@ public sealed partial class DelegateThrows
 				                ↓ (actual)
 				               "FOO"
 				               "foo"
-				                ↑ (expected).
+				                ↑ (expected)
 				             """);
 		}
 
@@ -86,7 +86,7 @@ public sealed partial class DelegateThrows
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"
-				                ↑ (expected).
+				                ↑ (expected)
 				             """);
 		}
 

@@ -19,7 +19,7 @@ public static partial class ThatStringShould
 					_ => "be lower-cased",
 					(a, _) => a != null && a == a.ToLowerInvariant(),
 					(a, _)
-						=> $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+						=> $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 
 	/// <summary>
@@ -33,6 +33,6 @@ public static partial class ThatStringShould
 					"",
 					_ => "not be lower-cased",
 					(a, _) => a == null || a != a.ToLowerInvariant(),
-					(a, _) => $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+					(a, _) => $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 }

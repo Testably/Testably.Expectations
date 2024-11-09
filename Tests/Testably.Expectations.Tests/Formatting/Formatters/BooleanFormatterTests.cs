@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.Formatting.Formatters;
+﻿namespace Testably.Expectations.Tests.Formatting.Formatters;
 
 public sealed class BooleanFormatterTests
 {

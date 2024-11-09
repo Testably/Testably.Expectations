@@ -69,7 +69,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have at least 5 items equal to 1,
-				             but only 4 of 7 items were equal.
+				             but only 4 of 7 items were equal
 				             """);
 		}
 	}

@@ -25,7 +25,7 @@ public sealed partial class HttpResponseMessageShould
 				                ↓ (actual)
 				               "some content"
 				               "other content"
-				                ↑ (expected).
+				                ↑ (expected)
 				             """);
 		}
 

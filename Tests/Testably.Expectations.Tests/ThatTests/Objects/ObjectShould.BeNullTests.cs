@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.ThatTests.Objects;
+﻿namespace Testably.Expectations.Tests.ThatTests.Objects;
 
 public sealed partial class ObjectShould
 {
@@ -30,7 +28,7 @@ public sealed partial class ObjectShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null, because we want to test the failure,
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 	}
@@ -50,7 +48,7 @@ public sealed partial class ObjectShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null, because we want to test the failure,
-				             but it was.
+				             but it was
 				             """);
 		}
 

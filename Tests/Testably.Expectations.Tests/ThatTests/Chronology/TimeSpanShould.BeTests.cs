@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.ThatTests.Chronology;
+﻿namespace Testably.Expectations.Tests.ThatTests.Chronology;
 
 public sealed partial class TimeSpanShould
 {
@@ -19,7 +17,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -63,7 +61,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}.
+				              but found {Formatter.Format(subject)}
 				              """);
 		}
 	}

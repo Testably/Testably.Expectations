@@ -17,8 +17,8 @@ public sealed partial class BoolShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected antecedent to
-				              imply {consequent}, because we want to test the failure,
-				              but it did not.
+				              imply {Formatter.Format(consequent)}, because we want to test the failure,
+				              but it did not
 				              """);
 		}
 

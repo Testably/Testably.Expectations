@@ -49,7 +49,7 @@ public sealed partial class StringShould
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"
-				                ↑ (expected).
+				                ↑ (expected)
 				             """);
 		}
 	}

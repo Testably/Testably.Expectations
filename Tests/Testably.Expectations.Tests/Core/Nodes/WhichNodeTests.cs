@@ -23,7 +23,7 @@ public sealed class WhichNodeTests
 			                ↓ (actual)
 			               "foo"
 			               "bar"
-			                ↑ (expected).
+			                ↑ (expected)
 			             """);
 	}
 

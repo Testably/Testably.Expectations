@@ -21,7 +21,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be write-only,
-				             but it was not.
+				             but it was not
 				             """);
 		}
 
@@ -37,7 +37,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be write-only,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -81,7 +81,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be write-only,
-				             but found <null>.
+				             but found <null>
 				             """);
 		}
 
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be write-only,
-				             but it was.
+				             but it was
 				             """);
 		}
 	}

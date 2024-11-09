@@ -1,6 +1,4 @@
-﻿using Testably.Expectations.Formatting;
-
-namespace Testably.Expectations.Tests.Formatting;
+﻿namespace Testably.Expectations.Tests.Formatting;
 
 public sealed class DefaultFormatterTests
 {
@@ -29,7 +27,7 @@ public sealed class DefaultFormatterTests
 			Value = 2
 		};
 
-		string result = Formatter.Format(value, FormattingOptions.Default);
+		string result = Formatter.Format(value, FormattingOptions.MultipleLines);
 
 		await That(result).Should().Be("""
 		                               Dummy {
@@ -49,7 +47,7 @@ public sealed class DefaultFormatterTests
 		string expected = string.Join($"{Environment.NewLine}  ", values) + Environment.NewLine;
 		ClassWithToString subject = new(value);
 
-		string result = Formatter.Format(subject, FormattingOptions.Default);
+		string result = Formatter.Format(subject, FormattingOptions.MultipleLines);
 
 		await That(result).Should().Be(expected);
 	}

@@ -24,7 +24,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             between 6 and 8 satisfy "x => x < 6",
-				             but could not verify, because it was cancelled early.
+				             but could not verify, because it was cancelled early
 				             """);
 		}
 
@@ -52,7 +52,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have between 0 and 1 items equal to 1,
-				             but at least 2 items were equal.
+				             but at least 2 items were equal
 				             """);
 		}
 
@@ -79,7 +79,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have between 3 and 4 items equal to 2,
-				             but only 2 items were equal.
+				             but only 2 items were equal
 				             """);
 		}
 
@@ -95,7 +95,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             have between 1 and 3 items equal to 1,
-				             but at least 4 items were equal.
+				             but at least 4 items were equal
 				             """);
 		}
 	}
