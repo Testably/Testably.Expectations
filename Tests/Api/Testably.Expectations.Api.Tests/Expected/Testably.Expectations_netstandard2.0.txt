@@ -137,8 +137,10 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.ExpectationResult<TValue> NotThrow<TValue>(this Testably.Expectations.ThatDelegate.WithValue<TValue> source) { }
         public static Testably.Expectations.ThatDelegate.WithoutValue Should(this Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithoutValue> subject) { }
         public static Testably.Expectations.ThatDelegate.WithValue<TValue> Should<TValue>(this Testably.Expectations.Core.IExpectSubject<Testably.Expectations.ThatDelegate.WithValue<TValue>> subject) { }
+        public static Testably.Expectations.ThatDelegateThrows<System.Exception> Throw(this Testably.Expectations.ThatDelegate source, System.Type exceptionType) { }
         public static Testably.Expectations.ThatDelegateThrows<TException> Throw<TException>(this Testably.Expectations.ThatDelegate source)
             where TException : System.Exception { }
+        public static Testably.Expectations.ThatDelegateThrows<System.Exception> ThrowExactly(this Testably.Expectations.ThatDelegate source, System.Type exceptionType) { }
         public static Testably.Expectations.ThatDelegateThrows<TException> ThrowExactly<TException>(this Testably.Expectations.ThatDelegate source)
             where TException : System.Exception { }
         public static Testably.Expectations.ThatDelegateThrows<System.Exception> ThrowException(this Testably.Expectations.ThatDelegate source) { }
@@ -148,6 +150,8 @@ namespace Testably.Expectations
     {
         public Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
         public Testably.Expectations.ThatDelegateThrows<TException?> OnlyIf(bool predicate) { }
+        public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithInner(System.Type innerExceptionType) { }
+        public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithInner(System.Type innerExceptionType, System.Action<Testably.Expectations.ThatExceptionShould<System.Exception?>> expectations) { }
         public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithInner<TInnerException>()
             where TInnerException : System.Exception? { }
         public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatDelegateThrows<TException>> WithInner<TInnerException>(System.Action<Testably.Expectations.ThatExceptionShould<TInnerException?>> expectations)
@@ -204,6 +208,8 @@ namespace Testably.Expectations
     {
         public ThatExceptionShould(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
         public Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
+        public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatExceptionShould<TException>> HaveInner(System.Type innerExceptionType) { }
+        public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatExceptionShould<TException>> HaveInner(System.Type innerExceptionType, System.Action<Testably.Expectations.ThatExceptionShould<System.Exception?>> expectations) { }
         public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatExceptionShould<TException>> HaveInner<TInnerException>()
             where TInnerException : System.Exception? { }
         public Testably.Expectations.Results.AndOrResult<TException, Testably.Expectations.ThatExceptionShould<TException>> HaveInner<TInnerException>(System.Action<Testably.Expectations.ThatExceptionShould<TInnerException?>> expectations)
@@ -586,6 +592,7 @@ namespace Testably.Expectations
     }
     public static class ThatObjectShould
     {
+        public static Testably.Expectations.Results.AndOrWhichResult<object?, Testably.Expectations.Core.IThat<object?>> Be(this Testably.Expectations.Core.IThat<object?> source, System.Type type) { }
         public static Testably.Expectations.Results.ObjectEqualityResult<object?, Testably.Expectations.Core.IThat<object?>> Be(this Testably.Expectations.Core.IThat<object?> source, object? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrWhichResult<TType, Testably.Expectations.Core.IThat<object?>> Be<TType>(this Testably.Expectations.Core.IThat<object?> source) { }
         public static Testably.Expectations.Results.AndOrResult<object?, Testably.Expectations.Core.IThat<object?>> BeNull(this Testably.Expectations.Core.IThat<object?> source) { }
