@@ -15,4 +15,16 @@ public static partial class ThatDelegateShould
 				.AddConstraint(new ThrowsCastConstraint<TException>(throwOptions)),
 			throwOptions);
 	}
+
+	/// <summary>
+	///     Verifies that the delegate throws an exception of type <paramref name="exceptionType" />.
+	/// </summary>
+	public static ThatDelegateThrows<Exception> Throw(this ThatDelegate source,
+		Type exceptionType)
+	{
+		ThrowsOption throwOptions = new();
+		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
+				.AddConstraint(new ThrowsCastConstraint(exceptionType, throwOptions)),
+			throwOptions);
+	}
 }

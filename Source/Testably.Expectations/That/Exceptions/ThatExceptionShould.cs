@@ -102,6 +102,32 @@ public static partial class ThatExceptionShould
 			=> $"{verb} an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
+	internal readonly struct HasInnerExceptionValueConstraint(Type innerExceptionType, string verb)
+		: IValueConstraint<Exception?>
+	{
+		/// <inheritdoc />
+		public ConstraintResult IsMetBy(Exception? actual)
+		{
+			Exception? innerException = actual?.InnerException;
+			if (innerExceptionType.IsAssignableFrom(actual?.InnerException?.GetType()))
+			{
+				return new ConstraintResult.Success<Exception?>(actual, ToString());
+			}
+
+			if (innerException is not null)
+			{
+				return new ConstraintResult.Failure<Exception?>(actual, ToString(),
+					$"found {innerException.FormatForMessage()}");
+			}
+
+			return new ConstraintResult.Failure<Exception?>(actual, ToString(),
+				"found <null>");
+		}
+
+		public override string ToString()
+			=> $"{verb} an inner {(innerExceptionType == typeof(Exception) ? "exception" : Formatter.Format(innerExceptionType))}";
+	}
+
 	internal class ExceptionCastConstraint<TTarget> : ICastConstraint<Exception?, TTarget>
 		where TTarget : Exception?
 	{
@@ -113,6 +139,28 @@ public static partial class ThatExceptionShould
 			if (actual is TTarget casted)
 			{
 				return new ConstraintResult.Success<TTarget>(casted, "");
+			}
+
+			return new ConstraintResult.Failure<Exception?>(actual, "",
+				actual == null
+					? "found <null>"
+					: $"found {actual.FormatForMessage()}");
+		}
+
+		#endregion
+	}
+
+	internal class ExceptionCastConstraint(Type exceptionType)
+		: ICastConstraint<Exception?, Exception?>
+	{
+		#region ICastConstraint<Exception?,Exception?> Members
+
+		/// <inheritdoc />
+		public ConstraintResult IsMetBy(Exception? actual)
+		{
+			if (exceptionType.IsAssignableFrom(actual?.GetType()))
+			{
+				return new ConstraintResult.Success<Exception>(actual, "");
 			}
 
 			return new ConstraintResult.Failure<Exception?>(actual, "",

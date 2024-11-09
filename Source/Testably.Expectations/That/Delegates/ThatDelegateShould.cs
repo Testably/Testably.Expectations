@@ -39,6 +39,43 @@ public static partial class ThatDelegateShould
 		return new ConstraintResult.Success<TException?>(default, DoesNotThrowExpectation, true);
 	}
 
+	private readonly struct ThrowsCastConstraint(Type exceptionType, ThrowsOption throwOptions)
+		: ICastConstraint<DelegateValue, Exception?>
+	{
+		/// <inheritdoc />
+		public ConstraintResult IsMetBy(DelegateValue? value)
+		{
+			Exception? exception = value?.Exception;
+			if (!throwOptions.DoCheckThrow)
+			{
+				return DoesNotThrowResult<Exception>(exception);
+			}
+
+			if (exceptionType.IsAssignableFrom(exception?.GetType()))
+			{
+				return new ConstraintResult.Success<Exception?>(exception, ToString());
+			}
+
+			if (exception is null)
+			{
+				return new ConstraintResult.Failure<Exception?>(null, ToString(), "it did not");
+			}
+
+			return new ConstraintResult.Failure<Exception?>(null, ToString(),
+				$"it did throw {exception.FormatForMessage()}");
+		}
+
+		public override string ToString()
+		{
+			if (!throwOptions.DoCheckThrow)
+			{
+				return DoesNotThrowExpectation;
+			}
+
+			return $"throw {exceptionType.Name.PrependAOrAn()}";
+		}
+	}
+
 	private readonly struct ThrowsCastConstraint<TException>(ThrowsOption throwOptions)
 		: ICastConstraint<DelegateValue, TException?>
 		where TException : Exception

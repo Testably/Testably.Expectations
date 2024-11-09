@@ -19,13 +19,25 @@ public static partial class ThatDelegateShould
 			throwOptions);
 	}
 
+	/// <summary>
+	///     Verifies that the delegate throws exactly an exception of type <paramref name="exceptionType" />.
+	/// </summary>
+	public static ThatDelegateThrows<Exception> ThrowExactly(this ThatDelegate source,
+		Type exceptionType)
+	{
+		ThrowsOption throwOptions = new();
+		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
+				.AddConstraint(new ThrowsExactlyCastConstraint(exceptionType, throwOptions)),
+			throwOptions);
+	}
+
 	private readonly struct ThrowsExactlyCastConstraint<TException>(ThrowsOption throwOptions)
 		: ICastConstraint<DelegateValue, Exception?>
 		where TException : Exception
 	{
-		/// <inheritdoc />
-		public ConstraintResult IsMetBy(Exception? exception)
+		public ConstraintResult IsMetBy(DelegateValue? value)
 		{
+			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
 				return DoesNotThrowResult<Exception>(exception);
@@ -46,8 +58,44 @@ public static partial class ThatDelegateShould
 		}
 
 		/// <inheritdoc />
+		public override string ToString()
+		{
+			if (!throwOptions.DoCheckThrow)
+			{
+				return DoesNotThrowExpectation;
+			}
+
+			return $"throw exactly {typeof(TException).Name.PrependAOrAn()}";
+		}
+	}
+
+	private readonly struct ThrowsExactlyCastConstraint(
+		Type exceptionType,
+		ThrowsOption throwOptions)
+		: ICastConstraint<DelegateValue, Exception?>
+	{
+		/// <inheritdoc />
 		public ConstraintResult IsMetBy(DelegateValue? value)
-			=> IsMetBy(value?.Exception);
+		{
+			Exception? exception = value?.Exception;
+			if (!throwOptions.DoCheckThrow)
+			{
+				return DoesNotThrowResult<Exception>(exception);
+			}
+
+			if (exception?.GetType() == exceptionType)
+			{
+				return new ConstraintResult.Success<Exception?>(exception, ToString());
+			}
+
+			if (exception is null)
+			{
+				return new ConstraintResult.Failure<Exception?>(null, ToString(), "it did not");
+			}
+
+			return new ConstraintResult.Failure<Exception?>(null, ToString(),
+				$"it did throw {exception.FormatForMessage()}");
+		}
 
 		/// <inheritdoc />
 		public override string ToString()
@@ -57,7 +105,7 @@ public static partial class ThatDelegateShould
 				return DoesNotThrowExpectation;
 			}
 
-			return $"throw exactly {typeof(TException).Name.PrependAOrAn()}";
+			return $"throw exactly {exceptionType.Name.PrependAOrAn()}";
 		}
 	}
 }
