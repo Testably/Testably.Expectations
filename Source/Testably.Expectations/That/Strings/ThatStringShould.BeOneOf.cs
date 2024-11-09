@@ -1,4 +1,5 @@
-﻿using Testably.Expectations.Core;
+﻿using System.Linq;
+using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
@@ -52,12 +53,11 @@ public static partial class ThatStringShould
 					"found <null>");
 			}
 
-			foreach (string? expectedValue in expectedValues)
+			StringEqualityOptions stringEqualityOptions = options;
+			if (expectedValues.Any(expectedValue => stringEqualityOptions.Comparer
+				.Equals(actual, expectedValue)))
 			{
-				if (options.Comparer.Equals(actual, expectedValue))
-				{
-					return new ConstraintResult.Success<string?>(actual, ToString());
-				}
+				return new ConstraintResult.Success<string?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure<string?>(actual, ToString(),
@@ -85,13 +85,12 @@ public static partial class ThatStringShould
 					"found <null>");
 			}
 
-			foreach (string? unexpectedValue in unexpectedValues)
+			StringEqualityOptions stringEqualityOptions = options;
+			if (unexpectedValues.Any(unexpectedValue => stringEqualityOptions.Comparer
+				.Equals(actual, unexpectedValue)))
 			{
-				if (options.Comparer.Equals(actual, unexpectedValue))
-				{
-					return new ConstraintResult.Failure<string?>(actual, ToString(),
-						$"found {Formatter.Format(actual)}");
-				}
+				return new ConstraintResult.Failure<string?>(actual, ToString(),
+					$"found {Formatter.Format(actual)}");
 			}
 
 			return new ConstraintResult.Success<string?>(actual, ToString());
