@@ -58,10 +58,11 @@ public class Formatter
 	/// <summary>
 	///     Formats the <paramref name="value" /> according to the formatting <paramref name="options" />.
 	/// </summary>
+	/// <remarks>Default value for <paramref name="options" /> is <see cref="FormattingOptions.SingleLine" />.</remarks>
 	public static string Format<T>(T? value, FormattingOptions? options = null)
 	{
 		StringBuilder stringBuilder = new();
-		options ??= FormattingOptions.Default;
+		options ??= FormattingOptions.SingleLine;
 		Initialization.State.Value.Formatter.Format(value, stringBuilder, options);
 		return stringBuilder.ToString();
 	}

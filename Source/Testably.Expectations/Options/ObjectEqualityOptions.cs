@@ -80,7 +80,8 @@ public class ObjectEqualityOptions
 		{
 			if (HandleSpecialCases(a, b, out bool? specialCaseResult))
 			{
-				return new Result(specialCaseResult.Value, $"found {Formatter.Format(a)}");
+				return new Result(specialCaseResult.Value,
+					$"found {Formatter.Format(a, FormattingOptions.MultipleLines)}");
 			}
 
 			List<ComparisonFailure> failures = Compare.CheckEquivalent(a, b,
@@ -146,7 +147,7 @@ public class ObjectEqualityOptions
 
 		/// <inheritdoc />
 		public Result AreConsideredEqual(object? a, object? b)
-			=> new(Equals(a, b), $"found {Formatter.Format(a)}");
+			=> new(Equals(a, b), $"found {Formatter.Format(a, FormattingOptions.MultipleLines)}");
 
 		/// <inheritdoc />
 		public string GetExpectation(string expectedExpression)
@@ -161,7 +162,8 @@ public class ObjectEqualityOptions
 
 		/// <inheritdoc />
 		public Result AreConsideredEqual(object? a, object? b)
-			=> new(comparer.Equals(a, b), $"found {Formatter.Format(a)}");
+			=> new(comparer.Equals(a, b),
+				$"found {Formatter.Format(a, FormattingOptions.MultipleLines)}");
 
 		/// <inheritdoc />
 		public string GetExpectation(string expectedExpression)

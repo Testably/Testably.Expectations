@@ -18,7 +18,7 @@ public static partial class ThatStringShould
 					"",
 					_ => "be upper-cased",
 					(a, _) => a != null && a == a.ToUpperInvariant(),
-					(a, _) => $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+					(a, _) => $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 
 	/// <summary>
@@ -32,6 +32,6 @@ public static partial class ThatStringShould
 					"",
 					_ => "not be upper-cased",
 					(a, _) => a == null || a != a.ToUpperInvariant(),
-					(a, _) => $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+					(a, _) => $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 }

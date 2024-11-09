@@ -8,7 +8,7 @@ public class FormattingOptions
 	/// <summary>
 	///     Format the objects on multiple lines.
 	/// </summary>
-	public static FormattingOptions Default { get; } = new(true);
+	public static FormattingOptions MultipleLines { get; } = new(true);
 
 	/// <summary>
 	///     Format the objects on a single line.

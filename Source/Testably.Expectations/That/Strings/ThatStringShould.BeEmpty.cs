@@ -18,7 +18,7 @@ public static partial class ThatStringShould
 					_ => "be empty",
 					(a, _) => a == "",
 					(a, _)
-						=> $"found {Formatter.Format(a.DisplayWhitespace().TruncateWithEllipsis(100))}")),
+						=> $"found {Formatter.Format(a, FormattingOptions.SingleLine)}")),
 			source);
 
 	/// <summary>
