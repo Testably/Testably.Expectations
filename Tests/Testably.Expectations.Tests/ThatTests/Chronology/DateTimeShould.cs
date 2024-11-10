@@ -6,7 +6,7 @@ public sealed partial class DateTimeShould
 	///     Use a fixed random time in each test run to ensure, that the tests don't rely on special times.
 	/// </summary>
 	private static readonly Lazy<DateTime> CurrentTimeLazy = new(
-		() => DateTime.MinValue.AddSeconds(new Random().Next()));
+		() => DateTime.MinValue.AddSeconds(new Random().Next(100, 100000)));
 
 	private static DateTime CurrentTime()
 		=> CurrentTimeLazy.Value;

@@ -6,7 +6,7 @@ public sealed partial class TimeSpanShould
 	///     Use a fixed random time in each test run to ensure, that the tests don't rely on special times.
 	/// </summary>
 	private static readonly Lazy<TimeSpan> CurrentTimeLazy = new(
-		() => TimeSpan.FromSeconds(new Random().Next(500)));
+		() => TimeSpan.FromSeconds(new Random().Next(100, 100000)));
 
 	private static TimeSpan CurrentTime()
 		=> CurrentTimeLazy.Value;
