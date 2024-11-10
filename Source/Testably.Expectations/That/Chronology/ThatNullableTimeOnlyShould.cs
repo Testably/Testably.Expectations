@@ -10,24 +10,24 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="TimeOnly" /> values.
 /// </summary>
-public static partial class ThatTimeOnlyShould
+public static partial class ThatNullableTimeOnlyShould
 {
 	/// <summary>
-	///     Start expectations for current <see cref="TimeOnly" /> <paramref name="subject" />.
+	///     Start expectations for current <see cref="TimeOnly" />? <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TimeOnly> Should(this IExpectSubject<TimeOnly> subject)
+	public static IThat<TimeOnly?> Should(this IExpectSubject<TimeOnly?> subject)
 		=> subject.Should(_ => { });
 
 	private readonly struct ConditionConstraint(
-		TimeOnly expected,
-		Func<TimeOnly, TimeOnly, bool> condition,
-		string expectation) : IValueConstraint<TimeOnly>
+		TimeOnly? expected,
+		Func<TimeOnly?, TimeOnly?, bool> condition,
+		string expectation) : IValueConstraint<TimeOnly?>
 	{
-		public ConstraintResult IsMetBy(TimeOnly actual)
+		public ConstraintResult IsMetBy(TimeOnly? actual)
 		{
 			if (condition(actual, expected))
 			{
-				return new ConstraintResult.Success<TimeOnly>(actual, ToString());
+				return new ConstraintResult.Success<TimeOnly?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
@@ -40,12 +40,12 @@ public static partial class ThatTimeOnlyShould
 	private readonly struct ConditionConstraintWithTolerance(
 		TimeOnly? expected,
 		Func<TimeOnly?, TimeTolerance, string> expectation,
-		Func<TimeOnly, TimeOnly?, TimeSpan, bool> condition,
-		Func<TimeOnly, TimeOnly?, string> failureMessageFactory,
+		Func<TimeOnly?, TimeOnly?, TimeSpan, bool> condition,
+		Func<TimeOnly?, TimeOnly?, string> failureMessageFactory,
 		TimeTolerance tolerance)
-		: IValueConstraint<TimeOnly>
+		: IValueConstraint<TimeOnly?>
 	{
-		public ConstraintResult IsMetBy(TimeOnly actual)
+		public ConstraintResult IsMetBy(TimeOnly? actual)
 		{
 			if (expected is null)
 			{
@@ -55,7 +55,7 @@ public static partial class ThatTimeOnlyShould
 
 			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
 			{
-				return new ConstraintResult.Success<TimeOnly>(actual, ToString());
+				return new ConstraintResult.Success<TimeOnly?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),
