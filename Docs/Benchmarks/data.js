@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731247633926,
+  "lastUpdate": 1731248403918,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -298,6 +298,66 @@ window.BENCHMARK_DATA = {
             "value": 1434.351681436811,
             "unit": "ns",
             "range": "± 8.93975378025529"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "04a9795ad43498a480332a1409e6d697a250691f",
+          "message": "feat: Add workflow for github pages (#153)",
+          "timestamp": "2024-11-10T14:16:51Z",
+          "tree_id": "1ab3a4cdb4e24d76cae6e3e60c62d1ce7f8d91d8",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/04a9795ad43498a480332a1409e6d697a250691f"
+        },
+        "date": 1731248403363,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 216.46007132530212,
+            "unit": "ns",
+            "range": "± 1.3224365529877649"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 284.57064822514855,
+            "unit": "ns",
+            "range": "± 2.5388069569838216"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 631.8529075895037,
+            "unit": "ns",
+            "range": "± 3.630213696092942"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 386.3392347971598,
+            "unit": "ns",
+            "range": "± 1.7363159762152305"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 440.9900715192159,
+            "unit": "ns",
+            "range": "± 2.9611957094779924"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 1386.7418332417806,
+            "unit": "ns",
+            "range": "± 10.945158104530364"
           }
         ]
       }
