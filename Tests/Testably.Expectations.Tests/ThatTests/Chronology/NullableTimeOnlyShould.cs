@@ -7,7 +7,7 @@ public sealed partial class NullableTimeOnlyShould
 	///     Use a fixed random time in each test run to ensure, that the tests don't rely on special times.
 	/// </summary>
 	private static readonly Lazy<TimeOnly?> CurrentTimeLazy = new(
-		() => TimeOnly.MinValue.Add(TimeSpan.FromSeconds(new Random().Next(86400))));
+		() => TimeOnly.MinValue.Add(TimeSpan.FromSeconds(new Random().Next(100, 86300))));
 
 	private static TimeOnly? CurrentTime()
 		=> CurrentTimeLazy.Value;
