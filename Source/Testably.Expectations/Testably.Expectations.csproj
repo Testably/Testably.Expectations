@@ -7,13 +7,6 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
-	
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-		<DefineConstants>$(DefineConstants);RELEASE;TRACE</DefineConstants>
-		<DebugSymbols>false</DebugSymbols>
-		<DebugType>portable</DebugType>
-		<Optimize>true</Optimize>
-	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
 		<Nullable>annotations</Nullable>
