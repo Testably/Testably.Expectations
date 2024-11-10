@@ -115,7 +115,7 @@ public abstract class ExpectationBuilder
 	/// <summary>
 	///     Adds a <paramref name="cancellationToken" /> to be used by the constraints.
 	/// </summary>
-	public void AddCancellation(CancellationToken cancellationToken)
+	public void WithCancellation(CancellationToken cancellationToken)
 	{
 		_cancellationToken = cancellationToken;
 	}

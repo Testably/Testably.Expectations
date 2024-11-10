@@ -338,6 +338,7 @@ public class ExpectTests
 				.WithMessage("You must provide at least one expectation*").AsWildcard();
 		}
 	}
+	
 #if NET6_0_OR_GREATER
 	/// <summary>
 	///     Returns an <see cref="IAsyncEnumerable{T}" /> with incrementing numbers, starting with 0, which cancels the
@@ -370,7 +371,7 @@ public class ExpectTests
 			subject = GetCancellingAsyncEnumerable(6, cts, CancellationToken.None);
 
 		async Task Act()
-			=> await That(subject).Should(b => b.AddCancellation(token)).All().Satisfy(x => x < 6);
+			=> await That(subject).Should(b => b.WithCancellation(token)).All().Satisfy(x => x < 6);
 
 		await That(Act).Should().Throw<XunitException>()
 			.WithMessage("""
