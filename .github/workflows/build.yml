@@ -205,7 +205,7 @@ jobs:
                     dotnet-version: |
                         8.0.x
             -   name: Run benchmark
-                run: cd Tests/Testably.Expectations.Benchmarks && dotnet run --exporters json --filter '*'
+                run: cd Tests/Testably.Expectations.Benchmarks && dotnet run --exporters json --filter '*' --framework net8.0
             -   name: Store benchmark result
                 uses: rhysd/github-action-benchmark@v1
                 with:
