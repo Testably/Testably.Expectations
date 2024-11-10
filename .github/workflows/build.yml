@@ -216,6 +216,8 @@ jobs:
                   tool: 'benchmarkdotnet'
                   output-file-path: Build/Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.HappyCaseBenchmarks-report-full-compressed.json
                   github-token: ${{ secrets.GITHUB_TOKEN }}
+                  gh-pages-branch: 'benchmarks'
+                  benchmark-data-dir-path: 'docs/benchmarks'
                   auto-push: true
                     
     deploy:
