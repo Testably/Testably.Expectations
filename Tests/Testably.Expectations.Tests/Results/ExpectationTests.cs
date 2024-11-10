@@ -11,7 +11,8 @@ public class ExpectationTests
 
 		bool Act() => sut.Equals(That(true).Should().BeTrue());
 
-		await That(Act).Should().Throw<NotSupportedException>();
+		await That(Act).Should().Throw<NotSupportedException>()
+			.WithMessage("Equals is not supported. Did you mean Be() instead?");
 	}
 
 	[Fact]
@@ -21,6 +22,7 @@ public class ExpectationTests
 
 		int Act() => sut.GetHashCode();
 
-		await That(Act).Should().Throw<NotSupportedException>();
+		await That(Act).Should().Throw<NotSupportedException>()
+			.WithMessage("GetHashCode is not supported.");
 	}
 }
