@@ -5,7 +5,7 @@ using FluentAssertions.Primitives;
 namespace Testably.Expectations.Benchmarks;
 
 [MemoryDiagnoser]
-public class StringComparison_HappyCase_Benchmarks
+public class HappyCaseForString
 {
 	private readonly string _expected = "foo";
 	private readonly string _subject = "foo";

@@ -5,7 +5,7 @@ using FluentAssertions.Primitives;
 namespace Testably.Expectations.Benchmarks;
 
 [MemoryDiagnoser]
-public class BoolComparison_HappyCase_Benchmarks
+public class HappyCaseForBool
 {
 	private readonly bool _subject = true;
 
