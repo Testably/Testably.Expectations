@@ -761,11 +761,19 @@ namespace Testably.Expectations.Core
     }
     public interface IExpectSubject<out T>
     {
+        bool Equals(object? obj);
+        int GetHashCode();
+        System.Type GetType();
         Testably.Expectations.Core.IThat<T> Should(System.Action<Testably.Expectations.Core.ExpectationBuilder> builderOptions);
+        string? ToString();
     }
     public interface IThat<out T>
     {
         Testably.Expectations.Core.ExpectationBuilder ExpectationBuilder { get; }
+        bool Equals(object? obj);
+        int GetHashCode();
+        System.Type GetType();
+        string? ToString();
     }
     public abstract class PropertyAccessor
     {
@@ -930,6 +938,10 @@ namespace Testably.Expectations.Results
     public abstract class Expectation
     {
         protected Expectation() { }
+        public override bool Equals(object? obj) { }
+        public override int GetHashCode() { }
+        public new System.Type GetType() { }
+        public override string? ToString() { }
         public abstract class Combination : Testably.Expectations.Results.Expectation
         {
             protected Combination(Testably.Expectations.Results.Expectation[] expectations) { }
