@@ -85,7 +85,7 @@ public abstract class ExpectationBuilder
 	/// <summary>
 	///     Adds a <paramref name="reason" /> to the current expectation constraint.
 	/// </summary>
-	public void AddReason(string reason)
+	internal void AddReason(string reason)
 	{
 		BecauseReason becauseReason = new(reason);
 		_tree.GetCurrent().SetReason(becauseReason);
@@ -115,7 +115,7 @@ public abstract class ExpectationBuilder
 	/// <summary>
 	///     Adds a <paramref name="cancellationToken" /> to be used by the constraints.
 	/// </summary>
-	internal void AddCancellation(CancellationToken cancellationToken)
+	public void AddCancellation(CancellationToken cancellationToken)
 	{
 		_cancellationToken = cancellationToken;
 	}
