@@ -77,6 +77,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{8E66A739-A8B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testably.Expectations.Internal.Tests", "Tests\Testably.Expectations.Internal.Tests\Testably.Expectations.Internal.Tests.csproj", "{0A57A213-E281-4B92-8005-E242DD34B04E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testably.Expectations.Benchmarks", "Tests\Testably.Expectations.Benchmarks\Testably.Expectations.Benchmarks.csproj", "{CEA70C41-62D0-406C-9A17-5578A54E93CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,10 @@ Global
 		{0A57A213-E281-4B92-8005-E242DD34B04E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A57A213-E281-4B92-8005-E242DD34B04E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A57A213-E281-4B92-8005-E242DD34B04E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEA70C41-62D0-406C-9A17-5578A54E93CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA70C41-62D0-406C-9A17-5578A54E93CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA70C41-62D0-406C-9A17-5578A54E93CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA70C41-62D0-406C-9A17-5578A54E93CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -141,6 +147,7 @@ Global
 		{E5E419DE-412D-4E44-8C6B-BA324DFCAE4A} = {81590DC1-DAC3-41B9-8696-2024E31F493A}
 		{8E66A739-A8B3-45D7-A69E-36F0231C5E24} = {7D94B2A0-9ED6-4186-9635-64637C55556F}
 		{0A57A213-E281-4B92-8005-E242DD34B04E} = {E08785BF-6C98-4CAC-BFC2-BBB79B522DD6}
+		{CEA70C41-62D0-406C-9A17-5578A54E93CA} = {E08785BF-6C98-4CAC-BFC2-BBB79B522DD6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {65C0CC2C-5F10-4F18-9057-176DC70833FA}
