@@ -25,7 +25,7 @@ public class Formatter
 		new DateTimeFormatter(),
 		new DateTimeOffsetFormatter(),
 		new TimeSpanFormatter(),
-#if !NETSTANDARD2_0
+#if NET6_0_OR_GREATER
 		new DateOnlyFormatter(),
 		new TimeOnlyFormatter(),
 #endif

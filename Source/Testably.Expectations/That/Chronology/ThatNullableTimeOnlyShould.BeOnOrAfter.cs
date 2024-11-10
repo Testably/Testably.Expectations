@@ -1,4 +1,4 @@
-﻿#if !NETSTANDARD2_0
+﻿#if NET6_0_OR_GREATER
 using System;
 using System.Net.Sockets;
 using Testably.Expectations.Core;
