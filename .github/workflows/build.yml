@@ -214,7 +214,7 @@ jobs:
               with:
                   name: Benchmark.Net Benchmark
                   tool: 'benchmarkdotnet'
-                  output-file-path: Build/Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.Benchmarks-report-full-compressed.json
+                  output-file-path: Build/Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks-report-full-compressed.json
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   auto-push: true
                     
