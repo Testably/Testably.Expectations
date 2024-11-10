@@ -40,7 +40,7 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 	/// </summary>
 	public ExpectationResult WithCancellation(CancellationToken cancellationToken)
 	{
-		expectationBuilder.AddCancellation(cancellationToken);
+		expectationBuilder.WithCancellation(cancellationToken);
 		return this;
 	}
 
@@ -117,7 +117,7 @@ public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuild
 	/// </summary>
 	public TSelf WithCancellation(CancellationToken cancellationToken)
 	{
-		expectationBuilder.AddCancellation(cancellationToken);
+		expectationBuilder.WithCancellation(cancellationToken);
 		return (TSelf)this;
 	}
 
