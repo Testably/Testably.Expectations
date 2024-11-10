@@ -846,12 +846,12 @@ namespace Testably.Expectations.Core
     public abstract class ExpectationBuilder
     {
         protected ExpectationBuilder(string subjectExpression) { }
+        public void AddCancellation(System.Threading.CancellationToken cancellationToken) { }
         public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IAsyncConstraint<TValue> constraint) { }
         public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IAsyncContextConstraint<TValue> constraint) { }
         public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IContextConstraint<TValue> constraint) { }
         public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IValueConstraint<TValue> constraint) { }
         public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TSource, TTarget>(Testably.Expectations.Core.Constraints.ICastConstraint<TSource, TTarget> constraint) { }
-        public void AddReason(string reason) { }
         public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(Testably.Expectations.Core.PropertyAccessor<TSource, TTarget?> propertyAccessor, System.Func<Testably.Expectations.Core.PropertyAccessor, string, string>? expectationTextGenerator = null) { }
         public class PropertyExpectationBuilder<TSource, TProperty>
         {
