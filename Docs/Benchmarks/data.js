@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731254871821,
+  "lastUpdate": 1731261594173,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -418,6 +418,66 @@ window.BENCHMARK_DATA = {
             "value": 1418.9397478103638,
             "unit": "ns",
             "range": "± 7.880048282000287"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0f42c1497bf4539d14f27d11c122be39098dfcb1",
+          "message": "feat: add `EditorBrowsable` attribute (#155)\n\nExclude `Equals`, `GetHashCode`, `ToString()`, ... from IntelliSense via\r\nthe\r\n[`EditorBrowsable`](https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.editorbrowsableattribute?view=net-8.0)\r\nattribute.",
+          "timestamp": "2024-11-10T17:56:34Z",
+          "tree_id": "8f409ee6717041cf4b1ea81d05dd83abcea80667",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/0f42c1497bf4539d14f27d11c122be39098dfcb1"
+        },
+        "date": 1731261593609,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 220.7546913964408,
+            "unit": "ns",
+            "range": "± 1.5986074895835443"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 283.0423843065898,
+            "unit": "ns",
+            "range": "± 0.8866866603560025"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 635.3028348286947,
+            "unit": "ns",
+            "range": "± 1.5456776976335178"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 394.8485062462943,
+            "unit": "ns",
+            "range": "± 1.5713895946307697"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 438.8522559483846,
+            "unit": "ns",
+            "range": "± 3.3113918977091616"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 1401.9338188171387,
+            "unit": "ns",
+            "range": "± 8.363523236401408"
           }
         ]
       }
