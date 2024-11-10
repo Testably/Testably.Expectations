@@ -197,30 +197,33 @@ jobs:
         name: Run benchmarks
         runs-on: ubuntu-latest
         steps:
-            -   name: Checkout sources
-                uses: actions/checkout@v4
-            -   name: Setup .NET
-                uses: actions/setup-dotnet@v3
-                with:
-                    dotnet-version: |
-                        8.0.x
-            -   name: Run benchmark
-                run: cd Tests/Testably.Expectations.Benchmarks && dotnet run --exporters json --filter '*' --framework net8.0
-            -   name: Store benchmark result
-                uses: rhysd/github-action-benchmark@v1
-                with:
-                    name: Benchmark.Net Benchmark
-                    tool: 'benchmarkdotnet'
-                    output-file-path: Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.Benchmarks-report-full-compressed.json
-                    github-token: ${{ secrets.GITHUB_TOKEN }}
-                    auto-push: true
+            - name: Checkout sources
+              uses: actions/checkout@v4
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                  dotnet-version: |
+                      6.0.x
+                      8.0.x
+            - name: Build solution
+              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            - name: Run benchmark
+              run: cd Tests/Testably.Expectations.Benchmarks && dotnet run --exporters json --filter '*' --framework net8.0
+            - name: Store benchmark result
+              uses: rhysd/github-action-benchmark@v1
+              with:
+                  name: Benchmark.Net Benchmark
+                  tool: 'benchmarkdotnet'
+                  output-file-path: Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.Benchmarks-report-full-compressed.json
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  auto-push: true
                     
     deploy:
         name: Deploy
         if: startsWith(github.ref, 'refs/heads/release/')
         runs-on: ubuntu-latest
         environment: production
-        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker]
+        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker, benchmark]
         steps:
             - name: Checkout sources
               uses: actions/checkout@v4
