@@ -208,13 +208,13 @@ jobs:
             - name: Build solution
               run: dotnet build /p:NetCoreOnly=True --configuration "Release"
             - name: Run benchmark
-              run: cd Tests/Testably.Expectations.Benchmarks && dotnet run --exporters json --filter '*' --framework net8.0
+              run: cd Build/Tests/Testably.Expectations.Benchmarks && dotnet ./Testably.Expectations.Benchmarks.dll --exporters json --filter '*'
             - name: Store benchmark result
               uses: rhysd/github-action-benchmark@v1
               with:
                   name: Benchmark.Net Benchmark
                   tool: 'benchmarkdotnet'
-                  output-file-path: Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.Benchmarks-report-full-compressed.json
+                  output-file-path: Build/Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.Benchmarks-report-full-compressed.json
                   github-token: ${{ secrets.GITHUB_TOKEN }}
                   auto-push: true
                     

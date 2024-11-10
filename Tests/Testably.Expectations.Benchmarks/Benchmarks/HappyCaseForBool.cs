@@ -1,6 +1,8 @@
 ﻿using BenchmarkDotNet.Attributes;
 using FluentAssertions;
 using FluentAssertions.Primitives;
+using TUnit.Assertions;
+using TUnit.Assertions.Extensions;
 
 namespace Testably.Expectations.Benchmarks;
 
