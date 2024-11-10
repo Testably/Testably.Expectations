@@ -193,6 +193,28 @@ jobs:
                   cd Tests
                   ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.Config.json -v "${GITHUB_REF#refs/heads/}" -r "Dashboard" -r "cleartext"
     
+    benchmark:
+        name: Run benchmarks
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v3
+                with:
+                    dotnet-version: |
+                        8.0.x
+            -   name: Run benchmark
+                run: cd Tests/Testably.Expectations.Benchmarks && dotnet run --exporters json --filter '*'
+            -   name: Store benchmark result
+                uses: rhysd/github-action-benchmark@v1
+                with:
+                    name: Benchmark.Net Benchmark
+                    tool: 'benchmarkdotnet'
+                    output-file-path: Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.Benchmarks-report-full-compressed.json
+                    github-token: ${{ secrets.GITHUB_TOKEN }}
+                    auto-push: true
+                    
     deploy:
         name: Deploy
         if: startsWith(github.ref, 'refs/heads/release/')
