@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -17,6 +18,26 @@ namespace Testably.Expectations.Results;
 [StackTraceHidden]
 public abstract class Expectation
 {
+	/// <inheritdoc cref="object.Equals(object?)" />
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public override bool Equals(object? obj)
+		=> throw new NotSupportedException("Equals is not supported. Did you mean Be() instead?");
+
+	/// <inheritdoc cref="object.GetHashCode()" />
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public override int GetHashCode()
+		=> throw new NotSupportedException("GetHashCode is not supported.");
+
+	/// <inheritdoc cref="object.GetType()" />
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public new Type GetType()
+		=> base.GetType();
+
+	/// <inheritdoc cref="object.ToString()" />
+	[EditorBrowsable(EditorBrowsableState.Never)]
+	public override string? ToString()
+		=> base.ToString();
+
 	internal abstract Task<Result> GetResult(int index);
 
 	internal struct Result(int index, string subjectLine, ConstraintResult result)
