@@ -64,7 +64,7 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 
 		if (result is ConstraintResult.Failure failure)
 		{
-			Fail.Test(expectationBuilder.FailureMessageBuilder.FromFailure(
+			Fail.Test(expectationBuilder.FromFailure(
 				expectationBuilder.Subject, failure));
 		}
 		else if (result is ConstraintResult.Success)
@@ -142,7 +142,7 @@ public class ExpectationResult<TType, TSelf>(ExpectationBuilder expectationBuild
 
 		if (result is ConstraintResult.Failure failure)
 		{
-			Fail.Test(expectationBuilder.FailureMessageBuilder.FromFailure(
+			Fail.Test(expectationBuilder.FromFailure(
 				expectationBuilder.Subject, failure));
 		}
 		else if (result is ConstraintResult.Success<TType> matchingSuccess)
