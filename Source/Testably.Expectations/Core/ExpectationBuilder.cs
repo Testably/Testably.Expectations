@@ -17,16 +17,10 @@ namespace Testably.Expectations.Core;
 [DebuggerDisplay("{_tree}")]
 public abstract class ExpectationBuilder
 {
-	/// <summary>
-	///     The builder for the failure message.
-	/// </summary>
-	internal IFailureMessageBuilder FailureMessageBuilder => _failureMessageBuilder;
-
 	internal string Subject { get; }
 
 	private CancellationToken? _cancellationToken;
 
-	private readonly FailureMessageBuilder _failureMessageBuilder;
 	private ITimeSystem? _timeSystem;
 	private readonly Tree _tree = new();
 
@@ -37,7 +31,6 @@ public abstract class ExpectationBuilder
 	protected ExpectationBuilder(string subjectExpression)
 	{
 		Subject = subjectExpression;
-		_failureMessageBuilder = new FailureMessageBuilder();
 	}
 
 	/// <summary>
@@ -129,6 +122,16 @@ public abstract class ExpectationBuilder
 
 	internal void And(string textSeparator = " and ")
 		=> _tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
+
+	/// <summary>
+	///     Creates the exception message from the <paramref name="failure" />.
+	/// </summary>
+	internal string FromFailure(string subject, ConstraintResult.Failure failure)
+		=> $"""
+		    Expected {subject} to
+		    {failure.ExpectationText},
+		    but {failure.ResultText}
+		    """;
 
 	internal Task<ConstraintResult> IsMet()
 	{
