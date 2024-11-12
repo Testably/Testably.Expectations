@@ -32,7 +32,7 @@ public sealed partial class DateTimeShould
 		public async Task WhenSubjectIsDifferent_ShouldFail()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime();
+			DateTime? expected = LaterTime();
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Because("we want to test the failure");
@@ -49,7 +49,7 @@ public sealed partial class DateTimeShould
 		public async Task WhenSubjectIsTheExpectedValue_ShouldSucceed()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = CurrentTime();
+			DateTime? expected = CurrentTime();
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
@@ -73,7 +73,7 @@ public sealed partial class DateTimeShould
 		public async Task WhenSubjectOnlyDiffersInKind_ShouldFail()
 		{
 			DateTime subject = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Utc);
-			DateTime expected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
+			DateTime? expected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected)
@@ -91,7 +91,7 @@ public sealed partial class DateTimeShould
 		public async Task Within_NegativeTolerance_ShouldThrowArgumentOutOfRangeException()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? expected = LaterTime(4);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(-1));
@@ -105,7 +105,7 @@ public sealed partial class DateTimeShould
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldFail()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? expected = LaterTime(4);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(3))
@@ -123,7 +123,7 @@ public sealed partial class DateTimeShould
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldSucceed()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(3);
+			DateTime? expected = LaterTime(3);
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected).Within(TimeSpan.FromSeconds(3));
@@ -174,7 +174,7 @@ public sealed partial class DateTimeShould
 		public async Task WhenSubjectIsDifferent_ShouldSucceed()
 		{
 			DateTime subject = CurrentTime();
-			DateTime unexpected = LaterTime();
+			DateTime? unexpected = LaterTime();
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected);
@@ -186,7 +186,7 @@ public sealed partial class DateTimeShould
 		public async Task WhenSubjectIsTheSame_ShouldFail()
 		{
 			DateTime subject = CurrentTime();
-			DateTime unexpected = subject;
+			DateTime? unexpected = subject;
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected)
@@ -204,7 +204,7 @@ public sealed partial class DateTimeShould
 		public async Task WhenSubjectOnlyDiffersInKind_ShouldSucceed()
 		{
 			DateTime subject = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Utc);
-			DateTime unexpected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
+			DateTime? unexpected = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Local);
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected)
@@ -217,10 +217,10 @@ public sealed partial class DateTimeShould
 		public async Task Within_NegativeTolerance_ShouldThrowArgumentOutOfRangeException()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? unexpected = LaterTime(4);
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(expected).Within(TimeSpan.FromSeconds(-1));
+				=> await That(subject).Should().NotBe(unexpected).Within(TimeSpan.FromSeconds(-1));
 
 			await That(Act).Should().Throw<ArgumentOutOfRangeException>()
 				.WithParamName("tolerance").And
@@ -231,10 +231,10 @@ public sealed partial class DateTimeShould
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldSucceed()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(4);
+			DateTime? unexpected = LaterTime(4);
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(expected)
+				=> await That(subject).Should().NotBe(unexpected)
 					.Within(TimeSpan.FromSeconds(3));
 
 			await That(Act).Should().NotThrow();
@@ -244,16 +244,16 @@ public sealed partial class DateTimeShould
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldFail()
 		{
 			DateTime subject = CurrentTime();
-			DateTime expected = LaterTime(3);
+			DateTime? unexpected = LaterTime(3);
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(expected).Within(TimeSpan.FromSeconds(3))
+				=> await That(subject).Should().NotBe(unexpected).Within(TimeSpan.FromSeconds(3))
 					.Because("we want to test the failure");
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {Formatter.Format(expected)} ± 0:03, because we want to test the failure,
+				              not be {Formatter.Format(unexpected)} ± 0:03, because we want to test the failure,
 				              but found {Formatter.Format(subject)}
 				              """);
 		}

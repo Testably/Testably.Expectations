@@ -5,13 +5,13 @@ using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
 
-public static partial class ThatDateTimeOffsetShould
+public static partial class ThatNullableDateTimeOffsetShould
 {
 	/// <summary>
 	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrResult<DateTimeOffset, IThat<DateTimeOffset>> Be(
-		this IThat<DateTimeOffset> source,
+	public static AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>> Be(
+		this IThat<DateTimeOffset?> source,
 		DateTimeOffset? expected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
@@ -23,8 +23,8 @@ public static partial class ThatDateTimeOffsetShould
 	/// <summary>
 	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static AndOrResult<DateTimeOffset, IThat<DateTimeOffset>> NotBe(
-		this IThat<DateTimeOffset> source,
+	public static AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>> NotBe(
+		this IThat<DateTimeOffset?> source,
 		DateTimeOffset? unexpected)
 		=> new(source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(

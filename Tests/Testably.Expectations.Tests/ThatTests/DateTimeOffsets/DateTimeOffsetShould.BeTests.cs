@@ -5,27 +5,63 @@ public sealed partial class DateTimeOffsetShould
 	public sealed class BeTests
 	{
 		[Fact]
-		public async Task WhenSubjectIsDifferent_ShouldFail()
+		public async Task WhenSubjectAndExpectedAreMaxValue_ShouldSucceed()
 		{
-			DateTimeOffset subject = CurrentTime();
-			DateTimeOffset expected = LaterTime();
+			DateTimeOffset subject = DateTimeOffset.MaxValue;
+			DateTimeOffset expected = DateTimeOffset.MaxValue;
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
 
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenSubjectAndExpectedAreMinValue_ShouldSucceed()
+		{
+			DateTimeOffset subject = DateTimeOffset.MinValue;
+			DateTimeOffset expected = DateTimeOffset.MinValue;
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenSubjectIsDifferent_ShouldFail()
+		{
+			DateTimeOffset subject = CurrentTime();
+			DateTimeOffset? expected = LaterTime();
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected).Because("we want to test the failure");
+
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              be {Formatter.Format(expected)},
+				              be {Formatter.Format(expected)}, because we want to test the failure,
 				              but found {Formatter.Format(subject)}
 				              """);
 		}
 
 		[Fact]
-		public async Task WhenSubjectIsTheSame_ShouldSucceed()
+		public async Task WhenSubjectIsTheExpectedValue_ShouldSucceed()
 		{
 			DateTimeOffset subject = CurrentTime();
-			DateTimeOffset expected = subject;
+			DateTimeOffset? expected = CurrentTime();
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenSubjectIsTheNullableExpectedValue_ShouldSucceed()
+		{
+			DateTimeOffset subject = CurrentTime();
+			DateTimeOffset? expected = CurrentTime();
 
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
@@ -37,10 +73,46 @@ public sealed partial class DateTimeOffsetShould
 	public sealed class NotBeTests
 	{
 		[Fact]
+		public async Task WhenSubjectAndExpectedAreMaxValue_ShouldFail()
+		{
+			DateTimeOffset subject = DateTimeOffset.MaxValue;
+			DateTimeOffset unexpected = DateTimeOffset.MaxValue;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected)
+					.Because("we want to test the failure");
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             not be 9999-12-31T23:59:59.9999999, because we want to test the failure,
+				             but found 9999-12-31T23:59:59.9999999
+				             """);
+		}
+
+		[Fact]
+		public async Task WhenSubjectAndExpectedAreMinValue_ShouldFail()
+		{
+			DateTimeOffset subject = DateTimeOffset.MinValue;
+			DateTimeOffset unexpected = DateTimeOffset.MinValue;
+
+			async Task Act()
+				=> await That(subject).Should().NotBe(unexpected)
+					.Because("we want to test the failure");
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected subject to
+				             not be 0001-01-01T00:00:00.0000000, because we want to test the failure,
+				             but found 0001-01-01T00:00:00.0000000
+				             """);
+		}
+
+		[Fact]
 		public async Task WhenSubjectIsDifferent_ShouldSucceed()
 		{
 			DateTimeOffset subject = CurrentTime();
-			DateTimeOffset unexpected = LaterTime();
+			DateTimeOffset? unexpected = LaterTime();
 
 			async Task Act()
 				=> await That(subject).Should().NotBe(unexpected);
@@ -52,15 +124,16 @@ public sealed partial class DateTimeOffsetShould
 		public async Task WhenSubjectIsTheSame_ShouldFail()
 		{
 			DateTimeOffset subject = CurrentTime();
-			DateTimeOffset unexpected = subject;
+			DateTimeOffset? unexpected = subject;
 
 			async Task Act()
-				=> await That(subject).Should().NotBe(unexpected);
+				=> await That(subject).Should().NotBe(unexpected)
+					.Because("we want to test the failure");
 
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage($"""
 				              Expected subject to
-				              not be {Formatter.Format(unexpected)},
+				              not be {Formatter.Format(unexpected)}, because we want to test the failure,
 				              but found {Formatter.Format(subject)}
 				              """);
 		}

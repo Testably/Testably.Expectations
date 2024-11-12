@@ -16,15 +16,9 @@ public static partial class ThatDateTimeOffsetShould
 	public static IThat<DateTimeOffset> Should(this IExpectSubject<DateTimeOffset> subject)
 		=> subject.Should(_ => { });
 
-	/// <summary>
-	///     Start expectations for the current <see cref="DateTimeOffset" />? <paramref name="subject" />.
-	/// </summary>
-	public static IThat<DateTimeOffset?> Should(this IExpectSubject<DateTimeOffset?> subject)
-		=> subject.Should(_ => { });
-
 	private readonly struct ConditionConstraint(
-		DateTimeOffset expected,
-		Func<DateTimeOffset, DateTimeOffset, bool> condition,
+		DateTimeOffset? expected,
+		Func<DateTimeOffset, DateTimeOffset?, bool> condition,
 		string expectation) : IValueConstraint<DateTimeOffset>
 	{
 		public ConstraintResult IsMetBy(DateTimeOffset actual)
