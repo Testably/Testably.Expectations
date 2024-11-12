@@ -79,8 +79,14 @@
         flex-wrap: wrap;
         width: 100%;
       }
+      .benchmark-graphs>div {
+        min-width: 600px;
+      }
       .benchmark-chart {
         max-width: 1000px;
+      }
+      .benchmark-graphs h3 {
+        text-align: center;
       }
     </style>
     <title>Benchmarks</title>
@@ -240,13 +246,15 @@
           }
 
           function renderGraphs(parent, name, datasets) {
+            var div = document.createElement("div");
             var h = document.createElement("h3");
-            var t = document.createTextNode(name);
+            var t = document.createTextNode(name.substring(33));
             h.appendChild(t);
-            parent.appendChild(h);
+            div.appendChild(h);
             const canvas = document.createElement('canvas');
             canvas.className = 'benchmark-chart';
-            parent.appendChild(canvas);
+            div.appendChild(canvas);
+            parent.appendChild(div);
 
             const data = {
               labels: datasets[0][1].map(d => d.commit.id.slice(0, 7)),
