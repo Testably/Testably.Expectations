@@ -16,7 +16,8 @@ public static partial class ThatNullableDateTimeOffsetShould
 		DateTimeOffset? expected)
 	{
 		TimeTolerance tolerance = new();
-		return new TimeToleranceResult<DateTimeOffset?, IThat<DateTimeOffset?>>(source.ExpectationBuilder
+		return new TimeToleranceResult<DateTimeOffset?, IThat<DateTimeOffset?>>(source
+				.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
 					$"be {Formatter.Format(expected)}{tolerance}",
