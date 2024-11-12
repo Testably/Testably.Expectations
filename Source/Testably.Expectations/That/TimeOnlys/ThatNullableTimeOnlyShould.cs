@@ -37,6 +37,25 @@ public static partial class ThatNullableTimeOnlyShould
 			=> expectation;
 	}
 
+	private readonly struct PropertyConstraint<T>(
+		T expected,
+		Func<TimeOnly?, T, bool> condition,
+		string expectation) : IValueConstraint<TimeOnly?>
+	{
+		public ConstraintResult IsMetBy(TimeOnly? actual)
+		{
+			if (condition(actual, expected))
+			{
+				return new ConstraintResult.Success<TimeOnly?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> expectation;
+	}
+
 	private readonly struct ConditionConstraintWithTolerance(
 		TimeOnly? expected,
 		Func<TimeOnly?, TimeTolerance, string> expectation,
