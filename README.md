@@ -38,3 +38,6 @@ By adding `global using static Testably.Expectations.Expect;` anywhere in the te
 	  .Because("we tested the null edge case");
   }
   ```
+
+## Benchmarks
+Some simple [benchmarks](https://github.com/Testably/Testably.Expectations/tree/main/Tests/Testably.Expectations.Benchmarks) are available [here](https://testably.github.io/Testably.Expectations).
