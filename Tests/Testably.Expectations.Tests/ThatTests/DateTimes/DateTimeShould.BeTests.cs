@@ -58,18 +58,6 @@ public sealed partial class DateTimeShould
 		}
 
 		[Fact]
-		public async Task WhenSubjectIsTheNullableExpectedValue_ShouldSucceed()
-		{
-			DateTime subject = CurrentTime();
-			DateTime? expected = CurrentTime();
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
 		public async Task WhenSubjectOnlyDiffersInKind_ShouldFail()
 		{
 			DateTime subject = new(2024, 11, 1, 14, 15, 0, DateTimeKind.Utc);

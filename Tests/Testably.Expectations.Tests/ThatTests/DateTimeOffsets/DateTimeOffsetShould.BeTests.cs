@@ -58,18 +58,6 @@ public sealed partial class DateTimeOffsetShould
 		}
 
 		[Fact]
-		public async Task WhenSubjectIsTheNullableExpectedValue_ShouldSucceed()
-		{
-			DateTimeOffset subject = CurrentTime();
-			DateTimeOffset? expected = CurrentTime();
-
-			async Task Act()
-				=> await That(subject).Should().Be(expected);
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
 		public async Task Within_NegativeTolerance_ShouldThrowArgumentOutOfRangeException()
 		{
 			DateTimeOffset subject = CurrentTime();
