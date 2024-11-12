@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731264249484,
+  "lastUpdate": 1731423134594,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -538,6 +538,66 @@ window.BENCHMARK_DATA = {
             "value": 1386.6543276860164,
             "unit": "ns",
             "range": "± 14.150717333218816"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b2092af98504ef23635a8dce8b5424925d7c5053",
+          "message": "feat: add support for nullable `DateTimeOffset` (#157)\n\nSupport nullable `DateTimeOffset` with the `Be` method",
+          "timestamp": "2024-11-12T14:48:56Z",
+          "tree_id": "ccb2017e31325f0bd9be761c4e8ab404f588bbfd",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/b2092af98504ef23635a8dce8b5424925d7c5053"
+        },
+        "date": 1731423133826,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 226.72857233456202,
+            "unit": "ns",
+            "range": "± 1.8332837540218576"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 293.8473629951477,
+            "unit": "ns",
+            "range": "± 2.5392937672265554"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 663.0240126291911,
+            "unit": "ns",
+            "range": "± 5.848658211248516"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 404.99270076018115,
+            "unit": "ns",
+            "range": "± 2.694549927127409"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 481.8928180422102,
+            "unit": "ns",
+            "range": "± 3.679040222960862"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 1389.2814937319074,
+            "unit": "ns",
+            "range": "± 10.298525390392117"
           }
         ]
       }
