@@ -2,6 +2,7 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
+using Testably.Expectations.Options;
 
 namespace Testably.Expectations;
 
@@ -16,22 +17,41 @@ public static partial class ThatNullableDateTimeOffsetShould
 	public static IThat<DateTimeOffset?> Should(this IExpectSubject<DateTimeOffset?> subject)
 		=> subject.Should(_ => { });
 
+	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan? difference)
+	{
+		if (difference == null)
+		{
+			return false;
+		}
+
+		if (tolerance == null)
+		{
+			return difference.Value == TimeSpan.Zero;
+		}
+
+		return difference.Value <= tolerance.Value &&
+		       difference.Value >= tolerance.Value.Negate();
+	}
+
 	private readonly struct ConditionConstraint(
 		DateTimeOffset? expected,
-		Func<DateTimeOffset?, DateTimeOffset?, bool> condition,
-		string expectation) : IValueConstraint<DateTimeOffset?>
+		string expectation,
+		Func<DateTimeOffset?, DateTimeOffset?, TimeSpan, bool> condition,
+		Func<DateTimeOffset?, DateTimeOffset?, string> failureMessageFactory,
+		TimeTolerance tolerance) : IValueConstraint<DateTimeOffset?>
 	{
 		public ConstraintResult IsMetBy(DateTimeOffset? actual)
 		{
-			if (condition(actual, expected))
+			if (condition(actual, expected, tolerance.Tolerance ?? TimeSpan.Zero))
 			{
 				return new ConstraintResult.Success<DateTimeOffset?>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected));
 		}
 
 		public override string ToString()
-			=> expectation;
+			=> expectation + tolerance;
 	}
 }
