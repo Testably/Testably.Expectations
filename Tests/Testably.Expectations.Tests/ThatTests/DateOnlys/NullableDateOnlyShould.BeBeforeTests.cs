@@ -240,36 +240,28 @@ public sealed partial class NullableDateOnlyShould
 		}
 
 		[Fact]
-		public async Task Within_WhenNullableUnexpectedValueIsOutsideTheTolerance_ShouldSucceed()
+		public async Task Within_WhenNullableUnexpectedValueIsOutsideTheTolerance_ShouldFail()
 		{
 			DateOnly? subject = CurrentTime();
-			DateOnly? unexpected = EarlierTime(4);
+			DateOnly? unexpected = LaterTime(4);
 
 			async Task Act()
 				=> await That(subject).Should().NotBeBefore(unexpected)
 					.Within(TimeSpan.FromDays(3))
 					.Because("we want to test the failure");
 
-			await That(Act).Should().NotThrow();
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              not be before {Formatter.Format(unexpected)} ± 3 days, because we want to test the failure,
+				              but found {Formatter.Format(subject)}
+				              """);
 		}
 
 		[Fact]
-		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldSucceed()
+		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldFail()
 		{
-			DateOnly? subject = LaterTime(3);
-			DateOnly? unexpected = CurrentTime();
-
-			async Task Act()
-				=> await That(subject).Should().NotBeBefore(unexpected)
-					.Within(TimeSpan.FromDays(3));
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
-		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldFail()
-		{
-			DateOnly? subject = EarlierTime(2);
+			DateOnly? subject = EarlierTime(4);
 			DateOnly? unexpected = CurrentTime();
 
 			async Task Act()
@@ -282,6 +274,19 @@ public sealed partial class NullableDateOnlyShould
 				              not be before {Formatter.Format(unexpected)} ± 3 days,
 				              but found {Formatter.Format(subject)}
 				              """);
+		}
+
+		[Fact]
+		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldSucceed()
+		{
+			DateOnly? subject = EarlierTime(3);
+			DateOnly? unexpected = CurrentTime();
+
+			async Task Act()
+				=> await That(subject).Should().NotBeBefore(unexpected)
+					.Within(TimeSpan.FromDays(3));
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }

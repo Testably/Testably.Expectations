@@ -42,7 +42,7 @@ public static partial class ThatNullableTimeOnlyShould
 				.AddConstraint(new ConditionConstraintWithTolerance(
 					unexpected,
 					(u, t) => $"not be on or before {Formatter.Format(u)}{t}",
-					(a, e, t) => a?.Add(t.Negate()) > e,
+					(a, e, t) => a?.Add(t) > e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance)),
 			source,

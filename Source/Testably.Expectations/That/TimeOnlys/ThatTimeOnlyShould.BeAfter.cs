@@ -42,7 +42,7 @@ public static partial class ThatTimeOnlyShould
 				.AddConstraint(new ConditionConstraintWithTolerance(
 					unexpected,
 					(u, t) => $"not be after {Formatter.Format(u)}{t}",
-					(a, e, t) => a.Add(t) <= e,
+					(a, e, t) => a.Add(t.Negate()) <= e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance)),
 			source,

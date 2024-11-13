@@ -239,34 +239,26 @@ public sealed partial class NullableTimeOnlyShould
 		}
 
 		[Fact]
-		public async Task Within_WhenNullableUnexpectedValueIsOutsideTheTolerance_ShouldSucceed()
+		public async Task Within_WhenNullableUnexpectedValueIsOutsideTheTolerance_ShouldFail()
 		{
 			TimeOnly? subject = CurrentTime();
-			TimeOnly? unexpected = EarlierTime(4);
+			TimeOnly? unexpected = LaterTime(3);
 
 			async Task Act()
 				=> await That(subject).Should().NotBeOnOrBefore(unexpected)
 					.Within(TimeSpan.FromSeconds(3))
 					.Because("we want to test the failure");
 
-			await That(Act).Should().NotThrow();
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              not be on or before {Formatter.Format(unexpected)} ± 0:03, because we want to test the failure,
+				              but found {Formatter.Format(subject)}
+				              """);
 		}
 
 		[Fact]
-		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldSucceed()
-		{
-			TimeOnly? subject = LaterTime(4);
-			TimeOnly? unexpected = CurrentTime();
-
-			async Task Act()
-				=> await That(subject).Should().NotBeOnOrBefore(unexpected)
-					.Within(TimeSpan.FromSeconds(3));
-
-			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
-		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldFail()
+		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldFail()
 		{
 			TimeOnly? subject = EarlierTime(3);
 			TimeOnly? unexpected = CurrentTime();
@@ -281,6 +273,19 @@ public sealed partial class NullableTimeOnlyShould
 				              not be on or before {Formatter.Format(unexpected)} ± 0:03,
 				              but found {Formatter.Format(subject)}
 				              """);
+		}
+
+		[Fact]
+		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldSucceed()
+		{
+			TimeOnly? subject = EarlierTime(2);
+			TimeOnly? unexpected = CurrentTime();
+
+			async Task Act()
+				=> await That(subject).Should().NotBeOnOrBefore(unexpected)
+					.Within(TimeSpan.FromSeconds(3));
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }
