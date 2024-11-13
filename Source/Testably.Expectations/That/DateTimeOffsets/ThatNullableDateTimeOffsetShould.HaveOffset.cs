@@ -10,7 +10,8 @@ public static partial class ThatNullableDateTimeOffsetShould
 	/// <summary>
 	///     Verifies that the offset of the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>> HaveOffset(this IThat<DateTimeOffset?> source,
+	public static AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>> HaveOffset(
+		this IThat<DateTimeOffset?> source,
 		TimeSpan expected)
 	{
 		return new AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>>(source.ExpectationBuilder

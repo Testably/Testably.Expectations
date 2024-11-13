@@ -17,6 +17,17 @@ public static partial class ThatDateTimeOffsetShould
 	public static IThat<DateTimeOffset> Should(this IExpectSubject<DateTimeOffset> subject)
 		=> subject.Should(_ => { });
 
+	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)
+	{
+		if (tolerance == null)
+		{
+			return difference == TimeSpan.Zero;
+		}
+
+		return difference <= tolerance.Value &&
+		       difference >= tolerance.Value.Negate();
+	}
+
 	private readonly struct PropertyConstraint<T>(
 		T expected,
 		Func<DateTimeOffset, T, bool> condition,
@@ -34,17 +45,6 @@ public static partial class ThatDateTimeOffsetShould
 
 		public override string ToString()
 			=> expectation;
-	}
-
-	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)
-	{
-		if (tolerance == null)
-		{
-			return difference == TimeSpan.Zero;
-		}
-
-		return difference <= tolerance.Value &&
-		       difference >= tolerance.Value.Negate();
 	}
 
 	private readonly struct ConditionConstraint(
