@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731487918916,
+  "lastUpdate": 1731494940463,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -838,6 +838,66 @@ window.BENCHMARK_DATA = {
             "value": 1443.6281449635824,
             "unit": "ns",
             "range": "± 7.26617561797841"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "111637b4c65a733cf3fbfec63ce0107c81f6cd2b",
+          "message": "feat: add property expectations for DateOnly (#162)\n\nAdd property expectations for `DateOnly`:\n- `HaveYear` / `NotHaveYear`\n- `HaveMonth` / `NotHaveMonth`\n- `HaveDay` / `NotHaveDay`",
+          "timestamp": "2024-11-13T11:45:33+01:00",
+          "tree_id": "1d3a2ce68204d5b842a5719628ad5fe9de47c917",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/111637b4c65a733cf3fbfec63ce0107c81f6cd2b"
+        },
+        "date": 1731494939911,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 212.1721953323909,
+            "unit": "ns",
+            "range": "± 2.105996343461402"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 281.2347474416097,
+            "unit": "ns",
+            "range": "± 1.8250576792886504"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 622.898862361908,
+            "unit": "ns",
+            "range": "± 5.350347696632538"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 388.22877007264356,
+            "unit": "ns",
+            "range": "± 1.3219861048639947"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 437.63180742263796,
+            "unit": "ns",
+            "range": "± 1.8585543531814483"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 1422.3460948944091,
+            "unit": "ns",
+            "range": "± 8.100348022980032"
           }
         ]
       }
