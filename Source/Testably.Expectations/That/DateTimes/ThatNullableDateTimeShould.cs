@@ -1,6 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations;
@@ -30,6 +31,25 @@ public static partial class ThatNullableDateTimeShould
 
 		return difference.Value <= tolerance.Value &&
 		       difference.Value >= tolerance.Value.Negate();
+	}
+
+	private readonly struct PropertyConstraint<T>(
+		T expected,
+		Func<DateTime?, T, bool> condition,
+		string expectation) : IValueConstraint<DateTime?>
+	{
+		public ConstraintResult IsMetBy(DateTime? actual)
+		{
+			if (condition(actual, expected))
+			{
+				return new ConstraintResult.Success<DateTime?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> expectation;
 	}
 
 	private readonly struct ConditionConstraint(
