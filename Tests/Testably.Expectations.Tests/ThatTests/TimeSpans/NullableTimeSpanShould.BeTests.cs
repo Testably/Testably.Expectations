@@ -1,13 +1,13 @@
 ﻿namespace Testably.Expectations.Tests.ThatTests.TimeSpans;
 
-public sealed partial class TimeSpanShould
+public sealed partial class NullableTimeSpanShould
 {
 	public sealed class BeTests
 	{
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreMaxValue_ShouldSucceed()
 		{
-			TimeSpan subject = TimeSpan.MaxValue;
+			TimeSpan? subject = TimeSpan.MaxValue;
 			TimeSpan expected = TimeSpan.MaxValue;
 
 			async Task Act()
@@ -19,7 +19,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreMinValue_ShouldSucceed()
 		{
-			TimeSpan subject = TimeSpan.MinValue;
+			TimeSpan? subject = TimeSpan.MinValue;
 			TimeSpan expected = TimeSpan.MinValue;
 
 			async Task Act()
@@ -31,7 +31,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task WhenSubjectIsDifferent_ShouldFail()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? expected = LaterTime();
 
 			async Task Act()
@@ -48,7 +48,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task WhenSubjectIsTheExpectedValue_ShouldSucceed()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? expected = CurrentTime();
 
 			async Task Act()
@@ -60,7 +60,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task Within_NegativeTolerance_ShouldThrowArgumentOutOfRangeException()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? expected = LaterTime(4);
 
 			async Task Act()
@@ -74,7 +74,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldFail()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? expected = LaterTime(4);
 
 			async Task Act()
@@ -92,7 +92,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldSucceed()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? expected = LaterTime(3);
 
 			async Task Act()
@@ -107,7 +107,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreMaxValue_ShouldFail()
 		{
-			TimeSpan subject = TimeSpan.MaxValue;
+			TimeSpan? subject = TimeSpan.MaxValue;
 			TimeSpan unexpected = TimeSpan.MaxValue;
 
 			async Task Act()
@@ -125,7 +125,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task WhenSubjectAndExpectedAreMinValue_ShouldFail()
 		{
-			TimeSpan subject = TimeSpan.MinValue;
+			TimeSpan? subject = TimeSpan.MinValue;
 			TimeSpan unexpected = TimeSpan.MinValue;
 
 			async Task Act()
@@ -143,7 +143,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task WhenSubjectIsDifferent_ShouldSucceed()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? unexpected = LaterTime();
 
 			async Task Act()
@@ -155,7 +155,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task WhenSubjectIsTheSame_ShouldFail()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? unexpected = subject;
 
 			async Task Act()
@@ -173,7 +173,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task Within_NegativeTolerance_ShouldThrowArgumentOutOfRangeException()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? unexpected = LaterTime(4);
 
 			async Task Act()
@@ -187,7 +187,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task Within_WhenValuesAreOutsideTheTolerance_ShouldSucceed()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? unexpected = LaterTime(4);
 
 			async Task Act()
@@ -200,7 +200,7 @@ public sealed partial class TimeSpanShould
 		[Fact]
 		public async Task Within_WhenValuesAreWithinTheTolerance_ShouldFail()
 		{
-			TimeSpan subject = CurrentTime();
+			TimeSpan? subject = CurrentTime();
 			TimeSpan? unexpected = LaterTime(3);
 
 			async Task Act()

@@ -9,9 +9,9 @@ namespace Testably.Expectations;
 public static partial class ThatTimeSpanShould
 {
 	/// <summary>
-	///     Verifies that the subject is equal to the <paramref name="expected" /> value.
+	///     Verifies that the subject is less than the <paramref name="expected" /> value.
 	/// </summary>
-	public static TimeToleranceResult<TimeSpan, IThat<TimeSpan>> Be(
+	public static TimeToleranceResult<TimeSpan, IThat<TimeSpan>> BeLessThan(
 		this IThat<TimeSpan> source,
 		TimeSpan? expected)
 	{
@@ -20,8 +20,8 @@ public static partial class ThatTimeSpanShould
 			source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					expected,
-					$"be {Formatter.Format(expected)}",
-					(a, e, t) => IsWithinTolerance(t, a - e),
+					$"be less than {Formatter.Format(expected)}",
+					(a, e, t) => a - t < e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance)),
 			source,
@@ -29,9 +29,9 @@ public static partial class ThatTimeSpanShould
 	}
 
 	/// <summary>
-	///     Verifies that the subject is not equal to the <paramref name="unexpected" /> value.
+	///     Verifies that the subject is not less than the <paramref name="unexpected" /> value.
 	/// </summary>
-	public static TimeToleranceResult<TimeSpan, IThat<TimeSpan>> NotBe(
+	public static TimeToleranceResult<TimeSpan, IThat<TimeSpan>> NotBeLessThan(
 		this IThat<TimeSpan> source,
 		TimeSpan? unexpected)
 	{
@@ -40,8 +40,8 @@ public static partial class ThatTimeSpanShould
 			source.ExpectationBuilder
 				.AddConstraint(new ConditionConstraint(
 					unexpected,
-					$"not be {Formatter.Format(unexpected)}",
-					(a, e, t) => !IsWithinTolerance(t, a - e),
+					$"not be less than {Formatter.Format(unexpected)}",
+					(a, e, t) => a + t >= e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance)),
 			source,
