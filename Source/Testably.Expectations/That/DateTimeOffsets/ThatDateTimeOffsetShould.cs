@@ -1,6 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations;
@@ -15,6 +16,25 @@ public static partial class ThatDateTimeOffsetShould
 	/// </summary>
 	public static IThat<DateTimeOffset> Should(this IExpectSubject<DateTimeOffset> subject)
 		=> subject.Should(_ => { });
+
+	private readonly struct PropertyConstraint<T>(
+		T expected,
+		Func<DateTimeOffset, T, bool> condition,
+		string expectation) : IValueConstraint<DateTimeOffset>
+	{
+		public ConstraintResult IsMetBy(DateTimeOffset actual)
+		{
+			if (condition(actual, expected))
+			{
+				return new ConstraintResult.Success<DateTimeOffset>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> expectation;
+	}
 
 	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)
 	{
