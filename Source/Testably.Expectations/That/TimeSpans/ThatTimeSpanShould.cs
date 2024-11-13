@@ -54,4 +54,24 @@ public static partial class ThatTimeSpanShould
 		public override string ToString()
 			=> expectation + tolerance;
 	}
+
+	private readonly struct SimpleConstraint(
+		string expectation,
+		Func<TimeSpan, bool> condition,
+		Func<TimeSpan, string> failureMessageFactory) : IValueConstraint<TimeSpan>
+	{
+		public ConstraintResult IsMetBy(TimeSpan actual)
+		{
+			if (condition(actual))
+			{
+				return new ConstraintResult.Success<TimeSpan>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual));
+		}
+
+		public override string ToString()
+			=> expectation;
+	}
 }
