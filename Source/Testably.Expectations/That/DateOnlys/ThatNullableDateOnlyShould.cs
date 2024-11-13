@@ -18,6 +18,25 @@ public static partial class ThatNullableDateOnlyShould
 	public static IThat<DateOnly?> Should(this IExpectSubject<DateOnly?> subject)
 		=> subject.Should(_ => { });
 
+	private readonly struct PropertyConstraint<T>(
+		T expected,
+		Func<DateOnly?, T, bool> condition,
+		string expectation) : IValueConstraint<DateOnly?>
+	{
+		public ConstraintResult IsMetBy(DateOnly? actual)
+		{
+			if (condition(actual, expected))
+			{
+				return new ConstraintResult.Success<DateOnly?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> expectation;
+	}
+
 	private readonly struct ConditionConstraint(
 		DateOnly? expected,
 		Func<DateOnly?, DateOnly?, bool> condition,
