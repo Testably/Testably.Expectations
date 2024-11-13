@@ -6,23 +6,6 @@ public sealed partial class DateOnlyShould
 	public sealed class HaveDayTests
 	{
 		[Fact]
-		public async Task WhenExpectedIsNull_ShouldFail()
-		{
-			DateOnly subject = new(2010, 11, 12);
-			int? expected = null;
-
-			async Task Act()
-				=> await That(subject).Should().HaveDay(expected);
-
-			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              have day of <null>,
-				              but found {Formatter.Format(subject)}
-				              """);
-		}
-
-		[Fact]
 		public async Task WhenDayOfSubjectIsDifferent_ShouldFail()
 		{
 			DateOnly subject = new(2010, 11, 12);
@@ -49,6 +32,23 @@ public sealed partial class DateOnlyShould
 				=> await That(subject).Should().HaveDay(expected);
 
 			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenExpectedIsNull_ShouldFail()
+		{
+			DateOnly subject = new(2010, 11, 12);
+			int? expected = null;
+
+			async Task Act()
+				=> await That(subject).Should().HaveDay(expected);
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage($"""
+				              Expected subject to
+				              have day of <null>,
+				              but found {Formatter.Format(subject)}
+				              """);
 		}
 	}
 

@@ -55,6 +55,18 @@ public sealed partial class DateOnlyShould
 	public sealed class NotHaveYearTests
 	{
 		[Fact]
+		public async Task WhenUnexpectedIsNull_ShouldSucceed()
+		{
+			DateOnly subject = new(2010, 11, 12);
+			int? unexpected = null;
+
+			async Task Act()
+				=> await That(subject).Should().NotHaveYear(unexpected);
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
 		public async Task WhenYearOfSubjectIsDifferent_ShouldSucceed()
 		{
 			DateOnly subject = new(2010, 11, 12);
@@ -81,18 +93,6 @@ public sealed partial class DateOnlyShould
 				              not have year of {Formatter.Format(unexpected)},
 				              but found {Formatter.Format(subject)}
 				              """);
-		}
-
-		[Fact]
-		public async Task WhenUnexpectedIsNull_ShouldSucceed()
-		{
-			DateOnly subject = new(2010, 11, 12);
-			int? unexpected = null;
-
-			async Task Act()
-				=> await That(subject).Should().NotHaveYear(unexpected);
-
-			await That(Act).Should().NotThrow();
 		}
 	}
 }
