@@ -8,15 +8,15 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on <see cref="TimeSpan" /> values.
 /// </summary>
-public static partial class ThatTimeSpanShould
+public static partial class ThatNullableTimeSpanShould
 {
 	/// <summary>
 	///     Start expectations for current <see cref="TimeSpan" /> <paramref name="subject" />.
 	/// </summary>
-	public static IThat<TimeSpan> Should(this IExpectSubject<TimeSpan> subject)
+	public static IThat<TimeSpan?> Should(this IExpectSubject<TimeSpan?> subject)
 		=> subject.Should(_ => { });
 
-	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan difference)
+	private static bool IsWithinTolerance(TimeSpan? tolerance, TimeSpan? difference)
 	{
 		if (tolerance == null)
 		{
@@ -30,25 +30,19 @@ public static partial class ThatTimeSpanShould
 	private readonly struct ConditionConstraint(
 		TimeSpan? expected,
 		string expectation,
-		Func<TimeSpan, TimeSpan, TimeSpan, bool> condition,
-		Func<TimeSpan, TimeSpan?, string> failureMessageFactory,
-		TimeTolerance tolerance) : IValueConstraint<TimeSpan>
+		Func<TimeSpan?, TimeSpan?, TimeSpan, bool> condition,
+		Func<TimeSpan?, TimeSpan?, string> failureMessageFactory,
+		TimeTolerance tolerance) : IValueConstraint<TimeSpan?>
 	{
-		public ConstraintResult IsMetBy(TimeSpan actual)
+		public ConstraintResult IsMetBy(TimeSpan? actual)
 		{
-			if (expected is null)
+			if (condition(actual, expected, tolerance.Tolerance ?? TimeSpan.Zero))
 			{
-				return new ConstraintResult.Failure(ToString(),
-					failureMessageFactory(actual, expected));
-			}
-
-			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
-			{
-				return new ConstraintResult.Success<TimeSpan>(actual, ToString());
+				return new ConstraintResult.Success<TimeSpan?>(actual, ToString());
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected.Value));
+				failureMessageFactory(actual, expected));
 		}
 
 		public override string ToString()

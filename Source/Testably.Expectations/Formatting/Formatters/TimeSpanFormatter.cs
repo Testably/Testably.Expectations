@@ -10,11 +10,11 @@ internal class TimeSpanFormatter : FormatterBase<TimeSpan>
 		FormattingOptions options)
 	{
 		string formatString;
-		if (value.Days > 0)
+		if (value.Days != 0)
 		{
 			formatString = @"d\.hh\:mm\:ss";
 		}
-		else if (value.Hours > 0)
+		else if (value.Hours != 0)
 		{
 			formatString = @"h\:mm\:ss";
 		}
@@ -26,6 +26,11 @@ internal class TimeSpanFormatter : FormatterBase<TimeSpan>
 		if (value.Milliseconds > 0)
 		{
 			formatString += @"\.fff";
+		}
+
+		if (value < TimeSpan.Zero)
+		{
+			stringBuilder.Append('-');
 		}
 
 		stringBuilder.Append(value.ToString(formatString));

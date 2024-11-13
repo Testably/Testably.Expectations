@@ -479,6 +479,20 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.AndOrResult<System.TimeOnly?, Testably.Expectations.Core.IThat<System.TimeOnly?>> NotHaveSecond(this Testably.Expectations.Core.IThat<System.TimeOnly?> source, int? unexpected) { }
         public static Testably.Expectations.Core.IThat<System.TimeOnly?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeOnly?> subject) { }
     }
+    public static class ThatNullableTimeSpanShould
+    {
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> Be(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> BeGreaterThan(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> BeGreaterThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> BeLessThan(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> BeLessThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> NotBe(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> NotBeGreaterThan(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> NotBeGreaterThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> NotBeLessThan(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan?, Testably.Expectations.Core.IThat<System.TimeSpan?>> NotBeLessThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan?> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Core.IThat<System.TimeSpan?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan?> subject) { }
+    }
     public static class ThatNumberShould
     {
         public static Testably.Expectations.Results.NumberToleranceResult<byte, Testably.Expectations.Core.IThat<byte>> Be(this Testably.Expectations.Core.IThat<byte> source, byte? expected) { }
@@ -881,10 +895,17 @@ namespace Testably.Expectations
     }
     public static class ThatTimeSpanShould
     {
-        public static Testably.Expectations.Results.AndOrResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> Be(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan expected) { }
-        public static Testably.Expectations.Results.AndOrResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> NotBe(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> Be(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> BeGreaterThan(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> BeGreaterThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> BeLessThan(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> BeLessThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? expected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> NotBe(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> NotBeGreaterThan(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> NotBeGreaterThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> NotBeLessThan(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? unexpected) { }
+        public static Testably.Expectations.Results.TimeToleranceResult<System.TimeSpan, Testably.Expectations.Core.IThat<System.TimeSpan>> NotBeLessThanOrEqualTo(this Testably.Expectations.Core.IThat<System.TimeSpan> source, System.TimeSpan? unexpected) { }
         public static Testably.Expectations.Core.IThat<System.TimeSpan> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan> subject) { }
-        public static Testably.Expectations.Core.IThat<System.TimeSpan?> Should(this Testably.Expectations.Core.IExpectSubject<System.TimeSpan?> subject) { }
     }
 }
 namespace Testably.Expectations.Core.Constraints
