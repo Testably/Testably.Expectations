@@ -240,7 +240,7 @@ public sealed partial class DateTimeOffsetShould
 		public async Task Within_WhenNullableUnexpectedValueIsOutsideTheTolerance_ShouldFail()
 		{
 			DateTimeOffset subject = CurrentTime();
-			DateTimeOffset? unexpected = LaterTime(4);
+			DateTimeOffset? unexpected = LaterTime(3);
 
 			async Task Act()
 				=> await That(subject).Should().NotBeOnOrBefore(unexpected)

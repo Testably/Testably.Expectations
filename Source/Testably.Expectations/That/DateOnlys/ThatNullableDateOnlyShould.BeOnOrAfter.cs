@@ -42,7 +42,7 @@ public static partial class ThatNullableDateOnlyShould
 				.AddConstraint(new ConditionConstraintWithTolerance(
 					unexpected,
 					(u, t) => $"not be on or after {Formatter.Format(u)}{t.ToDayString()}",
-					(a, e, t) => a?.AddDays((int)t.TotalDays) < e,
+					(a, e, t) => a?.AddDays(-1 * (int)t.TotalDays) < e,
 					(a, _) => $"found {Formatter.Format(a)}",
 					tolerance)),
 			source,

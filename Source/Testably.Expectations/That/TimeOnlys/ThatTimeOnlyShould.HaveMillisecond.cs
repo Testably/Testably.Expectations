@@ -11,7 +11,8 @@ public static partial class ThatTimeOnlyShould
 	/// <summary>
 	///     Verifies that the millisecond of the subject is equal to the <paramref name="expected" /> value.
 	/// </summary>
-	public static AndOrResult<TimeOnly, IThat<TimeOnly>> HaveMillisecond(this IThat<TimeOnly> source,
+	public static AndOrResult<TimeOnly, IThat<TimeOnly>> HaveMillisecond(
+		this IThat<TimeOnly> source,
 		int? expected)
 	{
 		return new AndOrResult<TimeOnly, IThat<TimeOnly>>(source.ExpectationBuilder
