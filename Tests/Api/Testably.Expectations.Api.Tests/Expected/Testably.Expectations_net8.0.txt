@@ -305,9 +305,10 @@ namespace Testably.Expectations
         public Testably.Expectations.Results.StringMatcherResult<TException?, Testably.Expectations.ThatExceptionShould<TException>> HaveMessage(Testably.Expectations.Options.StringMatcher expected) { }
         public Testably.Expectations.Results.AndOrResult<TException?, Testably.Expectations.ThatExceptionShould<TException>> HaveRecursiveInnerExceptions(System.Action<Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<System.Exception>>> expectations) { }
     }
-    public static class ThatGenericShould
+    public static class ThatGeneric
     {
         public static Testably.Expectations.Results.AndOrResult<T, Testably.Expectations.Core.IThat<T>> BeSameAs<T>(this Testably.Expectations.Core.IThat<T> source, object? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
+        public static Testably.Expectations.Results.AndOrResult<T, Testably.Expectations.Core.IExpectSubject<object?>> For<T, TProperty>(this Testably.Expectations.Core.IExpectSubject<object?> source, System.Linq.Expressions.Expression<System.Func<T, TProperty?>> selector, System.Action<Testably.Expectations.Core.IExpectSubject<TProperty?>> expectations) { }
         public static Testably.Expectations.Results.AndOrResult<T, Testably.Expectations.Core.IThat<T>> NotBeSameAs<T>(this Testably.Expectations.Core.IThat<T> source, object? unexpected, [System.Runtime.CompilerServices.CallerArgumentExpression("unexpected")] string doNotPopulateThisValue = "") { }
     }
     public static class ThatGuidShould
@@ -800,7 +801,6 @@ namespace Testably.Expectations
         public static Testably.Expectations.Results.ObjectEqualityResult<object?, Testably.Expectations.Core.IThat<object?>> Be(this Testably.Expectations.Core.IThat<object?> source, object? expected, [System.Runtime.CompilerServices.CallerArgumentExpression("expected")] string doNotPopulateThisValue = "") { }
         public static Testably.Expectations.Results.AndOrWhichResult<TType, Testably.Expectations.Core.IThat<object?>> Be<TType>(this Testably.Expectations.Core.IThat<object?> source) { }
         public static Testably.Expectations.Results.AndOrResult<object?, Testably.Expectations.Core.IThat<object?>> BeNull(this Testably.Expectations.Core.IThat<object?> source) { }
-        public static Testably.Expectations.Results.AndOrResult<T, Testably.Expectations.Core.IThat<object?>> For<T, TProperty>(this Testably.Expectations.Core.IThat<object?> source, System.Linq.Expressions.Expression<System.Func<T, TProperty?>> selector, System.Action<Testably.Expectations.Core.IThat<TProperty?>> expectations) { }
         public static Testably.Expectations.Results.AndOrResult<object, Testably.Expectations.Core.IThat<object?>> NotBeNull(this Testably.Expectations.Core.IThat<object?> source) { }
         public static Testably.Expectations.Core.IThat<object?> Should(this Testably.Expectations.Core.IExpectSubject<object?> subject) { }
     }
