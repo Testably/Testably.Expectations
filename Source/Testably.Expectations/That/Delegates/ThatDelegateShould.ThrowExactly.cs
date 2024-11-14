@@ -35,26 +35,25 @@ public static partial class ThatDelegateShould
 		: ICastConstraint<DelegateValue, Exception?>
 		where TException : Exception
 	{
-		public ConstraintResult IsMetBy(DelegateValue? value)
+		public ConstraintResult IsMetBy(Exception? value)
 		{
-			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult<Exception>(exception);
+				return DoesNotThrowResult<Exception>(value);
 			}
 
-			if (exception is TException typedException && exception.GetType() == typeof(TException))
+			if (value is TException typedException && value.GetType() == typeof(TException))
 			{
 				return new ConstraintResult.Success<TException?>(typedException, ToString());
 			}
 
-			if (exception is null)
+			if (value is null)
 			{
 				return new ConstraintResult.Failure<TException?>(null, ToString(), "it did not");
 			}
 
 			return new ConstraintResult.Failure<TException?>(null, ToString(),
-				$"it did throw {exception.FormatForMessage()}");
+				$"it did throw {value.FormatForMessage()}");
 		}
 
 		/// <inheritdoc />
@@ -75,26 +74,25 @@ public static partial class ThatDelegateShould
 		: ICastConstraint<DelegateValue, Exception?>
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateValue? value)
+		public ConstraintResult IsMetBy(Exception? value)
 		{
-			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult<Exception>(exception);
+				return DoesNotThrowResult<Exception>(value);
 			}
 
-			if (exception?.GetType() == exceptionType)
+			if (value?.GetType() == exceptionType)
 			{
-				return new ConstraintResult.Success<Exception?>(exception, ToString());
+				return new ConstraintResult.Success<Exception?>(value, ToString());
 			}
 
-			if (exception is null)
+			if (value is null)
 			{
 				return new ConstraintResult.Failure<Exception?>(null, ToString(), "it did not");
 			}
 
 			return new ConstraintResult.Failure<Exception?>(null, ToString(),
-				$"it did throw {exception.FormatForMessage()}");
+				$"it did throw {value.FormatForMessage()}");
 		}
 
 		/// <inheritdoc />

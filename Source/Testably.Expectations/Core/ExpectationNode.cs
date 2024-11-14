@@ -1,0 +1,100 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.EvaluationContext;
+using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Sources;
+
+namespace Testably.Expectations.Core;
+
+internal class ExpectationNode : Node2
+{
+	protected IConstraint? Constraint { get; private set; }
+
+	protected Node2? Inner { get; private set; }
+
+	protected BecauseReason? Reason { get; private set; }
+
+	private Func<ConstraintResult?, ConstraintResult, ConstraintResult>? _combineResults;
+
+	/// <inheritdoc />
+	public override void AddConstraint(IConstraint constraint)
+	{
+		if (Inner is not null)
+		{
+			Inner.AddConstraint(constraint);
+		}
+		else if (Constraint is null)
+		{
+			Constraint = constraint;
+		}
+		else
+		{
+			throw new InvalidOperationException(
+				"You have to specify how to combine the expectations! Use `And()` or `Or()` in between adding expectations.");
+		}
+	}
+
+	/// <inheritdoc />
+	public override void AddMapping<TValue, TTarget>(
+		IValueConstraint<TValue>? precondition,
+		PropertyAccessor<TValue, TTarget?> propertyAccessor,
+		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
+		where TTarget : default
+	{
+		MappingNode<TValue, TTarget> mappingNode =
+			new MappingNode<TValue, TTarget>(precondition, propertyAccessor,
+				expectationTextGenerator);
+		Inner = mappingNode;
+		_combineResults = mappingNode.CombineResults;
+	}
+
+	/// <inheritdoc />
+	public override async Task<ConstraintResult> IsMetBy<TValue>(TValue? value,
+		IEvaluationContext context,
+		CancellationToken cancellationToken) where TValue : default
+	{
+		ConstraintResult? result = null;
+		if (Constraint is IValueConstraint<TValue?> valueConstraint)
+		{
+			result = valueConstraint.IsMetBy(value);
+			result = Reason?.ApplyTo(result) ?? result;
+		}
+		else if (Constraint is IContextConstraint<TValue?> contextConstraint)
+		{
+			result = contextConstraint.IsMetBy(value, context);
+			result = Reason?.ApplyTo(result) ?? result;
+		}
+		else if (Constraint is IAsyncConstraint<TValue?> asyncConstraint)
+		{
+			result = await asyncConstraint.IsMetBy(value, cancellationToken);
+			result = Reason?.ApplyTo(result) ?? result;
+		}
+		else if (Constraint is IAsyncContextConstraint<TValue?> asyncContextConstraint)
+		{
+			result = await asyncContextConstraint.IsMetBy(value, context, cancellationToken);
+			result = Reason?.ApplyTo(result) ?? result;
+		}
+		else if (value is DelegateValue delegateValue)
+		{
+			return await IsMetBy(delegateValue.Exception, context,
+				cancellationToken);
+		}
+
+		if (Inner != null)
+		{
+			ConstraintResult innerResult = await Inner.IsMetBy(value, context, cancellationToken);
+			return _combineResults?.Invoke(result, innerResult) ?? innerResult;
+		}
+
+		return result ?? throw new InvalidOperationException(
+			$"The expectation node does not support {typeof(TValue).Name} {value}");
+	}
+
+	/// <inheritdoc />
+	public override void SetReason(BecauseReason becauseReason)
+	{
+		Reason = becauseReason;
+	}
+}

@@ -1,0 +1,104 @@
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Testably.Expectations.Core.Constraints;
+using Testably.Expectations.Core.EvaluationContext;
+
+namespace Testably.Expectations.Core;
+
+internal class MappingNode<TSource, TTarget> : ExpectationNode
+{
+	private readonly PropertyAccessor<TSource, TTarget?> _propertyAccessor;
+
+	private readonly Func<PropertyAccessor<TSource, TTarget?>, string, string> _expectationTextGenerator;
+
+	public MappingNode(
+		IValueConstraint<TSource>? precondition,
+		PropertyAccessor<TSource, TTarget?> propertyAccessor,
+		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
+	{
+		_propertyAccessor = propertyAccessor;
+		if (expectationTextGenerator == null)
+		{
+			_expectationTextGenerator = DefaultExpectationTextGenerator;
+		}
+		else
+		{
+			_expectationTextGenerator = expectationTextGenerator;
+		}
+	}
+
+	private static string DefaultExpectationTextGenerator(PropertyAccessor<TSource, TTarget?> propertyAccessor,
+		string expectationText)
+	{
+		return propertyAccessor + expectationText;
+	}
+
+	public ConstraintResult CombineResults(ConstraintResult? combinedResult, ConstraintResult result)
+	{
+		if (combinedResult == null)
+		{
+			return result;
+		}
+		
+		string combinedExpectation =
+			$"{combinedResult.ExpectationText}{_expectationTextGenerator(_propertyAccessor, result.ExpectationText)}";
+
+		if (combinedResult is ConstraintResult.Failure leftFailure &&
+		    result is ConstraintResult.Failure rightFailure)
+		{
+			return leftFailure.CombineWith(
+				combinedExpectation,
+				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
+		}
+
+		if (combinedResult is ConstraintResult.Failure onlyLeftFailure)
+		{
+			return onlyLeftFailure.CombineWith(
+				combinedExpectation,
+				onlyLeftFailure.ResultText);
+		}
+
+		if (result is ConstraintResult.Failure onlyRightFailure)
+		{
+			return onlyRightFailure.CombineWith(
+				combinedExpectation,
+				onlyRightFailure.ResultText);
+		}
+
+		return combinedResult.CombineWith(combinedExpectation, "");
+	}
+	
+	private static string CombineResultTexts(string leftResultText, string rightResultText)
+	{
+		if (leftResultText == rightResultText)
+		{
+			return leftResultText;
+		}
+
+		return $"{leftResultText} and {rightResultText}";
+	}
+
+	/// <inheritdoc />
+	public override Task<ConstraintResult> IsMetBy<TValue>(
+		TValue? value,
+		IEvaluationContext context,
+		CancellationToken cancellationToken) where TValue : default
+	{
+		if (value is not TSource typedValue)
+		{
+			throw new InvalidOperationException(
+				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value?.GetType().Name}");
+		}
+
+		if (_propertyAccessor.TryAccessProperty(
+			typedValue,
+			out TTarget? matchingValue))
+		{
+			return base.IsMetBy(matchingValue, context, cancellationToken);
+		}
+
+		throw new InvalidOperationException(
+			$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TTarget).Name},{Environment.NewLine}but found {matchingValue?.GetType().Name}");
+	}
+}

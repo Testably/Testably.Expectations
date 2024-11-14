@@ -22,7 +22,9 @@ public abstract class ExpectationBuilder
 	private CancellationToken? _cancellationToken;
 
 	private ITimeSystem? _timeSystem;
-	private readonly Tree _tree = new();
+
+	private Node2 _node = new ExpectationNode();
+	//private readonly Tree _tree = new();
 
 	/// <summary>
 	///     Initializes the <see cref="ExpectationBuilder" /> with the <paramref name="subjectExpression" />
@@ -38,7 +40,7 @@ public abstract class ExpectationBuilder
 	/// </summary>
 	public ExpectationBuilder AddConstraint<TValue>(IValueConstraint<TValue> constraint)
 	{
-		_tree.AddExpectation(constraint);
+		_node.AddConstraint(constraint);
 		return this;
 	}
 
@@ -48,7 +50,7 @@ public abstract class ExpectationBuilder
 	/// </summary>
 	public ExpectationBuilder AddConstraint<TValue>(IAsyncContextConstraint<TValue> constraint)
 	{
-		_tree.AddExpectation(constraint);
+		_node.AddConstraint(constraint);
 		return this;
 	}
 
@@ -58,7 +60,7 @@ public abstract class ExpectationBuilder
 	/// </summary>
 	public ExpectationBuilder AddConstraint<TValue>(IContextConstraint<TValue> constraint)
 	{
-		_tree.AddExpectation(constraint);
+		_node.AddConstraint(constraint);
 		return this;
 	}
 
@@ -67,7 +69,7 @@ public abstract class ExpectationBuilder
 	/// </summary>
 	public ExpectationBuilder AddConstraint<TValue>(IAsyncConstraint<TValue> constraint)
 	{
-		_tree.AddExpectation(constraint);
+		_node.AddConstraint(constraint);
 		return this;
 	}
 
@@ -78,7 +80,16 @@ public abstract class ExpectationBuilder
 	public ExpectationBuilder AddConstraint<TSource, TTarget>(
 		ICastConstraint<TSource, TTarget> constraint)
 	{
-		_tree.AddManipulation(n => new CastNode<TSource, TTarget>(constraint, n));
+		_node.AddMapping(null, PropertyAccessor<TSource, TTarget?>.FromFunc(s =>
+		{
+			if (s is TTarget target)
+			{
+				return target;
+			}
+
+			return default;
+		}, ""));
+		_node.AddConstraint(constraint);
 		return this;
 	}
 
@@ -88,7 +99,7 @@ public abstract class ExpectationBuilder
 	internal void AddReason(string reason)
 	{
 		BecauseReason becauseReason = new(reason);
-		_tree.GetCurrent().SetReason(becauseReason);
+		_node.SetReason(becauseReason);
 	}
 
 	/// <summary>
@@ -101,13 +112,13 @@ public abstract class ExpectationBuilder
 	{
 		return new PropertyExpectationBuilder<TSource, TTarget>((a, c) =>
 		{
-			_tree.TryAddCombination(n => new AndNode(n, Node.None, ""), 5);
-			_tree.AddManipulation(_ => new WhichNode<TSource, TTarget>(
-				propertyAccessor,
-				c == null
-					? new DeferredNode<TTarget>(a)
-					: new AndNode(new ExpectationNode(c), new DeferredNode<TTarget>(a), ""),
-				expectationTextGenerator));
+			_node.AddMapping(null, propertyAccessor, expectationTextGenerator);
+			if (c is not null)
+			{
+				_node.AddConstraint(c);
+			}
+
+			a?.Invoke(this);
 			return this;
 		});
 	}
@@ -121,7 +132,27 @@ public abstract class ExpectationBuilder
 	}
 
 	internal void And(string textSeparator = " and ")
-		=> _tree.AddCombination(n => new AndNode(n, Node.None, textSeparator), 5);
+	{
+		if (_node is AndNode andNode)
+		{
+			andNode.AddNode(new ExpectationNode());
+			return;
+		}
+
+		if (_node is OrNode orNode)
+		{
+			var newNode = new AndNode(orNode.Current);
+			newNode.AddNode(new ExpectationNode());
+			orNode.Current = newNode;
+		}
+		else
+		{
+			var newNode = new AndNode(_node);
+			newNode.AddNode(new ExpectationNode());
+			_node = newNode;
+		}
+
+	}
 
 	/// <summary>
 	///     Creates the exception message from the <paramref name="failure" />.
@@ -136,19 +167,28 @@ public abstract class ExpectationBuilder
 	internal Task<ConstraintResult> IsMet()
 	{
 		EvaluationContext.EvaluationContext context = new();
-		Node rootNode = _tree.GetRoot();
-		return IsMet(rootNode, context, _timeSystem ?? RealTimeSystem.Instance,
+		return IsMet(_node, context, _timeSystem ?? RealTimeSystem.Instance,
 			_cancellationToken ?? CancellationToken.None);
 	}
 
 	internal abstract Task<ConstraintResult> IsMet(
-		Node rootNode,
+		Node2 rootNode,
 		EvaluationContext.EvaluationContext context,
 		ITimeSystem timeSystem,
 		CancellationToken cancellationToken);
 
+	// TODO VAB: do we need the textseparator?
 	internal void Or(string textSeparator = " or ")
-		=> _tree.AddCombination(n => new OrNode(n, Node.None, textSeparator), 4);
+	{
+		if (_node is OrNode orNode)
+		{
+			orNode.AddNode(new ExpectationNode());
+		}
+
+		var newNode = new OrNode(_node);
+		newNode.AddNode(new ExpectationNode());
+		_node = newNode;
+	}
 
 	/// <summary>
 	///     Specifies a <see cref="ITimeSystem" /> to use for the expectation.
@@ -167,7 +207,7 @@ public abstract class ExpectationBuilder
 			Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder>
 			_callback;
 
-		private IValueConstraint<TProperty>? _constraint;
+		private IValueConstraint<TProperty>? _constraint = null;
 
 		internal PropertyExpectationBuilder(
 			Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder>
@@ -191,7 +231,8 @@ public abstract class ExpectationBuilder
 		public PropertyExpectationBuilder<TSource, TProperty> Validate<TTarget>(
 			ICastConstraint<TProperty, TTarget> constraint)
 		{
-			_constraint = constraint;
+			// TODO VAB: CHeck
+			//_constraint = constraint;
 			return this;
 		}
 	}
@@ -214,7 +255,7 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 
 	/// <inheritdoc />
 	internal override async Task<ConstraintResult> IsMet(
-		Node rootNode,
+		Node2 rootNode,
 		EvaluationContext.EvaluationContext context,
 		ITimeSystem timeSystem,
 		CancellationToken cancellationToken)

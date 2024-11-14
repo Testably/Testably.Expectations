@@ -43,26 +43,25 @@ public static partial class ThatDelegateShould
 		: ICastConstraint<DelegateValue, Exception?>
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateValue? value)
+		public ConstraintResult IsMetBy(Exception? value)
 		{
-			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult<Exception>(exception);
+				return DoesNotThrowResult<Exception>(value);
 			}
 
-			if (exceptionType.IsAssignableFrom(exception?.GetType()))
+			if (exceptionType.IsAssignableFrom(value?.GetType()))
 			{
-				return new ConstraintResult.Success<Exception?>(exception, ToString());
+				return new ConstraintResult.Success<Exception?>(value, ToString());
 			}
 
-			if (exception is null)
+			if (value is null)
 			{
 				return new ConstraintResult.Failure<Exception?>(null, ToString(), "it did not");
 			}
 
 			return new ConstraintResult.Failure<Exception?>(null, ToString(),
-				$"it did throw {exception.FormatForMessage()}");
+				$"it did throw {value.FormatForMessage()}");
 		}
 
 		public override string ToString()
@@ -81,26 +80,25 @@ public static partial class ThatDelegateShould
 		where TException : Exception
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateValue? value)
+		public ConstraintResult IsMetBy(TException? value)
 		{
-			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult<TException>(exception);
+				return DoesNotThrowResult<TException>(value);
 			}
 
-			if (exception is TException typedException)
+			if (value is TException typedException)
 			{
 				return new ConstraintResult.Success<TException?>(typedException, ToString());
 			}
 
-			if (exception is null)
+			if (value is null)
 			{
 				return new ConstraintResult.Failure<TException?>(null, ToString(), "it did not");
 			}
 
 			return new ConstraintResult.Failure<TException?>(null, ToString(),
-				$"it did throw {exception.FormatForMessage()}");
+				$"it did throw {value.FormatForMessage()}");
 		}
 
 		public override string ToString()

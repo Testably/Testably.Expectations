@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.Core;
+﻿using System.Globalization;
+
+namespace Testably.Expectations.Tests.Core;
 
 public sealed class ExpectationTests
 {
@@ -11,7 +13,7 @@ public sealed class ExpectationTests
 		async Task Act()
 			=> await That(true).Should().Be(a).And.Be(b);
 
-		await That(Act).Should().ThrowException();
+		await That(Act).Should().Throw<XunitException>();
 	}
 
 	[Theory]

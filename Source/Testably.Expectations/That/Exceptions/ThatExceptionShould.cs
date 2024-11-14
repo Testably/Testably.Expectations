@@ -134,13 +134,8 @@ public static partial class ThatExceptionShould
 		#region ICastConstraint<Exception?,TTarget> Members
 
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(Exception? actual)
+		public ConstraintResult IsMetBy(TTarget? actual)
 		{
-			if (actual is TTarget casted)
-			{
-				return new ConstraintResult.Success<TTarget>(casted, "");
-			}
-
 			return new ConstraintResult.Failure<Exception?>(actual, "",
 				actual == null
 					? "found <null>"
