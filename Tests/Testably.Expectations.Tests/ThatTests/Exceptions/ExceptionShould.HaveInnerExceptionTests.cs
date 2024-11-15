@@ -7,8 +7,7 @@ public sealed partial class ExceptionShould
 		[Fact]
 		public async Task FailsWhenInnerExceptionHasCorrectMessageButUnexpectedType()
 		{
-			Exception subject = new("outer",
-				new Exception("inner"));
+			Exception subject = new("outer", new Exception("inner"));
 
 			async Task Act()
 				=> await That(subject).Should()

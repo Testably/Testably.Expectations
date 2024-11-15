@@ -59,8 +59,7 @@ public sealed partial class DelegateThrows
 		public async Task ShouldIncludeExceptionType()
 		{
 			string message = "FOO";
-			Exception exception =
-				new OuterException(message, innerException: new CustomException());
+			Exception exception = new CustomException(message);
 
 			async Task Act()
 				=> await That(() => throw exception).Should().Throw<CustomException>()

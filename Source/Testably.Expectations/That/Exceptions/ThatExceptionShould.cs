@@ -128,32 +128,37 @@ public static partial class ThatExceptionShould
 			=> $"{verb} an inner {(innerExceptionType == typeof(Exception) ? "exception" : Formatter.Format(innerExceptionType))}";
 	}
 
-	internal class ExceptionCastConstraint<TTarget> : IValueConstraint<Exception?>
-		where TTarget : Exception?
+	internal class InnerExceptionIsTypeConstraint<TInnerException> : IValueConstraint<Exception?>
+		where TInnerException : Exception?
 	{
-		#region ICastConstraint<Exception?,TTarget> Members
+		#region IValueConstraint<Exception?> Members
 
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(Exception? actual)
 		{
+			if (actual?.InnerException is TInnerException)
+			{
+				return new ConstraintResult.Success<Exception?>(actual, "");
+			}
+
 			return new ConstraintResult.Failure<Exception?>(actual, "",
 				actual == null
 					? "found <null>"
-					: $"found {actual.FormatForMessage()}");
+					: $"found {actual.InnerException?.FormatForMessage()}");
 		}
 
 		#endregion
 	}
 
-	internal class ExceptionCastConstraint(Type exceptionType)
+	internal class InnerExceptionIsTypeConstraint(Type exceptionType)
 		: IValueConstraint<Exception?>
 	{
-		#region ICastConstraint<Exception?,Exception?> Members
+		#region IValueConstraint<Exception?> Members
 
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(Exception? actual)
 		{
-			if (exceptionType.IsAssignableFrom(actual?.GetType()))
+			if (exceptionType.IsAssignableFrom(actual?.InnerException?.GetType()))
 			{
 				return new ConstraintResult.Success<Exception>(actual, "");
 			}

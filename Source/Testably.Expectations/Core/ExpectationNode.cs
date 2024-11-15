@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations.Core;
 
@@ -55,6 +54,11 @@ internal class ExpectationNode : Node2
 		=> throw new NotSupportedException(
 			$"Don't specify the inner node for Expectation nodes directly. You can use {nameof(AddMapping)} instead.");
 
+	public bool IsEmpty()
+	{
+		return Constraint is null && Inner is null;
+	}
+
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(TValue? value,
 		IEvaluationContext context,
@@ -81,11 +85,6 @@ internal class ExpectationNode : Node2
 			result = await asyncContextConstraint.IsMetBy(value, context, cancellationToken);
 			result = Reason?.ApplyTo(result) ?? result;
 		}
-		else if (value is DelegateValue delegateValue)
-		{
-			return await IsMetBy(delegateValue.Exception, context,
-				cancellationToken);
-		}
 
 		if (Inner != null)
 		{
@@ -93,13 +92,13 @@ internal class ExpectationNode : Node2
 			return _combineResults?.Invoke(result, innerResult) ?? innerResult;
 		}
 
+		if (_combineResults != null && result != null)
+		{
+			return _combineResults.Invoke(null, result);
+		}
+
 		return result ?? throw new InvalidOperationException(
 			$"The expectation node does not support {typeof(TValue).Name} {value}");
-	}
-
-	public bool IsEmpty()
-	{
-		return Constraint is null && Inner is null;
 	}
 
 	/// <inheritdoc />
