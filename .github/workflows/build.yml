@@ -5,6 +5,12 @@ on:
     push:
         branches: [main, 'release/v[0-9]+.[0-9]+.[0-9]+']
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
     test-macos:
         name: Test (MacOS)
@@ -219,7 +225,28 @@ jobs:
                   gh-pages-branch: 'benchmarks'
                   benchmark-data-dir-path: 'Docs/Benchmarks'
                   auto-push: true
-                    
+    
+    pages:
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        runs-on: ubuntu-latest
+        needs: [benchmark]
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+            with:
+              ref: 'benchmarks'
+          - name: Setup Pages
+            uses: actions/configure-pages@v5
+          - name: Upload artifact
+            uses: actions/upload-pages-artifact@v3
+            with:
+              path: 'Docs/Benchmarks'
+          - name: Deploy to GitHub Pages
+            id: deployment
+            uses: actions/deploy-pages@v4
+
     deploy:
         name: Deploy
         if: startsWith(github.ref, 'refs/heads/release/')
