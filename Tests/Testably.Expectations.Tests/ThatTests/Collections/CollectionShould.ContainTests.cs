@@ -9,8 +9,13 @@ public sealed partial class CollectionShould
 	{
 		[Theory]
 		[AutoData]
-		public async Task Fails(string[] subject, string expected)
+		public async Task Fails(int[] subject, int expected)
 		{
+			while (subject.Contains(expected))
+			{
+				expected++;
+			}
+
 			async Task Act()
 				=> await That(subject).Should().Contain(expected);
 
