@@ -983,7 +983,6 @@ namespace Testably.Expectations.Core.EvaluationContext
 }
 namespace Testably.Expectations.Core
 {
-    [System.Diagnostics.DebuggerDisplay("{_node}")]
     public abstract class ExpectationBuilder
     {
         protected ExpectationBuilder(string subjectExpression) { }
@@ -992,6 +991,7 @@ namespace Testably.Expectations.Core
         public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IContextConstraint<TValue> constraint) { }
         public Testably.Expectations.Core.ExpectationBuilder AddConstraint<TValue>(Testably.Expectations.Core.Constraints.IValueConstraint<TValue> constraint) { }
         public Testably.Expectations.Core.ExpectationBuilder.PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(Testably.Expectations.Core.PropertyAccessor<TSource, TTarget?> propertyAccessor, System.Func<Testably.Expectations.Core.PropertyAccessor, string, string>? expectationTextGenerator = null) { }
+        public override string? ToString() { }
         public void WithCancellation(System.Threading.CancellationToken cancellationToken) { }
         public class PropertyExpectationBuilder<TSource, TProperty>
         {
