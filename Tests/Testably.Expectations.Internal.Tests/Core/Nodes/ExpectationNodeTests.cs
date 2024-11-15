@@ -81,7 +81,7 @@ public class ExpectationNodeTests
 		await That(result).Should().Be("baz foo-bar");
 	}
 
-	private class CheckConstraint(Func<int, bool> isMatch) : IValueConstraint<int>
+	private sealed class CheckConstraint(Func<int, bool> isMatch) : IValueConstraint<int>
 	{
 		#region IValueConstraint<int> Members
 

@@ -19,7 +19,7 @@ public sealed class AndNodeTests
 			return node;
 		}).ToList();
 		AndNode sut = new(nodes.First());
-		foreach (ExpectationNode? node in nodes.Skip(1))
+		foreach (ExpectationNode node in nodes.Skip(1))
 		{
 			sut.AddNode(node);
 		}

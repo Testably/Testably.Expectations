@@ -115,7 +115,7 @@ internal class ExpectationNode : Node
 	{
 		if (_constraint != null && _inner != null)
 		{
-			return _constraint + (_inner == null ? "" : _inner.ToString());
+			return _constraint + _inner.ToString();
 		}
 
 		if (_constraint != null)
