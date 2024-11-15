@@ -28,7 +28,8 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 		}
 	}
 
-	public ConstraintResult CombineResults(ConstraintResult? combinedResult,
+	internal ConstraintResult CombineResults(
+		ConstraintResult? combinedResult,
 		ConstraintResult result)
 	{
 		if (combinedResult == null)

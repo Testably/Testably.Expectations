@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
@@ -60,8 +61,15 @@ internal class OrNode : Node
 		=> Current.SetReason(becauseReason);
 
 	/// <inheritdoc />
-	public override string ToString()
-		=> string.Join(" or ", _nodes) + " or " + Current;
+	public override string? ToString()
+	{
+		if (_nodes.Any())
+		{
+			return string.Join(" or ", _nodes) + " or " + Current;
+		}
+
+		return Current.ToString();
+	}
 
 	private ConstraintResult CombineResults(ConstraintResult? combinedResult,
 		ConstraintResult result)

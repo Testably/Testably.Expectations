@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
@@ -14,7 +13,6 @@ namespace Testably.Expectations.Core;
 /// <summary>
 ///     The builder for collecting all expectations.
 /// </summary>
-[DebuggerDisplay("{_node}")]
 public abstract class ExpectationBuilder
 {
 	internal string Subject { get; }
@@ -102,6 +100,10 @@ public abstract class ExpectationBuilder
 			return this;
 		});
 	}
+
+	/// <inheritdoc />
+	public override string? ToString()
+		=> _node.ToString();
 
 	/// <summary>
 	///     Adds a <paramref name="cancellationToken" /> to be used by the constraints.
@@ -210,19 +212,21 @@ public abstract class ExpectationBuilder
 	/// </summary>
 	public class PropertyExpectationBuilder<TSource, TProperty>
 	{
-		private readonly
-			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>
-				?, ExpectationBuilder>
+		private readonly Func<Action<ExpectationBuilder>,
+				IValueConstraint<TSource>?,
+				IValueConstraint<TProperty>?,
+				ExpectationBuilder>
 			_callback;
 
 		private readonly IValueConstraint<TProperty>? _constraint = null;
 
 		private IValueConstraint<TSource>? _sourceConstraint;
 
-		internal PropertyExpectationBuilder(
-			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>
-					?, ExpectationBuilder>
-				callback)
+		internal PropertyExpectationBuilder(Func<Action<ExpectationBuilder>,
+				IValueConstraint<TSource>?,
+				IValueConstraint<TProperty>?,
+				ExpectationBuilder>
+			callback)
 		{
 			_callback = callback;
 		}

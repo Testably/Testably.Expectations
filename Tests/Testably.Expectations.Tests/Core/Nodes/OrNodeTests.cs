@@ -1,7 +1,22 @@
-﻿namespace Testably.Expectations.Tests.Core.Nodes;
+﻿using Testably.Expectations.Core;
+
+namespace Testably.Expectations.Tests.Core.Nodes;
 
 public sealed class OrNodeTests
 {
+	[Fact]
+	public async Task ToString_ShouldCombineAllNodes()
+	{
+		IThat<bool> that = That(true).Should();
+		that.BeTrue().Or.BeFalse().Or.Imply(false);
+
+		string expectedResult = "be True or be False or imply False";
+
+		string? result = that.ExpectationBuilder.ToString();
+
+		await That(result).Should().Be(expectedResult);
+	}
+
 	[Fact]
 	public async Task WithFirstFailedTests_ShouldNotThrow()
 	{

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
@@ -68,8 +69,15 @@ internal class AndNode : Node
 		=> Current.SetReason(becauseReason);
 
 	/// <inheritdoc />
-	public override string ToString()
-		=> string.Join(" and ", _nodes) + " and " + Current;
+	public override string? ToString()
+	{
+		if (_nodes.Any())
+		{
+			return string.Join(" and ", _nodes.Select(x => x.Item2)) + " and " + Current;
+		}
+
+		return Current.ToString();
+	}
 
 	private ConstraintResult CombineResults(ConstraintResult? combinedResult,
 		ConstraintResult result, string separator)
