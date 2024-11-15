@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731534982439,
+  "lastUpdate": 1731691153808,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -1258,6 +1258,66 @@ window.BENCHMARK_DATA = {
             "value": 1356.7474951426188,
             "unit": "ns",
             "range": "± 11.261237902041866"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fad8683aa15fb525c79548d65c36c3828dbeb77e",
+          "message": "feat: change the `.For` syntax (#167)\n\nChange the `.For` syntax to work on `IExpectSubject<T>` instead of\r\n`IThat<T>`\r\nThis allows using inheritance of `IThat<T>` to reduce duplications.\r\nThe syntax changes from\r\n```csharp\r\nawait That(sut).Should().For<MyClass, int>(x => x.Value, v => v.Be(4))`.And.For<MyClass, int>(x => x.Value2, v => v.Be(6));\r\n```\r\nto\r\n```csharp\r\nawait That(sut).For(x => x.Value, v => v.Should().Be(4)).And.For(x => x.Value2, v => v.Should().Be(6));\r\n```",
+          "timestamp": "2024-11-15T17:15:52Z",
+          "tree_id": "68ee15bfb0734eb185619601432356a3edf143ae",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/fad8683aa15fb525c79548d65c36c3828dbeb77e"
+        },
+        "date": 1731691153255,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 217.02692226001196,
+            "unit": "ns",
+            "range": "± 1.1902252122837893"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 260.37234385808307,
+            "unit": "ns",
+            "range": "± 2.7518069176254794"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 628.5911921819051,
+            "unit": "ns",
+            "range": "± 3.8754191911761477"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 392.5958313624064,
+            "unit": "ns",
+            "range": "± 2.8527776501441973"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 408.55137392452787,
+            "unit": "ns",
+            "range": "± 2.1653411930096413"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 1397.0270998636881,
+            "unit": "ns",
+            "range": "± 7.509081577875937"
           }
         ]
       }
