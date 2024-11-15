@@ -44,11 +44,16 @@ internal class ExpectationNode : Node2
 		where TTarget : default
 	{
 		MappingNode<TValue, TTarget> mappingNode =
-			new MappingNode<TValue, TTarget>(precondition, propertyAccessor,
+			new(precondition, propertyAccessor,
 				expectationTextGenerator);
 		Inner = mappingNode;
 		_combineResults = mappingNode.CombineResults;
 	}
+
+	/// <inheritdoc />
+	public override void AddNode(Node2 node, string? separator = null)
+		=> throw new NotSupportedException(
+			$"Don't specify the inner node for Expectation nodes directly. You can use {nameof(AddMapping)} instead.");
 
 	/// <inheritdoc />
 	public override async Task<ConstraintResult> IsMetBy<TValue>(TValue? value,
@@ -92,9 +97,18 @@ internal class ExpectationNode : Node2
 			$"The expectation node does not support {typeof(TValue).Name} {value}");
 	}
 
+	public bool IsEmpty()
+	{
+		return Constraint is null && Inner is null;
+	}
+
 	/// <inheritdoc />
 	public override void SetReason(BecauseReason becauseReason)
 	{
 		Reason = becauseReason;
 	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> Constraint + (Inner == null ? "" : Inner.ToString());
 }

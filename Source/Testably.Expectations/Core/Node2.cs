@@ -22,4 +22,6 @@ internal abstract class Node2
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null);
 
 	public abstract void SetReason(BecauseReason becauseReason);
+
+	public abstract void AddNode(Node2 node, string? separator = null);
 }

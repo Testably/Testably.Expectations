@@ -91,9 +91,13 @@ internal class OrNode : Node2
 	public override void SetReason(BecauseReason becauseReason)
 		=> Current.SetReason(becauseReason);
 
-	public void AddNode(Node2 node)
+	public override void AddNode(Node2 node, string? separator = null)
 	{
 		_nodes.Add(Current);
 		Current = node;
 	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> string.Join(" or ", _nodes) + " or " + Current;
 }

@@ -15,7 +15,9 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<TException>(source.ExpectationBuilder
-				.AddConstraint(new ThrowsExactlyCastConstraint<TException>(throwOptions)),
+				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
+				.AddConstraint(new ThrowsExactlyCastConstraint<TException>(throwOptions))
+				.And(" "),
 			throwOptions);
 	}
 
@@ -27,12 +29,14 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
-				.AddConstraint(new ThrowsExactlyCastConstraint(exceptionType, throwOptions)),
+				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
+				.AddConstraint(new ThrowsExactlyCastConstraint(exceptionType, throwOptions))
+				.And(" "),
 			throwOptions);
 	}
 
 	private readonly struct ThrowsExactlyCastConstraint<TException>(ThrowsOption throwOptions)
-		: ICastConstraint<DelegateValue, Exception?>
+		: IValueConstraint<Exception?>
 		where TException : Exception
 	{
 		public ConstraintResult IsMetBy(Exception? value)
@@ -71,7 +75,7 @@ public static partial class ThatDelegateShould
 	private readonly struct ThrowsExactlyCastConstraint(
 		Type exceptionType,
 		ThrowsOption throwOptions)
-		: ICastConstraint<DelegateValue, Exception?>
+		: IValueConstraint<Exception?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(Exception? value)

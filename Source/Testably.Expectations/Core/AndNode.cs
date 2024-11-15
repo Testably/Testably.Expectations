@@ -10,8 +10,10 @@ namespace Testably.Expectations.Core;
 
 internal class AndNode : Node2
 {
-	private List<Node2> _nodes = new();
-	internal Node2 Current { get; set; }
+	private const string DefaultSeparator = " and ";
+	private List<(string, Node2)> _nodes = new();
+	private string? _currentSeparator;
+	private Node2 Current { get; set; }
 
 	public AndNode(Node2 node)
 	{
@@ -23,12 +25,16 @@ internal class AndNode : Node2
 		IEvaluationContext context,
 		CancellationToken cancellationToken) where TValue : default
 	{
-		_nodes.Add(Current);
+		_nodes.Add((_currentSeparator ?? DefaultSeparator, Current));
 		ConstraintResult? combinedResult = null;
-		foreach (var node in _nodes)
+		foreach ((string separator, Node2 node) in _nodes)
 		{
+			if (node is ExpectationNode expectationNode && expectationNode.IsEmpty())
+			{
+				continue;
+			}
 			var result = await node.IsMetBy(value, context, cancellationToken);
-			combinedResult = CombineResults(combinedResult, result);
+			combinedResult = CombineResults(combinedResult, result, separator);
 			if (result.IgnoreFurtherProcessing)
 			{
 				return combinedResult;
@@ -38,15 +44,14 @@ internal class AndNode : Node2
 		return combinedResult!;
 	}
 
-	private ConstraintResult CombineResults(ConstraintResult? combinedResult, ConstraintResult result)
+	private ConstraintResult CombineResults(ConstraintResult? combinedResult, ConstraintResult result, string separator)
 	{
-		const string _textSeparator = " and ";
 		if (combinedResult == null)
 		{
 			return result;
 		}
 		string combinedExpectation =
-			$"{combinedResult.ExpectationText}{_textSeparator}{result.ExpectationText}";
+			$"{combinedResult.ExpectationText}{separator}{result.ExpectationText}";
 
 		if (combinedResult is ConstraintResult.Failure leftFailure &&
 		    result is ConstraintResult.Failure rightFailure)
@@ -99,9 +104,14 @@ internal class AndNode : Node2
 	public override void SetReason(BecauseReason becauseReason)
 		=> Current.SetReason(becauseReason);
 
-	public void AddNode(Node2 node)
+	public override void AddNode(Node2 node, string? separator = null)
 	{
-		_nodes.Add(Current);
+		_nodes.Add((_currentSeparator ?? DefaultSeparator, Current));
 		Current = node;
+		_currentSeparator = separator;
 	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> string.Join(" and ", _nodes) + " and " + Current;
 }

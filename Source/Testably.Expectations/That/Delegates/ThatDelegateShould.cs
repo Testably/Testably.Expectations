@@ -40,7 +40,7 @@ public static partial class ThatDelegateShould
 	}
 
 	private readonly struct ThrowsCastConstraint(Type exceptionType, ThrowsOption throwOptions)
-		: ICastConstraint<DelegateValue, Exception?>
+		: IValueConstraint<Exception?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(Exception? value)
@@ -76,11 +76,11 @@ public static partial class ThatDelegateShould
 	}
 
 	private readonly struct ThrowsCastConstraint<TException>(ThrowsOption throwOptions)
-		: ICastConstraint<DelegateValue, TException?>
+		: IValueConstraint<Exception?>
 		where TException : Exception
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(TException? value)
+		public ConstraintResult IsMetBy(Exception? value)
 		{
 			if (!throwOptions.DoCheckThrow)
 			{

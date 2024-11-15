@@ -1,4 +1,6 @@
 ﻿using System;
+using Testably.Expectations.Core.Sources;
+using Testably.Expectations.Core;
 
 namespace Testably.Expectations;
 
@@ -11,7 +13,9 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
-				.AddConstraint(new ThrowsCastConstraint<Exception>(throwOptions)),
+				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
+				.AddConstraint(new ThrowsCastConstraint<Exception>(throwOptions))
+				.And(" "),
 			throwOptions);
 	}
 }

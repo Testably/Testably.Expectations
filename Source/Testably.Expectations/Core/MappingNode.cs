@@ -80,6 +80,10 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 	}
 
 	/// <inheritdoc />
+	public override string ToString()
+		=> _propertyAccessor + base.ToString();
+
+	/// <inheritdoc />
 	public override Task<ConstraintResult> IsMetBy<TValue>(
 		TValue? value,
 		IEvaluationContext context,

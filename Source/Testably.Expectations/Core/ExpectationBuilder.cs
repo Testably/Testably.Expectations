@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Core.Sources;
 using Testably.Expectations.Core.TimeSystem;
 
@@ -21,9 +20,11 @@ public abstract class ExpectationBuilder
 
 	private CancellationToken? _cancellationToken;
 
+	private Node2 _node = new ExpectationNode();
+
 	private ITimeSystem? _timeSystem;
 
-	private Node2 _node = new ExpectationNode();
+	private Node2? _whichNode;
 	//private readonly Tree _tree = new();
 
 	/// <summary>
@@ -74,35 +75,6 @@ public abstract class ExpectationBuilder
 	}
 
 	/// <summary>
-	///     Adds the <paramref name="constraint" /> which verifies the underlying value
-	///     and returns a different <typeparamref name="TTarget" /> for subsequent constraints.
-	/// </summary>
-	public ExpectationBuilder AddConstraint<TSource, TTarget>(
-		ICastConstraint<TSource, TTarget> constraint)
-	{
-		_node.AddMapping(null, PropertyAccessor<TSource, TTarget?>.FromFunc(s =>
-		{
-			if (s is TTarget target)
-			{
-				return target;
-			}
-
-			return default;
-		}, ""));
-		_node.AddConstraint(constraint);
-		return this;
-	}
-
-	/// <summary>
-	///     Adds a <paramref name="reason" /> to the current expectation constraint.
-	/// </summary>
-	internal void AddReason(string reason)
-	{
-		BecauseReason becauseReason = new(reason);
-		_node.SetReason(becauseReason);
-	}
-
-	/// <summary>
 	///     Specifies a constraint that applies to the property selected
 	///     by the <paramref name="propertyAccessor" />.
 	/// </summary>
@@ -110,8 +82,14 @@ public abstract class ExpectationBuilder
 		PropertyAccessor<TSource, TTarget?> propertyAccessor,
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
 	{
-		return new PropertyExpectationBuilder<TSource, TTarget>((a, c) =>
+		return new PropertyExpectationBuilder<TSource, TTarget>((a, s, c) =>
 		{
+			if (s is not null)
+			{
+				And(" ");
+				_node.AddConstraint(s);
+			}
+			
 			_node.AddMapping(null, propertyAccessor, expectationTextGenerator);
 			if (c is not null)
 			{
@@ -131,27 +109,48 @@ public abstract class ExpectationBuilder
 		_cancellationToken = cancellationToken;
 	}
 
-	internal void And(string textSeparator = " and ")
+	/// <summary>
+	///     Adds a <paramref name="reason" /> to the current expectation constraint.
+	/// </summary>
+	internal void AddReason(string reason)
+	{
+		BecauseReason becauseReason = new(reason);
+		_node.SetReason(becauseReason);
+	}
+
+	internal ExpectationBuilder And(string textSeparator = " and ")
 	{
 		if (_node is AndNode andNode)
 		{
-			andNode.AddNode(new ExpectationNode());
-			return;
+			andNode.AddNode(new ExpectationNode(), textSeparator);
 		}
-
-		if (_node is OrNode orNode)
+		else if (_node is OrNode orNode)
 		{
-			var newNode = new AndNode(orNode.Current);
-			newNode.AddNode(new ExpectationNode());
+			AndNode newNode = new AndNode(orNode.Current);
+			newNode.AddNode(new ExpectationNode(), textSeparator);
 			orNode.Current = newNode;
 		}
 		else
 		{
-			var newNode = new AndNode(_node);
-			newNode.AddNode(new ExpectationNode());
+			AndNode newNode = new AndNode(_node);
+			newNode.AddNode(new ExpectationNode(), textSeparator);
 			_node = newNode;
 		}
 
+		return this;
+	}
+
+	/// <summary>
+	///     Specifies a global mapping for the value to test.
+	/// </summary>
+	/// <remarks>
+	///     Intended for mapping the <see cref="DelegateValue{TValue}" /> to an exception.
+	/// </remarks>
+	internal ExpectationBuilder ForWhich<TSource, TTarget>(
+		Func<TSource, TTarget?> whichAccessor)
+	{
+		_whichNode = new WhichNode<TSource, TTarget>(whichAccessor);
+		return this;
 	}
 
 	/// <summary>
@@ -167,6 +166,12 @@ public abstract class ExpectationBuilder
 	internal Task<ConstraintResult> IsMet()
 	{
 		EvaluationContext.EvaluationContext context = new();
+		if (_whichNode != null)
+		{
+			_whichNode.AddNode(_node);
+			_node = _whichNode;
+		}
+
 		return IsMet(_node, context, _timeSystem ?? RealTimeSystem.Instance,
 			_cancellationToken ?? CancellationToken.None);
 	}
@@ -182,11 +187,11 @@ public abstract class ExpectationBuilder
 	{
 		if (_node is OrNode orNode)
 		{
-			orNode.AddNode(new ExpectationNode());
+			orNode.AddNode(new ExpectationNode(), textSeparator);
 		}
 
-		var newNode = new OrNode(_node);
-		newNode.AddNode(new ExpectationNode());
+		OrNode newNode = new OrNode(_node);
+		newNode.AddNode(new ExpectationNode(), textSeparator);
 		_node = newNode;
 	}
 
@@ -204,13 +209,14 @@ public abstract class ExpectationBuilder
 	public class PropertyExpectationBuilder<TSource, TProperty>
 	{
 		private readonly
-			Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder>
+			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>?, ExpectationBuilder>
 			_callback;
 
-		private IValueConstraint<TProperty>? _constraint = null;
+		private IValueConstraint<TSource>? _sourceConstraint = null;
+		private readonly IValueConstraint<TProperty>? _constraint = null;
 
 		internal PropertyExpectationBuilder(
-			Func<Action<ExpectationBuilder>, IValueConstraint<TProperty>?, ExpectationBuilder>
+			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>?, ExpectationBuilder>
 				callback)
 		{
 			_callback = callback;
@@ -221,18 +227,17 @@ public abstract class ExpectationBuilder
 		/// </summary>
 		public ExpectationBuilder AddExpectations(Action<ExpectationBuilder> expectation)
 		{
-			return _callback(expectation, _constraint);
+			return _callback(expectation, _sourceConstraint, _constraint);
 		}
 
 		/// <summary>
 		///     Add a validation constraint for the current <typeparamref name="TProperty" />,
-		///     that it is of type <typeparamref name="TTarget" />.
+		///     that it is of type <typeparamref name="TSource" />.
 		/// </summary>
-		public PropertyExpectationBuilder<TSource, TProperty> Validate<TTarget>(
-			ICastConstraint<TProperty, TTarget> constraint)
+		public PropertyExpectationBuilder<TSource, TProperty> Validate(
+			IValueConstraint<TSource> constraint)
 		{
-			// TODO VAB: CHeck
-			//_constraint = constraint;
+			_sourceConstraint = constraint;
 			return this;
 		}
 	}
