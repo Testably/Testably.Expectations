@@ -1156,7 +1156,12 @@ namespace Testably.Expectations.Results
         where TSelf : Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>
     {
         public AndOrWhichResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue) { }
-        public Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>.WhichResult<TProperty, Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>> Which<TProperty>(System.Linq.Expressions.Expression<System.Func<TType, TProperty?>> selector) { }
+        public Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>.WhichResult<TProperty, Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>.AdditionalAndOrWhichResult> Which<TProperty>(System.Linq.Expressions.Expression<System.Func<TType, TProperty?>> selector) { }
+        public class AdditionalAndOrWhichResult : Testably.Expectations.Results.AndOrResult<TType, TThat, TSelf>
+        {
+            public AdditionalAndOrWhichResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder, TThat returnValue) { }
+            public Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>.WhichResult<TProperty, Testably.Expectations.Results.AndOrWhichResult<TType, TThat, TSelf>.AdditionalAndOrWhichResult> AndWhich<TProperty>(System.Linq.Expressions.Expression<System.Func<TType, TProperty?>> selector) { }
+        }
         public class WhichResult<TProperty, TReturn>
         {
             public WhichResult(System.Func<System.Action<Testably.Expectations.Core.IThat<TProperty?>>, TReturn> resultCallback) { }
