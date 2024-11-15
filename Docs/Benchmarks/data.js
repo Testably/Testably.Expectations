@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731691153808,
+  "lastUpdate": 1731694430829,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -1318,6 +1318,66 @@ window.BENCHMARK_DATA = {
             "value": 1397.0270998636881,
             "unit": "ns",
             "range": "± 7.509081577875937"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bf78a7f968d525e896bc96839e0210ae6ba938bd",
+          "message": "feat: enable duplicate `Which` expectations (#168)\n\nSupport for multiple `Which` statements that are combined via AND.",
+          "timestamp": "2024-11-15T19:10:35+01:00",
+          "tree_id": "661d008e3f3e30177f38f51386e486847d7c9565",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/bf78a7f968d525e896bc96839e0210ae6ba938bd"
+        },
+        "date": 1731694430232,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 216.1184001139232,
+            "unit": "ns",
+            "range": "± 1.738875595604143"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 250.2024953548725,
+            "unit": "ns",
+            "range": "± 0.5335104645967235"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 658.4788731166294,
+            "unit": "ns",
+            "range": "± 2.52920052215773"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 392.6614631017049,
+            "unit": "ns",
+            "range": "± 2.1863735203123102"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 412.0789326349894,
+            "unit": "ns",
+            "range": "± 2.4007084017881635"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 1384.2194468634468,
+            "unit": "ns",
+            "range": "± 9.545150290563988"
           }
         ]
       }
