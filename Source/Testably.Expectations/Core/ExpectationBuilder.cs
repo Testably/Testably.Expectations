@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 using Testably.Expectations.Core.Helpers;
+using Testably.Expectations.Core.Nodes;
 using Testably.Expectations.Core.Sources;
 using Testably.Expectations.Core.TimeSystem;
 
@@ -20,11 +21,11 @@ public abstract class ExpectationBuilder
 
 	private CancellationToken? _cancellationToken;
 
-	private Node2 _node = new ExpectationNode();
+	private Node _node = new ExpectationNode();
 
 	private ITimeSystem? _timeSystem;
 
-	private Node2? _whichNode;
+	private Node? _whichNode;
 	//private readonly Tree _tree = new();
 
 	/// <summary>
@@ -177,7 +178,7 @@ public abstract class ExpectationBuilder
 	}
 
 	internal abstract Task<ConstraintResult> IsMet(
-		Node2 rootNode,
+		Node rootNode,
 		EvaluationContext.EvaluationContext context,
 		ITimeSystem timeSystem,
 		CancellationToken cancellationToken);
@@ -260,7 +261,7 @@ internal class ExpectationBuilder<TValue> : ExpectationBuilder
 
 	/// <inheritdoc />
 	internal override async Task<ConstraintResult> IsMet(
-		Node2 rootNode,
+		Node rootNode,
 		EvaluationContext.EvaluationContext context,
 		ITimeSystem timeSystem,
 		CancellationToken cancellationToken)

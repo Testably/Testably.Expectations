@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
 
-namespace Testably.Expectations.Core;
+namespace Testably.Expectations.Core.Nodes;
 
 internal class MappingNode<TSource, TTarget> : ExpectationNode
 {
-	private readonly PropertyAccessor<TSource, TTarget?> _propertyAccessor;
+	private readonly Func<PropertyAccessor<TSource, TTarget?>, string, string>
+		_expectationTextGenerator;
 
-	private readonly Func<PropertyAccessor<TSource, TTarget?>, string, string> _expectationTextGenerator;
+	private readonly PropertyAccessor<TSource, TTarget?> _propertyAccessor;
 
 	public MappingNode(
 		IValueConstraint<TSource>? precondition,
@@ -28,19 +29,14 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 		}
 	}
 
-	private static string DefaultExpectationTextGenerator(PropertyAccessor<TSource, TTarget?> propertyAccessor,
-		string expectationText)
-	{
-		return propertyAccessor + expectationText;
-	}
-
-	public ConstraintResult CombineResults(ConstraintResult? combinedResult, ConstraintResult result)
+	public ConstraintResult CombineResults(ConstraintResult? combinedResult,
+		ConstraintResult result)
 	{
 		if (combinedResult == null)
 		{
 			return result;
 		}
-		
+
 		string combinedExpectation =
 			$"{combinedResult.ExpectationText}{_expectationTextGenerator(_propertyAccessor, result.ExpectationText)}";
 
@@ -68,20 +64,6 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 
 		return combinedResult.CombineWith(combinedExpectation, "");
 	}
-	
-	private static string CombineResultTexts(string leftResultText, string rightResultText)
-	{
-		if (leftResultText == rightResultText)
-		{
-			return leftResultText;
-		}
-
-		return $"{leftResultText} and {rightResultText}";
-	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> _propertyAccessor + base.ToString();
 
 	/// <inheritdoc />
 	public override Task<ConstraintResult> IsMetBy<TValue>(
@@ -104,5 +86,26 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 
 		throw new InvalidOperationException(
 			$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TTarget).Name},{Environment.NewLine}but found {matchingValue?.GetType().Name}");
+	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> _propertyAccessor + base.ToString();
+
+	private static string CombineResultTexts(string leftResultText, string rightResultText)
+	{
+		if (leftResultText == rightResultText)
+		{
+			return leftResultText;
+		}
+
+		return $"{leftResultText} and {rightResultText}";
+	}
+
+	private static string DefaultExpectationTextGenerator(
+		PropertyAccessor<TSource, TTarget?> propertyAccessor,
+		string expectationText)
+	{
+		return propertyAccessor + expectationText;
 	}
 }

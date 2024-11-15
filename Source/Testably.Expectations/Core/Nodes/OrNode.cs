@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
@@ -6,62 +8,89 @@ using Testably.Expectations.Core.Helpers;
 
 namespace Testably.Expectations.Core.Nodes;
 
-internal class OrNode : CombinationNode
+internal class OrNode : Node
 {
-	public override Node Left { get; }
-	public override Node Right { get; set; }
-	private readonly string _textSeparator;
+	internal Node Current { get; set; }
+	private readonly List<Node> _nodes = new();
 
-	public OrNode(Node left, Node right, string textSeparator = " or ")
+	public OrNode(Node node)
 	{
-		_textSeparator = textSeparator;
-		Left = left;
-		Right = right;
+		Current = node;
 	}
 
 	/// <inheritdoc />
-	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		TValue? value,
-		IEvaluationContext context,
-		CancellationToken cancellationToken)
-		where TValue : default
+	public override void AddConstraint(IConstraint constraint)
+		=> Current.AddConstraint(constraint);
+
+	/// <inheritdoc />
+	public override void AddMapping<TValue, TTarget>(
+		IValueConstraint<TValue>? precondition,
+		PropertyAccessor<TValue, TTarget?> propertyAccessor,
+		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
+		where TTarget : default
+		=> Current.AddMapping(precondition, propertyAccessor, expectationTextGenerator);
+
+	public override void AddNode(Node node, string? separator = null)
 	{
-		ConstraintResult leftResult = await Left.IsMetBy(value, context, cancellationToken);
-		if (leftResult.IgnoreFurtherProcessing)
+		_nodes.Add(Current);
+		Current = node;
+	}
+
+	/// <inheritdoc />
+	public override async Task<ConstraintResult> IsMetBy<TValue>(TValue? value,
+		IEvaluationContext context,
+		CancellationToken cancellationToken) where TValue : default
+	{
+		_nodes.Add(Current);
+		ConstraintResult? combinedResult = null;
+		foreach (Node node in _nodes)
 		{
-			return leftResult;
+			ConstraintResult result = await node.IsMetBy(value, context, cancellationToken);
+			combinedResult = CombineResults(combinedResult, result);
+			if (result.IgnoreFurtherProcessing)
+			{
+				return combinedResult;
+			}
 		}
 
-		ConstraintResult rightResult = await Right.IsMetBy(value, context, cancellationToken);
+		return combinedResult!;
+	}
+
+	/// <inheritdoc />
+	public override void SetReason(BecauseReason becauseReason)
+		=> Current.SetReason(becauseReason);
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> string.Join(" or ", _nodes) + " or " + Current;
+
+	private ConstraintResult CombineResults(ConstraintResult? combinedResult,
+		ConstraintResult result)
+	{
+		const string _textSeparator = " or ";
+		if (combinedResult == null)
+		{
+			return result;
+		}
 
 		string combinedExpectation =
-			$"{leftResult.ExpectationText}{_textSeparator}{rightResult.ExpectationText}";
+			$"{combinedResult.ExpectationText}{_textSeparator}{result.ExpectationText}";
 
-		if (leftResult is ConstraintResult.Failure leftFailure &&
-		    rightResult is ConstraintResult.Failure rightFailure)
+		if (combinedResult is ConstraintResult.Failure leftFailure &&
+		    result is ConstraintResult.Failure rightFailure)
 		{
 			return leftFailure.CombineWith(
 				combinedExpectation,
 				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
 		}
 
-		if (leftResult is ConstraintResult.Failure)
+		if (combinedResult is ConstraintResult.Failure)
 		{
-			return rightResult.CombineWith(combinedExpectation, "");
+			return result.CombineWith(combinedExpectation, "");
 		}
 
-		return leftResult.CombineWith(combinedExpectation, "");
+		return combinedResult.CombineWith(combinedExpectation, "");
 	}
-
-	/// <inheritdoc />
-	public override void SetReason(BecauseReason reason)
-	{
-		Right.SetReason(reason);
-	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> $"({Left} OR {Right})";
 
 	private static string CombineResultTexts(string leftResultText, string rightResultText)
 	{
