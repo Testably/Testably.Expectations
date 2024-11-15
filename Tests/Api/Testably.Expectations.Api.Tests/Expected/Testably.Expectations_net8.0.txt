@@ -844,9 +844,9 @@ namespace Testably.Expectations
         public static Testably.Expectations.Core.IThat<TStream?> Should<TStream>(this Testably.Expectations.Core.IExpectSubject<TStream?> subject)
             where TStream : System.IO.Stream { }
     }
-    public static class ThatStringCollectionShould
+    public static class ThatStringEnumerableShould
     {
-        public static Testably.Expectations.Results.AndOrResult<System.Collections.Generic.IEnumerable<string>, Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<string>>> Contain(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<string>> source, string expected) { }
+        public static Testably.Expectations.Results.StringCountResult<System.Collections.Generic.IEnumerable<string>, Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<string>>> Contain(this Testably.Expectations.Core.IThat<System.Collections.Generic.IEnumerable<string>> source, string expected) { }
     }
     public static class ThatStringShould
     {
@@ -1103,7 +1103,7 @@ namespace Testably.Expectations.Options
         public void AtLeast(int minimum) { }
         public void AtMost(int maximum) { }
         public void Between(int minimum, int maximum) { }
-        public bool Check(int amount) { }
+        public bool? Check(int amount) { }
         public void Exactly(int expected) { }
         public override string ToString() { }
     }

@@ -70,11 +70,17 @@ public class Quantifier
 	/// <summary>
 	///     Verifies the amount against the conditions.
 	/// </summary>
-	public bool Check(int amount)
+	/// <remarks>
+	///     Returns <see langword="true" /> when the condition is satisfied,
+	///     <see langword="false" /> when the condition is not satisfied
+	///     and <see langword="null" /> when the condition could still be satisfied
+	///     with a larger <paramref name="amount" />.
+	/// </remarks>
+	public bool? Check(int amount)
 	{
 		if (_minimum != null && amount < _minimum)
 		{
-			return false;
+			return null;
 		}
 
 		if (_maximum != null && amount > _maximum)

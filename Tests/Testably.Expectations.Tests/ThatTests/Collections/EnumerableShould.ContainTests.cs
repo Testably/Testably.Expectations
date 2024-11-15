@@ -34,8 +34,8 @@ public sealed partial class EnumerableShould
 
 		[Theory]
 		[AutoData]
-		public async Task WhenEnumerableContainsExpectedValue_ShouldSucceed(List<string> subject,
-			string expected)
+		public async Task WhenEnumerableContainsExpectedValue_ShouldSucceed(List<int> subject,
+			int expected)
 		{
 			subject.Add(expected);
 
@@ -47,9 +47,14 @@ public sealed partial class EnumerableShould
 
 		[Theory]
 		[AutoData]
-		public async Task WhenEnumerableDoesNotContainsExpectedValue_ShouldFail(string[] subject,
-			string expected)
+		public async Task WhenEnumerableDoesNotContainsExpectedValue_ShouldFail(int[] subject,
+			int expected)
 		{
+			while (subject.Contains(expected))
+			{
+				expected++;
+			}
+
 			async Task Act()
 				=> await That(subject).Should().Contain(expected);
 
