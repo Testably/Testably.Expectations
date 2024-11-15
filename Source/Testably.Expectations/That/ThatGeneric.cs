@@ -6,7 +6,7 @@ namespace Testably.Expectations;
 /// <summary>
 ///     Expectations on generic values.
 /// </summary>
-public static partial class ThatGenericShould
+public static partial class ThatGeneric
 {
 	private readonly struct ConditionConstraint<T>(
 		T expected,

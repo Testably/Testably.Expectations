@@ -97,8 +97,8 @@ public class BecauseTests
 		bool subject = true;
 
 		async Task Act()
-			=> await That(subject).Should().BeTrue().Because(because1)
-				.And.BeFalse().Because(because2);
+			=> await That(subject).Should().BeFalse().Because(because1)
+				.Or.BeFalse().Because(because2);
 
 		await That(Act).Should().ThrowException().WithMessage($"*{because1}*{because2}*")
 			.AsWildcard();

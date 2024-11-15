@@ -17,7 +17,7 @@ public partial class ThatDelegateThrows<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"with an inner {typeof(TInnerException).Name} which should ")
-				.Validate(new ThatExceptionShould.ExceptionCastConstraint<TInnerException>())
+				.Validate(new ThatExceptionShould.InnerExceptionIsTypeConstraint<TInnerException>())
 				.AddExpectations(e => expectations(new ThatExceptionShould<TInnerException?>(e))),
 			this);
 
@@ -43,7 +43,7 @@ public partial class ThatDelegateThrows<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"with an inner {innerExceptionType.Name} which should ")
-				.Validate(new ThatExceptionShould.ExceptionCastConstraint(innerExceptionType))
+				.Validate(new ThatExceptionShould.InnerExceptionIsTypeConstraint(innerExceptionType))
 				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
 			this);
 

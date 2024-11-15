@@ -26,7 +26,7 @@ public partial class ThatExceptionShould<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					"have an inner exception which should ")
-				.Validate(new ThatExceptionShould.ExceptionCastConstraint<Exception>())
+				.Validate(new ThatExceptionShould.InnerExceptionIsTypeConstraint<Exception>())
 				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
 			this);
 }

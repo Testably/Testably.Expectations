@@ -55,6 +55,28 @@ public sealed partial class DelegateThrows
 				             """);
 		}
 
+		[Fact]
+		public async Task ShouldIncludeExceptionType()
+		{
+			string message = "FOO";
+			Exception exception = new CustomException(message);
+
+			async Task Act()
+				=> await That(() => throw exception).Should().Throw<CustomException>()
+					.WithMessage("foo");
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected () => throw exception to
+				             throw a CustomException with Message equal to "foo",
+				             but found "FOO" which differs at index 0:
+				                ↓ (actual)
+				               "FOO"
+				               "foo"
+				                ↑ (expected)
+				             """);
+		}
+
 		[Theory]
 		[AutoData]
 		public async Task WhenAwaited_ShouldReturnThrownException(string message)

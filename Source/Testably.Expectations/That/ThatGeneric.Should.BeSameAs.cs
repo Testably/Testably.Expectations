@@ -5,7 +5,7 @@ using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
 
-public static partial class ThatGenericShould
+public static partial class ThatGeneric
 {
 	/// <summary>
 	///     Expect the actual value to be the same as the <paramref name="expected" /> value.

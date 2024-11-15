@@ -15,7 +15,9 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<TException>(source.ExpectationBuilder
-				.AddConstraint(new ThrowsExactlyCastConstraint<TException>(throwOptions)),
+				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
+				.AddConstraint(new ThrowsExactlyCastConstraint<TException>(throwOptions))
+				.And(" "),
 			throwOptions);
 	}
 
@@ -27,34 +29,35 @@ public static partial class ThatDelegateShould
 	{
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
-				.AddConstraint(new ThrowsExactlyCastConstraint(exceptionType, throwOptions)),
+				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
+				.AddConstraint(new ThrowsExactlyCastConstraint(exceptionType, throwOptions))
+				.And(" "),
 			throwOptions);
 	}
 
 	private readonly struct ThrowsExactlyCastConstraint<TException>(ThrowsOption throwOptions)
-		: ICastConstraint<DelegateValue, Exception?>
+		: IValueConstraint<Exception?>
 		where TException : Exception
 	{
-		public ConstraintResult IsMetBy(DelegateValue? value)
+		public ConstraintResult IsMetBy(Exception? value)
 		{
-			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult<Exception>(exception);
+				return DoesNotThrowResult<Exception>(value);
 			}
 
-			if (exception is TException typedException && exception.GetType() == typeof(TException))
+			if (value is TException typedException && value.GetType() == typeof(TException))
 			{
 				return new ConstraintResult.Success<TException?>(typedException, ToString());
 			}
 
-			if (exception is null)
+			if (value is null)
 			{
 				return new ConstraintResult.Failure<TException?>(null, ToString(), "it did not");
 			}
 
 			return new ConstraintResult.Failure<TException?>(null, ToString(),
-				$"it did throw {exception.FormatForMessage()}");
+				$"it did throw {value.FormatForMessage()}");
 		}
 
 		/// <inheritdoc />
@@ -72,29 +75,28 @@ public static partial class ThatDelegateShould
 	private readonly struct ThrowsExactlyCastConstraint(
 		Type exceptionType,
 		ThrowsOption throwOptions)
-		: ICastConstraint<DelegateValue, Exception?>
+		: IValueConstraint<Exception?>
 	{
 		/// <inheritdoc />
-		public ConstraintResult IsMetBy(DelegateValue? value)
+		public ConstraintResult IsMetBy(Exception? value)
 		{
-			Exception? exception = value?.Exception;
 			if (!throwOptions.DoCheckThrow)
 			{
-				return DoesNotThrowResult<Exception>(exception);
+				return DoesNotThrowResult<Exception>(value);
 			}
 
-			if (exception?.GetType() == exceptionType)
+			if (value?.GetType() == exceptionType)
 			{
-				return new ConstraintResult.Success<Exception?>(exception, ToString());
+				return new ConstraintResult.Success<Exception?>(value, ToString());
 			}
 
-			if (exception is null)
+			if (value is null)
 			{
 				return new ConstraintResult.Failure<Exception?>(null, ToString(), "it did not");
 			}
 
 			return new ConstraintResult.Failure<Exception?>(null, ToString(),
-				$"it did throw {exception.FormatForMessage()}");
+				$"it did throw {value.FormatForMessage()}");
 		}
 
 		/// <inheritdoc />
