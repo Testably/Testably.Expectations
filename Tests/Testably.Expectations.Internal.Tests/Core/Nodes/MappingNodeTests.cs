@@ -19,7 +19,7 @@ public class MappingNodeTests
 
 		await That(combined).Should().Be<ConstraintResult.Failure>()
 			.Which(f => f.ExpectationText).Should(f => f.Be("expect1 prop expect2"))
-			.Which(f => f.ResultText).Should(f => f.Be("foo"));
+			.AndWhich(f => f.ResultText).Should(f => f.Be("foo"));
 	}
 
 	[Fact]
@@ -34,7 +34,7 @@ public class MappingNodeTests
 
 		await That(combined).Should().Be<ConstraintResult.Failure>()
 			.Which(f => f.ExpectationText).Should(f => f.Be("expect1 prop expect2"))
-			.Which(f => f.ResultText).Should(f => f.Be("foo"));
+			.AndWhich(f => f.ResultText).Should(f => f.Be("foo"));
 	}
 
 	[Fact]
@@ -63,7 +63,7 @@ public class MappingNodeTests
 
 		await That(combined).Should().Be<ConstraintResult.Failure>()
 			.Which(f => f.ExpectationText).Should(f => f.Be("expect1 prop expect2"))
-			.Which(f => f.ResultText).Should(f => f.Be("foo"));
+			.AndWhich(f => f.ResultText).Should(f => f.Be("foo"));
 	}
 
 	[Fact]

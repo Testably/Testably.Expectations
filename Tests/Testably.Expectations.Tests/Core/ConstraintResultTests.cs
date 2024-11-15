@@ -109,7 +109,7 @@ public sealed class ConstraintResultTests
 
 		await That(result).Should().Be<ConstraintResult.Failure>()
 			.Which(s => s.ExpectationText).Should(e => e.Be(expectationText))
-			.Which(s => s.ResultText).Should(e => e.Be("it did"));
+			.AndWhich(s => s.ResultText).Should(e => e.Be("it did"));
 	}
 
 	[Theory]
@@ -123,7 +123,7 @@ public sealed class ConstraintResultTests
 
 		await That(result).Should().Be<ConstraintResult.Failure>()
 			.Which(p => p.ExpectationText).Should(e => e.Be(expectationText))
-			.Which(p => p.ResultText).Should(e => e.Be(resultText));
+			.AndWhich(p => p.ResultText).Should(e => e.Be(resultText));
 	}
 
 	[Theory]
@@ -151,7 +151,7 @@ public sealed class ConstraintResultTests
 
 		await That(result).Should().Be<ConstraintResult.Failure<Dummy>>()
 			.Which(p => p.ExpectationText).Should(e => e.Be(expectationText))
-			.Which(p => p.ResultText).Should(e => e.Be("it did"));
+			.AndWhich(p => p.ResultText).Should(e => e.Be("it did"));
 	}
 
 	[Theory]
@@ -166,7 +166,7 @@ public sealed class ConstraintResultTests
 
 		await That(result).Should().Be<ConstraintResult.Failure<Dummy>>()
 			.Which(p => p.ExpectationText).Should(e => e.Be(expectationText))
-			.Which(p => p.ResultText).Should(e => e.Be(resultText));
+			.AndWhich(p => p.ResultText).Should(e => e.Be(resultText));
 	}
 
 	[Theory]

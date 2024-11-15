@@ -36,20 +36,55 @@ public class AndOrWhichResult<TType, TThat, TSelf>(
 	/// <summary>
 	///     Allows specifying expectations on a property of the current value.
 	/// </summary>
-	public WhichResult<TProperty, AndOrWhichResult<TType, TThat, TSelf>>
-		Which<TProperty>(
-			Expression<Func<TType, TProperty?>> selector)
+	public WhichResult<TProperty, AdditionalAndOrWhichResult>
+		Which<TProperty>(Expression<Func<TType, TProperty?>> selector)
 	{
-		return new WhichResult<TProperty, AndOrWhichResult<TType, TThat, TSelf>>(
+		return new WhichResult<TProperty, AdditionalAndOrWhichResult>(
 			expectations =>
 			{
-				return new AndOrWhichResult<TType, TThat, TSelf>(
+				return new AdditionalAndOrWhichResult(
 					_expectationBuilder
 						.ForProperty(PropertyAccessor<TType, TProperty?>.FromExpression(selector),
 							(property, expectation) => $" which {property}should {expectation}")
 						.AddExpectations(e => expectations(new Expect.ThatSubject<TProperty?>(e))),
 					_returnValue);
 			});
+	}
+
+	/// <summary>
+	///     The result of an additional expectation for the underlying type.
+	///     <para />
+	///     In addition to the combinations from <see cref="AndOrResult{TType,TThat}" />, allows accessing
+	///     underlying properties with <see cref="AndWhich{TProperty}" />.
+	/// </summary>
+	public class AdditionalAndOrWhichResult(
+		ExpectationBuilder expectationBuilder,
+		TThat returnValue)
+		: AndOrResult<TType, TThat, TSelf>(expectationBuilder, returnValue)
+	{
+		private readonly ExpectationBuilder _expectationBuilder = expectationBuilder;
+		private readonly TThat _returnValue = returnValue;
+
+		/// <summary>
+		///     Allows specifying expectations on a property of the current value.
+		/// </summary>
+		public WhichResult<TProperty, AdditionalAndOrWhichResult>
+			AndWhich<TProperty>(Expression<Func<TType, TProperty?>> selector)
+		{
+			_expectationBuilder.And(" and");
+			return new WhichResult<TProperty, AdditionalAndOrWhichResult>(
+				expectations =>
+				{
+					return new AdditionalAndOrWhichResult(
+						_expectationBuilder
+							.ForProperty(
+								PropertyAccessor<TType, TProperty?>.FromExpression(selector),
+								(property, expectation) => $" which {property}should {expectation}")
+							.AddExpectations(e
+								=> expectations(new Expect.ThatSubject<TProperty?>(e))),
+						_returnValue);
+				});
+		}
 	}
 
 	/// <summary>
