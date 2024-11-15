@@ -9,24 +9,23 @@ namespace Testably.Expectations.Core.Nodes;
 
 internal class ExpectationNode : Node
 {
-	protected IConstraint? Constraint { get; private set; }
-
-	protected Node? Inner { get; private set; }
-
-	protected BecauseReason? Reason { get; private set; }
-
 	private Func<ConstraintResult?, ConstraintResult, ConstraintResult>? _combineResults;
+	private IConstraint? _constraint;
+
+	private Node? _inner;
+
+	private BecauseReason? _reason;
 
 	/// <inheritdoc />
 	public override void AddConstraint(IConstraint constraint)
 	{
-		if (Inner is not null)
+		if (_inner is not null)
 		{
-			Inner.AddConstraint(constraint);
+			_inner.AddConstraint(constraint);
 		}
-		else if (Constraint is null)
+		else if (_constraint is null)
 		{
-			Constraint = constraint;
+			_constraint = constraint;
 		}
 		else
 		{
@@ -36,17 +35,17 @@ internal class ExpectationNode : Node
 	}
 
 	/// <inheritdoc />
-	public override void AddMapping<TValue, TTarget>(
-		IValueConstraint<TValue>? precondition,
+	public override Node? AddMapping<TValue, TTarget>(
 		PropertyAccessor<TValue, TTarget?> propertyAccessor,
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
 		where TTarget : default
 	{
 		MappingNode<TValue, TTarget> mappingNode =
-			new(precondition, propertyAccessor,
+			new(propertyAccessor,
 				expectationTextGenerator);
-		Inner = mappingNode;
+		_inner = mappingNode;
 		_combineResults = mappingNode.CombineResults;
+		return mappingNode;
 	}
 
 	/// <inheritdoc />
@@ -54,9 +53,12 @@ internal class ExpectationNode : Node
 		=> throw new NotSupportedException(
 			$"Don't specify the inner node for Expectation nodes directly. You can use {nameof(AddMapping)} instead.");
 
+	/// <summary>
+	///     Indicates, if the node is empty.
+	/// </summary>
 	public bool IsEmpty()
 	{
-		return Constraint is null && Inner is null;
+		return _constraint is null && _inner is null;
 	}
 
 	/// <inheritdoc />
@@ -65,31 +67,32 @@ internal class ExpectationNode : Node
 		CancellationToken cancellationToken) where TValue : default
 	{
 		ConstraintResult? result = null;
-		if (Constraint is IValueConstraint<TValue?> valueConstraint)
+		if (_constraint is IValueConstraint<TValue?> valueConstraint)
 		{
 			result = valueConstraint.IsMetBy(value);
-			result = Reason?.ApplyTo(result) ?? result;
+			result = _reason?.ApplyTo(result) ?? result;
 		}
-		else if (Constraint is IContextConstraint<TValue?> contextConstraint)
+		else if (_constraint is IContextConstraint<TValue?> contextConstraint)
 		{
 			result = contextConstraint.IsMetBy(value, context);
-			result = Reason?.ApplyTo(result) ?? result;
+			result = _reason?.ApplyTo(result) ?? result;
 		}
-		else if (Constraint is IAsyncConstraint<TValue?> asyncConstraint)
+		else if (_constraint is IAsyncConstraint<TValue?> asyncConstraint)
 		{
 			result = await asyncConstraint.IsMetBy(value, cancellationToken);
-			result = Reason?.ApplyTo(result) ?? result;
+			result = _reason?.ApplyTo(result) ?? result;
 		}
-		else if (Constraint is IAsyncContextConstraint<TValue?> asyncContextConstraint)
+		else if (_constraint is IAsyncContextConstraint<TValue?> asyncContextConstraint)
 		{
 			result = await asyncContextConstraint.IsMetBy(value, context, cancellationToken);
-			result = Reason?.ApplyTo(result) ?? result;
+			result = _reason?.ApplyTo(result) ?? result;
 		}
 
-		if (Inner != null)
+		if (_inner != null)
 		{
-			ConstraintResult innerResult = await Inner.IsMetBy(value, context, cancellationToken);
-			return _combineResults?.Invoke(result, innerResult) ?? innerResult;
+			ConstraintResult innerResult = await _inner.IsMetBy(value, context, cancellationToken);
+			innerResult = _combineResults?.Invoke(result, innerResult) ?? innerResult;
+			return innerResult;
 		}
 
 		if (_combineResults != null && result != null)
@@ -104,10 +107,27 @@ internal class ExpectationNode : Node
 	/// <inheritdoc />
 	public override void SetReason(BecauseReason becauseReason)
 	{
-		Reason = becauseReason;
+		_reason = becauseReason;
 	}
 
 	/// <inheritdoc />
-	public override string ToString()
-		=> Constraint + (Inner == null ? "" : Inner.ToString());
+	public override string? ToString()
+	{
+		if (_constraint != null && _inner != null)
+		{
+			return _constraint + (_inner == null ? "" : _inner.ToString());
+		}
+
+		if (_constraint != null)
+		{
+			return _constraint.ToString();
+		}
+
+		if (_inner != null)
+		{
+			return _inner.ToString();
+		}
+
+		return "<empty>";
+	}
 }

@@ -31,15 +31,15 @@ public sealed class AndNodeTests
 	}
 
 	[Fact]
-	public async Task WithTwoFailedTests_ShouldIncludeBothFailuresInMessage()
+	public async Task WithMultipleFailedTests_ShouldIncludeAllFailuresInMessage()
 	{
 		async Task Act()
-			=> await That(true).Should().BeFalse().And.Imply(false);
+			=> await That(true).Should().BeFalse().And.BeFalse().And.Imply(false);
 
 		await That(Act).Should().ThrowException()
 			.WithMessage("""
 			             Expected true to
-			             be False and imply False,
+			             be False and be False and imply False,
 			             but found True and it did not
 			             """);
 	}

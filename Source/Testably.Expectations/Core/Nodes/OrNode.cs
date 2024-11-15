@@ -23,12 +23,11 @@ internal class OrNode : Node
 		=> Current.AddConstraint(constraint);
 
 	/// <inheritdoc />
-	public override void AddMapping<TValue, TTarget>(
-		IValueConstraint<TValue>? precondition,
+	public override Node? AddMapping<TValue, TTarget>(
 		PropertyAccessor<TValue, TTarget?> propertyAccessor,
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
 		where TTarget : default
-		=> Current.AddMapping(precondition, propertyAccessor, expectationTextGenerator);
+		=> Current.AddMapping(propertyAccessor, expectationTextGenerator);
 
 	public override void AddNode(Node node, string? separator = null)
 	{

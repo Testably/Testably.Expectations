@@ -14,7 +14,7 @@ namespace Testably.Expectations.Core;
 /// <summary>
 ///     The builder for collecting all expectations.
 /// </summary>
-[DebuggerDisplay("{_tree}")]
+[DebuggerDisplay("{_node}")]
 public abstract class ExpectationBuilder
 {
 	internal string Subject { get; }
@@ -26,7 +26,6 @@ public abstract class ExpectationBuilder
 	private ITimeSystem? _timeSystem;
 
 	private Node? _whichNode;
-	//private readonly Tree _tree = new();
 
 	/// <summary>
 	///     Initializes the <see cref="ExpectationBuilder" /> with the <paramref name="subjectExpression" />
@@ -90,14 +89,16 @@ public abstract class ExpectationBuilder
 				And(" ");
 				_node.AddConstraint(s);
 			}
-			
-			_node.AddMapping(null, propertyAccessor, expectationTextGenerator);
+
+			Node root = _node;
+			_node = _node.AddMapping(propertyAccessor, expectationTextGenerator) ?? _node;
 			if (c is not null)
 			{
 				_node.AddConstraint(c);
 			}
 
-			a?.Invoke(this);
+			a.Invoke(this);
+			_node = root;
 			return this;
 		});
 	}
@@ -127,13 +128,13 @@ public abstract class ExpectationBuilder
 		}
 		else if (_node is OrNode orNode)
 		{
-			AndNode newNode = new AndNode(orNode.Current);
+			AndNode newNode = new(orNode.Current);
 			newNode.AddNode(new ExpectationNode(), textSeparator);
 			orNode.Current = newNode;
 		}
 		else
 		{
-			AndNode newNode = new AndNode(_node);
+			AndNode newNode = new(_node);
 			newNode.AddNode(new ExpectationNode(), textSeparator);
 			_node = newNode;
 		}
@@ -183,15 +184,15 @@ public abstract class ExpectationBuilder
 		ITimeSystem timeSystem,
 		CancellationToken cancellationToken);
 
-	// TODO VAB: do we need the textseparator?
 	internal void Or(string textSeparator = " or ")
 	{
 		if (_node is OrNode orNode)
 		{
 			orNode.AddNode(new ExpectationNode(), textSeparator);
+			return;
 		}
 
-		OrNode newNode = new OrNode(_node);
+		OrNode newNode = new(_node);
 		newNode.AddNode(new ExpectationNode(), textSeparator);
 		_node = newNode;
 	}
@@ -210,14 +211,17 @@ public abstract class ExpectationBuilder
 	public class PropertyExpectationBuilder<TSource, TProperty>
 	{
 		private readonly
-			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>?, ExpectationBuilder>
+			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>
+				?, ExpectationBuilder>
 			_callback;
 
-		private IValueConstraint<TSource>? _sourceConstraint = null;
 		private readonly IValueConstraint<TProperty>? _constraint = null;
 
+		private IValueConstraint<TSource>? _sourceConstraint;
+
 		internal PropertyExpectationBuilder(
-			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>?, ExpectationBuilder>
+			Func<Action<ExpectationBuilder>, IValueConstraint<TSource>?, IValueConstraint<TProperty>
+					?, ExpectationBuilder>
 				callback)
 		{
 			_callback = callback;

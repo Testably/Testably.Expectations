@@ -23,11 +23,11 @@ internal class WhichNode<TSource, TProperty> : Node
 		=> _inner?.AddConstraint(constraint);
 
 	/// <inheritdoc />
-	public override void AddMapping<TValue, TTarget>(IValueConstraint<TValue>? precondition,
+	public override Node? AddMapping<TValue, TTarget>(
 		PropertyAccessor<TValue, TTarget?> propertyAccessor,
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
 		where TTarget : default
-		=> _inner?.AddMapping(precondition, propertyAccessor, expectationTextGenerator);
+		=> _inner?.AddMapping(propertyAccessor, expectationTextGenerator);
 
 	/// <inheritdoc />
 	public override void AddNode(Node node, string? separator = null)

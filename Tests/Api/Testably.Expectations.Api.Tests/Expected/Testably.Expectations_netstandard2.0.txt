@@ -851,7 +851,7 @@ namespace Testably.Expectations.Core.EvaluationContext
 }
 namespace Testably.Expectations.Core
 {
-    [System.Diagnostics.DebuggerDisplay("{_tree}")]
+    [System.Diagnostics.DebuggerDisplay("{_node}")]
     public abstract class ExpectationBuilder
     {
         protected ExpectationBuilder(string subjectExpression) { }

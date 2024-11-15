@@ -14,7 +14,6 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 	private readonly PropertyAccessor<TSource, TTarget?> _propertyAccessor;
 
 	public MappingNode(
-		IValueConstraint<TSource>? precondition,
 		PropertyAccessor<TSource, TTarget?> propertyAccessor,
 		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
 	{
@@ -34,7 +33,8 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 	{
 		if (combinedResult == null)
 		{
-			return result;
+			return result.UpdateExpectationText(
+				e => _expectationTextGenerator(_propertyAccessor, e.ExpectationText));
 		}
 
 		string combinedExpectation =
@@ -66,7 +66,7 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 	}
 
 	/// <inheritdoc />
-	public override Task<ConstraintResult> IsMetBy<TValue>(
+	public override async Task<ConstraintResult> IsMetBy<TValue>(
 		TValue? value,
 		IEvaluationContext context,
 		CancellationToken cancellationToken) where TValue : default
@@ -81,7 +81,8 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 			typedValue,
 			out TTarget? matchingValue))
 		{
-			return base.IsMetBy(matchingValue, context, cancellationToken);
+			var result = await base.IsMetBy(matchingValue, context, cancellationToken);
+			return result.UseValue(value);
 		}
 
 		throw new InvalidOperationException(

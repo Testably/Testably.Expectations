@@ -20,7 +20,12 @@ public sealed class GenericForTests
 				.For(o => o.A, v => v.Should().BeTrue()).And
 				.For(o => o.B, v => v.Should().BeTrue());
 
-		await That(Act).Should().Throw<XunitException>();
+		await That(Act).Should().Throw<XunitException>().OnlyIf(!expectSuccess)
+			.WithMessage("""
+			             Expected subject to
+			             for .A be True and for .B be True,
+			             but found False
+			             """);
 	}
 
 	[Theory]
@@ -42,7 +47,11 @@ public sealed class GenericForTests
 				.For(o => o.B, v => v.Should().BeTrue());
 
 		await That(Act).Should().Throw<XunitException>().OnlyIf(!expectSuccess)
-			.WithMessage("foo");
+			.WithMessage("""
+			             Expected subject to
+			             for .A be True or for .B be True,
+			             but found False
+			             """);
 	}
 
 	[Theory]
