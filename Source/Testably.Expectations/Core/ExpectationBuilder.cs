@@ -240,8 +240,7 @@ public abstract class ExpectationBuilder
 		}
 
 		/// <summary>
-		///     Add a validation constraint for the current <typeparamref name="TProperty" />,
-		///     that it is of type <typeparamref name="TSource" />.
+		///     Add a validation constraint for the current <typeparamref name="TSource" />.
 		/// </summary>
 		public PropertyExpectationBuilder<TSource, TProperty> Validate(
 			IValueConstraint<TSource> constraint)
