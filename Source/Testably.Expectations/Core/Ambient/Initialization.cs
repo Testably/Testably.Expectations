@@ -46,13 +46,13 @@ internal static class Initialization
 
 	internal class InitializationState
 	{
-		public Formatter Formatter { get; }
+		public ValueFormatter Formatter { get; }
 		private readonly ITestFrameworkAdapter _testFramework;
 
 		public InitializationState(ITestFrameworkAdapter testFramework)
 		{
 			_testFramework = testFramework;
-			Formatter = new Formatter();
+			Formatter = new ValueFormatter();
 		}
 
 		[DoesNotReturn]

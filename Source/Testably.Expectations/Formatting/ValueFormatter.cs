@@ -3,37 +3,19 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Testably.Expectations.Core.Helpers;
+using MemberVisibilities = Testably.Expectations.Core.Helpers.MemberVisibilities;
 
 namespace Testably.Expectations.Formatting;
 
-internal class DefaultFormatter : IValueFormatter
+/// <summary>
+///     Formatter for arbitrary objects in exception messages.
+/// </summary>
+public class ValueFormatter
 {
-	#region IValueFormatter Members
-
-	/// <inheritdoc />
-	public bool TryFormat(object value, StringBuilder stringBuilder, FormattingOptions options)
-	{
-		if (value.GetType() == typeof(object))
-		{
-			stringBuilder.Append($"System.Object (HashCode={value.GetHashCode()})");
-		}
-		else if (HasCompilerGeneratedToStringImplementation(value))
-		{
-			WriteTypeAndMemberValues(value, stringBuilder, options);
-		}
-		else if (options.UseLineBreaks)
-		{
-			stringBuilder.AppendLine(value.ToString().Indent(indentFirstLine: false));
-		}
-		else
-		{
-			stringBuilder.Append(value);
-		}
-
-		return true;
-	}
-
-	#endregion
+	/// <summary>
+	///     The default string representation of <see langword="null" />.
+	/// </summary>
+	public static readonly string NullString = "<null>";
 
 	/// <summary>
 	///     Selects which members of <paramref name="type" /> to format.
@@ -52,7 +34,27 @@ internal class DefaultFormatter : IValueFormatter
 	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
 	/// <returns>The name to be displayed for <paramref name="type" />.</returns>
 	/// <remarks>The default is <see cref="Type.FullName" />.</remarks>
-	protected virtual string? TypeDisplayName(Type type) => type.Name;
+	protected virtual string TypeDisplayName(Type type) => type.Name;
+
+	internal void FormatObject(StringBuilder stringBuilder, object value, FormattingOptions options)
+	{
+		if (value.GetType() == typeof(object))
+		{
+			stringBuilder.Append($"System.Object (HashCode={value.GetHashCode()})");
+		}
+		else if (HasCompilerGeneratedToStringImplementation(value))
+		{
+			WriteTypeAndMemberValues(value, stringBuilder, options);
+		}
+		else if (options.UseLineBreaks)
+		{
+			stringBuilder.AppendLine(value.ToString().Indent(indentFirstLine: false));
+		}
+		else
+		{
+			stringBuilder.Append(value);
+		}
+	}
 
 	private static bool HasCompilerGeneratedToStringImplementation(object value)
 	{
@@ -132,7 +134,7 @@ internal class DefaultFormatter : IValueFormatter
 
 	private void WriteTypeName(StringBuilder stringBuilder, Type type)
 	{
-		string? typeName = type.HasFriendlyName() ? TypeDisplayName(type) : string.Empty;
+		string typeName = type.HasFriendlyName() ? TypeDisplayName(type) : string.Empty;
 		stringBuilder.Append(typeName);
 	}
 

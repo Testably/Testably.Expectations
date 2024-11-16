@@ -926,8 +926,10 @@ namespace Testably.Expectations.Core.Constraints
         public abstract Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText);
         public class Failure : Testably.Expectations.Core.Constraints.ConstraintResult
         {
+            public Failure(string expectationText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public Failure(string expectationText, string resultText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public string ResultText { get; }
+            public Testably.Expectations.Core.Constraints.ConstraintResult.Failure AppendResult(string result) { }
             public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
             public override string ToString() { }
         }
@@ -1058,15 +1060,118 @@ namespace Testably.Expectations.Extensions
 }
 namespace Testably.Expectations.Formatting
 {
-    public class Formatter
+    public static class Format
     {
-        public Formatter() { }
-        public static string Format<T>(T? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static Testably.Expectations.Formatting.ValueFormatter Formatter { get; }
     }
     public class FormattingOptions
     {
         public static Testably.Expectations.Formatting.FormattingOptions MultipleLines { get; }
         public static Testably.Expectations.Formatting.FormattingOptions SingleLine { get; }
+    }
+    public class ValueFormatter
+    {
+        public static readonly string NullString;
+        public ValueFormatter() { }
+        protected virtual System.Reflection.MemberInfo[] GetMembers(System.Type type) { }
+        protected virtual string TypeDisplayName(System.Type type) { }
+    }
+    public static class ValueFormatters
+    {
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, bool value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, byte value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.DateOnly value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.DateTime value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.DateTimeOffset value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, decimal value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, double value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.Guid value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, short value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, int value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, long value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.IntPtr value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.Net.HttpStatusCode? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, sbyte value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, float value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.TimeOnly value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.TimeSpan value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, ushort value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, uint value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, ulong value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, System.UIntPtr value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter _, string? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Collections.IEnumerable value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.DateOnly? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.DateTime? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.DateTimeOffset? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Enum? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Guid? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.IntPtr? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.TimeOnly? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.TimeSpan? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Type? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.UIntPtr? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, bool? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, byte? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, decimal? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, double? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, float? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, int? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, long? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, object? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, sbyte? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, short? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, uint? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, ulong? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format(this Testably.Expectations.Formatting.ValueFormatter formatter, ushort? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, bool value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, byte value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.Collections.IEnumerable value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.DateOnly value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.DateOnly? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.DateTime value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.DateTime? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.DateTimeOffset value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.DateTimeOffset? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, decimal value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, double value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.Enum? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.Guid value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.Guid? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, short value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, int value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, long value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.IntPtr value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.IntPtr? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.Net.HttpStatusCode? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, sbyte value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, float value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.TimeOnly value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.TimeOnly? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.TimeSpan value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.TimeSpan? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.Type? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, ushort value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, uint value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, ulong value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.UIntPtr value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.UIntPtr? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, bool? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, byte? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, decimal? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, double? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, float? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, int? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, long? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, object? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, sbyte? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, short? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, string? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, uint? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, ulong? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, ushort? value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static string Format<T>(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Collections.Generic.IEnumerable<T> value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
+        public static void Format<T>(this Testably.Expectations.Formatting.ValueFormatter formatter, System.Text.StringBuilder stringBuilder, System.Collections.Generic.IEnumerable<T> value, Testably.Expectations.Formatting.FormattingOptions? options = null) { }
     }
 }
 namespace Testably.Expectations.Options

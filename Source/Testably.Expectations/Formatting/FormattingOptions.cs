@@ -1,7 +1,7 @@
 ﻿namespace Testably.Expectations.Formatting;
 
 /// <summary>
-///     Formatting options used in the <see cref="Formatter.Format{T}(T, FormattingOptions)" /> method.
+///     Formatting options used in the <see cref="ValueFormatter" />.
 /// </summary>
 public class FormattingOptions
 {
