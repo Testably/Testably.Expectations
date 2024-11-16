@@ -13,7 +13,7 @@ public static partial class ThatBoolShould
 	public static AndOrResult<bool, IThat<bool>> Be(this IThat<bool> source,
 		bool expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint(source.ExpectationBuilder.GetIt(), expected)),
+				.AddConstraint(it => new IsValueConstraint(it, expected)),
 			source);
 
 	/// <summary>
@@ -22,10 +22,10 @@ public static partial class ThatBoolShould
 	public static AndOrResult<bool, IThat<bool>> NotBe(this IThat<bool> source,
 		bool unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsNotValueConstraint(unexpected)),
+				.AddConstraint(it => new IsNotValueConstraint(it, unexpected)),
 			source);
 
-	private readonly struct IsNotValueConstraint(bool unexpected) : IValueConstraint<bool>
+	private readonly struct IsNotValueConstraint(string it, bool unexpected) : IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{
@@ -34,7 +34,7 @@ public static partial class ThatBoolShould
 				return new ConstraintResult.Success<bool>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()

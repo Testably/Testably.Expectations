@@ -15,25 +15,28 @@ namespace Testably.Expectations.Core;
 /// </summary>
 public abstract class ExpectationBuilder
 {
-	internal string Subject { get; }
+	private const string DefaultCurrentSubject = "it";
+
+	/// <summary>
+	///     The current name for the subject.
+	/// </summary>
+	/// <remarks>
+	///     Defaults to "it".
+	/// </remarks>
+	public string It => _it;
+
 	internal static Action<ExpectationBuilder> NoAction { get; } = _ => { };
+	internal string Subject { get; }
 
 	private CancellationToken? _cancellationToken;
+
+	private string _it = DefaultCurrentSubject;
 
 	private Node _node = new ExpectationNode();
 
 	private ITimeSystem? _timeSystem;
 
 	private Node? _whichNode;
-
-	private const string DefaultCurrentSubject = "it";
-
-	public string GetIt()
-	{
-		return _currentSubject;
-	}
-
-	private string _currentSubject = DefaultCurrentSubject;
 
 	/// <summary>
 	///     Initializes the <see cref="ExpectationBuilder" /> with the <paramref name="subjectExpression" />
@@ -42,6 +45,54 @@ public abstract class ExpectationBuilder
 	protected ExpectationBuilder(string subjectExpression)
 	{
 		Subject = subjectExpression;
+	}
+
+	/// <summary>
+	///     Adds the <see cref="IValueConstraint{TValue}"/> from the <paramref name="constraintBuilder" /> which verifies the underlying value.
+	/// </summary>
+	/// <remarks>
+	///     The parameter passed to the <paramref name="constraintBuilder"/> is the current name for the subject (mostly "it").
+	/// </remarks>
+	public ExpectationBuilder AddConstraint<TValue>(Func<string, IValueConstraint<TValue>> constraintBuilder)
+	{
+		_node.AddConstraint(constraintBuilder(It));
+		return this;
+	}
+
+	/// <summary>
+	///     Adds the <see cref="IContextConstraint{TValue}"/> from the <paramref name="constraintBuilder" /> which verifies the underlying value.
+	/// </summary>
+	/// <remarks>
+	///     The parameter passed to the <paramref name="constraintBuilder"/> is the current name for the subject (mostly "it").
+	/// </remarks>
+	public ExpectationBuilder AddConstraint<TValue>(Func<string, IContextConstraint<TValue>> constraintBuilder)
+	{
+		_node.AddConstraint(constraintBuilder(It));
+		return this;
+	}
+
+	/// <summary>
+	///     Adds the <see cref="IAsyncConstraint{TValue}"/> from the <paramref name="constraintBuilder" /> which verifies the underlying value.
+	/// </summary>
+	/// <remarks>
+	///     The parameter passed to the <paramref name="constraintBuilder"/> is the current name for the subject (mostly "it").
+	/// </remarks>
+	public ExpectationBuilder AddConstraint<TValue>(Func<string, IAsyncConstraint<TValue>> constraintBuilder)
+	{
+		_node.AddConstraint(constraintBuilder(It));
+		return this;
+	}
+
+	/// <summary>
+	///     Adds the <see cref="IAsyncContextConstraint{TValue}"/> from the <paramref name="constraintBuilder" /> which verifies the underlying value.
+	/// </summary>
+	/// <remarks>
+	///     The parameter passed to the <paramref name="constraintBuilder"/> is the current name for the subject (mostly "it").
+	/// </remarks>
+	public ExpectationBuilder AddConstraint<TValue>(Func<string, IAsyncContextConstraint<TValue>> constraintBuilder)
+	{
+		_node.AddConstraint(constraintBuilder(It));
+		return this;
 	}
 
 	/// <summary>
@@ -100,7 +151,7 @@ public abstract class ExpectationBuilder
 
 			Node root = _node;
 			_node = _node.AddMapping(propertyAccessor, expectationTextGenerator) ?? _node;
-			_currentSubject = propertyAccessor.ToString().Trim();
+			_it = propertyAccessor.ToString().Trim();
 			if (c is not null)
 			{
 				_node.AddConstraint(c);
@@ -108,7 +159,7 @@ public abstract class ExpectationBuilder
 
 			a.Invoke(this);
 			_node = root;
-			_currentSubject = DefaultCurrentSubject;
+			_it = DefaultCurrentSubject;
 			return this;
 		});
 	}

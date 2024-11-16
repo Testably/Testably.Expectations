@@ -13,10 +13,10 @@ public static partial class ThatBoolShould
 	public static AndOrResult<bool, IThat<bool>> Imply(this IThat<bool> source,
 		bool consequent)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ImpliesValueConstraint(consequent)),
+				.AddConstraint(it => new ImpliesValueConstraint(it, consequent)),
 			source);
 
-	private readonly struct ImpliesValueConstraint(bool consequent) : IValueConstraint<bool>
+	private readonly struct ImpliesValueConstraint(string it, bool consequent) : IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{
@@ -25,7 +25,7 @@ public static partial class ThatBoolShould
 				return new ConstraintResult.Success<bool>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), "it did not");
+			return new ConstraintResult.Failure(ToString(), $"{it} did not");
 		}
 
 		public override string ToString()
