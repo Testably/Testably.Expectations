@@ -14,7 +14,7 @@ public static partial class ThatAsyncEnumerableShould
 	/// </summary>
 	public static IThat<IAsyncEnumerable<TItem>> Should<TItem>(
 		this IExpectSubject<IAsyncEnumerable<TItem>> subject)
-		=> subject.Should(_ => { });
+		=> subject.Should(ExpectationBuilder.NoAction);
 }
 
 #endif
