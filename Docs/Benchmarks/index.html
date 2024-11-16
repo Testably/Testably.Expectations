@@ -210,7 +210,7 @@
                   afterTitle: items => {
                     const {index} = items[0];
                     const data = dataset[index];
-                    return '\n' + data.commit.message + '\n\n' + data.commit.timestamp + ' committed by @' + data.commit.committer.username + '\n';
+                    return '\n' + data.commit.message.slice(0, data.commit.message.indexOf("\n")) + '\n\n' + data.commit.timestamp + ' committed by @' + data.commit.author.username + '\n';
                   },
                   label: item => {
                     let label = item.value;
@@ -296,7 +296,7 @@
                   afterTitle: items => {
                     const {index} = items[0];
                     const data = datasets[0][1][index];
-                    return '\n' + data.commit.message + '\n\n' + data.commit.timestamp + ' committed by @' + data.commit.committer.username + '\n';
+                    return '\n' + data.commit.message.slice(0, data.commit.message.indexOf("\n")) + '\n\n' + data.commit.timestamp + ' committed by @' + data.commit.author.username + '\n';
                   },
                   label: item => {
                     let label = item.value;
