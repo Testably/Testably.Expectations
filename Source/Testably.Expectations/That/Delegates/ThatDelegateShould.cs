@@ -2,7 +2,6 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Core.Sources;
 
 namespace Testably.Expectations;
 
@@ -33,10 +32,12 @@ public static partial class ThatDelegateShould
 		if (exception is not null)
 		{
 			return new ConstraintResult.Failure<Exception?>(exception, DoesNotThrowExpectation,
-				$"it did throw {exception.FormatForMessage()}", true);
+				$"it did throw {exception.FormatForMessage()}",
+				ConstraintResult.FurtherProcessing.IgnoreCompletely);
 		}
 
-		return new ConstraintResult.Success<TException?>(default, DoesNotThrowExpectation, true);
+		return new ConstraintResult.Success<TException?>(default, DoesNotThrowExpectation,
+			ConstraintResult.FurtherProcessing.IgnoreCompletely);
 	}
 
 	private readonly struct ThrowsCastConstraint(Type exceptionType, ThrowsOption throwOptions)
@@ -75,7 +76,7 @@ public static partial class ThatDelegateShould
 		}
 	}
 
-	private readonly struct ThrowsCastConstraint<TException>(ThrowsOption throwOptions)
+	private readonly struct ThrowExceptionOfTypeConstraint<TException>(ThrowsOption throwOptions)
 		: IValueConstraint<Exception?>
 		where TException : Exception
 	{
@@ -94,7 +95,9 @@ public static partial class ThatDelegateShould
 
 			if (value is null)
 			{
-				return new ConstraintResult.Failure<TException?>(null, ToString(), "it did not");
+				return new ConstraintResult.Failure<TException?>(null, ToString(),
+					"it did not throw any exception",
+					ConstraintResult.FurtherProcessing.IgnoreResult);
 			}
 
 			return new ConstraintResult.Failure<TException?>(null, ToString(),

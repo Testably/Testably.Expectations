@@ -11,8 +11,10 @@ namespace Testably.Expectations.Core.Nodes;
 
 internal class OrNode : Node
 {
+	private const string DefaultSeparator = " or ";
 	internal Node Current { get; set; }
-	private readonly List<Node> _nodes = new();
+	private string? _currentSeparator;
+	private readonly List<(string, Node)> _nodes = new();
 
 	public OrNode(Node node)
 	{
@@ -32,8 +34,9 @@ internal class OrNode : Node
 
 	public override void AddNode(Node node, string? separator = null)
 	{
-		_nodes.Add(Current);
+		_nodes.Add((_currentSeparator ?? DefaultSeparator, Current));
 		Current = node;
+		_currentSeparator = separator;
 	}
 
 	/// <inheritdoc />
@@ -41,13 +44,14 @@ internal class OrNode : Node
 		IEvaluationContext context,
 		CancellationToken cancellationToken) where TValue : default
 	{
-		_nodes.Add(Current);
+		_nodes.Add((_currentSeparator ?? DefaultSeparator, Current));
 		ConstraintResult? combinedResult = null;
-		foreach (Node node in _nodes)
+		foreach ((string separator, Node node) in _nodes)
 		{
 			ConstraintResult result = await node.IsMetBy(value, context, cancellationToken);
-			combinedResult = CombineResults(combinedResult, result);
-			if (result.IgnoreFurtherProcessing)
+			combinedResult = CombineResults(combinedResult, result, separator,
+				combinedResult?.FurtherProcessingStrategy);
+			if (result.FurtherProcessingStrategy == ConstraintResult.FurtherProcessing.IgnoreCompletely)
 			{
 				return combinedResult;
 			}
@@ -65,30 +69,36 @@ internal class OrNode : Node
 	{
 		if (_nodes.Any())
 		{
-			return string.Join(" or ", _nodes) + " or " + Current;
+			return string.Join(DefaultSeparator, _nodes.Select(x => x.Item2))
+			       + DefaultSeparator + Current;
 		}
 
 		return Current.ToString();
 	}
 
-	private ConstraintResult CombineResults(ConstraintResult? combinedResult,
-		ConstraintResult result)
+	private ConstraintResult CombineResults(
+		ConstraintResult? combinedResult,
+		ConstraintResult result,
+		string separator,
+		ConstraintResult.FurtherProcessing? furtherProcessingStrategy)
 	{
-		const string _textSeparator = " or ";
 		if (combinedResult == null)
 		{
 			return result;
 		}
 
 		string combinedExpectation =
-			$"{combinedResult.ExpectationText}{_textSeparator}{result.ExpectationText}";
+			$"{combinedResult.ExpectationText}{separator}{result.ExpectationText}";
 
 		if (combinedResult is ConstraintResult.Failure leftFailure &&
 		    result is ConstraintResult.Failure rightFailure)
 		{
 			return leftFailure.CombineWith(
 				combinedExpectation,
-				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
+				CombineResultTexts(
+					leftFailure.ResultText,
+					rightFailure.ResultText,
+					furtherProcessingStrategy ?? ConstraintResult.FurtherProcessing.Continue));
 		}
 
 		if (combinedResult is ConstraintResult.Failure)
@@ -99,9 +109,13 @@ internal class OrNode : Node
 		return combinedResult.CombineWith(combinedExpectation, "");
 	}
 
-	private static string CombineResultTexts(string leftResultText, string rightResultText)
+	private static string CombineResultTexts(
+		string leftResultText,
+		string rightResultText,
+		ConstraintResult.FurtherProcessing furtherProcessingStrategy)
 	{
-		if (leftResultText == rightResultText)
+		if (furtherProcessingStrategy == ConstraintResult.FurtherProcessing.IgnoreResult ||
+		    leftResultText == rightResultText)
 		{
 			return leftResultText;
 		}

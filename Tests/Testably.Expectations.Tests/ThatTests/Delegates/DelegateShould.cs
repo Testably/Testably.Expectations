@@ -66,7 +66,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -114,7 +114,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -147,7 +147,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -195,7 +195,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -228,7 +228,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -276,7 +276,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -310,7 +310,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -361,7 +361,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -394,7 +394,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -427,7 +427,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 
@@ -461,7 +461,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 #endif
@@ -498,7 +498,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected @delegate to
 				             throw an Exception,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 #endif
