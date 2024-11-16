@@ -24,7 +24,7 @@ public class ExpectTests
 				               [01] Expected subjectA to be True
 				               [02] Expected subjectB to be True
 				              but
-				               [{(subjectB ? "01" : "02")}] found False
+				               [{(subjectB ? "01" : "02")}] it was False
 				              """);
 		}
 
@@ -92,8 +92,8 @@ public class ExpectTests
 				              [01] Expected subjectA to be True
 				              [02] Expected subjectB to be True
 				             but
-				              [01] found False
-				              [02] found False
+				              [01] it was False
+				              [02] it was False
 				             """);
 		}
 
@@ -159,9 +159,9 @@ public class ExpectTests
 				              [03] Expected subjectC to be True
 				              [04] Expected subjectD to be True
 				             but
-				                [01] found False
-				                [02] found False
-				              [04] found False
+				                [01] it was False
+				                [02] it was False
+				              [04] it was False
 				             """);
 		}
 
@@ -196,8 +196,8 @@ public class ExpectTests
 				              [01] Expected subjectA to be True
 				              [02] Expected subjectB to be True
 				             but
-				              [01] found False
-				              [02] found False
+				              [01] it was False
+				              [02] it was False
 				             """);
 		}
 
@@ -277,7 +277,7 @@ public class ExpectTests
 				                [03] Expected subjectB to be equal to "subject B"
 				                [04] Expected subjectC to be equal to "subject C"
 				             but
-				              [01] found False
+				              [01] it was False
 				                [02] found "subject X" which differs at index 8:
 				                                ↓ (actual)
 				                       "subject X"
@@ -321,9 +321,9 @@ public class ExpectTests
 				              [03] Expected subjectC to be True
 				              [04] Expected subjectD to be True
 				             but
-				                [01] found False
-				              [03] found False
-				              [04] found False
+				                [01] it was False
+				              [03] it was False
+				              [04] it was False
 				             """);
 		}
 

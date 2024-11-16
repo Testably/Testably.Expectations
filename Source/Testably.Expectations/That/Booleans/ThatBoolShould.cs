@@ -15,7 +15,7 @@ public static partial class ThatBoolShould
 	public static IThat<bool> Should(this IExpectSubject<bool> subject)
 		=> subject.Should(ExpectationBuilder.NoAction);
 
-	private readonly struct IsValueConstraint(bool expected) : IValueConstraint<bool>
+	private readonly struct IsValueConstraint(string it, bool expected) : IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{
@@ -24,7 +24,7 @@ public static partial class ThatBoolShould
 				return new ConstraintResult.Success<bool>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()

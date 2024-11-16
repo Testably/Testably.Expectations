@@ -38,7 +38,7 @@ public sealed class OrNodeTests
 			.WithMessage("""
 			             Expected true to
 			             be False or be False or imply False,
-			             but found True and it did not
+			             but it was True and it did not
 			             """);
 	}
 

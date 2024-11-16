@@ -13,7 +13,7 @@ public static partial class ThatBoolShould
 	public static AndOrResult<bool, IThat<bool>> Be(this IThat<bool> source,
 		bool expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint(expected)),
+				.AddConstraint(new IsValueConstraint(source.ExpectationBuilder.GetIt(), expected)),
 			source);
 
 	/// <summary>

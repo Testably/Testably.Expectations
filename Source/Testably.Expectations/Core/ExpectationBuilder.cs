@@ -25,7 +25,16 @@ public abstract class ExpectationBuilder
 	private ITimeSystem? _timeSystem;
 
 	private Node? _whichNode;
-	
+
+	private const string DefaultCurrentSubject = "it";
+
+	public string GetIt()
+	{
+		return _currentSubject;
+	}
+
+	private string _currentSubject = DefaultCurrentSubject;
+
 	/// <summary>
 	///     Initializes the <see cref="ExpectationBuilder" /> with the <paramref name="subjectExpression" />
 	///     for the statement builder.
@@ -91,6 +100,7 @@ public abstract class ExpectationBuilder
 
 			Node root = _node;
 			_node = _node.AddMapping(propertyAccessor, expectationTextGenerator) ?? _node;
+			_currentSubject = propertyAccessor.ToString().Trim();
 			if (c is not null)
 			{
 				_node.AddConstraint(c);
@@ -98,6 +108,7 @@ public abstract class ExpectationBuilder
 
 			a.Invoke(this);
 			_node = root;
+			_currentSubject = DefaultCurrentSubject;
 			return this;
 		});
 	}

@@ -18,7 +18,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -37,7 +37,7 @@ public sealed partial class BoolShould
 				.WithMessage($"""
 				              Expected subject to
 				              be {Formatter.Format(expected)}, because {reason},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
