@@ -17,24 +17,7 @@ public class ValueFormatter
 	/// </summary>
 	public static readonly string NullString = "<null>";
 
-	/// <summary>
-	///     Selects which members of <paramref name="type" /> to format.
-	/// </summary>
-	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
-	/// <returns>The members of <paramref name="type" /> that will be included when formatting this object.</returns>
-	/// <remarks>The default is all non-private members.</remarks>
-	protected virtual MemberInfo[] GetMembers(Type type)
-	{
-		return type.GetMembers(MemberVisibilities.Public);
-	}
-
-	/// <summary>
-	///     Selects the name to display for <paramref name="type" />.
-	/// </summary>
-	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
-	/// <returns>The name to be displayed for <paramref name="type" />.</returns>
-	/// <remarks>The default is <see cref="Type.FullName" />.</remarks>
-	protected virtual string TypeDisplayName(Type type) => type.Name;
+	internal ValueFormatter() { }
 
 	internal void FormatObject(StringBuilder stringBuilder, object value, FormattingOptions options)
 	{
@@ -56,6 +39,17 @@ public class ValueFormatter
 		}
 	}
 
+	/// <summary>
+	///     Selects which members of <paramref name="type" /> to format.
+	/// </summary>
+	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
+	/// <returns>The members of <paramref name="type" /> that will be included when formatting this object.</returns>
+	/// <remarks>The default is all non-private members.</remarks>
+	private MemberInfo[] GetMembers(Type type)
+	{
+		return type.GetMembers(MemberVisibilities.Public);
+	}
+
 	private static bool HasCompilerGeneratedToStringImplementation(object value)
 	{
 		Type type = value.GetType();
@@ -69,6 +63,14 @@ public class ValueFormatter
 
 		return str is null || str == value.GetType().ToString();
 	}
+
+	/// <summary>
+	///     Selects the name to display for <paramref name="type" />.
+	/// </summary>
+	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
+	/// <returns>The name to be displayed for <paramref name="type" />.</returns>
+	/// <remarks>The default is <see cref="Type.FullName" />.</remarks>
+	private string TypeDisplayName(Type type) => type.Name;
 
 	private static void WriteMemberValues(object obj, MemberInfo[] members,
 		StringBuilder stringBuilder, int indentation, FormattingOptions options)

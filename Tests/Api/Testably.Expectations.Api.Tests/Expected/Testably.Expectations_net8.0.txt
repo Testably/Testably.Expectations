@@ -1070,9 +1070,6 @@ namespace Testably.Expectations.Formatting
     public class ValueFormatter
     {
         public static readonly string NullString;
-        public ValueFormatter() { }
-        protected virtual System.Reflection.MemberInfo[] GetMembers(System.Type type) { }
-        protected virtual string TypeDisplayName(System.Type type) { }
     }
     public static class ValueFormatters
     {
