@@ -794,10 +794,8 @@ namespace Testably.Expectations.Core.Constraints
         public abstract Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText);
         public class Failure : Testably.Expectations.Core.Constraints.ConstraintResult
         {
-            public Failure(string expectationText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public Failure(string expectationText, string resultText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public string ResultText { get; }
-            public Testably.Expectations.Core.Constraints.ConstraintResult.Failure AppendResult(string result) { }
             public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
             public override string ToString() { }
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 
 namespace Testably.Expectations.Core.Constraints;
 
@@ -166,21 +165,10 @@ public abstract class ConstraintResult
 	/// </summary>
 	public class Failure : ConstraintResult
 	{
-		private readonly StringBuilder _resultBuilder = new();
-
 		/// <summary>
 		///     A human-readable representation of the reason for the failure.
 		/// </summary>
-		public string ResultText
-		{
-			get
-			{
-				_resultText ??= _resultBuilder.ToString();
-				return _resultText;
-			}
-		}
-
-		private string? _resultText;
+		public string ResultText { get; }
 
 		/// <summary>
 		///     Initializes a new instance of <see cref="ConstraintResult.Failure" />.
@@ -193,25 +181,7 @@ public abstract class ConstraintResult
 				expectationText,
 				furtherProcessingStrategy)
 		{
-			_resultText = resultText;
-		}
-
-		/// <summary>
-		///     Initializes a new instance of <see cref="ConstraintResult.Failure" />.
-		/// </summary>
-		public Failure(
-			string expectationText,
-			FurtherProcessing furtherProcessingStrategy = FurtherProcessing.Continue)
-			: base(
-				expectationText,
-				furtherProcessingStrategy)
-		{
-		}
-
-		public Failure AppendResult(string result)
-		{
-			_resultBuilder.Append(result);
-			return this;
+			ResultText = resultText;
 		}
 
 		/// <inheritdoc cref="ConstraintResult.CombineWith(string, string)" />
