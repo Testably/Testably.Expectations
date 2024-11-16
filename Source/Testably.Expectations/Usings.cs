@@ -3,3 +3,4 @@ global using Testably.Expectations.Polyfills;
 #endif
 
 global using System.Numerics;
+global using static Testably.Expectations.Formatting.Format;

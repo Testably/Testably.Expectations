@@ -16,7 +16,7 @@ public static partial class ThatDateOnlyShould
 	///     Start expectations for current <see cref="DateOnly" /> <paramref name="subject" />.
 	/// </summary>
 	public static IThat<DateOnly> Should(this IExpectSubject<DateOnly> subject)
-		=> subject.Should(_ => { });
+		=> subject.Should(ExpectationBuilder.NoAction);
 
 	private readonly struct ConditionConstraint(
 		DateOnly? expected,

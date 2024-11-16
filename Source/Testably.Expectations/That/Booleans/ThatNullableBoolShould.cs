@@ -13,7 +13,7 @@ public static partial class ThatNullableBoolShould
 	///     Start expectations for the current <see cref="bool" />? <paramref name="subject" />.
 	/// </summary>
 	public static IThat<bool?> Should(this IExpectSubject<bool?> subject)
-		=> subject.Should(_ => { });
+		=> subject.Should(ExpectationBuilder.NoAction);
 
 	private readonly struct IsValueConstraint(bool? expected) : IValueConstraint<bool?>
 	{

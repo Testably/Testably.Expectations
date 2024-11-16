@@ -16,6 +16,7 @@ namespace Testably.Expectations.Core;
 public abstract class ExpectationBuilder
 {
 	internal string Subject { get; }
+	internal static Action<ExpectationBuilder> NoAction { get; } = _ => { };
 
 	private CancellationToken? _cancellationToken;
 
@@ -24,7 +25,7 @@ public abstract class ExpectationBuilder
 	private ITimeSystem? _timeSystem;
 
 	private Node? _whichNode;
-
+	
 	/// <summary>
 	///     Initializes the <see cref="ExpectationBuilder" /> with the <paramref name="subjectExpression" />
 	///     for the statement builder.

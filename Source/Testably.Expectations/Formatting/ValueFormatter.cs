@@ -3,15 +3,23 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Testably.Expectations.Core.Helpers;
+using MemberVisibilities = Testably.Expectations.Core.Helpers.MemberVisibilities;
 
 namespace Testably.Expectations.Formatting;
 
-internal class DefaultFormatter : IValueFormatter
+/// <summary>
+///     Formatter for arbitrary objects in exception messages.
+/// </summary>
+public class ValueFormatter
 {
-	#region IValueFormatter Members
+	/// <summary>
+	///     The default string representation of <see langword="null" />.
+	/// </summary>
+	public static readonly string NullString = "<null>";
 
-	/// <inheritdoc />
-	public bool TryFormat(object value, StringBuilder stringBuilder, FormattingOptions options)
+	internal ValueFormatter() { }
+
+	internal void FormatObject(StringBuilder stringBuilder, object value, FormattingOptions options)
 	{
 		if (value.GetType() == typeof(object))
 		{
@@ -29,11 +37,7 @@ internal class DefaultFormatter : IValueFormatter
 		{
 			stringBuilder.Append(value);
 		}
-
-		return true;
 	}
-
-	#endregion
 
 	/// <summary>
 	///     Selects which members of <paramref name="type" /> to format.
@@ -41,18 +45,10 @@ internal class DefaultFormatter : IValueFormatter
 	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
 	/// <returns>The members of <paramref name="type" /> that will be included when formatting this object.</returns>
 	/// <remarks>The default is all non-private members.</remarks>
-	protected virtual MemberInfo[] GetMembers(Type type)
+	private MemberInfo[] GetMembers(Type type)
 	{
 		return type.GetMembers(MemberVisibilities.Public);
 	}
-
-	/// <summary>
-	///     Selects the name to display for <paramref name="type" />.
-	/// </summary>
-	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
-	/// <returns>The name to be displayed for <paramref name="type" />.</returns>
-	/// <remarks>The default is <see cref="Type.FullName" />.</remarks>
-	protected virtual string? TypeDisplayName(Type type) => type.Name;
 
 	private static bool HasCompilerGeneratedToStringImplementation(object value)
 	{
@@ -67,6 +63,14 @@ internal class DefaultFormatter : IValueFormatter
 
 		return str is null || str == value.GetType().ToString();
 	}
+
+	/// <summary>
+	///     Selects the name to display for <paramref name="type" />.
+	/// </summary>
+	/// <param name="type">The <see cref="Type" /> of the object being formatted.</param>
+	/// <returns>The name to be displayed for <paramref name="type" />.</returns>
+	/// <remarks>The default is <see cref="Type.FullName" />.</remarks>
+	private string TypeDisplayName(Type type) => type.Name;
 
 	private static void WriteMemberValues(object obj, MemberInfo[] members,
 		StringBuilder stringBuilder, int indentation, FormattingOptions options)
@@ -132,7 +136,7 @@ internal class DefaultFormatter : IValueFormatter
 
 	private void WriteTypeName(StringBuilder stringBuilder, Type type)
 	{
-		string? typeName = type.HasFriendlyName() ? TypeDisplayName(type) : string.Empty;
+		string typeName = type.HasFriendlyName() ? TypeDisplayName(type) : string.Empty;
 		stringBuilder.Append(typeName);
 	}
 

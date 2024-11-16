@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace Testably.Expectations.Formatting.Formatters;
+namespace Testably.Expectations.Formatting;
 
-internal class TypeFormatter : FormatterBase<Type>
+public static partial class ValueFormatters
 {
 	private static readonly Dictionary<Type, string> Aliases = new()
 	{
@@ -29,13 +29,50 @@ internal class TypeFormatter : FormatterBase<Type>
 		{ typeof(nuint), "nuint" },
 	};
 
-	/// <inheritdoc />
-	public override void Format(Type value, StringBuilder stringBuilder,
-		FormattingOptions options)
+	/// <summary>
+	///     Returns the according to the <paramref name="options" /> formatted <paramref name="value" />.
+	/// </summary>
+	public static string Format(
+		this ValueFormatter formatter,
+		Type? value,
+		FormattingOptions? options = null)
+	{
+		if (value == null)
+		{
+			return ValueFormatter.NullString;
+		}
+
+		StringBuilder stringBuilder = new();
+		FormatType(value, stringBuilder);
+		return stringBuilder.ToString();
+	}
+
+	/// <summary>
+	///     Appends the according to the <paramref name="options" /> formatted <paramref name="value" />
+	///     to the <paramref name="stringBuilder" />
+	/// </summary>
+	public static void Format(
+		this ValueFormatter formatter,
+		StringBuilder stringBuilder,
+		Type? value,
+		FormattingOptions? options = null)
+	{
+		if (value == null)
+		{
+			stringBuilder.Append(ValueFormatter.NullString);
+			return;
+		}
+
+		FormatType(value, stringBuilder);
+	}
+
+	private static void FormatType(
+		Type value,
+		StringBuilder stringBuilder)
 	{
 		if (value.IsArray)
 		{
-			Format(value.GetElementType()!, stringBuilder, FormattingOptions.SingleLine);
+			FormatType(value.GetElementType()!, stringBuilder);
 			stringBuilder.Append("[]");
 		}
 		else if (TryFindPrimitiveAlias(value, out string? alias))
@@ -44,7 +81,7 @@ internal class TypeFormatter : FormatterBase<Type>
 		}
 		else if (value.IsGenericType)
 		{
-			Type? genericTypeDefinition = value.GetGenericTypeDefinition();
+			Type genericTypeDefinition = value.GetGenericTypeDefinition();
 			stringBuilder.Append(genericTypeDefinition.Name
 				.Substring(0, genericTypeDefinition.Name.IndexOf('`')));
 			stringBuilder.Append('<');
@@ -57,7 +94,7 @@ internal class TypeFormatter : FormatterBase<Type>
 				}
 
 				isFirstArgument = false;
-				Format(argument, stringBuilder, FormattingOptions.SingleLine);
+				FormatType(argument, stringBuilder);
 			}
 
 			stringBuilder.Append('>');
