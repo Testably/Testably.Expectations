@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731765111805,
+  "lastUpdate": 1731765484342,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -1616,6 +1616,66 @@ window.BENCHMARK_DATA = {
             "value": 1386.0766773223877,
             "unit": "ns",
             "range": "± 2.6624076456453887"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8beb42f4b0e6260113ca891e38447bc3e573796d",
+          "message": "refactor: remove unused `Invert` method (#176)\n\nThe `Invert` method on `ConstraintResult` is not used anywhere in code",
+          "timestamp": "2024-11-16T13:54:34Z",
+          "tree_id": "a757474756c999bb1a8b4025b449cba944da2007",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/8beb42f4b0e6260113ca891e38447bc3e573796d"
+        },
+        "date": 1731765483504,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 211.62036009935233,
+            "unit": "ns",
+            "range": "± 1.77423650583222"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 257.4515151977539,
+            "unit": "ns",
+            "range": "± 3.2645310382733834"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 633.3295285361154,
+            "unit": "ns",
+            "range": "± 5.874662859746229"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 394.9920405069987,
+            "unit": "ns",
+            "range": "± 4.457586395030007"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 400.2075576464335,
+            "unit": "ns",
+            "range": "± 3.174228283573669"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 1405.1853749411446,
+            "unit": "ns",
+            "range": "± 7.382877604250353"
           }
         ]
       }
