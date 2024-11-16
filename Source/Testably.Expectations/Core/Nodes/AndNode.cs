@@ -54,8 +54,9 @@ internal class AndNode : Node
 			}
 
 			ConstraintResult result = await node.IsMetBy(value, context, cancellationToken);
-			combinedResult = CombineResults(combinedResult, result, separator);
-			if (result.IgnoreFurtherProcessing)
+			combinedResult = CombineResults(combinedResult, result, separator,
+				combinedResult?.FurtherProcessingStrategy);
+			if (result.FurtherProcessingStrategy == ConstraintResult.FurtherProcessing.IgnoreCompletely)
 			{
 				return combinedResult;
 			}
@@ -73,14 +74,18 @@ internal class AndNode : Node
 	{
 		if (_nodes.Any())
 		{
-			return string.Join(" and ", _nodes.Select(x => x.Item2)) + " and " + Current;
+			return string.Join(DefaultSeparator, _nodes.Select(x => x.Item2))
+			       + DefaultSeparator + Current;
 		}
 
 		return Current.ToString();
 	}
 
-	private ConstraintResult CombineResults(ConstraintResult? combinedResult,
-		ConstraintResult result, string separator)
+	private ConstraintResult CombineResults(
+		ConstraintResult? combinedResult,
+		ConstraintResult result,
+		string separator,
+		ConstraintResult.FurtherProcessing? furtherProcessingStrategy)
 	{
 		if (combinedResult == null)
 		{
@@ -95,7 +100,10 @@ internal class AndNode : Node
 		{
 			return leftFailure.CombineWith(
 				combinedExpectation,
-				CombineResultTexts(leftFailure.ResultText, rightFailure.ResultText));
+				CombineResultTexts(
+					leftFailure.ResultText,
+					rightFailure.ResultText,
+					furtherProcessingStrategy ?? ConstraintResult.FurtherProcessing.Continue));
 		}
 
 		if (combinedResult is ConstraintResult.Failure onlyLeftFailure)
@@ -115,9 +123,13 @@ internal class AndNode : Node
 		return combinedResult.CombineWith(combinedExpectation, "");
 	}
 
-	private static string CombineResultTexts(string leftResultText, string rightResultText)
+	private static string CombineResultTexts(
+		string leftResultText,
+		string rightResultText,
+		ConstraintResult.FurtherProcessing furtherProcessingStrategy)
 	{
-		if (leftResultText == rightResultText)
+		if (furtherProcessingStrategy == ConstraintResult.FurtherProcessing.IgnoreResult ||
+		    leftResultText == rightResultText)
 		{
 			return leftResultText;
 		}

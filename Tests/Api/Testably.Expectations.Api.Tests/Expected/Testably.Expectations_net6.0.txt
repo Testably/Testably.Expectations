@@ -920,14 +920,14 @@ namespace Testably.Expectations.Core.Constraints
 {
     public abstract class ConstraintResult
     {
-        protected ConstraintResult(string expectationText, bool ignoreFurtherProcessing) { }
+        protected ConstraintResult(string expectationText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy) { }
         public string ExpectationText { get; }
-        public bool IgnoreFurtherProcessing { get; }
+        public Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing FurtherProcessingStrategy { get; }
         public abstract Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText);
         public abstract Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null);
         public class Failure : Testably.Expectations.Core.Constraints.ConstraintResult
         {
-            public Failure(string expectationText, string resultText, bool ignoreFurtherProcessing = false) { }
+            public Failure(string expectationText, string resultText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public string ResultText { get; }
             public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
             public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
@@ -935,21 +935,27 @@ namespace Testably.Expectations.Core.Constraints
         }
         public class Failure<T> : Testably.Expectations.Core.Constraints.ConstraintResult.Failure
         {
-            public Failure(T value, string expectationText, string resultText, bool ignoreFurtherProcessing = false) { }
+            public Failure(T value, string expectationText, string resultText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public T Value { get; }
             public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
             public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
         }
+        public enum FurtherProcessing
+        {
+            Continue = 0,
+            IgnoreCompletely = 1,
+            IgnoreResult = 2,
+        }
         public class Success : Testably.Expectations.Core.Constraints.ConstraintResult
         {
-            public Success(string expectationText, bool ignoreFurtherProcessing = false) { }
+            public Success(string expectationText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
             public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }
             public override string ToString() { }
         }
         public class Success<T> : Testably.Expectations.Core.Constraints.ConstraintResult.Success
         {
-            public Success(T value, string expectationText, bool ignoreFurtherProcessing = false) { }
+            public Success(T value, string expectationText, Testably.Expectations.Core.Constraints.ConstraintResult.FurtherProcessing furtherProcessingStrategy = 0) { }
             public T Value { get; }
             public override Testably.Expectations.Core.Constraints.ConstraintResult CombineWith(string expectationText, string resultText) { }
             public override Testably.Expectations.Core.Constraints.ConstraintResult Invert(System.Func<Testably.Expectations.Core.Constraints.ConstraintResult, string>? expectationText = null, System.Func<object?, string>? resultText = null) { }

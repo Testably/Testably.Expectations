@@ -42,7 +42,7 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected action to
 				             throw a CustomException,
-				             but it did not
+				             but it did not throw any exception
 				             """);
 		}
 		

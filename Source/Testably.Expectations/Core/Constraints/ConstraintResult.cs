@@ -18,17 +18,17 @@ public abstract class ConstraintResult
 	/// <summary>
 	///     Specifies if further processing of chained constraints should be ignored.
 	/// </summary>
-	public bool IgnoreFurtherProcessing { get; }
+	public FurtherProcessing FurtherProcessingStrategy { get; }
 
 	/// <summary>
 	///     Initializes a new instance of <see cref="ConstraintResult" />.
 	/// </summary>
 	protected ConstraintResult(
 		string expectationText,
-		bool ignoreFurtherProcessing)
+		FurtherProcessing furtherProcessingStrategy)
 	{
 		ExpectationText = expectationText;
-		IgnoreFurtherProcessing = ignoreFurtherProcessing;
+		FurtherProcessingStrategy = furtherProcessingStrategy;
 	}
 
 	/// <summary>
@@ -52,6 +52,30 @@ public abstract class ConstraintResult
 	internal abstract ConstraintResult UseValue<T>(T value);
 
 	/// <summary>
+	///     The strategy how to continue processing after the current result.
+	/// </summary>
+	public enum FurtherProcessing
+	{
+		/// <summary>
+		///     Continue processing.
+		/// </summary>
+		/// <remarks>
+		///     This is the default behaviour.
+		/// </remarks>
+		Continue,
+
+		/// <summary>
+		///     Completely ignore all future constraints.
+		/// </summary>
+		IgnoreCompletely,
+
+		/// <summary>
+		///     Ignore the result of future constraints, but include their expectations.
+		/// </summary>
+		IgnoreResult,
+	}
+
+	/// <summary>
 	///     The actual value met the expectation.
 	/// </summary>
 	public class Success : ConstraintResult
@@ -61,10 +85,10 @@ public abstract class ConstraintResult
 		/// </summary>
 		public Success(
 			string expectationText,
-			bool ignoreFurtherProcessing = false)
+			FurtherProcessing furtherProcessingStrategy = FurtherProcessing.Continue)
 			: base(
 				expectationText,
-				ignoreFurtherProcessing)
+				furtherProcessingStrategy)
 		{
 		}
 
@@ -102,7 +126,7 @@ public abstract class ConstraintResult
 		/// <inheritdoc />
 		internal override ConstraintResult UseValue<T>(T value)
 		{
-			return new Success<T>(value, ExpectationText, IgnoreFurtherProcessing);
+			return new Success<T>(value, ExpectationText, FurtherProcessingStrategy);
 		}
 	}
 
@@ -122,10 +146,10 @@ public abstract class ConstraintResult
 		public Success(
 			T value,
 			string expectationText,
-			bool ignoreFurtherProcessing = false)
+			FurtherProcessing furtherProcessingStrategy = FurtherProcessing.Continue)
 			: base(
 				expectationText,
-				ignoreFurtherProcessing)
+				furtherProcessingStrategy)
 		{
 			Value = value;
 		}
@@ -181,10 +205,10 @@ public abstract class ConstraintResult
 		public Failure(
 			string expectationText,
 			string resultText,
-			bool ignoreFurtherProcessing = false)
+			FurtherProcessing furtherProcessingStrategy = FurtherProcessing.Continue)
 			: base(
 				expectationText,
-				ignoreFurtherProcessing)
+				furtherProcessingStrategy)
 		{
 			ResultText = resultText;
 		}
@@ -216,7 +240,7 @@ public abstract class ConstraintResult
 		/// <inheritdoc />
 		internal override ConstraintResult UseValue<T>(T value)
 		{
-			return new Failure<T>(value, ExpectationText, ResultText, IgnoreFurtherProcessing);
+			return new Failure<T>(value, ExpectationText, ResultText, FurtherProcessingStrategy);
 		}
 	}
 
@@ -237,11 +261,11 @@ public abstract class ConstraintResult
 			T value,
 			string expectationText,
 			string resultText,
-			bool ignoreFurtherProcessing = false)
+			FurtherProcessing furtherProcessingStrategy = FurtherProcessing.Continue)
 			: base(
 				expectationText,
 				resultText,
-				ignoreFurtherProcessing)
+				furtherProcessingStrategy)
 		{
 			Value = value;
 		}
