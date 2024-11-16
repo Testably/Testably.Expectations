@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731789259505,
+  "lastUpdate": 1731791345312,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -1736,6 +1736,66 @@ window.BENCHMARK_DATA = {
             "value": 794.5678090367999,
             "unit": "ns",
             "range": "± 3.2759009464021784"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e150650b9fe0eeecbfcbc850097c2b515bccafd8",
+          "message": "refactor: improve `Formatter` performance (#178)\n\nReplace static `Formatter.Format` method with instance method and add\r\noverloads for common types to speedup formatting",
+          "timestamp": "2024-11-16T22:05:51+01:00",
+          "tree_id": "40e7a2ae0be4936760ca4b7e04450cfea5b89ee9",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/e150650b9fe0eeecbfcbc850097c2b515bccafd8"
+        },
+        "date": 1731791344706,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 214.96680693967002,
+            "unit": "ns",
+            "range": "± 1.2937204378837455"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 160.33751722744532,
+            "unit": "ns",
+            "range": "± 1.307942499776674"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 595.7693546840122,
+            "unit": "ns",
+            "range": "± 3.8406527846304876"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 390.27749789555867,
+            "unit": "ns",
+            "range": "± 2.5073824882874365"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 279.3786124865214,
+            "unit": "ns",
+            "range": "± 2.2438731822096174"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 795.8874958583286,
+            "unit": "ns",
+            "range": "± 5.470391889304692"
           }
         ]
       }
