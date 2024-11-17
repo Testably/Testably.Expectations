@@ -19,7 +19,7 @@ public static partial class ThatAsyncEnumerableShould
 		BeEmpty<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsEmptyValueConstraint<TItem>()),
+				.AddConstraint(it => new BeEmptyConstraint<TItem>(it)),
 			source);
 
 	/// <summary>
@@ -29,10 +29,10 @@ public static partial class ThatAsyncEnumerableShould
 		NotBeEmpty<TItem>(
 			this IThat<IAsyncEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsNotEmptyConstraint<TItem>()),
+				.AddConstraint(it => new NotBeEmptyConstraint<TItem>(it)),
 			source);
 
-	private readonly struct IsEmptyValueConstraint<TItem>
+	private readonly struct BeEmptyConstraint<TItem>(string it)
 		: IAsyncContextConstraint<IAsyncEnumerable<TItem>>
 	{
 		public async Task<ConstraintResult> IsMetBy(
@@ -57,13 +57,13 @@ public static partial class ThatAsyncEnumerableShould
 				}
 
 				return new ConstraintResult.Failure(ToString(),
-					$"found {Formatter.Format(items)}");
+					$"{it} was {Formatter.Format(items)}");
 			}
 
 			if (cancellationToken.IsCancellationRequested)
 			{
 				return new ConstraintResult.Failure(ToString(),
-					"could not evaluate it, because it was already cancelled");
+					$"could not evaluate {it}, because it was already cancelled");
 			}
 
 			return new ConstraintResult.Success<IAsyncEnumerable<TItem>>(materializedEnumerable,
@@ -74,7 +74,7 @@ public static partial class ThatAsyncEnumerableShould
 			=> "be empty";
 	}
 
-	private readonly struct IsNotEmptyConstraint<TItem>
+	private readonly struct NotBeEmptyConstraint<TItem>(string it)
 		: IAsyncContextConstraint<IAsyncEnumerable<TItem>>
 	{
 		public async Task<ConstraintResult> IsMetBy(
@@ -92,7 +92,7 @@ public static partial class ThatAsyncEnumerableShould
 					ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), "it was");
+			return new ConstraintResult.Failure(ToString(), $"{it} was");
 		}
 
 		public override string ToString()

@@ -19,10 +19,10 @@ public static partial class ThatEnumerableShould
 			this IThat<IEnumerable<TItem>> source,
 			TItem expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ContainsConstraint<TItem>(expected)),
+				.AddConstraint(it => new ContainConstraint<TItem>(it, expected)),
 			source);
 
-	private readonly struct ContainsConstraint<TItem>(TItem expected)
+	private readonly struct ContainConstraint<TItem>(string it, TItem expected)
 		: IContextConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual, IEvaluationContext context)
@@ -39,7 +39,7 @@ public static partial class ThatEnumerableShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"found {Formatter.Format(materializedEnumerable.Take(10).ToArray())}");
+				$"{it} was {Formatter.Format(materializedEnumerable.Take(10).ToArray())}");
 		}
 
 		public override string ToString()
