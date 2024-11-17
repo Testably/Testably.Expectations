@@ -18,22 +18,46 @@ namespace Testably.Expectations.Results;
 [StackTraceHidden]
 public abstract class Expectation
 {
-	/// <inheritdoc cref="object.Equals(object?)" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.Equals(object?)" /> is not supported. Did you mean <c>Be</c> instead?
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public override bool Equals(object? obj)
 		=> throw new NotSupportedException("Equals is not supported. Did you mean Be() instead?");
 
-	/// <inheritdoc cref="object.GetHashCode()" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.GetHashCode()" /> is not supported.
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public override int GetHashCode()
 		=> throw new NotSupportedException("GetHashCode is not supported.");
 
-	/// <inheritdoc cref="object.GetType()" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.GetType()" /> is not supported.
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public new Type GetType()
 		=> base.GetType();
 
-	/// <inheritdoc cref="object.ToString()" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.ToString()" /> is not supported.
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	public override string? ToString()
 		=> base.ToString();
