@@ -262,7 +262,7 @@ jobs:
               shell: bash
               run: |
                   git checkout benchmarks
-                  git rebase main
+                  git rebase origin/main
                   git push origin
             - name: Merge benchmarks into main
               shell: bash
