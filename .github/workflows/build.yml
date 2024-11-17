@@ -7,227 +7,230 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+    contents: write
+    pages: write
+    id-token: write
+    pull-requests: write
 
 jobs:
     test-macos:
         name: Test (MacOS)
         runs-on: macos-latest
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Tag current commit
-              if: startsWith(github.ref, 'refs/heads/release/')
-              shell: bash
-              run: |
-                  version="${GITHUB_REF#refs/heads/release/}"
-                  git tag "${version}"
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: |
-                      6.0.x
-                      8.0.x
-            - name: Build solution
-              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-            - name: Run tests
-              run: dotnet test --no-build --collect:"XPlat Code Coverage"
-            - name: Upload coverage
-              uses: actions/upload-artifact@v3
-              with:
-                  name: Code coverage (MacOS)
-                  path: "**/coverage.cobertura.xml"
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Tag current commit
+                if: startsWith(github.ref, 'refs/heads/release/')
+                shell: bash
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    git tag "${version}"
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: |
+                        6.0.x
+                        8.0.x
+            -   name: Build solution
+                run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            -   name: Run tests
+                run: dotnet test --no-build --collect:"XPlat Code Coverage"
+            -   name: Upload coverage
+                uses: actions/upload-artifact@v3
+                with:
+                    name: Code coverage (MacOS)
+                    path: "**/coverage.cobertura.xml"
     
     test-ubuntu:
         name: Test (Ubuntu)
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Tag current commit
-              if: startsWith(github.ref, 'refs/heads/release/')
-              shell: bash
-              run: |
-                  version="${GITHUB_REF#refs/heads/release/}"
-                  git tag "${version}"
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: |
-                      6.0.x
-                      8.0.x
-            - name: Build solution
-              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-            - name: Run tests
-              run: dotnet test --no-build --collect:"XPlat Code Coverage"
-            - name: Upload coverage
-              uses: actions/upload-artifact@v3
-              with:
-                  name: Code coverage (Ubuntu)
-                  path: "**/coverage.cobertura.xml"
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Tag current commit
+                if: startsWith(github.ref, 'refs/heads/release/')
+                shell: bash
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    git tag "${version}"
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: |
+                        6.0.x
+                        8.0.x
+            -   name: Build solution
+                run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            -   name: Run tests
+                run: dotnet test --no-build --collect:"XPlat Code Coverage"
+            -   name: Upload coverage
+                uses: actions/upload-artifact@v3
+                with:
+                    name: Code coverage (Ubuntu)
+                    path: "**/coverage.cobertura.xml"
     
     test-windows:
         name: Test (Windows)
         runs-on: windows-latest
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Tag current commit
-              if: startsWith(github.ref, 'refs/heads/release/')
-              shell: bash
-              run: |
-                  version="${GITHUB_REF#refs/heads/release/}"
-                  git tag "${version}"
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: |
-                      6.0.x
-                      8.0.x
-            - name: Build solution
-              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-            - name: Run tests
-              run: dotnet test --no-build --collect:"XPlat Code Coverage"
-            - name: Upload coverage
-              uses: actions/upload-artifact@v3
-              with:
-                  name: Code coverage (Windows)
-                  path: "**/coverage.cobertura.xml"
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Tag current commit
+                if: startsWith(github.ref, 'refs/heads/release/')
+                shell: bash
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    git tag "${version}"
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: |
+                        6.0.x
+                        8.0.x
+            -   name: Build solution
+                run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            -   name: Run tests
+                run: dotnet test --no-build --collect:"XPlat Code Coverage"
+            -   name: Upload coverage
+                uses: actions/upload-artifact@v3
+                with:
+                    name: Code coverage (Windows)
+                    path: "**/coverage.cobertura.xml"
     
     test-net-framework:
         name: Test (.NET Framework)
         runs-on: windows-latest
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Tag current commit
-              if: startsWith(github.ref, 'refs/heads/release/')
-              shell: bash
-              run: |
-                  version="${GITHUB_REF#refs/heads/release/}"
-                  git tag "${version}"
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-            - name: Setup MSBuild
-              uses: microsoft/setup-msbuild@v2
-            - name: Setup VSTest
-              uses: darenm/Setup-VSTest@v1
-            - name: Navigate to Workspace
-              run: cd $GITHUB_WORKSPACE
-            - name: Build solution
-              run: msbuild.exe Testably.Expectations.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
-            - name: Run tests
-              run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\Testably.Expectations.Internal.Tests\net48\Testably.Expectations.Internal.Tests.dll .\Build\Tests\TestFramework.NUnit3.Tests\net48\TestFramework.NUnit3.Tests.dll .\Build\Tests\TestFramework.NUnit4.Tests\net48\TestFramework.NUnit4.Tests.dll .\Build\Tests\TestFramework.XUnit2.Tests\net48\TestFramework.XUnit2.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
-            - name: Upload coverage
-              uses: actions/upload-artifact@v3
-              with:
-                  name: Code coverage (.NET Framework)
-                  path: "**/*.cobertura.xml"
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Tag current commit
+                if: startsWith(github.ref, 'refs/heads/release/')
+                shell: bash
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    git tag "${version}"
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+            -   name: Setup MSBuild
+                uses: microsoft/setup-msbuild@v2
+            -   name: Setup VSTest
+                uses: darenm/Setup-VSTest@v1
+            -   name: Navigate to Workspace
+                run: cd $GITHUB_WORKSPACE
+            -   name: Build solution
+                run: msbuild.exe Testably.Expectations.sln /p:NetFrameworkOnly=True /p:platform="Any CPU" /p:configuration="Release" -t:restore,build -p:RestorePackagesConfig=true
+            -   name: Run tests
+                run: vstest.console.exe .\Build\Tests\Testably.Expectations.Tests\net48\Testably.Expectations.Tests.dll .\Build\Tests\Testably.Expectations.Internal.Tests\net48\Testably.Expectations.Internal.Tests.dll .\Build\Tests\TestFramework.NUnit3.Tests\net48\TestFramework.NUnit3.Tests.dll .\Build\Tests\TestFramework.NUnit4.Tests\net48\TestFramework.NUnit4.Tests.dll .\Build\Tests\TestFramework.XUnit2.Tests\net48\TestFramework.XUnit2.Tests.dll /Logger:trx /ResultsDirectory:TestResults /collect:"Code Coverage;Format=Cobertura"
+            -   name: Upload coverage
+                uses: actions/upload-artifact@v3
+                with:
+                    name: Code coverage (.NET Framework)
+                    path: "**/*.cobertura.xml"
     
     upload-coverage:
         name: Upload coverage to Codacy
         needs: [test-macos, test-ubuntu, test-windows, test-net-framework]
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-            - name: Download code coverage files (MacOS)
-              uses: actions/download-artifact@v3
-              with:
-                  name: Code coverage (MacOS)
-                  path: Coverage/MacOS
-            - name: Download code coverage files (Ubuntu)
-              uses: actions/download-artifact@v3
-              with:
-                  name: Code coverage (Ubuntu)
-                  path: Coverage/Ubuntu
-            - name: Download code coverage files (Windows)
-              uses: actions/download-artifact@v3
-              with:
-                  name: Code coverage (Windows)
-                  path: Coverage/Windows
-            - name: Generate coverage report
-              uses: danielpalme/ReportGenerator-GitHub-Action@v5.3.11
-              with:
-                  reports: "Coverage/**/*.cobertura.xml"
-                  targetdir: "coverage-report"
-                  reporttypes: "Cobertura"
-            - name: Publish coverage report to Codacy
-              uses: codacy/codacy-coverage-reporter-action@master
-              with:
-                  project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-                  coverage-reports: coverage-report/Cobertura.xml
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+            -   name: Download code coverage files (MacOS)
+                uses: actions/download-artifact@v3
+                with:
+                    name: Code coverage (MacOS)
+                    path: Coverage/MacOS
+            -   name: Download code coverage files (Ubuntu)
+                uses: actions/download-artifact@v3
+                with:
+                    name: Code coverage (Ubuntu)
+                    path: Coverage/Ubuntu
+            -   name: Download code coverage files (Windows)
+                uses: actions/download-artifact@v3
+                with:
+                    name: Code coverage (Windows)
+                    path: Coverage/Windows
+            -   name: Generate coverage report
+                uses: danielpalme/ReportGenerator-GitHub-Action@v5.3.11
+                with:
+                    reports: "Coverage/**/*.cobertura.xml"
+                    targetdir: "coverage-report"
+                    reporttypes: "Cobertura"
+            -   name: Publish coverage report to Codacy
+                uses: codacy/codacy-coverage-reporter-action@master
+                with:
+                    project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+                    coverage-reports: coverage-report/Cobertura.xml
     
     stryker:
         name: Stryker mutation testing
         runs-on: ubuntu-latest
         timeout-minutes: 300
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: |
-                      6.0.x
-                      8.0.x
-            - name: Install .NET Stryker
-              shell: bash
-              run: |
-                  dotnet tool install dotnet-stryker --tool-path ../tools --version 4.3.0
-            - name: Analyze Testably.Expectations
-              env:
-                  STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
-              shell: bash
-              run: |
-                  cd Tests
-                  ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.Config.json -v "${GITHUB_REF#refs/heads/}" -r "Dashboard" -r "cleartext"
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: |
+                        6.0.x
+                        8.0.x
+            -   name: Install .NET Stryker
+                shell: bash
+                run: |
+                    dotnet tool install dotnet-stryker --tool-path ../tools --version 4.3.0
+            -   name: Analyze Testably.Expectations
+                env:
+                    STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+                shell: bash
+                run: |
+                    cd Tests
+                    ../../tools/dotnet-stryker -f ../.github/stryker/Stryker.Config.json -v "${GITHUB_REF#refs/heads/}" -r "Dashboard" -r "cleartext"
     
     benchmark:
         name: Run benchmarks
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v3
-              with:
-                  dotnet-version: |
-                      6.0.x
-                      8.0.x
-            - name: Build solution
-              run: dotnet build /p:NetCoreOnly=True --configuration "Release"
-            - name: Run benchmark
-              run: cd Build/Tests/Testably.Expectations.Benchmarks && dotnet ./Testably.Expectations.Benchmarks.dll --exporters json --filter '*'
-            - name: Store benchmark result
-              uses: rhysd/github-action-benchmark@v1
-              with:
-                  name: Benchmark.Net Benchmark
-                  tool: 'benchmarkdotnet'
-                  output-file-path: Build/Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.HappyCaseBenchmarks-report-full-compressed.json
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  gh-pages-branch: 'benchmarks'
-                  benchmark-data-dir-path: 'Docs/Benchmarks'
-                  auto-push: true
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v3
+                with:
+                    dotnet-version: |
+                        6.0.x
+                        8.0.x
+            -   name: Build solution
+                run: dotnet build /p:NetCoreOnly=True --configuration "Release"
+            -   name: Run benchmark
+                run: cd Build/Tests/Testably.Expectations.Benchmarks && dotnet ./Testably.Expectations.Benchmarks.dll --exporters json --filter '*'
+            -   name: Store benchmark result
+                uses: rhysd/github-action-benchmark@v1
+                if: github.ref == 'refs/heads/main'
+                with:
+                    name: Benchmark.Net Benchmark
+                    tool: 'benchmarkdotnet'
+                    output-file-path: Build/Tests/Testably.Expectations.Benchmarks/BenchmarkDotNet.Artifacts/results/Testably.Expectations.Benchmarks.HappyCaseBenchmarks-report-full-compressed.json
+                    github-token: ${{ secrets.GITHUB_TOKEN }}
+                    gh-pages-branch: 'benchmarks'
+                    benchmark-data-dir-path: 'Docs/Benchmarks'
+                    auto-push: true
     
     pages:
         name: Deploy to Github Pages
+        if: github.ref == 'refs/heads/main'
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
@@ -247,68 +250,98 @@ jobs:
             -   name: Deploy to GitHub Pages
                 id: deployment
                 uses: actions/deploy-pages@v4
+    
+    prepare-release:
+        name: Prepare Release
+        if: startsWith(github.ref, 'refs/heads/release/')
+        runs-on: ubuntu-latest
+        needs: [benchmark]
+        steps:
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Rebase benchmarks onto main
+                shell: bash
+                run: |
+                    git checkout benchmarks
+                    git rebase origin/main
+                    git push origin
+            -   name: Merge benchmarks into main
+                shell: bash
+                run: |
+                    git checkout main
+                    git checkout -b integrate/merge-benchmarks-to-main
+                    git merge benchmarks
+                    git push --set-upstream origin integrate/merge-benchmarks-to-main
+            -   name: Create pull request
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    gh pr create -B main -H integrate/merge-benchmarks-to-main --title "docs: update benchmarks while releasing ${version}" --fill
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     deploy:
         name: Deploy
         if: startsWith(github.ref, 'refs/heads/release/')
         runs-on: ubuntu-latest
         environment: production
-        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker, benchmark]
+        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker, benchmark, prepare-release]
         steps:
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Tag current commit
-              id: tag
-              shell: bash
-              run: |
-                  version="${GITHUB_REF#refs/heads/release/}"
-                  git tag "${version}"
-                  git push origin "${version}"
-                  echo "release_version=${version}" >> "$GITHUB_OUTPUT"
-            - name: Setup NuGet
-              uses: NuGet/setup-nuget@v2.0.0
-            - name: Setup .NET
-              uses: actions/setup-dotnet@v4
-              with:
-                  dotnet-version: |
-                      6.0.x
-                      8.0.x
-            - name: Prepare README.md
-              shell: bash
-              run: |
-                  version="${GITHUB_REF#refs/heads/release/}"
-                  # Add changelog badge to README.md
-                  sed -i -e "2 a\[!\[Changelog](https:\/\/img\.shields\.io\/badge\/Changelog-${version}-blue)](https:\/\/github\.com\/Testably\/Testably\.Expectations\/releases\/tag\/${version})" "./README.md"
-                  for f in "README.md"
-                  do
-                    echo "Processing $f" # always double quote "$f" filename
-                    # do something on $f
-                    # Remove the codacy and sonarcloud badge as it is not aligned to the release
-                    grep -v "app.codacy.com" "./$f" > "./$f.backup" && mv "./$f.backup" "./$f"
-                    grep -v "sonarcloud.io" "./$f" > "./$f.backup" && mv "./$f.backup" "./$f"
-                    # Change status badges to display explicit version
-                    sed -i -e "s/branch=main/branch=release%2F${version}/g" "./$f"
-                    sed -i -e "s/Testably.Expectations%2Fmain/Testably.Expectations%2Frelease%2F${version}/g" "./$f"
-                    sed -i -e "s/Testably.Expectations%2Fmain/Testably.Expectations%2Frelease%2F${version}/g" "./$f"
-                    sed -i -e "s/Testably.Expectations\/main)/Testably.Expectations\/release\/${version})/g" "./$f"
-                    sed -i -e "s/Testably.Expectations\/actions\/workflows\/build.yml\/badge.svg)/Testably.Expectations\/actions\/workflows\/build.yml\/badge.svg?branch=release\/${version})/g" "./$f"
-                    sed -i -e "s/Testably.Expectations\/actions\/workflows\/build.yml)/Testably.Expectations\/actions\/workflows\/build.yml?query=branch%3Arelease%2F${version})/g" "./$f"
-                    # Add absolute path to example section
-                    sed -i -e 's/\(Examples\/README.md\)/https:\/\/github.com\/Testably\/Testably.Expectations\/blob\/main\/Examples\/README.md/g' "./$f"
-                  done
-            - name: Build
-              run: dotnet build --configuration "Release"
-            - name: Publish
-              run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
-            - name: Create GitHub release
-              uses: softprops/action-gh-release@v2
-              with:
-                  name: ${{ steps.tag.outputs.release_version }}
-                  tag_name: ${{ steps.tag.outputs.release_version }}
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  generate_release_notes: true
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Tag current commit
+                id: tag
+                shell: bash
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    git tag "${version}"
+                    git push origin "${version}"
+                    echo "release_version=${version}" >> "$GITHUB_OUTPUT"
+            -   name: Setup NuGet
+                uses: NuGet/setup-nuget@v2.0.0
+            -   name: Setup .NET
+                uses: actions/setup-dotnet@v4
+                with:
+                    dotnet-version: |
+                        6.0.x
+                        8.0.x
+            -   name: Prepare README.md
+                shell: bash
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    # Add changelog badge to README.md
+                    sed -i -e "2 a\[!\[Changelog](https:\/\/img\.shields\.io\/badge\/Changelog-${version}-blue)](https:\/\/github\.com\/Testably\/Testably\.Expectations\/releases\/tag\/${version})" "./README.md"
+                    for f in "README.md"
+                    do
+                      echo "Processing $f" # always double quote "$f" filename
+                      # do something on $f
+                      # Remove the codacy and sonarcloud badge as it is not aligned to the release
+                      grep -v "app.codacy.com" "./$f" > "./$f.backup" && mv "./$f.backup" "./$f"
+                      grep -v "sonarcloud.io" "./$f" > "./$f.backup" && mv "./$f.backup" "./$f"
+                      # Change status badges to display explicit version
+                      sed -i -e "s/branch=main/branch=release%2F${version}/g" "./$f"
+                      sed -i -e "s/Testably.Expectations%2Fmain/Testably.Expectations%2Frelease%2F${version}/g" "./$f"
+                      sed -i -e "s/Testably.Expectations%2Fmain/Testably.Expectations%2Frelease%2F${version}/g" "./$f"
+                      sed -i -e "s/Testably.Expectations\/main)/Testably.Expectations\/release\/${version})/g" "./$f"
+                      sed -i -e "s/Testably.Expectations\/actions\/workflows\/build.yml\/badge.svg)/Testably.Expectations\/actions\/workflows\/build.yml\/badge.svg?branch=release\/${version})/g" "./$f"
+                      sed -i -e "s/Testably.Expectations\/actions\/workflows\/build.yml)/Testably.Expectations\/actions\/workflows\/build.yml?query=branch%3Arelease%2F${version})/g" "./$f"
+                      # Add absolute path to example section
+                      sed -i -e 's/\(Examples\/README.md\)/https:\/\/github.com\/Testably\/Testably.Expectations\/blob\/main\/Examples\/README.md/g' "./$f"
+                    done
+            -   name: Build
+                run: dotnet build --configuration "Release"
+            -   name: Publish
+                run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+            -   name: Create GitHub release
+                uses: softprops/action-gh-release@v2
+                with:
+                    name: ${{ steps.tag.outputs.release_version }}
+                    tag_name: ${{ steps.tag.outputs.release_version }}
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    generate_release_notes: true
                 
     cleanup:
         name: Cleanup
@@ -316,22 +349,22 @@ jobs:
         runs-on: ubuntu-latest
         needs: [deploy]
         steps:
-            - name: Comment relevant issues and pull requests
-              uses: apexskier/github-release-commenter@v1.3.6
-              with:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  comment-template: |
-                      This is addressed in release {release_link}.
-                  label-template: |
-                      state: released
-                  skip-label: |
-                      state: released
-            - name: Checkout sources
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
-            - name: Delete release branch
-              shell: bash
-              run: |
-                  version="${GITHUB_REF#refs/heads/release/}"
-                  git push origin -d "refs/heads/release/${version}"
+            -   name: Comment relevant issues and pull requests
+                uses: apexskier/github-release-commenter@v1.3.6
+                with:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    comment-template: |
+                        This is addressed in release {release_link}.
+                    label-template: |
+                        state: released
+                    skip-label: |
+                        state: released
+            -   name: Checkout sources
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+            -   name: Delete release branch
+                shell: bash
+                run: |
+                    version="${GITHUB_REF#refs/heads/release/}"
+                    git push origin -d "refs/heads/release/${version}"
