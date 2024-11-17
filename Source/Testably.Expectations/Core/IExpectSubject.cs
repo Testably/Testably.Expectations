@@ -8,15 +8,33 @@ namespace Testably.Expectations.Core;
 /// </summary>
 public interface IExpectSubject<out T>
 {
-	/// <inheritdoc cref="object.Equals(object?)" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.Equals(object?)" /> is not supported. Did you mean <c>Be</c> instead?
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	bool Equals(object? obj);
 
-	/// <inheritdoc cref="object.GetHashCode()" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.GetHashCode()" /> is not supported.
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	int GetHashCode();
 
-	/// <inheritdoc cref="object.GetType()" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.GetType()" /> is not supported.
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	Type GetType();
 
@@ -25,7 +43,13 @@ public interface IExpectSubject<out T>
 	/// </summary>
 	IThat<T> Should(Action<ExpectationBuilder> builderOptions);
 
-	/// <inheritdoc cref="object.ToString()" />
+	/// <summary>
+	///     <i>Not supported!</i><br />
+	///     <see cref="object.ToString()" /> is not supported.
+	/// </summary>
+	/// <remarks>
+	///     Consider adding support for <see cref="EditorBrowsableAttribute" /> to hide this method from code suggestions.
+	/// </remarks>
 	[EditorBrowsable(EditorBrowsableState.Never)]
 	string? ToString();
 }
