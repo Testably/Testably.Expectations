@@ -247,13 +247,42 @@ jobs:
             -   name: Deploy to GitHub Pages
                 id: deployment
                 uses: actions/deploy-pages@v4
+    
+    prepare-release:
+        name: Prepare Release
+        if: startsWith(github.ref, 'refs/heads/release/')
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout sources
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - name: Rebase benchmarks onto main
+              shell: bash
+              run: |
+                  git checkout benchmarks
+                  git rebase main
+                  git push origin
+            - name: Merge benchmarks into main
+              shell: bash
+              run: |
+                  git checkout main
+                  git checkout -b integrate/merge-benchmarks-to-main
+                  git merge benchmarks
+                  git push origin
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  branch: integrate/merge-benchmarks-to-main
+                  base: main
+                  title: 'docs: update benchmarks while releasing ${version}'
 
     deploy:
         name: Deploy
         if: startsWith(github.ref, 'refs/heads/release/')
         runs-on: ubuntu-latest
         environment: production
-        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker, benchmark]
+        needs: [test-macos, test-ubuntu, test-windows, test-net-framework, stryker, benchmark, prepare-release]
         steps:
             - name: Checkout sources
               uses: actions/checkout@v4
