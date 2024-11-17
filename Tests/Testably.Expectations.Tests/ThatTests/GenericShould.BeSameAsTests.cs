@@ -31,7 +31,7 @@ public sealed partial class GenericShould
 				             refer to expected Other {
 				               Value = 1
 				             },
-				             but found Other {
+				             but it was Other {
 				               Value = 1
 				             }
 				             """);
@@ -50,7 +50,7 @@ public sealed partial class GenericShould
 				.WithMessage("""
 				             Expected subject to
 				             refer to expected <null>,
-				             but found Other {
+				             but it was Other {
 				               Value = 1
 				             }
 				             """);
@@ -83,7 +83,7 @@ public sealed partial class GenericShould
 				             refer to expected Other {
 				               Value = 1
 				             },
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}

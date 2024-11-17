@@ -15,7 +15,7 @@ public static partial class ThatNullableBoolShould
 	public static IThat<bool?> Should(this IExpectSubject<bool?> subject)
 		=> subject.Should(ExpectationBuilder.NoAction);
 
-	private readonly struct IsValueConstraint(string it, bool? expected) : IValueConstraint<bool?>
+	private readonly struct BeValueConstraint(string it, bool? expected) : IValueConstraint<bool?>
 	{
 		public ConstraintResult IsMetBy(bool? actual)
 		{
@@ -31,7 +31,7 @@ public static partial class ThatNullableBoolShould
 			=> $"be {Formatter.Format(expected)}";
 	}
 
-	private readonly struct IsNotValueConstraint(string it, bool? unexpected) : IValueConstraint<bool?>
+	private readonly struct NotBeValueConstraint(string it, bool? unexpected) : IValueConstraint<bool?>
 	{
 		public ConstraintResult IsMetBy(bool? actual)
 		{

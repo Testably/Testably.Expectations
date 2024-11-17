@@ -18,7 +18,7 @@ public sealed partial class NullableDateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              have year of <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -35,7 +35,7 @@ public sealed partial class NullableDateOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             have year of <null>,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -52,7 +52,7 @@ public sealed partial class NullableDateOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             have year of 1,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -69,7 +69,7 @@ public sealed partial class NullableDateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              have year of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -149,7 +149,7 @@ public sealed partial class NullableDateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have year of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 	}

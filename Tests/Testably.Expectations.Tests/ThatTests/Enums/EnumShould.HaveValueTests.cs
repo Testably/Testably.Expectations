@@ -16,7 +16,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have value <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -34,7 +34,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have value {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -81,7 +81,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have value {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

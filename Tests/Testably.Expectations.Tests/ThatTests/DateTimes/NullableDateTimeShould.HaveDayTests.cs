@@ -17,7 +17,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage($"""
 				              Expected subject to
 				              have day of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -46,7 +46,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage($"""
 				              Expected subject to
 				              have day of <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -63,7 +63,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage("""
 				             Expected subject to
 				             have day of <null>,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -80,7 +80,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage("""
 				             Expected subject to
 				             have day of 1,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}
@@ -112,7 +112,7 @@ public sealed partial class NullableDateTimeShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have day of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

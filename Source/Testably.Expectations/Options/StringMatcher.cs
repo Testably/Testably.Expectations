@@ -88,8 +88,8 @@ public class StringMatcher(string? pattern)
 			_ => throw new NotSupportedException("Invalid Grammar type")
 		};
 
-	internal string GetExtendedFailure(string? actual)
-		=> _type.GetExtendedFailure(actual, pattern, _ignoreCase,
+	internal string GetExtendedFailure(string it, string? actual)
+		=> _type.GetExtendedFailure(it, actual, pattern, _ignoreCase,
 			_comparer ?? UseDefaultComparer(_ignoreCase));
 
 	/// <summary>
@@ -104,7 +104,7 @@ public class StringMatcher(string? pattern)
 
 	private interface IMatchType
 	{
-		string GetExtendedFailure(string? actual, string? pattern, bool ignoreCase,
+		string GetExtendedFailure(string it, string? actual, string? pattern, bool ignoreCase,
 			IEqualityComparer<string> comparer);
 
 		bool Matches(string? value, string? pattern, bool ignoreCase,
@@ -116,9 +116,10 @@ public class StringMatcher(string? pattern)
 		#region IMatchType Members
 
 		/// <inheritdoc />
-		public string GetExtendedFailure(string? actual, string? pattern, bool ignoreCase,
+		public string GetExtendedFailure(string it, string? actual, string? pattern,
+			bool ignoreCase,
 			IEqualityComparer<string> comparer)
-			=> $"found {Formatter.Format(actual.TruncateWithEllipsisOnWord(LongMaxLength).Indent(indentFirstLine: false))}";
+			=> $"{it} was {Formatter.Format(actual.TruncateWithEllipsisOnWord(LongMaxLength).Indent(indentFirstLine: false))}";
 
 		public bool Matches(string? value, string? pattern, bool ignoreCase,
 			IEqualityComparer<string> comparer)
@@ -154,16 +155,17 @@ public class StringMatcher(string? pattern)
 		#region IMatchType Members
 
 		/// <inheritdoc />
-		public string GetExtendedFailure(string? actual, string? pattern, bool ignoreCase,
+		public string GetExtendedFailure(string it, string? actual, string? pattern,
+			bool ignoreCase,
 			IEqualityComparer<string> comparer)
 		{
 			if (actual == null || pattern == null)
 			{
-				return "found <null>";
+				return $"{it} was <null>";
 			}
 
 			string prefix =
-				$"found {Formatter.Format(actual.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}";
+				$"{it} was {Formatter.Format(actual.TruncateWithEllipsisOnWord(DefaultMaxLength).ToSingleLine())}";
 			int minCommonLength = Math.Min(actual.Length, pattern.Length);
 			StringDifference stringDifference = new(actual, pattern, comparer);
 			if (stringDifference.IndexOfFirstMismatch == 0 &&
@@ -250,9 +252,10 @@ public class StringMatcher(string? pattern)
 		#region IMatchType Members
 
 		/// <inheritdoc />
-		public string GetExtendedFailure(string? actual, string? pattern, bool ignoreCase,
+		public string GetExtendedFailure(string it, string? actual, string? pattern,
+			bool ignoreCase,
 			IEqualityComparer<string> comparer)
-			=> $"found {Formatter.Format(actual.TruncateWithEllipsisOnWord(LongMaxLength).Indent(indentFirstLine: false))}";
+			=> $"{it} was {Formatter.Format(actual.TruncateWithEllipsisOnWord(LongMaxLength).Indent(indentFirstLine: false))}";
 
 		public bool Matches(string? value, string? pattern, bool ignoreCase,
 			IEqualityComparer<string> comparer)

@@ -18,7 +18,7 @@ public static partial class ThatStringShould
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new DoesNotStartWithValueConstraint(unexpected, options)),
+				.AddConstraint(it => new NotStartWithConstraint(it, unexpected, options)),
 			source,
 			options);
 	}
@@ -33,13 +33,14 @@ public static partial class ThatStringShould
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new StartsWithValueConstraint(expected, options)),
+				.AddConstraint(it => new StartWithConstraint(it, expected, options)),
 			source,
 			options);
 	}
 
-	private readonly struct StartsWithValueConstraint(
-		string expected,
+	private readonly struct NotStartWithConstraint(
+		string it,
+		string unexpected,
 		StringEqualityOptions options)
 		: IValueConstraint<string?>
 	{
@@ -49,50 +50,14 @@ public static partial class ThatStringShould
 			if (actual is null)
 			{
 				return new ConstraintResult.Failure<string?>(null, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
-			if (expected.Length > actual.Length)
+			if (unexpected.Length <= actual.Length &&
+			    options.Comparer.Equals(actual[..unexpected.Length], unexpected))
 			{
 				return new ConstraintResult.Failure<string?>(actual, ToString(),
-					$"it had only length {actual.Length} which is shorter than the expected length of {expected.Length}");
-			}
-
-			if (options.Comparer.Equals(actual.Substring(0, expected.Length), expected))
-			{
-				return new ConstraintResult.Success<string?>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure<string?>(actual, ToString(),
-				$"found {Formatter.Format(actual)}");
-		}
-
-		/// <inheritdoc />
-		public override string ToString()
-		{
-			return $"start with {Formatter.Format(expected)}{options}";
-		}
-	}
-
-	private readonly struct DoesNotStartWithValueConstraint(
-		string expected,
-		StringEqualityOptions options)
-		: IValueConstraint<string?>
-	{
-		/// <inheritdoc />
-		public ConstraintResult IsMetBy(string? actual)
-		{
-			if (actual is null)
-			{
-				return new ConstraintResult.Failure<string?>(null, ToString(),
-					"found <null>");
-			}
-
-			if (expected.Length <= actual.Length &&
-			    options.Comparer.Equals(actual.Substring(0, expected.Length), expected))
-			{
-				return new ConstraintResult.Failure<string?>(actual, ToString(),
-					$"found {Formatter.Format(actual)}");
+					$"{it} was {Formatter.Format(actual)}");
 			}
 
 			return new ConstraintResult.Success<string?>(actual, ToString());
@@ -100,8 +65,41 @@ public static partial class ThatStringShould
 
 		/// <inheritdoc />
 		public override string ToString()
+			=> $"not start with {Formatter.Format(unexpected)}{options}";
+	}
+
+	private readonly struct StartWithConstraint(
+		string it,
+		string expected,
+		StringEqualityOptions options)
+		: IValueConstraint<string?>
+	{
+		/// <inheritdoc />
+		public ConstraintResult IsMetBy(string? actual)
 		{
-			return $"not start with {Formatter.Format(expected)}{options}";
+			if (actual is null)
+			{
+				return new ConstraintResult.Failure<string?>(null, ToString(),
+					$"{it} was <null>");
+			}
+
+			if (expected.Length > actual.Length)
+			{
+				return new ConstraintResult.Failure<string?>(actual, ToString(),
+					$"{it} had only length {actual.Length} which is shorter than the expected length of {expected.Length}");
+			}
+
+			if (options.Comparer.Equals(actual[..expected.Length], expected))
+			{
+				return new ConstraintResult.Success<string?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure<string?>(actual, ToString(),
+				$"{it} was {Formatter.Format(actual)}");
 		}
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"start with {Formatter.Format(expected)}{options}";
 	}
 }

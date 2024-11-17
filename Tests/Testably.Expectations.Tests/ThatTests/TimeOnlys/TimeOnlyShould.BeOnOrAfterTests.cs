@@ -18,7 +18,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be on or after <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -59,7 +59,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be on or after {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -101,7 +101,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be on or after {Formatter.Format(expected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -120,7 +120,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be on or after {Formatter.Format(expected)} ± 0:03, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -153,7 +153,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or after {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -170,7 +170,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or after {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -187,7 +187,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or after {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -204,7 +204,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or after {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -234,7 +234,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or after <null>, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -253,7 +253,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or after {Formatter.Format(unexpected)} ± 0:03, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -271,7 +271,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be on or after {Formatter.Format(unexpected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

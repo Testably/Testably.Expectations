@@ -27,7 +27,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             be positive,
-				             but found -10675199.02:48:05
+				             but it was -10675199.02:48:05
 				             """);
 		}
 
@@ -43,7 +43,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -70,7 +70,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be positive,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 	}
@@ -89,7 +89,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             not be positive,
-				             but found 10675199.02:48:05.477
+				             but it was 10675199.02:48:05.477
 				             """);
 		}
 
@@ -127,7 +127,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be positive,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

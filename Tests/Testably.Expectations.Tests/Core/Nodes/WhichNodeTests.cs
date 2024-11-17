@@ -19,7 +19,7 @@ public sealed class WhichNodeTests
 			.WithMessage("""
 			             Expected subject to
 			             be type Dummy which .Value should be equal to "bar",
-			             but found "foo" which differs at index 0:
+			             but it was "foo" which differs at index 0:
 			                ↓ (actual)
 			               "foo"
 			               "bar"

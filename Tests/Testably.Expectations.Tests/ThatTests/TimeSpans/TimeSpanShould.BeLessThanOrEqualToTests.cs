@@ -17,7 +17,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than or equal to <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -58,7 +58,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than or equal to {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -100,7 +100,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than or equal to {Formatter.Format(expected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -118,7 +118,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be less than or equal to {Formatter.Format(expected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -151,7 +151,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             not be less than or equal to 10675199.02:48:05.477,
-				             but found 10675199.02:48:05.477
+				             but it was 10675199.02:48:05.477
 				             """);
 		}
 
@@ -168,7 +168,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             not be less than or equal to -10675199.02:48:05,
-				             but found -10675199.02:48:05
+				             but it was -10675199.02:48:05
 				             """);
 		}
 
@@ -185,7 +185,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be less than or equal to {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -202,7 +202,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be less than or equal to {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -232,7 +232,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be less than or equal to <null>, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -251,7 +251,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be less than or equal to {Formatter.Format(unexpected)} ± 0:03, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -269,7 +269,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be less than or equal to {Formatter.Format(unexpected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

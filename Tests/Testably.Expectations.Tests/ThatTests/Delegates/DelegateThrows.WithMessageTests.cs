@@ -47,7 +47,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected () => throw exception to
 				             throw an Exception with Message equal to "foo",
-				             but found "FOO" which differs at index 0:
+				             but it was "FOO" which differs at index 0:
 				                ↓ (actual)
 				               "FOO"
 				               "foo"
@@ -69,7 +69,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected () => throw exception to
 				             throw a CustomException with Message equal to "foo",
-				             but found "FOO" which differs at index 0:
+				             but it was "FOO" which differs at index 0:
 				                ↓ (actual)
 				               "FOO"
 				               "foo"
@@ -104,7 +104,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception with Message equal to "expected other text",
-				             but found "actual text" which differs at index 0:
+				             but it was "actual text" which differs at index 0:
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"

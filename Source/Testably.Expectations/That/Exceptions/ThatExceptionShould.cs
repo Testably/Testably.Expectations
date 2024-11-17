@@ -34,7 +34,7 @@ public static partial class ThatExceptionShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				expected.GetExtendedFailure(actual?.Message));
+				expected.GetExtendedFailure("TODO VAB", actual?.Message));
 		}
 
 		public override string ToString()

@@ -18,7 +18,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              have hour of <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -35,7 +35,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              have hour of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -79,7 +79,7 @@ public sealed partial class TimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have hour of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

@@ -27,7 +27,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be upper-cased,
-				             but found "abc"
+				             but it was "abc"
 				             """);
 		}
 
@@ -43,7 +43,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be upper-cased,
-				             but found "AbC"
+				             but it was "AbC"
 				             """);
 		}
 
@@ -59,7 +59,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be upper-cased,
-				              but found "{StringWith100Characters}…"
+				              but it was "{StringWith100Characters}…"
 				              """);
 		}
 
@@ -75,7 +75,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be upper-cased,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -138,7 +138,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be upper-cased,
-				             but found ""
+				             but it was ""
 				             """);
 		}
 
@@ -176,7 +176,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be upper-cased,
-				              but found "{StringWith100Characters.ToUpperInvariant()}…"
+				              but it was "{StringWith100Characters.ToUpperInvariant()}…"
 				              """);
 		}
 
@@ -203,7 +203,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be upper-cased,
-				             but found "ABC"
+				             but it was "ABC"
 				             """);
 		}
 
@@ -219,7 +219,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be upper-cased,
-				             but found "A漢字B"
+				             but it was "A漢字B"
 				             """);
 		}
 
@@ -235,7 +235,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be upper-cased,
-				             but found "A-B-C!"
+				             but it was "A-B-C!"
 				             """);
 		}
 
@@ -251,7 +251,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be upper-cased,
-				             but found " \t "
+				             but it was " \t "
 				             """);
 		}
 	}

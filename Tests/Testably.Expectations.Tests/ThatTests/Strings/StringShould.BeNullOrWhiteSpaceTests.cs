@@ -26,7 +26,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null or white-space,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -42,7 +42,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null or white-space,
-				              but found "{StringWith100Characters}…"
+				              but it was "{StringWith100Characters}…"
 				              """);
 		}
 
@@ -83,7 +83,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null or white-space,
-				             but found ""
+				             but it was ""
 				             """);
 		}
 
@@ -109,7 +109,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null or white-space,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -125,7 +125,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be null or white-space,
-				              but found "{new string(' ', 100)}…"
+				              but it was "{new string(' ', 100)}…"
 				              """);
 		}
 
@@ -141,7 +141,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null or white-space,
-				             but found " \t "
+				             but it was " \t "
 				             """);
 		}
 	}

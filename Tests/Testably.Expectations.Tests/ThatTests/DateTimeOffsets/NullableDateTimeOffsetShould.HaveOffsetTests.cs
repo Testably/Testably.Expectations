@@ -17,7 +17,7 @@ public sealed partial class NullableDateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              have offset of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -46,7 +46,7 @@ public sealed partial class NullableDateTimeOffsetShould
 				.WithMessage("""
 				             Expected subject to
 				             have offset of 2:00:00,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}
@@ -78,7 +78,7 @@ public sealed partial class NullableDateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have offset of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

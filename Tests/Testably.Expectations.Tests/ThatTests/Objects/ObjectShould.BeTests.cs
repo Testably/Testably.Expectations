@@ -28,7 +28,7 @@ public sealed partial class ObjectShould
 				.WithMessage($$"""
 				               Expected subject to
 				               be type OtherClass, because we want to test the failure,
-				               but found MyClass {
+				               but it was MyClass {
 				                 Value = {{value}}
 				               }
 				               """);
@@ -59,7 +59,7 @@ public sealed partial class ObjectShould
 				.WithMessage($$"""
 				               Expected subject to
 				               be type MyClass, because {{reason}},
-				               but found MyBaseClass {
+				               but it was MyBaseClass {
 				                 Value = {{value}}
 				               }
 				               """);
@@ -101,7 +101,7 @@ public sealed partial class ObjectShould
 				.WithMessage($$"""
 				               Expected subject to
 				               be type OtherClass, because we want to test the failure,
-				               but found MyClass {
+				               but it was MyClass {
 				                 Value = {{value}}
 				               }
 				               """);
@@ -132,7 +132,7 @@ public sealed partial class ObjectShould
 				.WithMessage($$"""
 				               Expected subject to
 				               be type MyClass, because {{reason}},
-				               but found MyBaseClass {
+				               but it was MyBaseClass {
 				                 Value = {{value}}
 				               }
 				               """);

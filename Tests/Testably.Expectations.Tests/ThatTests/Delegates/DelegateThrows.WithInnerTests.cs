@@ -43,7 +43,7 @@ public sealed partial class DelegateThrows
 				.WithMessage($"""
 				              Expected action to
 				              throw an Exception with an inner SubCustomException,
-				              but found a CustomException:
+				              but it was a CustomException:
 				                {message}
 				              """);
 		}
@@ -62,7 +62,7 @@ public sealed partial class DelegateThrows
 				.WithMessage($"""
 				              Expected action to
 				              throw an Exception with an inner CustomException,
-				              but found an OtherException:
+				              but it was an OtherException:
 				                {message}
 				              """);
 		}
@@ -102,7 +102,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception with an inner CustomException,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -146,7 +146,7 @@ public sealed partial class DelegateThrows
 				.WithMessage($"""
 				              Expected action to
 				              throw an Exception with an inner SubCustomException,
-				              but found a CustomException:
+				              but it was a CustomException:
 				                {message}
 				              """);
 		}
@@ -165,7 +165,7 @@ public sealed partial class DelegateThrows
 				.WithMessage($"""
 				              Expected action to
 				              throw an Exception with an inner CustomException,
-				              but found an OtherException:
+				              but it was an OtherException:
 				                {message}
 				              """);
 		}
@@ -205,7 +205,7 @@ public sealed partial class DelegateThrows
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception with an inner CustomException,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}

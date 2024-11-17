@@ -17,7 +17,7 @@ public sealed partial class DateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              have minute of <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -34,7 +34,7 @@ public sealed partial class DateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              have minute of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -78,7 +78,7 @@ public sealed partial class DateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have minute of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

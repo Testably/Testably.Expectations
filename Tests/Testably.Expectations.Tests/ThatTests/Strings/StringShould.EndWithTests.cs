@@ -22,7 +22,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "TEXT",
-				             but found "some arbitrary text"
+				             but it was "some arbitrary text"
 				             """);
 		}
 
@@ -40,7 +40,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "SOME" ignoring case,
-				             but found "some arbitrary text"
+				             but it was "some arbitrary text"
 				             """);
 		}
 
@@ -59,7 +59,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "TEXT" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text"
+				             but it was "some arbitrary text"
 				             """);
 		}
 
@@ -90,7 +90,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             end with "some",
-				             but found "some arbitrary text"
+				             but it was "some arbitrary text"
 				             """);
 		}
 
@@ -122,7 +122,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not end with "TEXT" ignoring case,
-				             but found "some text"
+				             but it was "some text"
 				             """);
 		}
 
@@ -153,7 +153,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not end with "tExt" using IgnoreCaseForVocalsComparer,
-				             but found "some arbitrary text"
+				             but it was "some arbitrary text"
 				             """);
 		}
 
@@ -184,7 +184,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             not end with "text",
-				             but found "some text"
+				             but it was "some text"
 				             """);
 		}
 

@@ -18,7 +18,7 @@ public static partial class ThatStringShould
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new EndsWithValueConstraint(expected, options)),
+				.AddConstraint(it => new EndWithConstraint(it, expected, options)),
 			source,
 			options);
 	}
@@ -33,12 +33,13 @@ public static partial class ThatStringShould
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new DoesNotEndWithValueConstraint(unexpected, options)),
+				.AddConstraint(it => new NotEndWithConstraint(it, unexpected, options)),
 			source,
 			options);
 	}
 
-	private readonly struct EndsWithValueConstraint(
+	private readonly struct EndWithConstraint(
+		string it,
 		string expected,
 		StringEqualityOptions options)
 		: IValueConstraint<string?>
@@ -49,13 +50,13 @@ public static partial class ThatStringShould
 			if (actual is null)
 			{
 				return new ConstraintResult.Failure<string?>(null, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			if (expected.Length > actual.Length)
 			{
 				return new ConstraintResult.Failure<string?>(actual, ToString(),
-					$"it had only length {actual.Length} which is shorter than the expected length of {expected.Length}");
+					$"{it} had only length {actual.Length} which is shorter than the expected length of {expected.Length}");
 			}
 
 			if (options.Comparer.Equals(
@@ -65,18 +66,17 @@ public static partial class ThatStringShould
 			}
 
 			return new ConstraintResult.Failure<string?>(actual, ToString(),
-				$"found {Formatter.Format(actual)}");
+				$"{it} was {Formatter.Format(actual)}");
 		}
 
 		/// <inheritdoc />
 		public override string ToString()
-		{
-			return $"end with {Formatter.Format(expected)}{options}";
-		}
+			=> $"end with {Formatter.Format(expected)}{options}";
 	}
 
-	private readonly struct DoesNotEndWithValueConstraint(
-		string expected,
+	private readonly struct NotEndWithConstraint(
+		string it,
+		string unexpected,
 		StringEqualityOptions options)
 		: IValueConstraint<string?>
 	{
@@ -86,15 +86,16 @@ public static partial class ThatStringShould
 			if (actual is null)
 			{
 				return new ConstraintResult.Failure<string?>(null, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
-			if (expected.Length <= actual.Length &&
+			if (unexpected.Length <= actual.Length &&
 			    options.Comparer.Equals(
-				    actual.Substring(actual.Length - expected.Length, expected.Length), expected))
+				    actual.Substring(actual.Length - unexpected.Length, unexpected.Length),
+				    unexpected))
 			{
 				return new ConstraintResult.Failure<string?>(actual, ToString(),
-					$"found {Formatter.Format(actual)}");
+					$"{it} was {Formatter.Format(actual)}");
 			}
 
 			return new ConstraintResult.Success<string?>(actual, ToString());
@@ -102,8 +103,6 @@ public static partial class ThatStringShould
 
 		/// <inheritdoc />
 		public override string ToString()
-		{
-			return $"not end with {Formatter.Format(expected)}{options}";
-		}
+			=> $"not end with {Formatter.Format(unexpected)}{options}";
 	}
 }

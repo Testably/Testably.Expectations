@@ -16,7 +16,7 @@ public partial class StringEnumerableShould
 				.WithMessage("""
 				             Expected sut to
 				             contain "GREEN" at least once,
-				             but found it 0 times in ["green", "blue", "yellow"]
+				             but it was it 0 times in ["green", "blue", "yellow"]
 				             """);
 		}
 
@@ -32,7 +32,7 @@ public partial class StringEnumerableShould
 				.WithMessage("""
 				             Expected sut to
 				             contain "red" at least once,
-				             but found it 0 times in ["green", "blue", "yellow"]
+				             but it was it 0 times in ["green", "blue", "yellow"]
 				             """);
 		}
 
@@ -70,7 +70,7 @@ public partial class StringEnumerableShould
 				.WithMessage("""
 				             Expected sut to
 				             contain "green" at least 3 times,
-				             but found it 2 times in ["green", "green", "blue", "yellow"]
+				             but it was it 2 times in ["green", "green", "blue", "yellow"]
 				             """);
 		}
 
@@ -86,7 +86,7 @@ public partial class StringEnumerableShould
 				.WithMessage("""
 				             Expected sut to
 				             contain "green" at most 2 times,
-				             but found it at least 3 times in ["green", "green", "green", "green", "blue", "yellow"]
+				             but it was it at least 3 times in ["green", "green", "green", "green", "blue", "yellow"]
 				             """);
 		}
 	}

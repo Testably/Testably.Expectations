@@ -27,7 +27,7 @@ public sealed partial class GuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              be empty,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 	}
@@ -46,7 +46,7 @@ public sealed partial class GuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be empty,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

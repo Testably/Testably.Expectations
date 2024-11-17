@@ -16,7 +16,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             have length 0,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 

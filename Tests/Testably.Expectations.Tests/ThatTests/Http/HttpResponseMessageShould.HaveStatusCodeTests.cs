@@ -24,7 +24,7 @@ public sealed partial class HttpResponseMessageShould
 				.WithMessage("""
 				             Expected subject to
 				             have StatusCode 200 OK,
-				             but found 400 BadRequest:
+				             but it was 400 BadRequest:
 				               HTTP/1.1 400 BadRequest
 				               some content
 				               The originating request was:
@@ -47,7 +47,7 @@ public sealed partial class HttpResponseMessageShould
 				.WithMessage("""
 				             Expected subject to
 				             have StatusCode 200 OK,
-				             but found 400 BadRequest:
+				             but it was 400 BadRequest:
 				               HTTP/1.1 400 BadRequest
 				               some content
 				               The originating request was <null>

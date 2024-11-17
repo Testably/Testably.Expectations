@@ -69,7 +69,7 @@ public sealed class GenericForTests
 			.WithMessage($"""
 			              Expected subject to
 			              for .Value be {Formatter.Format(expectedValue)},
-			              but found {Formatter.Format(value)}
+			              but it was {Formatter.Format(value)}
 			              """);
 	}
 

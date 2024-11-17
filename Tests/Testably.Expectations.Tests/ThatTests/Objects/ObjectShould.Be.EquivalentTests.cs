@@ -196,7 +196,7 @@ public sealed partial class ObjectShould
 					.WithMessage("""
 					             Expected subject to
 					             be equivalent to expected,
-					             but found z
+					             but it was z
 					             """);
 			}
 

@@ -18,7 +18,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -35,7 +35,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             be before 9999-12-31,
-				             but found 9999-12-31
+				             but it was 9999-12-31
 				             """);
 		}
 
@@ -52,7 +52,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             be before 0001-01-01,
-				             but found 0001-01-01
+				             but it was 0001-01-01
 				             """);
 		}
 
@@ -69,7 +69,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -87,7 +87,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)}, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -117,7 +117,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)} ± 3 days,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -136,7 +136,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)} ± 3 days, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -193,7 +193,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -235,7 +235,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before <null>, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -254,7 +254,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before {Formatter.Format(unexpected)} ± 3 days, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -272,7 +272,7 @@ public sealed partial class DateOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before {Formatter.Format(unexpected)} ± 3 days,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

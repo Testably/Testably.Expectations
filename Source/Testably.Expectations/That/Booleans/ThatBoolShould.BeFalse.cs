@@ -10,6 +10,6 @@ public static partial class ThatBoolShould
 	/// </summary>
 	public static AndOrResult<bool, IThat<bool>> BeFalse(this IThat<bool> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new IsValueConstraint(it, false)),
+				.AddConstraint(it => new BeValueConstraint(it, false)),
 			source);
 }
