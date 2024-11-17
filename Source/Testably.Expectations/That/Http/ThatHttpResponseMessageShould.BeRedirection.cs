@@ -13,8 +13,9 @@ public static partial class ThatHttpResponseMessageShould
 	public static AndOrResult<HttpResponseMessage, IThat<HttpResponseMessage?>>
 		BeRedirection(
 			this IThat<HttpResponseMessage?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasStatusCodeRangeConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new HasStatusCodeRangeConstraint(
+					it,
 					statusCode => statusCode >= 300 && statusCode < 400,
 					"be redirection (status code 3xx)")),
 			source);

@@ -27,6 +27,7 @@ public static partial class ThatHttpResponseMessageShould
 		=> subject.Should(ExpectationBuilder.NoAction);
 
 	private readonly struct HasStatusCodeRangeConstraint(
+		string it,
 		Func<int, bool> predicate,
 		string expectation)
 		: IAsyncConstraint<HttpResponseMessage>
@@ -38,7 +39,7 @@ public static partial class ThatHttpResponseMessageShould
 			if (actual == null)
 			{
 				return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			if (predicate((int)actual.StatusCode))
@@ -49,7 +50,7 @@ public static partial class ThatHttpResponseMessageShould
 			string formattedResponse =
 				await HttpResponseMessageFormatter.Format(actual, "  ", cancellationToken);
 			return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
-				$"found {Formatter.Format(actual.StatusCode)}:{Environment.NewLine}{formattedResponse}");
+				$"{it} was {Formatter.Format(actual.StatusCode)}:{Environment.NewLine}{formattedResponse}");
 		}
 
 		public override string ToString()

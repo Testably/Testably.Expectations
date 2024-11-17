@@ -21,8 +21,8 @@ public static partial class ThatHttpResponseMessageShould
 		HaveStatusCode(
 			this IThat<HttpResponseMessage?> source,
 			HttpStatusCode expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasStatusCodeConstraint(expected)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new HasStatusCodeConstraint(it, expected)),
 			source);
 
 	/// <summary>
@@ -32,13 +32,14 @@ public static partial class ThatHttpResponseMessageShould
 		NotHaveStatusCode(
 			this IThat<HttpResponseMessage?> source,
 			HttpStatusCode unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasStatusCodeRangeConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new HasStatusCodeRangeConstraint(
+					it,
 					statusCode => statusCode != (int)unexpected,
 					$"has StatusCode different to {Formatter.Format(unexpected)}")),
 			source);
 
-	private readonly struct HasStatusCodeConstraint(HttpStatusCode expected)
+	private readonly struct HasStatusCodeConstraint(string it, HttpStatusCode expected)
 		: IAsyncConstraint<HttpResponseMessage>
 	{
 		public async Task<ConstraintResult> IsMetBy(
@@ -48,7 +49,7 @@ public static partial class ThatHttpResponseMessageShould
 			if (actual == null)
 			{
 				return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			if (actual.StatusCode == expected)
@@ -59,7 +60,7 @@ public static partial class ThatHttpResponseMessageShould
 			string formattedResponse =
 				await HttpResponseMessageFormatter.Format(actual, "  ", cancellationToken);
 			return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
-				$"found {Formatter.Format(actual.StatusCode)}:{Environment.NewLine}{formattedResponse}");
+				$"{it} was {Formatter.Format(actual.StatusCode)}:{Environment.NewLine}{formattedResponse}");
 		}
 
 		public override string ToString()

@@ -1,6 +1,5 @@
 ﻿#if NET6_0_OR_GREATER
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Testably.Expectations.Core;
@@ -19,12 +18,12 @@ public static partial class ThatHttpResponseMessageShould
 		HaveContent(
 			this IThat<HttpResponseMessage?> source,
 			StringMatcher expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasContentConstraint(expected)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new HasContentConstraint(it, expected)),
 			source,
 			expected);
 
-	private readonly struct HasContentConstraint(StringMatcher expected)
+	private readonly struct HasContentConstraint(string it, StringMatcher expected)
 		: IAsyncConstraint<HttpResponseMessage>
 	{
 		public async Task<ConstraintResult> IsMetBy(
@@ -34,7 +33,7 @@ public static partial class ThatHttpResponseMessageShould
 			if (actual == null)
 			{
 				return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			string message = await actual.Content.ReadAsStringAsync(cancellationToken);
@@ -44,7 +43,7 @@ public static partial class ThatHttpResponseMessageShould
 			}
 
 			return new ConstraintResult.Failure<HttpResponseMessage?>(actual, ToString(),
-				expected.GetExtendedFailure("TODO VAB", message));
+				expected.GetExtendedFailure(it, message));
 		}
 
 		public override string ToString()
