@@ -20,8 +20,8 @@ public static partial class ThatStringShould
 		Quantifier? quantifier = new();
 		StringEqualityOptions? options = new();
 		return new StringCountResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(it => new ContainConstraint(it, expected, quantifier, options)),
+			source.ExpectationBuilder.AddConstraint(it 
+				=> new ContainConstraint(it, expected, quantifier, options)),
 			source,
 			quantifier,
 			options);
@@ -38,8 +38,8 @@ public static partial class ThatStringShould
 		quantifier.Exactly(0);
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(it => new ContainConstraint(it, unexpected, quantifier, options)),
+			source.ExpectationBuilder.AddConstraint(it 
+				=> new ContainConstraint(it, unexpected, quantifier, options)),
 			source,
 			options);
 	}

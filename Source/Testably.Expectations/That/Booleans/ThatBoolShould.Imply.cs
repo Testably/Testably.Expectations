@@ -12,8 +12,8 @@ public static partial class ThatBoolShould
 	/// </summary>
 	public static AndOrResult<bool, IThat<bool>> Imply(this IThat<bool> source,
 		bool consequent)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ImplyConstraint(it, consequent)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ImplyConstraint(it, consequent)),
 			source);
 
 	private readonly struct ImplyConstraint(string it, bool consequent) : IValueConstraint<bool>

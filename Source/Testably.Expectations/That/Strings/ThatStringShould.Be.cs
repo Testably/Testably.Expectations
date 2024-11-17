@@ -13,8 +13,8 @@ public static partial class ThatStringShould
 	public static StringMatcherResult<string?, IThat<string?>> Be(
 		this IThat<string?> source,
 		StringMatcher expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new BeConstraint(it, expected)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new BeConstraint(it, expected)),
 			source,
 			expected);
 

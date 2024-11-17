@@ -12,8 +12,8 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static AndOrResult<string?, IThat<string?>> BeNullOrEmpty(
 		this IThat<string?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new BeNullOrEmptyConstraint(it)),
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new BeNullOrEmptyConstraint(it)),
 			source);
 
 	/// <summary>
@@ -21,8 +21,8 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static AndOrResult<string, IThat<string?>> NotBeNullOrEmpty(
 		this IThat<string?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new NotBeNullOrEmptyConstraint(it)),
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new NotBeNullOrEmptyConstraint(it)),
 			source);
 
 	private readonly struct BeNullOrEmptyConstraint(string it) : IValueConstraint<string?>

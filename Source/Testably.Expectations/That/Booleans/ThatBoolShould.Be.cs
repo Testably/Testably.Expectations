@@ -12,8 +12,8 @@ public static partial class ThatBoolShould
 	/// </summary>
 	public static AndOrResult<bool, IThat<bool>> Be(this IThat<bool> source,
 		bool expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new BeValueConstraint(it, expected)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new BeValueConstraint(it, expected)),
 			source);
 
 	/// <summary>
@@ -21,8 +21,8 @@ public static partial class ThatBoolShould
 	/// </summary>
 	public static AndOrResult<bool, IThat<bool>> NotBe(this IThat<bool> source,
 		bool unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new NotBeValueConstraint(it, unexpected)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NotBeValueConstraint(it, unexpected)),
 			source);
 
 	private readonly struct NotBeValueConstraint(string it, bool unexpected) : IValueConstraint<bool>

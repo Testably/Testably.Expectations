@@ -10,8 +10,8 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is seen as not a number (<see cref="float.NaN" />).
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> BeNaN(this IThat<float> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new GenericConstraint<float>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new GenericConstraint<float>(
 					it,
 					float.NaN,
 					_ => "be NaN",
@@ -23,8 +23,8 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is seen as not a number (<see cref="double.NaN" />).
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> BeNaN(this IThat<double> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new GenericConstraint<double>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new GenericConstraint<double>(
 					it,
 					double.NaN,
 					_ => "be NaN",
@@ -36,8 +36,8 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is seen as not a number (not <see langword="null" /> and <see cref="float.NaN" />).
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> BeNaN(this IThat<float?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new NullableGenericConstraint<float>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new NullableGenericConstraint<float>(
 					it,
 					float.NaN,
 					_ => "be NaN",
@@ -49,8 +49,8 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is seen as not a number (not <see langword="null" /> and <see cref="double.NaN" />).
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> BeNaN(this IThat<double?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new NullableGenericConstraint<double>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new NullableGenericConstraint<double>(
 					it,
 					double.NaN,
 					_ => "be NaN",
@@ -62,8 +62,8 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is not seen as not a number (not <see cref="float.NaN" />).
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> NotBeNaN(this IThat<float> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new GenericConstraint<float>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new GenericConstraint<float>(
 					it,
 					float.NaN,
 					_ => "not be NaN",
@@ -75,8 +75,8 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is not seen as not a number (not <see cref="double.NaN" />).
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> NotBeNaN(this IThat<double> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new GenericConstraint<double>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new GenericConstraint<double>(
 					it,
 					double.NaN,
 					_ => "not be NaN",
@@ -89,8 +89,8 @@ public static partial class ThatNumberShould
 	///     ).
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> NotBeNaN(this IThat<float?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new NullableGenericConstraint<float>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new NullableGenericConstraint<float>(
 					it,
 					float.NaN,
 					_ => "not be NaN",
@@ -102,8 +102,8 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is not seen as not a number (<see langword="null" /> or not <see cref="double.NaN" />).
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> NotBeNaN(this IThat<double?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new NullableGenericConstraint<double>(
+		=> new(source.ExpectationBuilder.AddConstraint(it 
+				=> new NullableGenericConstraint<double>(
 					it,
 					double.NaN,
 					_ => "not be NaN",

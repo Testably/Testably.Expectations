@@ -1,5 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
@@ -12,11 +13,8 @@ public static partial class ThatNullableTimeSpanShould
 	/// </summary>
 	public static AndOrResult<TimeSpan?, IThat<TimeSpan?>> BeNegative(this IThat<TimeSpan?> source)
 		=> new(
-			source.ExpectationBuilder
-				.AddConstraint(new SimpleConstraint(
-					"be negative",
-					a => a < TimeSpan.Zero,
-					a => $"found {Formatter.Format(a)}")),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new BeNegativeConstraint(it)),
 			source);
 
 	/// <summary>
@@ -25,10 +23,43 @@ public static partial class ThatNullableTimeSpanShould
 	public static AndOrResult<TimeSpan?, IThat<TimeSpan?>> NotBeNegative(
 		this IThat<TimeSpan?> source)
 		=> new(
-			source.ExpectationBuilder
-				.AddConstraint(new SimpleConstraint(
-					"not be negative",
-					a => a >= TimeSpan.Zero,
-					a => $"found {Formatter.Format(a)}")),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new NotBeNegativeConstraint(it)),
 			source);
+
+	private readonly struct BeNegativeConstraint(string it)
+		: IValueConstraint<TimeSpan?>
+	{
+		public ConstraintResult IsMetBy(TimeSpan? actual)
+		{
+			if (actual < TimeSpan.Zero)
+			{
+				return new ConstraintResult.Success<TimeSpan?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				$"{it} was {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> "be negative";
+	}
+
+	private readonly struct NotBeNegativeConstraint(string it)
+		: IValueConstraint<TimeSpan?>
+	{
+		public ConstraintResult IsMetBy(TimeSpan? actual)
+		{
+			if (actual >= TimeSpan.Zero)
+			{
+				return new ConstraintResult.Success<TimeSpan?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				$"{it} was {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> "not be negative";
+	}
 }

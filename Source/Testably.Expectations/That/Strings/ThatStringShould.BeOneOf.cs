@@ -18,8 +18,8 @@ public static partial class ThatStringShould
 	{
 		StringEqualityOptions options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(it => new BeOneOfConstraint(it, expected, options)),
+			source.ExpectationBuilder.AddConstraint(it 
+				=> new BeOneOfConstraint(it, expected, options)),
 			source,
 			options);
 	}
@@ -33,8 +33,8 @@ public static partial class ThatStringShould
 	{
 		StringEqualityOptions options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(it => new NotBeOneOfConstraint(it, unexpected, options)),
+			source.ExpectationBuilder.AddConstraint(it 
+				=> new NotBeOneOfConstraint(it, unexpected, options)),
 			source,
 			options);
 	}

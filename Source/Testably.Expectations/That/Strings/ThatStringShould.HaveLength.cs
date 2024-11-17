@@ -22,8 +22,8 @@ public static partial class ThatStringShould
 				"The expected length must be greater than or equal to zero.");
 		}
 
-		return new AndOrResult<string?, IThat<string?>>(source.ExpectationBuilder
-				.AddConstraint(it => new HaveLengthConstraint(it, expected)),
+		return new AndOrResult<string?, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it 
+				=> new HaveLengthConstraint(it, expected)),
 			source);
 	}
 
@@ -40,8 +40,8 @@ public static partial class ThatStringShould
 				"The unexpected length must be greater than or equal to zero.");
 		}
 
-		return new AndOrResult<string, IThat<string?>>(source.ExpectationBuilder
-				.AddConstraint(it => new NotHaveLengthConstraint(it, unexpected)),
+		return new AndOrResult<string, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it 
+				=> new NotHaveLengthConstraint(it, unexpected)),
 			source);
 	}
 
