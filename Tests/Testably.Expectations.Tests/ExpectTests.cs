@@ -48,12 +48,12 @@ public class ExpectTests
 				              [02] Expected subjectB to be equal to "subject B"
 				              [03] Expected subjectC to be equal to "subject C"
 				             but
-				              [02] found "subject C" which differs at index 8:
+				              [02] it was "subject C" which differs at index 8:
 				                              ↓ (actual)
 				                     "subject C"
 				                     "subject B"
 				                              ↑ (expected)
-				              [03] found "subject B" which differs at index 8:
+				              [03] it was "subject B" which differs at index 8:
 				                              ↓ (actual)
 				                     "subject B"
 				                     "subject C"
@@ -121,12 +121,12 @@ public class ExpectTests
 				                [03] Expected subjectB to be equal to "subject B"
 				                [04] Expected subjectC to be equal to "subject C"
 				             but
-				                [03] found "some unexpected value" which differs at index 1:
+				                [03] it was "some unexpected value" which differs at index 1:
 				                         ↓ (actual)
 				                       "some unexpected value"
 				                       "subject B"
 				                         ↑ (expected)
-				                [04] found "subject B" which differs at index 8:
+				                [04] it was "subject B" which differs at index 8:
 				                                ↓ (actual)
 				                       "subject B"
 				                       "subject C"
@@ -221,17 +221,17 @@ public class ExpectTests
 				              [02] Expected subjectB to be equal to "subject B"
 				              [03] Expected subjectC to be equal to "subject C"
 				             but
-				              [01] found "subject X" which differs at index 8:
+				              [01] it was "subject X" which differs at index 8:
 				                              ↓ (actual)
 				                     "subject X"
 				                     "subject A"
 				                              ↑ (expected)
-				              [02] found "subject Y" which differs at index 8:
+				              [02] it was "subject Y" which differs at index 8:
 				                              ↓ (actual)
 				                     "subject Y"
 				                     "subject B"
 				                              ↑ (expected)
-				              [03] found "subject Z" which differs at index 8:
+				              [03] it was "subject Z" which differs at index 8:
 				                              ↓ (actual)
 				                     "subject Z"
 				                     "subject C"
@@ -278,17 +278,17 @@ public class ExpectTests
 				                [04] Expected subjectC to be equal to "subject C"
 				             but
 				              [01] it was False
-				                [02] found "subject X" which differs at index 8:
+				                [02] it was "subject X" which differs at index 8:
 				                                ↓ (actual)
 				                       "subject X"
 				                       "subject A"
 				                                ↑ (expected)
-				                [03] found "some unexpected value" which differs at index 1:
+				                [03] it was "some unexpected value" which differs at index 1:
 				                         ↓ (actual)
 				                       "some unexpected value"
 				                       "subject B"
 				                         ↑ (expected)
-				                [04] found "subject Z" which differs at index 8:
+				                [04] it was "subject Z" which differs at index 8:
 				                                ↓ (actual)
 				                       "subject Z"
 				                       "subject C"

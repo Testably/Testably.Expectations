@@ -455,7 +455,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
 
-			await That(Act).Should().ThrowException().WithMessage("*but found <null>*")
+			await That(Act).Should().ThrowException().WithMessage("*but it was <null>*")
 				.AsWildcard();
 		}
 	}
