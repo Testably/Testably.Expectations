@@ -35,15 +35,6 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 		return result.GetAwaiter();
 	}
 
-	/// <summary>
-	///     Sets the <see cref="CancellationToken" /> to be passed to expectations.
-	/// </summary>
-	public ExpectationResult WithCancellation(CancellationToken cancellationToken)
-	{
-		expectationBuilder.WithCancellation(cancellationToken);
-		return this;
-	}
-
 	/// <inheritdoc />
 	internal override async Task<Result> GetResult(int index)
 		=> new(++index, $" [{index:00}] Expected {expectationBuilder.Subject} to",
@@ -67,12 +58,6 @@ public class ExpectationResult(ExpectationBuilder expectationBuilder) : Expectat
 			Fail.Test(expectationBuilder.FromFailure(
 				expectationBuilder.Subject, failure));
 		}
-		else if (result is ConstraintResult.Success)
-		{
-			return;
-		}
-
-		throw new FailException("You should not be here (without value)!");
 	}
 }
 
