@@ -42,8 +42,8 @@ public class ObjectEqualityOptions
 		return this;
 	}
 
-	internal Result AreConsideredEqual(object? a, object? b)
-		=> _type.AreConsideredEqual(a, b);
+	internal Result AreConsideredEqual(object? a, object? b, string it)
+		=> _type.AreConsideredEqual(a, b, it);
 
 	internal string GetExpectation(string expectedExpression)
 		=> _type.GetExpectation(expectedExpression);
@@ -66,7 +66,7 @@ public class ObjectEqualityOptions
 
 	private interface IEquality
 	{
-		Result AreConsideredEqual(object? a, object? b);
+		Result AreConsideredEqual(object? a, object? b, string it);
 		string GetExpectation(string expectedExpression);
 	}
 
@@ -76,12 +76,12 @@ public class ObjectEqualityOptions
 		#region IEquality Members
 
 		/// <inheritdoc />
-		public Result AreConsideredEqual(object? a, object? b)
+		public Result AreConsideredEqual(object? a, object? b, string it)
 		{
 			if (HandleSpecialCases(a, b, out bool? specialCaseResult))
 			{
 				return new Result(specialCaseResult.Value,
-					$"found {Formatter.Format(a, FormattingOptions.MultipleLines)}");
+					$"{it} was {Formatter.Format(a, FormattingOptions.MultipleLines)}");
 			}
 
 			List<ComparisonFailure> failures = Compare.CheckEquivalent(a, b,
@@ -95,7 +95,7 @@ public class ObjectEqualityOptions
 				if (firstFailure.Type == MemberType.Value)
 				{
 					return new Result(false,
-						$"found {Formatter.Format(firstFailure.Actual, FormattingOptions.SingleLine)}");
+						$"{it} was {Formatter.Format(firstFailure.Actual, FormattingOptions.SingleLine)}");
 				}
 
 				return new Result(false, $"""
@@ -146,8 +146,8 @@ public class ObjectEqualityOptions
 		#region IEquality Members
 
 		/// <inheritdoc />
-		public Result AreConsideredEqual(object? a, object? b)
-			=> new(Equals(a, b), $"found {Formatter.Format(a, FormattingOptions.MultipleLines)}");
+		public Result AreConsideredEqual(object? a, object? b, string it)
+			=> new(Equals(a, b), $"{it} was {Formatter.Format(a, FormattingOptions.MultipleLines)}");
 
 		/// <inheritdoc />
 		public string GetExpectation(string expectedExpression)
@@ -161,9 +161,9 @@ public class ObjectEqualityOptions
 		#region IEquality Members
 
 		/// <inheritdoc />
-		public Result AreConsideredEqual(object? a, object? b)
+		public Result AreConsideredEqual(object? a, object? b, string it)
 			=> new(comparer.Equals(a, b),
-				$"found {Formatter.Format(a, FormattingOptions.MultipleLines)}");
+				$"{it} was {Formatter.Format(a, FormattingOptions.MultipleLines)}");
 
 		/// <inheritdoc />
 		public string GetExpectation(string expectedExpression)

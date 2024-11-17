@@ -11,9 +11,10 @@ namespace Testably.Expectations;
 public static partial class ThatBufferedStreamShould
 {
 	private readonly struct ValueConstraint(
+		string it,
 		string expectation,
 		Func<BufferedStream?, bool> successIf,
-		Func<BufferedStream?, string> onFailure)
+		Func<BufferedStream?, string, string> onFailure)
 		: IValueConstraint<BufferedStream?>
 	{
 		public ConstraintResult IsMetBy(BufferedStream? actual)
@@ -23,7 +24,7 @@ public static partial class ThatBufferedStreamShould
 				return new ConstraintResult.Success<BufferedStream?>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), onFailure(actual));
+			return new ConstraintResult.Failure(ToString(), onFailure(actual, it));
 		}
 
 		public override string ToString()

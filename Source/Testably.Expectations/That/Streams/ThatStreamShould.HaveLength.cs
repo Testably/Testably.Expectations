@@ -13,10 +13,10 @@ public static partial class ThatStreamShould
 		this IThat<Stream?> source,
 		long expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+				.AddConstraint(it => new ValueConstraint(
 					$"have length {expected}",
 					actual => actual?.Length == expected,
-					actual => actual == null ? "found <null>" : $"it had length {actual.Length}")),
+					actual => actual == null ? $"{it} was <null>" : $"{it} had length {actual.Length}")),
 			source);
 
 	/// <summary>
@@ -26,9 +26,9 @@ public static partial class ThatStreamShould
 		this IThat<Stream?> source,
 		long expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+				.AddConstraint(it => new ValueConstraint(
 					$"not have length {expected}",
 					actual => actual != null && actual.Length != expected,
-					actual => actual == null ? "found <null>" : "it had")),
+					actual => actual == null ? $"{it} was <null>" : $"{it} had")),
 			source);
 }
