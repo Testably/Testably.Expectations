@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.Options;
+﻿using Testably.Expectations.Tests.TestHelpers;
+
+namespace Testably.Expectations.Tests.Options;
 
 public class StringMatcherTests
 {
@@ -457,6 +459,53 @@ public class StringMatcherTests
 
 			await That(Act).Should().ThrowException().WithMessage("*but it was <null>*")
 				.AsWildcard();
+		}
+
+		[Fact]
+		public async Task WhenUsingComparer_ShouldApplyComparer()
+		{
+			string subject = "ABC";
+			string expected = "aBC";
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected)
+					.Using(new IgnoreCaseForVocalsComparer());
+
+			await That(Act).Should().NotThrow();
+		}
+
+		[Fact]
+		public async Task WhenUsingMultipleStrategies_ShouldUseTheLastOne()
+		{
+			string subject = "ABC";
+			string expected = "AB*";
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected).AsWildcard().Exactly();
+
+			await That(Act).Should().ThrowException()
+				.WithMessage("""
+				             Expected subject to
+				             be equal to "AB*",
+				             but it was "ABC" which differs at index 2:
+				                  ↓ (actual)
+				               "ABC"
+				               "AB*"
+				                  ↑ (expected)
+				             """);
+		}
+
+		[Fact]
+		public async Task WhenUsingRegex_ShouldApplyComparer()
+		{
+			string subject = "AbbbbbbbbC";
+			string expected = "A(b*)C";
+
+			async Task Act()
+				=> await That(subject).Should().Be(expected)
+					.AsRegex();
+
+			await That(Act).Should().NotThrow();
 		}
 	}
 }

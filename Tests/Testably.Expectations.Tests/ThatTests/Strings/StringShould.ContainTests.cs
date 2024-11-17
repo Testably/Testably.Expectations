@@ -1,4 +1,6 @@
-﻿namespace Testably.Expectations.Tests.ThatTests.Strings;
+﻿using Testably.Expectations.Tests.TestHelpers;
+
+namespace Testably.Expectations.Tests.ThatTests.Strings;
 
 public sealed partial class StringShould
 {

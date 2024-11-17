@@ -1,4 +1,5 @@
-﻿#if NET6_0_OR_GREATER
+﻿using Testably.Expectations.Tests.TestHelpers;
+#if NET6_0_OR_GREATER
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -295,6 +296,41 @@ public class ExpectTests
 				                       "subject Z"
 				                       "subject C"
 				                                ↑ (expected)
+				             """);
+		}
+
+		[Fact]
+		public async Task WhenNested_ShouldIndentMultiLineResults()
+		{
+			async Task Act()
+				=> await ThatAll(That(true).Should().IsMyConstraint(
+					"""
+					expectation
+					over
+					multiple
+					lines
+					""",
+					_ => false,
+					"""
+					result
+					also
+					on multiple
+					lines
+					"""
+				));
+
+			await That(Act).Should().Throw<XunitException>()
+				.WithMessage("""
+				             Expected all of the following to succeed:
+				              [01] Expected true to expectation
+				                   over
+				                   multiple
+				                   lines
+				             but
+				              [01] result
+				                   also
+				                   on multiple
+				                   lines
 				             """);
 		}
 

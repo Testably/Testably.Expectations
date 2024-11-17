@@ -1178,7 +1178,6 @@ namespace Testably.Expectations.Results
         public ExpectationResult(Testably.Expectations.Core.ExpectationBuilder expectationBuilder) { }
         public Testably.Expectations.Results.ExpectationResult Because(string reason) { }
         public System.Runtime.CompilerServices.TaskAwaiter GetAwaiter() { }
-        public Testably.Expectations.Results.ExpectationResult WithCancellation(System.Threading.CancellationToken cancellationToken) { }
     }
     public class ExpectationResult<TType> : Testably.Expectations.Results.ExpectationResult<TType, Testably.Expectations.Results.ExpectationResult<TType>>
     {
