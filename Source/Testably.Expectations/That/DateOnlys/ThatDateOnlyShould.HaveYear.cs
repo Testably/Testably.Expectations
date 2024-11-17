@@ -15,7 +15,8 @@ public static partial class ThatDateOnlyShould
 		int? expected)
 	{
 		return new AndOrResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+				.AddConstraint(it => new PropertyConstraint<int?>(
+					it,
 					expected,
 					(a, e) => a.Year == e,
 					$"have year of {Formatter.Format(expected)}")),
@@ -29,7 +30,8 @@ public static partial class ThatDateOnlyShould
 		this IThat<DateOnly> source,
 		int? unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+				.AddConstraint(it => new PropertyConstraint<int?>(
+					it,
 					unexpected,
 					(a, e) => a.Year != e,
 					$"not have year of {Formatter.Format(unexpected)}")),

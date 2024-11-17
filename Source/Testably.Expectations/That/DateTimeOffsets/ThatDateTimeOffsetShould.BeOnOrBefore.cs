@@ -18,11 +18,12 @@ public static partial class ThatDateTimeOffsetShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTimeOffset, IThat<DateTimeOffset>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					expected,
 					$"be on or before {Formatter.Format(expected)}",
 					(a, e, t) => a - t <= e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);
@@ -38,11 +39,12 @@ public static partial class ThatDateTimeOffsetShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTimeOffset, IThat<DateTimeOffset>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					unexpected,
 					$"not be on or before {Formatter.Format(unexpected)}",
 					(a, e, t) => a + t > e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);

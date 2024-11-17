@@ -12,11 +12,12 @@ public static partial class ThatObjectShould
 	public static AndOrResult<object?, IThat<object?>> BeNull(
 		this IThat<object?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<object?>(
+				.AddConstraint(it => new GenericConstraint<object?>(
+					it,
 					null,
 					"be null",
 					(a, _) => a is null,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -25,10 +26,11 @@ public static partial class ThatObjectShould
 	public static AndOrResult<object, IThat<object?>> NotBeNull(
 		this IThat<object?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<object?>(
+				.AddConstraint(it => new GenericConstraint<object?>(
+					it,
 					null,
 					"not be null",
 					(a, _) => a is not null,
-					(_, _) => "it was")),
+					(_, _, i) => $"{i} was")),
 			source);
 }

@@ -14,7 +14,8 @@ public static partial class ThatTimeOnlyShould
 	public static AndOrResult<TimeOnly, IThat<TimeOnly>> Be(this IThat<TimeOnly> source,
 		TimeOnly expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					expected,
 					(a, e) => a.Equals(e),
 					$"be {Formatter.Format(expected)}")),
@@ -27,7 +28,8 @@ public static partial class ThatTimeOnlyShould
 		this IThat<TimeOnly> source,
 		TimeOnly unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					unexpected,
 					(a, e) => !a.Equals(e),
 					$"not be {Formatter.Format(unexpected)}")),

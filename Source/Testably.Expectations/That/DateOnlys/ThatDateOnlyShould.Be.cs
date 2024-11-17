@@ -15,7 +15,8 @@ public static partial class ThatDateOnlyShould
 		DateOnly? expected)
 	{
 		return new AndOrResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					expected,
 					(a, e) => a.Equals(e),
 					$"be {Formatter.Format(expected)}")),
@@ -29,7 +30,8 @@ public static partial class ThatDateOnlyShould
 		this IThat<DateOnly> source,
 		DateOnly unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					unexpected,
 					(a, e) => !a.Equals(e),
 					$"not be {Formatter.Format(unexpected)}")),

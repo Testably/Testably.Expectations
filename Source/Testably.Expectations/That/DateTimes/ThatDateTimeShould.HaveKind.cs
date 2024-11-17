@@ -14,7 +14,8 @@ public static partial class ThatDateTimeShould
 		DateTimeKind expected)
 	{
 		return new AndOrResult<DateTime, IThat<DateTime>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<DateTimeKind>(
+				.AddConstraint(it => new PropertyConstraint<DateTimeKind>(
+					it,
 					expected,
 					(a, e) => a.Kind == e,
 					$"have kind of {Formatter.Format(expected)}")),
@@ -28,7 +29,8 @@ public static partial class ThatDateTimeShould
 		this IThat<DateTime> source,
 		DateTimeKind unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<DateTimeKind>(
+				.AddConstraint(it => new PropertyConstraint<DateTimeKind>(
+					it,
 					unexpected,
 					(a, e) => a.Kind != e,
 					$"not have kind of {Formatter.Format(unexpected)}")),

@@ -15,7 +15,8 @@ public static partial class ThatDateTimeOffsetShould
 		int? expected)
 	{
 		return new AndOrResult<DateTimeOffset, IThat<DateTimeOffset>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+				.AddConstraint(it => new PropertyConstraint<int?>(
+					it,
 					expected,
 					(a, e) => a.Minute == e,
 					$"have minute of {Formatter.Format(expected)}")),
@@ -29,7 +30,8 @@ public static partial class ThatDateTimeOffsetShould
 		this IThat<DateTimeOffset> source,
 		int? unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+				.AddConstraint(it => new PropertyConstraint<int?>(
+					it,
 					unexpected,
 					(a, e) => a.Minute != e,
 					$"not have minute of {Formatter.Format(unexpected)}")),

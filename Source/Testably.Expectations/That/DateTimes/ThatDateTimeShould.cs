@@ -29,6 +29,7 @@ public static partial class ThatDateTimeShould
 	}
 
 	private readonly struct PropertyConstraint<T>(
+		string it,
 		T expected,
 		Func<DateTime, T, bool> condition,
 		string expectation) : IValueConstraint<DateTime>
@@ -40,7 +41,7 @@ public static partial class ThatDateTimeShould
 				return new ConstraintResult.Success<DateTime>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()
@@ -48,10 +49,11 @@ public static partial class ThatDateTimeShould
 	}
 
 	private readonly struct ConditionConstraint(
+		string it,
 		DateTime? expected,
 		string expectation,
 		Func<DateTime, DateTime, TimeSpan, bool> condition,
-		Func<DateTime, DateTime?, string> failureMessageFactory,
+		Func<DateTime, DateTime?, string, string> failureMessageFactory,
 		TimeTolerance tolerance) : IValueConstraint<DateTime>
 	{
 		public ConstraintResult IsMetBy(DateTime actual)
@@ -59,7 +61,7 @@ public static partial class ThatDateTimeShould
 			if (expected is null)
 			{
 				return new ConstraintResult.Failure(ToString(),
-					failureMessageFactory(actual, expected));
+					failureMessageFactory(actual, expected, it));
 			}
 
 			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
@@ -68,7 +70,7 @@ public static partial class ThatDateTimeShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected.Value));
+				failureMessageFactory(actual, expected.Value, it));
 		}
 
 		public override string ToString()

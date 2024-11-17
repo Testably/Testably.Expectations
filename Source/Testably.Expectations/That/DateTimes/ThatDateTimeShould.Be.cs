@@ -18,13 +18,14 @@ public static partial class ThatDateTimeShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					expected,
 					$"be {Formatter.Format(expected)}{tolerance}",
 					(a, e, t) => a.Kind == e.Kind && IsWithinTolerance(t, a - e),
-					(a, e) => a.Kind == e?.Kind
-						? $"found {Formatter.Format(a)}"
-						: "it differed in the Kind property",
+					(a, e, i) => a.Kind == e?.Kind
+						? $"{i} was {Formatter.Format(a)}"
+						: $"{i} differed in the Kind property",
 					tolerance)),
 			source,
 			tolerance);
@@ -40,11 +41,12 @@ public static partial class ThatDateTimeShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime, IThat<DateTime>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					unexpected,
 					$"not be {Formatter.Format(unexpected)}{tolerance}",
 					(a, e, t) => a.Kind != e.Kind || !IsWithinTolerance(t, a - e),
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);

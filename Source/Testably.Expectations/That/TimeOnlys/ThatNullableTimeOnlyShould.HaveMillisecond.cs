@@ -16,7 +16,8 @@ public static partial class ThatNullableTimeOnlyShould
 		int? expected)
 	{
 		return new AndOrResult<TimeOnly?, IThat<TimeOnly?>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+				.AddConstraint(it => new PropertyConstraint<int?>(
+					it,
 					expected,
 					(a, e) => a.HasValue && a.Value.Millisecond == e,
 					$"have millisecond of {Formatter.Format(expected)}")),
@@ -30,7 +31,8 @@ public static partial class ThatNullableTimeOnlyShould
 		this IThat<TimeOnly?> source,
 		int? unexpected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+				.AddConstraint(it => new PropertyConstraint<int?>(
+					it,
 					unexpected,
 					(a, e) => !a.HasValue || a.Value.Millisecond != e,
 					$"not have millisecond of {Formatter.Format(unexpected)}")),

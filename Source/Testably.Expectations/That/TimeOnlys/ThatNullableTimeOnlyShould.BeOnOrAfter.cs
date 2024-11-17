@@ -19,11 +19,12 @@ public static partial class ThatNullableTimeOnlyShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<TimeOnly?, IThat<TimeOnly?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraintWithTolerance(
+				.AddConstraint(it => new ConditionConstraintWithTolerance(
+					it,
 					expected,
 					(e, t) => $"be on or after {Formatter.Format(e)}{t}",
 					(a, e, t) => a?.Add(t) >= e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);
@@ -39,11 +40,12 @@ public static partial class ThatNullableTimeOnlyShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<TimeOnly?, IThat<TimeOnly?>>(
 			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraintWithTolerance(
+				.AddConstraint(it => new ConditionConstraintWithTolerance(
+					it,
 					unexpected,
 					(u, t) => $"not be on or after {Formatter.Format(u)}{t}",
 					(a, e, t) => a?.Add(t.Negate()) < e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);

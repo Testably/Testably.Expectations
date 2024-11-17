@@ -34,6 +34,7 @@ public static partial class ThatNullableDateTimeOffsetShould
 	}
 
 	private readonly struct PropertyConstraint<T>(
+		string it,
 		T expected,
 		Func<DateTimeOffset?, T, bool> condition,
 		string expectation) : IValueConstraint<DateTimeOffset?>
@@ -45,7 +46,7 @@ public static partial class ThatNullableDateTimeOffsetShould
 				return new ConstraintResult.Success<DateTimeOffset?>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()
@@ -53,10 +54,11 @@ public static partial class ThatNullableDateTimeOffsetShould
 	}
 
 	private readonly struct ConditionConstraint(
+		string it,
 		DateTimeOffset? expected,
 		string expectation,
 		Func<DateTimeOffset?, DateTimeOffset?, TimeSpan, bool> condition,
-		Func<DateTimeOffset?, DateTimeOffset?, string> failureMessageFactory,
+		Func<DateTimeOffset?, DateTimeOffset?, string, string> failureMessageFactory,
 		TimeTolerance tolerance) : IValueConstraint<DateTimeOffset?>
 	{
 		public ConstraintResult IsMetBy(DateTimeOffset? actual)
@@ -67,7 +69,7 @@ public static partial class ThatNullableDateTimeOffsetShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
+				failureMessageFactory(actual, expected, it));
 		}
 
 		public override string ToString()
