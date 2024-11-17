@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731791345312,
+  "lastUpdate": 1731836945738,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -1796,6 +1796,66 @@ window.BENCHMARK_DATA = {
             "value": 795.8874958583286,
             "unit": "ns",
             "range": "± 5.470391889304692"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d98e758041ad2af919ecb720544fbfa232c4460f",
+          "message": "feat: improve unclear error messages when accessing properties (#180)\n\nFixes #172 by using the subject name (default \"it\") in the error\r\nmessage.",
+          "timestamp": "2024-11-17T09:45:35Z",
+          "tree_id": "09e02f5b82e34675397437455e2a468fa535280d",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/d98e758041ad2af919ecb720544fbfa232c4460f"
+        },
+        "date": 1731836945110,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 217.64562688668568,
+            "unit": "ns",
+            "range": "± 1.995035274341335"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 166.19945885453905,
+            "unit": "ns",
+            "range": "± 0.9235219202998374"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 629.0879451887948,
+            "unit": "ns",
+            "range": "± 2.0206415073753576"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 399.73716831207275,
+            "unit": "ns",
+            "range": "± 2.255723335171622"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 332.300386873881,
+            "unit": "ns",
+            "range": "± 2.43931110370214"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 808.0915812810262,
+            "unit": "ns",
+            "range": "± 3.3732781730901014"
           }
         ]
       }
