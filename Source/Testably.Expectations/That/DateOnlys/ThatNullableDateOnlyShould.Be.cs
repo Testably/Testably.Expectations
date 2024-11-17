@@ -14,8 +14,8 @@ public static partial class ThatNullableDateOnlyShould
 	public static AndOrResult<DateOnly?, IThat<DateOnly?>> Be(this IThat<DateOnly?> source,
 		DateOnly? expected)
 	{
-		return new AndOrResult<DateOnly?, IThat<DateOnly?>>(source.ExpectationBuilder
-				.AddConstraint(it => new ConditionConstraint(
+		return new AndOrResult<DateOnly?, IThat<DateOnly?>>(source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
 					it,
 					expected,
 					(a, e) => a.Equals(e),
@@ -29,8 +29,8 @@ public static partial class ThatNullableDateOnlyShould
 	public static AndOrResult<DateOnly?, IThat<DateOnly?>> NotBe(
 		this IThat<DateOnly?> source,
 		DateOnly? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ConditionConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
 					it,
 					unexpected,
 					(a, e) => !a.Equals(e),

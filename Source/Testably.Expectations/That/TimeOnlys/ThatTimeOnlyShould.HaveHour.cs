@@ -14,8 +14,8 @@ public static partial class ThatTimeOnlyShould
 	public static AndOrResult<TimeOnly, IThat<TimeOnly>> HaveHour(this IThat<TimeOnly> source,
 		int? expected)
 	{
-		return new AndOrResult<TimeOnly, IThat<TimeOnly>>(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<int?>(
+		return new AndOrResult<TimeOnly, IThat<TimeOnly>>(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
 					it,
 					expected,
 					(a, e) => a.Hour == e,
@@ -29,8 +29,8 @@ public static partial class ThatTimeOnlyShould
 	public static AndOrResult<TimeOnly, IThat<TimeOnly>> NotHaveHour(
 		this IThat<TimeOnly> source,
 		int? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<int?>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
 					it,
 					unexpected,
 					(a, e) => a.Hour != e,

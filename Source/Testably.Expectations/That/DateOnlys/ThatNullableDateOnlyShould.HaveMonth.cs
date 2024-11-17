@@ -14,8 +14,8 @@ public static partial class ThatNullableDateOnlyShould
 	public static AndOrResult<DateOnly?, IThat<DateOnly?>> HaveMonth(this IThat<DateOnly?> source,
 		int? expected)
 	{
-		return new AndOrResult<DateOnly?, IThat<DateOnly?>>(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<int?>(
+		return new AndOrResult<DateOnly?, IThat<DateOnly?>>(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
 					it,
 					expected,
 					(a, e) => a.HasValue && a.Value.Month == e,
@@ -29,8 +29,8 @@ public static partial class ThatNullableDateOnlyShould
 	public static AndOrResult<DateOnly?, IThat<DateOnly?>> NotHaveMonth(
 		this IThat<DateOnly?> source,
 		int? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<int?>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
 					it,
 					unexpected,
 					(a, e) => !a.HasValue || a.Value.Month != e,

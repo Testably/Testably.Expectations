@@ -14,8 +14,8 @@ public static partial class ThatDateTimeOffsetShould
 		this IThat<DateTimeOffset> source,
 		int? expected)
 	{
-		return new AndOrResult<DateTimeOffset, IThat<DateTimeOffset>>(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<int?>(
+		return new AndOrResult<DateTimeOffset, IThat<DateTimeOffset>>(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
 					it,
 					expected,
 					(a, e) => a.Day == e,
@@ -29,8 +29,8 @@ public static partial class ThatDateTimeOffsetShould
 	public static AndOrResult<DateTimeOffset, IThat<DateTimeOffset>> NotHaveDay(
 		this IThat<DateTimeOffset> source,
 		int? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<int?>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
 					it,
 					unexpected,
 					(a, e) => a.Day != e,

@@ -13,8 +13,8 @@ public static partial class ThatNullableDateTimeShould
 	public static AndOrResult<DateTime?, IThat<DateTime?>> HaveKind(this IThat<DateTime?> source,
 		DateTimeKind expected)
 	{
-		return new AndOrResult<DateTime?, IThat<DateTime?>>(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<DateTimeKind>(
+		return new AndOrResult<DateTime?, IThat<DateTime?>>(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<DateTimeKind>(
 					it,
 					expected,
 					(a, e) => a.HasValue && a.Value.Kind == e,
@@ -28,8 +28,8 @@ public static partial class ThatNullableDateTimeShould
 	public static AndOrResult<DateTime?, IThat<DateTime?>> NotHaveKind(
 		this IThat<DateTime?> source,
 		DateTimeKind unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new PropertyConstraint<DateTimeKind>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<DateTimeKind>(
 					it,
 					unexpected,
 					(a, e) => !a.HasValue || a.Value.Kind != e,

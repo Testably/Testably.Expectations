@@ -18,8 +18,8 @@ public static partial class ThatNullableDateOnlyShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateOnly?, IThat<DateOnly?>>(
-			source.ExpectationBuilder
-				.AddConstraint(it => new ConditionConstraintWithTolerance(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraintWithTolerance(
 					it,
 					expected,
 					(e, t) => $"be before {Formatter.Format(e)}{t.ToDayString()}",
@@ -39,8 +39,8 @@ public static partial class ThatNullableDateOnlyShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateOnly?, IThat<DateOnly?>>(
-			source.ExpectationBuilder
-				.AddConstraint(it => new ConditionConstraintWithTolerance(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraintWithTolerance(
 					it,
 					unexpected,
 					(u, t) => $"not be before {Formatter.Format(u)}{t.ToDayString()}",

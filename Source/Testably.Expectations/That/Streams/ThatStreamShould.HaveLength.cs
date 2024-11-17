@@ -12,8 +12,8 @@ public static partial class ThatStreamShould
 	public static AndOrResult<Stream?, IThat<Stream?>> HaveLength(
 		this IThat<Stream?> source,
 		long expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					$"have length {expected}",
 					actual => actual?.Length == expected,
 					actual => actual == null ? $"{it} was <null>" : $"{it} had length {actual.Length}")),
@@ -25,8 +25,8 @@ public static partial class ThatStreamShould
 	public static AndOrResult<Stream?, IThat<Stream?>> NotHaveLength(
 		this IThat<Stream?> source,
 		long expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					$"not have length {expected}",
 					actual => actual != null && actual.Length != expected,
 					actual => actual == null ? $"{it} was <null>" : $"{it} had")),

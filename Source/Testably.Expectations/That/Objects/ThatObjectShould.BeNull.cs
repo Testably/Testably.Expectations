@@ -11,8 +11,8 @@ public static partial class ThatObjectShould
 	/// </summary>
 	public static AndOrResult<object?, IThat<object?>> BeNull(
 		this IThat<object?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new GenericConstraint<object?>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<object?>(
 					it,
 					null,
 					"be null",
@@ -25,8 +25,8 @@ public static partial class ThatObjectShould
 	/// </summary>
 	public static AndOrResult<object, IThat<object?>> NotBeNull(
 		this IThat<object?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new GenericConstraint<object?>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<object?>(
 					it,
 					null,
 					"not be null",

@@ -14,8 +14,8 @@ public static partial class ThatNullableTimeOnlyShould
 	public static AndOrResult<TimeOnly?, IThat<TimeOnly?>> Be(this IThat<TimeOnly?> source,
 		TimeOnly? expected)
 	{
-		return new AndOrResult<TimeOnly?, IThat<TimeOnly?>>(source.ExpectationBuilder
-				.AddConstraint(it => new ConditionConstraint(
+		return new AndOrResult<TimeOnly?, IThat<TimeOnly?>>(source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
 					it,
 					expected,
 					(a, e) => a.Equals(e),
@@ -29,8 +29,8 @@ public static partial class ThatNullableTimeOnlyShould
 	public static AndOrResult<TimeOnly?, IThat<TimeOnly?>> NotBe(
 		this IThat<TimeOnly?> source,
 		TimeOnly? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ConditionConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
 					it,
 					unexpected,
 					(a, e) => !a.Equals(e),

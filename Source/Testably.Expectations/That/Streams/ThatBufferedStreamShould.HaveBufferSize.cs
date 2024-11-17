@@ -13,8 +13,8 @@ public static partial class ThatBufferedStreamShould
 	public static AndOrResult<BufferedStream?, IThat<BufferedStream?>> HaveBufferSize(
 		this IThat<BufferedStream?> source,
 		int expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					it,
 					$"have buffer size {expected}",
 					actual => actual?.BufferSize == expected,
@@ -30,8 +30,8 @@ public static partial class ThatBufferedStreamShould
 	public static AndOrResult<BufferedStream?, IThat<BufferedStream?>>
 		NotHaveBufferSize(this IThat<BufferedStream?> source,
 			int unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					it,
 					$"not have buffer size {unexpected}",
 					actual => actual != null && actual.BufferSize != unexpected,

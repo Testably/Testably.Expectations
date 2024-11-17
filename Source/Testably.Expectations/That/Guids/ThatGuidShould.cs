@@ -16,7 +16,7 @@ public static partial class ThatGuidShould
 	public static IThat<Guid> Should(this IExpectSubject<Guid> subject)
 		=> subject.Should(ExpectationBuilder.NoAction);
 
-	private readonly struct ValueConstraint(string expectation, Func<Guid, bool> successIf)
+	private readonly struct ValueConstraint(string it, string expectation, Func<Guid, bool> successIf)
 		: IValueConstraint<Guid>
 	{
 		public ConstraintResult IsMetBy(Guid actual)
@@ -26,7 +26,7 @@ public static partial class ThatGuidShould
 				return new ConstraintResult.Success<Guid?>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()

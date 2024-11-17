@@ -11,8 +11,8 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> BeReadable(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					"be readable",
 					actual => actual?.CanRead == true,
 					actual => actual == null ? $"{it} was <null>" : $"{it} was not")),
@@ -23,8 +23,8 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> NotBeReadable(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					"not be readable",
 					actual => actual?.CanRead == false,
 					actual => actual == null ? $"{it} was <null>" : $"{it} was")),

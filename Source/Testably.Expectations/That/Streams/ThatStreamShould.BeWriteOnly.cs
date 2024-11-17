@@ -11,8 +11,8 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> BeWriteOnly(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					"be write-only",
 					actual => actual is { CanWrite: true, CanRead: false },
 					actual => actual == null ? $"{it} was <null>" : $"{it} was not")),
@@ -23,8 +23,8 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> NotBeWriteOnly(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(it => new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					"not be write-only",
 					actual => actual != null && !(actual is { CanWrite: true, CanRead: false }),
 					actual => actual == null ? $"{it} was <null>" : $"{it} was")),
