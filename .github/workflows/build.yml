@@ -253,7 +253,7 @@ jobs:
     
     prepare-release:
         name: Prepare Release
-        # if: startsWith(github.ref, 'refs/heads/release/')
+        if: startsWith(github.ref, 'refs/heads/release/')
         runs-on: ubuntu-latest
         needs: [benchmark]
         steps:
@@ -277,7 +277,7 @@ jobs:
             -   name: Create pull request
                 run: |
                     version="${GITHUB_REF#refs/heads/release/}"
-                    gh pr create -B main -H integrate/merge-benchmarks-to-main --title 'docs: update benchmarks while releasing ${version}' --fill
+                    gh pr create -B main -H integrate/merge-benchmarks-to-main --title "docs: update benchmarks while releasing ${version}" --fill
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
