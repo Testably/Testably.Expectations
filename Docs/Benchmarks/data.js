@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731859864525,
+  "lastUpdate": 1731861092437,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -2322,6 +2322,66 @@ window.BENCHMARK_DATA = {
             "value": 863.6240283966065,
             "unit": "ns",
             "range": "± 4.4423998353434655"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "55475c4ec69189249736902de49ab2725a17f3ce",
+          "message": "feat: add prepare release step to build pipeline (#183)",
+          "timestamp": "2024-11-17T17:28:04+01:00",
+          "tree_id": "774ca879bc0338bfbfd19348ac367b76892b79d8",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/55475c4ec69189249736902de49ab2725a17f3ce"
+        },
+        "date": 1731861090849,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 219.55243284361703,
+            "unit": "ns",
+            "range": "± 1.8681059807093012"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 169.27850273450215,
+            "unit": "ns",
+            "range": "± 1.249913386432451"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 584.9937897409711,
+            "unit": "ns",
+            "range": "± 2.469376309657369"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 400.8521567491385,
+            "unit": "ns",
+            "range": "± 2.4417536001745046"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 323.15083690790027,
+            "unit": "ns",
+            "range": "± 0.7713848544248805"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 822.1176720399123,
+            "unit": "ns",
+            "range": "± 2.444117865958926"
           }
         ]
       }
