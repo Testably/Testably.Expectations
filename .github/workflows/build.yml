@@ -268,7 +268,7 @@ jobs:
                     git config --global user.name "Benchmark User"
                     git checkout benchmarks
                     git rebase origin/main
-                    git push origin
+                    git push origin -f
             -   name: Merge benchmarks into main
                 shell: bash
                 run: |
