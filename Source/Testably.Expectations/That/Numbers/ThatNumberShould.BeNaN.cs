@@ -11,11 +11,12 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> BeNaN(this IThat<float> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float>(
+				.AddConstraint(it => new GenericConstraint<float>(
+					it,
 					float.NaN,
 					_ => "be NaN",
 					(a, _) => float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -23,11 +24,12 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> BeNaN(this IThat<double> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double>(
+				.AddConstraint(it => new GenericConstraint<double>(
+					it,
 					double.NaN,
 					_ => "be NaN",
 					(a, _) => double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -35,11 +37,12 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> BeNaN(this IThat<float?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<float>(
+				.AddConstraint(it => new NullableGenericConstraint<float>(
+					it,
 					float.NaN,
 					_ => "be NaN",
 					(a, _) => a != null && float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -47,11 +50,12 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> BeNaN(this IThat<double?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<double>(
+				.AddConstraint(it => new NullableGenericConstraint<double>(
+					it,
 					double.NaN,
 					_ => "be NaN",
 					(a, _) => a != null && double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -59,11 +63,12 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> NotBeNaN(this IThat<float> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float>(
+				.AddConstraint(it => new GenericConstraint<float>(
+					it,
 					float.NaN,
 					_ => "not be NaN",
 					(a, _) => !float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -71,11 +76,12 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> NotBeNaN(this IThat<double> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double>(
+				.AddConstraint(it => new GenericConstraint<double>(
+					it,
 					double.NaN,
 					_ => "not be NaN",
 					(a, _) => !double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -84,11 +90,12 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> NotBeNaN(this IThat<float?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<float>(
+				.AddConstraint(it => new NullableGenericConstraint<float>(
+					it,
 					float.NaN,
 					_ => "not be NaN",
 					(a, _) => a == null || !float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -96,10 +103,11 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> NotBeNaN(this IThat<double?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<double>(
+				.AddConstraint(it => new NullableGenericConstraint<double>(
+					it,
 					double.NaN,
 					_ => "not be NaN",
 					(a, _) => a == null || !double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 }

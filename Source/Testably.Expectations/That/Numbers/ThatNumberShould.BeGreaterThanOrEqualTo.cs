@@ -13,11 +13,12 @@ public static partial class ThatNumberShould
 		this IThat<byte> source,
 		byte? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<byte>(
+				.AddConstraint(it => new GenericConstraint<byte>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -27,11 +28,12 @@ public static partial class ThatNumberShould
 		this IThat<sbyte> source,
 		sbyte? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<sbyte>(
+				.AddConstraint(it => new GenericConstraint<sbyte>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -41,11 +43,12 @@ public static partial class ThatNumberShould
 		this IThat<short> source,
 		short? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<short>(
+				.AddConstraint(it => new GenericConstraint<short>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -55,11 +58,12 @@ public static partial class ThatNumberShould
 		this IThat<ushort> source,
 		ushort? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<ushort>(
+				.AddConstraint(it => new GenericConstraint<ushort>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -69,11 +73,12 @@ public static partial class ThatNumberShould
 		this IThat<int> source,
 		int? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<int>(
+				.AddConstraint(it => new GenericConstraint<int>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -83,11 +88,12 @@ public static partial class ThatNumberShould
 		this IThat<uint> source,
 		uint? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<uint>(
+				.AddConstraint(it => new GenericConstraint<uint>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -97,11 +103,12 @@ public static partial class ThatNumberShould
 		this IThat<long> source,
 		long? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<long>(
+				.AddConstraint(it => new GenericConstraint<long>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -111,11 +118,12 @@ public static partial class ThatNumberShould
 		this IThat<ulong> source,
 		ulong? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<ulong>(
+				.AddConstraint(it => new GenericConstraint<ulong>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -125,11 +133,12 @@ public static partial class ThatNumberShould
 		this IThat<float> source,
 		float? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float>(
+				.AddConstraint(it => new GenericConstraint<float>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -139,11 +148,12 @@ public static partial class ThatNumberShould
 		this IThat<double> source,
 		double? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double>(
+				.AddConstraint(it => new GenericConstraint<double>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -153,11 +163,12 @@ public static partial class ThatNumberShould
 		this IThat<decimal> source,
 		decimal? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<decimal>(
+				.AddConstraint(it => new GenericConstraint<decimal>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -167,11 +178,12 @@ public static partial class ThatNumberShould
 		this IThat<byte?> source,
 		byte? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<byte>(
+				.AddConstraint(it => new NullableGenericConstraint<byte>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -181,11 +193,12 @@ public static partial class ThatNumberShould
 		this IThat<sbyte?> source,
 		sbyte? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<sbyte>(
+				.AddConstraint(it => new NullableGenericConstraint<sbyte>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -195,11 +208,12 @@ public static partial class ThatNumberShould
 		this IThat<short?> source,
 		short? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<short>(
+				.AddConstraint(it => new NullableGenericConstraint<short>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -209,11 +223,12 @@ public static partial class ThatNumberShould
 		this IThat<ushort?> source,
 		ushort? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<ushort>(
+				.AddConstraint(it => new NullableGenericConstraint<ushort>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -223,11 +238,12 @@ public static partial class ThatNumberShould
 		this IThat<int?> source,
 		int? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<int>(
+				.AddConstraint(it => new NullableGenericConstraint<int>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -237,11 +253,12 @@ public static partial class ThatNumberShould
 		this IThat<uint?> source,
 		uint? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<uint>(
+				.AddConstraint(it => new NullableGenericConstraint<uint>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -251,11 +268,12 @@ public static partial class ThatNumberShould
 		this IThat<long?> source,
 		long? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<long>(
+				.AddConstraint(it => new NullableGenericConstraint<long>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -265,11 +283,12 @@ public static partial class ThatNumberShould
 		this IThat<ulong?> source,
 		ulong? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<ulong>(
+				.AddConstraint(it => new NullableGenericConstraint<ulong>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -279,11 +298,12 @@ public static partial class ThatNumberShould
 		this IThat<float?> source,
 		float? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<float>(
+				.AddConstraint(it => new NullableGenericConstraint<float>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -293,11 +313,12 @@ public static partial class ThatNumberShould
 		this IThat<double?> source,
 		double? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<double>(
+				.AddConstraint(it => new NullableGenericConstraint<double>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -307,10 +328,11 @@ public static partial class ThatNumberShould
 		this IThat<decimal?> source,
 		decimal? expected)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<decimal>(
+				.AddConstraint(it => new NullableGenericConstraint<decimal>(
+					it,
 					expected,
 					e => $"be greater than or equal to {Formatter.Format(e)}",
 					(a, e) => a >= e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 }

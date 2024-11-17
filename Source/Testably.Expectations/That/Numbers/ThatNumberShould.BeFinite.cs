@@ -13,11 +13,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<float, IThat<float>> BeFinite(
 		this IThat<float> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float>(
+				.AddConstraint(it => new GenericConstraint<float>(
+					it,
 					float.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => !float.IsInfinity(a) && !float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -27,11 +28,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<double, IThat<double>> BeFinite(
 		this IThat<double> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double>(
+				.AddConstraint(it => new GenericConstraint<double>(
+					it,
 					double.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => !double.IsInfinity(a) && !double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -41,11 +43,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<float, IThat<float?>> BeFinite(
 		this IThat<float?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<float>(
+				.AddConstraint(it => new NullableGenericConstraint<float>(
+					it,
 					float.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => a != null && !float.IsInfinity(a.Value) && !float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -55,11 +58,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<double, IThat<double?>> BeFinite(
 		this IThat<double?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<double>(
+				.AddConstraint(it => new NullableGenericConstraint<double>(
+					it,
 					double.PositiveInfinity,
 					_ => "be finite",
 					(a, _) => a != null && !double.IsInfinity(a.Value) && !double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -69,11 +73,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<float, IThat<float>> NotBeFinite(
 		this IThat<float> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float>(
+				.AddConstraint(it => new GenericConstraint<float>(
+					it,
 					float.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => float.IsInfinity(a) || float.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -83,11 +88,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<double, IThat<double>> NotBeFinite(
 		this IThat<double> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double>(
+				.AddConstraint(it => new GenericConstraint<double>(
+					it,
 					double.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => double.IsInfinity(a) || double.IsNaN(a),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -97,11 +103,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<float?, IThat<float?>> NotBeFinite(
 		this IThat<float?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<float>(
+				.AddConstraint(it => new NullableGenericConstraint<float>(
+					it,
 					float.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => a == null || float.IsInfinity(a.Value) || float.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -111,10 +118,11 @@ public static partial class ThatNumberShould
 	public static AndOrResult<double?, IThat<double?>> NotBeFinite(
 		this IThat<double?> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<double>(
+				.AddConstraint(it => new NullableGenericConstraint<double>(
+					it,
 					double.PositiveInfinity,
 					_ => "not be finite",
 					(a, _) => a == null || double.IsInfinity(a.Value) || double.IsNaN(a.Value),
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 }
