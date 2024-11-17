@@ -264,6 +264,8 @@ jobs:
             -   name: Rebase benchmarks onto main
                 shell: bash
                 run: |
+                    git config --global user.email "benchmarks@testably.org"
+                    git config --global user.name "Benchmark User"
                     git checkout benchmarks
                     git rebase origin/main
                     git push origin
