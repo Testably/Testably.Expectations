@@ -16,7 +16,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage("""
 				             Expected subject to
 				             be null,
-				             but found 00000000-0000-0000-0000-000000000000
+				             but it was 00000000-0000-0000-0000-000000000000
 				             """);
 		}
 
@@ -32,7 +32,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage($"""
 				              Expected subject to
 				              be null,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -84,7 +84,7 @@ public sealed partial class NullableGuidShould
 				.WithMessage("""
 				             Expected subject to
 				             not be null,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}

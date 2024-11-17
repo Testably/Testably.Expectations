@@ -141,57 +141,12 @@ public static partial class ThatNumberShould
 	public static IThat<decimal?> Should(this IExpectSubject<decimal?> subject)
 		=> subject.Should(ExpectationBuilder.NoAction);
 
-	private readonly struct GenericArrayConstraint<T>(
-		T?[] expected,
-		Func<T?[], string> expectation,
-		Func<T, T?[], bool> condition,
-		Func<T, T?[], string> failureMessageFactory)
-		: IValueConstraint<T>
-		where T : struct
-	{
-		public ConstraintResult IsMetBy(T actual)
-		{
-			if (condition(actual, expected))
-			{
-				return new ConstraintResult.Success<T>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
-		}
-
-		public override string ToString()
-			=> expectation(expected);
-	}
-
-	private readonly struct GenericArrayConstraint2<T>(
-		T[] expected,
-		Func<T[], string> expectation,
-		Func<T, T[], bool> condition,
-		Func<T, T[], string> failureMessageFactory)
-		: IValueConstraint<T>
-		where T : struct
-	{
-		public ConstraintResult IsMetBy(T actual)
-		{
-			if (condition(actual, expected))
-			{
-				return new ConstraintResult.Success<T>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
-		}
-
-		public override string ToString()
-			=> expectation(expected);
-	}
-
 	private readonly struct GenericConstraint<T>(
+		string it,
 		T? expected,
 		Func<T?, string> expectation,
 		Func<T, T?, bool> condition,
-		Func<T, T?, string> failureMessageFactory)
+		Func<T, T?, string, string> failureMessageFactory)
 		: IValueConstraint<T>
 		where T : struct
 	{
@@ -203,7 +158,7 @@ public static partial class ThatNumberShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
+				failureMessageFactory(actual, expected, it));
 		}
 
 		public override string ToString()
@@ -211,10 +166,11 @@ public static partial class ThatNumberShould
 	}
 
 	private readonly struct NullableGenericConstraint<T>(
+		string it,
 		T? expected,
 		Func<T?, string> expectation,
 		Func<T?, T?, bool> condition,
-		Func<T?, T?, string> failureMessageFactory)
+		Func<T?, T?, string, string> failureMessageFactory)
 		: IValueConstraint<T?>
 		where T : struct
 	{
@@ -226,7 +182,55 @@ public static partial class ThatNumberShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
+				failureMessageFactory(actual, expected, it));
+		}
+
+		public override string ToString()
+			=> expectation(expected);
+	}
+
+	private readonly struct GenericArrayConstraint<T>(
+		string it,
+		T[] expected,
+		Func<T[], string> expectation,
+		Func<T, T[], bool> condition,
+		Func<T, T[], string, string> failureMessageFactory)
+		: IValueConstraint<T>
+		where T : struct
+	{
+		public ConstraintResult IsMetBy(T actual)
+		{
+			if (condition(actual, expected))
+			{
+				return new ConstraintResult.Success<T>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected, it));
+		}
+
+		public override string ToString()
+			=> expectation(expected);
+	}
+
+	private readonly struct GenericArrayConstraintWithNullableValues<T>(
+		string it,
+		T?[] expected,
+		Func<T?[], string> expectation,
+		Func<T, T?[], bool> condition,
+		Func<T, T?[], string, string> failureMessageFactory)
+		: IValueConstraint<T>
+		where T : struct
+	{
+		public ConstraintResult IsMetBy(T actual)
+		{
+			if (condition(actual, expected))
+			{
+				return new ConstraintResult.Success<T>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				failureMessageFactory(actual, expected, it));
 		}
 
 		public override string ToString()
@@ -234,10 +238,11 @@ public static partial class ThatNumberShould
 	}
 
 	private readonly struct NullableGenericArrayConstraint<T>(
-		T?[] expected,
-		Func<T?[], string> expectation,
-		Func<T?, T?[], bool> condition,
-		Func<T?, T?[], string> failureMessageFactory)
+		string it,
+		T[] expected,
+		Func<T[], string> expectation,
+		Func<T?, T[], bool> condition,
+		Func<T?, T[], string, string> failureMessageFactory)
 		: IValueConstraint<T?>
 		where T : struct
 	{
@@ -249,18 +254,19 @@ public static partial class ThatNumberShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
+				failureMessageFactory(actual, expected, it));
 		}
 
 		public override string ToString()
 			=> expectation(expected);
 	}
 
-	private readonly struct NullableGenericArrayConstraint2<T>(
-		T[] expected,
-		Func<T[], string> expectation,
-		Func<T?, T[], bool> condition,
-		Func<T?, T[], string> failureMessageFactory)
+	private readonly struct NullableGenericArrayConstraintWithNullableValues<T>(
+		string it,
+		T?[] expected,
+		Func<T?[], string> expectation,
+		Func<T?, T?[], bool> condition,
+		Func<T?, T?[], string, string> failureMessageFactory)
 		: IValueConstraint<T?>
 		where T : struct
 	{
@@ -272,7 +278,7 @@ public static partial class ThatNumberShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
+				failureMessageFactory(actual, expected, it));
 		}
 
 		public override string ToString()

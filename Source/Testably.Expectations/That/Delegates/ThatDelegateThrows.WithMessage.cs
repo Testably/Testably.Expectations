@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Options;
+﻿using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -12,9 +11,9 @@ public partial class ThatDelegateThrows<TException>
 	public StringMatcherResult<TException, ThatDelegateThrows<TException>>
 		WithMessage(
 			StringMatcher expected)
-		=> new(ExpectationBuilder
-				.AddConstraint(new ThatExceptionShould.HasMessageValueConstraint<TException>(
-					expected, "with")),
+		=> new(ExpectationBuilder.AddConstraint(it
+				=> new ThatExceptionShould.HasMessageValueConstraint<TException>(
+					it, "with", expected)),
 			this,
 			expected);
 }

@@ -18,7 +18,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -35,7 +35,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             be before 23:59:59.9999999,
-				             but found 23:59:59.9999999
+				             but it was 23:59:59.9999999
 				             """);
 		}
 
@@ -52,7 +52,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             be before 00:00:00.0000000,
-				             but found 00:00:00.0000000
+				             but it was 00:00:00.0000000
 				             """);
 		}
 
@@ -69,7 +69,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -87,7 +87,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)}, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -117,7 +117,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -136,7 +136,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              be before {Formatter.Format(expected)} ± 0:03, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -193,7 +193,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -235,7 +235,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before <null>, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -254,7 +254,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before {Formatter.Format(unexpected)} ± 0:03, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -272,7 +272,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be before {Formatter.Format(unexpected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

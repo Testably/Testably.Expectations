@@ -37,7 +37,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be read-only,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -81,7 +81,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be read-only,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 

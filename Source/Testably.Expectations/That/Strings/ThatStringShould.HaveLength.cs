@@ -1,7 +1,7 @@
 ﻿using System;
 using Testably.Expectations.Core;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -21,14 +21,8 @@ public static partial class ThatStringShould
 				"The expected length must be greater than or equal to zero.");
 		}
 
-		return new AndOrResult<string?, IThat<string?>>(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<int>(
-					expected,
-					e => $"have length {e}",
-					(a, e) => a?.Length == e,
-					(a, _) => a == null
-						? "found <null>"
-						: $"it did have a length of {a.Length}:{Environment.NewLine}{Formatter.Format(a).Indent()}")),
+		return new AndOrResult<string?, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it
+				=> new HaveLengthConstraint(it, expected)),
 			source);
 	}
 
@@ -45,12 +39,54 @@ public static partial class ThatStringShould
 				"The unexpected length must be greater than or equal to zero.");
 		}
 
-		return new AndOrResult<string, IThat<string?>>(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<int>(
-					unexpected,
-					e => $"not have length {e}",
-					(a, e) => a?.Length != e,
-					(a, _) => $"it did:{Environment.NewLine}{Formatter.Format(a).Indent()}")),
+		return new AndOrResult<string, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it
+				=> new NotHaveLengthConstraint(it, unexpected)),
 			source);
+	}
+
+	private readonly struct HaveLengthConstraint(string it, int expected)
+		: IValueConstraint<string?>
+	{
+		/// <inheritdoc />
+		public ConstraintResult IsMetBy(string? actual)
+		{
+			if (actual is null)
+			{
+				return new ConstraintResult.Failure<string?>(null, ToString(),
+					$"{it} was <null>");
+			}
+
+			if (actual.Length != expected)
+			{
+				return new ConstraintResult.Failure<string?>(actual, ToString(),
+					$"{it} did have a length of {actual.Length}:{Environment.NewLine}{StringExtensions.Indent(Formatter.Format(actual))}");
+			}
+
+			return new ConstraintResult.Success<string?>(actual, ToString());
+		}
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"have length {Formatter.Format(expected)}";
+	}
+
+	private readonly struct NotHaveLengthConstraint(string it, int unexpected)
+		: IValueConstraint<string?>
+	{
+		/// <inheritdoc />
+		public ConstraintResult IsMetBy(string? actual)
+		{
+			if (actual?.Length == unexpected)
+			{
+				return new ConstraintResult.Failure<string?>(actual, ToString(),
+					$"{it} did:{Environment.NewLine}{StringExtensions.Indent(Formatter.Format(actual))}");
+			}
+
+			return new ConstraintResult.Success<string?>(actual, ToString());
+		}
+
+		/// <inheritdoc />
+		public override string ToString()
+			=> $"not have length {Formatter.Format(unexpected)}";
 	}
 }

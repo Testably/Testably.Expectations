@@ -1,5 +1,4 @@
 ﻿using System;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Options;
 
@@ -50,17 +49,6 @@ public class TimeTolerance
 			return "";
 		}
 
-		const char plusMinus = '\u00b1';
-		return $" {plusMinus} {Formatter.Format(Tolerance.Value)}";
-	}
-
-	internal bool IsWithinTolerance(TimeSpan difference)
-	{
-		if (Tolerance == null)
-		{
-			return difference == TimeSpan.Zero;
-		}
-
-		return difference <= Tolerance.Value && difference >= Tolerance.Value.Negate();
+		return $" \u00b1 {Formatter.Format(Tolerance.Value)}";
 	}
 }

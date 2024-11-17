@@ -34,7 +34,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             be writable,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -75,7 +75,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not be writable,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 

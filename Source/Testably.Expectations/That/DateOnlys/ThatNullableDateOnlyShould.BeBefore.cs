@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -18,12 +17,13 @@ public static partial class ThatNullableDateOnlyShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateOnly?, IThat<DateOnly?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraintWithTolerance(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraintWithTolerance(
+					it,
 					expected,
 					(e, t) => $"be before {Formatter.Format(e)}{t.ToDayString()}",
 					(a, e, t) => a?.AddDays(-1 * (int)t.TotalDays) < e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);
@@ -38,12 +38,13 @@ public static partial class ThatNullableDateOnlyShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateOnly?, IThat<DateOnly?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraintWithTolerance(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraintWithTolerance(
+					it,
 					unexpected,
 					(u, t) => $"not be before {Formatter.Format(u)}{t.ToDayString()}",
 					(a, e, t) => a?.AddDays((int)t.TotalDays) >= e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);

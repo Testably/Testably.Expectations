@@ -1,6 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
+using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -17,13 +17,8 @@ public static partial class ThatNullableTimeSpanShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<TimeSpan?, IThat<TimeSpan?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
-					expected,
-					$"be {Formatter.Format(expected)}",
-					(a, e, t) => IsWithinTolerance(t, a - e),
-					(a, _) => $"found {Formatter.Format(a)}",
-					tolerance)),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new BeConstraint(it, expected, tolerance)),
 			source,
 			tolerance);
 	}
@@ -37,14 +32,48 @@ public static partial class ThatNullableTimeSpanShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<TimeSpan?, IThat<TimeSpan?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
-					unexpected,
-					$"not be {Formatter.Format(unexpected)}",
-					(a, e, t) => !IsWithinTolerance(t, a - e),
-					(a, _) => $"found {Formatter.Format(a)}",
-					tolerance)),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new NotBeConstraint(it, unexpected, tolerance)),
 			source,
 			tolerance);
+	}
+
+	private readonly struct BeConstraint(string it, TimeSpan? expected, TimeTolerance tolerance)
+		: IValueConstraint<TimeSpan?>
+	{
+		public ConstraintResult IsMetBy(TimeSpan? actual)
+		{
+			if (IsWithinTolerance(tolerance.Tolerance, actual - expected))
+			{
+				return new ConstraintResult.Success<TimeSpan?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				$"{it} was {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> $"be {Formatter.Format(expected)}{tolerance}";
+	}
+
+	private readonly struct NotBeConstraint(
+		string it,
+		TimeSpan? unexpected,
+		TimeTolerance tolerance)
+		: IValueConstraint<TimeSpan?>
+	{
+		public ConstraintResult IsMetBy(TimeSpan? actual)
+		{
+			if (!IsWithinTolerance(tolerance.Tolerance, actual - unexpected))
+			{
+				return new ConstraintResult.Success<TimeSpan?>(actual, ToString());
+			}
+
+			return new ConstraintResult.Failure(ToString(),
+				$"{it} was {Formatter.Format(actual)}");
+		}
+
+		public override string ToString()
+			=> $"not be {Formatter.Format(unexpected)}{tolerance}";
 	}
 }

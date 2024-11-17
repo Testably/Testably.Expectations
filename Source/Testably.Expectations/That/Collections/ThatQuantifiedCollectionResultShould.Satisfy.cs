@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -24,7 +23,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 			string doNotPopulateThisValue = "")
 		where TCollection : IEnumerable<TItem>
 		=> new(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.SatisfyConstraint<TItem, TCollection>(
 						predicate,
 						doNotPopulateThisValue,
@@ -42,7 +41,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 			[CallerArgumentExpression("predicate")]
 			string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.SatisfyConstraint<TItem,
 						IEnumerable<TItem>>(
 						predicate,
@@ -66,7 +65,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 			string doNotPopulateThisValue = "")
 		where TCollection : IAsyncEnumerable<TItem>
 		=> new(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.SatisfyConstraint<TItem, TCollection>(
 						predicate,
 						doNotPopulateThisValue,
@@ -84,7 +83,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 			[CallerArgumentExpression("predicate")]
 			string doNotPopulateThisValue = "")
 		=> new(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.SatisfyConstraint<TItem,
 						IAsyncEnumerable<TItem>>(
 						predicate,

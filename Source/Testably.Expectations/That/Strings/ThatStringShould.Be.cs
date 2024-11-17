@@ -13,12 +13,13 @@ public static partial class ThatStringShould
 	public static StringMatcherResult<string?, IThat<string?>> Be(
 		this IThat<string?> source,
 		StringMatcher expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint(expected)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new BeConstraint(it, expected)),
 			source,
 			expected);
 
-	private readonly struct IsValueConstraint(StringMatcher expected) : IValueConstraint<string?>
+	private readonly struct BeConstraint(string it, StringMatcher expected)
+		: IValueConstraint<string?>
 	{
 		/// <inheritdoc />
 		public ConstraintResult IsMetBy(string? actual)
@@ -29,7 +30,7 @@ public static partial class ThatStringShould
 			}
 
 			return new ConstraintResult.Failure<string?>(actual, ToString(),
-				expected.GetExtendedFailure(actual));
+				expected.GetExtendedFailure(it, actual));
 		}
 
 		/// <inheritdoc />

@@ -76,7 +76,7 @@ public class StringMatcherTests
 				.WithMessage($"""
 				              Expected subject to
 				              be equal to "@startuml{nl}Alice -> Bob :…",
-				              but found "@startuml{nl}Alice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
+				              but it was "@startuml{nl}Alice -> Bob :…" which differs on line 5 and column 16 (index {expectedIndex}):
 				                           ↓ (actual)
 				                "…-> Bob : Another authentication Request{nl}Alice <-- Bob :…"
 				                "…-> Bob : Invalid authentication Request{nl}Alice <-- Bob :…"
@@ -174,7 +174,7 @@ public class StringMatcherTests
 				.WithMessage("""
 				             Expected subject to
 				             be equal to "this is a long text which…",
-				             but found "this is a long text that…" which differs at index 20:
+				             but it was "this is a long text that…" which differs at index 20:
 				                                ↓ (actual)
 				               "…is a long text that differs in between two words and has lot…"
 				               "…is a long text which differs in between two words and has…"
@@ -455,7 +455,7 @@ public class StringMatcherTests
 			async Task Act()
 				=> await That(subject).Should().Be(expected);
 
-			await That(Act).Should().ThrowException().WithMessage("*but found <null>*")
+			await That(Act).Should().ThrowException().WithMessage("*but it was <null>*")
 				.AsWildcard();
 		}
 	}

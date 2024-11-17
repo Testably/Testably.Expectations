@@ -11,11 +11,11 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> BeSeekable(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					"be seekable",
 					actual => actual?.CanSeek == true,
-					actual => actual == null ? "found <null>" : "it was not")),
+					actual => actual == null ? $"{it} was <null>" : $"{it} was not")),
 			source);
 
 	/// <summary>
@@ -23,10 +23,10 @@ public static partial class ThatStreamShould
 	/// </summary>
 	public static AndOrResult<Stream?, IThat<Stream?>> NotBeSeekable(
 		this IThat<Stream?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					"not be seekable",
 					actual => actual?.CanSeek == false,
-					actual => actual == null ? "found <null>" : "it was")),
+					actual => actual == null ? $"{it} was <null>" : $"{it} was")),
 			source);
 }

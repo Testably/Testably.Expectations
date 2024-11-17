@@ -17,7 +17,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be greater than <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -33,8 +33,8 @@ public sealed partial class TimeSpanShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             be greater than 10675199.02:48:05.477,
-				             but found 10675199.02:48:05.477
+				             be greater than the maximum time span,
+				             but it was the maximum time span
 				             """);
 		}
 
@@ -50,8 +50,8 @@ public sealed partial class TimeSpanShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             be greater than -10675199.02:48:05,
-				             but found -10675199.02:48:05
+				             be greater than the minimum time span,
+				             but it was the minimum time span
 				             """);
 		}
 
@@ -68,7 +68,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be greater than {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -86,7 +86,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be greater than {Formatter.Format(expected)}, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -116,7 +116,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be greater than {Formatter.Format(expected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -135,7 +135,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              be greater than {Formatter.Format(expected)} ± 0:03, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -192,7 +192,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be greater than {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -234,7 +234,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be greater than <null>, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -253,7 +253,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be greater than {Formatter.Format(unexpected)} ± 0:03, because we want to test the failure,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -271,7 +271,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be greater than {Formatter.Format(unexpected)} ± 0:03,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

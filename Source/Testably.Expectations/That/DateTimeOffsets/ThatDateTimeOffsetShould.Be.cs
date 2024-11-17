@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -18,11 +17,12 @@ public static partial class ThatDateTimeOffsetShould
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTimeOffset, IThat<DateTimeOffset>>(source
 				.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+				.AddConstraint(it => new ConditionConstraint(
+					it,
 					expected,
 					$"be {Formatter.Format(expected)}{tolerance}",
 					(a, e, t) => IsWithinTolerance(t, a - e),
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);
@@ -37,12 +37,13 @@ public static partial class ThatDateTimeOffsetShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTimeOffset, IThat<DateTimeOffset>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
+					it,
 					unexpected,
 					$"not be {Formatter.Format(unexpected)}{tolerance}",
 					(a, e, t) => !IsWithinTolerance(t, a - e),
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);

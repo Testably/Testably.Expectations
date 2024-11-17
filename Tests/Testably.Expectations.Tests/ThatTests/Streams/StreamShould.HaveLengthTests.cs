@@ -48,7 +48,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             have length 0,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}
@@ -97,7 +97,7 @@ public sealed partial class StreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not have length 0,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}

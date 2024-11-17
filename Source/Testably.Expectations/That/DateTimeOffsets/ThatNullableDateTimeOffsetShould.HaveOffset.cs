@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -14,8 +13,10 @@ public static partial class ThatNullableDateTimeOffsetShould
 		this IThat<DateTimeOffset?> source,
 		TimeSpan expected)
 	{
-		return new AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<TimeSpan>(
+		return new AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>>(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<TimeSpan>(
+					it,
 					expected,
 					(a, e) => a.HasValue && a.Value.Offset == e,
 					$"have offset of {Formatter.Format(expected)}")),
@@ -28,8 +29,9 @@ public static partial class ThatNullableDateTimeOffsetShould
 	public static AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>> NotHaveOffset(
 		this IThat<DateTimeOffset?> source,
 		TimeSpan unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<TimeSpan>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<TimeSpan>(
+					it,
 					unexpected,
 					(a, e) => !a.HasValue || a.Value.Offset != e,
 					$"not have offset of {Formatter.Format(unexpected)}")),

@@ -1,7 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations;
@@ -34,6 +33,7 @@ public static partial class ThatNullableDateTimeShould
 	}
 
 	private readonly struct PropertyConstraint<T>(
+		string it,
 		T expected,
 		Func<DateTime?, T, bool> condition,
 		string expectation) : IValueConstraint<DateTime?>
@@ -45,7 +45,7 @@ public static partial class ThatNullableDateTimeShould
 				return new ConstraintResult.Success<DateTime?>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()
@@ -53,10 +53,11 @@ public static partial class ThatNullableDateTimeShould
 	}
 
 	private readonly struct ConditionConstraint(
+		string it,
 		DateTime? expected,
 		string expectation,
 		Func<DateTime?, DateTime?, TimeSpan, bool> condition,
-		Func<DateTime?, DateTime?, string> failureMessageFactory,
+		Func<DateTime?, DateTime?, string, string> failureMessageFactory,
 		TimeTolerance tolerance) : IValueConstraint<DateTime?>
 	{
 		public ConstraintResult IsMetBy(DateTime? actual)
@@ -67,7 +68,7 @@ public static partial class ThatNullableDateTimeShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
+				failureMessageFactory(actual, expected, it));
 		}
 
 		public override string ToString()

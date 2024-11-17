@@ -27,7 +27,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 	{
 		EquivalencyOptions options = new();
 		return new AndOrResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem,
 						TCollection>(
 						expected,
@@ -54,7 +54,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 	{
 		EquivalencyOptions options = new();
 		return new AndOrResult<TCollection, IThat<TCollection>>(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.BeEquivalentToConstraint<TItem,
 						TCollection>(
 						expected,

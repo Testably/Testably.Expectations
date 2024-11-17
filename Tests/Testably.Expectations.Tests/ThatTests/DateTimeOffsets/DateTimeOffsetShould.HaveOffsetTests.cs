@@ -17,7 +17,7 @@ public sealed partial class DateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              have offset of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -61,7 +61,7 @@ public sealed partial class DateTimeOffsetShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have offset of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 	}

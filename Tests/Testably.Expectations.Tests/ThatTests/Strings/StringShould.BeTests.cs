@@ -45,7 +45,7 @@ public sealed partial class StringShould
 				.WithMessage("""
 				             Expected subject to
 				             be equal to "expected other text",
-				             but found "actual text" which differs at index 0:
+				             but it was "actual text" which differs at index 0:
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"

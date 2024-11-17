@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -14,11 +13,13 @@ public static partial class ThatNullableTimeOnlyShould
 	public static AndOrResult<TimeOnly?, IThat<TimeOnly?>> Be(this IThat<TimeOnly?> source,
 		TimeOnly? expected)
 	{
-		return new AndOrResult<TimeOnly?, IThat<TimeOnly?>>(source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
-					expected,
-					(a, e) => a.Equals(e),
-					$"be {Formatter.Format(expected)}")),
+		return new AndOrResult<TimeOnly?, IThat<TimeOnly?>>(source.ExpectationBuilder.AddConstraint(
+				it
+					=> new ConditionConstraint(
+						it,
+						expected,
+						(a, e) => a.Equals(e),
+						$"be {Formatter.Format(expected)}")),
 			source);
 	}
 
@@ -28,8 +29,9 @@ public static partial class ThatNullableTimeOnlyShould
 	public static AndOrResult<TimeOnly?, IThat<TimeOnly?>> NotBe(
 		this IThat<TimeOnly?> source,
 		TimeOnly? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
+					it,
 					unexpected,
 					(a, e) => !a.Equals(e),
 					$"not be {Formatter.Format(unexpected)}")),

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Options;
 
@@ -25,7 +24,7 @@ public class EquivalencyOptions
 	public override string ToString()
 	{
 		return _membersToIgnore.Count > 0
-			? $" ignoring [{string.Join(", ", _membersToIgnore.Select(m => Formatter.Format(m)))}]"
+			? $" ignoring [{string.Join(", ", _membersToIgnore.Select<string, string>(m => Formatter.Format(m)))}]"
 			: "";
 	}
 }

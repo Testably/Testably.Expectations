@@ -2,7 +2,6 @@
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
 using Testably.Expectations.Core.Sources;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -16,7 +15,7 @@ public static partial class ThatDelegateShould
 		this ThatDelegate.WithValue<TValue> source,
 		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ExecuteWithinConstraint<TValue>(duration)));
+			.AddConstraint(_ => new ExecuteWithinConstraint<TValue>(duration)));
 
 	/// <summary>
 	///     Verifies that the delegate finishes execution within the given <paramref name="duration" />.
@@ -25,7 +24,7 @@ public static partial class ThatDelegateShould
 		this ThatDelegate.WithoutValue source,
 		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new ExecuteWithinConstraint(duration)));
+			.AddConstraint(_ => new ExecuteWithinConstraint(duration)));
 
 	/// <summary>
 	///     Verifies that the delegate does not finish execution within the given <paramref name="duration" />.
@@ -34,7 +33,7 @@ public static partial class ThatDelegateShould
 		this ThatDelegate.WithValue<TValue> source,
 		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new NotExecuteWithinConstraint<TValue>(duration)));
+			.AddConstraint(_ => new NotExecuteWithinConstraint<TValue>(duration)));
 
 	/// <summary>
 	///     Verifies that the delegate does not finish execution within the given <paramref name="duration" />.
@@ -43,7 +42,7 @@ public static partial class ThatDelegateShould
 		this ThatDelegate.WithoutValue source,
 		TimeSpan duration)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(new NotExecuteWithinConstraint(duration)));
+			.AddConstraint(_ => new NotExecuteWithinConstraint(duration)));
 
 	private readonly struct ExecuteWithinConstraint<TValue>(TimeSpan duration)
 		: IValueConstraint<DelegateValue<TValue>>

@@ -1,7 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Options;
 
 namespace Testably.Expectations;
 
@@ -25,53 +23,5 @@ public static partial class ThatTimeSpanShould
 
 		return difference <= tolerance.Value &&
 		       difference >= tolerance.Value.Negate();
-	}
-
-	private readonly struct ConditionConstraint(
-		TimeSpan? expected,
-		string expectation,
-		Func<TimeSpan, TimeSpan, TimeSpan, bool> condition,
-		Func<TimeSpan, TimeSpan?, string> failureMessageFactory,
-		TimeTolerance tolerance) : IValueConstraint<TimeSpan>
-	{
-		public ConstraintResult IsMetBy(TimeSpan actual)
-		{
-			if (expected is null)
-			{
-				return new ConstraintResult.Failure(ToString(),
-					failureMessageFactory(actual, expected));
-			}
-
-			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
-			{
-				return new ConstraintResult.Success<TimeSpan>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected.Value));
-		}
-
-		public override string ToString()
-			=> expectation + tolerance;
-	}
-
-	private readonly struct SimpleConstraint(
-		string expectation,
-		Func<TimeSpan, bool> condition,
-		Func<TimeSpan, string> failureMessageFactory) : IValueConstraint<TimeSpan>
-	{
-		public ConstraintResult IsMetBy(TimeSpan actual)
-		{
-			if (condition(actual))
-			{
-				return new ConstraintResult.Success<TimeSpan>(actual, ToString());
-			}
-
-			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual));
-		}
-
-		public override string ToString()
-			=> expectation;
 	}
 }

@@ -12,8 +12,9 @@ public static partial class ThatNullableEnumShould
 	public static AndOrResult<TEnum?, IThat<TEnum?>> BeNull<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint<TEnum>(
+					it,
 					"be null",
 					actual => actual == null)),
 			source);
@@ -24,8 +25,9 @@ public static partial class ThatNullableEnumShould
 	public static AndOrResult<TEnum?, IThat<TEnum?>> NotBeNull<TEnum>(
 		this IThat<TEnum?> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint<TEnum>(
+					it,
 					"not be null",
 					actual => actual != null)),
 			source);

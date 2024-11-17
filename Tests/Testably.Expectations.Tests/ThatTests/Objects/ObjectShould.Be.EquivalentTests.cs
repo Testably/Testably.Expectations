@@ -11,7 +11,7 @@ public sealed partial class ObjectShould
 			{
 				OuterClass subject = new() { Value = "Foo" };
 				OuterClass expected = new() { Value = "Foo" };
-				
+
 				async Task Act()
 					=> await That(subject).Should().Be(expected).Equivalent();
 
@@ -196,7 +196,7 @@ public sealed partial class ObjectShould
 					.WithMessage("""
 					             Expected subject to
 					             be equivalent to expected,
-					             but found z
+					             but it was z
 					             """);
 			}
 

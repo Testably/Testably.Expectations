@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -13,11 +12,13 @@ public static partial class ThatNullableDateTimeShould
 	public static AndOrResult<DateTime?, IThat<DateTime?>> HaveKind(this IThat<DateTime?> source,
 		DateTimeKind expected)
 	{
-		return new AndOrResult<DateTime?, IThat<DateTime?>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<DateTimeKind>(
-					expected,
-					(a, e) => a.HasValue && a.Value.Kind == e,
-					$"have kind of {Formatter.Format(expected)}")),
+		return new AndOrResult<DateTime?, IThat<DateTime?>>(source.ExpectationBuilder.AddConstraint(
+				it
+					=> new PropertyConstraint<DateTimeKind>(
+						it,
+						expected,
+						(a, e) => a.HasValue && a.Value.Kind == e,
+						$"have kind of {Formatter.Format(expected)}")),
 			source);
 	}
 
@@ -27,8 +28,9 @@ public static partial class ThatNullableDateTimeShould
 	public static AndOrResult<DateTime?, IThat<DateTime?>> NotHaveKind(
 		this IThat<DateTime?> source,
 		DateTimeKind unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<DateTimeKind>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<DateTimeKind>(
+					it,
 					unexpected,
 					(a, e) => !a.HasValue || a.Value.Kind != e,
 					$"not have kind of {Formatter.Format(unexpected)}")),

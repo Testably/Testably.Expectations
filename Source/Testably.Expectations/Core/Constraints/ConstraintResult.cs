@@ -237,7 +237,7 @@ public abstract class ConstraintResult
 		{
 			return new Failure<T>(Value, expectationText, resultText);
 		}
- 
+
 		/// <inheritdoc />
 		internal override ConstraintResult UpdateExpectationText(
 			Func<ConstraintResult, string> expectationText)

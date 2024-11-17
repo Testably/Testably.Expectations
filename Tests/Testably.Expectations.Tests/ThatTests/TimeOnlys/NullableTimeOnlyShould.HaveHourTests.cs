@@ -18,7 +18,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              have hour of <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -35,7 +35,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              have hour of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -64,7 +64,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             have hour of <null>,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 
@@ -81,7 +81,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage("""
 				             Expected subject to
 				             have hour of 1,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}
@@ -113,7 +113,7 @@ public sealed partial class NullableTimeOnlyShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have hour of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

@@ -12,13 +12,13 @@ public static partial class ThatStreamShould
 	public static AndOrResult<Stream?, IThat<Stream?>> HavePosition(
 		this IThat<Stream?> source,
 		long expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					$"have position {expected}",
 					actual => actual?.Position == expected,
 					actual => actual == null
-						? "found <null>"
-						: $"it had position {actual.Position}")),
+						? $"{it} was <null>"
+						: $"{it} had position {actual.Position}")),
 			source);
 
 	/// <summary>
@@ -27,10 +27,10 @@ public static partial class ThatStreamShould
 	public static AndOrResult<Stream?, IThat<Stream?>> NotHavePosition(
 		this IThat<Stream?> source,
 		long expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
 					$"not have position {expected}",
 					actual => actual != null && actual.Position != expected,
-					actual => actual == null ? "found <null>" : "it had")),
+					actual => actual == null ? $"{it} was <null>" : $"{it} had")),
 			source);
 }

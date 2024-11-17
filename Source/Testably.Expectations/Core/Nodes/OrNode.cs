@@ -51,7 +51,8 @@ internal class OrNode : Node
 			ConstraintResult result = await node.IsMetBy(value, context, cancellationToken);
 			combinedResult = CombineResults(combinedResult, result, separator,
 				combinedResult?.FurtherProcessingStrategy);
-			if (result.FurtherProcessingStrategy == ConstraintResult.FurtherProcessing.IgnoreCompletely)
+			if (result.FurtherProcessingStrategy ==
+			    ConstraintResult.FurtherProcessing.IgnoreCompletely)
 			{
 				return combinedResult;
 			}

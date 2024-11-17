@@ -14,7 +14,21 @@ public sealed class PrecedenceTests
 				.WithMessage("""
 				             Expected true to
 				             be False and be True or be False,
-				             but found True
+				             but it was True
+				             """);
+		}
+
+		[Fact]
+		public async Task F_and_T_or_T_and_F_ShouldFail()
+		{
+			async Task Act()
+				=> await That(true).Should().BeFalse().And.BeTrue().Or.BeTrue().And.BeFalse();
+
+			await That(Act).Should().ThrowException()
+				.WithMessage("""
+				             Expected true to
+				             be False and be True or be True and be False,
+				             but it was True
 				             """);
 		}
 
@@ -37,7 +51,7 @@ public sealed class PrecedenceTests
 				.WithMessage("""
 				             Expected true to
 				             be False or be True and be False,
-				             but found True
+				             but it was True
 				             """);
 		}
 
@@ -51,7 +65,7 @@ public sealed class PrecedenceTests
 				.WithMessage("""
 				             Expected true to
 				             be True and be False or be False,
-				             but found True
+				             but it was True
 				             """);
 		}
 
@@ -71,20 +85,6 @@ public sealed class PrecedenceTests
 				=> await That(true).Should().BeTrue().Or.BeTrue().And.BeFalse();
 
 			await That(Act).Should().NotThrow();
-		}
-
-		[Fact]
-		public async Task F_and_T_or_T_and_F_ShouldFail()
-		{
-			async Task Act()
-				=> await That(true).Should().BeFalse().And.BeTrue().Or.BeTrue().And.BeFalse();
-
-			await That(Act).Should().ThrowException()
-				.WithMessage("""
-				             Expected true to
-				             be False and be True or be True and be False,
-				             but found True
-				             """);
 		}
 	}
 }

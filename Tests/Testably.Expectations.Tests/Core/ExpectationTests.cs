@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Testably.Expectations.Tests.Core;
+﻿namespace Testably.Expectations.Tests.Core;
 
 public sealed class ExpectationTests
 {

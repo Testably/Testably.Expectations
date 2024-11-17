@@ -18,7 +18,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have Message equal to "expected other text",
-				             but found "actual text" which differs at index 0:
+				             but it was "actual text" which differs at index 0:
 				                ↓ (actual)
 				               "actual text"
 				               "expected other text"

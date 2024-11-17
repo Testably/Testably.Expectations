@@ -16,6 +16,22 @@ public sealed partial class DelegateShould
 		}
 
 		[Fact]
+		public async Task WhenChained_ShouldOnlyDisplayInformationAboutNotThrownException()
+		{
+			Action action = () => { };
+
+			async Task<Exception> Act()
+				=> await That(action).Should().ThrowException().WithMessage("foo");
+
+			await That(Act).Should().ThrowException()
+				.WithMessage("""
+				             Expected action to
+				             throw an Exception with Message equal to "foo",
+				             but it did not throw any exception
+				             """);
+		}
+
+		[Fact]
 		public async Task WhenExceptionIsThrown_ShouldSucceed()
 		{
 			Exception exception = new CustomException();
@@ -39,22 +55,6 @@ public sealed partial class DelegateShould
 				.WithMessage("""
 				             Expected action to
 				             throw an Exception,
-				             but it did not throw any exception
-				             """);
-		}
-
-		[Fact]
-		public async Task WhenChained_ShouldOnlyDisplayInformationAboutNotThrownException()
-		{
-			Action action = () => { };
-
-			async Task<Exception> Act()
-				=> await That(action).Should().ThrowException().WithMessage("foo");
-
-			await That(Act).Should().ThrowException()
-				.WithMessage("""
-				             Expected action to
-				             throw an Exception with Message equal to "foo",
 				             but it did not throw any exception
 				             """);
 		}

@@ -16,7 +16,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be one of {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -45,7 +45,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              be one of {Formatter.Format(expected)},
-				              but found <null>
+				              but it was <null>
 				              """);
 		}
 	}
@@ -88,7 +88,7 @@ public sealed partial class StringShould
 				.WithMessage($"""
 				              Expected subject to
 				              not be one of {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 	}

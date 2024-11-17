@@ -31,7 +31,7 @@ public class QuantifiedCollectionResult
 		/// </summary>
 		public AndOrResult<TCollection, IThat<TCollection>> Be<TExpected>()
 			=> new(ExpectationBuilder
-					.AddConstraint(
+					.AddConstraint(_ =>
 						new BeOfTypeConstraint<TItem, TCollection, TExpected>(
 							Quantity,
 							(a, c) => Quantity.GetEvaluator<TItem, TCollection>(a, c))),
@@ -56,7 +56,7 @@ public class QuantifiedCollectionResult
 		/// </summary>
 		public AndOrResult<TCollection, IThat<TCollection>> Be<TExpected>()
 			=> new(ExpectationBuilder
-					.AddConstraint(
+					.AddConstraint(_ =>
 						new BeOfTypeConstraint<TItem, TCollection, TExpected>(
 							Quantity,
 							(a, c) => Quantity.GetAsyncEvaluator<TItem, TCollection>(a, c))),

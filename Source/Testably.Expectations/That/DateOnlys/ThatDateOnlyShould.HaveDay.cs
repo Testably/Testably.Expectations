@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -14,8 +13,9 @@ public static partial class ThatDateOnlyShould
 	public static AndOrResult<DateOnly, IThat<DateOnly>> HaveDay(this IThat<DateOnly> source,
 		int? expected)
 	{
-		return new AndOrResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+		return new AndOrResult<DateOnly, IThat<DateOnly>>(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
+					it,
 					expected,
 					(a, e) => a.Day == e,
 					$"have day of {Formatter.Format(expected)}")),
@@ -28,8 +28,9 @@ public static partial class ThatDateOnlyShould
 	public static AndOrResult<DateOnly, IThat<DateOnly>> NotHaveDay(
 		this IThat<DateOnly> source,
 		int? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
+					it,
 					unexpected,
 					(a, e) => a.Day != e,
 					$"not have day of {Formatter.Format(unexpected)}")),

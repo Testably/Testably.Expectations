@@ -19,8 +19,10 @@ public partial class ThatExceptionShould<TException>
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
-					$"have an inner {typeof(TInnerException).Name} which should ")
-				.Validate(new ThatExceptionShould.InnerExceptionIsTypeConstraint<TInnerException>())
+					$"have an inner {typeof(TInnerException).Name} which should ",
+					replaceIt: false)
+				.Validate(it
+					=> new ThatExceptionShould.InnerExceptionIsTypeConstraint<TInnerException>(it))
 				.AddExpectations(e => expectations(new ThatExceptionShould<TInnerException?>(e))),
 			this);
 
@@ -30,9 +32,9 @@ public partial class ThatExceptionShould<TException>
 	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner<
 		TInnerException>()
 		where TInnerException : Exception?
-		=> new(ExpectationBuilder.AddConstraint(
-				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
-					"have")),
+		=> new(ExpectationBuilder.AddConstraint(it =>
+				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("have",
+					it)),
 			this);
 
 	/// <summary>
@@ -45,7 +47,9 @@ public partial class ThatExceptionShould<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"have an inner {innerExceptionType.Name} which should ")
-				.Validate(new ThatExceptionShould.InnerExceptionIsTypeConstraint(innerExceptionType))
+				.Validate(it
+					=> new ThatExceptionShould.InnerExceptionIsTypeConstraint(it,
+						innerExceptionType))
 				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
 			this);
 
@@ -54,8 +58,8 @@ public partial class ThatExceptionShould<TException>
 	/// </summary>
 	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner(
 		Type innerExceptionType)
-		=> new(ExpectationBuilder.AddConstraint(
-				new ThatExceptionShould.HasInnerExceptionValueConstraint(
-					innerExceptionType, "have")),
+		=> new(ExpectationBuilder.AddConstraint(it
+				=> new ThatExceptionShould.HasInnerExceptionValueConstraint(innerExceptionType,
+					"have", it)),
 			this);
 }

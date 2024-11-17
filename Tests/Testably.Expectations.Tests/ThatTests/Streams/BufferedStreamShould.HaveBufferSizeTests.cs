@@ -49,7 +49,7 @@ public sealed partial class BufferedStreamShould
 				.WithMessage("""
 				             Expected subject to
 				             have buffer size 0,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}
@@ -98,7 +98,7 @@ public sealed partial class BufferedStreamShould
 				.WithMessage("""
 				             Expected subject to
 				             not have buffer size 0,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 	}

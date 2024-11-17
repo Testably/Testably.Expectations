@@ -16,7 +16,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have flag <null>,
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -32,7 +32,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              have flag {Formatter.Format(expected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -90,7 +90,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have flag {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 
@@ -108,7 +108,7 @@ public sealed partial class EnumShould
 				.WithMessage($"""
 				              Expected subject to
 				              not have flag {Formatter.Format(unexpected)},
-				              but found {Formatter.Format(subject)}
+				              but it was {Formatter.Format(subject)}
 				              """);
 		}
 

@@ -28,6 +28,34 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 		}
 	}
 
+	/// <inheritdoc />
+	public override async Task<ConstraintResult> IsMetBy<TValue>(
+		TValue? value,
+		IEvaluationContext context,
+		CancellationToken cancellationToken) where TValue : default
+	{
+		if (value is not TSource typedValue)
+		{
+			throw new InvalidOperationException(
+				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value?.GetType().Name}");
+		}
+
+		if (_propertyAccessor.TryAccessProperty(
+			typedValue,
+			out TTarget? matchingValue))
+		{
+			ConstraintResult result = await base.IsMetBy(matchingValue, context, cancellationToken);
+			return result.UseValue(value);
+		}
+
+		throw new InvalidOperationException(
+			$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TTarget).Name},{Environment.NewLine}but found {matchingValue?.GetType().Name}");
+	}
+
+	/// <inheritdoc />
+	public override string ToString()
+		=> _propertyAccessor + base.ToString();
+
 	internal ConstraintResult CombineResults(
 		ConstraintResult? combinedResult,
 		ConstraintResult result)
@@ -65,34 +93,6 @@ internal class MappingNode<TSource, TTarget> : ExpectationNode
 
 		return combinedResult.CombineWith(combinedExpectation, "");
 	}
-
-	/// <inheritdoc />
-	public override async Task<ConstraintResult> IsMetBy<TValue>(
-		TValue? value,
-		IEvaluationContext context,
-		CancellationToken cancellationToken) where TValue : default
-	{
-		if (value is not TSource typedValue)
-		{
-			throw new InvalidOperationException(
-				$"The property type for the actual value in the which node did not match.{Environment.NewLine}Expected {typeof(TSource).Name},{Environment.NewLine}but found {value?.GetType().Name}");
-		}
-
-		if (_propertyAccessor.TryAccessProperty(
-			typedValue,
-			out TTarget? matchingValue))
-		{
-			var result = await base.IsMetBy(matchingValue, context, cancellationToken);
-			return result.UseValue(value);
-		}
-
-		throw new InvalidOperationException(
-			$"The property type for the which node did not match.{Environment.NewLine}Expected {typeof(TTarget).Name},{Environment.NewLine}but found {matchingValue?.GetType().Name}");
-	}
-
-	/// <inheritdoc />
-	public override string ToString()
-		=> _propertyAccessor + base.ToString();
 
 	private static string CombineResultTexts(string leftResultText, string rightResultText)
 	{

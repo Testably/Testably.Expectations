@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -18,8 +17,8 @@ public static partial class ThatStringShould
 	{
 		StringEqualityOptions options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new BeOneOfConstraint(expected, options)),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new BeOneOfConstraint(it, expected, options)),
 			source,
 			options);
 	}
@@ -33,13 +32,14 @@ public static partial class ThatStringShould
 	{
 		StringEqualityOptions options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new NotBeOneOfConstraint(unexpected, options)),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new NotBeOneOfConstraint(it, unexpected, options)),
 			source,
 			options);
 	}
 
 	private readonly struct BeOneOfConstraint(
+		string it,
 		string?[] expectedValues,
 		StringEqualityOptions options)
 		: IValueConstraint<string?>
@@ -50,7 +50,7 @@ public static partial class ThatStringShould
 			if (actual is null)
 			{
 				return new ConstraintResult.Failure<string?>(null, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			StringEqualityOptions stringEqualityOptions = options;
@@ -61,17 +61,16 @@ public static partial class ThatStringShould
 			}
 
 			return new ConstraintResult.Failure<string?>(actual, ToString(),
-				$"found {Formatter.Format(actual)}");
+				$"{it} was {Formatter.Format(actual)}");
 		}
 
 		/// <inheritdoc />
 		public override string ToString()
-		{
-			return $"be one of {Formatter.Format(expectedValues)}{options}";
-		}
+			=> $"be one of {Formatter.Format(expectedValues)}{options}";
 	}
 
 	private readonly struct NotBeOneOfConstraint(
+		string it,
 		string?[] unexpectedValues,
 		StringEqualityOptions options)
 		: IValueConstraint<string?>
@@ -82,7 +81,7 @@ public static partial class ThatStringShould
 			if (actual is null)
 			{
 				return new ConstraintResult.Failure<string?>(null, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			StringEqualityOptions stringEqualityOptions = options;
@@ -90,7 +89,7 @@ public static partial class ThatStringShould
 				.Equals(actual, unexpectedValue)))
 			{
 				return new ConstraintResult.Failure<string?>(actual, ToString(),
-					$"found {Formatter.Format(actual)}");
+					$"{it} was {Formatter.Format(actual)}");
 			}
 
 			return new ConstraintResult.Success<string?>(actual, ToString());
@@ -98,8 +97,6 @@ public static partial class ThatStringShould
 
 		/// <inheritdoc />
 		public override string ToString()
-		{
-			return $"not be one of {Formatter.Format(unexpectedValues)}{options}";
-		}
+			=> $"not be one of {Formatter.Format(unexpectedValues)}{options}";
 	}
 }

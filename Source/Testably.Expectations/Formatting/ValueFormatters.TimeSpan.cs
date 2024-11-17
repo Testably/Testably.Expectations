@@ -9,18 +9,13 @@ public static partial class ValueFormatters
 	///     Returns the according to the <paramref name="options" /> formatted <paramref name="value" />.
 	/// </summary>
 	public static string Format(
-		this ValueFormatter _,
+		this ValueFormatter formatter,
 		TimeSpan value,
 		FormattingOptions? options = null)
 	{
-		string formatString = CreateTimeSpanFormatString(value);
-
-		if (value < TimeSpan.Zero)
-		{
-			return $"-{value.ToString(formatString)}";
-		}
-
-		return value.ToString(formatString);
+		StringBuilder stringBuilder = new();
+		Format(formatter, stringBuilder, value, options);
+		return stringBuilder.ToString();
 	}
 
 	/// <summary>
@@ -32,16 +27,7 @@ public static partial class ValueFormatters
 		StringBuilder stringBuilder,
 		TimeSpan value,
 		FormattingOptions? options = null)
-	{
-		string formatString = CreateTimeSpanFormatString(value);
-
-		if (value < TimeSpan.Zero)
-		{
-			stringBuilder.Append('-');
-		}
-
-		stringBuilder.Append(value.ToString(formatString));
-	}
+		=> Format(formatter, stringBuilder, (TimeSpan?)value, options);
 
 	/// <summary>
 	///     Returns the according to the <paramref name="options" /> formatted <paramref name="value" />.
@@ -75,30 +61,58 @@ public static partial class ValueFormatters
 			return;
 		}
 
-		Format(formatter, stringBuilder, value.Value, options);
-	}
-
-	private static string CreateTimeSpanFormatString(TimeSpan value)
-	{
-		string formatString;
-		if (value.Days != 0)
+		if (value == TimeSpan.MaxValue)
 		{
-			formatString = @"d\.hh\:mm\:ss";
-		}
-		else if (value.Hours != 0)
-		{
-			formatString = @"h\:mm\:ss";
-		}
-		else
-		{
-			formatString = @"m\:ss";
+			stringBuilder.Append("the maximum time span");
+			return;
 		}
 
-		if (value.Milliseconds > 0)
+		if (value == TimeSpan.MinValue)
 		{
-			formatString += @"\.fff";
+			stringBuilder.Append("the minimum time span");
+			return;
 		}
 
-		return formatString;
+		TimeSpan absoluteValue = value.Value.Duration();
+		bool hasDays = absoluteValue.Days > 0;
+		bool hasHours = absoluteValue.Hours > 0;
+
+		if (hasDays)
+		{
+			stringBuilder.Append(absoluteValue.Days);
+			stringBuilder.Append('.');
+		}
+
+		if (hasDays || hasHours)
+		{
+			if (hasDays && absoluteValue.Hours < 10)
+			{
+				stringBuilder.Append('0');
+			}
+
+			stringBuilder.Append(absoluteValue.Hours);
+			stringBuilder.Append(':');
+		}
+
+		if ((hasDays || hasHours) && absoluteValue.Minutes < 10)
+		{
+			stringBuilder.Append('0');
+		}
+
+		stringBuilder.Append(absoluteValue.Minutes);
+		stringBuilder.Append(':');
+
+		if (absoluteValue.Seconds < 10)
+		{
+			stringBuilder.Append('0');
+		}
+
+		stringBuilder.Append(absoluteValue.Seconds);
+
+		if (absoluteValue.Milliseconds > 0)
+		{
+			stringBuilder.Append('.');
+			stringBuilder.Append(absoluteValue.Milliseconds.ToString("000"));
+		}
 	}
 }

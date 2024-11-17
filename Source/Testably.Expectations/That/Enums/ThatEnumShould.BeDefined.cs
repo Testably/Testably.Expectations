@@ -12,8 +12,9 @@ public static partial class ThatEnumShould
 	public static AndOrResult<TEnum, IThat<TEnum>> BeDefined<TEnum>(
 		this IThat<TEnum> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint<TEnum>(
+					it,
 					"be defined",
 					actual => Enum.IsDefined(typeof(TEnum), actual))),
 			source);
@@ -24,8 +25,9 @@ public static partial class ThatEnumShould
 	public static AndOrResult<TEnum, IThat<TEnum>> NotBeDefined<TEnum>(
 		this IThat<TEnum> source)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint<TEnum>(
+					it,
 					"not be defined",
 					actual => !Enum.IsDefined(typeof(TEnum), actual))),
 			source);

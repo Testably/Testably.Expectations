@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -14,8 +13,10 @@ public static partial class ThatDateTimeOffsetShould
 		this IThat<DateTimeOffset> source,
 		int? expected)
 	{
-		return new AndOrResult<DateTimeOffset, IThat<DateTimeOffset>>(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+		return new AndOrResult<DateTimeOffset, IThat<DateTimeOffset>>(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
+					it,
 					expected,
 					(a, e) => a.Day == e,
 					$"have day of {Formatter.Format(expected)}")),
@@ -28,8 +29,9 @@ public static partial class ThatDateTimeOffsetShould
 	public static AndOrResult<DateTimeOffset, IThat<DateTimeOffset>> NotHaveDay(
 		this IThat<DateTimeOffset> source,
 		int? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new PropertyConstraint<int?>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new PropertyConstraint<int?>(
+					it,
 					unexpected,
 					(a, e) => a.Day != e,
 					$"not have day of {Formatter.Format(unexpected)}")),

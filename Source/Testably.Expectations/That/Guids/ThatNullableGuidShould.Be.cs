@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -12,11 +11,11 @@ public static partial class ThatNullableGuidShould
 	/// </summary>
 	public static AndOrResult<Guid?, IThat<Guid?>> Be(this IThat<Guid?> source,
 		Guid? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(
-					new ValueConstraint(
-						$"be {Formatter.Format(expected)}",
-						actual => actual?.Equals(expected) ?? expected == null)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
+					it,
+					$"be {Formatter.Format(expected)}",
+					actual => actual?.Equals(expected) ?? expected == null)),
 			source);
 
 	/// <summary>
@@ -24,10 +23,10 @@ public static partial class ThatNullableGuidShould
 	/// </summary>
 	public static AndOrResult<Guid?, IThat<Guid?>> NotBe(this IThat<Guid?> source,
 		Guid? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(
-					new ValueConstraint(
-						$"not be {Formatter.Format(unexpected)}",
-						actual => !actual?.Equals(unexpected) ?? unexpected != null)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
+					it,
+					$"not be {Formatter.Format(unexpected)}",
+					actual => !actual?.Equals(unexpected) ?? unexpected != null)),
 			source);
 }

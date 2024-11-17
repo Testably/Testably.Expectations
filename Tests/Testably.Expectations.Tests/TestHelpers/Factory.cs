@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+#if NET6_0_OR_GREATER
 using System.Runtime.CompilerServices;
 using System.Threading;
+#endif
 
 namespace Testably.Expectations.Tests.TestHelpers;
 

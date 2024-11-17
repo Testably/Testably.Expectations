@@ -21,11 +21,11 @@ public sealed class GenericForTests
 				.For(o => o.B, v => v.Should().BeTrue());
 
 		await That(Act).Should().Throw<XunitException>().OnlyIf(!expectSuccess)
-			.WithMessage("""
-			             Expected subject to
-			             for .A be True and for .B be True,
-			             but found False
-			             """);
+			.WithMessage($"""
+			              Expected subject to
+			              for .A be True and for .B be True,
+			              but {(a ? "" : ".A was False")}{(!a && !b ? " and " : "")}{(b ? "" : ".B was False")}
+			              """);
 	}
 
 	[Theory]
@@ -50,7 +50,7 @@ public sealed class GenericForTests
 			.WithMessage("""
 			             Expected subject to
 			             for .A be True or for .B be True,
-			             but found False
+			             but .A was False and .B was False
 			             """);
 	}
 
@@ -69,7 +69,7 @@ public sealed class GenericForTests
 			.WithMessage($"""
 			              Expected subject to
 			              for .Value be {Formatter.Format(expectedValue)},
-			              but found {Formatter.Format(value)}
+			              but .Value was {Formatter.Format(value)}
 			              """);
 	}
 

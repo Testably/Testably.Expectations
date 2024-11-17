@@ -1,7 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations;
 
@@ -17,7 +16,10 @@ public static partial class ThatEnumShould
 		where TEnum : struct, Enum
 		=> subject.Should(ExpectationBuilder.NoAction);
 
-	private readonly struct ValueConstraint<TEnum>(string expectation, Func<TEnum, bool> successIf)
+	private readonly struct ValueConstraint<TEnum>(
+		string it,
+		string expectation,
+		Func<TEnum, bool> successIf)
 		: IValueConstraint<TEnum>
 		where TEnum : struct, Enum
 	{
@@ -28,7 +30,7 @@ public static partial class ThatEnumShould
 				return new ConstraintResult.Success<TEnum?>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()

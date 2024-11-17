@@ -17,7 +17,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have an inner CustomException which should have Message equal to "inner",
-				             but found an Exception:
+				             but it was an Exception:
 				               inner
 				             """);
 		}
@@ -36,7 +36,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have an inner CustomException which should have Message equal to "some other message",
-				             but found "inner" which differs at index 0:
+				             but it was "inner" which differs at index 0:
 				                ↓ (actual)
 				               "inner"
 				               "some other message"
@@ -58,7 +58,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have an inner exception which should have Message equal to "some other message",
-				             but found "inner" which differs at index 0:
+				             but it was "inner" which differs at index 0:
 				                ↓ (actual)
 				               "inner"
 				               "some other message"
@@ -79,7 +79,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have an inner CustomException,
-				             but found an Exception:
+				             but it was an Exception:
 				               inner
 				             """);
 		}
@@ -96,7 +96,7 @@ public sealed partial class ExceptionShould
 				.WithMessage("""
 				             Expected subject to
 				             have an inner exception,
-				             but found <null>
+				             but it was <null>
 				             """);
 		}
 

@@ -23,7 +23,7 @@ public sealed partial class CollectionShould
 				.WithMessage($"""
 				              Expected subject to
 				              contain {Formatter.Format(expected)},
-				              but found [{string.Join(", ", subject.Select(s => Formatter.Format(s)))}]
+				              but it was [{string.Join(", ", subject.Select(s => Formatter.Format(s)))}]
 				              """);
 		}
 

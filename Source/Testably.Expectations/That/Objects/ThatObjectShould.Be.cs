@@ -20,9 +20,8 @@ public static partial class ThatObjectShould
 	{
 		ObjectEqualityOptions options = new();
 		return new ObjectEqualityResult<object?, IThat<object?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new IsEqualValueConstraint(
-					expected, doNotPopulateThisValue, options)),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new IsEqualValueConstraint(it, expected, doNotPopulateThisValue, options)),
 			source,
 			options);
 	}
@@ -32,8 +31,8 @@ public static partial class ThatObjectShould
 	/// </summary>
 	public static AndOrWhichResult<TType, IThat<object?>> Be<TType>(
 		this IThat<object?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint<TType>()),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new IsValueConstraint<TType>(it)),
 			source);
 
 	/// <summary>
@@ -42,11 +41,12 @@ public static partial class ThatObjectShould
 	public static AndOrWhichResult<object?, IThat<object?>> Be(
 		this IThat<object?> source,
 		Type type)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsValueConstraint(type)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new IsValueConstraint(it, type)),
 			source);
 
 	private readonly struct IsEqualValueConstraint(
+		string it,
 		object? expected,
 		string expectedExpression,
 		ObjectEqualityOptions options)
@@ -54,7 +54,7 @@ public static partial class ThatObjectShould
 	{
 		public ConstraintResult IsMetBy(object? actual)
 		{
-			ObjectEqualityOptions.Result result = options.AreConsideredEqual(actual, expected);
+			ObjectEqualityOptions.Result result = options.AreConsideredEqual(actual, expected, it);
 
 			if (!result.AreConsideredEqual)
 			{
@@ -68,7 +68,7 @@ public static partial class ThatObjectShould
 			=> options.GetExpectation(expectedExpression);
 	}
 
-	private readonly struct IsValueConstraint<TType> : IValueConstraint<object?>
+	private readonly struct IsValueConstraint<TType>(string it) : IValueConstraint<object?>
 	{
 		public ConstraintResult IsMetBy(object? actual)
 		{
@@ -78,14 +78,14 @@ public static partial class ThatObjectShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"found {Formatter.Format(actual, FormattingOptions.MultipleLines)}");
+				$"{it} was {Formatter.Format(actual, FormattingOptions.MultipleLines)}");
 		}
 
 		public override string ToString()
 			=> $"be type {Formatter.Format(typeof(TType))}";
 	}
 
-	private readonly struct IsValueConstraint(Type type) : IValueConstraint<object?>
+	private readonly struct IsValueConstraint(string it, Type type) : IValueConstraint<object?>
 	{
 		public ConstraintResult IsMetBy(object? actual)
 		{
@@ -95,7 +95,7 @@ public static partial class ThatObjectShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"found {Formatter.Format(actual, FormattingOptions.MultipleLines)}");
+				$"{it} was {Formatter.Format(actual, FormattingOptions.MultipleLines)}");
 		}
 
 		public override string ToString()

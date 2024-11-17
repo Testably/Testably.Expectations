@@ -16,7 +16,7 @@ public sealed partial class CollectionShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found [1, 1, 2]
+				             but it was [1, 1, 2]
 				             """);
 		}
 

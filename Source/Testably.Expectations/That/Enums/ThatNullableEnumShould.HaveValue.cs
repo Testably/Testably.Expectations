@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -15,8 +14,9 @@ public static partial class ThatNullableEnumShould
 		this IThat<TEnum?> source,
 		long? expected)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint<TEnum>(
+					it,
 					$"have value {Formatter.Format(expected)}",
 					actual => actual != null &&
 					          Convert.ToInt64(actual, CultureInfo.InvariantCulture)
@@ -30,8 +30,9 @@ public static partial class ThatNullableEnumShould
 		this IThat<TEnum?> source,
 		long? unexpected)
 		where TEnum : struct, Enum
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint<TEnum>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint<TEnum>(
+					it,
 					$"not have value {Formatter.Format(unexpected)}",
 					actual => actual != null &&
 					          Convert.ToInt64(actual.Value, CultureInfo.InvariantCulture) !=

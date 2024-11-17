@@ -10,8 +10,9 @@ public static partial class ThatNullableGuidShould
 	///     Verifies that the subject is empty.
 	/// </summary>
 	public static AndOrResult<Guid?, IThat<Guid?>> BeEmpty(this IThat<Guid?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
+					it,
 					"be empty",
 					actual => actual != null && actual == Guid.Empty)),
 			source);
@@ -20,8 +21,9 @@ public static partial class ThatNullableGuidShould
 	///     Verifies that the subject is not empty.
 	/// </summary>
 	public static AndOrResult<Guid?, IThat<Guid?>> NotBeEmpty(this IThat<Guid?> source)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
+					it,
 					"not be empty",
 					actual => actual != null && actual != Guid.Empty)),
 			source);

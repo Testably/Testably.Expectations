@@ -1,6 +1,5 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -12,11 +11,11 @@ public static partial class ThatBoolShould
 	/// </summary>
 	public static AndOrResult<bool, IThat<bool>> Imply(this IThat<bool> source,
 		bool consequent)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ImpliesValueConstraint(consequent)),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ImplyConstraint(it, consequent)),
 			source);
 
-	private readonly struct ImpliesValueConstraint(bool consequent) : IValueConstraint<bool>
+	private readonly struct ImplyConstraint(string it, bool consequent) : IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{
@@ -25,7 +24,7 @@ public static partial class ThatBoolShould
 				return new ConstraintResult.Success<bool>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), "it did not");
+			return new ConstraintResult.Failure(ToString(), $"{it} did not");
 		}
 
 		public override string ToString()

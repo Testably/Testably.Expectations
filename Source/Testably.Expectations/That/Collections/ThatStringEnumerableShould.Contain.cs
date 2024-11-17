@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -20,13 +19,14 @@ public static partial class ThatStringEnumerableShould
 		StringEqualityOptions options = new();
 		return new StringCountResult<IEnumerable<string>, IThat<IEnumerable<string>>>(source
 				.ExpectationBuilder
-				.AddConstraint(new ContainsValueConstraint(expected, quantifier, options)),
+				.AddConstraint(it => new ContainValueConstraint(it, expected, quantifier, options)),
 			source,
 			quantifier,
 			options);
 	}
 
-	private readonly struct ContainsValueConstraint(
+	private readonly struct ContainValueConstraint(
+		string it,
 		string expected,
 		Quantifier quantifier,
 		StringEqualityOptions options)
@@ -45,7 +45,7 @@ public static partial class ThatStringEnumerableShould
 					if (quantifier.Check(count) == false)
 					{
 						return new ConstraintResult.Failure<IEnumerable<string>>(actual, ToString(),
-							$"found it at least {count} times in {Formatter.Format(actual)}");
+							$"{it} contained it at least {count} times in {Formatter.Format(actual)}");
 					}
 				}
 			}
@@ -57,7 +57,7 @@ public static partial class ThatStringEnumerableShould
 			}
 
 			return new ConstraintResult.Failure<IEnumerable<string>>(actual, ToString(),
-				$"found it {count} times in {Formatter.Format(actual)}");
+				$"{it} contained it {count} times in {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()

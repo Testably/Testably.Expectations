@@ -20,7 +20,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, …]
+				             but it was [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, …]
 				             """);
 		}
 
@@ -36,7 +36,7 @@ public sealed partial class EnumerableShould
 				.WithMessage("""
 				             Expected subject to
 				             be empty,
-				             but found [1, 1, 2]
+				             but it was [1, 1, 2]
 				             """);
 		}
 

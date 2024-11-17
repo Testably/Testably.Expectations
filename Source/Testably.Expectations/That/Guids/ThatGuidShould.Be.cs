@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -12,8 +11,9 @@ public static partial class ThatGuidShould
 	/// </summary>
 	public static AndOrResult<Guid, IThat<Guid>> Be(this IThat<Guid> source,
 		Guid? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
+					it,
 					$"be {Formatter.Format(expected)}",
 					actual => actual.Equals(expected))),
 			source);
@@ -23,8 +23,9 @@ public static partial class ThatGuidShould
 	/// </summary>
 	public static AndOrResult<Guid, IThat<Guid>> NotBe(this IThat<Guid> source,
 		Guid? unexpected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new ValueConstraint(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new ValueConstraint(
+					it,
 					$"not be {Formatter.Format(unexpected)}",
 					actual => !actual.Equals(unexpected))),
 			source);

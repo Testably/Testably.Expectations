@@ -3,7 +3,6 @@ using System.Linq;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -16,7 +15,7 @@ public static partial class ThatEnumerableShould
 	public static AndOrResult<IEnumerable<TItem>, IThat<IEnumerable<TItem>>>
 		BeEmpty<TItem>(this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsEmptyValueConstraint<TItem>()),
+				.AddConstraint(it => new BeEmptyConstraint<TItem>(it)),
 			source);
 
 	/// <summary>
@@ -26,10 +25,11 @@ public static partial class ThatEnumerableShould
 		NotBeEmpty<TItem>(
 			this IThat<IEnumerable<TItem>> source)
 		=> new(source.ExpectationBuilder
-				.AddConstraint(new IsNotEmptyConstraint<TItem>()),
+				.AddConstraint(it => new NotBeEmptyConstraint<TItem>(it)),
 			source);
 
-	private readonly struct IsEmptyValueConstraint<TItem> : IValueConstraint<IEnumerable<TItem>>
+	private readonly struct BeEmptyConstraint<TItem>(string it)
+		: IValueConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
@@ -37,7 +37,7 @@ public static partial class ThatEnumerableShould
 			if (enumerator.MoveNext())
 			{
 				return new ConstraintResult.Failure(ToString(),
-					$"found {Formatter.Format(actual.Take(11))}");
+					$"{it} was {Formatter.Format(actual.Take(11))}");
 			}
 
 			return new ConstraintResult.Success<IEnumerable<TItem>>(actual, ToString());
@@ -47,7 +47,8 @@ public static partial class ThatEnumerableShould
 			=> "be empty";
 	}
 
-	private readonly struct IsNotEmptyConstraint<TItem> : IContextConstraint<IEnumerable<TItem>>
+	private readonly struct NotBeEmptyConstraint<TItem>(string it)
+		: IContextConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual, IEvaluationContext context)
 		{
@@ -60,7 +61,7 @@ public static partial class ThatEnumerableShould
 					ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), "it was");
+			return new ConstraintResult.Failure(ToString(), $"{it} was");
 		}
 
 		public override string ToString()

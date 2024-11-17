@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -17,12 +16,13 @@ public static partial class ThatNullableDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
+					it,
 					expected,
 					$"be on or before {Formatter.Format(expected)}",
 					(a, e, t) => a - t <= e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);
@@ -37,12 +37,13 @@ public static partial class ThatNullableDateTimeShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<DateTime?, IThat<DateTime?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ConditionConstraint(
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ConditionConstraint(
+					it,
 					unexpected,
 					$"not be on or before {Formatter.Format(unexpected)}",
 					(a, e, t) => a + t > e,
-					(a, _) => $"found {Formatter.Format(a)}",
+					(a, _, i) => $"{i} was {Formatter.Format(a)}",
 					tolerance)),
 			source,
 			tolerance);

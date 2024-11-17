@@ -16,10 +16,11 @@ public static partial class ThatObjectShould
 		=> subject.Should(ExpectationBuilder.NoAction);
 
 	private readonly struct GenericConstraint<T>(
+		string it,
 		T expected,
 		string expectation,
 		Func<T, T, bool> condition,
-		Func<T, T, string> failureMessageFactory)
+		Func<T, T, string, string> failureMessageFactory)
 		: IValueConstraint<T>
 	{
 		public ConstraintResult IsMetBy(T actual)
@@ -30,7 +31,7 @@ public static partial class ThatObjectShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected));
+				failureMessageFactory(actual, expected, it));
 		}
 
 		public override string ToString()

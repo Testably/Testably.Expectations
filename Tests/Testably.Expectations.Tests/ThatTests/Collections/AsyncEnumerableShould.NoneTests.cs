@@ -15,7 +15,8 @@ public sealed partial class AsyncEnumerableShould
 		{
 			using CancellationTokenSource cts = new();
 			CancellationToken token = cts.Token;
-			IAsyncEnumerable<int> subject = GetCancellingAsyncEnumerable(6, cts, CancellationToken.None);
+			IAsyncEnumerable<int> subject =
+ GetCancellingAsyncEnumerable(6, cts, CancellationToken.None);
 
 			async Task Act()
 				=> await That(subject).Should().None().Satisfy(x => x < 0)

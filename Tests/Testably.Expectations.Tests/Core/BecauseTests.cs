@@ -85,7 +85,7 @@ public class BecauseTests
 			.WithMessage("""
 			             Expected subject to
 			             be True, because we only apply it to previous constraints and be False,
-			             but found True
+			             but it was True
 			             """);
 	}
 
@@ -107,19 +107,17 @@ public class BecauseTests
 	[Fact]
 	public async Task WhenNoBecauseReasonIsGiven_ShouldNotIncludeBecause()
 	{
-		string expectedMessage = """
-		                         Expected subject to
-		                         be False,
-		                         but found True
-		                         """;
-
 		bool subject = true;
 
 		async Task Act()
 			=> await That(subject).Should().BeFalse();
 
 		await That(Act).Should().ThrowException()
-			.WithMessage(expectedMessage);
+			.WithMessage("""
+			             Expected subject to
+			             be False,
+			             but it was True
+			             """);
 	}
 
 	[Fact]

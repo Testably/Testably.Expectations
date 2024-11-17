@@ -1,5 +1,4 @@
 ﻿using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -12,12 +11,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<byte, IThat<byte>> BeLessThan(
 		this IThat<byte> source,
 		byte? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<byte>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<byte>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -26,12 +26,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<sbyte, IThat<sbyte>> BeLessThan(
 		this IThat<sbyte> source,
 		sbyte? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<sbyte>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<sbyte>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -40,12 +41,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<short, IThat<short>> BeLessThan(
 		this IThat<short> source,
 		short? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<short>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<short>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -54,12 +56,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<ushort, IThat<ushort>> BeLessThan(
 		this IThat<ushort> source,
 		ushort? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<ushort>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<ushort>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -68,12 +71,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<int, IThat<int>> BeLessThan(
 		this IThat<int> source,
 		int? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<int>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<int>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -82,12 +86,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<uint, IThat<uint>> BeLessThan(
 		this IThat<uint> source,
 		uint? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<uint>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<uint>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -96,12 +101,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<long, IThat<long>> BeLessThan(
 		this IThat<long> source,
 		long? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<long>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<long>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -110,12 +116,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<ulong, IThat<ulong>> BeLessThan(
 		this IThat<ulong> source,
 		ulong? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<ulong>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<ulong>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -124,12 +131,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<float, IThat<float>> BeLessThan(
 		this IThat<float> source,
 		float? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<float>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<float>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -138,12 +146,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<double, IThat<double>> BeLessThan(
 		this IThat<double> source,
 		double? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<double>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<double>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -152,12 +161,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<decimal, IThat<decimal>> BeLessThan(
 		this IThat<decimal> source,
 		decimal? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new GenericConstraint<decimal>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new GenericConstraint<decimal>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -166,12 +176,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<byte?, IThat<byte?>> BeLessThan(
 		this IThat<byte?> source,
 		byte? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<byte>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<byte>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -180,12 +191,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<sbyte?, IThat<sbyte?>> BeLessThan(
 		this IThat<sbyte?> source,
 		sbyte? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<sbyte>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<sbyte>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -194,12 +206,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<short?, IThat<short?>> BeLessThan(
 		this IThat<short?> source,
 		short? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<short>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<short>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -208,12 +221,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<ushort?, IThat<ushort?>> BeLessThan(
 		this IThat<ushort?> source,
 		ushort? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<ushort>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<ushort>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -222,12 +236,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<int?, IThat<int?>> BeLessThan(
 		this IThat<int?> source,
 		int? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<int>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<int>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -236,12 +251,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<uint?, IThat<uint?>> BeLessThan(
 		this IThat<uint?> source,
 		uint? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<uint>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<uint>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -250,12 +266,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<long?, IThat<long?>> BeLessThan(
 		this IThat<long?> source,
 		long? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<long>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<long>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -264,12 +281,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<ulong?, IThat<ulong?>> BeLessThan(
 		this IThat<ulong?> source,
 		ulong? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<ulong>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<ulong>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -278,12 +296,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<float?, IThat<float?>> BeLessThan(
 		this IThat<float?> source,
 		float? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<float>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<float>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -292,12 +311,13 @@ public static partial class ThatNumberShould
 	public static AndOrResult<double?, IThat<double?>> BeLessThan(
 		this IThat<double?> source,
 		double? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<double>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<double>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 
 	/// <summary>
@@ -306,11 +326,12 @@ public static partial class ThatNumberShould
 	public static AndOrResult<decimal?, IThat<decimal?>> BeLessThan(
 		this IThat<decimal?> source,
 		decimal? expected)
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new NullableGenericConstraint<decimal>(
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new NullableGenericConstraint<decimal>(
+					it,
 					expected,
 					e => $"be less than {Formatter.Format(e)}",
 					(a, e) => a < e,
-					(a, _) => $"found {Formatter.Format(a)}")),
+					(a, _, i) => $"{i} was {Formatter.Format(a)}")),
 			source);
 }

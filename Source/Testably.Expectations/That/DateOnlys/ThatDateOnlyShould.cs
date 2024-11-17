@@ -2,7 +2,6 @@
 using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations;
@@ -19,6 +18,7 @@ public static partial class ThatDateOnlyShould
 		=> subject.Should(ExpectationBuilder.NoAction);
 
 	private readonly struct ConditionConstraint(
+		string it,
 		DateOnly? expected,
 		Func<DateOnly, DateOnly?, bool> condition,
 		string expectation) : IValueConstraint<DateOnly>
@@ -30,7 +30,7 @@ public static partial class ThatDateOnlyShould
 				return new ConstraintResult.Success<DateOnly>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()
@@ -38,6 +38,7 @@ public static partial class ThatDateOnlyShould
 	}
 
 	private readonly struct PropertyConstraint<T>(
+		string it,
 		T expected,
 		Func<DateOnly, T, bool> condition,
 		string expectation) : IValueConstraint<DateOnly>
@@ -49,7 +50,7 @@ public static partial class ThatDateOnlyShould
 				return new ConstraintResult.Success<DateOnly>(actual, ToString());
 			}
 
-			return new ConstraintResult.Failure(ToString(), $"found {Formatter.Format(actual)}");
+			return new ConstraintResult.Failure(ToString(), $"{it} was {Formatter.Format(actual)}");
 		}
 
 		public override string ToString()
@@ -57,10 +58,11 @@ public static partial class ThatDateOnlyShould
 	}
 
 	private readonly struct ConditionConstraintWithTolerance(
+		string it,
 		DateOnly? expected,
 		Func<DateOnly?, TimeTolerance, string> expectation,
 		Func<DateOnly, DateOnly?, TimeSpan, bool> condition,
-		Func<DateOnly, DateOnly?, string> failureMessageFactory,
+		Func<DateOnly, DateOnly?, string, string> failureMessageFactory,
 		TimeTolerance tolerance)
 		: IValueConstraint<DateOnly>
 	{
@@ -69,7 +71,7 @@ public static partial class ThatDateOnlyShould
 			if (expected is null)
 			{
 				return new ConstraintResult.Failure(ToString(),
-					failureMessageFactory(actual, expected));
+					failureMessageFactory(actual, expected, it));
 			}
 
 			if (condition(actual, expected.Value, tolerance.Tolerance ?? TimeSpan.Zero))
@@ -78,7 +80,7 @@ public static partial class ThatDateOnlyShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				failureMessageFactory(actual, expected.Value));
+				failureMessageFactory(actual, expected.Value, it));
 		}
 
 		public override string ToString()

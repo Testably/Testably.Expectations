@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -20,8 +19,8 @@ public static partial class ThatStringShould
 		Quantifier? quantifier = new();
 		StringEqualityOptions? options = new();
 		return new StringCountResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ContainsValueConstraint(expected, quantifier, options)),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ContainConstraint(it, expected, quantifier, options)),
 			source,
 			quantifier,
 			options);
@@ -38,13 +37,14 @@ public static partial class ThatStringShould
 		quantifier.Exactly(0);
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder
-				.AddConstraint(new ContainsValueConstraint(unexpected, quantifier, options)),
+			source.ExpectationBuilder.AddConstraint(it
+				=> new ContainConstraint(it, unexpected, quantifier, options)),
 			source,
 			options);
 	}
 
-	private readonly struct ContainsValueConstraint(
+	private readonly struct ContainConstraint(
+		string it,
 		string expected,
 		Quantifier quantifier,
 		StringEqualityOptions options)
@@ -56,7 +56,7 @@ public static partial class ThatStringShould
 			if (actual is null)
 			{
 				return new ConstraintResult.Failure<string?>(null, ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			int actualCount = CountOccurrences(actual, expected, options.Comparer);
@@ -66,7 +66,7 @@ public static partial class ThatStringShould
 			}
 
 			return new ConstraintResult.Failure<string?>(actual, ToString(),
-				$"found it {actualCount} times in {Formatter.Format(actual)}");
+				$"{it} contained it {actualCount} times in {Formatter.Format(actual)}");
 		}
 
 		private static int CountOccurrences(string actual, string expected,
