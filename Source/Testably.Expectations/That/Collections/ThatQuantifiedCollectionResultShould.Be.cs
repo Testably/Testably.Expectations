@@ -20,7 +20,7 @@ public static partial class ThatQuantifiedCollectionResultShouldSync
 		TItem expected)
 		where TCollection : IEnumerable<TItem>
 		=> new(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(
 						expected,
 						source.Quantity,
@@ -39,7 +39,7 @@ public static partial class ThatQuantifiedCollectionResultShouldAsync
 		TItem expected)
 		where TCollection : IAsyncEnumerable<TItem>
 		=> new(source.ExpectationBuilder
-				.AddConstraint(
+				.AddConstraint(_ =>
 					new ThatQuantifiedCollectionResultShould.BeEqualConstraint<TItem, TCollection>(
 						expected,
 						source.Quantity,

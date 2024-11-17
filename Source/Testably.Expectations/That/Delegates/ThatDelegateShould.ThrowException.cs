@@ -14,7 +14,7 @@ public static partial class ThatDelegateShould
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
 				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
-				.AddConstraint(new ThrowExceptionOfTypeConstraint<Exception>(throwOptions))
+				.AddConstraint(_ =>new ThrowExceptionOfTypeConstraint<Exception>(throwOptions))
 				.And(" "),
 			throwOptions);
 	}
