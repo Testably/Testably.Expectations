@@ -272,12 +272,11 @@ jobs:
                   git checkout -b integrate/merge-benchmarks-to-main
                   git merge benchmarks
                   git push --set-upstream origin integrate/merge-benchmarks-to-main
-            - name: Create Pull Request
-              uses: peter-evans/create-pull-request@v7
-              with:
-                  branch: integrate/merge-benchmarks-to-main
-                  base: main
-                  title: 'docs: update benchmarks while releasing ${version}'
+            - name: Create pull request
+              run: | 
+                  gh pr create -B main -H integrate/merge-benchmarks-to-main --title 'docs: update benchmarks while releasing ${version}'
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     deploy:
         name: Deploy
