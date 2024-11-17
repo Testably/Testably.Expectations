@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1731836945738,
+  "lastUpdate": 1731843018010,
   "repoUrl": "https://github.com/Testably/Testably.Expectations",
   "entries": {
     "Benchmark.Net Benchmark": [
@@ -1856,6 +1856,66 @@ window.BENCHMARK_DATA = {
             "value": 808.0915812810262,
             "unit": "ns",
             "range": "± 3.3732781730901014"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "vbreuss@gmail.com",
+            "name": "Valentin Breuß",
+            "username": "vbreuss"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "29720dd622fc0f7e3fb5c4e71deeb243fefa128d",
+          "message": "refactor: add XML comments for hidden methods (#181)\n\nAdd XML-Doc comments for methods hidden with the\n`EditorBrowsableAttribute` to clarify, why this should not be visible in\ncode suggestions.",
+          "timestamp": "2024-11-17T11:26:43Z",
+          "tree_id": "e2a717c228f5b22b08f13e0f90e62f45611e0c3a",
+          "url": "https://github.com/Testably/Testably.Expectations/commit/29720dd622fc0f7e3fb5c4e71deeb243fefa128d"
+        },
+        "date": 1731843017380,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_FluentAssertions",
+            "value": 221.70008981227875,
+            "unit": "ns",
+            "range": "± 2.0800750678201325"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TestablyExpectations",
+            "value": 169.06887694767542,
+            "unit": "ns",
+            "range": "± 1.7926497901847653"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.Bool_TUnit",
+            "value": 603.2111625671387,
+            "unit": "ns",
+            "range": "± 3.7606178228637197"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_FluentAssertions",
+            "value": 410.6040994008382,
+            "unit": "ns",
+            "range": "± 3.604313807870807"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TestablyExpectations",
+            "value": 332.18479473250255,
+            "unit": "ns",
+            "range": "± 2.2478781331853623"
+          },
+          {
+            "name": "Testably.Expectations.Benchmarks.HappyCaseBenchmarks.String_TUnit",
+            "value": 805.1359320368085,
+            "unit": "ns",
+            "range": "± 6.981612291095164"
           }
         ]
       }
