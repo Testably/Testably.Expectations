@@ -21,19 +21,19 @@ public class HappyCaseBenchmarks
 	public async Task<bool> Bool_TestablyExpectations()
 		=> await Expect.That(_boolSubject).Should().BeTrue();
 
-//	[Benchmark]
-//	public async Task<bool> Bool_TUnit()
-//		=> await Assert.That(_boolSubject).IsTrue();
-//
-//	[Benchmark]
-//	public AndConstraint<StringAssertions> String_FluentAssertions()
-//		=> _stringSubject.Should().Be(_stringExpectation);
-//
-//	[Benchmark]
-//	public async Task<string?> String_TestablyExpectations()
-//		=> await Expect.That(_stringSubject).Should().Be(_stringExpectation);
-//
-//	[Benchmark]
-//	public async Task<string?> String_TUnit()
-//		=> await Assert.That(_stringSubject).IsEqualTo(_stringExpectation);
+	[Benchmark]
+	public async Task<bool> Bool_TUnit()
+		=> await Assert.That(_boolSubject).IsTrue();
+
+	[Benchmark]
+	public AndConstraint<StringAssertions> String_FluentAssertions()
+		=> _stringSubject.Should().Be(_stringExpectation);
+
+	[Benchmark]
+	public async Task<string?> String_TestablyExpectations()
+		=> await Expect.That(_stringSubject).Should().Be(_stringExpectation);
+
+	[Benchmark]
+	public async Task<string?> String_TUnit()
+		=> await Assert.That(_stringSubject).IsEqualTo(_stringExpectation);
 }

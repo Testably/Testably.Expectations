@@ -16,7 +16,7 @@ public sealed partial class NullableTimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             be negative,
-				             but it was 10675199.02:48:05.477
+				             but it was the maximum time span
 				             """);
 		}
 
@@ -100,7 +100,7 @@ public sealed partial class NullableTimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             not be negative,
-				             but it was -10675199.02:48:05
+				             but it was the minimum time span
 				             """);
 		}
 

@@ -117,8 +117,8 @@ public sealed partial class NullableTimeSpanShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be 10675199.02:48:05.477, because we want to test the failure,
-				             but it was 10675199.02:48:05.477
+				             not be the maximum time span, because we want to test the failure,
+				             but it was the maximum time span
 				             """);
 		}
 
@@ -135,8 +135,8 @@ public sealed partial class NullableTimeSpanShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be -10675199.02:48:05, because we want to test the failure,
-				             but it was -10675199.02:48:05
+				             not be the minimum time span, because we want to test the failure,
+				             but it was the minimum time span
 				             """);
 		}
 

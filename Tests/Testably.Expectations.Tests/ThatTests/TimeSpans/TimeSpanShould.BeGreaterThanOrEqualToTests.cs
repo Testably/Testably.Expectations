@@ -150,8 +150,8 @@ public sealed partial class TimeSpanShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be greater than or equal to 10675199.02:48:05.477,
-				             but it was 10675199.02:48:05.477
+				             not be greater than or equal to the maximum time span,
+				             but it was the maximum time span
 				             """);
 		}
 
@@ -167,8 +167,8 @@ public sealed partial class TimeSpanShould
 			await That(Act).Should().Throw<XunitException>()
 				.WithMessage("""
 				             Expected subject to
-				             not be greater than or equal to -10675199.02:48:05,
-				             but it was -10675199.02:48:05
+				             not be greater than or equal to the minimum time span,
+				             but it was the minimum time span
 				             """);
 		}
 

@@ -61,9 +61,15 @@ public static partial class ValueFormatters
 			return;
 		}
 
+		if (value == TimeSpan.MaxValue)
+		{
+			stringBuilder.Append("the maximum time span");
+			return;
+		}
+
 		if (value == TimeSpan.MinValue)
 		{
-			stringBuilder.Append("-10675199.02:48:05");
+			stringBuilder.Append("the minimum time span");
 			return;
 		}
 

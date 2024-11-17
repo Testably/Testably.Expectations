@@ -27,7 +27,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             be positive,
-				             but it was -10675199.02:48:05
+				             but it was the minimum time span
 				             """);
 		}
 
@@ -89,7 +89,7 @@ public sealed partial class TimeSpanShould
 				.WithMessage("""
 				             Expected subject to
 				             not be positive,
-				             but it was 10675199.02:48:05.477
+				             but it was the maximum time span
 				             """);
 		}
 
