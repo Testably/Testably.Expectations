@@ -1,7 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -18,7 +17,7 @@ public static partial class ThatNullableTimeSpanShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<TimeSpan?, IThat<TimeSpan?>>(
-			source.ExpectationBuilder.AddConstraint(it 
+			source.ExpectationBuilder.AddConstraint(it
 				=> new BeConstraint(it, expected, tolerance)),
 			source,
 			tolerance);
@@ -33,7 +32,7 @@ public static partial class ThatNullableTimeSpanShould
 	{
 		TimeTolerance tolerance = new();
 		return new TimeToleranceResult<TimeSpan?, IThat<TimeSpan?>>(
-			source.ExpectationBuilder.AddConstraint(it 
+			source.ExpectationBuilder.AddConstraint(it
 				=> new NotBeConstraint(it, unexpected, tolerance)),
 			source,
 			tolerance);

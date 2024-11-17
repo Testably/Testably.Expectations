@@ -2,7 +2,6 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 
 namespace Testably.Expectations;
@@ -78,7 +77,8 @@ public static partial class ThatExceptionShould
 	}
 
 	internal readonly struct HasInnerExceptionValueConstraint<TInnerException>(
-		string verb, string it)
+		string verb,
+		string it)
 		: IValueConstraint<Exception?>
 		where TInnerException : Exception?
 	{
@@ -134,7 +134,8 @@ public static partial class ThatExceptionShould
 			=> $"{verb} an inner {(innerExceptionType == typeof(Exception) ? "exception" : Formatter.Format(innerExceptionType))}";
 	}
 
-	internal class InnerExceptionIsTypeConstraint<TInnerException>(string it) : IValueConstraint<Exception?>
+	internal class InnerExceptionIsTypeConstraint<TInnerException>(string it)
+		: IValueConstraint<Exception?>
 		where TInnerException : Exception?
 	{
 		#region IValueConstraint<Exception?> Members

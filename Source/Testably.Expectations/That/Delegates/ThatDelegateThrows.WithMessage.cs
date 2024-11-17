@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Testably.Expectations.Options;
+﻿using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;

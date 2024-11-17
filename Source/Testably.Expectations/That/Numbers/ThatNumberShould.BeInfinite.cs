@@ -1,5 +1,4 @@
 ﻿using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -10,7 +9,7 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is seen as infinite (<see cref="float.IsInfinity" />).
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> BeInfinite(this IThat<float> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new GenericConstraint<float>(
 					it,
 					float.PositiveInfinity,
@@ -24,7 +23,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> BeInfinite(
 		this IThat<double> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new GenericConstraint<double>(
 					it,
 					double.PositiveInfinity,
@@ -37,7 +36,7 @@ public static partial class ThatNumberShould
 	///     Verifies that the subject is seen as infinite (not <see langword="null" /> and <see cref="float.IsInfinity" />).
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> BeInfinite(this IThat<float?> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new NullableGenericConstraint<float>(
 					it,
 					float.PositiveInfinity,
@@ -51,7 +50,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> BeInfinite(
 		this IThat<double?> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new NullableGenericConstraint<double>(
 					it,
 					double.PositiveInfinity,
@@ -65,7 +64,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float, IThat<float>> NotBeInfinite(
 		this IThat<float> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new GenericConstraint<float>(
 					it,
 					float.PositiveInfinity,
@@ -79,7 +78,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double, IThat<double>> NotBeInfinite(
 		this IThat<double> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new GenericConstraint<double>(
 					it,
 					double.PositiveInfinity,
@@ -93,7 +92,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<float?, IThat<float?>> NotBeInfinite(
 		this IThat<float?> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new NullableGenericConstraint<float>(
 					it,
 					float.PositiveInfinity,
@@ -108,7 +107,7 @@ public static partial class ThatNumberShould
 	/// </summary>
 	public static AndOrResult<double?, IThat<double?>> NotBeInfinite(
 		this IThat<double?> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new NullableGenericConstraint<double>(
 					it,
 					double.PositiveInfinity,

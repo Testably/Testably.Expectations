@@ -2,7 +2,6 @@
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -22,7 +21,7 @@ public static partial class ThatStringShould
 				"The expected length must be greater than or equal to zero.");
 		}
 
-		return new AndOrResult<string?, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it 
+		return new AndOrResult<string?, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it
 				=> new HaveLengthConstraint(it, expected)),
 			source);
 	}
@@ -40,7 +39,7 @@ public static partial class ThatStringShould
 				"The unexpected length must be greater than or equal to zero.");
 		}
 
-		return new AndOrResult<string, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it 
+		return new AndOrResult<string, IThat<string?>>(source.ExpectationBuilder.AddConstraint(it
 				=> new NotHaveLengthConstraint(it, unexpected)),
 			source);
 	}
@@ -60,7 +59,7 @@ public static partial class ThatStringShould
 			if (actual.Length != expected)
 			{
 				return new ConstraintResult.Failure<string?>(actual, ToString(),
-					$"{it} did have a length of {actual.Length}:{Environment.NewLine}{Formatter.Format(actual).Indent()}");
+					$"{it} did have a length of {actual.Length}:{Environment.NewLine}{StringExtensions.Indent(Formatter.Format(actual))}");
 			}
 
 			return new ConstraintResult.Success<string?>(actual, ToString());
@@ -80,7 +79,7 @@ public static partial class ThatStringShould
 			if (actual?.Length == unexpected)
 			{
 				return new ConstraintResult.Failure<string?>(actual, ToString(),
-					$"{it} did:{Environment.NewLine}{Formatter.Format(actual).Indent()}");
+					$"{it} did:{Environment.NewLine}{StringExtensions.Indent(Formatter.Format(actual))}");
 			}
 
 			return new ConstraintResult.Success<string?>(actual, ToString());

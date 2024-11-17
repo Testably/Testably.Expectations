@@ -1,5 +1,4 @@
 ﻿using System;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Options;
 

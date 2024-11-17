@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -14,12 +13,13 @@ public static partial class ThatNullableDateOnlyShould
 	public static AndOrResult<DateOnly?, IThat<DateOnly?>> HaveDay(this IThat<DateOnly?> source,
 		int? expected)
 	{
-		return new AndOrResult<DateOnly?, IThat<DateOnly?>>(source.ExpectationBuilder.AddConstraint(it
-				=> new PropertyConstraint<int?>(
-					it,
-					expected,
-					(a, e) => a.HasValue && a.Value.Day == e,
-					$"have day of {Formatter.Format(expected)}")),
+		return new AndOrResult<DateOnly?, IThat<DateOnly?>>(source.ExpectationBuilder.AddConstraint(
+				it
+					=> new PropertyConstraint<int?>(
+						it,
+						expected,
+						(a, e) => a.HasValue && a.Value.Day == e,
+						$"have day of {Formatter.Format(expected)}")),
 			source);
 	}
 

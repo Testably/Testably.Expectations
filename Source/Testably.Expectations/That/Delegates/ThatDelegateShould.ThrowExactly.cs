@@ -16,7 +16,7 @@ public static partial class ThatDelegateShould
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<TException>(source.ExpectationBuilder
 				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
-				.AddConstraint(_ =>new ThrowsExactlyCastConstraint<TException>(throwOptions))
+				.AddConstraint(_ => new ThrowsExactlyCastConstraint<TException>(throwOptions))
 				.And(" "),
 			throwOptions);
 	}
@@ -30,7 +30,7 @@ public static partial class ThatDelegateShould
 		ThrowsOption throwOptions = new();
 		return new ThatDelegateThrows<Exception>(source.ExpectationBuilder
 				.ForWhich<DelegateValue, Exception?>(d => d.Exception)
-				.AddConstraint(_ =>new ThrowsExactlyCastConstraint(exceptionType, throwOptions))
+				.AddConstraint(_ => new ThrowsExactlyCastConstraint(exceptionType, throwOptions))
 				.And(" "),
 			throwOptions);
 	}

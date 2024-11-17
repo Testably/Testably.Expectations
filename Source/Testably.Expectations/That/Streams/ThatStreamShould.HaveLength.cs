@@ -16,7 +16,9 @@ public static partial class ThatStreamShould
 				=> new ValueConstraint(
 					$"have length {expected}",
 					actual => actual?.Length == expected,
-					actual => actual == null ? $"{it} was <null>" : $"{it} had length {actual.Length}")),
+					actual => actual == null
+						? $"{it} was <null>"
+						: $"{it} had length {actual.Length}")),
 			source);
 
 	/// <summary>

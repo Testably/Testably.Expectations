@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;

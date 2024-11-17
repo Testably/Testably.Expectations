@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -14,7 +13,8 @@ public static partial class ThatNullableDateTimeOffsetShould
 		this IThat<DateTimeOffset?> source,
 		int? expected)
 	{
-		return new AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>>(source.ExpectationBuilder.AddConstraint(it
+		return new AndOrResult<DateTimeOffset?, IThat<DateTimeOffset?>>(
+			source.ExpectationBuilder.AddConstraint(it
 				=> new PropertyConstraint<int?>(
 					it,
 					expected,

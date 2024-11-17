@@ -1,7 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -15,12 +14,13 @@ public static partial class ThatNullableTimeOnlyShould
 		this IThat<TimeOnly?> source,
 		int? expected)
 	{
-		return new AndOrResult<TimeOnly?, IThat<TimeOnly?>>(source.ExpectationBuilder.AddConstraint(it
-				=> new PropertyConstraint<int?>(
-					it,
-					expected,
-					(a, e) => a.HasValue && a.Value.Millisecond == e,
-					$"have millisecond of {Formatter.Format(expected)}")),
+		return new AndOrResult<TimeOnly?, IThat<TimeOnly?>>(source.ExpectationBuilder.AddConstraint(
+				it
+					=> new PropertyConstraint<int?>(
+						it,
+						expected,
+						(a, e) => a.HasValue && a.Value.Millisecond == e,
+						$"have millisecond of {Formatter.Format(expected)}")),
 			source);
 	}
 

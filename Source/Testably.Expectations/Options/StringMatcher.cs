@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Testably.Expectations.Core.Helpers;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Options;
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -20,7 +19,7 @@ public static partial class ThatStringShould
 		Quantifier? quantifier = new();
 		StringEqualityOptions? options = new();
 		return new StringCountResult<string?, IThat<string?>>(
-			source.ExpectationBuilder.AddConstraint(it 
+			source.ExpectationBuilder.AddConstraint(it
 				=> new ContainConstraint(it, expected, quantifier, options)),
 			source,
 			quantifier,
@@ -38,7 +37,7 @@ public static partial class ThatStringShould
 		quantifier.Exactly(0);
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder.AddConstraint(it 
+			source.ExpectationBuilder.AddConstraint(it
 				=> new ContainConstraint(it, unexpected, quantifier, options)),
 			source,
 			options);

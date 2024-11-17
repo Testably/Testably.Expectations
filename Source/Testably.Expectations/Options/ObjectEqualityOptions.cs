@@ -147,7 +147,8 @@ public class ObjectEqualityOptions
 
 		/// <inheritdoc />
 		public Result AreConsideredEqual(object? a, object? b, string it)
-			=> new(Equals(a, b), $"{it} was {Formatter.Format(a, FormattingOptions.MultipleLines)}");
+			=> new(Equals(a, b),
+				$"{it} was {Formatter.Format(a, FormattingOptions.MultipleLines)}");
 
 		/// <inheritdoc />
 		public string GetExpectation(string expectedExpression)

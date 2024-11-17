@@ -45,7 +45,7 @@ public sealed partial class DelegateShould
 				             but it did not throw any exception
 				             """);
 		}
-		
+
 		[Theory]
 		[AutoData]
 		public async Task ForGeneric_WhenOtherExceptionIsThrown_ShouldFail(string message)

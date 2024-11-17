@@ -1,6 +1,5 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -25,7 +24,8 @@ public static partial class ThatBoolShould
 				=> new NotBeValueConstraint(it, unexpected)),
 			source);
 
-	private readonly struct NotBeValueConstraint(string it, bool unexpected) : IValueConstraint<bool>
+	private readonly struct NotBeValueConstraint(string it, bool unexpected)
+		: IValueConstraint<bool>
 	{
 		public ConstraintResult IsMetBy(bool actual)
 		{

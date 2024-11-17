@@ -14,14 +14,14 @@ public static partial class ThatDelegateShould
 	public static ExpectationResult<TValue> NotThrow<TValue>(
 		this ThatDelegate.WithValue<TValue> source)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(_ =>new DoesNotThrowConstraint<TValue>()));
+			.AddConstraint(_ => new DoesNotThrowConstraint<TValue>()));
 
 	/// <summary>
 	///     Verifies that the delegate does not throw any exception.
 	/// </summary>
 	public static ExpectationResult NotThrow(this ThatDelegate.WithoutValue source)
 		=> new(source.ExpectationBuilder
-			.AddConstraint(_ =>new DoesNotThrowConstraint()));
+			.AddConstraint(_ => new DoesNotThrowConstraint()));
 
 	private readonly struct DoesNotThrowConstraint : IValueConstraint<DelegateValue>
 	{

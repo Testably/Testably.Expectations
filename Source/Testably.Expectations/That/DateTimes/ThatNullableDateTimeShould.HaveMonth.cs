@@ -1,6 +1,5 @@
 ﻿using System;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -13,12 +12,13 @@ public static partial class ThatNullableDateTimeShould
 	public static AndOrResult<DateTime?, IThat<DateTime?>> HaveMonth(this IThat<DateTime?> source,
 		int? expected)
 	{
-		return new AndOrResult<DateTime?, IThat<DateTime?>>(source.ExpectationBuilder.AddConstraint(it
-				=> new PropertyConstraint<int?>(
-					it,
-					expected,
-					(a, e) => a.HasValue && a.Value.Month == e,
-					$"have month of {Formatter.Format(expected)}")),
+		return new AndOrResult<DateTime?, IThat<DateTime?>>(source.ExpectationBuilder.AddConstraint(
+				it
+					=> new PropertyConstraint<int?>(
+						it,
+						expected,
+						(a, e) => a.HasValue && a.Value.Month == e,
+						$"have month of {Formatter.Format(expected)}")),
 			source);
 	}
 

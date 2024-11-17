@@ -1,6 +1,5 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Options;
 using Testably.Expectations.Results;
 
@@ -17,7 +16,7 @@ public static partial class ThatStringShould
 	{
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder.AddConstraint(it 
+			source.ExpectationBuilder.AddConstraint(it
 				=> new EndWithConstraint(it, expected, options)),
 			source,
 			options);
@@ -32,7 +31,7 @@ public static partial class ThatStringShould
 	{
 		StringEqualityOptions? options = new();
 		return new StringEqualityResult<string?, IThat<string?>>(
-			source.ExpectationBuilder.AddConstraint(it 
+			source.ExpectationBuilder.AddConstraint(it
 				=> new NotEndWithConstraint(it, unexpected, options)),
 			source,
 			options);

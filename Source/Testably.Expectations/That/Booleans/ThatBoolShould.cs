@@ -1,6 +1,5 @@
 ﻿using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations;
 

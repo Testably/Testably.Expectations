@@ -18,5 +18,6 @@ public static class ExpectationBuilderExtensions
 			string displayName,
 			bool replaceIt = true)
 		=> expectationBuilder.ForProperty(
-			PropertyAccessor<TSource, TTarget>.FromFunc(propertySelector, displayName), replaceIt: replaceIt);
+			PropertyAccessor<TSource, TTarget>.FromFunc(propertySelector, displayName),
+			replaceIt: replaceIt);
 }

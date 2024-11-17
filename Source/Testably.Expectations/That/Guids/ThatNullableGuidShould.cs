@@ -1,7 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations;
 
@@ -16,7 +15,10 @@ public static partial class ThatNullableGuidShould
 	public static IThat<Guid?> Should(this IExpectSubject<Guid?> subject)
 		=> subject.Should(ExpectationBuilder.NoAction);
 
-	private readonly struct ValueConstraint(string it, string expectation, Func<Guid?, bool> successIf)
+	private readonly struct ValueConstraint(
+		string it,
+		string expectation,
+		Func<Guid?, bool> successIf)
 		: IValueConstraint<Guid?>
 	{
 		public ConstraintResult IsMetBy(Guid? actual)

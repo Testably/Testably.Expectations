@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations.Options;
 

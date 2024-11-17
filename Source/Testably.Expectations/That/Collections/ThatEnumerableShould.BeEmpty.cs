@@ -3,7 +3,6 @@ using System.Linq;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
 using Testably.Expectations.Core.EvaluationContext;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;
@@ -29,7 +28,8 @@ public static partial class ThatEnumerableShould
 				.AddConstraint(it => new NotBeEmptyConstraint<TItem>(it)),
 			source);
 
-	private readonly struct BeEmptyConstraint<TItem>(string it) : IValueConstraint<IEnumerable<TItem>>
+	private readonly struct BeEmptyConstraint<TItem>(string it)
+		: IValueConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual)
 		{
@@ -47,7 +47,8 @@ public static partial class ThatEnumerableShould
 			=> "be empty";
 	}
 
-	private readonly struct NotBeEmptyConstraint<TItem>(string it) : IContextConstraint<IEnumerable<TItem>>
+	private readonly struct NotBeEmptyConstraint<TItem>(string it)
+		: IContextConstraint<IEnumerable<TItem>>
 	{
 		public ConstraintResult IsMetBy(IEnumerable<TItem> actual, IEvaluationContext context)
 		{

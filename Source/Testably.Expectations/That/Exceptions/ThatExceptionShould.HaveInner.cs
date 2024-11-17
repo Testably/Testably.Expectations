@@ -21,7 +21,8 @@ public partial class ThatExceptionShould<TException>
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"have an inner {typeof(TInnerException).Name} which should ",
 					replaceIt: false)
-				.Validate(it => new ThatExceptionShould.InnerExceptionIsTypeConstraint<TInnerException>(it))
+				.Validate(it
+					=> new ThatExceptionShould.InnerExceptionIsTypeConstraint<TInnerException>(it))
 				.AddExpectations(e => expectations(new ThatExceptionShould<TInnerException?>(e))),
 			this);
 
@@ -32,7 +33,8 @@ public partial class ThatExceptionShould<TException>
 		TInnerException>()
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder.AddConstraint(it =>
-				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("have", it)),
+				new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("have",
+					it)),
 			this);
 
 	/// <summary>
@@ -45,7 +47,9 @@ public partial class ThatExceptionShould<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"have an inner {innerExceptionType.Name} which should ")
-				.Validate(it => new ThatExceptionShould.InnerExceptionIsTypeConstraint(it, innerExceptionType))
+				.Validate(it
+					=> new ThatExceptionShould.InnerExceptionIsTypeConstraint(it,
+						innerExceptionType))
 				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
 			this);
 
@@ -54,7 +58,8 @@ public partial class ThatExceptionShould<TException>
 	/// </summary>
 	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInner(
 		Type innerExceptionType)
-		=> new(ExpectationBuilder.AddConstraint(it 
-				=> new ThatExceptionShould.HasInnerExceptionValueConstraint(innerExceptionType, "have", it)),
+		=> new(ExpectationBuilder.AddConstraint(it
+				=> new ThatExceptionShould.HasInnerExceptionValueConstraint(innerExceptionType,
+					"have", it)),
 			this);
 }

@@ -17,7 +17,8 @@ public partial class ThatDelegateThrows<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"with an inner {typeof(TInnerException).Name} which should ")
-				.Validate(it => new ThatExceptionShould.InnerExceptionIsTypeConstraint<TInnerException>(it))
+				.Validate(it
+					=> new ThatExceptionShould.InnerExceptionIsTypeConstraint<TInnerException>(it))
 				.AddExpectations(e => expectations(new ThatExceptionShould<TInnerException?>(e))),
 			this);
 
@@ -28,8 +29,9 @@ public partial class ThatDelegateThrows<TException>
 		TInnerException>()
 		where TInnerException : Exception?
 		=> new(ExpectationBuilder
-				.AddConstraint(it => 
-					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>("with", it)),
+				.AddConstraint(it =>
+					new ThatExceptionShould.HasInnerExceptionValueConstraint<TInnerException>(
+						"with", it)),
 			this);
 
 	/// <summary>
@@ -42,7 +44,9 @@ public partial class ThatDelegateThrows<TException>
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
 					$"with an inner {innerExceptionType.Name} which should ")
-				.Validate(it => new ThatExceptionShould.InnerExceptionIsTypeConstraint(it, innerExceptionType))
+				.Validate(it
+					=> new ThatExceptionShould.InnerExceptionIsTypeConstraint(it,
+						innerExceptionType))
 				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
 			this);
 
@@ -53,6 +57,7 @@ public partial class ThatDelegateThrows<TException>
 		Type innerExceptionType)
 		=> new(ExpectationBuilder
 				.AddConstraint(it =>
-					new ThatExceptionShould.HasInnerExceptionValueConstraint(innerExceptionType, "with", it)),
+					new ThatExceptionShould.HasInnerExceptionValueConstraint(innerExceptionType,
+						"with", it)),
 			this);
 }

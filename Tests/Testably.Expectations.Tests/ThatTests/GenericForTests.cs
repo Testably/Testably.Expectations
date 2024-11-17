@@ -22,10 +22,10 @@ public sealed class GenericForTests
 
 		await That(Act).Should().Throw<XunitException>().OnlyIf(!expectSuccess)
 			.WithMessage($"""
-			             Expected subject to
-			             for .A be True and for .B be True,
-			             but {(a ? "" : ".A was False")}{(!a && !b ? " and " : "")}{(b ? "" : ".B was False")}
-			             """);
+			              Expected subject to
+			              for .A be True and for .B be True,
+			              but {(a ? "" : ".A was False")}{(!a && !b ? " and " : "")}{(b ? "" : ".B was False")}
+			              """);
 	}
 
 	[Theory]

@@ -351,11 +351,11 @@ public sealed partial class NumberShould
 			async Task Act() => await That(subject).Should().NotBeNaN();
 
 			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              not be NaN,
-				              but it was NaN
-				              """);
+				.WithMessage("""
+				             Expected subject to
+				             not be NaN,
+				             but it was NaN
+				             """);
 		}
 
 		[Theory]
@@ -397,11 +397,11 @@ public sealed partial class NumberShould
 				=> await That(subject).Should().NotBeNaN();
 
 			await That(Act).Should().Throw<XunitException>()
-				.WithMessage($"""
-				              Expected subject to
-				              not be NaN,
-				              but it was NaN
-				              """);
+				.WithMessage("""
+				             Expected subject to
+				             not be NaN,
+				             but it was NaN
+				             """);
 		}
 
 		[Theory]

@@ -12,7 +12,7 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static AndOrResult<string?, IThat<string?>> BeNull(
 		this IThat<string?> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new BeNullConstraint(it)),
 			source);
 
@@ -21,7 +21,7 @@ public static partial class ThatStringShould
 	/// </summary>
 	public static AndOrResult<string, IThat<string?>> NotBeNull(
 		this IThat<string?> source)
-		=> new(source.ExpectationBuilder.AddConstraint(it 
+		=> new(source.ExpectationBuilder.AddConstraint(it
 				=> new NotBeNullConstraint(it)),
 			source);
 

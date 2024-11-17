@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using Testably.Expectations.Core;
-using Testably.Expectations.Formatting;
 using Testably.Expectations.Results;
 
 namespace Testably.Expectations;

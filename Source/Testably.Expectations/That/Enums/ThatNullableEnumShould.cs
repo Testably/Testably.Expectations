@@ -1,7 +1,6 @@
 ﻿using System;
 using Testably.Expectations.Core;
 using Testably.Expectations.Core.Constraints;
-using Testably.Expectations.Formatting;
 
 namespace Testably.Expectations;
 
@@ -18,7 +17,9 @@ public static partial class ThatNullableEnumShould
 		=> subject.Should(ExpectationBuilder.NoAction);
 
 	private readonly struct ValueConstraint<TEnum>(
-		string it, string expectation, Func<TEnum?, bool> successIf)
+		string it,
+		string expectation,
+		Func<TEnum?, bool> successIf)
 		: IValueConstraint<TEnum?>
 		where TEnum : struct, Enum
 	{
