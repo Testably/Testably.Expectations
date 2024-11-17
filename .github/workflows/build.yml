@@ -273,8 +273,8 @@ jobs:
                     git merge benchmarks
                     git push --set-upstream origin integrate/merge-benchmarks-to-main
             -   name: Create pull request
-                run: | 
-                    gh pr create -B main -H integrate/merge-benchmarks-to-main --title 'docs: update benchmarks while releasing ${version}'
+                run: |
+                    gh pr create -B main -H integrate/merge-benchmarks-to-main --title 'docs: update benchmarks while releasing ${version}' --fill
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
