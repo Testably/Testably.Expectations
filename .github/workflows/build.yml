@@ -228,6 +228,7 @@ jobs:
     
     pages:
         name: Deploy to Github Pages
+        if: github.ref == 'refs/heads/main'
         environment:
             name: github-pages
             url: ${{ steps.deployment.outputs.page_url }}
@@ -270,7 +271,7 @@ jobs:
                   git checkout main
                   git checkout -b integrate/merge-benchmarks-to-main
                   git merge benchmarks
-                  git push origin
+                  git push --set-upstream origin integrate/merge-benchmarks-to-main
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v7
               with:
