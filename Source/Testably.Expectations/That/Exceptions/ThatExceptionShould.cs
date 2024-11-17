@@ -21,8 +21,9 @@ public static partial class ThatExceptionShould
 		=> new(subject.Should(_ => { }).ExpectationBuilder);
 
 	internal readonly struct HasMessageValueConstraint<TException>(
-		StringMatcher expected,
-		string verb)
+		string it,
+		string verb,
+		StringMatcher expected)
 		: IValueConstraint<Exception?>
 		where TException : Exception?
 	{
@@ -34,7 +35,7 @@ public static partial class ThatExceptionShould
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				expected.GetExtendedFailure("TODO VAB", actual?.Message));
+				expected.GetExtendedFailure(it, actual?.Message));
 		}
 
 		public override string ToString()
@@ -42,8 +43,9 @@ public static partial class ThatExceptionShould
 	}
 
 	internal readonly struct HasParamNameValueConstraint<TArgumentException>(
-		string expected,
-		string verb)
+		string it,
+		string verb,
+		string expected)
 		: IValueConstraint<Exception?>
 		where TArgumentException : ArgumentException?
 	{
@@ -52,7 +54,7 @@ public static partial class ThatExceptionShould
 			if (actual == null)
 			{
 				return new ConstraintResult.Failure(ToString(),
-					"found <null>");
+					$"{it} was <null>");
 			}
 
 			if (actual is TArgumentException argumentException)
@@ -64,18 +66,19 @@ public static partial class ThatExceptionShould
 				}
 
 				return new ConstraintResult.Failure(ToString(),
-					$"found ParamName {Formatter.Format(argumentException.ParamName)}");
+					$"{it} had ParamName {Formatter.Format(argumentException.ParamName)}");
 			}
 
 			return new ConstraintResult.Failure(ToString(),
-				$"found {actual.GetType().Name.PrependAOrAn()}");
+				$"{it} was {actual.GetType().Name.PrependAOrAn()}");
 		}
 
 		public override string ToString()
 			=> $"{verb} ParamName {Formatter.Format(expected)}";
 	}
 
-	internal readonly struct HasInnerExceptionValueConstraint<TInnerException>(string verb)
+	internal readonly struct HasInnerExceptionValueConstraint<TInnerException>(
+		string verb, string it)
 		: IValueConstraint<Exception?>
 		where TInnerException : Exception?
 	{
@@ -91,18 +94,21 @@ public static partial class ThatExceptionShould
 			if (innerException is not null)
 			{
 				return new ConstraintResult.Failure<Exception?>(actual, ToString(),
-					$"found {innerException.FormatForMessage()}");
+					$"{it} was {innerException.FormatForMessage()}");
 			}
 
 			return new ConstraintResult.Failure<Exception?>(actual, ToString(),
-				"found <null>");
+				$"{it} was <null>");
 		}
 
 		public override string ToString()
 			=> $"{verb} an inner {(typeof(TInnerException) == typeof(Exception) ? "exception" : Formatter.Format(typeof(TInnerException)))}";
 	}
 
-	internal readonly struct HasInnerExceptionValueConstraint(Type innerExceptionType, string verb)
+	internal readonly struct HasInnerExceptionValueConstraint(
+		Type innerExceptionType,
+		string verb,
+		string it)
 		: IValueConstraint<Exception?>
 	{
 		/// <inheritdoc />
@@ -117,18 +123,18 @@ public static partial class ThatExceptionShould
 			if (innerException is not null)
 			{
 				return new ConstraintResult.Failure<Exception?>(actual, ToString(),
-					$"found {innerException.FormatForMessage()}");
+					$"{it} was {innerException.FormatForMessage()}");
 			}
 
 			return new ConstraintResult.Failure<Exception?>(actual, ToString(),
-				"found <null>");
+				$"{it} was <null>");
 		}
 
 		public override string ToString()
 			=> $"{verb} an inner {(innerExceptionType == typeof(Exception) ? "exception" : Formatter.Format(innerExceptionType))}";
 	}
 
-	internal class InnerExceptionIsTypeConstraint<TInnerException> : IValueConstraint<Exception?>
+	internal class InnerExceptionIsTypeConstraint<TInnerException>(string it) : IValueConstraint<Exception?>
 		where TInnerException : Exception?
 	{
 		#region IValueConstraint<Exception?> Members
@@ -143,14 +149,14 @@ public static partial class ThatExceptionShould
 
 			return new ConstraintResult.Failure<Exception?>(actual, "",
 				actual == null
-					? "found <null>"
-					: $"found {actual.InnerException?.FormatForMessage()}");
+					? $"{it} was <null>"
+					: $"{it} was {actual.InnerException?.FormatForMessage()}");
 		}
 
 		#endregion
 	}
 
-	internal class InnerExceptionIsTypeConstraint(Type exceptionType)
+	internal class InnerExceptionIsTypeConstraint(string it, Type exceptionType)
 		: IValueConstraint<Exception?>
 	{
 		#region IValueConstraint<Exception?> Members
@@ -165,8 +171,8 @@ public static partial class ThatExceptionShould
 
 			return new ConstraintResult.Failure<Exception?>(actual, "",
 				actual == null
-					? "found <null>"
-					: $"found {actual.FormatForMessage()}");
+					? $"{it} was <null>"
+					: $"{it} was {actual.FormatForMessage()}");
 		}
 
 		#endregion

@@ -14,12 +14,10 @@ public partial class ThatExceptionShould<TException>
 	///     Verifies that the actual exception has a message equal to <paramref name="expected" />
 	/// </summary>
 	public StringMatcherResult<TException?, ThatExceptionShould<TException>>
-		HaveMessage(
-			StringMatcher expected)
-		=> new(ExpectationBuilder
-				.AddConstraint(
-					new ThatExceptionShould.HasMessageValueConstraint<TException>(expected,
-						"have")),
+		HaveMessage(StringMatcher expected)
+		=> new(ExpectationBuilder.AddConstraint(it
+				=> new ThatExceptionShould.HasMessageValueConstraint<TException>(
+					it, "have", expected)),
 			this,
 			expected);
 }

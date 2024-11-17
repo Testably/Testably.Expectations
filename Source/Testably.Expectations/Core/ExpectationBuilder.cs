@@ -139,19 +139,24 @@ public abstract class ExpectationBuilder
 	/// </summary>
 	public PropertyExpectationBuilder<TSource, TTarget> ForProperty<TSource, TTarget>(
 		PropertyAccessor<TSource, TTarget?> propertyAccessor,
-		Func<PropertyAccessor, string, string>? expectationTextGenerator = null)
+		Func<PropertyAccessor, string, string>? expectationTextGenerator = null,
+		bool replaceIt = true)
 	{
 		return new PropertyExpectationBuilder<TSource, TTarget>((a, s, c) =>
 		{
 			if (s is not null)
 			{
+				var constraint = s.Invoke(_it);
 				And(" ");
-				_node.AddConstraint(s);
+				_node.AddConstraint(constraint);
 			}
 
 			Node root = _node;
 			_node = _node.AddMapping(propertyAccessor, expectationTextGenerator) ?? _node;
-			_it = propertyAccessor.ToString().Trim();
+			if (replaceIt)
+			{
+				_it = propertyAccessor.ToString().Trim();
+			}
 			if (c is not null)
 			{
 				_node.AddConstraint(c);
@@ -159,7 +164,10 @@ public abstract class ExpectationBuilder
 
 			a.Invoke(this);
 			_node = root;
-			_it = DefaultCurrentSubject;
+			if (replaceIt)
+			{
+				_it = DefaultCurrentSubject;
+			}
 			return this;
 		});
 	}
@@ -276,17 +284,17 @@ public abstract class ExpectationBuilder
 	public class PropertyExpectationBuilder<TSource, TProperty>
 	{
 		private readonly Func<Action<ExpectationBuilder>,
-				IValueConstraint<TSource>?,
+				Func<string, IValueConstraint<TSource>>?,
 				IValueConstraint<TProperty>?,
 				ExpectationBuilder>
 			_callback;
 
 		private readonly IValueConstraint<TProperty>? _constraint = null;
 
-		private IValueConstraint<TSource>? _sourceConstraint;
+		private Func<string, IValueConstraint<TSource>>? _sourceConstraintBuilder;
 
 		internal PropertyExpectationBuilder(Func<Action<ExpectationBuilder>,
-				IValueConstraint<TSource>?,
+				Func<string, IValueConstraint<TSource>>?,
 				IValueConstraint<TProperty>?,
 				ExpectationBuilder>
 			callback)
@@ -299,16 +307,16 @@ public abstract class ExpectationBuilder
 		/// </summary>
 		public ExpectationBuilder AddExpectations(Action<ExpectationBuilder> expectation)
 		{
-			return _callback(expectation, _sourceConstraint, _constraint);
+			return _callback(expectation, _sourceConstraintBuilder, _constraint);
 		}
-
+		
 		/// <summary>
 		///     Add a validation constraint for the current <typeparamref name="TSource" />.
 		/// </summary>
 		public PropertyExpectationBuilder<TSource, TProperty> Validate(
-			IValueConstraint<TSource> constraint)
+			Func<string, IValueConstraint<TSource>> constraintBuilder)
 		{
-			_sourceConstraint = constraint;
+			_sourceConstraintBuilder = constraintBuilder;
 			return this;
 		}
 	}

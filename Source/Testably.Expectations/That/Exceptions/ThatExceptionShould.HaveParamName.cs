@@ -17,8 +17,8 @@ public static partial class ThatExceptionShould
 			this ThatExceptionShould<TException> source,
 			string expected)
 		where TException : ArgumentException?
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasParamNameValueConstraint<TException>(expected, "have")),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new HasParamNameValueConstraint<TException>(it, "have", expected)),
 			source);
 
 	/// <summary>
@@ -29,7 +29,7 @@ public static partial class ThatExceptionShould
 			this ThatDelegateThrows<TException> source,
 			string expected)
 		where TException : ArgumentException?
-		=> new(source.ExpectationBuilder
-				.AddConstraint(new HasParamNameValueConstraint<TException>(expected, "with")),
+		=> new(source.ExpectationBuilder.AddConstraint(it
+				=> new HasParamNameValueConstraint<TException>(it, "with", expected)),
 			source);
 }

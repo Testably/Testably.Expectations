@@ -14,8 +14,8 @@ public partial class ThatExceptionShould<TException>
 	/// </summary>
 	public AndOrResult<TException, ThatExceptionShould<TException>> HaveInnerException()
 		=> new(ExpectationBuilder
-				.AddConstraint(
-					new ThatExceptionShould.HasInnerExceptionValueConstraint<TException>("have")),
+				.AddConstraint(it => 
+					new ThatExceptionShould.HasInnerExceptionValueConstraint<TException>("have", it)),
 			this);
 
 	/// <summary>
@@ -25,8 +25,9 @@ public partial class ThatExceptionShould<TException>
 		Action<ThatExceptionShould<Exception?>> expectations)
 		=> new(ExpectationBuilder
 				.ForProperty<Exception, Exception?>(e => e.InnerException,
-					"have an inner exception which should ")
-				.Validate(new ThatExceptionShould.InnerExceptionIsTypeConstraint<Exception>())
+					"have an inner exception which should ",
+					replaceIt: false)
+				.Validate(it => new ThatExceptionShould.InnerExceptionIsTypeConstraint<Exception>(it))
 				.AddExpectations(e => expectations(new ThatExceptionShould<Exception?>(e))),
 			this);
 }
