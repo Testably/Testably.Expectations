@@ -1,3 +1,12 @@
+# DISCONTINUED!
+
+**This project is no longer maintained!**
+
+*Consider using [aweXpect](https://awexpect.com/) instead...*
+
+---
+
+
 ![Testably.Expectations](https://raw.githubusercontent.com/Testably/Testably.Expectations/main/Docs/Images/social-preview.png)  
 [![Nuget](https://img.shields.io/nuget/v/Testably.Expectations)](https://www.nuget.org/packages/Testably.Expectations)
 [![Build](https://github.com/Testably/Testably.Expectations/actions/workflows/build.yml/badge.svg)](https://github.com/Testably/Testably.Expectations/actions/workflows/build.yml)
